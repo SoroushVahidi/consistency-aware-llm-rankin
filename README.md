@@ -193,7 +193,7 @@ python scripts/download_datasets.py --dataset hotpotqa
 python scripts/download_datasets.py --dataset bright
 
 # Download a specific BRIGHT task/domain
-python scripts/download_datasets.py --dataset bright --bright-task biology
+python scripts/download_datasets.py --dataset bright --bright-task examples
 
 # Download all datasets at once
 python scripts/download_datasets.py --dataset all
@@ -205,6 +205,10 @@ python scripts/download_datasets.py --dataset hotpotqa --max-queries 200
 > **Note on BRIGHT:** If BRIGHT cannot be downloaded automatically (authentication
 > required or dataset not yet public), the script will create
 > `data/raw/bright/README.md` with exact manual download steps.
+>
+> Current live configs (subject to upstream change) include:
+> `examples`, `documents`, `long_documents`, `gpt4_reason`,
+> `claude-3-opus_reason`, `llama3-70b_reason`, `Gemini-1.0_reason`, `grit_reason`.
 
 ### Step 3 — Prepare Datasets (Unified Format + Pairwise Preferences)
 
@@ -241,7 +245,7 @@ If `python scripts/download_datasets.py --dataset bright` fails, follow these st
 3. Download the dataset:
    ```python
    from datasets import load_dataset
-   ds = load_dataset("xlangai/BRIGHT")
+   ds = load_dataset("xlangai/BRIGHT", "examples")
    ```
 4. Export to JSONL and place files in `data/raw/bright/`:
    - `queries.jsonl`

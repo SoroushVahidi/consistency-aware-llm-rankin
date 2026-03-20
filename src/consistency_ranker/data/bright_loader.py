@@ -46,7 +46,7 @@ BRIGHT could not be downloaded automatically. Follow these steps:
        huggingface-cli login
 5. Download using Python:
        from datasets import load_dataset
-       ds = load_dataset("xlangai/BRIGHT")
+       ds = load_dataset("xlangai/BRIGHT", "examples")
 6. Save the JSONL files to this directory:
        data/raw/bright/
    Expected files:
@@ -61,20 +61,17 @@ BRIGHT could not be downloaded automatically. Follow these steps:
        python scripts/prepare_datasets.py --dataset bright
 """
 
-BRIGHT_TASKS = (
-    "biology",
-    "earth_science",
-    "economics",
-    "psychology",
-    "robotics",
-    "stackoverflow",
-    "sustainable_living",
-    "leetcode",
-    "pony",
-    "aops",
-    "theoremqa_theorems",
-    "theoremqa_questions",
+_BRIGHT_TASKS_FALLBACK = (
+    "examples",
+    "documents",
+    "long_documents",
+    "gpt4_reason",
+    "claude-3-opus_reason",
+    "llama3-70b_reason",
+    "Gemini-1.0_reason",
+    "grit_reason",
 )
+DEFAULT_BRIGHT_TASK = "examples"
 
 
 class BrightNotAvailableError(RuntimeError):
@@ -85,9 +82,25 @@ class BrightSchemaError(ValueError):
     """Raised when BRIGHT records cannot be normalized safely."""
 
 
+def list_available_bright_tasks() -> tuple[str, ...]:
+    """Return available BRIGHT config names from HuggingFace.
+
+    Falls back to a static list when config lookup is unavailable.
+    """
+    try:
+        from datasets import get_dataset_config_names  # type: ignore[import]
+
+        configs = get_dataset_config_names("xlangai/BRIGHT")
+        if configs:
+            return tuple(configs)
+    except Exception:  # noqa: BLE001
+        pass
+    return _BRIGHT_TASKS_FALLBACK
+
+
 def download_bright(
     raw_path: Path,
-    task: str = "biology",
+    task: str = DEFAULT_BRIGHT_TASK,
     max_examples: int | None = None,
 ) -> tuple[list[Query], list[Document], list[QrelEntry]]:
     """Attempt to download BRIGHT from HuggingFace.
@@ -97,7 +110,7 @@ def download_bright(
     raw_path:
         Local directory for raw files and HuggingFace cache.
     task:
-        BRIGHT task/domain to load.  See :data:`_BRIGHT_TASKS` for options.
+        BRIGHT config name to load (e.g. ``"examples"``).
     max_examples:
         Optional cap on examples loaded.
 
@@ -112,10 +125,11 @@ def download_bright(
     ImportError
         If the ``datasets`` library is not installed.
     """
-    if task not in BRIGHT_TASKS:
+    available_tasks = list_available_bright_tasks()
+    if task not in available_tasks:
         raise ValueError(
             f"Unknown BRIGHT task {task!r}. "
-            f"Choose one of: {list(BRIGHT_TASKS)}"
+            f"Choose one of: {list(available_tasks)}"
         )
 
     try:
@@ -150,19 +164,22 @@ def download_bright(
     doc_map: dict[str, Document] = {}
     qrels: list[QrelEntry] = []
 
-    # BRIGHT dataset structure may vary; select a known split explicitly.
-    examples_split = _select_examples_split(ds)
-
-    for i, row in enumerate(examples_split):
-        if max_examples is not None and i >= max_examples:
-            break
-
-        query, docs_for_query, qrels_for_query = _parse_example_row(row, row_idx=i)
+    for i, (split_name, row) in enumerate(_iter_rows_with_split(ds, max_examples=max_examples)):
+        query, docs_for_query, qrels_for_query = _parse_example_row(
+            row,
+            row_idx=i,
+            split_name=split_name,
+        )
         queries.append(query)
         for doc in docs_for_query:
             if doc.doc_id not in doc_map:
                 doc_map[doc.doc_id] = doc
         qrels.extend(qrels_for_query)
+
+    _hydrate_missing_documents(
+        doc_map=doc_map,
+        cache_dir=cache_dir,
+    )
 
     return queries, list(doc_map.values()), qrels
 
@@ -318,34 +335,51 @@ def normalize_qrel_record(record: dict) -> QrelEntry:
     return QrelEntry(query_id=query_id_s, doc_id=doc_id_s, relevance=rel_i)
 
 
-def _select_examples_split(ds: object) -> Iterable:
-    """Select a BRIGHT split from a HuggingFace dataset object."""
+def _iter_rows_with_split(ds: object, max_examples: int | None = None):
+    """Yield ``(split_name, row)`` pairs from a HuggingFace dataset object."""
+    yielded = 0
     if isinstance(ds, Mapping):
-        for name in ("examples", "test", "validation", "train"):
-            if name in ds:
-                return ds[name]
-        if ds:
-            return next(iter(ds.values()))
+        for split_name in ds.keys():
+            split_rows = ds[split_name]
+            for row in split_rows:
+                yield str(split_name), row
+                yielded += 1
+                if max_examples is not None and yielded >= max_examples:
+                    return
+        return
+
+    if isinstance(ds, Iterable):
+        for row in ds:
+            yield "default", row
+            yielded += 1
+            if max_examples is not None and yielded >= max_examples:
+                return
+        return
+
     raise BrightSchemaError(
-        "Could not find a BRIGHT split in the loaded dataset. "
-        "Expected one of: examples, test, validation, train."
+        f"Unsupported BRIGHT dataset container type: {type(ds).__name__}"
     )
 
 
-def _parse_example_row(row: object, row_idx: int) -> tuple[Query, list[Document], list[QrelEntry]]:
+def _parse_example_row(
+    row: object,
+    row_idx: int,
+    split_name: str = "",
+) -> tuple[Query, list[Document], list[QrelEntry]]:
     """Parse one BRIGHT dataset row into Query, Documents, and Qrels."""
     if not isinstance(row, Mapping):
         raise BrightSchemaError(
             f"BRIGHT row at index {row_idx} must be a mapping/dict, got {type(row).__name__}."
         )
 
-    query_id = _first_non_null(row, ("id", "query_id", "qid"), default=str(row_idx))
+    raw_query_id = _first_non_null(row, ("id", "query_id", "qid"), default=str(row_idx))
     query_text = _first_non_null(row, ("query", "question", "text"))
     if query_text is None:
         raise BrightSchemaError(
             f"BRIGHT row {row_idx} is missing query text "
             "(expected query | question | text). Keys: {sorted(row.keys())}"
         )
+    query_id = f"{split_name}:{raw_query_id}" if split_name else str(raw_query_id)
     query = Query(query_id=str(query_id), text=str(query_text))
 
     docs_by_id: dict[str, Document] = {}
@@ -372,10 +406,23 @@ def _parse_example_row(row: object, row_idx: int) -> tuple[Query, list[Document]
     for doc_id, rel in list(pos_rel.items()) + list(neg_rel.items()):
         rel_by_doc[doc_id] = max(rel_by_doc.get(doc_id, rel), rel)
 
+    # BRIGHT "examples" rows commonly provide gold/excluded ids, not full doc payloads.
+    if not docs_by_id:
+        positive_ids = _to_str_id_list(row.get("gold_ids")) + _to_str_id_list(row.get("gold_ids_long"))
+        negative_ids = _to_str_id_list(row.get("excluded_ids"))
+        negative_ids = [doc_id for doc_id in negative_ids if doc_id.upper() != "N/A"]
+
+        for doc_id in positive_ids:
+            docs_by_id[doc_id] = Document(doc_id=doc_id, text="")
+            rel_by_doc[doc_id] = max(rel_by_doc.get(doc_id, 1), 1)
+        for doc_id in negative_ids:
+            docs_by_id.setdefault(doc_id, Document(doc_id=doc_id, text=""))
+            rel_by_doc[doc_id] = max(rel_by_doc.get(doc_id, 0), 0)
+
     if not docs_by_id:
         raise BrightSchemaError(
             f"BRIGHT row {row_idx} produced no documents. "
-            "Expected positive_docs and/or negative_docs with parseable entries."
+            "Expected positive_docs/negative_docs or gold_ids/excluded_ids."
         )
 
     qrels = [
@@ -462,6 +509,60 @@ def _document_from_payload(
     )
 
 
+def _hydrate_missing_documents(doc_map: dict[str, Document], cache_dir: str) -> None:
+    """Fill missing document text by loading the BRIGHT ``documents`` config."""
+    missing = {
+        doc_id
+        for doc_id, doc in doc_map.items()
+        if not str(doc.text).strip() and not str(doc.title).strip()
+    }
+    if not missing:
+        return
+
+    try:
+        from datasets import load_dataset  # type: ignore[import]
+    except ImportError as exc:
+        raise BrightSchemaError(
+            "The 'datasets' library is required to resolve BRIGHT document ids "
+            "from the 'documents' config."
+        ) from exc
+
+    for cfg_name in ("documents", "long_documents"):
+        if not missing:
+            break
+        try:
+            docs_ds = load_dataset("xlangai/BRIGHT", cfg_name, cache_dir=cache_dir)
+        except Exception:  # noqa: BLE001
+            continue
+
+        for _split_name, row in _iter_rows_with_split(docs_ds, max_examples=None):
+            if not isinstance(row, Mapping):
+                continue
+            doc_id = _first_non_null(row, ("id", "doc_id", "corpus_id", "corpus-id"))
+            if doc_id is None:
+                continue
+            doc_id_s = str(doc_id).strip()
+            if doc_id_s not in missing:
+                continue
+            text = _first_non_null(row, ("content", "text", "contents", "body"), default="")
+            title = _first_non_null(row, ("title", "doc_title"), default="")
+            doc_map[doc_id_s] = Document(
+                doc_id=doc_id_s,
+                text=str(text),
+                title=str(title),
+            )
+            missing.remove(doc_id_s)
+            if not missing:
+                break
+
+    if missing:
+        sample = sorted(missing)[:5]
+        raise BrightSchemaError(
+            f"Could not resolve {len(missing)} BRIGHT document ids from the "
+            f"'documents'/'long_documents' configs. Sample: {sample}"
+        )
+
+
 def _load_jsonl(path: Path, normalizer):
     records = []
     with path.open(encoding="utf-8") as fh:
@@ -494,3 +595,16 @@ def _first_non_null(record: Mapping, keys: tuple[str, ...], default=None):
         if key in record and record[key] is not None:
             return record[key]
     return default
+
+
+def _to_str_id_list(value: object) -> list[str]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        return []
+    result: list[str] = []
+    for item in value:
+        s = str(item).strip()
+        if s and s.upper() != "N/A":
+            result.append(s)
+    return result

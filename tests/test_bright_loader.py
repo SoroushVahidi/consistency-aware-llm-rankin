@@ -106,6 +106,21 @@ class TestBrightExampleParsing:
         with pytest.raises(BrightSchemaError, match="produced no documents"):
             _parse_example_row(row, row_idx=0)
 
+    def test_parse_example_row_gold_ids_schema(self):
+        row = {
+            "id": "7",
+            "query": "Question?",
+            "gold_ids": ["d1", "d2"],
+            "excluded_ids": ["d3", "N/A"],
+        }
+        query, docs, qrels = _parse_example_row(row, row_idx=0, split_name="biology")
+        assert query.query_id == "biology:7"
+        assert {d.doc_id for d in docs} == {"d1", "d2", "d3"}
+        rel_map = {q.doc_id: q.relevance for q in qrels}
+        assert rel_map["d1"] == 1
+        assert rel_map["d2"] == 1
+        assert rel_map["d3"] == 0
+
 
 class TestBrightDownloadAndCompatibility:
     def test_download_bright_without_network_via_mock(self, tmp_path: Path, monkeypatch):
@@ -129,7 +144,7 @@ class TestBrightDownloadAndCompatibility:
 
         queries, docs, qrels = download_bright(
             raw_path=tmp_path / "raw" / "bright",
-            task="biology",
+            task="examples",
             max_examples=None,
         )
 

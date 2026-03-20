@@ -141,7 +141,7 @@ def download_bright(
 ) -> None:
     """Attempt to download BRIGHT; create placeholder if unavailable."""
     from consistency_ranker.data.bright_loader import (
-        BRIGHT_TASKS,
+        list_available_bright_tasks,
         BrightNotAvailableError,
         download_bright,
     )
@@ -154,10 +154,11 @@ def download_bright(
         print(f"[bright] Raw files already exist in {raw_path}. Skipping (use --force to re-download).")
         return
 
-    if bright_task not in BRIGHT_TASKS:
+    available_tasks = list_available_bright_tasks()
+    if bright_task not in available_tasks:
         print(
             f"[bright] ERROR: unknown task {bright_task!r}. "
-            f"Choose one of: {list(BRIGHT_TASKS)}"
+            f"Choose one of: {list(available_tasks)}"
         )
         return
 
@@ -219,7 +220,7 @@ def main() -> None:
     parser.add_argument(
         "--bright-task",
         type=str,
-        default="biology",
+        default="examples",
         help="BRIGHT task/domain to download (used when --dataset bright or all).",
     )
     args = parser.parse_args()
