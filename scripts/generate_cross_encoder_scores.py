@@ -34,7 +34,7 @@ def main() -> None:
         description="Generate cross-encoder reranking scores (union of BM25 + dense).",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--dataset", type=str, required=True, choices=["fiqa", "scidocs"])
+    parser.add_argument("--dataset", type=str, required=True, choices=["fiqa", "scidocs", "hotpotqa"])
     parser.add_argument("--top-k", type=int, default=50, help="Top-k from each base scorer to union")
     parser.add_argument("--max-queries", type=int, default=None)
     parser.add_argument(

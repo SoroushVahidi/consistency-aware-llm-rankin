@@ -41,7 +41,7 @@ def main() -> None:
         "--dataset",
         type=str,
         required=True,
-        choices=["fiqa", "scidocs"],
+        choices=["fiqa", "scidocs", "hotpotqa"],
         help="Dataset to score.",
     )
     parser.add_argument(
@@ -106,6 +106,10 @@ def main() -> None:
     query_list = queries[: args.max_queries] if args.max_queries else queries
     query_ids = [q.query_id for q in query_list]
 
+    # HotpotQA: documents are per-query; always use per-query scoring (no global corpus)
+    if args.dataset == "hotpotqa":
+        args.rerank_from = None  # Ignore rerank_from; we score per-query docs
+
     # Option: rerank from BM25 (fast) vs full corpus (slow)
     if args.rerank_from:
         from consistency_ranker.data.unified_loader import load_score_rankings
@@ -152,8 +156,33 @@ def main() -> None:
             scores = np.dot(dn, qn)
             order = np.argsort(scores)[::-1]
             rankings[q.query_id] = [(doc_ids[j], float(scores[j])) for j in order]
+    elif args.dataset == "hotpotqa":
+        # HotpotQA: per-query documents (10 per query). Score each query against its docs.
+        from collections import defaultdict
+
+        docs_by_query: dict[str, list] = defaultdict(list)
+        for d in documents:
+            qid = d.metadata.get("query_id")
+            if qid:
+                docs_by_query[qid].append(d)
+
+        for i, q in enumerate(query_list):
+            if (i + 1) % 50 == 0 or i == 0:
+                print(f"  Query {i + 1}/{len(query_list)}...")
+            qdocs = docs_by_query.get(q.query_id, [])
+            if not qdocs:
+                continue
+            doc_ids = [d.doc_id for d in qdocs]
+            doc_texts = [d.text[:4000] + "..." if len(d.text) > 4000 else d.text for d in qdocs]
+            query_emb = model.encode([q.text], convert_to_tensor=False)[0]
+            doc_embs = model.encode(doc_texts, batch_size=min(32, len(doc_texts)), convert_to_tensor=False)
+            qn = query_emb / (np.linalg.norm(query_emb) + 1e-9)
+            dn = doc_embs / (np.linalg.norm(doc_embs, axis=1, keepdims=True) + 1e-9)
+            scores = np.dot(dn, qn)
+            order = np.argsort(scores)[::-1][: args.top_k]
+            rankings[q.query_id] = [(doc_ids[j], float(scores[j])) for j in order]
     else:
-        # Full corpus retrieval
+        # Full corpus retrieval (BEIR-style)
         doc_ids = [d.doc_id for d in documents]
         corpus_texts = [d.text for d in documents]
         query_texts = [q.text for q in query_list]
