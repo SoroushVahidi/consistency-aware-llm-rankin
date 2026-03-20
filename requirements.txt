@@ -1,0 +1,22 @@
+# Core graph and numeric libraries
+networkx>=3.2
+numpy>=1.26
+scipy>=1.11
+tqdm>=4.66
+
+# Dataset download and loading
+datasets>=2.18
+huggingface-hub>=0.21
+
+# Visualisation and data analysis
+matplotlib>=3.8
+pandas>=2.1
+
+# Development / testing
+pytest>=7.4
+pytest-cov>=4.1
+ruff>=0.3
+
+# Notebooks (optional – install separately if needed)
+# jupyter>=1.0
+# seaborn>=0.13
