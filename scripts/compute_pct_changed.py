@@ -20,6 +20,12 @@ from consistency_ranker.pairwise_prefs import Preference
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--scorer2", default="dense", help="Second scorer name (dense or synthetic_perturbed)")
+    args = parser.parse_args()
+    scorer2 = args.scorer2
+
     import random
     random.seed(42)
 
@@ -27,25 +33,25 @@ def main():
     cfg_scidocs = get_config("scidocs")
     multi_fiqa = load_multi_scorer_rankings({
         "bm25": cfg_fiqa.processed_path / "scores" / "bm25.jsonl",
-        "synthetic_perturbed": cfg_fiqa.processed_path / "scores" / "synthetic_perturbed.jsonl",
+        scorer2: cfg_fiqa.processed_path / "scores" / f"{scorer2}.jsonl",
     })
     multi_scidocs = load_multi_scorer_rankings({
         "bm25": cfg_scidocs.processed_path / "scores" / "bm25.jsonl",
-        "synthetic_perturbed": cfg_scidocs.processed_path / "scores" / "synthetic_perturbed.jsonl",
+        scorer2: cfg_scidocs.processed_path / "scores" / f"{scorer2}.jsonl",
     })
 
     _, _, qrels = load_dataset_splits("fiqa")
     qrels_by_q = {}
     for e in qrels:
         qrels_by_q.setdefault(e.query_id, []).append(e)
-    fiqa_qids = sorted(q for q in multi_fiqa["bm25"] if q in multi_fiqa["synthetic_perturbed"] and q in qrels_by_q)
+    fiqa_qids = sorted(q for q in multi_fiqa["bm25"] if q in multi_fiqa[scorer2] and q in qrels_by_q)
     fiqa_qids = fiqa_qids[:50]
 
     _, _, qrels_s = load_dataset_splits("scidocs")
     qrels_by_q_s = {}
     for e in qrels_s:
         qrels_by_q_s.setdefault(e.query_id, []).append(e)
-    scidocs_qids = sorted(q for q in multi_scidocs["bm25"] if q in multi_scidocs["synthetic_perturbed"] and q in qrels_by_q_s)
+    scidocs_qids = sorted(q for q in multi_scidocs["bm25"] if q in multi_scidocs[scorer2] and q in qrels_by_q_s)
     scidocs_qids = scidocs_qids[:50]
 
     results = {}
@@ -56,7 +62,7 @@ def main():
                 for qid in qids:
                     sr = {
                         "bm25": multi["bm25"][qid][:top_k],
-                        "synthetic_perturbed": multi["synthetic_perturbed"][qid][:top_k],
+                        scorer2: multi[scorer2][qid][:top_k],
                     }
                     prefs = preferences_from_multiple_score_rankings(qid, sr, weight_mode=mode)
                     if not prefs:

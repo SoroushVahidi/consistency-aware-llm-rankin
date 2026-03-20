@@ -38,6 +38,9 @@ dev = [
 bm25 = [
     "rank-bm25>=0.2.2",
 ]
+dense = [
+    "sentence-transformers>=2.2.0",
+]
 notebook = [
     "jupyter>=1.0",
     "seaborn>=0.13",
