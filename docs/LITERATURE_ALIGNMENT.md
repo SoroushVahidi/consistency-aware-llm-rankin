@@ -4,6 +4,48 @@ This document provides a strict, reviewer-level alignment between our method and
 
 ---
 
+## 0. Positioning Relative to Key Prior Work (Updated)
+
+### 0.1 Dwork et al. (2001): Rank Aggregation, Kemeny, Local Kemenization
+
+**What they do:** Kemeny optimal aggregation minimizes pairwise disagreements (Kendall tau distance to input rankings). Local Kemenization refines a ranking by locally swapping adjacent pairs to reduce disagreements. Social choice framing; extended Condorcet criteria.
+
+**Our relationship:**
+- **Objective:** Kemeny = minimize pairwise disagreements. With majority-vote weights (one vote per preferring ranker), minimizing BEW is equivalent to Kemeny. We use summed_margin, so our objective is a weighted variant, not identical Kemeny.
+- **Method:** We do not use local Kemenization. We use global FAS (cycle removal + topological sort). Local Kemenization is a different algorithmic approach.
+- **Contribution:** We add selective application (when to use FAS vs RRF). Dwork does not address "when to apply" a method.
+
+### 0.2 Ailon–Charikar–Newman (2008): Rank Aggregation as Weighted FAS on Tournaments
+
+**What they do:** Show that rank aggregation is equivalent to weighted feedback arc set on *tournaments* (complete directed graphs with one edge per pair). Provide approximation algorithms for this problem.
+
+**Our relationship:**
+- **Objective:** We use the same objective family—minimize total weight of backward edges (BEW). Our graphs are not full tournaments; we have at most one edge per pair (aggregate preference), so we are in the same formulation.
+- **Algorithm:** ACN give approximation algorithms with provable bounds. We use a simple greedy heuristic with no approximation guarantee. We do not use their algorithms.
+- **Contribution:** ACN contribute theory and approximation. We contribute **selective** application—when to use FAS-based ranking vs RRF—not a new FAS algorithm.
+
+### 0.3 Our Prior MWFAS Ranking Paper: Ranking via Minimizing Backward Edges
+
+**What it does:** Ranking from pairwise comparisons by minimizing backward edge weight (MWFAS). Connects ranking to FAS; uses combinatorial algorithms.
+
+**Our relationship:**
+- **Baseline:** Our "always FAS" is exactly what the prior MWFAS paper does—apply FAS to get a ranking that minimizes BEW.
+- **Contribution:** Our current work adds **selective repair**: apply FAS only when BEW (or disagreement) is high; otherwise keep RRF. The prior paper applies FAS globally. We show that conditioning on inconsistency improves over both always-FAS and never-FAS.
+
+**Differentiation:** Prior work = MWFAS for ranking (algorithmic). Current work = *when* to apply MWFAS vs RRF (policy).
+
+### 0.4 Summary: Positioning Table
+
+| Prior work | Objective | Algorithm | Our addition |
+|------------|-----------|-----------|--------------|
+| Dwork 2001 | Kemeny (min pairwise disagreements) | Local Kemenization | We use global FAS, not local Kemenization. We add selective application. |
+| ACN 2008 | Weighted FAS on tournaments | Approximation algorithms | We use simple greedy, not ACN algorithms. We add selective application. |
+| Prior MWFAS | Min backward edges | MWFAS solvers | We add selective application (when FAS vs RRF). |
+
+**Single-sentence positioning:** We build on the rank aggregation = weighted FAS formulation (Dwork, ACN) and on prior MWFAS-for-ranking work; our contribution is a **selective repair policy** that applies FAS-based ranking only when inconsistency (BEW, disagreement) is high, improving over both always-FAS and never-FAS.
+
+---
+
 ## 1. What Algorithm Are We Actually Using for FAS?
 
 ### 1.1 Our Algorithm
@@ -46,22 +88,23 @@ We use a **greedy cycle-removal heuristic**:
 
 The ranking that minimizes BEW is a topological order of G' where G' = G minus a minimum-weight FAS.
 
-### 2.2 Relation to Kemeny Optimal Aggregation
+### 2.2 Relation to Kemeny Optimal Aggregation (Dwork et al.)
 
-**Kemeny:** Minimize sum of Kendall tau distances to input rankings.
+**Kemeny (Dwork et al., 2001):** Minimize pairwise disagreements (Kendall tau distance to input rankings).
 
-**Equivalence:** For a graph built from **majority vote** (weight = number of rankings preferring u over v), minimizing BEW is **equivalent** to Kemeny optimal aggregation. (Each violated preference contributes its weight; Kemeny counts violations with weight 1 per ranking.)
+**Equivalence:** For a graph built from **majority vote** (weight = number of rankings preferring u over v), minimizing BEW is **equivalent** to Kemeny. (Each violated preference contributes its weight; Kemeny counts violations.)
 
-**Our setting:** We use **summed_margin** (weight = sum of score differences across scorers). So we are **not** solving Kemeny. We are solving a **weighted rank aggregation** problem with a specific weight scheme. The closest formulation is:
+**Our setting:** We use **summed_margin** (weight = sum of score differences across scorers). So we are **not** solving Kemeny exactly. We are solving **weighted rank aggregation** with margin-based weights—a variant in the same family.
 
-- **Weighted Kemeny** or **weighted rank aggregation** with margin-based weights
-- **MWFAS** on a graph with summed-margin edge weights
+**Conclusion:** Our objective is MWFAS / weighted rank aggregation. With majority-vote weights, BEW minimization = Kemeny. With summed_margin, we are in a weighted variant. We do not use local Kemenization (Dwork); we use global FAS.
 
-**Conclusion:** Our objective is MWFAS / weighted rank aggregation. We should not claim equivalence to Kemeny unless we use majority-vote weights. With summed_margin, we are in a well-known family of objectives (weighted feedback arc set for ranking).
+### 2.3 Closest Known Formulation (ACN, Prior MWFAS)
 
-### 2.3 Closest Known Formulation
+**Ailon et al. (2008):** Rank aggregation = weighted FAS on tournaments. One edge per pair; minimize total weight of backward edges. Approximation algorithms.
 
-**Minimum Weighted Feedback Arc Set for Ranking:** Given a directed graph with edge weights, find a ranking (linear order) that minimizes the sum of weights of edges pointing backward. This is exactly our BEW minimization. It is a standard formulation; see, e.g., Ailon et al. (2008) on aggregating inconsistent information, and the recent arxiv 2412.16181 (Vahidi & Koutis, 2024) on MWFAS for ranking from pairwise comparisons.
+**Prior MWFAS ranking work:** Ranking via minimizing backward edges. Apply FAS globally.
+
+**Our formulation:** Same objective (minimize BEW). Our graphs have at most one edge per pair (aggregate preference). We use a simple greedy heuristic, not ACN's approximation algorithms. Our contribution is **selective** application, not the objective or a new FAS algorithm.
 
 ---
 
@@ -113,35 +156,37 @@ Prior work typically applies a single fusion method (RRF, Borda, Kemeny, FAS) to
 
 ## 5. Closest 3–5 Papers
 
-### 5.1 Cormack, Clarke, Büttcher (SIGIR 2009): Reciprocal Rank Fusion
+### 5.1 Dwork et al. (2001): Rank Aggregation, Kemeny, Local Kemenization
 
-**What they do:** Propose RRF for combining rankings from multiple IR systems. RRF score(d) = Σ 1/(k + rank(d)). No score normalization; robust to outliers.
+**What they do:** Kemeny optimal aggregation minimizes pairwise disagreements. Local Kemenization refines rankings via local adjacent swaps. Social choice framing; extended Condorcet.
 
-**How we differ:** We use RRF as the base fusion. We add a **selective** step: replace RRF with FAS output when BEW is high. We do not modify RRF itself.
+**How we differ:** We use global FAS (cycle removal + topological sort), not local Kemenization. Our objective (BEW minimization) equals Kemeny when weights = vote counts; we use summed_margin. We add **selective** application.
 
-**Weaker/stronger:** We build on RRF; we do not outperform RRF in all settings. We outperform RRF only when selectively applying FAS on high-conflict queries.
+**Weaker/stronger:** Dwork is foundational for the objective. We are applied; we add the selective policy.
 
-### 5.2 Vahidi & Koutis (arXiv 2412.16181, 2024): MWFAS for Ranking from Pairwise Comparisons
+### 5.2 Ailon, Charikar, Newman (2008): Rank Aggregation as Weighted FAS on Tournaments
 
-**What they do:** Connect ranking from pairwise comparisons to MWFAS. Show that combinatorial MWFAS algorithms outperform learning-based approaches (He et al., ICML 2022) on ranking benchmarks.
+**What they do:** Show rank aggregation = weighted FAS on tournaments. Provide approximation algorithms with provable bounds.
 
-**How we differ:** They focus on the MWFAS objective and algorithms. We focus on **selective** application: when to use FAS vs RRF. We use a weaker greedy heuristic; they may use stronger solvers. Our contribution is the selective policy, not the FAS algorithm.
+**How we differ:** We use the same objective family (minimize backward edge weight). We do not use their approximation algorithms; we use a simple greedy heuristic. We add **selective** application.
 
-**Weaker/stronger:** They may have stronger FAS solvers. Our novelty is selective repair, not FAS itself. If this paper is by the same author (Vahidi), we must clearly differentiate and avoid self-citation that overstates novelty: they do MWFAS algorithms; we do *selective* application of FAS + RRF.
+**Weaker/stronger:** ACN are stronger theoretically. We are applied; our contribution is the selective policy, not approximation algorithms.
 
-### 5.3 Ailon, Charikar, Newman (STOC 2005 / JACM 2008): Aggregating Inconsistent Information
+### 5.3 Our Prior MWFAS Ranking Paper: Ranking via Minimizing Backward Edges
 
-**What they do:** Study rank aggregation and clustering under inconsistency. Show connections to feedback arc set, Kemeny, and approximation algorithms.
+**What they do:** Ranking from pairwise comparisons via MWFAS. Combinatorial algorithms for minimizing backward edges.
 
-**How we differ:** They provide theoretical foundations. We apply FAS heuristics to retrieval and add selective repair. We do not contribute to the theory.
+**How we differ:** That work applies FAS globally. We add **selective** application: use FAS only when BEW (or disagreement) is high; otherwise keep RRF. Our contribution is the policy, not the FAS algorithm.
 
-**Weaker/stronger:** They are stronger theoretically. We are an applied, empirical contribution.
+**Weaker/stronger:** Prior work = always-FAS baseline. We show selective FAS beats both always-FAS and never-FAS.
 
-### 5.4 Dwork et al. (rank aggregation), Schalekamp & van Zuylen (FAS approximations)
+### 5.4 Cormack, Clarke, Büttcher (SIGIR 2009): Reciprocal Rank Fusion
 
-**What they do:** Rank aggregation theory; approximation algorithms for FAS.
+**What they do:** RRF for combining rankings. RRF score(d) = Σ 1/(k + rank(d)). No score normalization.
 
-**How we differ:** We use a simple heuristic and focus on **when** to apply FAS, not **how** to solve FAS optimally.
+**How we differ:** We use RRF as the base. We add a selective step: replace RRF with FAS when BEW is high. We do not modify RRF itself.
+
+**Weaker/stronger:** We build on RRF. We outperform RRF only when selectively applying FAS on high-conflict queries.
 
 ### 5.5 He et al. (ICML 2022) or similar: Learning to Rank from Pairwise Comparisons
 
@@ -153,7 +198,7 @@ Prior work typically applies a single fusion method (RRF, Borda, Kemeny, FAS) to
 
 ## 6. Suggested Related Work Paragraph (Publication-Ready)
 
-> Rank aggregation combines multiple rankings into one. Classical methods include Borda count, Kemeny optimal aggregation (which minimizes the sum of Kendall tau distances to input rankings), and Reciprocal Rank Fusion (RRF) (Cormack et al., 2009), which avoids score normalization by using rank-based fusion. The minimum weighted feedback arc set (MWFAS) problem is equivalent to finding a ranking that minimizes the total weight of violated pairwise preferences (Ailon et al., 2008; Vahidi & Koutis, 2024). Solving MWFAS yields a topological ordering of the graph after removing a minimum-weight set of cycle-breaking edges. We use a simple greedy heuristic that iteratively removes the minimum-weight edge from an arbitrary cycle until the graph is acyclic, then apply topological sort. This heuristic has no known approximation guarantee and is distinct from the Eades-Lin-Smyth (1993) and Demetrescu-Finocchi (2003) algorithms. Our contribution is not a new FAS algorithm but a **selective repair policy**: we apply FAS (or graph-consistent ordering) only when the base ranking (RRF) has high backward edge weight (BEW) or scorer disagreement, and keep RRF otherwise. To our knowledge, prior work has not proposed conditioning FAS application on an inconsistency signal for multi-scorer retrieval. We show empirically that this policy improves over both always-FAS and never-FAS on FiQA, SciDocs, and HotpotQA.
+> Rank aggregation combines multiple rankings into one. Dwork et al. (2001) establish Kemeny optimal aggregation (minimizing pairwise disagreements) and local Kemenization. Ailon et al. (2008) show that rank aggregation is equivalent to the minimum weighted feedback arc set (MWFAS) problem on tournaments and provide approximation algorithms. Prior work on MWFAS for ranking applies FAS globally to produce a consistent ranking. Reciprocal Rank Fusion (RRF) (Cormack et al., 2009) offers a rank-based fusion that avoids score normalization. We use a simple greedy heuristic that iteratively removes the minimum-weight edge from an arbitrary cycle until the graph is acyclic, then apply topological sort. This heuristic has no known approximation guarantee. Our contribution is not a new FAS algorithm but a **selective repair policy**: we apply FAS (or graph-consistent ordering) only when the base ranking (RRF) has high backward edge weight (BEW) or scorer disagreement, and keep RRF otherwise. Unlike prior MWFAS-for-ranking work that applies FAS to all queries, we condition on an inconsistency signal. We show empirically that this policy improves over both always-FAS and never-FAS on FiQA, SciDocs, and HotpotQA.
 
 ---
 
@@ -191,8 +236,8 @@ Prior work typically applies a single fusion method (RRF, Borda, Kemeny, FAS) to
 
 **What we do:** Use RRF as the base fusion. When BEW (or disagreement) is high, replace RRF with the output of a greedy FAS heuristic + topological sort. When low, keep RRF.
 
-**What we contribute:** The idea and empirical validation of **selective** application—apply graph-consistent ranking only when the base ranking is highly inconsistent with the aggregated preference graph.
+**What we contribute:** The idea and empirical validation of **selective** application—apply graph-consistent ranking only when the base ranking is highly inconsistent with the aggregated preference graph. We build on Dwork (Kemeny objective), ACN (rank aggregation = weighted FAS), and prior MWFAS-for-ranking work; our addition is the **policy** of when to apply FAS vs RRF.
 
-**What we do not contribute:** A new FAS algorithm, a new rank aggregation objective, a theoretical guarantee, or a method that beats dense retrieval.
+**What we do not contribute:** A new FAS algorithm, a new rank aggregation objective (we use the standard BEW/MWFAS formulation), a theoretical guarantee, or a method that beats dense retrieval. We do not use local Kemenization (Dwork) or ACN's approximation algorithms.
 
-**For Q1 submission:** The contribution is narrow but clear. Emphasize the selective policy, the two-regime analysis (cyclic vs acyclic), and the empirical gains. Avoid overclaiming the FAS algorithm or the objective. Be explicit about limitations.
+**For Q1 submission:** The contribution is narrow but clear. Emphasize the selective policy, the two-regime analysis (cyclic vs acyclic), and the empirical gains. Position relative to Dwork, ACN, and prior MWFAS work. Avoid overclaiming the FAS algorithm or the objective. Be explicit about limitations.
