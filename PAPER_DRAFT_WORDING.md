@@ -68,3 +68,11 @@ Our experiments cover three datasets (FiQA, SciDocs, HotpotQA) with n=100 querie
 | **Stronger conference (SIGIR, EMNLP main)** | Marginal | The contribution is incremental: selective repair improves over RRF but not over dense. The two-regime framing (cycle repair vs acyclic reordering) is a strength, but main-track venues may expect more novelty or larger-scale evidence. A short paper or findings track is more realistic. |
 
 **Final recommendation:** Submit to **EMNLP Findings** or a **SIGIR/EMNLP workshop** (e.g., RepL4NLP, SIGIR workshop on retrieval). Emphasize the two-regime analysis and the explicit distinction between cycle repair and selective graph-consistent reordering. Keep wording conservative; do not blur the two regimes.
+
+---
+
+## 5. Related Work Paragraph (Publication-Ready)
+
+See `docs/LITERATURE_ALIGNMENT.md` for full analysis. Suggested paragraph:
+
+> Rank aggregation combines multiple rankings into one. Classical methods include Borda count, Kemeny optimal aggregation (which minimizes the sum of Kendall tau distances to input rankings), and Reciprocal Rank Fusion (RRF) (Cormack et al., 2009), which avoids score normalization by using rank-based fusion. The minimum weighted feedback arc set (MWFAS) problem is equivalent to finding a ranking that minimizes the total weight of violated pairwise preferences (Ailon et al., 2008). Solving MWFAS yields a topological ordering of the graph after removing a minimum-weight set of cycle-breaking edges. We use a simple greedy heuristic that iteratively removes the minimum-weight edge from an arbitrary cycle until the graph is acyclic, then apply topological sort. This heuristic has no known approximation guarantee and is distinct from the Eades-Lin-Smyth (1993) and Demetrescu-Finocchi (2003) algorithms. Our contribution is not a new FAS algorithm but a **selective repair policy**: we apply FAS (or graph-consistent ordering) only when the base ranking (RRF) has high backward edge weight (BEW) or scorer disagreement, and keep RRF otherwise. To our knowledge, prior work has not proposed conditioning FAS application on an inconsistency signal for multi-scorer retrieval. We show empirically that this policy improves over both always-FAS and never-FAS on FiQA, SciDocs, and HotpotQA.
