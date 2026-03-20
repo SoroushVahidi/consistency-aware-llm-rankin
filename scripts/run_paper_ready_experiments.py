@@ -97,6 +97,7 @@ def run_query_full(
     bew_rrf = _backward_edge_weight(graph, rankings["rrf_fusion"])
     bew_fas = _backward_edge_weight(graph, rankings["greedy_fas_topological"])
     is_cyclic = has_cycle(graph)
+    n_sccs = nx.number_strongly_connected_components(graph)
     fas_differs_rrf = rankings["greedy_fas_topological"] != rankings["rrf_fusion"]
 
     if len(scorer_names) >= 2:
@@ -115,6 +116,7 @@ def run_query_full(
         "bew_before": bew_rrf,
         "bew_after": bew_fas,
         "cyclic": is_cyclic,
+        "n_sccs": n_sccs,
         "disagreement": disagreement,
         "fas_differs_rrf": fas_differs_rrf,
     }
@@ -123,6 +125,7 @@ def run_query_full(
         result[f"mrr_{name}"] = mrr(ranking, relevant_ids)
         result[f"recall10_{name}"] = recall_at_k(ranking, relevant_ids, k=10)
         result[f"recall20_{name}"] = recall_at_k(ranking, relevant_ids, k=20)
+    result["fas_helps"] = result["ndcg_greedy_fas_topological"] > result["ndcg_rrf_fusion"]
     if return_rankings:
         result["rankings"] = rankings
         result["relevant_ids"] = relevant_ids
