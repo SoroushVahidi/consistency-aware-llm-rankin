@@ -27,6 +27,43 @@ from consistency_ranker.data.query_ids import (  # noqa: E402
 from consistency_ranker.data.unified_loader import load_dataset_splits  # noqa: E402
 
 
+def _candidate_aligned_rel_map(qrels_for_query: list, candidates: list[str]) -> dict[str, int]:
+    rel_map: dict[str, int] = {}
+    for e in qrels_for_query:
+        rel_map[e.doc_id] = max(rel_map.get(e.doc_id, e.relevance), e.relevance)
+    for d in candidates:
+        rel_map.setdefault(d, 0)
+    return rel_map
+
+
+def _ndcg_at_k(ranking: list[str], rel_map: dict[str, int], k: int) -> float:
+    k_eff = min(k, len(ranking))
+    if k_eff <= 0:
+        return 0.0
+
+    def _dcg(items: list[str]) -> float:
+        total = 0.0
+        for i, doc_id in enumerate(items[:k_eff]):
+            rel = rel_map.get(doc_id, 0)
+            total += (2.0 ** rel - 1.0) / math.log2(i + 2.0)
+        return total
+
+    dcg = _dcg(ranking)
+    ideal = sorted(ranking, key=lambda d: rel_map.get(d, 0), reverse=True)
+    idcg = _dcg(ideal)
+    if idcg <= 0.0:
+        return 0.0
+    return dcg / idcg
+
+
+def _precision_at_k(ranking: list[str], rel_map: dict[str, int], k: int) -> float:
+    k_eff = min(k, len(ranking))
+    if k_eff <= 0:
+        return 0.0
+    hits = sum(1 for d in ranking[:k_eff] if rel_map.get(d, 0) > 0)
+    return hits / k_eff
+
+
 def _load_scores(
     score_files: list[Path],
 ) -> dict[str, dict[str, dict[str, float]]]:
@@ -93,6 +130,7 @@ def _votes_for_query(
     abstain_missing: bool = False,
     min_support: int = 1,
     min_aggregate_margin: float = 0.0,
+    ranker_weights: dict[str, float] | None = None,
 ) -> list[dict]:
     """Build deterministic pairwise vote rows for one query.
 
@@ -118,6 +156,7 @@ def _votes_for_query(
 
     for voter in sorted(ranker_scores):
         score_map = ranker_scores[voter]
+        voter_weight = (ranker_weights or {}).get(voter, 1.0)
         floor = (min(score_map.values()) - 1.0) if score_map else -math.inf
         for a, b in combinations(candidates, 2):
             if abstain_missing and (a not in score_map or b not in score_map):
@@ -134,7 +173,8 @@ def _votes_for_query(
             else:
                 # Deterministic tie break
                 winner, loser = (a, b) if a < b else (b, a)
-            weight = margin if vote_weight_scheme == "margin" else 1.0
+            base_weight = margin if vote_weight_scheme == "margin" else 1.0
+            weight = base_weight * voter_weight
             pair_key = (a, b) if a < b else (b, a)
             votes_by_pair[pair_key][(winner, loser)].append((voter, float(weight), float(margin)))
 
@@ -159,6 +199,67 @@ def _votes_for_query(
                     }
                 )
     return rows
+
+
+def _load_ranker_weights_file(path: Path) -> dict[str, float]:
+    if not path.exists():
+        raise FileNotFoundError(f"Ranker weights file not found: {path}")
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError("Ranker weights file must be a JSON object: {ranker: weight}.")
+    out: dict[str, float] = {}
+    for k, v in raw.items():
+        out[str(k)] = float(v)
+    return out
+
+
+def _derive_ranker_weights(
+    *,
+    score_index: dict[str, dict[str, dict[str, float]]],
+    qrels_by_query: dict[str, list],
+    selected_qids: list[str],
+    top_k: int,
+    weighting_mode: str,
+    floor: float,
+) -> dict[str, float]:
+    """Derive ranker weights from candidate-aligned quality."""
+    if weighting_mode not in {"auto_ndcg_at_k", "auto_precision_at_k"}:
+        raise ValueError(f"Unsupported weighting mode: {weighting_mode}")
+
+    rankers = sorted(
+        {
+            ranker
+            for qid in selected_qids
+            for ranker in score_index.get(qid, {})
+        }
+    )
+    quality: dict[str, list[float]] = {r: [] for r in rankers}
+    for qid in selected_qids:
+        qrels_for_query = qrels_by_query.get(qid, [])
+        for ranker in rankers:
+            score_map = score_index.get(qid, {}).get(ranker)
+            if not score_map:
+                continue
+            ranking = [d for d, _ in sorted(score_map.items(), key=lambda x: (-x[1], x[0]))[:top_k]]
+            rel_map = _candidate_aligned_rel_map(qrels_for_query, ranking)
+            if weighting_mode == "auto_ndcg_at_k":
+                val = _ndcg_at_k(ranking, rel_map, k=top_k)
+            else:
+                val = _precision_at_k(ranking, rel_map, k=top_k)
+            quality[ranker].append(val)
+
+    avg_quality: dict[str, float] = {}
+    for ranker in rankers:
+        vals = quality[ranker]
+        avg_quality[ranker] = sum(vals) / len(vals) if vals else 0.0
+
+    raw = {r: max(avg_quality[r], floor) for r in rankers}
+    if not raw:
+        return {}
+    mean_val = sum(raw.values()) / len(raw)
+    if mean_val <= 0:
+        return {r: 1.0 for r in raw}
+    return {r: v / mean_val for r, v in raw.items()}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -205,6 +306,25 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=0.0,
         help="Minimum aggregate margin (sum) required for edge retention.",
     )
+    parser.add_argument(
+        "--ranker-weighting",
+        type=str,
+        default="none",
+        choices=["none", "auto_ndcg_at_k", "auto_precision_at_k", "from_file"],
+        help="Optional ranker weighting mode for vote weights.",
+    )
+    parser.add_argument(
+        "--ranker-weights-file",
+        type=Path,
+        default=None,
+        help="JSON file with ranker weights when --ranker-weighting from_file.",
+    )
+    parser.add_argument(
+        "--ranker-weight-floor",
+        type=float,
+        default=1e-6,
+        help="Minimum floor used when auto-deriving ranker weights.",
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument(
         "--query-id-file",
@@ -218,6 +338,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
     _queries, _docs, qrels = load_dataset_splits(args.dataset)
+    qrels_by_query: dict[str, list] = defaultdict(list)
+    for e in qrels:
+        qrels_by_query[e.query_id].append(e)
     eligible = set(eligible_query_ids(qrels))
 
     score_index = _load_scores(args.score_files)
@@ -228,6 +351,21 @@ def main(argv: list[str] | None = None) -> None:
         selected_qids = [qid for qid in requested if qid in eligible and qid in score_index]
     else:
         selected_qids = [qid for qid in score_qids if qid in eligible]
+
+    ranker_weights: dict[str, float] | None = None
+    if args.ranker_weighting == "from_file":
+        if args.ranker_weights_file is None:
+            raise ValueError("--ranker-weights-file is required when --ranker-weighting from_file.")
+        ranker_weights = _load_ranker_weights_file(args.ranker_weights_file)
+    elif args.ranker_weighting in {"auto_ndcg_at_k", "auto_precision_at_k"}:
+        ranker_weights = _derive_ranker_weights(
+            score_index=score_index,
+            qrels_by_query=qrels_by_query,
+            selected_qids=selected_qids,
+            top_k=args.top_k,
+            weighting_mode=args.ranker_weighting,
+            floor=args.ranker_weight_floor,
+        )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     n_rows = 0
@@ -242,6 +380,7 @@ def main(argv: list[str] | None = None) -> None:
                 abstain_missing=args.abstain_missing,
                 min_support=args.min_support,
                 min_aggregate_margin=args.min_aggregate_margin,
+                ranker_weights=ranker_weights,
             )
             for row in rows:
                 fh.write(json.dumps(row) + "\n")
@@ -251,6 +390,9 @@ def main(argv: list[str] | None = None) -> None:
     print(f"[build_votes_file] score_files={len(args.score_files)}")
     print(f"[build_votes_file] selected_queries={len(selected_qids)}")
     print(f"[build_votes_file] wrote_rows={n_rows}")
+    print(f"[build_votes_file] ranker_weighting={args.ranker_weighting}")
+    if ranker_weights:
+        print(f"[build_votes_file] ranker_weights={json.dumps(ranker_weights, sort_keys=True)}")
     print(
         "[build_votes_file] vote_cfg="
         f"weight={args.vote_weight_scheme}, min_vote_margin={args.min_vote_margin}, "

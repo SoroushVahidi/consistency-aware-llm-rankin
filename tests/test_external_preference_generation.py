@@ -125,6 +125,48 @@ def test_votes_v2_margin_abstention_and_support_filter():
     assert rows == []
 
 
+def test_votes_apply_ranker_weights():
+    rows = build_votes_file._votes_for_query(
+        query_id="q1",
+        ranker_scores={
+            "r1": {"d1": 1.0, "d2": 0.5},
+            "r2": {"d1": 0.7, "d2": 0.2},
+        },
+        top_k=2,
+        vote_weight_scheme="binary",
+        ranker_weights={"r1": 2.0, "r2": 0.5},
+    )
+    by_voter = {r["voter"]: r["weight"] for r in rows}
+    assert by_voter["r1"] == 2.0
+    assert by_voter["r2"] == 0.5
+
+
+def test_auto_ranker_weights_ndcg():
+    _q, _d, qrels = _mock_dataset()
+    qrels_by_query = {}
+    for e in qrels:
+        qrels_by_query.setdefault(e.query_id, []).append(e)
+    score_index = {
+        "q1": {
+            "good": {"d1": 2.0, "d2": 1.0},
+            "bad": {"d2": 2.0, "d1": 1.0},
+        },
+        "q2": {
+            "good": {"d2": 2.0, "d3": 1.0},
+            "bad": {"d3": 2.0, "d2": 1.0},
+        },
+    }
+    weights = build_votes_file._derive_ranker_weights(
+        score_index=score_index,
+        qrels_by_query=qrels_by_query,
+        selected_qids=["q1", "q2"],
+        top_k=2,
+        weighting_mode="auto_ndcg_at_k",
+        floor=1e-6,
+    )
+    assert weights["good"] > weights["bad"]
+
+
 def test_build_votes_file_schema(tmp_path: Path, monkeypatch):
     monkeypatch.setattr(build_votes_file, "load_dataset_splits", lambda _ds: _mock_dataset())
     score_a = tmp_path / "a.jsonl"

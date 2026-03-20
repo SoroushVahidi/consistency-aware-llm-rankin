@@ -289,6 +289,8 @@ Votes v2 knobs:
 - `--abstain-missing` (skip comparisons when either doc score is missing)
 - `--min-support` (minimum voters supporting a directed edge)
 - `--min-aggregate-margin` (minimum summed margin per directed edge)
+- `--ranker-weighting {none,auto_ndcg_at_k,auto_precision_at_k,from_file}` (optional ranker reliability weighting)
+- `--ranker-weights-file /path/to/weights.json` (required with `from_file`; format: `{"bm25": 0.9, "tfidf": 1.0, "minilm": 1.2}`)
 
 3) Run the experiment with `votes_file` (main real-signal path):
 
