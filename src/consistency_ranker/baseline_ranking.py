@@ -71,6 +71,62 @@ def topological_ranking(graph: nx.DiGraph) -> list[str]:
     return list(nx.topological_sort(graph))
 
 
+def pagerank_ranking(
+    graph: nx.DiGraph,
+    alpha: float = 0.85,
+    max_iter: int = 100,
+    tol: float = 1.0e-6,
+) -> list[str]:
+    """Rank items using a weighted PageRank-style centrality score.
+
+    Items that are beaten by many other highly-ranked items accumulate a
+    higher "authority" score.  The graph is **reversed** before computing
+    PageRank so that an edge ``u → v`` (meaning "u beats v") translates to
+    *authority flowing from u to v* — i.e. being beaten by a strong
+    competitor increases your authority.
+
+    In practice, nodes with many high-weight incoming edges (i.e. beaten by
+    strong competitors) receive high scores.  To produce a *preference*
+    ranking (best first), the scores are sorted in **descending** order.
+
+    Parameters
+    ----------
+    graph:
+        Weighted directed preference graph.  Edge weights are used.
+    alpha:
+        PageRank damping factor.  Default is 0.85.
+    max_iter:
+        Maximum number of power-iteration steps.
+    tol:
+        Convergence tolerance for power iteration.
+
+    Returns
+    -------
+    list[str]
+        Node ids sorted from highest to lowest PageRank score.
+
+    Notes
+    -----
+    PageRank on the reversed graph is O((n + e) · iter) where *iter* is the
+    number of power-iteration steps until convergence.  For sparse preference
+    graphs this is fast (typically < 50 iterations).
+
+    # TODO: If called repeatedly on the same graph, cache the PageRank vector
+    #       since it is deterministic for a fixed graph + alpha.
+    """
+    # Work on the transposed graph so that winning over a strong node raises
+    # your score (incoming edges in the reversed graph = "winning" edges here).
+    reversed_graph = graph.reverse(copy=True)
+    scores = nx.pagerank(
+        reversed_graph,
+        alpha=alpha,
+        weight="weight",
+        max_iter=max_iter,
+        tol=tol,
+    )
+    return sorted(scores, key=lambda n: scores[n], reverse=True)
+
+
 def borda_ranking(graph: nx.DiGraph) -> list[str]:
     """Rank items by Borda count (number of items each node beats).
 
