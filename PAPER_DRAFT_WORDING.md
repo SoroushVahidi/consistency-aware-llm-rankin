@@ -34,6 +34,16 @@ Our experiments cover three datasets (FiQA, SciDocs, HotpotQA) with n=100 querie
 
 ---
 
+### Theoretical Insights (2–3 paragraphs, for Methods or Analysis)
+
+**Paragraph 1 (Problem and BEW):** We formalize multi-scorer ranking as follows. For each query, we have a candidate set \( C \) and \( m \) scoring functions. Aggregating scores yields a weighted directed preference graph \( G = (V, E, w) \), where an edge \( (u, v) \) with weight \( w(u,v) \) indicates that the aggregate preference favors \( u \) over \( v \). Given a ranking \( \pi \), the backward edge weight (BEW) is the sum of weights of edges \( (u, v) \) such that \( v \) is ranked above \( u \) in \( \pi \). BEW measures how much \( \pi \) violates the preference structure encoded in \( G \). Any topological ordering of \( G \) (or of an acyclic subgraph obtained by removing a feedback arc set) has BEW zero with respect to that subgraph.
+
+**Paragraph 2 (Two regimes and unified view):** Our pipeline applies a greedy feedback arc set (FAS) heuristic followed by topological sort. In cyclic graphs, FAS removes edges to break cycles; in acyclic graphs, no edges are removed and we simply compute a topological ordering. In both cases, the output is a ranking consistent with a DAG. We unify these regimes under a single principle: when the base ranking (e.g., RRF) has high BEW—i.e., it strongly violates the aggregated preferences—we replace it with a graph-consistent ranking (a topological order). When BEW is low, we keep the base ranking. Thus, selective repair replaces the base ranking with a graph-consistent one when inconsistency is high.
+
+**Paragraph 3 (Why selective repair helps):** High BEW implies the ranking violates many high-weight preferences (Proposition 2). In such cases, the graph encodes strong aggregate signal that the base ranking ignores; replacing it with a graph-consistent ranking may improve relevance. Conversely, when BEW is low, the base ranking already agrees with most preferences, and forcing a topological order can introduce arbitrary choices (multiple topological orders exist) that may hurt retrieval. Empirically, applying FAS only when BEW exceeds a threshold (e.g., top 25%) outperforms both always-FAS and never-FAS on FiQA, SciDocs, and HotpotQA.
+
+---
+
 ## 3. Paper Title and Alternatives
 
 ### Recommended title
