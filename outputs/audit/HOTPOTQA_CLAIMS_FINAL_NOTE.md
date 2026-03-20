@@ -1,5 +1,15 @@
 # HotpotQA: Exact Claims (Final Note)
 
+## Claim Matrix (All Datasets)
+
+| Dataset | Graph regime | What FAS does | What claim is supported |
+|---------|--------------|---------------|-------------------------|
+| FiQA | Cyclic (~98–100%) | Removes edges to break cycles | Cycle repair; selective FAS improves over RRF |
+| SciDocs | Cyclic (~97%) | Removes edges to break cycles | Cycle repair; selective FAS can improve over RRF |
+| HotpotQA | Acyclic (0%) | Removes zero edges; topological ordering | Selective graph-consistent reordering |
+
+---
+
 ## What HotpotQA SUPPORTS
 
 1. **Selective reordering:** Choosing when to use graph-consistent (topological) ordering vs RRF improves NDCG.

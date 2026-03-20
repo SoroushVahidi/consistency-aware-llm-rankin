@@ -4,8 +4,12 @@
 
 - **Pipeline:** Validated fair comparison (all methods use same candidate set = union of scorers' top-k)
 - **Scorers:** bm25, dense; optionally cross_encoder (ms-marco-MiniLM-L6-v2)
-- **n:** 100 queries per dataset (FiQA and SciDocs have 300/200 in processed data; dense scores generated for 100)
+- **n:** 100 queries per dataset (FiQA, SciDocs, HotpotQA)
 - **Selective policies:** never (RRF), always (FAS), BEW top25%/50%, disagreement top25%, hybrid (BEW≥p50 AND disc≥p50), learned (best BEW percentile on 20% validation)
+
+**Two regimes (audited):**
+- **Cycle repair (FiQA, SciDocs):** Graphs are cyclic (~98–100%). FAS removes edges to break cycles.
+- **Selective graph-consistent reordering (HotpotQA):** Graphs are acyclic (0%). FAS removes zero edges; it produces a topological ordering. Do not overclaim HotpotQA as cycle repair.
 
 ---
 
@@ -125,15 +129,17 @@ In low-conflict, selective correctly keeps RRF (no FAS). Dense often best.
 
 ---
 
-## Third Dataset
+## HotpotQA (Third Dataset)
 
-HotpotQA and BRIGHT are in the registry but lack processed data (queries.jsonl, documents.jsonl, qrels.jsonl). Adding them would require:
-1. `download_datasets.py --dataset hotpotqa` (or bright)
-2. `prepare_datasets.py --dataset hotpotqa`
-3. BM25 and dense score generation
-4. Running the paper-ready pipeline
+HotpotQA distractor dev: 100 queries, 10 context paragraphs per query, bm25 + dense.
 
-Skipped for this report.
+| Method | NDCG@10 |
+|--------|---------|
+| rrf_fusion | 0.850 |
+| greedy_fas | 0.834 |
+| **sel_bew25** | **0.860** |
+
+**Graph regime:** Acyclic (0% cyclic). FAS removes **zero** edges; it produces a topological ordering. BEW measures ranking violation of the graph, not cycle-based inconsistency. Selective repair (BEW top 25%) beats both RRF and always-FAS. See `outputs/hotpotqa_report/HOTPOTQA_EXPERIMENT_REPORT.md` and `outputs/audit/HOTPOTQA_GRAPH_AUDIT_REPORT.md`.
 
 ---
 
@@ -145,7 +151,7 @@ Skipped for this report.
 
 ### Does it generalize beyond SciDocs?
 
-**Yes, to FiQA.** On FiQA 3-scorer, selective repair (0.361) beats RRF (0.339). On SciDocs, BEW-based selective does not beat RRF, but **disagreement-based selective (0.296) does** beat RRF (0.281). So the story generalizes when using disagreement or hybrid policies, not only BEW.
+**Yes, to FiQA and HotpotQA.** On FiQA 3-scorer, selective repair (0.361) beats RRF (0.339). On SciDocs, disagreement-based selective (0.296) beats RRF (0.281). On HotpotQA (acyclic graphs), selective graph-consistent reordering (0.860) beats both RRF (0.850) and always-FAS (0.834). **Important:** HotpotQA supports selective reordering in acyclic graphs, *not* cycle repair. Do not overclaim.
 
 ### Does adding a third scorer strengthen the effect?
 
