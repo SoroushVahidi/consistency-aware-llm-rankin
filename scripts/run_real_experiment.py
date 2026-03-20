@@ -97,6 +97,9 @@ METHODS = (
     "pagerank",
     "greedy_fas_topological",
     "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "greedy_fas_score_augmented_topological",
+    "hybrid_rrf_fas_regularized",
 )
 """Ordered tuple of method names used as keys throughout the script."""
 
@@ -388,6 +391,98 @@ def _weighted_out_minus_in_ranking(graph: nx.DiGraph) -> list[str]:
         scores[u] += w
         scores[v] -= w
     return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def _copeland_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank by Copeland wins-losses score on a graph."""
+    scores: dict[str, int] = {n: 0 for n in graph.nodes()}
+    for n in graph.nodes():
+        scores[n] = graph.out_degree(n) - graph.in_degree(n)
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def _priority_topological_ranking(
+    dag: nx.DiGraph,
+    priority_scores: dict[str, float],
+) -> list[str]:
+    """Topological ranking with deterministic priority tie-breaking."""
+    in_deg = {n: dag.in_degree(n) for n in dag.nodes()}
+    available = [n for n, d in in_deg.items() if d == 0]
+    ranking: list[str] = []
+    while available:
+        best = max(available, key=lambda n: (priority_scores.get(n, 0.0), n))
+        available.remove(best)
+        ranking.append(best)
+        for child in dag.successors(best):
+            in_deg[child] -= 1
+            if in_deg[child] == 0:
+                available.append(child)
+    return ranking
+
+
+def _normalize_scores(scores: dict[str, float]) -> dict[str, float]:
+    if not scores:
+        return {}
+    vals = list(scores.values())
+    lo, hi = min(vals), max(vals)
+    if hi - lo <= 1e-12:
+        return {k: 0.0 for k in scores}
+    return {k: (v - lo) / (hi - lo) for k, v in scores.items()}
+
+
+def _hybrid_rrf_fas_regularized_ranking(
+    dag: nx.DiGraph,
+    prior_scores: dict[str, float],
+    fas_regularization: float = 0.2,
+) -> list[str]:
+    """Hybrid ranking: score prior + repaired-graph consistency regularizer."""
+    if not dag.nodes():
+        return []
+    balance: dict[str, float] = {n: 0.0 for n in dag.nodes()}
+    for u, v, data in dag.edges(data=True):
+        w = data.get("weight", 1.0)
+        balance[u] += w
+        balance[v] -= w
+    prior_n = _normalize_scores({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
+    bal_n = _normalize_scores(balance)
+    combo = {
+        n: prior_n.get(n, 0.0) + fas_regularization * bal_n.get(n, 0.0)
+        for n in dag.nodes()
+    }
+    return sorted(combo, key=lambda n: (-combo[n], n))
+
+
+def _load_score_prior_files(
+    score_prior_files: list[Path] | None,
+) -> list[dict[str, list[tuple[str, float]]]]:
+    """Load score prior files for hybrid post-repair ranking methods."""
+    if not score_prior_files:
+        return []
+    return [_load_score_file(path) for path in score_prior_files]
+
+
+def _rrf_prior_scores_for_query(
+    query_id: str,
+    candidate_nodes: set[str],
+    score_prior_sets: list[dict[str, list[tuple[str, float]]]],
+) -> dict[str, float]:
+    """Aggregate score priors with reciprocal-rank fusion over files."""
+    rrf_k = 60.0
+    scores: dict[str, float] = defaultdict(float)
+    for score_map in score_prior_sets:
+        entries = score_map.get(query_id, [])
+        if not entries:
+            continue
+        best: dict[str, float] = {}
+        for doc_id, score in entries:
+            if doc_id in candidate_nodes:
+                best[doc_id] = max(best.get(doc_id, score), score)
+        ranked = sorted(best.items(), key=lambda x: (-x[1], x[0]))
+        for rank, (doc_id, _score) in enumerate(ranked, start=1):
+            scores[doc_id] += 1.0 / (rrf_k + rank)
+    for doc_id in candidate_nodes:
+        scores.setdefault(doc_id, 0.0)
+    return scores
 
 
 def _has_usable_eval_labels(qrels_for_query: list) -> bool:
@@ -704,6 +799,7 @@ def run_query(
     flip_prob: float,
     pairwise_index: dict[str, list[Preference]] | None,
     score_index: dict[str, list[tuple[str, float]]] | None,
+    score_prior_sets: list[dict[str, list[tuple[str, float]]]],
     global_acc: TimingAccumulator,
 ) -> tuple[list[dict], dict | None]:
     """Run the full pipeline for a single query.
@@ -850,6 +946,27 @@ def run_query(
     with Timer("ranking_fas_weighted_balance", accumulator=query_acc):
         rankings["greedy_fas_weighted_balance"] = _weighted_out_minus_in_ranking(dag)
 
+    with Timer("ranking_fas_copeland", accumulator=query_acc):
+        rankings["greedy_fas_copeland"] = _copeland_ranking(dag)
+
+    prior_scores = _rrf_prior_scores_for_query(
+        query_id=qid,
+        candidate_nodes=set(graph.nodes()),
+        score_prior_sets=score_prior_sets,
+    )
+    with Timer("ranking_fas_score_augmented_topological", accumulator=query_acc):
+        rankings["greedy_fas_score_augmented_topological"] = _priority_topological_ranking(
+            dag,
+            priority_scores=prior_scores,
+        )
+
+    with Timer("ranking_hybrid_rrf_fas_regularized", accumulator=query_acc):
+        rankings["hybrid_rrf_fas_regularized"] = _hybrid_rrf_fas_regularized_ranking(
+            dag,
+            prior_scores=prior_scores,
+            fas_regularization=0.2,
+        )
+
     # ------------------------------------------------------------------
     # 7. Evaluation per method
     # ------------------------------------------------------------------
@@ -899,6 +1016,13 @@ def run_query(
         "pagerank": timing_rows.get("ranking_pagerank", {}).get("total_s", 0.0),
         "greedy_fas_topological": timing_rows.get("ranking_topological", {}).get("total_s", 0.0),
         "greedy_fas_weighted_balance": timing_rows.get("ranking_fas_weighted_balance", {}).get("total_s", 0.0),
+        "greedy_fas_copeland": timing_rows.get("ranking_fas_copeland", {}).get("total_s", 0.0),
+        "greedy_fas_score_augmented_topological": timing_rows.get(
+            "ranking_fas_score_augmented_topological", {}
+        ).get("total_s", 0.0),
+        "hybrid_rrf_fas_regularized": timing_rows.get(
+            "ranking_hybrid_rrf_fas_regularized", {}
+        ).get("total_s", 0.0),
     }
 
     # ------------------------------------------------------------------
@@ -1053,6 +1177,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="JSONL score file for score_file mode (query_id, doc_id, score).",
     )
     parser.add_argument(
+        "--score-prior-files",
+        type=Path,
+        nargs="*",
+        default=None,
+        help=(
+            "Optional score JSONL files used as prior signals for hybrid "
+            "post-repair ranking extractors."
+        ),
+    )
+    parser.add_argument(
         "--query-id-file",
         type=Path,
         default=None,
@@ -1105,6 +1239,7 @@ def run_experiment(
     flip_prob: float,
     pairwise_file: Path | None,
     score_file: Path | None,
+    score_prior_files: list[Path] | None,
     seed: int,
     output_dir: Path,
     save_timings: bool = False,
@@ -1157,6 +1292,8 @@ def run_experiment(
         print(f"  pairwise_file: {pairwise_file}")
     if score_file is not None:
         print(f"  score_file   : {score_file}")
+    if score_prior_files:
+        print(f"  score_priors : {', '.join(str(p) for p in score_prior_files)}")
     if query_id_file is not None:
         print(f"  query_id_file: {query_id_file}")
     print(f"  seed         : {seed}")
@@ -1174,6 +1311,7 @@ def run_experiment(
 
     pairwise_index: dict[str, list[Preference]] | None = None
     score_index: dict[str, list[tuple[str, float]]] | None = None
+    score_prior_sets: list[dict[str, list[tuple[str, float]]]] = []
     with Timer("preference_source_loading", accumulator=global_acc):
         if preference_source in {"llm_pairwise_file", "votes_file"}:
             if pairwise_file is None:
@@ -1187,6 +1325,9 @@ def run_experiment(
                 raise ValueError("--score-file is required for score_file mode.")
             score_index = _load_score_file(score_file)
             print(f"[0] Loaded score entries for {len(score_index)} queries")
+        score_prior_sets = _load_score_prior_files(score_prior_files)
+        if score_prior_sets:
+            print(f"[0] Loaded {len(score_prior_sets)} score prior file(s) for hybrid methods")
 
     # ------------------------------------------------------------------
     # 1. Load dataset
@@ -1256,6 +1397,7 @@ def run_experiment(
                 flip_prob=flip_prob,
                 pairwise_index=pairwise_index,
                 score_index=score_index,
+                score_prior_sets=score_prior_sets,
                 global_acc=global_acc,
             )
 
@@ -1655,6 +1797,7 @@ def main(argv: list[str] | None = None) -> None:
         flip_prob=args.flip_prob,
         pairwise_file=args.pairwise_file,
         score_file=args.score_file,
+        score_prior_files=args.score_prior_files,
         query_id_file=args.query_id_file,
         seed=args.seed,
         output_dir=args.output_dir,

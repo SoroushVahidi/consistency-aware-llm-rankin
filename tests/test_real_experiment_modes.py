@@ -12,10 +12,14 @@ import pytest
 from scripts.run_real_experiment import (
     _build_query_preferences,
     _average_precision_at_k,
+    _copeland_ranking,
+    _hybrid_rrf_fas_regularized_ranking,
     _ndcg_at_k,
     _pairwise_accuracy_from_relevance,
+    _priority_topological_ranking,
     _precision_recall_at_k,
     _reference_ranking_for_candidates,
+    _rrf_prior_scores_for_query,
     _weighted_out_minus_in_ranking,
     _flip_preference_directions,
     _has_usable_eval_labels,
@@ -163,3 +167,32 @@ def test_weighted_out_minus_in_ranking_runs():
     )
     ranking = _weighted_out_minus_in_ranking(graph)
     assert ranking[0] == "a"
+
+
+def test_copeland_and_priority_topological_rankings():
+    graph = build_graph(
+        [
+            Preference("a", "b", 1.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    copeland = _copeland_ranking(graph)
+    assert copeland[0] == "a"
+
+    pri = {"a": 0.2, "b": 0.1, "c": 0.9}
+    topo = _priority_topological_ranking(graph, pri)
+    assert topo[0] == "a"
+    assert topo.index("c") < topo.index("b")
+
+
+def test_rrf_prior_and_hybrid_ranking():
+    prior_sets = [
+        {"q1": [("a", 3.0), ("b", 2.0), ("c", 1.0)]},
+        {"q1": [("c", 3.0), ("a", 2.0), ("b", 1.0)]},
+    ]
+    pri = _rrf_prior_scores_for_query("q1", {"a", "b", "c"}, prior_sets)
+    assert set(pri) == {"a", "b", "c"}
+    graph = build_graph([Preference("a", "b", 1.0), Preference("c", "b", 1.0)])
+    ranking = _hybrid_rrf_fas_regularized_ranking(graph, pri, fas_regularization=0.2)
+    assert ranking[0] in {"a", "c"}

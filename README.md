@@ -298,6 +298,10 @@ Votes v2 knobs:
 python scripts/run_real_experiment.py --dataset scidocs --preference-source votes_file \
   --pairwise-file outputs/real_signal/scidocs/votes.jsonl \
   --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --score-prior-files \
+    outputs/real_signal/scidocs/scores_bm25.jsonl \
+    outputs/real_signal/scidocs/scores_tfidf.jsonl \
+    outputs/real_signal/scidocs/scores_minilm.jsonl \
   --max-queries 50 --top-k 20 --save-timings --profile --no-plots
 ```
 
@@ -320,6 +324,7 @@ Expected external file formats:
 - `preference-source=score_file` is typically weaker for consistency analysis because a single score list is often close to transitive.
 - Qrels remain evaluation labels in all modes.
 - Primary ranking-quality metric in `run_real_experiment.py` is candidate-aligned `nDCG@k` (with MAP@k, Precision@k, Recall@k, and pairwise accuracy also reported). Kendall tau is secondary.
+- Hybrid post-repair methods can consume `--score-prior-files` to combine ranker score priors with repaired-graph consistency signals.
 
 ### BRIGHT — Manual Download (if needed)
 
