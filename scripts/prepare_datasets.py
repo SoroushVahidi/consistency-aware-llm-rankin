@@ -51,6 +51,7 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT / "src"))
 
 from consistency_ranker.data.dataset_registry import DATASET_NAMES, get_config
+from consistency_ranker.data.bright_loader import BrightSchemaError, load_raw_bright_splits
 from consistency_ranker.data.schema import Document, QrelEntry, Query
 from consistency_ranker.data.unified_loader import (
     preferences_from_qrels,
@@ -182,13 +183,11 @@ def prepare_bright(args: argparse.Namespace) -> None:
         print(f"[bright] Processed files already exist in {out}. Skipping (use --force).")
     else:
         print(f"[bright] Reading raw files from {raw} …")
-        raw_queries = _read_jsonl_raw(raw / "queries.jsonl")
-        raw_docs = _read_jsonl_raw(raw / "documents.jsonl")
-        raw_qrels = _read_jsonl_raw(raw / "qrels.jsonl")
-
-        queries = [Query.from_dict(q) for q in raw_queries]
-        documents = [Document.from_dict(d) for d in raw_docs]
-        qrels = [QrelEntry.from_dict(q) for q in raw_qrels]
+        try:
+            queries, documents, qrels = load_raw_bright_splits(raw)
+        except BrightSchemaError as exc:
+            print(f"[bright] ERROR: invalid BRIGHT raw format: {exc}")
+            return
 
         print("[bright] Writing processed files …")
         _write_jsonl(queries, out / "queries.jsonl")

@@ -7,6 +7,7 @@ tqdm>=4.66
 # Dataset download and loading
 datasets>=2.18
 huggingface-hub>=0.21
+sentence-transformers>=5.3.0
 
 # Visualisation and data analysis
 matplotlib>=3.8

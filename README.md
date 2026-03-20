@@ -192,6 +192,9 @@ python scripts/download_datasets.py --dataset fiqa
 python scripts/download_datasets.py --dataset hotpotqa
 python scripts/download_datasets.py --dataset bright
 
+# Download a specific BRIGHT task/domain
+python scripts/download_datasets.py --dataset bright --bright-task examples
+
 # Download all datasets at once
 python scripts/download_datasets.py --dataset all
 
@@ -202,6 +205,10 @@ python scripts/download_datasets.py --dataset hotpotqa --max-queries 200
 > **Note on BRIGHT:** If BRIGHT cannot be downloaded automatically (authentication
 > required or dataset not yet public), the script will create
 > `data/raw/bright/README.md` with exact manual download steps.
+>
+> Current live configs (subject to upstream change) include:
+> `examples`, `documents`, `long_documents`, `gpt4_reason`,
+> `claude-3-opus_reason`, `llama3-70b_reason`, `Gemini-1.0_reason`, `grit_reason`.
 
 ### Step 3 — Prepare Datasets (Unified Format + Pairwise Preferences)
 
@@ -226,6 +233,99 @@ Each prepared dataset produces:
 - `qrels.jsonl`    — one `{"query_id": "...", "doc_id": "...", "relevance": 0|1}` per line
 - `pairwise/preferences.jsonl` — pairwise preferences derived from relevance grades
 
+### Step 4 — Run Real-Data Experiments
+
+```bash
+# Baseline mode (label-derived pairwise DAG)
+python scripts/run_real_experiment.py --dataset scidocs --max-queries 50 --top-k 20 --save-timings --profile
+
+# Stress-test mode (synthetic conflict injection)
+python scripts/run_real_experiment.py --dataset scidocs --preference-source qrels_flip --flip-prob 0.15 \
+  --max-queries 50 --top-k 20 --save-timings --profile
+```
+
+### Main real-signal experiment (recommended): `votes_file`
+
+1) Generate score files from multiple free rankers (`bm25`, `tfidf`, `minilm`) using a shared query-id file:
+
+```bash
+python scripts/generate_score_file.py --dataset scidocs --ranker bm25 \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_bm25.jsonl
+
+python scripts/generate_score_file.py --dataset scidocs --ranker tfidf \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_tfidf.jsonl
+
+python scripts/generate_score_file.py --dataset scidocs --ranker minilm \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_minilm.jsonl
+```
+
+2) Build ranker-vote pairwise edges (Votes v2 recommended):
+
+```bash
+python scripts/build_votes_file.py --dataset scidocs \
+  --score-files \
+    outputs/real_signal/scidocs/scores_bm25.jsonl \
+    outputs/real_signal/scidocs/scores_tfidf.jsonl \
+    outputs/real_signal/scidocs/scores_minilm.jsonl \
+  --top-k 20 \
+  --vote-weight-scheme margin \
+  --min-vote-margin 0.05 \
+  --abstain-missing \
+  --min-support 2 \
+  --min-aggregate-margin 0.1 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/votes.jsonl
+```
+
+Votes v2 knobs:
+- `--vote-weight-scheme {binary,margin}` (default `binary`)
+- `--min-vote-margin` (abstain below this per-ranker margin)
+- `--abstain-missing` (skip comparisons when either doc score is missing)
+- `--min-support` (minimum voters supporting a directed edge)
+- `--min-aggregate-margin` (minimum summed margin per directed edge)
+- `--ranker-weighting {none,auto_ndcg_at_k,auto_precision_at_k,from_file}` (optional ranker reliability weighting)
+- `--ranker-weights-file /path/to/weights.json` (required with `from_file`; format: `{"bm25": 0.9, "tfidf": 1.0, "minilm": 1.2}`)
+
+3) Run the experiment with `votes_file` (main real-signal path):
+
+```bash
+python scripts/run_real_experiment.py --dataset scidocs --preference-source votes_file \
+  --pairwise-file outputs/real_signal/scidocs/votes.jsonl \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --score-prior-files \
+    outputs/real_signal/scidocs/scores_bm25.jsonl \
+    outputs/real_signal/scidocs/scores_tfidf.jsonl \
+    outputs/real_signal/scidocs/scores_minilm.jsonl \
+  --max-queries 50 --top-k 20 --save-timings --profile --no-plots
+```
+
+Optional weaker mode (`score_file`):
+
+```bash
+python scripts/run_real_experiment.py --dataset scidocs --preference-source score_file \
+  --score-file outputs/real_signal/scidocs/scores_minilm.jsonl \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --max-queries 50 --top-k 20 --save-timings --profile --no-plots
+```
+
+Expected external file formats:
+- `scores.jsonl`: `{"query_id": "...", "doc_id": "...", "score": 1.23}`
+- `votes.jsonl`: `{"query_id": "...", "winner_doc_id": "...", "loser_doc_id": "...", "weight": 1.0, "voter": "bm25"}`
+
+**Interpretation note (important):**
+- `preference-source=qrels_flip` uses **synthetic corruption** (random edge flips).
+- `preference-source=votes_file` is the **main real-signal experiment** because it captures disagreement across rankers and can create non-trivial cycles.
+- `preference-source=score_file` is typically weaker for consistency analysis because a single score list is often close to transitive.
+- Qrels remain evaluation labels in all modes.
+- Primary ranking-quality metric in `run_real_experiment.py` is candidate-aligned `nDCG@k` (with MAP@k, Precision@k, Recall@k, and pairwise accuracy also reported). Kendall tau is secondary.
+- Hybrid post-repair methods can consume `--score-prior-files` to combine ranker score priors with repaired-graph consistency signals.
+
 ### BRIGHT — Manual Download (if needed)
 
 If `python scripts/download_datasets.py --dataset bright` fails, follow these steps:
@@ -238,12 +338,15 @@ If `python scripts/download_datasets.py --dataset bright` fails, follow these st
 3. Download the dataset:
    ```python
    from datasets import load_dataset
-   ds = load_dataset("xlangai/BRIGHT")
+   ds = load_dataset("xlangai/BRIGHT", "examples")
    ```
 4. Export to JSONL and place files in `data/raw/bright/`:
    - `queries.jsonl`
    - `documents.jsonl`
    - `qrels.jsonl`
+   - accepted query keys: `query_id` or `id`; text keys: `text` or `query` or `question`
+   - accepted document keys: `doc_id` or `id` (plus `text`, optional `title`)
+   - accepted qrels keys: `query_id`/`query-id`, `doc_id`/`corpus-id`, `relevance`/`score`
 5. Then run:
    ```bash
    python scripts/prepare_datasets.py --dataset bright
