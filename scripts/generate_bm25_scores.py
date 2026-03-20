@@ -47,7 +47,7 @@ def main() -> None:
         "--dataset",
         type=str,
         required=True,
-        choices=["fiqa", "scidocs"],
+        choices=["fiqa", "scidocs", "hotpotqa"],
         help="Dataset to score.",
     )
     parser.add_argument(
@@ -92,32 +92,64 @@ def main() -> None:
     print(f"[{args.dataset}] Loading queries and documents...")
     queries, documents, _ = load_dataset_splits(args.dataset)
 
-    doc_by_id = {d.doc_id: d for d in documents}
-    doc_ids = [d.doc_id for d in documents]
-    corpus_texts = [d.text for d in documents]
-    tokenized_corpus = [_tokenize(t) for t in corpus_texts]
-
-    print(f"[{args.dataset}] Building BM25 index ({len(documents)} docs)...")
-    bm25 = BM25Okapi(tokenized_corpus)
-
-    # Process queries
     query_list = queries[: args.max_queries] if args.max_queries else queries
     rankings: dict[str, list[tuple[str, float]]] = {}
 
-    for i, q in enumerate(query_list):
-        if (i + 1) % 50 == 0 or i == 0:
-            print(f"  Processing query {i + 1}/{len(query_list)}...")
-        tokenized_query = _tokenize(q.text)
-        scores = bm25.get_scores(tokenized_query)
-        top_indices = np.argsort(scores)[::-1][: args.top_k]
-        candidates = [
-            (doc_ids[idx], float(scores[idx]))
-            for idx in top_indices
-            if scores[idx] > 0
-        ]
-        if not candidates:
-            candidates = [(doc_ids[i], 0.0) for i in top_indices[: args.top_k]]
-        rankings[q.query_id] = candidates
+    if args.dataset == "hotpotqa":
+        # HotpotQA: documents are per-query (query_id::title). Build per-query BM25.
+        from collections import defaultdict
+
+        docs_by_query: dict[str, list] = defaultdict(list)
+        for d in documents:
+            qid = d.metadata.get("query_id")
+            if qid:
+                docs_by_query[qid].append(d)
+
+        for i, q in enumerate(query_list):
+            if (i + 1) % 50 == 0 or i == 0:
+                print(f"  Processing query {i + 1}/{len(query_list)}...")
+            qdocs = docs_by_query.get(q.query_id, [])
+            if not qdocs:
+                continue
+            doc_ids = [d.doc_id for d in qdocs]
+            corpus_texts = [d.text for d in qdocs]
+            tokenized_corpus = [_tokenize(t) for t in corpus_texts]
+            bm25 = BM25Okapi(tokenized_corpus)
+            tokenized_query = _tokenize(q.text)
+            scores = bm25.get_scores(tokenized_query)
+            top_indices = np.argsort(scores)[::-1][: args.top_k]
+            candidates = [
+                (doc_ids[idx], float(scores[idx]))
+                for idx in top_indices
+                if scores[idx] > 0
+            ]
+            if not candidates:
+                candidates = [(doc_ids[j], 0.0) for j in top_indices[: args.top_k]]
+            rankings[q.query_id] = candidates
+    else:
+        # BEIR-style: global corpus, score all queries against it
+        doc_by_id = {d.doc_id: d for d in documents}
+        doc_ids = [d.doc_id for d in documents]
+        corpus_texts = [d.text for d in documents]
+        tokenized_corpus = [_tokenize(t) for t in corpus_texts]
+
+        print(f"[{args.dataset}] Building BM25 index ({len(documents)} docs)...")
+        bm25 = BM25Okapi(tokenized_corpus)
+
+        for i, q in enumerate(query_list):
+            if (i + 1) % 50 == 0 or i == 0:
+                print(f"  Processing query {i + 1}/{len(query_list)}...")
+            tokenized_query = _tokenize(q.text)
+            scores = bm25.get_scores(tokenized_query)
+            top_indices = np.argsort(scores)[::-1][: args.top_k]
+            candidates = [
+                (doc_ids[idx], float(scores[idx]))
+                for idx in top_indices
+                if scores[idx] > 0
+            ]
+            if not candidates:
+                candidates = [(doc_ids[i], 0.0) for i in top_indices[: args.top_k]]
+            rankings[q.query_id] = candidates
 
     save_score_rankings(rankings, out_path)
     print(f"[{args.dataset}] Wrote {len(rankings)} queries → {out_path}")
