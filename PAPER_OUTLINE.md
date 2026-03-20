@@ -45,6 +45,15 @@ When combining multiple retrieval scorers (BM25, dense, cross-encoder) via rank 
 
 ## 3. Methods
 
+### 3.0 Theoretical Foundation (for journal upgrade)
+- Formal problem: candidate set, scoring functions, induced preference graph
+- BEW: sum of weights of edges (u,v) where v ranked above u
+- Proposition 1: Topological order has BEW = 0
+- Proposition 2: High BEW ⇒ many high-weight violations
+- Proposition 3: In cyclic graphs, min BEW = min-weight FAS
+- Unified view: replace with graph-consistent ranking when BEW high
+- See `docs/THEORETICAL_FOUNDATION.md`
+
 ### 3.1 Setup
 - Scorers: BM25, dense retriever, optionally cross-encoder
 - Candidate set: union of each scorer's top-k (fair comparison)
