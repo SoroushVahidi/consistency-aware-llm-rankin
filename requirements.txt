@@ -1,0 +1,16 @@
+# Core graph and numeric libraries
+networkx>=3.2
+numpy>=1.26
+scipy>=1.11
+tqdm>=4.66
+
+# Development / testing
+pytest>=7.4
+pytest-cov>=4.1
+ruff>=0.3
+
+# Notebooks (optional – install separately if needed)
+# jupyter>=1.0
+# matplotlib>=3.8
+# seaborn>=0.13
+# pandas>=2.1
