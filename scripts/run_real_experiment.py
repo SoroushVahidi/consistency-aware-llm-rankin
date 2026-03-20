@@ -49,6 +49,7 @@ import math
 import random
 import sys
 from collections import defaultdict
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
@@ -91,7 +92,7 @@ log = logging.getLogger(__name__)
 MIN_JUDGED_DOCS = 2
 """Minimum number of distinct relevance grades needed to produce any preference."""
 
-METHODS = (
+NON_HYBRID_METHODS = (
     "score_sum",
     "borda",
     "pagerank",
@@ -99,12 +100,49 @@ METHODS = (
     "greedy_fas_weighted_balance",
     "greedy_fas_copeland",
     "greedy_fas_score_augmented_topological",
-    "hybrid_rrf_fas_regularized",
-    "hybrid_rrf_balance_a05",
-    "hybrid_rrf_copeland_a03",
-    "hybrid_rrf_priority_topo_a03",
 )
-"""Ordered tuple of method names used as keys throughout the script."""
+"""Core baseline/FAS methods always evaluated."""
+
+
+@dataclass(frozen=True)
+class HybridMethodSpec:
+    """Configuration for one hybrid ranking method."""
+
+    name: str
+    component: str
+    alpha: float
+    use_repaired_graph: bool
+    mode: str = "score_component"  # score_component | priority_topological | prior_only
+
+
+DEFAULT_HYBRID_SPECS = (
+    HybridMethodSpec(
+        name="hybrid_rrf_fas_regularized",
+        component="balance",
+        alpha=0.2,
+        use_repaired_graph=True,
+    ),
+    HybridMethodSpec(
+        name="hybrid_rrf_balance_a05",
+        component="balance",
+        alpha=0.5,
+        use_repaired_graph=True,
+    ),
+    HybridMethodSpec(
+        name="hybrid_rrf_copeland_a03",
+        component="copeland",
+        alpha=0.3,
+        use_repaired_graph=True,
+    ),
+    HybridMethodSpec(
+        name="hybrid_rrf_priority_topo_a03",
+        component="balance",
+        alpha=0.3,
+        use_repaired_graph=True,
+        mode="priority_topological",
+    ),
+)
+"""Default hybrid methods for standard runs."""
 
 PRIMARY_QUALITY_METRIC = "ndcg_at_k"
 """Primary ranking-quality metric for real-data evaluation."""
@@ -507,6 +545,122 @@ def _hybrid_rrf_priority_topological_ranking(
     return _priority_topological_ranking(dag, pri)
 
 
+def _prior_only_ranking(
+    candidate_nodes: Iterable[str],
+    prior_scores: dict[str, float],
+) -> list[str]:
+    """Rank by score prior only."""
+    return sorted(candidate_nodes, key=lambda n: (-prior_scores.get(n, 0.0), n))
+
+
+def _alpha_token(alpha: float) -> str:
+    s = f"{alpha:.3f}".rstrip("0").rstrip(".")
+    if "." not in s:
+        s = f"{s}.0"
+    return s.replace(".", "p")
+
+
+def _parse_alpha_values(raw: str) -> list[float]:
+    vals: list[float] = []
+    for part in raw.split(","):
+        tok = part.strip()
+        if not tok:
+            continue
+        try:
+            val = float(tok)
+        except ValueError as exc:
+            raise ValueError(f"Invalid alpha value: {tok!r}") from exc
+        if val < 0.0:
+            raise ValueError(f"Alpha must be non-negative. Got {val}.")
+        vals.append(val)
+    if not vals:
+        raise ValueError("No alpha values parsed from --hybrid-alpha-values.")
+    return vals
+
+
+def _build_hybrid_specs(
+    *,
+    include_ablation: bool,
+    alpha_sweep_components: list[str] | None,
+    alpha_values: list[float],
+) -> list[HybridMethodSpec]:
+    """Build dynamic hybrid specs for defaults + optional ablations/sweeps."""
+    specs: list[HybridMethodSpec] = list(DEFAULT_HYBRID_SPECS)
+
+    if include_ablation:
+        specs.extend(
+            [
+                HybridMethodSpec(
+                    name="hybrid_rrf_prior_only",
+                    component="prior",
+                    alpha=0.0,
+                    use_repaired_graph=True,
+                    mode="prior_only",
+                ),
+                HybridMethodSpec(
+                    name="hybrid_rrf_unrepaired_copeland_a03",
+                    component="copeland",
+                    alpha=0.3,
+                    use_repaired_graph=False,
+                ),
+                HybridMethodSpec(
+                    name="hybrid_rrf_repaired_copeland_a03",
+                    component="copeland",
+                    alpha=0.3,
+                    use_repaired_graph=True,
+                ),
+                HybridMethodSpec(
+                    name="hybrid_rrf_unrepaired_balance_a03",
+                    component="balance",
+                    alpha=0.3,
+                    use_repaired_graph=False,
+                ),
+                HybridMethodSpec(
+                    name="hybrid_rrf_repaired_balance_a03",
+                    component="balance",
+                    alpha=0.3,
+                    use_repaired_graph=True,
+                ),
+            ]
+        )
+
+    if alpha_sweep_components:
+        for component in alpha_sweep_components:
+            for alpha in alpha_values:
+                token = _alpha_token(alpha)
+                specs.append(
+                    HybridMethodSpec(
+                        name=f"hybrid_rrf_repaired_{component}_a{token}",
+                        component=component,
+                        alpha=alpha,
+                        use_repaired_graph=True,
+                    )
+                )
+
+    # Deterministic dedupe by method name (first occurrence wins).
+    dedup: dict[str, HybridMethodSpec] = {}
+    for spec in specs:
+        if spec.name not in dedup:
+            dedup[spec.name] = spec
+    return list(dedup.values())
+
+
+def _method_plan(
+    *,
+    include_hybrid_ablation: bool,
+    alpha_sweep_components: list[str] | None,
+    alpha_values: list[float],
+) -> tuple[list[str], dict[str, HybridMethodSpec]]:
+    specs = _build_hybrid_specs(
+        include_ablation=include_hybrid_ablation,
+        alpha_sweep_components=alpha_sweep_components,
+        alpha_values=alpha_values,
+    )
+    hybrid_by_name = {s.name: s for s in specs}
+    methods = list(NON_HYBRID_METHODS) + [s.name for s in specs]
+    return methods, hybrid_by_name
+
+
 def _load_score_prior_files(
     score_prior_files: list[Path] | None,
 ) -> list[dict[str, list[tuple[str, float]]]]:
@@ -855,6 +1009,8 @@ def run_query(
     pairwise_index: dict[str, list[Preference]] | None,
     score_index: dict[str, list[tuple[str, float]]] | None,
     score_prior_sets: list[dict[str, list[tuple[str, float]]]],
+    methods: list[str],
+    hybrid_specs: dict[str, HybridMethodSpec],
     global_acc: TimingAccumulator,
 ) -> tuple[list[dict], dict | None]:
     """Run the full pipeline for a single query.
@@ -985,24 +1141,31 @@ def run_query(
     # 6. Ranking methods
     # ------------------------------------------------------------------
     rankings: dict[str, list[str]] = {}
+    ranking_stage_by_method: dict[str, str] = {}
 
     with Timer("ranking_score_sum", accumulator=query_acc):
         rankings["score_sum"] = score_sum_ranking(graph)
+    ranking_stage_by_method["score_sum"] = "ranking_score_sum"
 
     with Timer("ranking_borda", accumulator=query_acc):
         rankings["borda"] = borda_ranking(graph)
+    ranking_stage_by_method["borda"] = "ranking_borda"
 
     with Timer("ranking_pagerank", accumulator=query_acc):
         rankings["pagerank"] = pagerank_ranking(graph)
+    ranking_stage_by_method["pagerank"] = "ranking_pagerank"
 
     with Timer("ranking_topological", accumulator=query_acc):
         rankings["greedy_fas_topological"] = topological_ranking(dag)
+    ranking_stage_by_method["greedy_fas_topological"] = "ranking_topological"
 
     with Timer("ranking_fas_weighted_balance", accumulator=query_acc):
         rankings["greedy_fas_weighted_balance"] = _weighted_out_minus_in_ranking(dag)
+    ranking_stage_by_method["greedy_fas_weighted_balance"] = "ranking_fas_weighted_balance"
 
     with Timer("ranking_fas_copeland", accumulator=query_acc):
         rankings["greedy_fas_copeland"] = _copeland_ranking(dag)
+    ranking_stage_by_method["greedy_fas_copeland"] = "ranking_fas_copeland"
 
     prior_scores = _rrf_prior_scores_for_query(
         query_id=qid,
@@ -1014,37 +1177,34 @@ def run_query(
             dag,
             priority_scores=prior_scores,
         )
+    ranking_stage_by_method["greedy_fas_score_augmented_topological"] = (
+        "ranking_fas_score_augmented_topological"
+    )
 
-    with Timer("ranking_hybrid_rrf_fas_regularized", accumulator=query_acc):
-        rankings["hybrid_rrf_fas_regularized"] = _hybrid_rrf_fas_regularized_ranking(
-            dag,
-            prior_scores=prior_scores,
-            fas_regularization=0.2,
-        )
-
-    with Timer("ranking_hybrid_rrf_balance_a05", accumulator=query_acc):
-        rankings["hybrid_rrf_balance_a05"] = _hybrid_rrf_component_ranking(
-            dag,
-            prior_scores=prior_scores,
-            component="balance",
-            alpha=0.5,
-        )
-
-    with Timer("ranking_hybrid_rrf_copeland_a03", accumulator=query_acc):
-        rankings["hybrid_rrf_copeland_a03"] = _hybrid_rrf_component_ranking(
-            dag,
-            prior_scores=prior_scores,
-            component="copeland",
-            alpha=0.3,
-        )
-
-    with Timer("ranking_hybrid_rrf_priority_topo_a03", accumulator=query_acc):
-        rankings["hybrid_rrf_priority_topo_a03"] = _hybrid_rrf_priority_topological_ranking(
-            dag,
-            prior_scores=prior_scores,
-            component="balance",
-            alpha=0.3,
-        )
+    for method_name, spec in hybrid_specs.items():
+        stage_name = f"ranking_{method_name}"
+        ranking_stage_by_method[method_name] = stage_name
+        source_graph = dag if spec.use_repaired_graph else graph
+        with Timer(stage_name, accumulator=query_acc):
+            if spec.mode == "prior_only":
+                rankings[method_name] = _prior_only_ranking(
+                    source_graph.nodes(),
+                    prior_scores=prior_scores,
+                )
+            elif spec.mode == "priority_topological":
+                rankings[method_name] = _hybrid_rrf_priority_topological_ranking(
+                    source_graph,
+                    prior_scores=prior_scores,
+                    component=spec.component,
+                    alpha=spec.alpha,
+                )
+            else:
+                rankings[method_name] = _hybrid_rrf_component_ranking(
+                    source_graph,
+                    prior_scores=prior_scores,
+                    component=spec.component,
+                    alpha=spec.alpha,
+                )
 
     # ------------------------------------------------------------------
     # 7. Evaluation per method
@@ -1090,34 +1250,15 @@ def run_query(
     t_total = sum(r["total_s"] for r in timing_rows.values())
 
     ranking_stage_times = {
-        "score_sum": timing_rows.get("ranking_score_sum", {}).get("total_s", 0.0),
-        "borda": timing_rows.get("ranking_borda", {}).get("total_s", 0.0),
-        "pagerank": timing_rows.get("ranking_pagerank", {}).get("total_s", 0.0),
-        "greedy_fas_topological": timing_rows.get("ranking_topological", {}).get("total_s", 0.0),
-        "greedy_fas_weighted_balance": timing_rows.get("ranking_fas_weighted_balance", {}).get("total_s", 0.0),
-        "greedy_fas_copeland": timing_rows.get("ranking_fas_copeland", {}).get("total_s", 0.0),
-        "greedy_fas_score_augmented_topological": timing_rows.get(
-            "ranking_fas_score_augmented_topological", {}
-        ).get("total_s", 0.0),
-        "hybrid_rrf_fas_regularized": timing_rows.get(
-            "ranking_hybrid_rrf_fas_regularized", {}
-        ).get("total_s", 0.0),
-        "hybrid_rrf_balance_a05": timing_rows.get(
-            "ranking_hybrid_rrf_balance_a05", {}
-        ).get("total_s", 0.0),
-        "hybrid_rrf_copeland_a03": timing_rows.get(
-            "ranking_hybrid_rrf_copeland_a03", {}
-        ).get("total_s", 0.0),
-        "hybrid_rrf_priority_topo_a03": timing_rows.get(
-            "ranking_hybrid_rrf_priority_topo_a03", {}
-        ).get("total_s", 0.0),
+        method_name: timing_rows.get(stage_name, {}).get("total_s", 0.0)
+        for method_name, stage_name in ranking_stage_by_method.items()
     }
 
     # ------------------------------------------------------------------
     # 9. Build output rows
     # ------------------------------------------------------------------
     rows = []
-    for method_name in METHODS:
+    for method_name in methods:
         m_metrics = method_metrics[method_name]
         rows.append({
             # Identity
@@ -1284,6 +1425,31 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--include-hybrid-ablation",
+        action="store_true",
+        help=(
+            "Include repaired-vs-unrepaired hybrid ablation methods "
+            "(prior only, unrepaired/repaired balance+copeland)."
+        ),
+    )
+    parser.add_argument(
+        "--hybrid-alpha-sweep-components",
+        type=str,
+        nargs="*",
+        default=None,
+        choices=["balance", "copeland"],
+        help=(
+            "Optional repaired-hybrid component(s) to sweep over "
+            "--hybrid-alpha-values."
+        ),
+    )
+    parser.add_argument(
+        "--hybrid-alpha-values",
+        type=str,
+        default="0.0,0.1,0.2,0.3,0.5,0.7,1.0",
+        help="Comma-separated alpha values for optional hybrid alpha sweep.",
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -1334,6 +1500,9 @@ def run_experiment(
     profile: bool = False,
     generate_plots: bool = True,
     query_id_file: Path | None = None,
+    include_hybrid_ablation: bool = False,
+    hybrid_alpha_sweep_components: list[str] | None = None,
+    hybrid_alpha_values: str = "0.0,0.1,0.2,0.3,0.5,0.7,1.0",
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -1384,6 +1553,20 @@ def run_experiment(
         print(f"  score_priors : {', '.join(str(p) for p in score_prior_files)}")
     if query_id_file is not None:
         print(f"  query_id_file: {query_id_file}")
+    alpha_values = _parse_alpha_values(hybrid_alpha_values)
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=include_hybrid_ablation,
+        alpha_sweep_components=hybrid_alpha_sweep_components,
+        alpha_values=alpha_values,
+    )
+    print(f"  hybrid_ablation: {include_hybrid_ablation}")
+    if hybrid_alpha_sweep_components:
+        print(
+            "  hybrid_alpha_sweep: "
+            f"components={','.join(hybrid_alpha_sweep_components)} "
+            f"alphas={','.join(str(a) for a in alpha_values)}"
+        )
+    print(f"  methods      : {', '.join(methods)}")
     print(f"  seed         : {seed}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
@@ -1486,6 +1669,8 @@ def run_experiment(
                 pairwise_index=pairwise_index,
                 score_index=score_index,
                 score_prior_sets=score_prior_sets,
+                methods=methods,
+                hybrid_specs=hybrid_specs,
                 global_acc=global_acc,
             )
 
@@ -1539,7 +1724,7 @@ def run_experiment(
     # ------------------------------------------------------------------
     # 5. Build and save aggregate summary
     # ------------------------------------------------------------------
-    summary_rows = _build_summary(all_rows)
+    summary_rows = _build_summary(all_rows, methods=methods)
     summary_csv_path = output_dir / f"{dataset}_summary.csv"
     _write_csv(summary_rows, summary_csv_path)
     print(f"[5] Aggregate summary CSV → {summary_csv_path}")
@@ -1592,7 +1777,7 @@ def run_experiment(
 # ---------------------------------------------------------------------------
 
 
-def _build_summary(rows: list[dict]) -> list[dict]:
+def _build_summary(rows: list[dict], methods: list[str]) -> list[dict]:
     """Build aggregate statistics per method.
 
     Parameters
@@ -1610,7 +1795,7 @@ def _build_summary(rows: list[dict]) -> list[dict]:
         by_method[r["method"]].append(r)
 
     summary_rows = []
-    for method in METHODS:
+    for method in methods:
         method_rows = by_method.get(method, [])
         if not method_rows:
             continue
@@ -1887,6 +2072,9 @@ def main(argv: list[str] | None = None) -> None:
         score_file=args.score_file,
         score_prior_files=args.score_prior_files,
         query_id_file=args.query_id_file,
+        include_hybrid_ablation=args.include_hybrid_ablation,
+        hybrid_alpha_sweep_components=args.hybrid_alpha_sweep_components,
+        hybrid_alpha_values=args.hybrid_alpha_values,
         seed=args.seed,
         output_dir=args.output_dir,
         save_timings=args.save_timings,

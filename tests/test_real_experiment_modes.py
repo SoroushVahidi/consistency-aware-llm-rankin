@@ -12,12 +12,15 @@ import pytest
 from scripts.run_real_experiment import (
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_priority_topological_ranking,
+    _build_hybrid_specs,
     _build_query_preferences,
     _average_precision_at_k,
     _copeland_ranking,
     _hybrid_rrf_fas_regularized_ranking,
     _ndcg_at_k,
+    _parse_alpha_values,
     _pairwise_accuracy_from_relevance,
+    _prior_only_ranking,
     _priority_topological_ranking,
     _precision_recall_at_k,
     _reference_ranking_for_candidates,
@@ -220,3 +223,24 @@ def test_hybrid_component_variants():
     assert r_balance[0] in {"a", "c"}
     assert r_copeland[0] in {"a", "c"}
     assert r_prio.index("b") == len(r_prio) - 1
+
+
+def test_hybrid_spec_builder_ablation_and_sweep():
+    specs = _build_hybrid_specs(
+        include_ablation=True,
+        alpha_sweep_components=["balance"],
+        alpha_values=[0.0, 0.3],
+    )
+    names = {s.name for s in specs}
+    assert "hybrid_rrf_prior_only" in names
+    assert "hybrid_rrf_unrepaired_balance_a03" in names
+    assert "hybrid_rrf_repaired_balance_a0p0" in names
+    assert "hybrid_rrf_repaired_balance_a0p3" in names
+
+
+def test_parse_alpha_values_and_prior_only():
+    assert _parse_alpha_values("0.0, 0.3,1.0") == [0.0, 0.3, 1.0]
+    with pytest.raises(ValueError):
+        _parse_alpha_values("")
+    ranking = _prior_only_ranking(["b", "a", "c"], {"a": 0.2, "b": 0.9, "c": 0.9})
+    assert ranking == ["b", "c", "a"]
