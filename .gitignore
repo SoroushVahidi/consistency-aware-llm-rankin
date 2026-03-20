@@ -213,8 +213,10 @@ __marimo__/
 outputs/*.json
 outputs/*.csv
 outputs/*.pkl
-
-# Raw downloaded dataset files (keep directory structure via .gitkeep)
+outputs/timings/*.csv
+outputs/timings/*.json
+outputs/plots/*.png
+outputs/plots/*.pdf
 data/raw/beir/scidocs/*.jsonl
 data/raw/beir/scidocs/*.arrow
 data/raw/beir/scidocs/*.parquet

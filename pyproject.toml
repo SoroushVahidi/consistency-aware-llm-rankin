@@ -25,6 +25,8 @@ dependencies = [
     "tqdm>=4.66",
     "datasets>=2.18",
     "huggingface-hub>=0.21",
+    "matplotlib>=3.8",
+    "pandas>=2.1",
 ]
 
 [project.optional-dependencies]
@@ -35,9 +37,7 @@ dev = [
 ]
 notebook = [
     "jupyter>=1.0",
-    "matplotlib>=3.8",
     "seaborn>=0.13",
-    "pandas>=2.1",
 ]
 
 [project.scripts]

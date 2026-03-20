@@ -37,6 +37,19 @@ def greedy_fas(graph: nx.DiGraph) -> tuple[nx.DiGraph, list[tuple[str, str, floa
         A copy of *graph* with all cycle-forming edges removed.
     removed_edges : list[(u, v, weight)]
         The edges that were removed, in the order they were removed.
+
+    **Complexity note:** Each iteration finds one cycle with
+    ``nx.find_cycle`` (O(n + e)) and removes one edge, so the overall
+    cost is O(C · (n + e)) where C is the number of removal iterations
+    (at most e).  In the worst case this is O(e · (n + e)).  For dense
+    pairwise graphs (e ≈ n²) this can be O(n⁴).  Use a small graph
+    (n ≤ 50–100) for interactive experiments; for larger graphs the ILP
+    back-end (once implemented) or a more efficient heuristic should be
+    preferred.  This stage is typically the **dominant bottleneck** in the
+    pipeline for moderately large inputs.
+
+    # TODO: Cache graph copy and incrementally remove edges to avoid
+    #       deep-copying the full graph each call.
     """
     dag = copy.deepcopy(graph)
     removed: list[tuple[str, str, float]] = []

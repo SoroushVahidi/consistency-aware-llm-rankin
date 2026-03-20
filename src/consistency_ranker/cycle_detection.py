@@ -39,6 +39,13 @@ def find_simple_cycles(graph: nx.DiGraph) -> list[list[str]]:
     Uses Johnson's algorithm (O((n + e)(c + 1)) where *c* is the number of
     cycles).  May be slow for dense graphs with many cycles.
 
+    **Complexity note:** Johnson's algorithm is O((n + e)(c + 1)) where n =
+    nodes, e = edges, c = number of simple cycles.  In the worst case (a
+    complete tournament graph) the number of cycles is exponential in n, so
+    this function should only be called on small graphs (n ≲ 30) or when
+    the graph is known to be sparse.  For large graphs use :func:`has_cycle`
+    plus SCC-based cycle counting as a proxy.
+
     Parameters
     ----------
     graph:

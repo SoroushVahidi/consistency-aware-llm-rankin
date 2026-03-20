@@ -8,6 +8,8 @@ Usage
 ::
 
     python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42
+    python scripts/run_synthetic.py --n-items 50 --noise 0.1 --save-timings
+    python scripts/run_synthetic.py --n-items 100 --noise 0.15 --save-timings --profile
 
 The script:
 
@@ -19,6 +21,7 @@ The script:
 6. Applies the greedy FAS heuristic to obtain a DAG, then ranks by topological sort.
 7. Evaluates all rankings against the ground truth with Kendall τ.
 8. Saves the results to ``<output_dir>/synthetic_results.json``.
+9. Optionally saves per-stage timings to ``<output_dir>/timings/``.
 """
 
 from __future__ import annotations
@@ -40,6 +43,7 @@ from consistency_ranker.graph_construction import build_graph, graph_summary
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.pairwise_prefs import generate_preferences
 from consistency_ranker.synthetic_data import generate_items, ground_truth_ranking, quality_map
+from consistency_ranker.utils.timing import Timer, TimingAccumulator
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -64,6 +68,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=Path("outputs"),
         help="Directory to save experiment results",
     )
+    parser.add_argument(
+        "--save-timings",
+        action="store_true",
+        default=False,
+        help="Save per-stage timing data to <output_dir>/timings/",
+    )
+    parser.add_argument(
+        "--profile",
+        action="store_true",
+        default=False,
+        help="Print detailed timing summary to stdout (implies --save-timings)",
+    )
     return parser.parse_args(argv)
 
 
@@ -73,6 +89,8 @@ def run_experiment(
     seed: int,
     weight_scheme: str = "margin",
     output_dir: Path = Path("outputs"),
+    save_timings: bool = False,
+    profile: bool = False,
 ) -> dict:
     """Run the full synthetic experiment and return a results dict.
 
@@ -88,12 +106,29 @@ def run_experiment(
         ``"uniform"`` or ``"margin"``.
     output_dir:
         Directory where ``synthetic_results.json`` will be written.
+    save_timings:
+        If ``True``, write per-stage timing data to
+        ``<output_dir>/timings/``.
+    profile:
+        If ``True``, print a detailed timing summary to stdout (also
+        activates ``save_timings``).
 
     Returns
     -------
     dict
         All experiment results, suitable for JSON serialisation.
     """
+    if profile:
+        save_timings = True
+
+    acc = TimingAccumulator()
+    acc.set_metadata(
+        experiment="synthetic",
+        n_items=n_items,
+        noise=noise,
+        seed=seed,
+        weight_scheme=weight_scheme,
+    )
     print(f"\n{'='*60}")
     print("  Consistency-Aware Ranking — Synthetic Experiment")
     print(f"{'='*60}")
@@ -101,83 +136,95 @@ def run_experiment(
     print(f"  noise        : {noise}")
     print(f"  seed         : {seed}")
     print(f"  weight_scheme: {weight_scheme}")
-    print(f"  output_dir   : {output_dir}\n")
+    print(f"  output_dir   : {output_dir}")
+    print(f"  save_timings : {save_timings}\n")
 
-    # ------------------------------------------------------------------
-    # 1. Generate items and ground-truth ranking
-    # ------------------------------------------------------------------
-    items = generate_items(n=n_items, seed=seed)
-    qmap = quality_map(items)
-    gt_ranking = ground_truth_ranking(items)
-    print(f"[1] Ground-truth ranking (top 5): {gt_ranking[:5]}")
+    with Timer("total_experiment", accumulator=acc):
 
-    # ------------------------------------------------------------------
-    # 2. Generate noisy pairwise preferences
-    # ------------------------------------------------------------------
-    prefs = generate_preferences(qmap, noise=noise, weight_scheme=weight_scheme, seed=seed)
-    print(f"[2] Generated {len(prefs)} pairwise preferences")
+        # ------------------------------------------------------------------
+        # 1. Generate items and ground-truth ranking
+        # ------------------------------------------------------------------
+        with Timer("data_generation", accumulator=acc):
+            items = generate_items(n=n_items, seed=seed)
+            qmap = quality_map(items)
+            gt_ranking = ground_truth_ranking(items)
+        print(f"[1] Ground-truth ranking (top 5): {gt_ranking[:5]}")
 
-    # ------------------------------------------------------------------
-    # 3. Build weighted directed preference graph
-    # ------------------------------------------------------------------
-    graph = build_graph(prefs)
-    g_summary = graph_summary(graph)
-    print(f"[3] Graph summary: {g_summary}")
+        # ------------------------------------------------------------------
+        # 2. Generate noisy pairwise preferences
+        # ------------------------------------------------------------------
+        with Timer("pairwise_preference_generation", accumulator=acc):
+            prefs = generate_preferences(qmap, noise=noise, weight_scheme=weight_scheme, seed=seed)
+        print(f"[2] Generated {len(prefs)} pairwise preferences")
 
-    # ------------------------------------------------------------------
-    # 4. Cycle detection (fast check — full enumeration skipped for large graphs)
-    # ------------------------------------------------------------------
-    g_has_cycle = has_cycle(graph)
-    n_sccs = g_summary["n_sccs"]
-    # Estimate cycles via SCC sizes instead of full enumeration (which is
-    # exponential on dense graphs).  A non-trivial SCC of size k can contain
-    # many cycles; we report the number of SCCs with size > 1 as a proxy.
-    large_sccs = sum(
-        1
-        for scc in nx.strongly_connected_components(graph)
-        if len(scc) > 1
-    )
-    c_summary = {
-        "has_cycle": g_has_cycle,
-        "n_sccs": n_sccs,
-        "n_non_trivial_sccs": large_sccs,
-        "note": "Full cycle enumeration skipped (exponential cost on dense graphs)",
-    }
-    print(f"[4] Cycle info: {c_summary}")
+        # ------------------------------------------------------------------
+        # 3. Build weighted directed preference graph
+        # ------------------------------------------------------------------
+        with Timer("graph_construction", accumulator=acc):
+            graph = build_graph(prefs)
+            g_summary = graph_summary(graph)
+        print(f"[3] Graph summary: {g_summary}")
 
-    # ------------------------------------------------------------------
-    # 5. Baseline rankings
-    # ------------------------------------------------------------------
-    ss_ranking = score_sum_ranking(graph)
-    borda = borda_ranking(graph)
-    print(f"[5] Score-sum ranking (top 5) : {ss_ranking[:5]}")
-    print(f"    Borda ranking (top 5)     : {borda[:5]}")
+        # ------------------------------------------------------------------
+        # 4. Cycle detection (fast check — full enumeration skipped for large graphs)
+        # ------------------------------------------------------------------
+        with Timer("cycle_detection", accumulator=acc):
+            g_has_cycle = has_cycle(graph)
+            n_sccs = g_summary["n_sccs"]
+            # Estimate cycles via SCC sizes instead of full enumeration (which is
+            # exponential on dense graphs).  A non-trivial SCC of size k can contain
+            # many cycles; we report the number of SCCs with size > 1 as a proxy.
+            large_sccs = sum(
+                1
+                for scc in nx.strongly_connected_components(graph)
+                if len(scc) > 1
+            )
+        c_summary = {
+            "has_cycle": g_has_cycle,
+            "n_sccs": n_sccs,
+            "n_non_trivial_sccs": large_sccs,
+            "note": "Full cycle enumeration skipped (exponential cost on dense graphs)",
+        }
+        print(f"[4] Cycle info: {c_summary}")
 
-    # ------------------------------------------------------------------
-    # 6. Greedy FAS → topological ranking
-    # ------------------------------------------------------------------
-    dag, removed_edges = greedy_fas(graph)
-    fas_weight = greedy_fas_total_weight(removed_edges)
-    topo_ranking = topological_ranking(dag)
-    print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
-    print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
+        # ------------------------------------------------------------------
+        # 5. Baseline rankings
+        # ------------------------------------------------------------------
+        with Timer("ranking_score_sum", accumulator=acc):
+            ss_ranking = score_sum_ranking(graph)
+        with Timer("ranking_borda", accumulator=acc):
+            borda = borda_ranking(graph)
+        print(f"[5] Score-sum ranking (top 5) : {ss_ranking[:5]}")
+        print(f"    Borda ranking (top 5)     : {borda[:5]}")
 
-    # Verify the dag produced is truly acyclic
-    assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
+        # ------------------------------------------------------------------
+        # 6. Greedy FAS → topological ranking
+        # ------------------------------------------------------------------
+        with Timer("greedy_fas_solver", accumulator=acc):
+            dag, removed_edges = greedy_fas(graph)
+            fas_weight = greedy_fas_total_weight(removed_edges)
+        with Timer("ranking_topological", accumulator=acc):
+            topo_ranking = topological_ranking(dag)
+        print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
+        print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
 
-    # ------------------------------------------------------------------
-    # 7. Evaluation
-    # ------------------------------------------------------------------
-    tau_ss = kendall_tau(ss_ranking, gt_ranking)
-    tau_borda = kendall_tau(borda, gt_ranking)
-    tau_topo = kendall_tau(topo_ranking, gt_ranking)
+        # Verify the dag produced is truly acyclic
+        assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
 
-    viol_ss = n_violations(ss_ranking, gt_ranking)
-    viol_borda = n_violations(borda, gt_ranking)
-    viol_topo = n_violations(topo_ranking, gt_ranking)
+        # ------------------------------------------------------------------
+        # 7. Evaluation
+        # ------------------------------------------------------------------
+        with Timer("evaluation", accumulator=acc):
+            tau_ss = kendall_tau(ss_ranking, gt_ranking)
+            tau_borda = kendall_tau(borda, gt_ranking)
+            tau_topo = kendall_tau(topo_ranking, gt_ranking)
 
-    incons_original = pairwise_inconsistency_count(graph, gt_ranking)
-    incons_dag = pairwise_inconsistency_count(dag, gt_ranking)
+            viol_ss = n_violations(ss_ranking, gt_ranking)
+            viol_borda = n_violations(borda, gt_ranking)
+            viol_topo = n_violations(topo_ranking, gt_ranking)
+
+            incons_original = pairwise_inconsistency_count(graph, gt_ranking)
+            incons_dag = pairwise_inconsistency_count(dag, gt_ranking)
 
     print("\n[7] Evaluation results:")
     print(f"    {'Method':<20} {'Kendall τ':>10} {'Violations':>12}")
@@ -188,9 +235,13 @@ def run_experiment(
     print(f"\n    Pairwise inconsistencies (original graph) : {incons_original}")
     print(f"    Pairwise inconsistencies (after FAS DAG)  : {incons_dag}")
 
+    if profile:
+        acc.print_summary()
+
     # ------------------------------------------------------------------
     # 8. Save results
     # ------------------------------------------------------------------
+    timing_summary = {row["stage"]: row for row in acc.summary_rows()}
     results = {
         "config": {
             "n_items": n_items,
@@ -227,6 +278,10 @@ def run_experiment(
             "total_removed_weight": fas_weight,
             "removed_edges": [[u, v, w] for u, v, w in removed_edges],
         },
+        "timings": {
+            stage: {"total_s": row["total_s"], "mean_s": row["mean_s"]}
+            for stage, row in timing_summary.items()
+        },
     }
 
     output_dir = Path(output_dir)
@@ -235,6 +290,14 @@ def run_experiment(
     with out_path.open("w") as fh:
         json.dump(results, fh, indent=2)
     print(f"\n[8] Results saved to {out_path}")
+
+    if save_timings:
+        timings_dir = output_dir / "timings"
+        csv_path = acc.save_csv(timings_dir / "synthetic_timings.csv")
+        json_path = acc.save_json(timings_dir / "synthetic_timings.json")
+        print(f"    Timings CSV  → {csv_path}")
+        print(f"    Timings JSON → {json_path}")
+
     print(f"{'='*60}\n")
 
     return results
@@ -249,6 +312,8 @@ def main(argv: list[str] | None = None) -> None:
         seed=args.seed,
         weight_scheme=args.weight_scheme,
         output_dir=args.output_dir,
+        save_timings=args.save_timings,
+        profile=args.profile,
     )
 
 

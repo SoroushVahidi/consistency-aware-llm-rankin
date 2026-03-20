@@ -251,6 +251,94 @@ If `python scripts/download_datasets.py --dataset bright` fails, follow these st
 
 ---
 
+## Timing & Profiling
+
+Every pipeline stage is instrumented with wall-clock timers.  Use the flags
+below to inspect bottlenecks without changing any source code.
+
+### Timing Utility (`src/consistency_ranker/utils/timing.py`)
+
+```python
+from consistency_ranker.utils.timing import Timer, TimingAccumulator, timed
+
+acc = TimingAccumulator()
+
+# Context manager
+with Timer("graph_build", accumulator=acc):
+    graph = build_graph(prefs)
+
+# Decorator
+@timed("greedy_fas", accumulator=acc)
+def run_fas(g):
+    return greedy_fas(g)
+
+acc.print_summary()
+acc.save_csv("outputs/timings/stages.csv")
+acc.save_json("outputs/timings/stages.json")
+```
+
+### Running a Profiling Experiment
+
+```bash
+# Run with timing summary printed to console + saved to disk
+python scripts/run_synthetic.py --n-items 50 --noise 0.1 --save-timings --profile
+
+# Scale sweep for runtime-vs-n_items plot
+for n in 10 20 50 100; do
+    python scripts/run_synthetic.py --n-items $n --save-timings \
+        --output-dir outputs/scale_$n
+done
+
+# Generate all plots
+python scripts/plot_timings.py --input outputs/timings/synthetic_timings.json
+python scripts/plot_timings.py \
+    --scale-dirs outputs/scale_10 outputs/scale_20 outputs/scale_50 outputs/scale_100
+```
+
+### Where Timings Are Saved
+
+```
+outputs/
+├── timings/
+│   ├── synthetic_timings.csv    # summary table (stage, n_calls, total_s, mean_s, median_s, max_s)
+│   └── synthetic_timings.json   # summary + raw per-call values + metadata
+├── plots/
+│   ├── runtime_by_stage.png     # horizontal bar chart of total runtime per stage
+│   ├── runtime_breakdown_pie.png  # proportional breakdown by stage
+│   ├── runtime_by_method.png    # bar chart: ranking methods + solver
+│   └── runtime_vs_n_items.png   # line chart from scale sweep
+└── synthetic_results.json       # experiment results include a "timings" key
+```
+
+### Expected Bottlenecks
+
+| Stage | Expected cost | Notes |
+|-------|--------------|-------|
+| `greedy_fas_solver` | **O(C · (n+e))** | Dominant for n > 30; C = removal iterations ≤ e |
+| `graph_construction` | O(e) | Linear in edges; fast in practice |
+| `cycle_detection` (SCC) | O(n + e) | Very fast; full enumeration is exponential — avoided |
+| `ranking_score_sum` | O(n + e) | Fast |
+| `ranking_borda` | O(n + e) | Fast |
+| `evaluation` | O(n²) | Quadratic in items due to all-pairs Kendall τ |
+
+### Three Concrete Optimization Suggestions
+
+1. **Cache the graph deep-copy in `greedy_fas`:** currently `copy.deepcopy`
+   is called once per experiment.  For repeated calls (e.g. sweep over many
+   queries) the copy cost dominates.  Use `graph.copy()` (shallow) if edge
+   attributes are not mutated, or pass a mutable flag.
+
+2. **Replace full Johnson cycle-enumeration with SCC-based heuristics:**
+   `find_simple_cycles` is exponential for dense graphs.  In the pipeline we
+   already skip it, but if cycle counts are needed, use the SCC size
+   distribution as a proxy — O(n + e) instead of exponential.
+
+3. **Vectorize Kendall τ with scipy or numpy:** the current all-pairs loop in
+   `kendall_tau` is O(n²) pure Python.  `scipy.stats.kendalltau` (C
+   implementation) is 10–100× faster for n > 100.
+
+---
+
 ## Key Concepts
 
 | Term | Definition |
