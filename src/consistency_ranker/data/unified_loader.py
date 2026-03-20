@@ -2,7 +2,7 @@
 unified_loader.py
 =================
 Unified interface for loading any registered dataset and converting
-relevance labels into pairwise preferences.
+relevance labels or model scores into pairwise preferences.
 
 Main entry points
 -----------------
@@ -14,6 +14,15 @@ Main entry points
     Derive :class:`~consistency_ranker.data.schema.PairwisePreference`
     objects from a list of :class:`~consistency_ranker.data.schema.QrelEntry`
     objects.
+
+:func:`preferences_from_scores`
+    Derive preferences from per-query candidate scores.
+
+:func:`preferences_from_multiple_score_rankings`
+    Aggregate multiple scorer rankings into pairwise preferences.
+
+:func:`load_score_rankings` / :func:`load_multi_scorer_rankings`
+    Load score JSONL files for score- or multi-scorer–based graphs.
 
 :func:`save_pairwise_preferences`
     Write pairwise preferences to JSONL under
@@ -29,7 +38,7 @@ from pathlib import Path
 from typing import Callable, TypeVar
 
 from .dataset_registry import DatasetConfig, get_config
-from .schema import Document, PairwisePreference, QrelEntry, Query
+from .schema import CandidateRanking, Document, PairwisePreference, QrelEntry, Query
 
 _T = TypeVar("_T")
 
@@ -175,6 +184,248 @@ def preferences_from_qrels(
                 # Equal relevance entries are skipped (no preference)
 
     return preferences
+
+
+# ---------------------------------------------------------------------------
+# Pairwise preferences from model scores
+# ---------------------------------------------------------------------------
+
+_MIN_SCORE_WEIGHT = 1e-6
+
+
+def preferences_from_scores(
+    query_id: str,
+    candidates: list[tuple[str, float]],
+    weight_scheme: str = "absolute_margin",
+    min_margin: float | None = None,
+) -> list[PairwisePreference]:
+    """Derive pairwise document preferences from per-query candidate scores."""
+    if weight_scheme not in {"binary", "absolute_margin", "normalized_margin"}:
+        raise ValueError(
+            f"Unknown weight_scheme {weight_scheme!r}. "
+            "Choose 'binary', 'absolute_margin', or 'normalized_margin'."
+        )
+
+    if len(candidates) < 2:
+        return []
+
+    scores = [s for _, s in candidates]
+    score_min = min(scores)
+    score_max = max(scores)
+    score_range = score_max - score_min
+
+    preferences: list[PairwisePreference] = []
+
+    for i in range(len(candidates)):
+        for j in range(i + 1, len(candidates)):
+            doc_a, score_a = candidates[i]
+            doc_b, score_b = candidates[j]
+
+            if score_a == score_b:
+                continue
+
+            winner_id, loser_id = (doc_a, doc_b) if score_a > score_b else (doc_b, doc_a)
+            margin = abs(score_a - score_b)
+
+            if min_margin is not None and margin < min_margin:
+                continue
+
+            w = _weight_from_scores(
+                score_winner=max(score_a, score_b),
+                score_loser=min(score_a, score_b),
+                score_range=score_range,
+                scheme=weight_scheme,
+            )
+            preferences.append(
+                PairwisePreference(
+                    query_id=query_id,
+                    winner_doc_id=winner_id,
+                    loser_doc_id=loser_id,
+                    weight=w,
+                )
+            )
+
+    return preferences
+
+
+def preferences_from_multiple_score_rankings(
+    query_id: str,
+    scorer_rankings: dict[str, list[tuple[str, float]]],
+    weight_mode: str = "vote_plus_margin",
+    min_margin: float | None = None,
+) -> list[PairwisePreference]:
+    """Derive pairwise preferences by aggregating multiple scorer rankings."""
+    if weight_mode not in {"majority_vote", "summed_margin", "vote_plus_margin"}:
+        raise ValueError(
+            f"Unknown weight_mode {weight_mode!r}. "
+            "Choose 'majority_vote', 'summed_margin', or 'vote_plus_margin'."
+        )
+
+    all_doc_ids: set[str] = set()
+    for cand in scorer_rankings.values():
+        all_doc_ids.update(doc_id for doc_id, _ in cand)
+
+    scorer_scores: dict[str, dict[str, float]] = {}
+    for name, cand in scorer_rankings.items():
+        scorer_scores[name] = {doc_id: score for doc_id, score in cand}
+
+    doc_list = sorted(all_doc_ids)
+    preferences: list[PairwisePreference] = []
+
+    for i in range(len(doc_list)):
+        for j in range(i + 1, len(doc_list)):
+            doc_a, doc_b = doc_list[i], doc_list[j]
+
+            votes_a_wins: list[str] = []
+            votes_b_wins: list[str] = []
+            margins_a_wins: list[float] = []
+            margins_b_wins: list[float] = []
+            signed_diffs: list[float] = []
+
+            for name, scores in scorer_scores.items():
+                if doc_a not in scores or doc_b not in scores:
+                    continue
+                sa, sb = scores[doc_a], scores[doc_b]
+                if sa == sb:
+                    continue
+                diff = sa - sb
+                if diff > 0:
+                    votes_a_wins.append(name)
+                    margins_a_wins.append(diff)
+                    signed_diffs.append(diff)
+                else:
+                    votes_b_wins.append(name)
+                    margins_b_wins.append(-diff)
+                    signed_diffs.append(diff)
+
+            if not votes_a_wins and not votes_b_wins:
+                continue
+
+            if weight_mode == "majority_vote":
+                n_a, n_b = len(votes_a_wins), len(votes_b_wins)
+                if n_a == n_b:
+                    continue
+                if n_a > n_b:
+                    winner_id, loser_id = doc_a, doc_b
+                    w = float(n_a)
+                    vote_margin = n_a - n_b
+                else:
+                    winner_id, loser_id = doc_b, doc_a
+                    w = float(n_b)
+                    vote_margin = n_b - n_a
+                if min_margin is not None and vote_margin < min_margin:
+                    continue
+
+            elif weight_mode == "summed_margin":
+                total = sum(signed_diffs)
+                if abs(total) < (_MIN_SCORE_WEIGHT if min_margin is None else min_margin):
+                    continue
+                if total > 0:
+                    winner_id, loser_id = doc_a, doc_b
+                    w = total
+                else:
+                    winner_id, loser_id = doc_b, doc_a
+                    w = -total
+                w = max(w, _MIN_SCORE_WEIGHT)
+
+            else:
+                n_a, n_b = len(votes_a_wins), len(votes_b_wins)
+                if n_a == n_b:
+                    continue
+                if n_a > n_b:
+                    winner_id, loser_id = doc_a, doc_b
+                    votes = n_a
+                    margins = margins_a_wins
+                else:
+                    winner_id, loser_id = doc_b, doc_a
+                    votes = n_b
+                    margins = margins_b_wins
+                mean_margin = sum(margins) / len(margins) if margins else 0.0
+                w = float(votes) + mean_margin
+                w = max(w, _MIN_SCORE_WEIGHT)
+                if min_margin is not None and mean_margin < min_margin:
+                    continue
+
+            preferences.append(
+                PairwisePreference(
+                    query_id=query_id,
+                    winner_doc_id=winner_id,
+                    loser_doc_id=loser_id,
+                    weight=w,
+                )
+            )
+
+    return preferences
+
+
+def load_score_rankings(path: Path) -> dict[str, list[tuple[str, float]]]:
+    """Load per-query candidate scores from a JSONL file (see :class:`CandidateRanking`)."""
+    result: dict[str, list[tuple[str, float]]] = {}
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            rec = CandidateRanking.from_dict(json.loads(line))
+            doc_ids = rec.ranked_doc_ids
+            scores = rec.scores
+            if scores is None:
+                scores = [1.0] * len(doc_ids)
+            if len(scores) != len(doc_ids):
+                raise ValueError(
+                    f"query_id={rec.query_id}: len(ranked_doc_ids)={len(doc_ids)} "
+                    f"!= len(scores)={len(scores)}"
+                )
+            result[rec.query_id] = list(zip(doc_ids, scores, strict=True))
+    return result
+
+
+def load_multi_scorer_rankings(
+    scorer_paths: dict[str, Path],
+) -> dict[str, dict[str, list[tuple[str, float]]]]:
+    """Load score rankings from multiple scorer JSONL files."""
+    result: dict[str, dict[str, list[tuple[str, float]]]] = {}
+    for name, path in scorer_paths.items():
+        if not path.exists():
+            continue
+        try:
+            result[name] = load_score_rankings(path)
+        except (ValueError, OSError):
+            continue
+    return result
+
+
+def save_score_rankings(
+    rankings: dict[str, list[tuple[str, float]]],
+    output_path: Path,
+) -> Path:
+    """Write per-query score rankings to a JSONL file."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as fh:
+        for qid, candidates in sorted(rankings.items()):
+            doc_ids = [c[0] for c in candidates]
+            scores = [c[1] for c in candidates]
+            rec = CandidateRanking(query_id=qid, ranked_doc_ids=doc_ids, scores=scores)
+            fh.write(json.dumps(rec.to_dict()) + "\n")
+    return output_path
+
+
+def _weight_from_scores(
+    score_winner: float,
+    score_loser: float,
+    score_range: float,
+    scheme: str,
+) -> float:
+    """Compute preference weight from score pair."""
+    if scheme == "binary":
+        return 1.0
+    if scheme == "absolute_margin":
+        w = score_winner - score_loser
+        return max(w, _MIN_SCORE_WEIGHT)
+    if score_range <= 0:
+        return _MIN_SCORE_WEIGHT
+    w = (score_winner - score_loser) / score_range
+    return max(w, _MIN_SCORE_WEIGHT)
 
 
 def _weight(rel_a: int, rel_b: int, scheme: str) -> float:

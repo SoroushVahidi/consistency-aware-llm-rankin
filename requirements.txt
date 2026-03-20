@@ -25,3 +25,6 @@ ruff>=0.3
 # TREC DL passage + Robust04 automatic download (optional):
 # pip install ir-datasets
 # or: pip install 'consistency-ranker[ir]' from pyproject optional-dependencies
+
+# BM25 score generation (optional):
+# pip install 'consistency-ranker[bm25]'

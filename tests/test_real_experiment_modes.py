@@ -139,6 +139,8 @@ def test_build_query_preferences_qrels_flip():
         flip_prob=0.5,
         pairwise_index=None,
         score_index=None,
+        multi_scores_by_query=None,
+        multi_score_weight_mode="vote_plus_margin",
     )
     assert prefs
     assert "synthetic corruption" in note
@@ -155,6 +157,8 @@ def test_build_query_preferences_score_file():
         flip_prob=0.0,
         pairwise_index=None,
         score_index={"q1": [("d1", 0.9), ("d2", 0.2)]},
+        multi_scores_by_query=None,
+        multi_score_weight_mode="vote_plus_margin",
     )
     assert len(prefs) == 1
     assert prefs[0].winner == "d1"
@@ -357,6 +361,7 @@ def test_validate_rrf_requires_score_prior_files(tmp_path: Path):
             pairwise_file=None,
             score_file=None,
             score_prior_files=None,
+            scorers=None,
             query_id_file=None,
             output_dir=tmp_path,
             save_timings=False,
@@ -376,6 +381,7 @@ def test_validate_combsum_requires_score_prior_files(tmp_path: Path):
             pairwise_file=None,
             score_file=None,
             score_prior_files=None,
+            scorers=None,
             query_id_file=None,
             output_dir=tmp_path,
             save_timings=False,
@@ -395,6 +401,7 @@ def test_validate_borda_fuse_requires_score_prior_files(tmp_path: Path):
             pairwise_file=None,
             score_file=None,
             score_prior_files=None,
+            scorers=None,
             query_id_file=None,
             output_dir=tmp_path,
             save_timings=False,

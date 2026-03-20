@@ -82,9 +82,11 @@ from consistency_ranker.data.query_ids import (
     has_usable_eval_labels,
     load_query_ids_file,
 )
-from consistency_ranker.data.dataset_registry import DATASET_NAMES
+from consistency_ranker.data.dataset_registry import DATASET_NAMES, get_config
 from consistency_ranker.data.unified_loader import (
     load_dataset_splits,
+    load_multi_scorer_rankings,
+    preferences_from_multiple_score_rankings,
     preferences_from_qrels,
 )
 from consistency_ranker.graph_construction import build_graph, graph_summary
@@ -180,6 +182,7 @@ PREFERENCE_SOURCES = (
     "qrels",
     "qrels_flip",
     "score_file",
+    "multi_scores",
     "llm_pairwise_file",
     "votes_file",
 )
@@ -866,6 +869,7 @@ def _validate_run_configuration(
     pairwise_file: Path | None,
     score_file: Path | None,
     score_prior_files: list[Path] | None,
+    scorers: str | None,
     query_id_file: Path | None,
     output_dir: Path,
     save_timings: bool,
@@ -893,6 +897,12 @@ def _validate_run_configuration(
             raise ValueError("--score-file is required for score_file mode.")
         if not score_file.exists():
             raise FileNotFoundError(f"Score file not found: {score_file}")
+    if preference_source == "multi_scores":
+        if not scorers or not str(scorers).strip():
+            raise ValueError(
+                "--preference-source=multi_scores requires --scorers "
+                "(comma-separated names, e.g. bm25,dense)."
+            )
     if query_id_file is not None and not query_id_file.exists():
         raise FileNotFoundError(f"query_id_file not found: {query_id_file}")
     for score_prior in score_prior_files or []:
@@ -1135,6 +1145,8 @@ def _build_query_preferences(
     flip_prob: float,
     pairwise_index: dict[str, list[Preference]] | None,
     score_index: dict[str, list[tuple[str, float]]] | None,
+    multi_scores_by_query: dict[str, dict[str, list[tuple[str, float]]]] | None,
+    multi_score_weight_mode: str,
 ) -> tuple[list[Preference], str]:
     """Build preferences for a query from the selected source."""
     if preference_source == "qrels":
@@ -1192,6 +1204,24 @@ def _build_query_preferences(
             seed=seed,
         )
         return prefs, "external pairwise preferences induced from score file"
+
+    if preference_source == "multi_scores":
+        if not multi_scores_by_query or query_id not in multi_scores_by_query:
+            raise ValueError("multi_scores_by_query is required for multi_scores source.")
+        scorer_rankings = multi_scores_by_query[query_id]
+        truncated = {name: cands[:top_k] for name, cands in scorer_rankings.items()}
+        schema_prefs = preferences_from_multiple_score_rankings(
+            query_id=query_id,
+            scorer_rankings=truncated,
+            weight_mode=multi_score_weight_mode,
+        )
+        prefs = [
+            Preference(winner=p.winner_doc_id, loser=p.loser_doc_id, weight=p.weight)
+            for p in schema_prefs
+        ]
+        return prefs, (
+            f"multi-scorer aggregated preferences (mode={multi_score_weight_mode!r})"
+        )
 
     raise ValueError(f"Unknown preference_source: {preference_source!r}")
 
@@ -1307,6 +1337,8 @@ def run_query(
     metric_aware_beta: float = 1.0,
     metric_aware_top_k: int | None = None,
     metric_aware_gain_source: str = "prior_score",
+    multi_scores_by_query: dict[str, dict[str, list[tuple[str, float]]]] | None = None,
+    multi_score_weight_mode: str = "vote_plus_margin",
 ) -> tuple[list[dict], dict | None]:
     """Run the full pipeline for a single query.
 
@@ -1350,6 +1382,13 @@ def run_query(
             "reason": f"only {len(unique_docs)} judged docs with {n_distinct_grades} distinct grade(s)",
         }
 
+    if preference_source == "multi_scores":
+        if not multi_scores_by_query or qid not in multi_scores_by_query:
+            return [], {
+                "query_id": qid,
+                "reason": "query not in multi-scorer rankings",
+            }
+
     query_acc = TimingAccumulator()
     query_acc.set_metadata(query_id=qid, dataset=dataset)
 
@@ -1367,6 +1406,8 @@ def run_query(
             flip_prob=flip_prob,
             pairwise_index=pairwise_index,
             score_index=score_index,
+            multi_scores_by_query=multi_scores_by_query,
+            multi_score_weight_mode=multi_score_weight_mode,
         )
 
     if not prefs:
@@ -1920,6 +1961,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help=(
             "Source used to build preference graph: qrels (baseline), "
             "qrels_flip (synthetic corruption), score_file (reranker scores), "
+            "multi_scores (aggregate multiple scorer JSONLs under processed/scores/), "
             "llm_pairwise_file, or votes_file."
         ),
     )
@@ -1943,6 +1985,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         default=None,
         help="JSONL score file for score_file mode (query_id, doc_id, score).",
+    )
+    parser.add_argument(
+        "--scorers",
+        type=str,
+        default=None,
+        help=(
+            "Comma-separated scorer names for --preference-source=multi_scores. "
+            "Expects data/processed/<dataset>/scores/<name>.jsonl per scorer "
+            "(CandidateRanking JSONL). Requires at least two scorers with "
+            "overlapping queries."
+        ),
+    )
+    parser.add_argument(
+        "--multi-score-weight-mode",
+        type=str,
+        default="vote_plus_margin",
+        choices=["majority_vote", "summed_margin", "vote_plus_margin"],
+        help="Aggregation mode when --preference-source=multi_scores.",
     )
     parser.add_argument(
         "--score-prior-files",
@@ -2116,6 +2176,8 @@ def run_experiment(
     pairwise_file: Path | None,
     score_file: Path | None,
     score_prior_files: list[Path] | None,
+    scorers: str | None,
+    multi_score_weight_mode: str,
     seed: int,
     output_dir: Path,
     methods_filter: list[str] | None = None,
@@ -2175,6 +2237,7 @@ def run_experiment(
         pairwise_file=pairwise_file,
         score_file=score_file,
         score_prior_files=score_prior_files,
+        scorers=scorers,
         query_id_file=query_id_file,
         output_dir=output_dir,
         save_timings=save_timings,
@@ -2204,6 +2267,9 @@ def run_experiment(
         print(f"  score_file   : {score_file}")
     if score_prior_files:
         print(f"  score_priors : {', '.join(str(p) for p in score_prior_files)}")
+    if preference_source == "multi_scores":
+        print(f"  scorers      : {scorers}")
+        print(f"  multi_wmode  : {multi_score_weight_mode}")
     print(f"  markov_damp  : {markov_damping} (Rank Centrality–style graph chain)")
     if score_prior_sets:
         print(
@@ -2255,6 +2321,7 @@ def run_experiment(
 
     pairwise_index: dict[str, list[Preference]] | None = None
     score_index: dict[str, list[tuple[str, float]]] | None = None
+    multi_scores_by_query: dict[str, dict[str, list[tuple[str, float]]]] | None = None
     with Timer("preference_source_loading", accumulator=global_acc):
         if preference_source in {"llm_pairwise_file", "votes_file"}:
             if pairwise_file is None:
@@ -2268,6 +2335,50 @@ def run_experiment(
                 raise ValueError("--score-file is required for score_file mode.")
             score_index = _load_score_file(score_file)
             print(f"[0] Loaded score entries for {len(score_index)} queries")
+        elif preference_source == "multi_scores":
+            cfg = get_config(dataset)
+            scorer_names = [s.strip() for s in str(scorers).split(",") if s.strip()]
+            if len(scorer_names) < 2:
+                log.error(
+                    "multi_scores requires at least two scorer names in --scorers; got %s",
+                    scorer_names,
+                )
+                sys.exit(1)
+            scorer_paths = {
+                name: cfg.processed_path / "scores" / f"{name}.jsonl"
+                for name in scorer_names
+            }
+            missing = [str(p) for p in scorer_paths.values() if not p.exists()]
+            if missing:
+                log.error("Missing scorer file(s) for multi_scores: %s", ", ".join(missing))
+                sys.exit(1)
+            loaded = load_multi_scorer_rankings(scorer_paths)
+            if len(loaded) < 2:
+                log.error(
+                    "multi_scores requires at least two successfully loaded scorers; got %s",
+                    list(loaded.keys()),
+                )
+                sys.exit(1)
+            # Invert: query_id -> {scorer_name: [(doc_id, score), ...]}
+            all_qids: set[str] = set()
+            for smap in loaded.values():
+                all_qids.update(smap.keys())
+            multi_scores_by_query = {}
+            for qid in all_qids:
+                per_scorer = {
+                    name: rankings[qid]
+                    for name, rankings in loaded.items()
+                    if qid in rankings
+                }
+                if len(per_scorer) >= 2:
+                    multi_scores_by_query[qid] = per_scorer
+            print(
+                f"[0] Loaded {len(loaded)} scorers; "
+                f"{len(multi_scores_by_query)} queries with >=2 scorers"
+            )
+            if not multi_scores_by_query:
+                log.error("No queries found with at least two scorers; aborting.")
+                sys.exit(1)
         if score_prior_sets:
             print(
                 f"[0] Using {len(score_prior_sets)} score prior file(s) "
@@ -2301,6 +2412,9 @@ def run_experiment(
 
         # Restrict to queries that have usable evaluation labels
         eligible_qids = eligible_query_ids(qrels)
+        if preference_source == "multi_scores" and multi_scores_by_query is not None:
+            ms_keys = set(multi_scores_by_query.keys())
+            eligible_qids = sorted(set(eligible_qids) & ms_keys)
         eligible_set = set(eligible_qids)
 
         if query_id_file is not None:
@@ -2353,6 +2467,8 @@ def run_experiment(
                 metric_aware_beta=metric_aware_beta,
                 metric_aware_top_k=metric_aware_top_k,
                 metric_aware_gain_source=metric_aware_gain_source,
+                multi_scores_by_query=multi_scores_by_query,
+                multi_score_weight_mode=multi_score_weight_mode,
             )
 
             if skip_info is not None:
@@ -2381,6 +2497,10 @@ def run_experiment(
                 "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts."
             ),
             "score_file": "Real preference edges induced from external score file (reranker-style).",
+            "multi_scores": (
+                "Real preference edges aggregated from multiple scorer JSONL rankings "
+                "(processed/scores/<scorer>.jsonl)."
+            ),
             "llm_pairwise_file": "Real preference edges loaded from external LLM pairwise judgments.",
             "votes_file": "Real preference edges loaded from external multi-ranker vote pairs.",
         }.get(preference_source, "Unknown preference source.")
@@ -2763,6 +2883,8 @@ def main(argv: list[str] | None = None) -> None:
             pairwise_file=args.pairwise_file,
             score_file=args.score_file,
             score_prior_files=args.score_prior_files,
+            scorers=args.scorers,
+            multi_score_weight_mode=args.multi_score_weight_mode,
             query_id_file=args.query_id_file,
             include_hybrid_ablation=args.include_hybrid_ablation,
             hybrid_alpha_sweep_components=args.hybrid_alpha_sweep_components,
