@@ -45,6 +45,7 @@ import argparse
 import csv
 import json
 import logging
+import math
 import random
 import sys
 from collections import defaultdict
@@ -90,8 +91,17 @@ log = logging.getLogger(__name__)
 MIN_JUDGED_DOCS = 2
 """Minimum number of distinct relevance grades needed to produce any preference."""
 
-METHODS = ("score_sum", "borda", "pagerank", "greedy_fas_topological")
+METHODS = (
+    "score_sum",
+    "borda",
+    "pagerank",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+)
 """Ordered tuple of method names used as keys throughout the script."""
+
+PRIMARY_QUALITY_METRIC = "ndcg_at_k"
+"""Primary ranking-quality metric for real-data evaluation."""
 
 PREFERENCE_SOURCES = (
     "qrels",
@@ -134,6 +144,28 @@ def _reference_ranking(qrels_for_query: list) -> list[str]:
             seen.add(e.doc_id)
             ranking.append(e.doc_id)
     return ranking
+
+
+def _reference_ranking_for_candidates(
+    qrels_for_query: list,
+    candidates: set[str] | list[str],
+) -> tuple[list[str], dict[str, int]]:
+    """Build candidate-aligned qrels reference ranking.
+
+    Returns
+    -------
+    tuple[list[str], dict[str, int]]
+        (reference ranking over all candidate docs, relevance map)
+    """
+    rel_map: dict[str, int] = {}
+    for e in qrels_for_query:
+        # Keep the highest grade if duplicates exist
+        rel_map[e.doc_id] = max(rel_map.get(e.doc_id, e.relevance), e.relevance)
+    candidate_list = sorted(set(candidates))
+    for doc_id in candidate_list:
+        rel_map.setdefault(doc_id, 0)
+    candidate_list.sort(key=lambda d: (-rel_map[d], d))
+    return candidate_list, rel_map
 
 
 def _backward_edge_weight(graph: nx.DiGraph, ranking: list[str]) -> float:
@@ -251,6 +283,111 @@ def _kendall_tau(ranking: list[str], reference: list[str]) -> float | None:
 
     total = concordant + discordant
     return (concordant - discordant) / total if total > 0 else 0.0
+
+
+def _ndcg_at_k(
+    ranking: list[str],
+    rel_map: dict[str, int],
+    k: int,
+) -> float | None:
+    """Compute nDCG@k for a ranked list and relevance map."""
+    if not ranking:
+        return None
+    k_eff = min(k, len(ranking))
+    if k_eff <= 0:
+        return None
+
+    def _dcg(items: list[str]) -> float:
+        total = 0.0
+        for i, doc_id in enumerate(items[:k_eff]):
+            rel = rel_map.get(doc_id, 0)
+            gain = (2.0 ** rel - 1.0) / math.log2(i + 2.0)
+            total += gain
+        return total
+
+    dcg = _dcg(ranking)
+    ideal = sorted(ranking, key=lambda d: rel_map.get(d, 0), reverse=True)
+    idcg = _dcg(ideal)
+    if idcg <= 0.0:
+        return 0.0
+    return dcg / idcg
+
+
+def _precision_recall_at_k(
+    ranking: list[str],
+    rel_map: dict[str, int],
+    k: int,
+) -> tuple[float | None, float | None]:
+    """Compute precision@k and recall@k for binary relevance rel>0."""
+    if not ranking:
+        return None, None
+    k_eff = min(k, len(ranking))
+    if k_eff <= 0:
+        return None, None
+    top = ranking[:k_eff]
+    hits = sum(1 for d in top if rel_map.get(d, 0) > 0)
+    precision = hits / k_eff
+    total_relevant = sum(1 for d in ranking if rel_map.get(d, 0) > 0)
+    recall = (hits / total_relevant) if total_relevant > 0 else None
+    return precision, recall
+
+
+def _average_precision_at_k(
+    ranking: list[str],
+    rel_map: dict[str, int],
+    k: int,
+) -> float | None:
+    """Compute AP@k (binary relevance rel>0)."""
+    if not ranking:
+        return None
+    k_eff = min(k, len(ranking))
+    if k_eff <= 0:
+        return None
+    total_relevant = sum(1 for d in ranking if rel_map.get(d, 0) > 0)
+    if total_relevant == 0:
+        return None
+    hit_count = 0
+    ap_sum = 0.0
+    for i, d in enumerate(ranking[:k_eff], start=1):
+        if rel_map.get(d, 0) > 0:
+            hit_count += 1
+            ap_sum += hit_count / i
+    denom = min(total_relevant, k_eff)
+    return ap_sum / denom if denom > 0 else None
+
+
+def _pairwise_accuracy_from_relevance(
+    ranking: list[str],
+    rel_map: dict[str, int],
+) -> float | None:
+    """Pairwise accuracy on judged candidate pairs with different grades."""
+    if len(ranking) < 2:
+        return None
+    pos = {d: i for i, d in enumerate(ranking)}
+    docs = list(ranking)
+    correct = 0
+    total = 0
+    for i in range(len(docs)):
+        for j in range(i + 1, len(docs)):
+            a, b = docs[i], docs[j]
+            ra = rel_map.get(a)
+            rb = rel_map.get(b)
+            if ra is None or rb is None or ra == rb:
+                continue
+            total += 1
+            if (ra > rb and pos[a] < pos[b]) or (rb > ra and pos[b] < pos[a]):
+                correct += 1
+    return (correct / total) if total > 0 else None
+
+
+def _weighted_out_minus_in_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank nodes by (weighted out-degree - weighted in-degree)."""
+    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
+    for u, v, data in graph.edges(data=True):
+        w = data.get("weight", 1.0)
+        scores[u] += w
+        scores[v] -= w
+    return sorted(scores, key=lambda n: (-scores[n], n))
 
 
 def _has_usable_eval_labels(qrels_for_query: list) -> bool:
@@ -669,9 +806,15 @@ def run_query(
         scc_cycle_burden = sum(len(s) for s in sccs if len(s) > 1)
 
     # ------------------------------------------------------------------
-    # 4. Reference ranking from qrels (evaluation-only labels)
+    # 4. Candidate-aligned reference ranking from qrels
     # ------------------------------------------------------------------
-    ref_ranking = _reference_ranking(qrels_for_query)[:top_k]
+    legacy_ref_ranking = _reference_ranking(qrels_for_query)[:top_k]
+    candidate_nodes = set(graph.nodes())
+    ref_ranking, rel_map = _reference_ranking_for_candidates(
+        qrels_for_query=qrels_for_query,
+        candidates=candidate_nodes,
+    )
+    candidate_set = set(ref_ranking)
 
     # Graph-vs-qrels inconsistency before/after repair
     graph_bew_pre = _backward_edge_weight(graph, ref_ranking)
@@ -704,6 +847,9 @@ def run_query(
     with Timer("ranking_topological", accumulator=query_acc):
         rankings["greedy_fas_topological"] = topological_ranking(dag)
 
+    with Timer("ranking_fas_weighted_balance", accumulator=query_acc):
+        rankings["greedy_fas_weighted_balance"] = _weighted_out_minus_in_ranking(dag)
+
     # ------------------------------------------------------------------
     # 7. Evaluation per method
     # ------------------------------------------------------------------
@@ -712,11 +858,24 @@ def run_query(
         for method_name, ranking in rankings.items():
             bew = _backward_edge_weight(graph, ranking)
             pic = _pairwise_inconsistency(graph, ranking)
-            tau = _kendall_tau(ranking, ref_ranking)
+            # Candidate-aligned ranking for primary quality metrics
+            ranking_aligned = [d for d in ranking if d in candidate_set]
+            tau = _kendall_tau(ranking_aligned, ref_ranking)
+            tau_legacy = _kendall_tau(ranking, legacy_ref_ranking)
+            ndcg = _ndcg_at_k(ranking_aligned, rel_map, k=top_k)
+            map_k = _average_precision_at_k(ranking_aligned, rel_map, k=top_k)
+            precision_k, recall_k = _precision_recall_at_k(ranking_aligned, rel_map, k=top_k)
+            pair_acc = _pairwise_accuracy_from_relevance(ranking_aligned, rel_map)
             method_metrics[method_name] = {
                 "backward_edge_weight": bew,
                 "pairwise_inconsistency": pic,
                 "kendall_tau": tau,
+                "kendall_tau_legacy": tau_legacy,
+                "ndcg_at_k": ndcg,
+                "map_at_k": map_k,
+                "precision_at_k": precision_k,
+                "recall_at_k": recall_k,
+                "pairwise_accuracy": pair_acc,
             }
 
     # ------------------------------------------------------------------
@@ -739,6 +898,7 @@ def run_query(
         "borda": timing_rows.get("ranking_borda", {}).get("total_s", 0.0),
         "pagerank": timing_rows.get("ranking_pagerank", {}).get("total_s", 0.0),
         "greedy_fas_topological": timing_rows.get("ranking_topological", {}).get("total_s", 0.0),
+        "greedy_fas_weighted_balance": timing_rows.get("ranking_fas_weighted_balance", {}).get("total_s", 0.0),
     }
 
     # ------------------------------------------------------------------
@@ -771,12 +931,45 @@ def run_query(
             "graph_ref_bew_post": round(graph_bew_post, 6),
             "graph_ref_pic_pre": graph_pic_pre,
             "graph_ref_pic_post": graph_pic_post,
+            # Evaluation context
+            "n_eval_candidates": len(ref_ranking),
+            "primary_metric": PRIMARY_QUALITY_METRIC,
             # Evaluation
             "backward_edge_weight": round(m_metrics["backward_edge_weight"], 6),
             "pairwise_inconsistency": m_metrics["pairwise_inconsistency"],
             "kendall_tau": (
                 round(m_metrics["kendall_tau"], 6)
                 if m_metrics["kendall_tau"] is not None
+                else None
+            ),
+            "kendall_tau_legacy": (
+                round(m_metrics["kendall_tau_legacy"], 6)
+                if m_metrics["kendall_tau_legacy"] is not None
+                else None
+            ),
+            "ndcg_at_k": (
+                round(m_metrics["ndcg_at_k"], 6)
+                if m_metrics["ndcg_at_k"] is not None
+                else None
+            ),
+            "map_at_k": (
+                round(m_metrics["map_at_k"], 6)
+                if m_metrics["map_at_k"] is not None
+                else None
+            ),
+            "precision_at_k": (
+                round(m_metrics["precision_at_k"], 6)
+                if m_metrics["precision_at_k"] is not None
+                else None
+            ),
+            "recall_at_k": (
+                round(m_metrics["recall_at_k"], 6)
+                if m_metrics["recall_at_k"] is not None
+                else None
+            ),
+            "pairwise_accuracy": (
+                round(m_metrics["pairwise_accuracy"], 6)
+                if m_metrics["pairwise_accuracy"] is not None
                 else None
             ),
             # Timings
@@ -1100,6 +1293,7 @@ def run_experiment(
             "preference_source": preference_source,
             "preference_source_note": source_note,
             "flip_prob": flip_prob if preference_source == "qrels_flip" else None,
+            "primary_metric": PRIMARY_QUALITY_METRIC,
             "n_processed": 0,
             "n_skipped": len(skipped),
             "skipped_reasons": [s["reason"] for s in skipped],
@@ -1209,6 +1403,12 @@ def _build_summary(rows: list[dict]) -> list[dict]:
         bew = _stats("backward_edge_weight")
         pic = _stats("pairwise_inconsistency")
         tau = _stats("kendall_tau")
+        tau_legacy = _stats("kendall_tau_legacy")
+        ndcg = _stats("ndcg_at_k")
+        map_k = _stats("map_at_k")
+        p_k = _stats("precision_at_k")
+        r_k = _stats("recall_at_k")
+        pair_acc = _stats("pairwise_accuracy")
         rt = _stats("runtime_total_s")
         n_nodes = _stats("n_nodes")
         n_edges = _stats("n_edges")
@@ -1235,6 +1435,13 @@ def _build_summary(rows: list[dict]) -> list[dict]:
             "tau_mean": tau["mean"],
             "tau_median": tau["median"],
             "tau_max": tau["max"],
+            "tau_legacy_mean": tau_legacy["mean"],
+            # Primary ranking quality metrics (candidate-aligned)
+            "ndcg_mean": ndcg["mean"],
+            "map_mean": map_k["mean"],
+            "precision_at_k_mean": p_k["mean"],
+            "recall_at_k_mean": r_k["mean"],
+            "pairwise_accuracy_mean": pair_acc["mean"],
             # Runtime
             "runtime_mean_s": rt["mean"],
             "runtime_median_s": rt["median"],
@@ -1313,6 +1520,14 @@ def _build_experiment_summary(
     avg_bew = {m: sum(vs) / len(vs) for m, vs in bew_by_method.items() if vs}
     best_method = min(avg_bew, key=avg_bew.get) if avg_bew else "n/a"
 
+    # Primary metric: candidate-aligned nDCG@k (higher is better)
+    ndcg_by_method: dict[str, list[float]] = defaultdict(list)
+    for r in all_rows:
+        if r.get("ndcg_at_k") is not None:
+            ndcg_by_method[r["method"]].append(r["ndcg_at_k"])
+    avg_ndcg = {m: sum(vs) / len(vs) for m, vs in ndcg_by_method.items() if vs}
+    best_method_by_primary = max(avg_ndcg, key=avg_ndcg.get) if avg_ndcg else "n/a"
+
     # Pre/post inconsistency of graph edges w.r.t. qrels reference
     avg_pre_pic = sum(r["graph_ref_pic_pre"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
     avg_post_pic = sum(r["graph_ref_pic_post"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
@@ -1349,6 +1564,9 @@ def _build_experiment_summary(
         "avg_runtime_by_method_s": {m: round(v, 6) for m, v in avg_rt_by_method.items()},
         "avg_bew_by_method": {m: round(v, 6) for m, v in avg_bew.items()},
         "best_method_by_bew": best_method,
+        "primary_metric": PRIMARY_QUALITY_METRIC,
+        "avg_primary_by_method": {m: round(v, 6) for m, v in avg_ndcg.items()},
+        "best_method_by_primary": best_method_by_primary,
         "avg_graph_ref_pic_pre": round(avg_pre_pic, 6),
         "avg_graph_ref_pic_post": round(avg_post_pic, 6),
         "avg_graph_ref_bew_pre": round(avg_pre_bew, 6),
@@ -1372,6 +1590,7 @@ def _print_experiment_summary(summary: dict, dataset: str) -> None:
     print(f"  Avg graph edges   : {summary['avg_n_edges']:.1f}")
     print(f"  Avg largest SCC   : {summary['avg_largest_scc']:.1f}")
     print(f"  % cyclic graphs   : {summary['pct_cyclic_graphs']:.1f}%")
+    print(f"  Primary metric    : {summary['primary_metric']}")
     print(f"  Avg FAS weight    : {summary['avg_fas_removed_weight']:.4f}")
     print(
         f"  Graph inconsistency pre/post (edges): "
@@ -1387,6 +1606,10 @@ def _print_experiment_summary(summary: dict, dataset: str) -> None:
     print(f"\n  Best method by backward-edge weight: {summary['best_method_by_bew']}")
     print(f"  Average BEW by method:")
     for m, v in summary["avg_bew_by_method"].items():
+        print(f"    {m:<30} {v:.4f}")
+    print(f"\n  Best method by primary metric: {summary['best_method_by_primary']}")
+    print(f"  Average primary metric by method:")
+    for m, v in summary["avg_primary_by_method"].items():
         print(f"    {m:<30} {v:.4f}")
 
 

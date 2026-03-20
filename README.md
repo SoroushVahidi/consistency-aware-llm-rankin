@@ -265,7 +265,7 @@ python scripts/generate_score_file.py --dataset scidocs --ranker minilm \
   --output outputs/real_signal/scidocs/scores_minilm.jsonl
 ```
 
-2) Build ranker-vote pairwise edges:
+2) Build ranker-vote pairwise edges (Votes v2 recommended):
 
 ```bash
 python scripts/build_votes_file.py --dataset scidocs \
@@ -274,9 +274,21 @@ python scripts/build_votes_file.py --dataset scidocs \
     outputs/real_signal/scidocs/scores_tfidf.jsonl \
     outputs/real_signal/scidocs/scores_minilm.jsonl \
   --top-k 20 \
+  --vote-weight-scheme margin \
+  --min-vote-margin 0.05 \
+  --abstain-missing \
+  --min-support 2 \
+  --min-aggregate-margin 0.1 \
   --query-id-file outputs/real_signal/scidocs/query_ids.txt \
   --output outputs/real_signal/scidocs/votes.jsonl
 ```
+
+Votes v2 knobs:
+- `--vote-weight-scheme {binary,margin}` (default `binary`)
+- `--min-vote-margin` (abstain below this per-ranker margin)
+- `--abstain-missing` (skip comparisons when either doc score is missing)
+- `--min-support` (minimum voters supporting a directed edge)
+- `--min-aggregate-margin` (minimum summed margin per directed edge)
 
 3) Run the experiment with `votes_file` (main real-signal path):
 
@@ -305,6 +317,7 @@ Expected external file formats:
 - `preference-source=votes_file` is the **main real-signal experiment** because it captures disagreement across rankers and can create non-trivial cycles.
 - `preference-source=score_file` is typically weaker for consistency analysis because a single score list is often close to transitive.
 - Qrels remain evaluation labels in all modes.
+- Primary ranking-quality metric in `run_real_experiment.py` is candidate-aligned `nDCG@k` (with MAP@k, Precision@k, Recall@k, and pairwise accuracy also reported). Kendall tau is secondary.
 
 ### BRIGHT — Manual Download (if needed)
 

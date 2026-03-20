@@ -105,6 +105,26 @@ def test_votes_for_query_from_conflicting_rankers():
     assert ("tfidf", "d2", "d1") in triples
 
 
+def test_votes_v2_margin_abstention_and_support_filter():
+    rows = build_votes_file._votes_for_query(
+        query_id="q1",
+        ranker_scores={
+            "r1": {"d1": 1.0, "d2": 0.95},   # margin 0.05 (abstain)
+            "r2": {"d1": 1.0, "d2": 0.70},   # margin 0.30 vote d1>d2
+            "r3": {"d1": 0.60, "d2": 0.90},  # margin 0.30 vote d2>d1
+            "r4": {"d1": 1.2},               # missing d2 -> abstain when enabled
+        },
+        top_k=2,
+        vote_weight_scheme="margin",
+        min_vote_margin=0.1,
+        abstain_missing=True,
+        min_support=2,
+        min_aggregate_margin=0.4,
+    )
+    # No edge should pass: each direction has only one supporting voter.
+    assert rows == []
+
+
 def test_build_votes_file_schema(tmp_path: Path, monkeypatch):
     monkeypatch.setattr(build_votes_file, "load_dataset_splits", lambda _ds: _mock_dataset())
     score_a = tmp_path / "a.jsonl"

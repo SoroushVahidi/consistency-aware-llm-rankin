@@ -11,6 +11,12 @@ import pytest
 
 from scripts.run_real_experiment import (
     _build_query_preferences,
+    _average_precision_at_k,
+    _ndcg_at_k,
+    _pairwise_accuracy_from_relevance,
+    _precision_recall_at_k,
+    _reference_ranking_for_candidates,
+    _weighted_out_minus_in_ranking,
     _flip_preference_directions,
     _has_usable_eval_labels,
     _load_pairwise_preference_file,
@@ -18,6 +24,8 @@ from scripts.run_real_experiment import (
     _score_entries_to_preferences,
 )
 from consistency_ranker.data.schema import QrelEntry
+from consistency_ranker.graph_construction import build_graph
+from consistency_ranker.pairwise_prefs import Preference
 
 
 def _qrels(*rows) -> list[QrelEntry]:
@@ -124,3 +132,34 @@ def test_build_query_preferences_score_file():
     assert len(prefs) == 1
     assert prefs[0].winner == "d1"
     assert "score file" in note
+
+
+def test_candidate_aligned_reference_and_quality_metrics():
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    ref, rel_map = _reference_ranking_for_candidates(qrels, {"d1", "d2", "dX"})
+    assert ref == ["d1", "d2", "dX"]
+    assert rel_map["d1"] == 2
+    assert rel_map["dX"] == 0
+
+    ranking = ["d2", "dX", "d1"]
+    ndcg = _ndcg_at_k(ranking, rel_map, k=2)
+    ap = _average_precision_at_k(ranking, rel_map, k=2)
+    p_at_k, r_at_k = _precision_recall_at_k(ranking, rel_map, k=2)
+    pair_acc = _pairwise_accuracy_from_relevance(ranking, rel_map)
+    assert ndcg is not None and 0.0 <= ndcg <= 1.0
+    assert ap is not None and 0.0 <= ap <= 1.0
+    assert p_at_k is not None and 0.0 <= p_at_k <= 1.0
+    assert r_at_k is not None and 0.0 <= r_at_k <= 1.0
+    assert pair_acc is not None and 0.0 <= pair_acc <= 1.0
+
+
+def test_weighted_out_minus_in_ranking_runs():
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    ranking = _weighted_out_minus_in_ranking(graph)
+    assert ranking[0] == "a"
