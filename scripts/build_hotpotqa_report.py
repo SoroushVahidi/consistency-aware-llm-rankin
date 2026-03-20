@@ -194,6 +194,8 @@ def main() -> int:
     report_lines.append(f"- **Avg BEW after:** {avg_bew_after:.2f}")
     report_lines.append(f"- **% queries where FAS changes ranking:** {pct_fas_changes:.1f}")
     report_lines.append("")
+    report_lines.append("**Interpretation (audit):** On HotpotQA, graphs are acyclic (0% cyclic). FAS removes **zero** edges; it produces a topological ordering. BEW measures *ranking violation of the graph* (how much RRF's order violates preferences), not cycle-based inconsistency. FAS changes rankings because RRF's order differs from the topological order, not because edges were removed. See `outputs/audit/HOTPOTQA_GRAPH_AUDIT_REPORT.md` for full audit.")
+    report_lines.append("")
     report_lines.append("## 6. Subset Results")
     report_lines.append("")
     top25 = sorted(rows, key=lambda r: r.get("bew_before", 0) or 0, reverse=True)[: max(1, n // 4)]
@@ -292,8 +294,9 @@ def main() -> int:
     report_lines.append("")
     report_lines.append(
         "HotpotQA has only 10 candidates per query (vs 100+ on BEIR). "
-        "Graphs are acyclic (0% cyclic) but FAS still changes 99% of rankings due to "
-        "different topological orderings. The selective-repair gain is modest but "
+        "Graphs are acyclic (0% cyclic); FAS removes zero edges and simply produces "
+        "a topological ordering. FAS changes 99% of rankings because RRF's order "
+        "differs from the topological order. The selective-repair gain is modest but "
         "consistent: BEW top 25% achieves best NDCG, avoiding FAS on low-conflict "
         "queries where RRF is strong."
     )
@@ -320,6 +323,18 @@ def main() -> int:
         "weaker than on FiQA/SciDocs high-conflict subsets; HotpotQA strengthens "
         "generalization rather than raw performance gains."
     )
+    report_lines.append("")
+    report_lines.append("## 12. Final Note: Exact Claims (Post-Audit)")
+    report_lines.append("")
+    report_lines.append("### HotpotQA SUPPORTS:")
+    report_lines.append("- **Selective reordering:** Choosing when to use graph-consistent (topological) ordering vs RRF improves NDCG.")
+    report_lines.append("- **Conflict-aware selection:** BEW (ranking violation of graph) is a useful signal for when to apply.")
+    report_lines.append("- **Generalization:** The selective-repair *policy* generalizes to sparse, acyclic multi-scorer settings.")
+    report_lines.append("")
+    report_lines.append("### HotpotQA DOES NOT SUPPORT:")
+    report_lines.append("- **Cycle repair:** No cycles exist; FAS removes zero edges.")
+    report_lines.append("- **MWFAS / feedback arc set:** FAS is not doing cycle removal on HotpotQA.")
+    report_lines.append("- **Inconsistency resolution:** There is no cycle-based inconsistency to resolve.")
 
     report_path = out_dir / "HOTPOTQA_EXPERIMENT_REPORT.md"
     report_path.write_text("\n".join(report_lines), encoding="utf-8")
