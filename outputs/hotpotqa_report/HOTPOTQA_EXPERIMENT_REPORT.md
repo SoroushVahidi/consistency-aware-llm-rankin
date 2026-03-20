@@ -1,5 +1,7 @@
 # HotpotQA Experiment Report
 
+**Graph regime: Acyclic.** HotpotQA supports *selective graph-consistent reordering*, not cycle repair. FAS removes zero edges; it produces a topological ordering. Do not overclaim.
+
 ## 1. Setup
 
 - **Dataset:** HotpotQA distractor dev (100 queries)
