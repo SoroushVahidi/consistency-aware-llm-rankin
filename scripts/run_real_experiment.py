@@ -19,6 +19,18 @@ Quick start
     python scripts/run_real_experiment.py --dataset fiqa \\
         --max-queries 50 --top-k 20 --save-timings --profile
 
+    # Synthetic conflict stress-test (qrels-derived + flips)
+    python scripts/run_real_experiment.py --dataset scidocs \\
+        --preference-source qrels_flip --flip-prob 0.15 --max-queries 50 --top-k 20
+
+    # External score-derived preferences
+    python scripts/run_real_experiment.py --dataset scidocs \\
+        --preference-source score_file --score-file path/to/scores.jsonl
+
+    # External pairwise preferences (LLM or multi-ranker votes)
+    python scripts/run_real_experiment.py --dataset scidocs \\
+        --preference-source llm_pairwise_file --pairwise-file path/to/pairs.jsonl
+
 Outputs (under ``--output-dir``, default ``outputs/``):
 - ``<dataset>_per_query.csv``        per-query × per-method results
 - ``<dataset>_summary.csv``          aggregate statistics per method
@@ -37,6 +49,7 @@ import random
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Iterable
 
 # Allow running as `python scripts/run_real_experiment.py` from repo root
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
@@ -74,6 +87,15 @@ MIN_JUDGED_DOCS = 2
 
 METHODS = ("score_sum", "borda", "pagerank", "greedy_fas_topological")
 """Ordered tuple of method names used as keys throughout the script."""
+
+PREFERENCE_SOURCES = (
+    "qrels",
+    "qrels_flip",
+    "score_file",
+    "llm_pairwise_file",
+    "votes_file",
+)
+"""Supported pairwise-preference sources for real-data experiments."""
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -226,6 +248,222 @@ def _kendall_tau(ranking: list[str], reference: list[str]) -> float | None:
     return (concordant - discordant) / total if total > 0 else 0.0
 
 
+def _has_usable_eval_labels(qrels_for_query: list) -> bool:
+    """Return True when qrels support evaluation ranking comparisons."""
+    unique_docs = {e.doc_id for e in qrels_for_query}
+    n_distinct_grades = len({e.relevance for e in qrels_for_query})
+    return len(unique_docs) >= MIN_JUDGED_DOCS and n_distinct_grades >= 2
+
+
+def _load_pairwise_preference_file(path: Path) -> dict[str, list[Preference]]:
+    """Load query-level pairwise preferences from a JSONL file.
+
+    Expected keys per line:
+    - query_id
+    - winner_doc_id / winner
+    - loser_doc_id / loser
+    - optional weight (default 1.0)
+    """
+    if not path.exists():
+        raise FileNotFoundError(f"Pairwise preference file not found: {path}")
+
+    result: dict[str, list[Preference]] = defaultdict(list)
+    with path.open(encoding="utf-8") as fh:
+        for lineno, line in enumerate(fh, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            query_id = row.get("query_id")
+            winner = row.get("winner_doc_id", row.get("winner"))
+            loser = row.get("loser_doc_id", row.get("loser"))
+            weight = row.get("weight", 1.0)
+            if query_id is None or winner is None or loser is None:
+                raise ValueError(
+                    f"{path}:{lineno} missing required keys "
+                    "(query_id, winner_doc_id/winner, loser_doc_id/loser)."
+                )
+            result[str(query_id)].append(
+                Preference(
+                    winner=str(winner),
+                    loser=str(loser),
+                    weight=float(weight),
+                )
+            )
+    return result
+
+
+def _load_score_file(path: Path) -> dict[str, list[tuple[str, float]]]:
+    """Load query-document scores from JSONL.
+
+    Expected keys per line:
+    - query_id
+    - doc_id
+    - score
+    """
+    if not path.exists():
+        raise FileNotFoundError(f"Score file not found: {path}")
+
+    by_query: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    with path.open(encoding="utf-8") as fh:
+        for lineno, line in enumerate(fh, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            if "query_id" not in row or "doc_id" not in row or "score" not in row:
+                raise ValueError(
+                    f"{path}:{lineno} missing required keys (query_id, doc_id, score)."
+                )
+            by_query[str(row["query_id"])].append(
+                (str(row["doc_id"]), float(row["score"]))
+            )
+    return by_query
+
+
+def _score_entries_to_preferences(
+    score_entries: list[tuple[str, float]],
+    top_k: int,
+    seed: int,
+) -> list[Preference]:
+    """Convert document scores to pairwise preferences (higher score wins)."""
+    if not score_entries:
+        return []
+    rng = random.Random(seed)
+    rng.shuffle(score_entries)
+    # Deduplicate docs by max score
+    best_score: dict[str, float] = {}
+    for doc_id, score in score_entries:
+        best_score[doc_id] = max(best_score.get(doc_id, score), score)
+    ranked = sorted(best_score.items(), key=lambda x: x[1], reverse=True)[:top_k]
+
+    prefs: list[Preference] = []
+    for i in range(len(ranked)):
+        for j in range(i + 1, len(ranked)):
+            winner, w_score = ranked[i]
+            loser, l_score = ranked[j]
+            margin = abs(w_score - l_score)
+            prefs.append(
+                Preference(
+                    winner=winner,
+                    loser=loser,
+                    weight=max(margin, 1e-6),
+                )
+            )
+    return prefs
+
+
+def _restrict_preferences_top_k(
+    prefs: list[Preference],
+    top_k: int,
+) -> list[Preference]:
+    """Restrict pairwise preferences to a top-k document subset."""
+    if not prefs:
+        return []
+    doc_strength: dict[str, float] = defaultdict(float)
+    for p in prefs:
+        doc_strength[p.winner] += p.weight
+        doc_strength[p.loser] += p.weight
+    keep_docs = {
+        doc for doc, _ in sorted(doc_strength.items(), key=lambda x: x[1], reverse=True)[:top_k]
+    }
+    return [p for p in prefs if p.winner in keep_docs and p.loser in keep_docs]
+
+
+def _flip_preference_directions(
+    prefs: list[Preference],
+    flip_prob: float,
+    seed: int,
+    query_id: str,
+) -> list[Preference]:
+    """Randomly flip preference directions for stress-testing cycles."""
+    if not (0.0 <= flip_prob <= 1.0):
+        raise ValueError(f"flip_prob must be in [0, 1], got {flip_prob}")
+    if flip_prob == 0.0:
+        return prefs
+
+    rng = random.Random(f"{seed}:{query_id}")
+    flipped: list[Preference] = []
+    for p in prefs:
+        if rng.random() < flip_prob:
+            flipped.append(Preference(winner=p.loser, loser=p.winner, weight=p.weight))
+        else:
+            flipped.append(p)
+    return flipped
+
+
+def _build_query_preferences(
+    *,
+    query_id: str,
+    qrels_for_query: list,
+    top_k: int,
+    weight_scheme: str,
+    seed: int,
+    preference_source: str,
+    flip_prob: float,
+    pairwise_index: dict[str, list[Preference]] | None,
+    score_index: dict[str, list[tuple[str, float]]] | None,
+) -> tuple[list[Preference], str]:
+    """Build preferences for a query from the selected source."""
+    if preference_source == "qrels":
+        schema_prefs = preferences_from_qrels(
+            qrels_for_query,
+            top_k=top_k,
+            seed=seed,
+            weight_scheme=weight_scheme,
+        )
+        prefs = [
+            Preference(winner=p.winner_doc_id, loser=p.loser_doc_id, weight=p.weight)
+            for p in schema_prefs
+        ]
+        return prefs, "label-derived pairwise preferences from qrels"
+
+    if preference_source == "qrels_flip":
+        schema_prefs = preferences_from_qrels(
+            qrels_for_query,
+            top_k=top_k,
+            seed=seed,
+            weight_scheme=weight_scheme,
+        )
+        base = [
+            Preference(winner=p.winner_doc_id, loser=p.loser_doc_id, weight=p.weight)
+            for p in schema_prefs
+        ]
+        flipped = _flip_preference_directions(
+            base,
+            flip_prob=flip_prob,
+            seed=seed,
+            query_id=query_id,
+        )
+        return (
+            flipped,
+            f"synthetic corruption: qrels-derived edges with flip_prob={flip_prob}",
+        )
+
+    if preference_source in {"llm_pairwise_file", "votes_file"}:
+        if pairwise_index is None:
+            raise ValueError("pairwise_index is required for pairwise file sources.")
+        prefs = _restrict_preferences_top_k(pairwise_index.get(query_id, []), top_k=top_k)
+        note = (
+            "external pairwise preferences from llm comparisons file"
+            if preference_source == "llm_pairwise_file"
+            else "external pairwise preferences from ranker votes file"
+        )
+        return prefs, note
+
+    if preference_source == "score_file":
+        if score_index is None:
+            raise ValueError("score_index is required for score_file source.")
+        prefs = _score_entries_to_preferences(
+            score_index.get(query_id, []),
+            top_k=top_k,
+            seed=seed,
+        )
+        return prefs, "external pairwise preferences induced from score file"
+
+    raise ValueError(f"Unknown preference_source: {preference_source!r}")
+
+
 # ---------------------------------------------------------------------------
 # Plotting helper (optional dependency)
 # ---------------------------------------------------------------------------
@@ -322,6 +560,10 @@ def run_query(
     top_k: int,
     weight_scheme: str,
     seed: int,
+    preference_source: str,
+    flip_prob: float,
+    pairwise_index: dict[str, list[Preference]] | None,
+    score_index: dict[str, list[tuple[str, float]]] | None,
     global_acc: TimingAccumulator,
 ) -> tuple[list[dict], dict | None]:
     """Run the full pipeline for a single query.
@@ -356,11 +598,11 @@ def run_query(
     qid = query.query_id
 
     # ------------------------------------------------------------------
-    # Safeguard: skip if too few distinct relevance-judged documents
+    # Safeguard: skip if evaluation labels are insufficient
     # ------------------------------------------------------------------
     unique_docs = {e.doc_id for e in qrels_for_query}
     n_distinct_grades = len({e.relevance for e in qrels_for_query})
-    if len(unique_docs) < MIN_JUDGED_DOCS or n_distinct_grades < 2:
+    if not _has_usable_eval_labels(qrels_for_query):
         return [], {
             "query_id": qid,
             "reason": f"only {len(unique_docs)} judged docs with {n_distinct_grades} distinct grade(s)",
@@ -373,24 +615,23 @@ def run_query(
     # 1. Generate pairwise preferences
     # ------------------------------------------------------------------
     with Timer("pairwise_preference_generation", accumulator=query_acc):
-        schema_prefs = preferences_from_qrels(
-            qrels_for_query,
+        prefs, pref_note = _build_query_preferences(
+            query_id=qid,
+            qrels_for_query=qrels_for_query,
             top_k=top_k,
-            seed=seed,
             weight_scheme=weight_scheme,
+            seed=seed,
+            preference_source=preference_source,
+            flip_prob=flip_prob,
+            pairwise_index=pairwise_index,
+            score_index=score_index,
         )
 
-    if not schema_prefs:
+    if not prefs:
         return [], {
             "query_id": qid,
-            "reason": "no pairwise preferences generated (all candidates have same grade)",
+            "reason": f"no preferences generated from source={preference_source!r}",
         }
-
-    # Convert PairwisePreference → pairwise_prefs.Preference for build_graph
-    prefs = [
-        Preference(winner=p.winner_doc_id, loser=p.loser_doc_id, weight=p.weight)
-        for p in schema_prefs
-    ]
 
     # ------------------------------------------------------------------
     # 2. Build graph
@@ -425,9 +666,13 @@ def run_query(
         scc_cycle_burden = sum(len(s) for s in sccs if len(s) > 1)
 
     # ------------------------------------------------------------------
-    # 4. Reference ranking from qrels (label-derived)
+    # 4. Reference ranking from qrels (evaluation-only labels)
     # ------------------------------------------------------------------
-    ref_ranking = _reference_ranking(qrels_for_query[:top_k])
+    ref_ranking = _reference_ranking(qrels_for_query)[:top_k]
+
+    # Graph-vs-qrels inconsistency before/after repair
+    graph_bew_pre = _backward_edge_weight(graph, ref_ranking)
+    graph_pic_pre = _pairwise_inconsistency(graph, ref_ranking)
 
     # ------------------------------------------------------------------
     # 5. Greedy FAS (shared repair — used by topological method)
@@ -436,6 +681,8 @@ def run_query(
         dag, removed_edges = greedy_fas(graph)
         fas_weight = greedy_fas_total_weight(removed_edges)
         fas_n_removed = len(removed_edges)
+    graph_bew_post = _backward_edge_weight(dag, ref_ranking)
+    graph_pic_post = _pairwise_inconsistency(dag, ref_ranking)
 
     # ------------------------------------------------------------------
     # 6. Ranking methods
@@ -502,6 +749,8 @@ def run_query(
             "dataset": dataset,
             "query_id": qid,
             "method": method_name,
+            "preference_source": preference_source,
+            "preference_source_note": pref_note,
             # Graph stats
             "n_nodes": n_nodes,
             "n_edges": n_edges,
@@ -514,6 +763,11 @@ def run_query(
             # FAS stats
             "fas_weight_removed": round(fas_weight, 6),
             "fas_n_edges_removed": fas_n_removed,
+            # Graph-vs-qrels inconsistency (pre/post FAS)
+            "graph_ref_bew_pre": round(graph_bew_pre, 6),
+            "graph_ref_bew_post": round(graph_bew_post, 6),
+            "graph_ref_pic_pre": graph_pic_pre,
+            "graph_ref_pic_post": graph_pic_post,
             # Evaluation
             "backward_edge_weight": round(m_metrics["backward_edge_weight"], 6),
             "pairwise_inconsistency": m_metrics["pairwise_inconsistency"],
@@ -571,6 +825,38 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="How to weight pairwise preferences.",
     )
     parser.add_argument(
+        "--preference-source",
+        type=str,
+        default="qrels",
+        choices=list(PREFERENCE_SOURCES),
+        help=(
+            "Source used to build preference graph: qrels (baseline), "
+            "qrels_flip (synthetic corruption), score_file (reranker scores), "
+            "llm_pairwise_file, or votes_file."
+        ),
+    )
+    parser.add_argument(
+        "--flip-prob",
+        type=float,
+        default=0.15,
+        help="Edge-flip probability used only when --preference-source qrels_flip.",
+    )
+    parser.add_argument(
+        "--pairwise-file",
+        type=Path,
+        default=None,
+        help=(
+            "JSONL pairwise file for llm_pairwise_file or votes_file modes "
+            "(query_id, winner_doc_id/winner, loser_doc_id/loser, weight?)."
+        ),
+    )
+    parser.add_argument(
+        "--score-file",
+        type=Path,
+        default=None,
+        help="JSONL score file for score_file mode (query_id, doc_id, score).",
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -610,6 +896,10 @@ def run_experiment(
     max_queries: int,
     top_k: int,
     weight_scheme: str,
+    preference_source: str,
+    flip_prob: float,
+    pairwise_file: Path | None,
+    score_file: Path | None,
     seed: int,
     output_dir: Path,
     save_timings: bool = False,
@@ -654,12 +944,41 @@ def run_experiment(
     print(f"  max_queries  : {max_queries}")
     print(f"  top_k        : {top_k}")
     print(f"  weight_scheme: {weight_scheme}")
+    print(f"  pref_source  : {preference_source}")
+    if preference_source == "qrels_flip":
+        print(f"  flip_prob    : {flip_prob}")
+    if pairwise_file is not None:
+        print(f"  pairwise_file: {pairwise_file}")
+    if score_file is not None:
+        print(f"  score_file   : {score_file}")
     print(f"  seed         : {seed}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
 
     global_acc = TimingAccumulator()
-    global_acc.set_metadata(dataset=dataset, max_queries=max_queries, top_k=top_k)
+    global_acc.set_metadata(
+        dataset=dataset,
+        max_queries=max_queries,
+        top_k=top_k,
+        preference_source=preference_source,
+        flip_prob=flip_prob if preference_source == "qrels_flip" else None,
+    )
+
+    pairwise_index: dict[str, list[Preference]] | None = None
+    score_index: dict[str, list[tuple[str, float]]] | None = None
+    with Timer("preference_source_loading", accumulator=global_acc):
+        if preference_source in {"llm_pairwise_file", "votes_file"}:
+            if pairwise_file is None:
+                raise ValueError(
+                    "--pairwise-file is required for llm_pairwise_file/votes_file modes."
+                )
+            pairwise_index = _load_pairwise_preference_file(pairwise_file)
+            print(f"[0] Loaded pairwise preferences for {len(pairwise_index)} queries")
+        elif preference_source == "score_file":
+            if score_file is None:
+                raise ValueError("--score-file is required for score_file mode.")
+            score_index = _load_score_file(score_file)
+            print(f"[0] Loaded score entries for {len(score_index)} queries")
 
     # ------------------------------------------------------------------
     # 1. Load dataset
@@ -686,9 +1005,9 @@ def run_experiment(
         for entry in qrels:
             qrels_by_query[entry.query_id].append(entry)
 
-        # Restrict to queries that have at least MIN_JUDGED_DOCS entries
+        # Restrict to queries that have usable evaluation labels
         eligible_qids = sorted(
-            qid for qid, entries in qrels_by_query.items() if len(entries) >= MIN_JUDGED_DOCS
+            qid for qid, entries in qrels_by_query.items() if _has_usable_eval_labels(entries)
         )
 
         rng = random.Random(seed)
@@ -722,6 +1041,10 @@ def run_experiment(
                 top_k=top_k,
                 weight_scheme=weight_scheme,
                 seed=seed,
+                preference_source=preference_source,
+                flip_prob=flip_prob,
+                pairwise_index=pairwise_index,
+                score_index=score_index,
                 global_acc=global_acc,
             )
 
@@ -745,7 +1068,24 @@ def run_experiment(
 
     if not all_rows:
         log.warning("No query results to save.")
-        return {"n_processed": 0, "n_skipped": len(skipped)}
+        source_note = {
+            "qrels": "Real preference edges derived directly from qrels (label-order DAG baseline).",
+            "qrels_flip": (
+                "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts."
+            ),
+            "score_file": "Real preference edges induced from external score file (reranker-style).",
+            "llm_pairwise_file": "Real preference edges loaded from external LLM pairwise judgments.",
+            "votes_file": "Real preference edges loaded from external multi-ranker vote pairs.",
+        }.get(preference_source, "Unknown preference source.")
+        return {
+            "dataset": dataset,
+            "preference_source": preference_source,
+            "preference_source_note": source_note,
+            "flip_prob": flip_prob if preference_source == "qrels_flip" else None,
+            "n_processed": 0,
+            "n_skipped": len(skipped),
+            "skipped_reasons": [s["reason"] for s in skipped],
+        }
 
     # ------------------------------------------------------------------
     # 4. Save per-query CSV
@@ -784,7 +1124,15 @@ def run_experiment(
     # ------------------------------------------------------------------
     # 8. Experiment summary
     # ------------------------------------------------------------------
-    summary = _build_experiment_summary(all_rows, skipped, global_acc, dataset, top_k)
+    summary = _build_experiment_summary(
+        all_rows,
+        skipped,
+        global_acc,
+        dataset,
+        top_k,
+        preference_source=preference_source,
+        flip_prob=flip_prob,
+    )
     _print_experiment_summary(summary, dataset)
 
     # Save summary JSON
@@ -846,6 +1194,12 @@ def _build_summary(rows: list[dict]) -> list[dict]:
         rt = _stats("runtime_total_s")
         n_nodes = _stats("n_nodes")
         n_edges = _stats("n_edges")
+        fas_w = _stats("fas_weight_removed")
+        cyc = _stats("is_cyclic")
+        pre_bew = _stats("graph_ref_bew_pre")
+        post_bew = _stats("graph_ref_bew_post")
+        pre_pic = _stats("graph_ref_pic_pre")
+        post_pic = _stats("graph_ref_pic_post")
 
         summary_rows.append({
             "method": method,
@@ -870,6 +1224,13 @@ def _build_summary(rows: list[dict]) -> list[dict]:
             # Graph size
             "n_nodes_mean": n_nodes["mean"],
             "n_edges_mean": n_edges["mean"],
+            # Cycle / FAS / pre-post consistency
+            "cyclic_pct": cyc["mean"] * 100 if cyc["mean"] is not None else None,
+            "fas_removed_weight_mean": fas_w["mean"],
+            "graph_ref_bew_pre_mean": pre_bew["mean"],
+            "graph_ref_bew_post_mean": post_bew["mean"],
+            "graph_ref_pic_pre_mean": pre_pic["mean"],
+            "graph_ref_pic_post_mean": post_pic["mean"],
         })
 
     return summary_rows
@@ -881,6 +1242,8 @@ def _build_experiment_summary(
     global_acc: TimingAccumulator,
     dataset: str,
     top_k: int,
+    preference_source: str,
+    flip_prob: float,
 ) -> dict:
     """Build a structured experiment summary dict.
 
@@ -932,12 +1295,32 @@ def _build_experiment_summary(
     avg_bew = {m: sum(vs) / len(vs) for m, vs in bew_by_method.items() if vs}
     best_method = min(avg_bew, key=avg_bew.get) if avg_bew else "n/a"
 
+    # Pre/post inconsistency of graph edges w.r.t. qrels reference
+    avg_pre_pic = sum(r["graph_ref_pic_pre"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
+    avg_post_pic = sum(r["graph_ref_pic_post"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
+    avg_pre_bew = sum(r["graph_ref_bew_pre"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
+    avg_post_bew = sum(r["graph_ref_bew_post"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
+    avg_fas_weight = sum(r["fas_weight_removed"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
+
     # Global timing summary
     timing_summary = {row["stage"]: row for row in global_acc.summary_rows()}
+
+    source_note = {
+        "qrels": "Real preference edges derived directly from qrels (label-order DAG baseline).",
+        "qrels_flip": (
+            "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts."
+        ),
+        "score_file": "Real preference edges induced from external score file (reranker-style).",
+        "llm_pairwise_file": "Real preference edges loaded from external LLM pairwise judgments.",
+        "votes_file": "Real preference edges loaded from external multi-ranker vote pairs.",
+    }.get(preference_source, "Unknown preference source.")
 
     return {
         "dataset": dataset,
         "top_k": top_k,
+        "preference_source": preference_source,
+        "preference_source_note": source_note,
+        "flip_prob": flip_prob if preference_source == "qrels_flip" else None,
         "n_processed": n_processed,
         "n_skipped": n_skipped,
         "skipped_reasons": [s["reason"] for s in skipped],
@@ -948,6 +1331,11 @@ def _build_experiment_summary(
         "avg_runtime_by_method_s": {m: round(v, 6) for m, v in avg_rt_by_method.items()},
         "avg_bew_by_method": {m: round(v, 6) for m, v in avg_bew.items()},
         "best_method_by_bew": best_method,
+        "avg_graph_ref_pic_pre": round(avg_pre_pic, 6),
+        "avg_graph_ref_pic_post": round(avg_post_pic, 6),
+        "avg_graph_ref_bew_pre": round(avg_pre_bew, 6),
+        "avg_graph_ref_bew_post": round(avg_post_bew, 6),
+        "avg_fas_removed_weight": round(avg_fas_weight, 6),
         "global_timings": {
             stage: {"total_s": row["total_s"], "mean_s": row["mean_s"]}
             for stage, row in timing_summary.items()
@@ -961,10 +1349,20 @@ def _print_experiment_summary(summary: dict, dataset: str) -> None:
     print(f"{'='*65}")
     print(f"  Queries processed : {summary['n_processed']}")
     print(f"  Queries skipped   : {summary['n_skipped']}")
+    print(f"  Preference source : {summary['preference_source']}")
     print(f"  Avg graph nodes   : {summary['avg_n_nodes']:.1f}")
     print(f"  Avg graph edges   : {summary['avg_n_edges']:.1f}")
     print(f"  Avg largest SCC   : {summary['avg_largest_scc']:.1f}")
     print(f"  % cyclic graphs   : {summary['pct_cyclic_graphs']:.1f}%")
+    print(f"  Avg FAS weight    : {summary['avg_fas_removed_weight']:.4f}")
+    print(
+        f"  Graph inconsistency pre/post (edges): "
+        f"{summary['avg_graph_ref_pic_pre']:.4f} -> {summary['avg_graph_ref_pic_post']:.4f}"
+    )
+    print(
+        f"  Graph inconsistency pre/post (weight): "
+        f"{summary['avg_graph_ref_bew_pre']:.4f} -> {summary['avg_graph_ref_bew_post']:.4f}"
+    )
     print(f"\n  Average runtime by method (s):")
     for m, v in summary["avg_runtime_by_method_s"].items():
         print(f"    {m:<30} {v:.6f}")
@@ -1012,6 +1410,10 @@ def main(argv: list[str] | None = None) -> None:
         max_queries=args.max_queries,
         top_k=args.top_k,
         weight_scheme=args.weight_scheme,
+        preference_source=args.preference_source,
+        flip_prob=args.flip_prob,
+        pairwise_file=args.pairwise_file,
+        score_file=args.score_file,
         seed=args.seed,
         output_dir=args.output_dir,
         save_timings=args.save_timings,

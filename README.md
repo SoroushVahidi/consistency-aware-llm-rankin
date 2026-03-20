@@ -233,6 +233,36 @@ Each prepared dataset produces:
 - `qrels.jsonl`    — one `{"query_id": "...", "doc_id": "...", "relevance": 0|1}` per line
 - `pairwise/preferences.jsonl` — pairwise preferences derived from relevance grades
 
+### Step 4 — Run Real-Data Experiments
+
+```bash
+# Baseline mode (label-derived pairwise DAG)
+python scripts/run_real_experiment.py --dataset scidocs --max-queries 50 --top-k 20 --save-timings --profile
+
+# Stress-test mode (synthetic conflict injection)
+python scripts/run_real_experiment.py --dataset scidocs --preference-source qrels_flip --flip-prob 0.15 \
+  --max-queries 50 --top-k 20 --save-timings --profile
+
+# External score mode (reranker score comparisons)
+python scripts/run_real_experiment.py --dataset scidocs --preference-source score_file \
+  --score-file /path/to/scores.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+
+# External pairwise mode (LLM judgments or ranker votes)
+python scripts/run_real_experiment.py --dataset scidocs --preference-source llm_pairwise_file \
+  --pairwise-file /path/to/pairwise.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+python scripts/run_real_experiment.py --dataset scidocs --preference-source votes_file \
+  --pairwise-file /path/to/pairwise.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+```
+
+Expected external file formats:
+- `scores.jsonl`: `{"query_id": "...", "doc_id": "...", "score": 1.23}`
+- `pairwise.jsonl`: `{"query_id": "...", "winner_doc_id": "...", "loser_doc_id": "...", "weight": 1.0}`
+
+**Interpretation note (important):**
+- `preference-source=qrels_flip` uses **synthetic corruption** (random edge flips).
+- `preference-source=score_file`, `llm_pairwise_file`, and `votes_file` use **real external preference signals** (if your input files are real).
+- Qrels remain evaluation labels in all modes.
+
 ### BRIGHT — Manual Download (if needed)
 
 If `python scripts/download_datasets.py --dataset bright` fails, follow these steps:
