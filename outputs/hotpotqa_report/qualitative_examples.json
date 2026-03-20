@@ -1,0 +1,110 @@
+{
+  "selective_repair_helps": [
+    {
+      "query_id": "5a8e1027554299653c1aa15f",
+      "question": "Which year and which conference was the 14th season for this conference as part of the NCAA Division that the Colorado Buffaloes played in with a record of 2-6 in conference play?",
+      "query_type": "bridge",
+      "bew_before": 15.786289966792005,
+      "disagreement": 0.9333333333333333,
+      "ndcg_rrf": 0.5437713091520254,
+      "ndcg_fas": 1.0,
+      "relevant_ids": [
+        "5a8e1027554299653c1aa15f::2009 Colorado Buffaloes football team",
+        "5a8e1027554299653c1aa15f::2009 Big 12 Conference football season"
+      ]
+    },
+    {
+      "query_id": "5ab3b0bf5542992ade7c6e39",
+      "question": "What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger as a former New York Police detective?",
+      "query_type": "bridge",
+      "bew_before": 31.723128491362715,
+      "disagreement": 0.9777777777777777,
+      "ndcg_rrf": 0.6934264036172708,
+      "ndcg_fas": 0.9197207891481876,
+      "relevant_ids": [
+        "5ab3b0bf5542992ade7c6e39::End of Days (film)",
+        "5ab3b0bf5542992ade7c6e39::Oh My God (Guns N' Roses song)"
+      ]
+    },
+    {
+      "query_id": "5a80721b554299485f5985ef",
+      "question": "The Livesey Hal War Memorial commemorates the fallen of which war, that had over 60 million casualties?",
+      "query_type": "bridge",
+      "bew_before": 39.47651418987727,
+      "disagreement": 0.9777777777777777,
+      "ndcg_rrf": 0.8315546295836225,
+      "ndcg_fas": 1.0,
+      "relevant_ids": [
+        "5a80721b554299485f5985ef::Livesey Hall War Memorial",
+        "5a80721b554299485f5985ef::World War II casualties"
+      ]
+    },
+    {
+      "query_id": "5a87c13f5542996e4f30890c",
+      "question": "In what city did the \"Prince of tenors\" star in a film based on an opera by Giacomo Puccini?",
+      "query_type": "bridge",
+      "bew_before": 2.929316058208765,
+      "disagreement": 1.2888888888888888,
+      "ndcg_rrf": 0.8315546295836225,
+      "ndcg_fas": 1.0,
+      "relevant_ids": [
+        "5a87c13f5542996e4f30890c::Franco Corelli",
+        "5a87c13f5542996e4f30890c::Tosca (1956 film)"
+      ]
+    },
+    {
+      "query_id": "5a77152355429966f1a36c2e",
+      "question": "What was the Roud Folk Song Index of the nursery rhyme inspiring What Are Little Girls Made Of?",
+      "query_type": "bridge",
+      "bew_before": 27.191494292615552,
+      "disagreement": 1.3333333333333333,
+      "ndcg_rrf": 0.8503449055347546,
+      "ndcg_fas": 1.0,
+      "relevant_ids": [
+        "5a77152355429966f1a36c2e::What Are Little Boys Made Of?",
+        "5a77152355429966f1a36c2e::What Are Little Girls Made Of?"
+      ]
+    }
+  ],
+  "failure_cases": [
+    {
+      "query_id": "5abc0a5d5542993f40c73c64",
+      "question": "Are Freakonomics and In the Realm of the Hackers both American documentaries?",
+      "query_type": "comparison",
+      "bew_before": 3.8877836557866727,
+      "disagreement": 1.2,
+      "ndcg_rrf": 1.0,
+      "ndcg_fas": 0.6052602440527057,
+      "relevant_ids": [
+        "5abc0a5d5542993f40c73c64::In the Realm of the Hackers",
+        "5abc0a5d5542993f40c73c64::Freakonomics (film)"
+      ]
+    },
+    {
+      "query_id": "5ae5736e5542990ba0bbb2b3",
+      "question": "When was the American lawyer, lobbyist and political consultant who was a senior member of the presidential campaign of Donald Trump born?",
+      "query_type": "bridge",
+      "bew_before": 3.8922563211143775,
+      "disagreement": 0.3111111111111111,
+      "ndcg_rrf": 1.0,
+      "ndcg_fas": 0.6934264036172708,
+      "relevant_ids": [
+        "5ae5736e5542990ba0bbb2b3::Paul Manafort",
+        "5ae5736e5542990ba0bbb2b3::Trump campaign\u2013Russian meeting"
+      ]
+    },
+    {
+      "query_id": "5a85b2d95542997b5ce40028",
+      "question": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+      "query_type": "bridge",
+      "bew_before": 2.3711191835955425,
+      "disagreement": 0.48888888888888893,
+      "ndcg_rrf": 1.0,
+      "ndcg_fas": 0.6934264036172708,
+      "relevant_ids": [
+        "5a85b2d95542997b5ce40028::Eenasul Fateh",
+        "5a85b2d95542997b5ce40028::Management consulting"
+      ]
+    }
+  ]
+}
