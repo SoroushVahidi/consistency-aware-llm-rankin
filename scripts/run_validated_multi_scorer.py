@@ -28,6 +28,7 @@ from consistency_ranker.data.unified_loader import (
     preferences_from_multiple_score_rankings,
 )
 from consistency_ranker.evaluation import mrr, ndcg_at_k, recall_at_k
+from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.greedy_fas import greedy_fas
 from consistency_ranker.pairwise_prefs import Preference
@@ -110,7 +111,14 @@ def run_query(
     # BEW: backward edge weight of ranking on original graph (lower = more consistent)
     bew_bm25 = _backward_edge_weight(graph, rankings["bm25_raw"])
     bew_fas = _backward_edge_weight(graph, rankings["greedy_fas_topological"])
-    results["_graph_stats"] = {"bew_bm25_raw": bew_bm25, "bew_fas": bew_fas}
+    is_cyclic = has_cycle(graph)
+    n_sccs = nx.number_strongly_connected_components(graph)
+    results["_graph_stats"] = {
+        "bew_bm25_raw": bew_bm25,
+        "bew_fas": bew_fas,
+        "cyclic": is_cyclic,
+        "n_sccs": n_sccs,
+    }
     if return_rankings:
         return results, rankings
     return results
