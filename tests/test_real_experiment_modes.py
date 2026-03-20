@@ -10,6 +10,8 @@ from pathlib import Path
 import pytest
 
 from scripts.run_real_experiment import (
+    _hybrid_rrf_component_ranking,
+    _hybrid_rrf_priority_topological_ranking,
     _build_query_preferences,
     _average_precision_at_k,
     _copeland_ranking,
@@ -196,3 +198,25 @@ def test_rrf_prior_and_hybrid_ranking():
     graph = build_graph([Preference("a", "b", 1.0), Preference("c", "b", 1.0)])
     ranking = _hybrid_rrf_fas_regularized_ranking(graph, pri, fas_regularization=0.2)
     assert ranking[0] in {"a", "c"}
+
+
+def test_hybrid_component_variants():
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    pri = {"a": 0.7, "b": 0.1, "c": 0.4}
+    r_balance = _hybrid_rrf_component_ranking(
+        graph, pri, component="balance", alpha=0.5
+    )
+    r_copeland = _hybrid_rrf_component_ranking(
+        graph, pri, component="copeland", alpha=0.3
+    )
+    r_prio = _hybrid_rrf_priority_topological_ranking(
+        graph, pri, component="balance", alpha=0.3
+    )
+    assert r_balance[0] in {"a", "c"}
+    assert r_copeland[0] in {"a", "c"}
+    assert r_prio.index("b") == len(r_prio) - 1

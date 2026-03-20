@@ -100,6 +100,9 @@ METHODS = (
     "greedy_fas_copeland",
     "greedy_fas_score_augmented_topological",
     "hybrid_rrf_fas_regularized",
+    "hybrid_rrf_balance_a05",
+    "hybrid_rrf_copeland_a03",
+    "hybrid_rrf_priority_topo_a03",
 )
 """Ordered tuple of method names used as keys throughout the script."""
 
@@ -450,6 +453,58 @@ def _hybrid_rrf_fas_regularized_ranking(
         for n in dag.nodes()
     }
     return sorted(combo, key=lambda n: (-combo[n], n))
+
+
+def _hybrid_rrf_component_ranking(
+    dag: nx.DiGraph,
+    prior_scores: dict[str, float],
+    *,
+    component: str = "balance",
+    alpha: float = 0.2,
+) -> list[str]:
+    """Hybrid score ranking from score prior + repaired-graph component."""
+    if not dag.nodes():
+        return []
+    if component == "balance":
+        comp_raw: dict[str, float] = {n: 0.0 for n in dag.nodes()}
+        for u, v, data in dag.edges(data=True):
+            w = data.get("weight", 1.0)
+            comp_raw[u] += w
+            comp_raw[v] -= w
+    elif component == "copeland":
+        comp_raw = {n: float(dag.out_degree(n) - dag.in_degree(n)) for n in dag.nodes()}
+    else:
+        raise ValueError(f"Unknown component: {component!r}")
+
+    prior_n = _normalize_scores({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
+    comp_n = _normalize_scores(comp_raw)
+    combo = {n: prior_n.get(n, 0.0) + alpha * comp_n.get(n, 0.0) for n in dag.nodes()}
+    return sorted(combo, key=lambda n: (-combo[n], n))
+
+
+def _hybrid_rrf_priority_topological_ranking(
+    dag: nx.DiGraph,
+    prior_scores: dict[str, float],
+    *,
+    component: str = "balance",
+    alpha: float = 0.3,
+) -> list[str]:
+    """Hybrid priority topological ranking using prior + repaired component."""
+    if component == "balance":
+        comp_raw: dict[str, float] = {n: 0.0 for n in dag.nodes()}
+        for u, v, data in dag.edges(data=True):
+            w = data.get("weight", 1.0)
+            comp_raw[u] += w
+            comp_raw[v] -= w
+    elif component == "copeland":
+        comp_raw = {n: float(dag.out_degree(n) - dag.in_degree(n)) for n in dag.nodes()}
+    else:
+        raise ValueError(f"Unknown component: {component!r}")
+
+    prior_n = _normalize_scores({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
+    comp_n = _normalize_scores(comp_raw)
+    pri = {n: prior_n.get(n, 0.0) + alpha * comp_n.get(n, 0.0) for n in dag.nodes()}
+    return _priority_topological_ranking(dag, pri)
 
 
 def _load_score_prior_files(
@@ -967,6 +1022,30 @@ def run_query(
             fas_regularization=0.2,
         )
 
+    with Timer("ranking_hybrid_rrf_balance_a05", accumulator=query_acc):
+        rankings["hybrid_rrf_balance_a05"] = _hybrid_rrf_component_ranking(
+            dag,
+            prior_scores=prior_scores,
+            component="balance",
+            alpha=0.5,
+        )
+
+    with Timer("ranking_hybrid_rrf_copeland_a03", accumulator=query_acc):
+        rankings["hybrid_rrf_copeland_a03"] = _hybrid_rrf_component_ranking(
+            dag,
+            prior_scores=prior_scores,
+            component="copeland",
+            alpha=0.3,
+        )
+
+    with Timer("ranking_hybrid_rrf_priority_topo_a03", accumulator=query_acc):
+        rankings["hybrid_rrf_priority_topo_a03"] = _hybrid_rrf_priority_topological_ranking(
+            dag,
+            prior_scores=prior_scores,
+            component="balance",
+            alpha=0.3,
+        )
+
     # ------------------------------------------------------------------
     # 7. Evaluation per method
     # ------------------------------------------------------------------
@@ -1022,6 +1101,15 @@ def run_query(
         ).get("total_s", 0.0),
         "hybrid_rrf_fas_regularized": timing_rows.get(
             "ranking_hybrid_rrf_fas_regularized", {}
+        ).get("total_s", 0.0),
+        "hybrid_rrf_balance_a05": timing_rows.get(
+            "ranking_hybrid_rrf_balance_a05", {}
+        ).get("total_s", 0.0),
+        "hybrid_rrf_copeland_a03": timing_rows.get(
+            "ranking_hybrid_rrf_copeland_a03", {}
+        ).get("total_s", 0.0),
+        "hybrid_rrf_priority_topo_a03": timing_rows.get(
+            "ranking_hybrid_rrf_priority_topo_a03", {}
         ).get("total_s", 0.0),
     }
 
