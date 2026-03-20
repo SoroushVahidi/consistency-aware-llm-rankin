@@ -192,6 +192,9 @@ python scripts/download_datasets.py --dataset fiqa
 python scripts/download_datasets.py --dataset hotpotqa
 python scripts/download_datasets.py --dataset bright
 
+# Download a specific BRIGHT task/domain
+python scripts/download_datasets.py --dataset bright --bright-task biology
+
 # Download all datasets at once
 python scripts/download_datasets.py --dataset all
 
@@ -244,6 +247,9 @@ If `python scripts/download_datasets.py --dataset bright` fails, follow these st
    - `queries.jsonl`
    - `documents.jsonl`
    - `qrels.jsonl`
+   - accepted query keys: `query_id` or `id`; text keys: `text` or `query` or `question`
+   - accepted document keys: `doc_id` or `id` (plus `text`, optional `title`)
+   - accepted qrels keys: `query_id`/`query-id`, `doc_id`/`corpus-id`, `relevance`/`score`
 5. Then run:
    ```bash
    python scripts/prepare_datasets.py --dataset bright

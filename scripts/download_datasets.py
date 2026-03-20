@@ -28,6 +28,7 @@ Options
 --dataset       Dataset to download (default: ``all``)
 --max-docs      Maximum corpus documents to download (default: unlimited)
 --max-queries   Maximum queries to download (default: unlimited)
+--bright-task   BRIGHT task/domain (default: ``biology``)
 --force         Re-download even if local files exist
 
 Requirements
@@ -132,9 +133,18 @@ def download_hotpotqa(force: bool, max_docs: int | None, max_queries: int | None
     )
 
 
-def download_bright(force: bool, max_docs: int | None, max_queries: int | None) -> None:
+def download_bright(
+    force: bool,
+    max_docs: int | None,
+    max_queries: int | None,
+    bright_task: str,
+) -> None:
     """Attempt to download BRIGHT; create placeholder if unavailable."""
-    from consistency_ranker.data.bright_loader import BrightNotAvailableError, download_bright
+    from consistency_ranker.data.bright_loader import (
+        BRIGHT_TASKS,
+        BrightNotAvailableError,
+        download_bright,
+    )
 
     cfg = get_config("bright")
     raw_path = cfg.raw_path
@@ -144,12 +154,19 @@ def download_bright(force: bool, max_docs: int | None, max_queries: int | None) 
         print(f"[bright] Raw files already exist in {raw_path}. Skipping (use --force to re-download).")
         return
 
-    print("[bright] Attempting to download BRIGHT from HuggingFace …")
+    if bright_task not in BRIGHT_TASKS:
+        print(
+            f"[bright] ERROR: unknown task {bright_task!r}. "
+            f"Choose one of: {list(BRIGHT_TASKS)}"
+        )
+        return
+
+    print(f"[bright] Attempting to download BRIGHT task={bright_task!r} from HuggingFace …")
     try:
         from consistency_ranker.data.beir_loader import write_jsonl
         queries, documents, qrels = download_bright(
             raw_path=raw_path,
-            task="biology",
+            task=bright_task,
             max_examples=max_queries,
         )
         if max_docs is not None:
@@ -199,6 +216,12 @@ def main() -> None:
         action="store_true",
         help="Re-download even if local files already exist",
     )
+    parser.add_argument(
+        "--bright-task",
+        type=str,
+        default="biology",
+        help="BRIGHT task/domain to download (used when --dataset bright or all).",
+    )
     args = parser.parse_args()
 
     if not _check_datasets_installed():
@@ -220,7 +243,7 @@ def main() -> None:
         elif name == "hotpotqa":
             download_hotpotqa(args.force, args.max_docs, args.max_queries)
         elif name == "bright":
-            download_bright(args.force, args.max_docs, args.max_queries)
+            download_bright(args.force, args.max_docs, args.max_queries, args.bright_task)
 
     print("\nAll requested downloads complete.")
 
