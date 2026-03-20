@@ -4,6 +4,10 @@ numpy>=1.26
 scipy>=1.11
 tqdm>=4.66
 
+# Dataset download and loading
+datasets>=2.18
+huggingface-hub>=0.21
+
 # Development / testing
 pytest>=7.4
 pytest-cov>=4.1

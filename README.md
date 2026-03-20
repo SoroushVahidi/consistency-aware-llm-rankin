@@ -38,7 +38,14 @@ consistency-aware-llm-rankin/
 ├── src/
 │   └── consistency_ranker/        # Main Python package
 │       ├── __init__.py
-│       ├── data_loader.py          # Load datasets from disk
+│       ├── data/                   # Dataset loading sub-package
+│       │   ├── schema.py           # Query, Document, QrelEntry, PairwisePreference
+│       │   ├── dataset_registry.py # DatasetConfig registry (scidocs, fiqa, hotpotqa, bright)
+│       │   ├── beir_loader.py      # BEIR corpus/queries/qrels loader
+│       │   ├── hotpotqa_loader.py  # HotpotQA loader
+│       │   ├── bright_loader.py    # BRIGHT loader (with manual-download fallback)
+│       │   └── unified_loader.py   # preferences_from_qrels() + load_dataset_splits()
+│       ├── data_loader.py          # Legacy generic file loader
 │       ├── synthetic_data.py       # Generate synthetic items + ground-truth ranking
 │       ├── pairwise_prefs.py       # Generate noisy pairwise preferences
 │       ├── graph_construction.py   # Build weighted directed preference graphs
@@ -50,8 +57,22 @@ consistency-aware-llm-rankin/
 ├── tests/                          # Unit tests (pytest)
 ├── notebooks/                      # Jupyter exploration notebooks
 ├── scripts/
-│   └── run_synthetic.py            # CLI: end-to-end synthetic experiment
-├── data/                           # Raw and processed datasets
+│   ├── run_synthetic.py            # CLI: end-to-end synthetic experiment
+│   ├── download_datasets.py        # CLI: download real benchmark datasets
+│   └── prepare_datasets.py         # CLI: convert raw data to unified JSONL format
+├── data/
+│   ├── raw/                        # Downloaded raw dataset files
+│   │   ├── beir/scidocs/
+│   │   ├── beir/fiqa/
+│   │   ├── hotpotqa/
+│   │   └── bright/
+│   ├── processed/                  # Unified JSONL outputs + pairwise preferences
+│   │   ├── beir/scidocs/pairwise/
+│   │   ├── beir/fiqa/pairwise/
+│   │   ├── hotpotqa/pairwise/
+│   │   └── bright/pairwise/
+│   ├── interim/                    # Scratch space
+│   └── cache/                      # HuggingFace cache
 ├── outputs/                        # Experiment results (JSON, CSV)
 ├── docs/                           # Extended documentation
 ├── pyproject.toml
@@ -117,6 +138,116 @@ pytest
 # or with coverage
 pytest --cov=consistency_ranker
 ```
+
+---
+
+## Real Benchmark Datasets
+
+This project supports four real retrieval benchmarks.  All datasets are
+downloaded from HuggingFace and normalised into a common JSONL format.
+
+### Dataset Overview
+
+| Name | Short ID | Source | Description |
+|------|----------|--------|-------------|
+| BEIR / SciDocs | `scidocs` | [BeIR/scidocs](https://huggingface.co/BeIR/scidocs) | Citation recommendation and scientific document retrieval |
+| BEIR / FiQA-2018 | `fiqa` | [BeIR/fiqa](https://huggingface.co/BeIR/fiqa) | Financial opinion QA and retrieval |
+| HotpotQA | `hotpotqa` | [hotpot_qa](https://huggingface.co/datasets/hotpot_qa) | Multi-hop question answering over Wikipedia |
+| BRIGHT | `bright` | [xlangai/BRIGHT](https://huggingface.co/datasets/xlangai/BRIGHT) | Reasoning-intensive retrieval (may need manual download) |
+
+### Where Files Are Stored
+
+```
+data/
+├── raw/
+│   ├── beir/scidocs/        # Raw downloaded files (queries, docs, qrels JSONL)
+│   ├── beir/fiqa/
+│   ├── hotpotqa/
+│   └── bright/              # Contains README.md with manual instructions if needed
+├── processed/
+│   ├── beir/scidocs/        # Unified queries.jsonl, documents.jsonl, qrels.jsonl
+│   │   └── pairwise/        # preferences.jsonl derived from qrels
+│   ├── beir/fiqa/
+│   │   └── pairwise/
+│   ├── hotpotqa/
+│   │   └── pairwise/
+│   └── bright/
+│       └── pairwise/
+├── interim/                 # Scratch space for intermediate processing
+└── cache/                   # HuggingFace dataset cache
+```
+
+### Step 1 — Install Dataset Dependencies
+
+```bash
+pip install datasets huggingface-hub
+```
+
+### Step 2 — Download Datasets
+
+```bash
+# Download a single dataset
+python scripts/download_datasets.py --dataset scidocs
+python scripts/download_datasets.py --dataset fiqa
+python scripts/download_datasets.py --dataset hotpotqa
+python scripts/download_datasets.py --dataset bright
+
+# Download all datasets at once
+python scripts/download_datasets.py --dataset all
+
+# Limit size for quick experiments
+python scripts/download_datasets.py --dataset hotpotqa --max-queries 200
+```
+
+> **Note on BRIGHT:** If BRIGHT cannot be downloaded automatically (authentication
+> required or dataset not yet public), the script will create
+> `data/raw/bright/README.md` with exact manual download steps.
+
+### Step 3 — Prepare Datasets (Unified Format + Pairwise Preferences)
+
+```bash
+# Prepare a single dataset
+python scripts/prepare_datasets.py --dataset scidocs
+python scripts/prepare_datasets.py --dataset fiqa
+python scripts/prepare_datasets.py --dataset hotpotqa
+python scripts/prepare_datasets.py --dataset bright
+
+# Prepare all datasets
+python scripts/prepare_datasets.py --dataset all
+
+# Customise preprocessing
+python scripts/prepare_datasets.py --dataset scidocs --top-k 50 --max-queries 200 --seed 123
+python scripts/prepare_datasets.py --dataset fiqa --weight-scheme binary
+```
+
+Each prepared dataset produces:
+- `queries.jsonl`  — one `{"query_id": "...", "text": "..."}` per line
+- `documents.jsonl` — one `{"doc_id": "...", "text": "...", "title": "..."}` per line
+- `qrels.jsonl`    — one `{"query_id": "...", "doc_id": "...", "relevance": 0|1}` per line
+- `pairwise/preferences.jsonl` — pairwise preferences derived from relevance grades
+
+### BRIGHT — Manual Download (if needed)
+
+If `python scripts/download_datasets.py --dataset bright` fails, follow these steps:
+
+1. Visit <https://huggingface.co/datasets/xlangai/BRIGHT> and accept any licence terms.
+2. Log in to HuggingFace CLI (if the dataset is gated):
+   ```bash
+   huggingface-cli login
+   ```
+3. Download the dataset:
+   ```python
+   from datasets import load_dataset
+   ds = load_dataset("xlangai/BRIGHT")
+   ```
+4. Export to JSONL and place files in `data/raw/bright/`:
+   - `queries.jsonl`
+   - `documents.jsonl`
+   - `qrels.jsonl`
+5. Then run:
+   ```bash
+   python scripts/prepare_datasets.py --dataset bright
+   ```
 
 ---
 

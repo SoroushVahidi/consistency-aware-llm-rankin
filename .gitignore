@@ -208,3 +208,29 @@ outputs/*.pkl
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project-specific: experiment outputs (keep .gitkeep, ignore results)
+outputs/*.json
+outputs/*.csv
+outputs/*.pkl
+
+# Raw downloaded dataset files (keep directory structure via .gitkeep)
+data/raw/beir/scidocs/*.jsonl
+data/raw/beir/scidocs/*.arrow
+data/raw/beir/scidocs/*.parquet
+data/raw/beir/fiqa/*.jsonl
+data/raw/beir/fiqa/*.arrow
+data/raw/beir/fiqa/*.parquet
+data/raw/hotpotqa/*.jsonl
+data/raw/hotpotqa/*.arrow
+data/raw/hotpotqa/*.parquet
+data/raw/bright/*.jsonl
+data/raw/bright/*.arrow
+data/raw/bright/*.parquet
+# HuggingFace cache within data/
+data/raw/**/.cache/
+data/cache/
+
+# Processed dataset files (large; regenerate with prepare_datasets.py)
+data/processed/**/*.jsonl
+data/interim/

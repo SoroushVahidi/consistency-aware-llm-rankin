@@ -23,6 +23,8 @@ dependencies = [
     "numpy>=1.26",
     "scipy>=1.11",
     "tqdm>=4.66",
+    "datasets>=2.18",
+    "huggingface-hub>=0.21",
 ]
 
 [project.optional-dependencies]
