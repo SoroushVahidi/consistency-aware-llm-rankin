@@ -9,6 +9,7 @@ import pytest
 
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
+    local_adjacent_swap_refinement,
     pagerank_ranking,
     score_sum_ranking,
     topological_ranking,
@@ -136,3 +137,52 @@ class TestPageRankRanking:
         r1 = pagerank_ranking(g, alpha=0.50)
         r2 = pagerank_ranking(g, alpha=0.99)
         assert set(r1) == set(r2) == {"a", "b", "c"}
+
+
+class TestLocalAdjacentSwapRefinement:
+    def _bew(self, graph, ranking):
+        pos = {n: i for i, n in enumerate(ranking)}
+        total = 0.0
+        for u, v, data in graph.edges(data=True):
+            if pos.get(v, -1) < pos.get(u, -1):
+                total += data.get("weight", 1.0)
+        return total
+
+    def test_dag_reaches_bew_zero(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("b", "c"), ("a", "c")])
+        # Start with backward order c, b, a (violates a->b, a->c, b->c)
+        base = ["c", "b", "a"]
+        refined = local_adjacent_swap_refinement(base, g, objective="bew")
+        assert self._bew(g, refined) == 0.0
+        assert set(refined) == {"a", "b", "c"}
+
+    def test_single_swap_fixes_violation(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        base = ["b", "a"]  # backward
+        refined = local_adjacent_swap_refinement(base, g, objective="bew")
+        assert refined == ["a", "b"]
+        assert self._bew(g, refined) == 0.0
+
+    def test_original_unchanged(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        base = ["b", "a"]
+        refined = local_adjacent_swap_refinement(base, g)
+        assert base == ["b", "a"]
+        assert refined == ["a", "b"]
+
+    def test_single_item_unchanged(self):
+        g = nx.DiGraph()
+        g.add_node("x")
+        refined = local_adjacent_swap_refinement(["x"], g)
+        assert refined == ["x"]
+
+    def test_count_objective(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=10.0)
+        base = ["b", "a"]
+        refined = local_adjacent_swap_refinement(base, g, objective="count")
+        assert refined == ["a", "b"]
+        assert self._bew(g, refined) == 0.0

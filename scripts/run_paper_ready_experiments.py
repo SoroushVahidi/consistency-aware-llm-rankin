@@ -13,6 +13,7 @@ Uses validated fair pipeline. Reports:
 from __future__ import annotations
 
 import argparse
+import time
 import csv
 import json
 import random
@@ -24,7 +25,7 @@ sys.path.insert(0, str(REPO / "src"))
 
 import networkx as nx
 
-from consistency_ranker.baseline_ranking import topological_ranking
+from consistency_ranker.baseline_ranking import local_adjacent_swap_refinement, topological_ranking
 from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.data.dataset_registry import get_config
 from consistency_ranker.data.unified_loader import (
@@ -86,7 +87,14 @@ def run_query_full(
         scores = {d: s for d, s in scorer_rankings[name]}
         rankings[f"{name}_raw"] = _rank_by_scores(candidate_set, scores)
     rankings["rrf_fusion"] = rrf_fusion(sr_truncated)
+    t0 = time.perf_counter()
     rankings["greedy_fas_topological"] = topological_ranking(dag)
+    fas_time = time.perf_counter() - t0
+    t0 = time.perf_counter()
+    rankings["local_adjacent_swap"] = local_adjacent_swap_refinement(
+        rankings["rrf_fusion"], graph, objective="bew"
+    )
+    local_time = time.perf_counter() - t0
 
     for name in list(rankings.keys()):
         r = rankings[name]
@@ -96,6 +104,7 @@ def run_query_full(
 
     bew_rrf = _backward_edge_weight(graph, rankings["rrf_fusion"])
     bew_fas = _backward_edge_weight(graph, rankings["greedy_fas_topological"])
+    bew_local = _backward_edge_weight(graph, rankings["local_adjacent_swap"])
     is_cyclic = has_cycle(graph)
     n_sccs = nx.number_strongly_connected_components(graph)
     fas_differs_rrf = rankings["greedy_fas_topological"] != rankings["rrf_fusion"]
@@ -115,6 +124,9 @@ def run_query_full(
         "query_id": qid,
         "bew_before": bew_rrf,
         "bew_after": bew_fas,
+        "bew_after_local": bew_local,
+        "fas_time_ms": round(fas_time * 1000, 2),
+        "local_time_ms": round(local_time * 1000, 2),
         "cyclic": is_cyclic,
         "n_sccs": n_sccs,
         "disagreement": disagreement,
@@ -234,6 +246,9 @@ def main():
     pct_fas_changes = 100 * sum(1 for r in per_query if r["fas_differs_rrf"]) / n
     avg_bew_before = sum(r["bew_before"] for r in per_query) / n
     avg_bew_after = sum(r["bew_after"] for r in per_query) / n
+    avg_bew_after_local = sum(r.get("bew_after_local", 0) for r in per_query) / n
+    avg_fas_ms = sum(r.get("fas_time_ms", 0) for r in per_query) / n
+    avg_local_ms = sum(r.get("local_time_ms", 0) for r in per_query) / n
 
     top25_bew = sorted(per_query, key=lambda r: r["bew_before"], reverse=True)[: max(1, n // 4)]
     bot25_bew = sorted(per_query, key=lambda r: r["bew_before"])[: max(1, n // 4)]
@@ -242,12 +257,13 @@ def main():
     print("\n" + "=" * 80)
     print(f"PAPER-READY: {args.dataset} n={n} scorers={scorers_str}")
     print("=" * 80)
-    print(f"  % cyclic: {pct_cyclic:.1f}  |  BEW before: {avg_bew_before:.2f}  after: {avg_bew_after:.2f}  |  % FAS changes ranking: {pct_fas_changes:.1f}")
+    print(f"  % cyclic: {pct_cyclic:.1f}  |  BEW before: {avg_bew_before:.2f}  after FAS: {avg_bew_after:.2f}  after local: {avg_bew_after_local:.2f}  |  % FAS changes: {pct_fas_changes:.1f}")
+    print(f"  Avg runtime: FAS {avg_fas_ms:.2f} ms  |  local {avg_local_ms:.2f} ms per query")
 
     print("\n--- TABLE A: Overall ---")
     print(f"{'Method':<22} {'NDCG@10':>8} {'MRR':>8} {'R@10':>8} {'R@20':>8}")
     print("-" * 55)
-    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "greedy_fas_topological", "sel_bew25", "sel_learned"]:
+    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "local_adjacent_swap", "greedy_fas_topological", "sel_bew25", "sel_learned"]:
         k = f"ndcg_{m}" if f"ndcg_{m}" in per_query[0] else (f"ndcg_sel_{m[4:]}" if m.startswith("sel_") else None)
         if k and k in per_query[0]:
             mr = f"mrr_{m}" if f"mrr_{m}" in per_query[0] else ("mrr_greedy_fas_topological" if "sel" in m else "mrr_rrf_fusion")
@@ -260,18 +276,24 @@ def main():
             print(f"{m:<22} {sum(r[k] for r in per_query)/n:>8.4f} {sum(r.get(mr,0) for r in per_query)/n:>8.4f} {sum(r.get(r10,0) for r in per_query)/n:>8.4f} {sum(r.get(r20,0) for r in per_query)/n:>8.4f}")
 
     print("\n--- TABLE B: High-conflict (top 25% BEW) ---")
-    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "greedy_fas_topological", "sel_bew25"]:
+    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "local_adjacent_swap", "greedy_fas_topological", "sel_bew25"]:
         k = f"ndcg_{m}" if f"ndcg_{m}" in per_query[0] else f"ndcg_sel_{m[4:]}"
         if k in per_query[0]:
             print(f"  {m:<20} NDCG@10 = {sum(r[k] for r in top25_bew)/len(top25_bew):.4f}")
 
     print("\n--- TABLE C: Low-conflict (bottom 25% BEW) ---")
-    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "greedy_fas_topological", "sel_bew25"]:
+    for m in ["bm25_raw", "dense_raw", "rrf_fusion", "local_adjacent_swap", "greedy_fas_topological", "sel_bew25"]:
         k = f"ndcg_{m}" if f"ndcg_{m}" in per_query[0] else f"ndcg_sel_{m[4:]}"
         if k in per_query[0]:
             print(f"  {m:<20} NDCG@10 = {sum(r[k] for r in bot25_bew)/len(bot25_bew):.4f}")
 
-    print("\n--- TABLE D: Ablation on selection policy ---")
+    print("\n--- TABLE D: Post-processing comparison (never, always FAS, selective, local) ---")
+    for m in ["rrf_fusion", "local_adjacent_swap", "greedy_fas_topological", "sel_bew25"]:
+        k = f"ndcg_{m}"
+        if k in per_query[0]:
+            print(f"  {m:<22} NDCG@10 = {sum(r[k] for r in per_query)/n:.4f}")
+
+    print("\n--- TABLE E: Ablation on selection policy ---")
     policies = [("never", "ndcg_never"), ("always", "ndcg_always"), ("BEW top25%", "ndcg_sel_bew25"), ("BEW top50%", "ndcg_sel_bew50"), ("disagreement top25%", "ndcg_sel_disc25"), ("hybrid", "ndcg_sel_hybrid"), ("learned", "ndcg_sel_learned")]
     print(f"{'Policy':<22} {args.dataset} NDCG@10")
     print("-" * 40)
@@ -301,7 +323,7 @@ def main():
             print(f"\n  Query {r['query_id']} [{helps}] BEW={r['bew_before']:.2f} disc={r['disagreement']:.3f}")
             print(f"    Relevant: {r.get('relevant_ids', [])[:5]}")
             rank_dict = r.get("rankings", {})
-            for name in ["bm25_raw", "dense_raw", "rrf_fusion", "greedy_fas_topological"]:
+            for name in ["bm25_raw", "dense_raw", "rrf_fusion", "local_adjacent_swap", "greedy_fas_topological"]:
                 if name in rank_dict:
                     ndcg = r.get(f"ndcg_{name}", 0)
                     print(f"    {name}: NDCG={ndcg:.3f} top5={rank_dict[name][:5]}")

@@ -34,6 +34,10 @@ This document provides a strict, reviewer-level alignment between our method and
 
 **Differentiation:** Prior work = MWFAS for ranking (algorithmic). Current work = *when* to apply MWFAS vs RRF (policy).
 
+### 0.5 Local Kemenization Baseline (Implemented)
+
+We implement a Dwork-inspired local baseline: greedy adjacent-swap hill climbing to minimize BEW, starting from RRF. On cyclic graphs, local refinement reduces BEW but **cannot resolve cycles** (adjacent swaps cannot fix non-adjacent violations); residual BEW ≈ 12–13 vs. FAS’s ≈ 0.5. On acyclic graphs, both achieve BEW=0. Selective FAS outperforms the always-local baseline on all datasets (FiQA, SciDocs, HotpotQA), and FAS is orders of magnitude faster (~0.08 ms vs ~21 ms per query). This supports: (1) the selective policy matters more than the repair algorithm when graphs are acyclic; (2) global FAS ordering adds value over local refinement when cycles exist.
+
 ### 0.4 Summary: Positioning Table
 
 | Prior work | Objective | Algorithm | Our addition |

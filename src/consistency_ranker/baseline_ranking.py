@@ -127,6 +127,70 @@ def pagerank_ranking(
     return sorted(scores, key=lambda n: scores[n], reverse=True)
 
 
+def local_adjacent_swap_refinement(
+    ranking: list[str],
+    graph: nx.DiGraph,
+    objective: str = "bew",
+    max_iter: int = 1000,
+) -> list[str]:
+    """Refine a ranking by greedy adjacent-swap hill climbing (local Kemenization-style).
+
+    Inspired by Dwork et al.'s local Kemenization: repeatedly consider adjacent
+    swaps and accept if they improve consistency with the preference graph.
+
+    Parameters
+    ----------
+    ranking:
+        Initial ranking (e.g., from RRF).
+    graph:
+        Weighted directed preference graph.
+    objective:
+        - "bew": minimize backward edge weight (sum of weights of violated edges)
+        - "count": minimize number of backward edges (unit weight per violation)
+    max_iter:
+        Maximum number of swap passes to prevent infinite loops.
+
+    Returns
+    -------
+    list[str]
+        Refined ranking (copy; original unchanged).
+    """
+    r = list(ranking)
+    n = len(r)
+    if n < 2:
+        return r
+
+    def _bew(rank: list[str], use_weights: bool = True) -> float:
+        pos = {x: i for i, x in enumerate(rank)}
+        total = 0.0
+        for u, v, data in graph.edges(data=True):
+            if pos.get(u) is None or pos.get(v) is None:
+                continue
+            if pos[v] < pos[u]:  # backward
+                total += data.get("weight", 1.0) if use_weights else 1.0
+        return total
+
+    use_weights = objective == "bew"
+    current = _bew(r, use_weights)
+
+    for _ in range(max_iter):
+        improved = False
+        for i in range(n - 1):
+            a, b = r[i], r[i + 1]
+            # Swap: r becomes ... b, a, ...
+            r[i], r[i + 1] = b, a
+            new_bew = _bew(r, use_weights)
+            if new_bew < current:
+                current = new_bew
+                improved = True
+                break
+            # Revert
+            r[i], r[i + 1] = a, b
+        if not improved:
+            break
+    return r
+
+
 def borda_ranking(graph: nx.DiGraph) -> list[str]:
     """Rank items by Borda count (number of items each node beats).
 
