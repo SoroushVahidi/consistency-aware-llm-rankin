@@ -67,6 +67,11 @@ from consistency_ranker.data.unified_loader import (
     load_dataset_splits,
     preferences_from_qrels,
 )
+from consistency_ranker.data.query_ids import (
+    eligible_query_ids,
+    has_usable_eval_labels,
+    load_query_ids_file,
+)
 from consistency_ranker.graph_construction import build_graph, graph_summary
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.pairwise_prefs import Preference
@@ -250,9 +255,7 @@ def _kendall_tau(ranking: list[str], reference: list[str]) -> float | None:
 
 def _has_usable_eval_labels(qrels_for_query: list) -> bool:
     """Return True when qrels support evaluation ranking comparisons."""
-    unique_docs = {e.doc_id for e in qrels_for_query}
-    n_distinct_grades = len({e.relevance for e in qrels_for_query})
-    return len(unique_docs) >= MIN_JUDGED_DOCS and n_distinct_grades >= 2
+    return has_usable_eval_labels(qrels_for_query)
 
 
 def _load_pairwise_preference_file(path: Path) -> dict[str, list[Preference]]:
@@ -857,6 +860,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="JSONL score file for score_file mode (query_id, doc_id, score).",
     )
     parser.add_argument(
+        "--query-id-file",
+        type=Path,
+        default=None,
+        help=(
+            "Optional TXT/JSONL file specifying exact query ids to use. "
+            "When provided, sampling uses this file (filtered to eligible qrels)."
+        ),
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -905,6 +917,7 @@ def run_experiment(
     save_timings: bool = False,
     profile: bool = False,
     generate_plots: bool = True,
+    query_id_file: Path | None = None,
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -951,6 +964,8 @@ def run_experiment(
         print(f"  pairwise_file: {pairwise_file}")
     if score_file is not None:
         print(f"  score_file   : {score_file}")
+    if query_id_file is not None:
+        print(f"  query_id_file: {query_id_file}")
     print(f"  seed         : {seed}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
@@ -1006,13 +1021,16 @@ def run_experiment(
             qrels_by_query[entry.query_id].append(entry)
 
         # Restrict to queries that have usable evaluation labels
-        eligible_qids = sorted(
-            qid for qid, entries in qrels_by_query.items() if _has_usable_eval_labels(entries)
-        )
+        eligible_qids = eligible_query_ids(qrels)
+        eligible_set = set(eligible_qids)
 
-        rng = random.Random(seed)
-        rng.shuffle(eligible_qids)
-        sampled_qids = eligible_qids[:max_queries]
+        if query_id_file is not None:
+            requested_qids = load_query_ids_file(query_id_file)
+            sampled_qids = [qid for qid in requested_qids if qid in eligible_set][:max_queries]
+        else:
+            rng = random.Random(seed)
+            rng.shuffle(eligible_qids)
+            sampled_qids = eligible_qids[:max_queries]
 
         # Build a lookup from query_id → Query object
         query_by_id = {q.query_id: q for q in queries}
@@ -1414,6 +1432,7 @@ def main(argv: list[str] | None = None) -> None:
         flip_prob=args.flip_prob,
         pairwise_file=args.pairwise_file,
         score_file=args.score_file,
+        query_id_file=args.query_id_file,
         seed=args.seed,
         output_dir=args.output_dir,
         save_timings=args.save_timings,

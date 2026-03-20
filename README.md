@@ -242,25 +242,68 @@ python scripts/run_real_experiment.py --dataset scidocs --max-queries 50 --top-k
 # Stress-test mode (synthetic conflict injection)
 python scripts/run_real_experiment.py --dataset scidocs --preference-source qrels_flip --flip-prob 0.15 \
   --max-queries 50 --top-k 20 --save-timings --profile
+```
 
-# External score mode (reranker score comparisons)
-python scripts/run_real_experiment.py --dataset scidocs --preference-source score_file \
-  --score-file /path/to/scores.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+### Main real-signal experiment (recommended): `votes_file`
 
-# External pairwise mode (LLM judgments or ranker votes)
-python scripts/run_real_experiment.py --dataset scidocs --preference-source llm_pairwise_file \
-  --pairwise-file /path/to/pairwise.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+1) Generate score files from multiple free rankers (`bm25`, `tfidf`, `minilm`) using a shared query-id file:
+
+```bash
+python scripts/generate_score_file.py --dataset scidocs --ranker bm25 \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_bm25.jsonl
+
+python scripts/generate_score_file.py --dataset scidocs --ranker tfidf \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_tfidf.jsonl
+
+python scripts/generate_score_file.py --dataset scidocs --ranker minilm \
+  --max-queries 50 --top-n 50 --seed 42 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/scores_minilm.jsonl
+```
+
+2) Build ranker-vote pairwise edges:
+
+```bash
+python scripts/build_votes_file.py --dataset scidocs \
+  --score-files \
+    outputs/real_signal/scidocs/scores_bm25.jsonl \
+    outputs/real_signal/scidocs/scores_tfidf.jsonl \
+    outputs/real_signal/scidocs/scores_minilm.jsonl \
+  --top-k 20 \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --output outputs/real_signal/scidocs/votes.jsonl
+```
+
+3) Run the experiment with `votes_file` (main real-signal path):
+
+```bash
 python scripts/run_real_experiment.py --dataset scidocs --preference-source votes_file \
-  --pairwise-file /path/to/pairwise.jsonl --max-queries 50 --top-k 20 --save-timings --profile
+  --pairwise-file outputs/real_signal/scidocs/votes.jsonl \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --max-queries 50 --top-k 20 --save-timings --profile --no-plots
+```
+
+Optional weaker mode (`score_file`):
+
+```bash
+python scripts/run_real_experiment.py --dataset scidocs --preference-source score_file \
+  --score-file outputs/real_signal/scidocs/scores_minilm.jsonl \
+  --query-id-file outputs/real_signal/scidocs/query_ids.txt \
+  --max-queries 50 --top-k 20 --save-timings --profile --no-plots
 ```
 
 Expected external file formats:
 - `scores.jsonl`: `{"query_id": "...", "doc_id": "...", "score": 1.23}`
-- `pairwise.jsonl`: `{"query_id": "...", "winner_doc_id": "...", "loser_doc_id": "...", "weight": 1.0}`
+- `votes.jsonl`: `{"query_id": "...", "winner_doc_id": "...", "loser_doc_id": "...", "weight": 1.0, "voter": "bm25"}`
 
 **Interpretation note (important):**
 - `preference-source=qrels_flip` uses **synthetic corruption** (random edge flips).
-- `preference-source=score_file`, `llm_pairwise_file`, and `votes_file` use **real external preference signals** (if your input files are real).
+- `preference-source=votes_file` is the **main real-signal experiment** because it captures disagreement across rankers and can create non-trivial cycles.
+- `preference-source=score_file` is typically weaker for consistency analysis because a single score list is often close to transitive.
 - Qrels remain evaluation labels in all modes.
 
 ### BRIGHT — Manual Download (if needed)
