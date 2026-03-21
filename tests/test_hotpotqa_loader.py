@@ -42,9 +42,9 @@ def test_download_hotpotqa_attaches_query_metadata(monkeypatch, tmp_path: Path):
 
     assert [q.query_id for q in queries] == ["q1", "q2"]
     assert [d.doc_id for d in documents] == [
-        "q1::hamlet",
-        "q1::william_shakespeare",
-        "q2::hamlet",
+        "q1::Hamlet",
+        "q1::William Shakespeare",
+        "q2::Hamlet",
     ]
     assert [d.metadata for d in documents] == [
         {"query_id": "q1"},
@@ -52,7 +52,7 @@ def test_download_hotpotqa_attaches_query_metadata(monkeypatch, tmp_path: Path):
         {"query_id": "q2"},
     ]
     assert [(q.query_id, q.doc_id, q.relevance) for q in qrels] == [
-        ("q1", "q1::hamlet", 1),
-        ("q1", "q1::william_shakespeare", 0),
-        ("q2", "q2::hamlet", 1),
+        ("q1", "q1::Hamlet", 1),
+        ("q1", "q1::William Shakespeare", 0),
+        ("q2", "q2::Hamlet", 1),
     ]

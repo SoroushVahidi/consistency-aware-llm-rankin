@@ -93,7 +93,7 @@ def download_hotpotqa(
         context_sentences = ex.get("context", {}).get("sentences", [])
 
         for title, sents in zip(context_titles, context_sentences):
-            doc_id = f"{qid}::{_title_to_id(title)}"
+            doc_id = f"{qid}::{title}"
             documents.append(Document(
                 doc_id=doc_id,
                 text=" ".join(sents),
@@ -104,11 +104,6 @@ def download_hotpotqa(
             qrels.append(QrelEntry(query_id=qid, doc_id=doc_id, relevance=rel))
 
     return queries, documents, qrels
-
-
-def _title_to_id(title: str) -> str:
-    """Convert a Wikipedia article title to a safe document id."""
-    return title.lower().replace(" ", "_").replace("/", "-")
 
 
 # ---------------------------------------------------------------------------
