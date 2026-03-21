@@ -1,0 +1,5 @@
+metric,method_a,method_b,n_paired_queries,mean_delta,ci95_low,ci95_high,positive_delta,ci_excludes_zero
+ndcg_at_k,borda,score_sum,50,0.0,0.0,0.0,False,False
+ndcg_at_k,greedy_fas_weighted_balance,score_sum,50,0.0,0.0,0.0,False,False
+ndcg_at_k,hybrid_rrf_fas_regularized,score_sum,50,0.0,0.0,0.0,False,False
+ndcg_at_k,fas_balance_score_prior_alpha_beta,score_sum,50,0.0,0.0,0.0,False,False
