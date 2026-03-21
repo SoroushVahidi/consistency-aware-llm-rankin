@@ -10,8 +10,11 @@ import pytest
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
     copeland_ranking,
+    fas_balance_score_prior_alpha_ranking,
+    hybrid_rrf_fas_regularized_ranking,
     pagerank_ranking,
     priority_topological_ranking,
+    score_sum_scores,
     score_sum_ranking,
     topological_ranking,
     weighted_out_minus_in_ranking,
@@ -46,6 +49,16 @@ class TestScoreSumRanking:
         # "a" should be first (score 2.0), "x" should be in the tail (score 0.0)
         assert ranking[0] == "a"
         assert "x" in ranking[-2:]  # x and c both have zero, x must be in last two
+
+    def test_score_sum_scores_returns_values(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=2.0)
+        g.add_edge("a", "c", weight=1.0)
+        g.add_edge("b", "c", weight=4.0)
+        scores = score_sum_scores(g)
+        assert scores["a"] == 3.0
+        assert scores["b"] == 4.0
+        assert scores["c"] == 0.0
 
 
 class TestTopologicalRanking:
@@ -176,3 +189,43 @@ class TestCopelandRanking:
         ranking = copeland_ranking(g)
         assert ranking[0] == "a"
         assert ranking[-1] == "c"
+
+
+class TestFasBalanceScorePriorAlphaRanking:
+    def test_alpha_zero_matches_balance_ranking(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=4.0)
+        dag.add_edge("a", "c", weight=1.0)
+        dag.add_edge("b", "c", weight=2.0)
+        prior = {"a": 1.0, "b": 3.0, "c": 2.0}
+        hybrid = fas_balance_score_prior_alpha_ranking(dag, prior, alpha=0.0)
+        balance = weighted_out_minus_in_ranking(dag)
+        assert hybrid == balance
+
+    def test_positive_alpha_uses_prior_signal(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=1.0)
+        dag.add_edge("b", "c", weight=1.0)
+        # Balance is tied around zero (a:+1,b:0,c:-1), but large prior on b should
+        # pull b upward when alpha is large.
+        prior = {"a": 0.0, "b": 100.0, "c": 0.0}
+        hybrid = fas_balance_score_prior_alpha_ranking(dag, prior, alpha=2.0)
+        assert hybrid[0] == "b"
+
+    def test_negative_alpha_raises(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=1.0)
+        with pytest.raises(ValueError):
+            fas_balance_score_prior_alpha_ranking(dag, {"a": 1.0, "b": 0.0}, alpha=-0.1)
+
+
+class TestHybridRrfFasRegularizedRanking:
+    def test_negative_regularization_raises(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=1.0)
+        with pytest.raises(ValueError):
+            hybrid_rrf_fas_regularized_ranking(
+                dag,
+                {"a": 1.0, "b": 0.0},
+                fas_regularization=-0.1,
+            )
