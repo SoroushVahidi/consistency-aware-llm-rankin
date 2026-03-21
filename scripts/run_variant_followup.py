@@ -19,8 +19,12 @@ import argparse
 import csv
 from collections import defaultdict
 from pathlib import Path
+import sys
 
-from scripts.run_synthetic import run_experiment
+# Allow running as `python scripts/run_variant_followup.py` from repo root
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from run_synthetic import run_experiment
 
 
 BASE_METHODS = [
@@ -236,15 +240,20 @@ def main() -> None:
         win_rows.append(
             {
                 "method": method,
-                "n_regimes_won": win_counts.get(method, 0),
-                "n_times_beats_borda": beats_borda.get(method, 0),
-                "n_times_beats_score_sum": beats_score_sum.get(method, 0),
+                "number_of_regimes_won": win_counts.get(method, 0),
+                "number_of_times_beats_borda": beats_borda.get(method, 0),
+                "number_of_times_beats_score_sum": beats_score_sum.get(method, 0),
             }
         )
     wins_path = args.tables_dir / "variant_followup_win_counts.csv"
     _write_csv(
         wins_path,
-        ["method", "n_regimes_won", "n_times_beats_borda", "n_times_beats_score_sum"],
+        [
+            "method",
+            "number_of_regimes_won",
+            "number_of_times_beats_borda",
+            "number_of_times_beats_score_sum",
+        ],
         win_rows,
     )
 

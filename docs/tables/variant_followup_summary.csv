@@ -1,0 +1,7 @@
+method,mean_tau,std_tau,best_method,gap_to_borda,gap_to_score_sum
+borda,0.775789,0.100114,borda,0.0,0.050526
+fas_copeland,0.58,0.145388,borda,-0.195789,-0.145263
+fas_weighted_balance,0.683158,0.134295,borda,-0.092632,-0.042105
+greedy_fas_topological,0.403158,0.171754,borda,-0.372632,-0.322105
+priority_topological_score_sum,0.426316,0.162941,borda,-0.349474,-0.298947
+score_sum,0.725263,0.112549,borda,-0.050526,0.0

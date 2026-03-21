@@ -1,0 +1,7 @@
+method,number_of_regimes_won,number_of_times_beats_borda,number_of_times_beats_score_sum
+borda,8,0,7
+fas_copeland,0,0,1
+fas_weighted_balance,1,2,2
+greedy_fas_topological,0,0,0
+priority_topological_score_sum,0,0,0
+score_sum,3,1,0
