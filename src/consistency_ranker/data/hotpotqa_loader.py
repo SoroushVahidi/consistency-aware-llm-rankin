@@ -38,9 +38,10 @@ def download_hotpotqa(
     Each example produces:
     - One :class:`~consistency_ranker.data.schema.Query` (the question).
     - Multiple :class:`~consistency_ranker.data.schema.Document` objects
-      (one per unique supporting passage).
+      (one passage per query/title pair, matching the downstream HotpotQA
+      scorers that build a per-query document pool).
     - One :class:`~consistency_ranker.data.schema.QrelEntry` per
-      (question, relevant passage) pair.
+      (question, passage) pair.
 
     Parameters
     ----------
@@ -74,8 +75,7 @@ def download_hotpotqa(
     ds = load_dataset("hotpot_qa", "fullwiki", split=split, cache_dir=cache_dir)
 
     queries: list[Query] = []
-    # Use a dict to deduplicate documents across examples
-    doc_map: dict[str, Document] = {}
+    documents: list[Document] = []
     qrels: list[QrelEntry] = []
 
     for i, ex in enumerate(ds):
@@ -93,17 +93,17 @@ def download_hotpotqa(
         context_sentences = ex.get("context", {}).get("sentences", [])
 
         for title, sents in zip(context_titles, context_sentences):
-            doc_id = _title_to_id(title)
-            if doc_id not in doc_map:
-                doc_map[doc_id] = Document(
-                    doc_id=doc_id,
-                    text=" ".join(sents),
-                    title=title,
-                )
+            doc_id = f"{qid}::{_title_to_id(title)}"
+            documents.append(Document(
+                doc_id=doc_id,
+                text=" ".join(sents),
+                title=title,
+                metadata={"query_id": qid},
+            ))
             rel = 1 if title in relevant_titles else 0
             qrels.append(QrelEntry(query_id=qid, doc_id=doc_id, relevance=rel))
 
-    return queries, list(doc_map.values()), qrels
+    return queries, documents, qrels
 
 
 def _title_to_id(title: str) -> str:
