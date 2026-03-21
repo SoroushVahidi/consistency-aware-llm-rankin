@@ -8,10 +8,12 @@ import networkx as nx
 import pytest
 
 from consistency_ranker.baseline_ranking import (
+    borda_scores,
     borda_ranking,
     copeland_ranking,
     fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
+    fas_balance_score_sum_borda_hybrid_ranking,
     hybrid_rrf_fas_regularized_ranking,
     pagerank_ranking,
     priority_topological_ranking,
@@ -115,6 +117,14 @@ class TestBordaRanking:
         # All have degree 1; order may vary but all nodes present
         ranking = borda_ranking(g)
         assert set(ranking) == {"a", "b", "c"}
+
+    def test_borda_scores(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("a", "c"), ("b", "c")])
+        scores = borda_scores(g)
+        assert scores["a"] == 2.0
+        assert scores["b"] == 1.0
+        assert scores["c"] == 0.0
 
 
 class TestPageRankRanking:
@@ -262,4 +272,70 @@ class TestHybridRrfFasRegularizedRanking:
                 dag,
                 {"a": 1.0, "b": 0.0},
                 fas_regularization=-0.1,
+            )
+
+
+class TestFasBalanceScoreSumBordaHybridRanking:
+    def test_zero_priors_matches_balance_when_beta_positive(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=3.0)
+        dag.add_edge("b", "c", weight=1.0)
+        ss_prior = {"a": 0.0, "b": 0.0, "c": 0.0}
+        b_prior = {"a": 0.0, "b": 0.0, "c": 0.0}
+        hybrid = fas_balance_score_sum_borda_hybrid_ranking(
+            dag,
+            ss_prior,
+            b_prior,
+            alpha_s=0.0,
+            alpha_b=0.0,
+            beta=1.0,
+        )
+        balance = weighted_out_minus_in_ranking(dag)
+        assert hybrid == balance
+
+    def test_borda_prior_can_shift_order(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "c", weight=1.0)
+        dag.add_edge("b", "c", weight=1.0)
+        ss_prior = {"a": 0.0, "b": 0.0, "c": 0.0}
+        b_prior = {"a": 0.0, "b": 10.0, "c": 0.0}
+        hybrid = fas_balance_score_sum_borda_hybrid_ranking(
+            dag,
+            ss_prior,
+            b_prior,
+            alpha_s=0.0,
+            alpha_b=2.0,
+            beta=0.1,
+        )
+        assert hybrid[0] == "b"
+
+    def test_negative_weights_raise(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=1.0)
+        with pytest.raises(ValueError):
+            fas_balance_score_sum_borda_hybrid_ranking(
+                dag,
+                {"a": 1.0, "b": 0.0},
+                {"a": 0.0, "b": 1.0},
+                alpha_s=-0.1,
+                alpha_b=1.0,
+                beta=0.1,
+            )
+        with pytest.raises(ValueError):
+            fas_balance_score_sum_borda_hybrid_ranking(
+                dag,
+                {"a": 1.0, "b": 0.0},
+                {"a": 0.0, "b": 1.0},
+                alpha_s=1.0,
+                alpha_b=-0.1,
+                beta=0.1,
+            )
+        with pytest.raises(ValueError):
+            fas_balance_score_sum_borda_hybrid_ranking(
+                dag,
+                {"a": 1.0, "b": 0.0},
+                {"a": 0.0, "b": 1.0},
+                alpha_s=1.0,
+                alpha_b=1.0,
+                beta=-0.1,
             )

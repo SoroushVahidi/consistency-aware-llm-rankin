@@ -38,10 +38,12 @@ import networkx as nx
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from consistency_ranker.baseline_ranking import (
+    borda_scores,
     borda_ranking,
     copeland_ranking,
     fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
+    fas_balance_score_sum_borda_hybrid_ranking,
     hybrid_rrf_fas_regularized_ranking,
     priority_topological_ranking,
     score_sum_scores,
@@ -110,6 +112,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=1.0,
         help="Beta for fas_balance_score_prior_alpha_beta hybrid extraction",
     )
+    parser.add_argument(
+        "--fas-balance-ss-borda-alpha-s",
+        type=float,
+        default=1.0,
+        help="Score-sum prior weight for fas_balance_score_sum_borda_hybrid",
+    )
+    parser.add_argument(
+        "--fas-balance-ss-borda-alpha-b",
+        type=float,
+        default=1.0,
+        help="Borda prior weight for fas_balance_score_sum_borda_hybrid",
+    )
+    parser.add_argument(
+        "--fas-balance-ss-borda-beta",
+        type=float,
+        default=0.1,
+        help="Repaired-balance weight for fas_balance_score_sum_borda_hybrid",
+    )
     return parser.parse_args(argv)
 
 
@@ -121,6 +141,9 @@ def run_experiment(
     fas_balance_alpha: float = 0.5,
     fas_balance_alpha_beta_alpha: float = 2.0,
     fas_balance_alpha_beta_beta: float = 1.0,
+    fas_balance_ss_borda_alpha_s: float = 1.0,
+    fas_balance_ss_borda_alpha_b: float = 1.0,
+    fas_balance_ss_borda_beta: float = 0.1,
     output_dir: Path = Path("outputs"),
     save_timings: bool = False,
     profile: bool = False,
@@ -143,6 +166,12 @@ def run_experiment(
         Alpha for fas_balance_score_prior_alpha_beta hybrid extraction.
     fas_balance_alpha_beta_beta:
         Beta for fas_balance_score_prior_alpha_beta hybrid extraction.
+    fas_balance_ss_borda_alpha_s:
+        Score-sum prior weight for fas_balance_score_sum_borda_hybrid.
+    fas_balance_ss_borda_alpha_b:
+        Borda prior weight for fas_balance_score_sum_borda_hybrid.
+    fas_balance_ss_borda_beta:
+        Repaired-balance weight for fas_balance_score_sum_borda_hybrid.
     output_dir:
         Directory where ``synthetic_results.json`` will be written.
     save_timings:
@@ -171,6 +200,21 @@ def run_experiment(
             "fas_balance_alpha_beta_beta must be non-negative. "
             f"Got {fas_balance_alpha_beta_beta}."
         )
+    if fas_balance_ss_borda_alpha_s < 0:
+        raise ValueError(
+            "fas_balance_ss_borda_alpha_s must be non-negative. "
+            f"Got {fas_balance_ss_borda_alpha_s}."
+        )
+    if fas_balance_ss_borda_alpha_b < 0:
+        raise ValueError(
+            "fas_balance_ss_borda_alpha_b must be non-negative. "
+            f"Got {fas_balance_ss_borda_alpha_b}."
+        )
+    if fas_balance_ss_borda_beta < 0:
+        raise ValueError(
+            "fas_balance_ss_borda_beta must be non-negative. "
+            f"Got {fas_balance_ss_borda_beta}."
+        )
 
     acc = TimingAccumulator()
     acc.set_metadata(
@@ -182,6 +226,9 @@ def run_experiment(
         fas_balance_alpha=fas_balance_alpha,
         fas_balance_alpha_beta_alpha=fas_balance_alpha_beta_alpha,
         fas_balance_alpha_beta_beta=fas_balance_alpha_beta_beta,
+        fas_balance_ss_borda_alpha_s=fas_balance_ss_borda_alpha_s,
+        fas_balance_ss_borda_alpha_b=fas_balance_ss_borda_alpha_b,
+        fas_balance_ss_borda_beta=fas_balance_ss_borda_beta,
     )
     print(f"\n{'='*60}")
     print("  Consistency-Aware Ranking — Synthetic Experiment")
@@ -193,6 +240,9 @@ def run_experiment(
     print(f"  fas_bal_alpha: {fas_balance_alpha}")
     print(f"  fas_ab_alpha : {fas_balance_alpha_beta_alpha}")
     print(f"  fas_ab_beta  : {fas_balance_alpha_beta_beta}")
+    print(f"  fas_s+b_a_s  : {fas_balance_ss_borda_alpha_s}")
+    print(f"  fas_s+b_a_b  : {fas_balance_ss_borda_alpha_b}")
+    print(f"  fas_s+b_beta : {fas_balance_ss_borda_beta}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
 
@@ -263,6 +313,7 @@ def run_experiment(
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
         score_sum_priority_scores = score_sum_scores(graph)
+        borda_prior_scores = borda_scores(graph)
         with Timer("ranking_priority_topological_score_sum", accumulator=acc):
             priority_topo_ss = priority_topological_ranking(dag, score_sum_priority_scores)
         with Timer("ranking_fas_weighted_balance", accumulator=acc):
@@ -288,6 +339,15 @@ def run_experiment(
                 alpha=fas_balance_alpha_beta_alpha,
                 beta=fas_balance_alpha_beta_beta,
             )
+        with Timer("ranking_fas_balance_score_sum_borda_hybrid", accumulator=acc):
+            fas_balance_score_sum_borda_hybrid = fas_balance_score_sum_borda_hybrid_ranking(
+                dag,
+                score_sum_priority_scores,
+                borda_prior_scores,
+                alpha_s=fas_balance_ss_borda_alpha_s,
+                alpha_b=fas_balance_ss_borda_alpha_b,
+                beta=fas_balance_ss_borda_beta,
+            )
         print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
         print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
         print(f"    Priority topo + score-sum   : {priority_topo_ss[:5]}")
@@ -296,6 +356,7 @@ def run_experiment(
         print(f"    Hybrid RRF FAS reg (top 5)  : {hybrid_rrf_fas_regularized[:5]}")
         print(f"    FAS bal+prior alpha (top 5) : {fas_balance_score_prior_alpha[:5]}")
         print(f"    FAS bal+prior a/b (top 5)   : {fas_balance_score_prior_alpha_beta[:5]}")
+        print(f"    FAS bal+ss+borda (top 5)    : {fas_balance_score_sum_borda_hybrid[:5]}")
 
         # Verify the dag produced is truly acyclic
         assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
@@ -319,6 +380,10 @@ def run_experiment(
                 fas_balance_score_prior_alpha_beta,
                 gt_ranking,
             )
+            tau_fas_balance_score_sum_borda_hybrid = kendall_tau(
+                fas_balance_score_sum_borda_hybrid,
+                gt_ranking,
+            )
 
             viol_ss = n_violations(ss_ranking, gt_ranking)
             viol_borda = n_violations(borda, gt_ranking)
@@ -336,6 +401,10 @@ def run_experiment(
             )
             viol_fas_balance_score_prior_alpha_beta = n_violations(
                 fas_balance_score_prior_alpha_beta,
+                gt_ranking,
+            )
+            viol_fas_balance_score_sum_borda_hybrid = n_violations(
+                fas_balance_score_sum_borda_hybrid,
                 gt_ranking,
             )
 
@@ -369,6 +438,10 @@ def run_experiment(
         f"    {'FAS bal+prior a/b':<20} {tau_fas_balance_score_prior_alpha_beta:>10.4f} "
         f"{viol_fas_balance_score_prior_alpha_beta:>12}"
     )
+    print(
+        f"    {'FAS bal+ss+borda':<20} {tau_fas_balance_score_sum_borda_hybrid:>10.4f} "
+        f"{viol_fas_balance_score_sum_borda_hybrid:>12}"
+    )
     print(f"\n    Pairwise inconsistencies (original graph) : {incons_original}")
     print(f"    Pairwise inconsistencies (after FAS DAG)  : {incons_dag}")
 
@@ -389,6 +462,7 @@ def run_experiment(
         "hybrid_rrf_fas_regularized": "ranking_hybrid_rrf_fas_regularized",
         "fas_balance_score_prior_alpha": "ranking_fas_balance_score_prior_alpha",
         "fas_balance_score_prior_alpha_beta": "ranking_fas_balance_score_prior_alpha_beta",
+        "fas_balance_score_sum_borda_hybrid": "ranking_fas_balance_score_sum_borda_hybrid",
     }
     fas_methods = {
         "greedy_fas_topological",
@@ -398,6 +472,7 @@ def run_experiment(
         "hybrid_rrf_fas_regularized",
         "fas_balance_score_prior_alpha",
         "fas_balance_score_prior_alpha_beta",
+        "fas_balance_score_sum_borda_hybrid",
     }
     method_metrics: dict[str, dict[str, float | int]] = {}
     for method, stage in stage_by_method.items():
@@ -423,6 +498,9 @@ def run_experiment(
             "fas_balance_alpha": fas_balance_alpha,
             "fas_balance_alpha_beta_alpha": fas_balance_alpha_beta_alpha,
             "fas_balance_alpha_beta_beta": fas_balance_alpha_beta_beta,
+            "fas_balance_ss_borda_alpha_s": fas_balance_ss_borda_alpha_s,
+            "fas_balance_ss_borda_alpha_b": fas_balance_ss_borda_alpha_b,
+            "fas_balance_ss_borda_beta": fas_balance_ss_borda_beta,
         },
         "ground_truth_ranking": gt_ranking,
         "graph_summary": g_summary,
@@ -437,6 +515,7 @@ def run_experiment(
             "hybrid_rrf_fas_regularized": hybrid_rrf_fas_regularized,
             "fas_balance_score_prior_alpha": fas_balance_score_prior_alpha,
             "fas_balance_score_prior_alpha_beta": fas_balance_score_prior_alpha_beta,
+            "fas_balance_score_sum_borda_hybrid": fas_balance_score_sum_borda_hybrid,
         },
         "evaluation": {
             "kendall_tau": {
@@ -449,6 +528,7 @@ def run_experiment(
                 "hybrid_rrf_fas_regularized": tau_hybrid_rrf_fas_regularized,
                 "fas_balance_score_prior_alpha": tau_fas_balance_score_prior_alpha,
                 "fas_balance_score_prior_alpha_beta": tau_fas_balance_score_prior_alpha_beta,
+                "fas_balance_score_sum_borda_hybrid": tau_fas_balance_score_sum_borda_hybrid,
             },
             "n_violations": {
                 "score_sum": viol_ss,
@@ -460,6 +540,7 @@ def run_experiment(
                 "hybrid_rrf_fas_regularized": viol_hybrid_rrf_fas_regularized,
                 "fas_balance_score_prior_alpha": viol_fas_balance_score_prior_alpha,
                 "fas_balance_score_prior_alpha_beta": viol_fas_balance_score_prior_alpha_beta,
+                "fas_balance_score_sum_borda_hybrid": viol_fas_balance_score_sum_borda_hybrid,
             },
             "pairwise_inconsistency_count": {
                 "original_graph": incons_original,
@@ -511,6 +592,9 @@ def main(argv: list[str] | None = None) -> None:
         fas_balance_alpha=args.fas_balance_alpha,
         fas_balance_alpha_beta_alpha=args.fas_balance_alpha_beta_alpha,
         fas_balance_alpha_beta_beta=args.fas_balance_alpha_beta_beta,
+        fas_balance_ss_borda_alpha_s=args.fas_balance_ss_borda_alpha_s,
+        fas_balance_ss_borda_alpha_b=args.fas_balance_ss_borda_alpha_b,
+        fas_balance_ss_borda_beta=args.fas_balance_ss_borda_beta,
     )
 
 
