@@ -1,0 +1,80 @@
+
+======================================================================
+  EXACT vs GREEDY FAS DIAGNOSTIC
+======================================================================
+
+--- Exact − Greedy FAS gap (Kendall τ) per regime ---
+  ≈ n=6, noise=0.05, ws=margin: Δτ = +0.0000  (obj gap: +24.3%)
+  ▲ n=6, noise=0.20, ws=margin: Δτ = +0.0444  (obj gap: +8.5%)
+  ≈ n=6, noise=0.30, ws=margin: Δτ = +0.0000  (obj gap: +55.1%)
+  ≈ n=6, noise=0.05, ws=uniform: Δτ = +0.0000  (obj gap: +20.0%)
+  ▼ n=6, noise=0.20, ws=uniform: Δτ = -0.0444  (obj gap: +200.0%)
+  ▼ n=6, noise=0.30, ws=uniform: Δτ = -0.1333  (obj gap: +466.7%)
+  ≈ n=8, noise=0.05, ws=margin: Δτ = +0.0000  (obj gap: +21.7%)
+  ≈ n=8, noise=0.20, ws=margin: Δτ = -0.0000  (obj gap: +66.0%)
+  ▼ n=8, noise=0.30, ws=margin: Δτ = -0.0476  (obj gap: +36.1%)
+  ▲ n=8, noise=0.05, ws=uniform: Δτ = +0.1190  (obj gap: +66.7%)
+  ▲ n=8, noise=0.20, ws=uniform: Δτ = +0.0238  (obj gap: +141.7%)
+  ≈ n=8, noise=0.30, ws=uniform: Δτ = +0.0000  (obj gap: +106.3%)
+
+  Mean exact−greedy gap:   -0.0032
+  Max gap (exact better):  +0.1190
+  Min gap (greedy better): -0.1333
+
+--- Greedy MWFAS objective quality ---
+  Mean excess removed weight: +101.1%
+  Worst excess removed weight: +466.7%
+
+--- Does exact FAS close the gap to baselines? ---
+  n=6, noise=0.05, ws=margin:
+    exact vs ss: +0.0000  |  exact vs borda: +0.0444
+    greedy vs ss: +0.0000  |  greedy vs borda: +0.0444
+  n=6, noise=0.20, ws=margin:
+    exact vs ss: +0.0000  |  exact vs borda: +0.0444
+    greedy vs ss: -0.0444  |  greedy vs borda: +0.0000
+  n=6, noise=0.30, ws=margin:
+    exact vs ss: +0.0000  |  exact vs borda: +0.3111
+    greedy vs ss: +0.0000  |  greedy vs borda: +0.3111
+  n=6, noise=0.05, ws=uniform:
+    exact vs ss: -0.0444  |  exact vs borda: -0.0444
+    greedy vs ss: -0.0444  |  greedy vs borda: -0.0444
+  n=6, noise=0.20, ws=uniform:
+    exact vs ss: -0.0444  |  exact vs borda: -0.0444
+    greedy vs ss: +0.0000  |  greedy vs borda: +0.0000
+  n=6, noise=0.30, ws=uniform:
+    exact vs ss: +0.0889  |  exact vs borda: +0.0889
+    greedy vs ss: +0.2222  |  greedy vs borda: +0.2222
+  n=8, noise=0.05, ws=margin:
+    exact vs ss: -0.0238  |  exact vs borda: +0.0238
+    greedy vs ss: -0.0238  |  greedy vs borda: +0.0238
+  n=8, noise=0.20, ws=margin:
+    exact vs ss: +0.0000  |  exact vs borda: +0.0714
+    greedy vs ss: +0.0000  |  greedy vs borda: +0.0714
+  n=8, noise=0.30, ws=margin:
+    exact vs ss: -0.0714  |  exact vs borda: +0.0238
+    greedy vs ss: -0.0238  |  greedy vs borda: +0.0714
+  n=8, noise=0.05, ws=uniform:
+    exact vs ss: +0.0952  |  exact vs borda: +0.0952
+    greedy vs ss: -0.0238  |  greedy vs borda: -0.0238
+  n=8, noise=0.20, ws=uniform:
+    exact vs ss: +0.0714  |  exact vs borda: +0.0714
+    greedy vs ss: +0.0476  |  greedy vs borda: +0.0476
+  n=8, noise=0.30, ws=uniform:
+    exact vs ss: +0.0238  |  exact vs borda: +0.0238
+    greedy vs ss: +0.0238  |  greedy vs borda: +0.0238
+
+  Regimes where exact rescues FAS vs score_sum (exact wins, greedy doesn't): 1/12
+  Regimes where exact rescues FAS vs borda (exact wins, greedy doesn't): 2/12
+
+--- DIAGNOSIS ---
+  The exact-vs-greedy gap is SMALL (mean < 0.02 τ).
+  → The greedy heuristic is NOT the main problem.
+  → The issue is likely OBJECTIVE MISALIGNMENT:
+    minimizing removed weight does not directly
+    maximise ranking quality (Kendall τ).
+
+  Even with exact MWFAS:
+    Beats score_sum in 4/12 regimes
+    Beats borda in 10/12 regimes
+
+======================================================================
