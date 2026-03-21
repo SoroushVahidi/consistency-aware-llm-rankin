@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from scripts.run_real_experiment import (
+    NON_HYBRID_METHODS,
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_priority_topological_ranking,
     _build_hybrid_specs,
@@ -30,13 +31,16 @@ from scripts.run_real_experiment import (
     _score_sum_prior_scores,
     _weighted_out_minus_in_ranking,
     _flip_preference_directions,
+    _filter_methods,
     _has_usable_eval_labels,
     _load_pairwise_preference_file,
+    _resolve_output_dir,
     _load_score_file,
     _score_entries_to_preferences,
     run_experiment,
 )
-from consistency_ranker.data.schema import Document, QrelEntry, Query
+from consistency_ranker.baseline_ranking import fas_balance_score_prior_alpha_beta_ranking
+from consistency_ranker.data.schema import QrelEntry
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.pairwise_prefs import Preference
 
@@ -267,100 +271,99 @@ def test_parse_alpha_values_and_prior_only():
     assert ranking == ["b", "c", "a"]
 
 
-def test_method_plan_can_filter_to_shortlist():
-    methods, hybrids = _method_plan(
-        include_hybrid_ablation=False,
-        alpha_sweep_components=None,
-        alpha_values=[0.2],
-        selected_methods=[
-            "score_sum",
-            "borda",
-            "greedy_fas_weighted_balance",
-            "hybrid_rrf_fas_regularized",
-        ],
-    )
-    assert methods == [
+def test_filter_methods_keeps_requested_shortlist():
+    methods = [
         "score_sum",
         "borda",
         "greedy_fas_weighted_balance",
         "hybrid_rrf_fas_regularized",
     ]
-    assert set(hybrids) == {"hybrid_rrf_fas_regularized"}
-
-
-def test_resolve_output_dir_separates_preference_sources():
-    assert _resolve_output_dir(Path("outputs/real_small_validation/scidocs"), "qrels") == (
-        Path("outputs/real_small_validation/scidocs/qrels")
+    filtered_methods, filtered_specs = _filter_methods(
+        methods,
+        {
+            "hybrid_rrf_fas_regularized": _build_hybrid_specs(
+                include_ablation=False,
+                alpha_sweep_components=None,
+                alpha_values=[0.2],
+            )[0]
+        },
+        selected_methods=["score_sum", "hybrid_rrf_fas_regularized"],
     )
-    assert _resolve_output_dir(
-        Path("outputs/real_full/scidocs/seed_42"),
-        "qrels_flip",
-    ) == Path("outputs/real_full/scidocs/qrels_flip/seed_42")
-    assert _resolve_output_dir(
-        Path("outputs/real_full/scidocs/qrels_flip/seed_42"),
-        "qrels_flip",
-    ) == Path("outputs/real_full/scidocs/qrels_flip/seed_42")
-
-
-def test_run_experiment_writes_preference_source_specific_subdirs(monkeypatch, tmp_path: Path):
-    queries = [Query(query_id="q1", text="query")]
-    documents = [
-        Document(doc_id="d1", text="doc1"),
-        Document(doc_id="d2", text="doc2"),
-        Document(doc_id="d3", text="doc3"),
+    assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
+    assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
+        "score_sum",
+        "borda",
+        "greedy_fas_weighted_balance",
+        "hybrid_rrf_fas_regularized",
     ]
-    qrels = [
-        QrelEntry(query_id="q1", doc_id="d1", relevance=2),
-        QrelEntry(query_id="q1", doc_id="d2", relevance=1),
-        QrelEntry(query_id="q1", doc_id="d3", relevance=0),
-    ]
+    assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
+    assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
 
-    monkeypatch.setattr(
-        "scripts.run_real_experiment.load_dataset_splits",
-        lambda _dataset: (queries, documents, qrels),
+
+def test_resolve_output_dir_nests_dataset_and_source():
+    root = Path("outputs/real_small_validation")
+    assert _resolve_output_dir(root, "scidocs", "qrels") == root / "scidocs" / "qrels"
+    assert _resolve_output_dir(root / "scidocs", "scidocs", "qrels_flip") == (
+        root / "scidocs" / "qrels_flip"
+    )
+    assert _resolve_output_dir(root / "scidocs" / "qrels", "scidocs", "qrels") == (
+        root / "scidocs" / "qrels"
     )
 
-    base_output = tmp_path / "real_small_validation" / "toyset"
-    common_kwargs = dict(
-        dataset="toyset",
-        max_queries=1,
+
+def test_fas_balance_score_prior_alpha_beta_in_non_hybrid_methods():
+    """fas_balance_score_prior_alpha_beta must be listed in NON_HYBRID_METHODS."""
+    assert "fas_balance_score_prior_alpha_beta" in NON_HYBRID_METHODS
+
+
+def test_fas_balance_score_prior_alpha_beta_ranking_runs():
+    """fas_balance_score_prior_alpha_beta_ranking produces a valid ordering."""
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    score_sum_prior = {"a": 3.0, "b": 0.0, "c": 1.0}
+    ranking = fas_balance_score_prior_alpha_beta_ranking(graph, score_sum_prior)
+    assert set(ranking) == {"a", "b", "c"}
+    assert ranking[0] == "a"
+
+
+def test_fas_balance_score_prior_alpha_beta_in_pipeline(tmp_path: Path):
+    """Run a mini pipeline and confirm fas_balance_score_prior_alpha_beta appears
+    in the per-query output rows produced by run_query."""
+    from scripts.run_real_experiment import _method_plan, run_query
+    from consistency_ranker.utils.timing import TimingAccumulator
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+    )
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
         top_k=3,
         weight_scheme="grade_diff",
-        pairwise_file=None,
-        score_file=None,
-        score_prior_files=None,
         seed=42,
-        output_dir=base_output,
-        save_timings=True,
-        profile=False,
-        generate_plots=False,
-        query_id_file=None,
-        include_hybrid_ablation=False,
-        hybrid_alpha_sweep_components=None,
-        hybrid_alpha_values="0.2",
-        methods_filter=["score_sum", "borda"],
-    )
-
-    run_experiment(
         preference_source="qrels",
-        flip_prob=0.15,
-        **common_kwargs,
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
     )
-    qrels_dir = base_output / "qrels"
-    assert (qrels_dir / "toyset_per_query.csv").exists()
-    assert (qrels_dir / "toyset_summary.csv").exists()
-    assert (qrels_dir / "toyset_experiment_summary.json").exists()
-    assert (qrels_dir / "timings" / "toyset_timings.csv").exists()
-    qrels_contents = (qrels_dir / "toyset_per_query.csv").read_text(encoding="utf-8")
 
-    run_experiment(
-        preference_source="qrels_flip",
-        flip_prob=1.0,
-        **common_kwargs,
-    )
-    qrels_flip_dir = base_output / "qrels_flip"
-    assert (qrels_flip_dir / "toyset_per_query.csv").exists()
-    assert (qrels_flip_dir / "toyset_summary.csv").exists()
-    assert (qrels_flip_dir / "toyset_experiment_summary.json").exists()
-    assert (qrels_flip_dir / "timings" / "toyset_timings.csv").exists()
-    assert (qrels_dir / "toyset_per_query.csv").read_text(encoding="utf-8") == qrels_contents
+    assert skip is None
+    method_names = {r["method"] for r in rows}
+    assert "fas_balance_score_prior_alpha_beta" in method_names

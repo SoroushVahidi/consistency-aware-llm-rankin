@@ -1,0 +1,5 @@
+method,n_queries,bew_mean,bew_median,bew_max,bew_min,pic_mean,pic_median,pic_max,tau_mean,tau_median,tau_max,tau_legacy_mean,ndcg_mean,map_mean,precision_at_k_mean,recall_at_k_mean,pairwise_accuracy_mean,runtime_mean_s,runtime_median_s,runtime_max_s,n_nodes_mean,n_edges_mean,cyclic_pct,fas_removed_weight_mean,graph_ref_bew_pre_mean,graph_ref_bew_post_mean,graph_ref_pic_pre_mean,graph_ref_pic_post_mean
+score_sum,20,0.0,0.0,0.0,0.0,0.0,0.0,0,1.0,1.0,1.0,0.59333335,1.0,1.0,0.575,1.0,1.0,0.01698355,0.0025235,0.291509,10.0,29.25,0.0,0.0,0.0,0.0,0.0,0.0
+borda,20,0.0,0.0,0.0,0.0,0.0,0.0,0,1.0,1.0,1.0,0.59333335,1.0,1.0,0.575,1.0,1.0,0.01698355,0.0025235,0.291509,10.0,29.25,0.0,0.0,0.0,0.0,0.0,0.0
+greedy_fas_weighted_balance,20,0.0,0.0,0.0,0.0,0.0,0.0,0,1.0,1.0,1.0,0.59333335,1.0,1.0,0.575,1.0,1.0,0.01698355,0.0025235,0.291509,10.0,29.25,0.0,0.0,0.0,0.0,0.0,0.0
+hybrid_rrf_fas_regularized,20,0.0,0.0,0.0,0.0,0.0,0.0,0,1.0,1.0,1.0,0.59333335,1.0,1.0,0.575,1.0,1.0,0.01698355,0.0025235,0.291509,10.0,29.25,0.0,0.0,0.0,0.0,0.0,0.0

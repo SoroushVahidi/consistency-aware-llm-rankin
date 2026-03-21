@@ -16,11 +16,81 @@ topological_ranking:
 borda_ranking:
     Rank items by Borda count: each win over another item contributes 1 point.
     Equivalent to score_sum_ranking with uniform weights.
+
+weighted_out_minus_in_ranking:
+    Rank items by weighted out-degree minus weighted in-degree.
+
+copeland_ranking:
+    Rank items by out-degree minus in-degree (unweighted Copeland score).
+
+priority_topological_ranking:
+    Deterministic topological extraction that uses a priority score map for
+    tie-breaking among currently available source nodes.
+
+fas_balance_score_prior_alpha_ranking:
+    Hybrid post-repair ranking that combines normalized repaired-graph balance
+    with normalized original score-sum prior.
+
+fas_balance_score_prior_alpha_beta_ranking:
+    Generalized two-parameter hybrid post-repair ranking:
+    beta * norm(repaired-balance) + alpha * norm(original score-sum prior).
+
+fas_balance_score_sum_borda_hybrid_ranking:
+    Three-term post-repair hybrid:
+    beta * norm(repaired-balance)
+    + alpha_s * norm(original score-sum prior)
+    + alpha_b * norm(original Borda prior).
+
+hybrid_rrf_fas_regularized_ranking:
+    Baseline hybrid variant that combines normalized original score prior with
+    normalized repaired-graph balance regularizer.
 """
 
 from __future__ import annotations
 
 import networkx as nx
+
+
+def _normalize_scores(scores: dict[str, float]) -> dict[str, float]:
+    """Min-max normalize score dict to [0, 1] with safe constant fallback."""
+    if not scores:
+        return {}
+    vals = list(scores.values())
+    lo, hi = min(vals), max(vals)
+    if hi - lo <= 1.0e-12:
+        return {k: 0.0 for k in scores}
+    return {k: (v - lo) / (hi - lo) for k, v in scores.items()}
+
+
+def score_sum_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return score-sum values (outgoing weighted wins) per node."""
+    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
+    for u, _, data in graph.edges(data=True):
+        scores[u] = scores.get(u, 0.0) + float(data.get("weight", 1.0))
+    return scores
+
+
+def borda_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return Borda-style score (out-degree wins count) per node."""
+    return {node: float(graph.out_degree(node)) for node in graph.nodes()}
+
+
+def _normalized_weighted_sum(
+    *,
+    component_scores: dict[str, dict[str, float]],
+    component_weights: dict[str, float],
+    node_order: list[str],
+) -> dict[str, float]:
+    """Combine multiple score components after per-component normalization."""
+    combo: dict[str, float] = {n: 0.0 for n in node_order}
+    for name, raw_scores in component_scores.items():
+        w = float(component_weights.get(name, 0.0))
+        if w == 0.0:
+            continue
+        norm_scores = _normalize_scores(raw_scores)
+        for n in node_order:
+            combo[n] += w * float(norm_scores.get(n, 0.0))
+    return combo
 
 
 def score_sum_ranking(graph: nx.DiGraph) -> list[str]:
@@ -39,10 +109,8 @@ def score_sum_ranking(graph: nx.DiGraph) -> list[str]:
     list[str]
         Node ids sorted from best (highest score) to worst.
     """
-    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
-    for u, v, data in graph.edges(data=True):
-        scores[u] = scores.get(u, 0.0) + data.get("weight", 1.0)
-    return sorted(scores, key=lambda n: scores[n], reverse=True)
+    scores = score_sum_scores(graph)
+    return sorted(scores, key=lambda n: (-scores[n], n))
 
 
 def topological_ranking(graph: nx.DiGraph) -> list[str]:
@@ -71,46 +139,6 @@ def topological_ranking(graph: nx.DiGraph) -> list[str]:
     return list(nx.topological_sort(graph))
 
 
-def weighted_balance_ranking(graph: nx.DiGraph) -> list[str]:
-    """Rank nodes by weighted out-degree minus weighted in-degree.
-
-    Parameters
-    ----------
-    graph:
-        Weighted directed preference graph.
-
-    Returns
-    -------
-    list[str]
-        Node ids sorted from largest weighted balance to smallest.
-    """
-    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
-    for u, v, data in graph.edges(data=True):
-        w = data.get("weight", 1.0)
-        scores[u] += w
-        scores[v] -= w
-    return sorted(scores, key=lambda n: (-scores[n], n))
-
-
-def copeland_ranking(graph: nx.DiGraph) -> list[str]:
-    """Rank nodes by Copeland wins-losses score.
-
-    Parameters
-    ----------
-    graph:
-        Directed preference graph.
-
-    Returns
-    -------
-    list[str]
-        Node ids sorted from highest to lowest Copeland score.
-    """
-    scores: dict[str, int] = {n: 0 for n in graph.nodes()}
-    for n in graph.nodes():
-        scores[n] = graph.out_degree(n) - graph.in_degree(n)
-    return sorted(scores, key=lambda n: (-scores[n], n))
-
-
 def priority_topological_ranking(
     dag: nx.DiGraph,
     priority_scores: dict[str, float],
@@ -129,10 +157,14 @@ def priority_topological_ranking(
     -------
     list[str]
         Node ids in a valid topological order.
+
+    At each step, choose the currently available source node with highest
+    ``priority_scores[node]``; ties fall back to node id for determinism.
     """
     if not nx.is_directed_acyclic_graph(dag):
         raise nx.NetworkXUnfeasible(
-            "Priority topological ranking requires a DAG. The graph contains cycles."
+            "priority_topological_ranking requires a DAG. "
+            "Use greedy_fas or mwfas_solver first."
         )
     in_deg = {n: dag.in_degree(n) for n in dag.nodes()}
     available = [n for n, d in in_deg.items() if d == 0]
@@ -148,50 +180,113 @@ def priority_topological_ranking(
     return ranking
 
 
-def hybrid_regularized_ranking(
-    dag: nx.DiGraph,
-    prior_scores: dict[str, float],
-    regularization: float = 0.2,
+def weighted_out_minus_in_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank nodes by weighted out-degree minus weighted in-degree."""
+    scores = weighted_out_minus_in_scores(graph)
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def weighted_out_minus_in_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return weighted out-minus-in balance scores per node."""
+    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
+    for u, v, data in graph.edges(data=True):
+        w = float(data.get("weight", 1.0))
+        scores[u] += w
+        scores[v] -= w
+    return scores
+
+
+def fas_balance_score_prior_alpha_ranking(
+    repaired_graph: nx.DiGraph,
+    score_sum_prior_scores: dict[str, float],
+    alpha: float = 0.5,
 ) -> list[str]:
-    """Combine prior scores with repaired-DAG weighted balance scores.
+    """Hybrid score = norm(balance_repaired) + alpha * norm(score_sum_prior)."""
+    return fas_balance_score_prior_alpha_beta_ranking(
+        repaired_graph,
+        score_sum_prior_scores,
+        alpha=alpha,
+        beta=1.0,
+    )
 
-    Parameters
-    ----------
-    dag:
-        Repaired DAG.
-    prior_scores:
-        Original-graph score prior.
-    regularization:
-        Weight assigned to the repaired-graph balance component.
 
-    Returns
-    -------
-    list[str]
-        Node ids sorted by the hybrid score.
-    """
-    if not dag.nodes():
-        return []
+def fas_balance_score_prior_alpha_beta_ranking(
+    repaired_graph: nx.DiGraph,
+    score_sum_prior_scores: dict[str, float],
+    alpha: float = 0.5,
+    beta: float = 1.0,
+) -> list[str]:
+    """Hybrid score = beta * norm(balance_repaired) + alpha * norm(score_sum_prior)."""
+    if alpha < 0:
+        raise ValueError(f"alpha must be non-negative. Got {alpha}.")
+    if beta < 0:
+        raise ValueError(f"beta must be non-negative. Got {beta}.")
+    nodes = list(repaired_graph.nodes())
+    combo = _normalized_weighted_sum(
+        component_scores={
+            "balance": weighted_out_minus_in_scores(repaired_graph),
+            "score_sum": {n: float(score_sum_prior_scores.get(n, 0.0)) for n in nodes},
+        },
+        component_weights={"balance": beta, "score_sum": alpha},
+        node_order=nodes,
+    )
+    return sorted(combo, key=lambda n: (-combo[n], n))
 
-    balance: dict[str, float] = {n: 0.0 for n in dag.nodes()}
-    for u, v, data in dag.edges(data=True):
-        w = data.get("weight", 1.0)
-        balance[u] += w
-        balance[v] -= w
 
-    def _normalize(scores: dict[str, float]) -> dict[str, float]:
-        vals = list(scores.values())
-        lo, hi = min(vals), max(vals)
-        if hi - lo <= 1.0e-12:
-            return {k: 0.0 for k in scores}
-        return {k: (v - lo) / (hi - lo) for k, v in scores.items()}
+def fas_balance_score_sum_borda_hybrid_ranking(
+    repaired_graph: nx.DiGraph,
+    score_sum_prior_scores: dict[str, float],
+    borda_prior_scores: dict[str, float],
+    *,
+    alpha_s: float = 1.0,
+    alpha_b: float = 1.0,
+    beta: float = 0.1,
+) -> list[str]:
+    """Hybrid score with repaired balance + score-sum prior + Borda prior."""
+    if alpha_s < 0:
+        raise ValueError(f"alpha_s must be non-negative. Got {alpha_s}.")
+    if alpha_b < 0:
+        raise ValueError(f"alpha_b must be non-negative. Got {alpha_b}.")
+    if beta < 0:
+        raise ValueError(f"beta must be non-negative. Got {beta}.")
+    nodes = list(repaired_graph.nodes())
+    combo = _normalized_weighted_sum(
+        component_scores={
+            "balance": weighted_out_minus_in_scores(repaired_graph),
+            "score_sum": {n: float(score_sum_prior_scores.get(n, 0.0)) for n in nodes},
+            "borda": {n: float(borda_prior_scores.get(n, 0.0)) for n in nodes},
+        },
+        component_weights={"balance": beta, "score_sum": alpha_s, "borda": alpha_b},
+        node_order=nodes,
+    )
+    return sorted(combo, key=lambda n: (-combo[n], n))
 
-    prior_n = _normalize({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
-    bal_n = _normalize(balance)
+
+def hybrid_rrf_fas_regularized_ranking(
+    repaired_graph: nx.DiGraph,
+    score_sum_prior_scores: dict[str, float],
+    fas_regularization: float = 0.2,
+) -> list[str]:
+    """Hybrid score = norm(score_sum_prior) + lambda * norm(balance_repaired)."""
+    if fas_regularization < 0:
+        raise ValueError(
+            f"fas_regularization must be non-negative. Got {fas_regularization}."
+        )
+    balance_raw = weighted_out_minus_in_scores(repaired_graph)
+    prior_raw = {n: float(score_sum_prior_scores.get(n, 0.0)) for n in repaired_graph.nodes()}
+    bal_n = _normalize_scores(balance_raw)
+    prior_n = _normalize_scores(prior_raw)
     combo = {
-        n: prior_n.get(n, 0.0) + regularization * bal_n.get(n, 0.0)
-        for n in dag.nodes()
+        n: prior_n.get(n, 0.0) + fas_regularization * bal_n.get(n, 0.0)
+        for n in repaired_graph.nodes()
     }
     return sorted(combo, key=lambda n: (-combo[n], n))
+
+
+def copeland_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank by Copeland wins-losses score (out-degree minus in-degree)."""
+    scores = {n: graph.out_degree(n) - graph.in_degree(n) for n in graph.nodes()}
+    return sorted(scores, key=lambda n: (-scores[n], n))
 
 
 def pagerank_ranking(
@@ -263,7 +358,5 @@ def borda_ranking(graph: nx.DiGraph) -> list[str]:
     list[str]
         Node ids sorted from most wins to fewest.
     """
-    wins: dict[str, int] = {node: 0 for node in graph.nodes()}
-    for u in graph.nodes():
-        wins[u] = graph.out_degree(u)
-    return sorted(wins, key=lambda n: wins[n], reverse=True)
+    wins = borda_scores(graph)
+    return sorted(wins, key=lambda n: (-wins[n], n))

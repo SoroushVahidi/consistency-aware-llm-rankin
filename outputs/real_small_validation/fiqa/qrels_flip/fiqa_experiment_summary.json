@@ -1,0 +1,110 @@
+{
+  "dataset": "fiqa",
+  "top_k": 10,
+  "preference_source": "qrels_flip",
+  "preference_source_note": "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts.",
+  "flip_prob": 0.15,
+  "n_processed": 20,
+  "n_skipped": 0,
+  "skipped_reasons": [],
+  "avg_n_nodes": 10.0,
+  "avg_n_edges": 33.4,
+  "avg_largest_scc": 7.05,
+  "pct_cyclic_graphs": 100.0,
+  "avg_runtime_by_method_s": {
+    "score_sum": 0.015718,
+    "borda": 0.015718,
+    "greedy_fas_weighted_balance": 0.015718,
+    "hybrid_rrf_fas_regularized": 0.015718
+  },
+  "avg_bew_by_method": {
+    "score_sum": 7.85,
+    "borda": 7.8,
+    "greedy_fas_weighted_balance": 8.1,
+    "hybrid_rrf_fas_regularized": 8.1
+  },
+  "best_method_by_bew": "borda",
+  "primary_metric": "ndcg_at_k",
+  "avg_primary_by_method": {
+    "score_sum": 0.988971,
+    "borda": 0.975221,
+    "greedy_fas_weighted_balance": 0.968938,
+    "hybrid_rrf_fas_regularized": 0.968938
+  },
+  "best_method_by_primary": "score_sum",
+  "avg_graph_ref_pic_pre": 4.85,
+  "avg_graph_ref_pic_post": 3.5,
+  "avg_graph_ref_bew_pre": 8.1,
+  "avg_graph_ref_bew_post": 6.4,
+  "avg_fas_removed_weight": 6.2,
+  "global_timings": {
+    "preference_source_loading": {
+      "total_s": 3e-06,
+      "mean_s": 3e-06
+    },
+    "dataset_loading": {
+      "total_s": 0.518504,
+      "mean_s": 0.518504
+    },
+    "candidate_selection": {
+      "total_s": 0.010552,
+      "mean_s": 0.010552
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.002598,
+      "mean_s": 0.00013
+    },
+    "graph_construction": {
+      "total_s": 0.002402,
+      "mean_s": 0.00012
+    },
+    "cycle_detection": {
+      "total_s": 0.000397,
+      "mean_s": 2e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.015214,
+      "mean_s": 0.000761
+    },
+    "ranking_score_sum": {
+      "total_s": 0.00041,
+      "mean_s": 2.1e-05
+    },
+    "ranking_borda": {
+      "total_s": 0.000275,
+      "mean_s": 1.4e-05
+    },
+    "ranking_pagerank": {
+      "total_s": 0.278802,
+      "mean_s": 0.01394
+    },
+    "ranking_topological": {
+      "total_s": 0.001103,
+      "mean_s": 5.5e-05
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 0.000634,
+      "mean_s": 3.2e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 0.000432,
+      "mean_s": 2.2e-05
+    },
+    "ranking_fas_score_augmented_topological": {
+      "total_s": 0.000531,
+      "mean_s": 2.7e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 0.000682,
+      "mean_s": 3.4e-05
+    },
+    "evaluation": {
+      "total_s": 0.010879,
+      "mean_s": 0.000544
+    },
+    "total_pipeline": {
+      "total_s": 0.326474,
+      "mean_s": 0.326474
+    }
+  }
+}

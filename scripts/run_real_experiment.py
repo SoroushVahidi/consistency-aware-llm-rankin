@@ -31,13 +31,14 @@ Quick start
     python scripts/run_real_experiment.py --dataset scidocs \\
         --preference-source llm_pairwise_file --pairwise-file path/to/pairs.jsonl
 
-Outputs (under ``--output-dir``, default ``outputs/``):
-- ``<output-dir>/<preference_source>/<dataset>_per_query.csv``
-- ``<output-dir>/<preference_source>/<dataset>_summary.csv``
-- ``<output-dir>/<preference_source>/timings/<dataset>_timings.csv``
-- ``<output-dir>/<preference_source>/timings/<dataset>_timings.json``
-- ``<output-dir>/<preference_source>/plots/`` (if matplotlib available)
-"""
+
+Outputs (under ``--output-dir``, default ``outputs/real_full``):
+- ``<dataset>/<preference_source>/<dataset>_per_query.csv``      per-query × per-method results
+- ``<dataset>/<preference_source>/<dataset>_summary.csv``        aggregate statistics per method
+- ``<dataset>/<preference_source>/timings/<dataset>_timings.csv``  timing data (CSV)
+- ``<dataset>/<preference_source>/timings/<dataset>_timings.json`` timing data (JSON)
+- ``<dataset>/<preference_source>/plots/``                       timing plots (if matplotlib available)
+
 
 from __future__ import annotations
 
@@ -60,8 +61,10 @@ import networkx as nx
 
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
+    fas_balance_score_prior_alpha_beta_ranking,
     pagerank_ranking,
     score_sum_ranking,
+    score_sum_scores,
     topological_ranking,
 )
 from consistency_ranker.cycle_detection import has_cycle
@@ -100,6 +103,7 @@ NON_HYBRID_METHODS = (
     "greedy_fas_weighted_balance",
     "greedy_fas_copeland",
     "greedy_fas_score_augmented_topological",
+    "fas_balance_score_prior_alpha_beta",
 )
 """Core baseline/FAS methods always evaluated."""
 
@@ -674,6 +678,47 @@ def _method_plan(
     return methods, hybrid_by_name
 
 
+def _filter_methods(
+    methods: list[str],
+    hybrid_specs: dict[str, HybridMethodSpec],
+    selected_methods: list[str] | None,
+) -> tuple[list[str], dict[str, HybridMethodSpec]]:
+    """Restrict the method plan to an explicit shortlist when requested."""
+    if not selected_methods:
+        return methods, hybrid_specs
+
+    missing = sorted(set(selected_methods) - set(methods))
+    if missing:
+        raise ValueError(
+            f"Unknown method(s) requested via --methods: {missing}. "
+            f"Available methods: {sorted(methods)}"
+        )
+
+    filtered_methods = [m for m in methods if m in selected_methods]
+    filtered_hybrid_specs = {name: spec for name, spec in hybrid_specs.items() if name in filtered_methods}
+    return filtered_methods, filtered_hybrid_specs
+
+
+def _resolve_output_dir(
+    output_dir: Path,
+    dataset: str,
+    preference_source: str,
+) -> Path:
+    """Normalize output_dir to a source-specific real-data directory.
+
+    Accepted inputs include:
+    - a root like ``outputs/real_full``
+    - a dataset directory like ``outputs/real_full/scidocs``
+    - a fully resolved directory like ``outputs/real_full/scidocs/qrels``
+    """
+    output_dir = Path(output_dir)
+    if len(output_dir.parts) >= 2 and output_dir.parts[-2:] == (dataset, preference_source):
+        return output_dir
+    if output_dir.name == dataset:
+        return output_dir / preference_source
+    return output_dir / dataset / preference_source
+
+
 def _load_score_prior_files(
     score_prior_files: list[Path] | None,
 ) -> list[dict[str, list[tuple[str, float]]]]:
@@ -1216,6 +1261,18 @@ def run_query(
         rankings["greedy_fas_copeland"] = _copeland_ranking(dag)
     ranking_stage_by_method["greedy_fas_copeland"] = "ranking_fas_copeland"
 
+    # Score-sum prior from the original (pre-repair) graph: used by
+    # fas_balance_score_prior_alpha_beta and score-augmented topological.
+    _score_sum_prior: dict[str, float] = score_sum_scores(graph)
+
+    with Timer("ranking_fas_balance_score_prior_alpha_beta", accumulator=query_acc):
+        rankings["fas_balance_score_prior_alpha_beta"] = (
+            fas_balance_score_prior_alpha_beta_ranking(dag, _score_sum_prior)
+        )
+    ranking_stage_by_method["fas_balance_score_prior_alpha_beta"] = (
+        "ranking_fas_balance_score_prior_alpha_beta"
+    )
+
     prior_scores = _rrf_prior_scores_for_query(
         query_id=qid,
         candidate_nodes=set(graph.nodes()),
@@ -1501,12 +1558,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--methods",
-        type=str,
-        nargs="*",
-        default=None,
-        help=(
-            "Optional exact method names to evaluate. "
-            "If omitted, all standard baselines/FAS/hybrid defaults are run."
+
+            nargs="*",
+    default=None,
+    help=(
+        "Optional explicit shortlist of methods to run. "
+        "If omitted, all standard baselines/FAS/hybrid defaults are run. "
+        "Useful for low-cost validation packages."
+    ),
+
         ),
     )
     parser.add_argument(
@@ -1518,8 +1578,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("outputs"),
-        help="Root directory for all outputs.",
+        default=Path("outputs/real_full"),
+        help="Root or fully resolved directory for real-data outputs.",
     )
     parser.add_argument(
         "--save-timings",
@@ -1556,6 +1616,7 @@ def run_experiment(
     score_prior_files: list[Path] | None,
     seed: int,
     output_dir: Path,
+    methods_filter: list[str] | None = None,
     save_timings: bool = False,
     profile: bool = False,
     generate_plots: bool = True,
@@ -1593,7 +1654,9 @@ def run_experiment(
     dict
         Experiment summary.
     """
-    output_dir = _resolve_output_dir(Path(output_dir), preference_source)
+
+      output_dir = _resolve_output_dir(Path(output_dir), dataset=dataset, preference_source=preference_source)
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'='*65}")
@@ -1619,6 +1682,11 @@ def run_experiment(
         include_hybrid_ablation=include_hybrid_ablation,
         alpha_sweep_components=hybrid_alpha_sweep_components,
         alpha_values=alpha_values,
+        selected_methods=methods_filter,
+    )
+    methods, hybrid_specs = _filter_methods(
+        methods,
+        hybrid_specs,
         selected_methods=methods_filter,
     )
     print(f"  hybrid_ablation: {include_hybrid_ablation}")
@@ -2140,6 +2208,7 @@ def main(argv: list[str] | None = None) -> None:
         methods_filter=args.methods,
         seed=args.seed,
         output_dir=args.output_dir,
+        methods_filter=args.methods,
         save_timings=args.save_timings,
         profile=args.profile,
         generate_plots=not args.no_plots,
