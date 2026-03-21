@@ -1,0 +1,73 @@
+
+======================================================================
+  REGIME ANALYSIS RESULTS
+======================================================================
+
+--- Regimes where best FAS beats score_sum (Kendall τ) ---
+  ✓ n=10, noise=0.05, ws=margin: +0.0148 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.05, ws=uniform: +0.0741 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.10, ws=uniform: +0.0148 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.15, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.20, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.25, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.30, ws=margin: +0.0593 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.05, ws=margin: +0.0070 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.05, ws=uniform: +0.0070 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.10, ws=uniform: +0.0351 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.15, ws=margin: +0.0070 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.15, ws=uniform: +0.0316 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.25, ws=margin: +0.0035 (fas_balance_score_prior_alpha_beta)
+  ✓ n=20, noise=0.25, ws=uniform: +0.0070 (fas_balance_score_prior_alpha_beta)
+  ✓ n=20, noise=0.30, ws=margin: +0.0140 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.30, ws=uniform: +0.0246 (hybrid_rrf_fas_regularized)
+  ✓ n=50, noise=0.15, ws=margin: +0.0016 (hybrid_rrf_fas_regularized)
+  ✓ n=50, noise=0.20, ws=margin: +0.0131 (hybrid_rrf_fas_regularized)
+  ✓ n=50, noise=0.25, ws=margin: +0.0136 (hybrid_rrf_fas_regularized)
+  ✓ n=50, noise=0.30, ws=margin: +0.0109 (hybrid_rrf_fas_regularized)
+
+  FAS beats score_sum in 20/36 regimes (56%)
+  Largest gain:  +0.0741 at n=10, noise=0.05, ws=uniform
+  Largest loss:  -0.0593 at n=10, noise=0.30, ws=uniform
+
+--- Regimes where best FAS beats borda (Kendall τ) ---
+  ✓ n=10, noise=0.05, ws=margin: +0.0148 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.05, ws=uniform: +0.0741 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.10, ws=margin: +0.0148 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.10, ws=uniform: +0.0148 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.15, ws=margin: +0.0593 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.15, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.20, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=10, noise=0.25, ws=uniform: +0.0444 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.05, ws=uniform: +0.0070 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.10, ws=uniform: +0.0351 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.15, ws=uniform: +0.0316 (hybrid_rrf_fas_regularized)
+  ✓ n=20, noise=0.25, ws=margin: +0.0211 (fas_balance_score_prior_alpha_beta)
+  ✓ n=20, noise=0.25, ws=uniform: +0.0070 (fas_balance_score_prior_alpha_beta)
+  ✓ n=20, noise=0.30, ws=uniform: +0.0246 (hybrid_rrf_fas_regularized)
+
+  FAS beats borda in 14/36 regimes (39%)
+  Largest gain:  +0.0741 at n=10, noise=0.05, ws=uniform
+  Largest loss:  -0.0941 at n=50, noise=0.30, ws=margin
+
+--- Regimes where FAS is competitive with both (|Δ| < 0.02) ---
+  ≈ n=10, noise=0.05, ws=margin: vs_ss=+0.0148, vs_borda=+0.0148
+  ≈ n=10, noise=0.10, ws=margin: vs_ss=-0.0148, vs_borda=+0.0148
+  ≈ n=10, noise=0.10, ws=uniform: vs_ss=+0.0148, vs_borda=+0.0148
+  ≈ n=10, noise=0.25, ws=margin: vs_ss=-0.0148, vs_borda=+0.0000
+  ≈ n=20, noise=0.05, ws=uniform: vs_ss=+0.0070, vs_borda=+0.0070
+  ≈ n=20, noise=0.10, ws=margin: vs_ss=+0.0000, vs_borda=-0.0105
+  ≈ n=20, noise=0.15, ws=margin: vs_ss=+0.0070, vs_borda=-0.0105
+  ≈ n=20, noise=0.20, ws=uniform: vs_ss=-0.0035, vs_borda=-0.0035
+  ≈ n=20, noise=0.25, ws=uniform: vs_ss=+0.0070, vs_borda=+0.0070
+  ≈ n=20, noise=0.30, ws=margin: vs_ss=+0.0140, vs_borda=-0.0070
+  ≈ n=50, noise=0.05, ws=uniform: vs_ss=-0.0196, vs_borda=-0.0196
+  ≈ n=50, noise=0.15, ws=uniform: vs_ss=-0.0158, vs_borda=-0.0158
+  ≈ n=50, noise=0.20, ws=uniform: vs_ss=-0.0152, vs_borda=-0.0152
+
+  Competitive in 13/36 regimes
+
+--- Inconsistency reduction by FAS ---
+  Average inconsistency reduction: 54.5%
+  Best reduction: 70.1% at n=50, noise=0.10, ws=margin
+
+======================================================================
