@@ -9,9 +9,13 @@ import pytest
 
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
+    copeland_ranking,
+    hybrid_regularized_ranking,
     pagerank_ranking,
+    priority_topological_ranking,
     score_sum_ranking,
     topological_ranking,
+    weighted_balance_ranking,
 )
 
 
@@ -81,6 +85,43 @@ class TestBordaRanking:
         # All have degree 1; order may vary but all nodes present
         ranking = borda_ranking(g)
         assert set(ranking) == {"a", "b", "c"}
+
+
+class TestFasAwareRankings:
+    def test_weighted_balance_ranking_prefers_high_weight_winner(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=3.0)
+        g.add_edge("a", "c", weight=2.0)
+        g.add_edge("b", "c", weight=1.0)
+        ranking = weighted_balance_ranking(g)
+        assert ranking[0] == "a"
+        assert ranking[-1] == "c"
+
+    def test_copeland_ranking_uses_out_minus_in_degree(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("a", "c"), ("b", "c")])
+        ranking = copeland_ranking(g)
+        assert ranking == ["a", "b", "c"]
+
+    def test_priority_topological_ranking_uses_priority_scores(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "c"), ("b", "c")])
+        ranking = priority_topological_ranking(g, {"a": 1.0, "b": 2.0, "c": 0.0})
+        assert ranking[:2] == ["b", "a"]
+        assert ranking[2] == "c"
+
+    def test_hybrid_regularized_ranking_combines_prior_and_dag_balance(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=2.0)
+        g.add_edge("a", "c", weight=1.0)
+        g.add_edge("b", "c", weight=1.0)
+        ranking = hybrid_regularized_ranking(
+            g,
+            {"a": 3.0, "b": 1.0, "c": 0.0},
+            regularization=0.2,
+        )
+        assert ranking[0] == "a"
+        assert ranking[-1] == "c"
 
 
 class TestPageRankRanking:

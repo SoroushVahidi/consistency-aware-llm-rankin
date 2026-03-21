@@ -71,6 +71,129 @@ def topological_ranking(graph: nx.DiGraph) -> list[str]:
     return list(nx.topological_sort(graph))
 
 
+def weighted_balance_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank nodes by weighted out-degree minus weighted in-degree.
+
+    Parameters
+    ----------
+    graph:
+        Weighted directed preference graph.
+
+    Returns
+    -------
+    list[str]
+        Node ids sorted from largest weighted balance to smallest.
+    """
+    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
+    for u, v, data in graph.edges(data=True):
+        w = data.get("weight", 1.0)
+        scores[u] += w
+        scores[v] -= w
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def copeland_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank nodes by Copeland wins-losses score.
+
+    Parameters
+    ----------
+    graph:
+        Directed preference graph.
+
+    Returns
+    -------
+    list[str]
+        Node ids sorted from highest to lowest Copeland score.
+    """
+    scores: dict[str, int] = {n: 0 for n in graph.nodes()}
+    for n in graph.nodes():
+        scores[n] = graph.out_degree(n) - graph.in_degree(n)
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def priority_topological_ranking(
+    dag: nx.DiGraph,
+    priority_scores: dict[str, float],
+) -> list[str]:
+    """Topological ranking with deterministic priority tie-breaking.
+
+    Parameters
+    ----------
+    dag:
+        Directed acyclic graph.
+    priority_scores:
+        Per-node scores used to resolve ties among currently available
+        zero-in-degree nodes.
+
+    Returns
+    -------
+    list[str]
+        Node ids in a valid topological order.
+    """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise nx.NetworkXUnfeasible(
+            "Priority topological ranking requires a DAG. The graph contains cycles."
+        )
+    in_deg = {n: dag.in_degree(n) for n in dag.nodes()}
+    available = [n for n, d in in_deg.items() if d == 0]
+    ranking: list[str] = []
+    while available:
+        best = max(available, key=lambda n: (priority_scores.get(n, 0.0), n))
+        available.remove(best)
+        ranking.append(best)
+        for child in dag.successors(best):
+            in_deg[child] -= 1
+            if in_deg[child] == 0:
+                available.append(child)
+    return ranking
+
+
+def hybrid_regularized_ranking(
+    dag: nx.DiGraph,
+    prior_scores: dict[str, float],
+    regularization: float = 0.2,
+) -> list[str]:
+    """Combine prior scores with repaired-DAG weighted balance scores.
+
+    Parameters
+    ----------
+    dag:
+        Repaired DAG.
+    prior_scores:
+        Original-graph score prior.
+    regularization:
+        Weight assigned to the repaired-graph balance component.
+
+    Returns
+    -------
+    list[str]
+        Node ids sorted by the hybrid score.
+    """
+    if not dag.nodes():
+        return []
+
+    balance: dict[str, float] = {n: 0.0 for n in dag.nodes()}
+    for u, v, data in dag.edges(data=True):
+        w = data.get("weight", 1.0)
+        balance[u] += w
+        balance[v] -= w
+
+    def _normalize(scores: dict[str, float]) -> dict[str, float]:
+        vals = list(scores.values())
+        lo, hi = min(vals), max(vals)
+        if hi - lo <= 1.0e-12:
+            return {k: 0.0 for k in scores}
+        return {k: (v - lo) / (hi - lo) for k, v in scores.items()}
+
+    prior_n = _normalize({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
+    bal_n = _normalize(balance)
+    combo = {
+        n: prior_n.get(n, 0.0) + regularization * bal_n.get(n, 0.0)
+        for n in dag.nodes()
+    }
+    return sorted(combo, key=lambda n: (-combo[n], n))
+
+
 def pagerank_ranking(
     graph: nx.DiGraph,
     alpha: float = 0.85,

@@ -1,0 +1,665 @@
+{
+  "config": {
+    "n_items": 20,
+    "noise": 0.2,
+    "seed": 789,
+    "weight_scheme": "uniform"
+  },
+  "ground_truth_ranking": [
+    "item_08",
+    "item_19",
+    "item_01",
+    "item_07",
+    "item_13",
+    "item_06",
+    "item_17",
+    "item_02",
+    "item_00",
+    "item_15",
+    "item_03",
+    "item_11",
+    "item_09",
+    "item_04",
+    "item_05",
+    "item_10",
+    "item_14",
+    "item_16",
+    "item_12",
+    "item_18"
+  ],
+  "graph_summary": {
+    "n_nodes": 20,
+    "n_edges": 190,
+    "is_dag": false,
+    "total_weight": 190.0,
+    "n_sccs": 1
+  },
+  "cycle_summary": {
+    "has_cycle": true,
+    "n_sccs": 1,
+    "n_non_trivial_sccs": 1,
+    "note": "Full cycle enumeration skipped (exponential cost on dense graphs)"
+  },
+  "rankings": {
+    "score_sum": [
+      "item_01",
+      "item_08",
+      "item_07",
+      "item_13",
+      "item_00",
+      "item_19",
+      "item_17",
+      "item_06",
+      "item_02",
+      "item_15",
+      "item_09",
+      "item_11",
+      "item_03",
+      "item_05",
+      "item_12",
+      "item_14",
+      "item_04",
+      "item_10",
+      "item_16",
+      "item_18"
+    ],
+    "borda": [
+      "item_01",
+      "item_08",
+      "item_07",
+      "item_13",
+      "item_00",
+      "item_19",
+      "item_17",
+      "item_06",
+      "item_02",
+      "item_15",
+      "item_09",
+      "item_11",
+      "item_03",
+      "item_05",
+      "item_12",
+      "item_14",
+      "item_04",
+      "item_10",
+      "item_16",
+      "item_18"
+    ],
+    "greedy_fas_topological": [
+      "item_19",
+      "item_16",
+      "item_17",
+      "item_15",
+      "item_13",
+      "item_14",
+      "item_11",
+      "item_12",
+      "item_09",
+      "item_10",
+      "item_08",
+      "item_18",
+      "item_07",
+      "item_05",
+      "item_06",
+      "item_02",
+      "item_03",
+      "item_04",
+      "item_00",
+      "item_01"
+    ]
+  },
+  "evaluation": {
+    "kendall_tau": {
+      "score_sum": 0.8,
+      "borda": 0.8,
+      "greedy_fas_topological": -0.05263157894736842
+    },
+    "n_violations": {
+      "score_sum": 19,
+      "borda": 19,
+      "greedy_fas_topological": 100
+    },
+    "pairwise_inconsistency_count": {
+      "original_graph": 37,
+      "after_fas_dag": 22
+    }
+  },
+  "fas": {
+    "n_removed_edges": 98,
+    "total_removed_weight": 98.0,
+    "removed_edges": [
+      [
+        "item_01",
+        "item_00",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_02",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_03",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_05",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_06",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_07",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_09",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_13",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_17",
+        1.0
+      ],
+      [
+        "item_01",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_03",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_04",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_05",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_09",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_13",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_00",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_03",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_04",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_05",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_02",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_04",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_05",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_09",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_03",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_04",
+        "item_05",
+        1.0
+      ],
+      [
+        "item_04",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_04",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_04",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_04",
+        "item_17",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_06",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_09",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_05",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_13",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_06",
+        "item_18",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_08",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_09",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_13",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_07",
+        "item_17",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_11",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_08",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_09",
+        "item_10",
+        1.0
+      ],
+      [
+        "item_09",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_09",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_09",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_10",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_10",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_10",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_10",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_11",
+        "item_12",
+        1.0
+      ],
+      [
+        "item_11",
+        "item_15",
+        1.0
+      ],
+      [
+        "item_11",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_12",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_12",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_13",
+        "item_14",
+        1.0
+      ],
+      [
+        "item_13",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_13",
+        "item_17",
+        1.0
+      ],
+      [
+        "item_13",
+        "item_19",
+        1.0
+      ],
+      [
+        "item_14",
+        "item_16",
+        1.0
+      ],
+      [
+        "item_14",
+        "item_17",
+        1.0
+      ],
+      [
+        "item_15",
+        "item_16",
+        1.0
+      ]
+    ]
+  },
+  "timings": {
+    "data_generation": {
+      "total_s": 9.9e-05,
+      "mean_s": 9.9e-05
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.000506,
+      "mean_s": 0.000506
+    },
+    "graph_construction": {
+      "total_s": 0.003359,
+      "mean_s": 0.003359
+    },
+    "cycle_detection": {
+      "total_s": 0.000322,
+      "mean_s": 0.000322
+    },
+    "ranking_score_sum": {
+      "total_s": 0.000151,
+      "mean_s": 0.000151
+    },
+    "ranking_borda": {
+      "total_s": 5e-05,
+      "mean_s": 5e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.034348,
+      "mean_s": 0.034348
+    },
+    "ranking_topological": {
+      "total_s": 0.000134,
+      "mean_s": 0.000134
+    },
+    "evaluation": {
+      "total_s": 0.000303,
+      "mean_s": 0.000303
+    },
+    "total_experiment": {
+      "total_s": 0.039489,
+      "mean_s": 0.039489
+    }
+  }
+}

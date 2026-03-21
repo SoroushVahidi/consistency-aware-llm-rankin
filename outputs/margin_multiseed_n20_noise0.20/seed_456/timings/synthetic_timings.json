@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "experiment": "synthetic",
+    "n_items": 20,
+    "noise": 0.2,
+    "seed": 456,
+    "weight_scheme": "margin"
+  },
+  "summary": [
+    {
+      "stage": "data_generation",
+      "n_calls": 1,
+      "total_s": 7.3e-05,
+      "mean_s": 7.3e-05,
+      "median_s": 7.3e-05,
+      "max_s": 7.3e-05
+    },
+    {
+      "stage": "pairwise_preference_generation",
+      "n_calls": 1,
+      "total_s": 0.000445,
+      "mean_s": 0.000445,
+      "median_s": 0.000445,
+      "max_s": 0.000445
+    },
+    {
+      "stage": "graph_construction",
+      "n_calls": 1,
+      "total_s": 0.002946,
+      "mean_s": 0.002946,
+      "median_s": 0.002946,
+      "max_s": 0.002946
+    },
+    {
+      "stage": "cycle_detection",
+      "n_calls": 1,
+      "total_s": 0.000199,
+      "mean_s": 0.000199,
+      "median_s": 0.000199,
+      "max_s": 0.000199
+    },
+    {
+      "stage": "ranking_score_sum",
+      "n_calls": 1,
+      "total_s": 0.0001,
+      "mean_s": 0.0001,
+      "median_s": 0.0001,
+      "max_s": 0.0001
+    },
+    {
+      "stage": "ranking_borda",
+      "n_calls": 1,
+      "total_s": 3.3e-05,
+      "mean_s": 3.3e-05,
+      "median_s": 3.3e-05,
+      "max_s": 3.3e-05
+    },
+    {
+      "stage": "greedy_fas_solver",
+      "n_calls": 1,
+      "total_s": 0.01045,
+      "mean_s": 0.01045,
+      "median_s": 0.01045,
+      "max_s": 0.01045
+    },
+    {
+      "stage": "ranking_topological",
+      "n_calls": 1,
+      "total_s": 0.000119,
+      "mean_s": 0.000119,
+      "median_s": 0.000119,
+      "max_s": 0.000119
+    },
+    {
+      "stage": "evaluation",
+      "n_calls": 1,
+      "total_s": 0.000316,
+      "mean_s": 0.000316,
+      "median_s": 0.000316,
+      "max_s": 0.000316
+    },
+    {
+      "stage": "total_experiment",
+      "n_calls": 1,
+      "total_s": 0.01483,
+      "mean_s": 0.01483,
+      "median_s": 0.01483,
+      "max_s": 0.01483
+    }
+  ],
+  "raw": {
+    "data_generation": [
+      7.324199987124302e-05
+    ],
+    "pairwise_preference_generation": [
+      0.00044505500000013853
+    ],
+    "graph_construction": [
+      0.002945779000128823
+    ],
+    "cycle_detection": [
+      0.0001986699999179109
+    ],
+    "ranking_score_sum": [
+      0.00010007200035033748
+    ],
+    "ranking_borda": [
+      3.2529999771213625e-05
+    ],
+    "greedy_fas_solver": [
+      0.010449799000070925
+    ],
+    "ranking_topological": [
+      0.0001191149999613117
+    ],
+    "evaluation": [
+      0.00031647100013287854
+    ],
+    "total_experiment": [
+      0.0148295250000956
+    ]
+  }
+}

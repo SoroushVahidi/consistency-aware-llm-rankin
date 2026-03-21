@@ -1,0 +1,15 @@
+stage,n_calls,total_s,mean_s,median_s,max_s
+data_generation,1,0.000139,0.000139,0.000139,0.000139
+pairwise_preference_generation,1,0.000608,0.000608,0.000608,0.000608
+graph_construction,1,0.003807,0.003807,0.003807,0.003807
+cycle_detection,1,0.000236,0.000236,0.000236,0.000236
+ranking_score_sum,1,0.000102,0.000102,0.000102,0.000102
+ranking_borda,1,4.2e-05,4.2e-05,4.2e-05,4.2e-05
+greedy_fas_solver,1,0.011126,0.011126,0.011126,0.011126
+ranking_topological,1,0.000124,0.000124,0.000124,0.000124
+ranking_priority_topological_score_sum,1,0.000127,0.000127,0.000127,0.000127
+ranking_fas_weighted_balance,1,7.4e-05,7.4e-05,7.4e-05,7.4e-05
+ranking_fas_copeland,1,4.7e-05,4.7e-05,4.7e-05,4.7e-05
+ranking_hybrid_rrf_fas_regularized,1,0.000106,0.000106,0.000106,0.000106
+evaluation,1,0.00065,0.00065,0.00065,0.00065
+total_experiment,1,0.017408,0.017408,0.017408,0.017408

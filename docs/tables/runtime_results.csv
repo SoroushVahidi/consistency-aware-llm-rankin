@@ -1,0 +1,15 @@
+experiment_family,run_dir,seed,weight_scheme,n_items,noise,runtime_total_s,runtime_greedy_fas_s,runtime_graph_construction_s,runtime_evaluation_s,fas_runtime_share_pct
+margin_multiseed,outputs/margin_multiseed_n20_noise0.20/seed_42,42,margin,20,0.2,0.014017,0.009924,0.002773,0.000304,70.8
+margin_multiseed,outputs/margin_multiseed_n20_noise0.20/seed_123,123,margin,20,0.2,0.013763,0.009336,0.002931,0.000307,67.834
+margin_multiseed,outputs/margin_multiseed_n20_noise0.20/seed_456,456,margin,20,0.2,0.01483,0.01045,0.002946,0.000316,70.465
+margin_multiseed,outputs/margin_multiseed_n20_noise0.20/seed_789,789,margin,20,0.2,0.014934,0.010696,0.002883,0.000278,71.622
+margin_multiseed,outputs/margin_multiseed_n20_noise0.20/seed_1234,1234,margin,20,0.2,0.018302,0.013946,0.002884,0.000321,76.199
+scale_sweep,outputs/scale_sweep_n10,42,margin,10,0.1,0.004377,0.002162,0.001661,0.000116,49.395
+scale_sweep,outputs/scale_sweep_n20,42,margin,20,0.1,0.014282,0.010689,0.002324,0.000327,74.842
+scale_sweep,outputs/scale_sweep_n50,42,margin,50,0.1,0.224724,0.212346,0.006457,0.001858,94.492
+scale_sweep,outputs/scale_sweep_n100,42,margin,100,0.1,1.231536,1.194237,0.019437,0.004145,96.971
+uniform_multiseed,outputs/uniform_multiseed_n20_noise0.20/seed_42,42,uniform,20,0.2,0.033754,0.029253,0.002971,0.000352,86.665
+uniform_multiseed,outputs/uniform_multiseed_n20_noise0.20/seed_123,123,uniform,20,0.2,0.024629,0.020075,0.003115,0.000308,81.51
+uniform_multiseed,outputs/uniform_multiseed_n20_noise0.20/seed_456,456,uniform,20,0.2,0.029513,0.025076,0.002884,0.000321,84.966
+uniform_multiseed,outputs/uniform_multiseed_n20_noise0.20/seed_789,789,uniform,20,0.2,0.039489,0.034348,0.003359,0.000303,86.981
+uniform_multiseed,outputs/uniform_multiseed_n20_noise0.20/seed_1234,1234,uniform,20,0.2,0.042419,0.037533,0.003147,0.000478,88.482

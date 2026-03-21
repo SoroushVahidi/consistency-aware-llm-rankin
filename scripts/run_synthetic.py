@@ -36,7 +36,15 @@ import networkx as nx
 # Allow running as `python scripts/run_synthetic.py` from repo root
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from consistency_ranker.baseline_ranking import borda_ranking, score_sum_ranking, topological_ranking
+from consistency_ranker.baseline_ranking import (
+    borda_ranking,
+    copeland_ranking,
+    hybrid_regularized_ranking,
+    priority_topological_ranking,
+    score_sum_ranking,
+    topological_ranking,
+    weighted_balance_ranking,
+)
 from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.evaluation import kendall_tau, n_violations, pairwise_inconsistency_count
 from consistency_ranker.graph_construction import build_graph, graph_summary
@@ -44,6 +52,14 @@ from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.pairwise_prefs import generate_preferences
 from consistency_ranker.synthetic_data import generate_items, ground_truth_ranking, quality_map
 from consistency_ranker.utils.timing import Timer, TimingAccumulator
+
+
+def _score_sum_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return original-graph score-sum scores for all nodes."""
+    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
+    for u, _, data in graph.edges(data=True):
+        scores[u] += data.get("weight", 1.0)
+    return scores
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -198,15 +214,28 @@ def run_experiment(
         print(f"    Borda ranking (top 5)     : {borda[:5]}")
 
         # ------------------------------------------------------------------
-        # 6. Greedy FAS → topological ranking
+        # 6. Greedy FAS → repaired-graph ranking variants
         # ------------------------------------------------------------------
         with Timer("greedy_fas_solver", accumulator=acc):
             dag, removed_edges = greedy_fas(graph)
             fas_weight = greedy_fas_total_weight(removed_edges)
+            score_prior = _score_sum_scores(graph)
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
+        with Timer("ranking_priority_topological_score_sum", accumulator=acc):
+            priority_topo_ranking = priority_topological_ranking(dag, score_prior)
+        with Timer("ranking_fas_weighted_balance", accumulator=acc):
+            weighted_balance = weighted_balance_ranking(dag)
+        with Timer("ranking_fas_copeland", accumulator=acc):
+            fas_copeland = copeland_ranking(dag)
+        with Timer("ranking_hybrid_rrf_fas_regularized", accumulator=acc):
+            hybrid_regularized = hybrid_regularized_ranking(dag, score_prior, regularization=0.2)
         print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
         print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
+        print(f"    Priority topo ranking (top 5): {priority_topo_ranking[:5]}")
+        print(f"    FAS weighted-balance (top 5): {weighted_balance[:5]}")
+        print(f"    FAS Copeland (top 5): {fas_copeland[:5]}")
+        print(f"    Hybrid regularized (top 5): {hybrid_regularized[:5]}")
 
         # Verify the dag produced is truly acyclic
         assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
@@ -218,10 +247,18 @@ def run_experiment(
             tau_ss = kendall_tau(ss_ranking, gt_ranking)
             tau_borda = kendall_tau(borda, gt_ranking)
             tau_topo = kendall_tau(topo_ranking, gt_ranking)
+            tau_priority_topo = kendall_tau(priority_topo_ranking, gt_ranking)
+            tau_weighted_balance = kendall_tau(weighted_balance, gt_ranking)
+            tau_fas_copeland = kendall_tau(fas_copeland, gt_ranking)
+            tau_hybrid_regularized = kendall_tau(hybrid_regularized, gt_ranking)
 
             viol_ss = n_violations(ss_ranking, gt_ranking)
             viol_borda = n_violations(borda, gt_ranking)
             viol_topo = n_violations(topo_ranking, gt_ranking)
+            viol_priority_topo = n_violations(priority_topo_ranking, gt_ranking)
+            viol_weighted_balance = n_violations(weighted_balance, gt_ranking)
+            viol_fas_copeland = n_violations(fas_copeland, gt_ranking)
+            viol_hybrid_regularized = n_violations(hybrid_regularized, gt_ranking)
 
             incons_original = pairwise_inconsistency_count(graph, gt_ranking)
             incons_dag = pairwise_inconsistency_count(dag, gt_ranking)
@@ -232,6 +269,16 @@ def run_experiment(
     print(f"    {'Score-sum':<20} {tau_ss:>10.4f} {viol_ss:>12}")
     print(f"    {'Borda':<20} {tau_borda:>10.4f} {viol_borda:>12}")
     print(f"    {'Greedy-FAS + Topo':<20} {tau_topo:>10.4f} {viol_topo:>12}")
+    print(
+        f"    {'Priority Topo + Score':<20} {tau_priority_topo:>10.4f} {viol_priority_topo:>12}"
+    )
+    print(
+        f"    {'FAS Weighted Balance':<20} {tau_weighted_balance:>10.4f} {viol_weighted_balance:>12}"
+    )
+    print(f"    {'FAS Copeland':<20} {tau_fas_copeland:>10.4f} {viol_fas_copeland:>12}")
+    print(
+        f"    {'Hybrid FAS Regular.':<20} {tau_hybrid_regularized:>10.4f} {viol_hybrid_regularized:>12}"
+    )
     print(f"\n    Pairwise inconsistencies (original graph) : {incons_original}")
     print(f"    Pairwise inconsistencies (after FAS DAG)  : {incons_dag}")
 
@@ -256,17 +303,29 @@ def run_experiment(
             "score_sum": ss_ranking,
             "borda": borda,
             "greedy_fas_topological": topo_ranking,
+            "priority_topological_score_sum": priority_topo_ranking,
+            "fas_weighted_balance": weighted_balance,
+            "fas_copeland": fas_copeland,
+            "hybrid_rrf_fas_regularized": hybrid_regularized,
         },
         "evaluation": {
             "kendall_tau": {
                 "score_sum": tau_ss,
                 "borda": tau_borda,
                 "greedy_fas_topological": tau_topo,
+                "priority_topological_score_sum": tau_priority_topo,
+                "fas_weighted_balance": tau_weighted_balance,
+                "fas_copeland": tau_fas_copeland,
+                "hybrid_rrf_fas_regularized": tau_hybrid_regularized,
             },
             "n_violations": {
                 "score_sum": viol_ss,
                 "borda": viol_borda,
                 "greedy_fas_topological": viol_topo,
+                "priority_topological_score_sum": viol_priority_topo,
+                "fas_weighted_balance": viol_weighted_balance,
+                "fas_copeland": viol_fas_copeland,
+                "hybrid_rrf_fas_regularized": viol_hybrid_regularized,
             },
             "pairwise_inconsistency_count": {
                 "original_graph": incons_original,

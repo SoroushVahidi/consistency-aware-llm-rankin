@@ -32,11 +32,11 @@ Quick start
         --preference-source llm_pairwise_file --pairwise-file path/to/pairs.jsonl
 
 Outputs (under ``--output-dir``, default ``outputs/``):
-- ``<dataset>_per_query.csv``        per-query × per-method results
-- ``<dataset>_summary.csv``          aggregate statistics per method
-- ``timings/<dataset>_timings.csv``  timing data (CSV)
-- ``timings/<dataset>_timings.json`` timing data (JSON)
-- ``plots/``                         timing plots (if matplotlib available)
+- ``<output-dir>/<preference_source>/<dataset>_per_query.csv``
+- ``<output-dir>/<preference_source>/<dataset>_summary.csv``
+- ``<output-dir>/<preference_source>/timings/<dataset>_timings.csv``
+- ``<output-dir>/<preference_source>/timings/<dataset>_timings.json``
+- ``<output-dir>/<preference_source>/plots/`` (if matplotlib available)
 """
 
 from __future__ import annotations
@@ -650,6 +650,7 @@ def _method_plan(
     include_hybrid_ablation: bool,
     alpha_sweep_components: list[str] | None,
     alpha_values: list[float],
+    selected_methods: list[str] | None = None,
 ) -> tuple[list[str], dict[str, HybridMethodSpec]]:
     specs = _build_hybrid_specs(
         include_ablation=include_hybrid_ablation,
@@ -658,6 +659,18 @@ def _method_plan(
     )
     hybrid_by_name = {s.name: s for s in specs}
     methods = list(NON_HYBRID_METHODS) + [s.name for s in specs]
+    if selected_methods:
+        selected_set = set(selected_methods)
+        unknown = [m for m in selected_methods if m not in methods]
+        if unknown:
+            raise ValueError(
+                "Unknown method(s) requested via --methods: "
+                f"{', '.join(unknown)}. Available methods: {', '.join(methods)}"
+            )
+        methods = [m for m in methods if m in selected_set]
+        hybrid_by_name = {
+            name: spec for name, spec in hybrid_by_name.items() if name in selected_set
+        }
     return methods, hybrid_by_name
 
 
@@ -670,12 +683,37 @@ def _load_score_prior_files(
     return [_load_score_file(path) for path in score_prior_files]
 
 
+def _resolve_output_dir(
+    base_output_dir: Path,
+    preference_source: str,
+) -> Path:
+    """Return a preference-source-specific output directory.
+
+    This prevents `qrels`, `qrels_flip`, `score_file`, and `votes_file`
+    runs from writing into the same directory tree. If the supplied path
+    already contains the preference source, it is left unchanged. If the
+    final path component looks like `seed_*`, the preference source is
+    inserted before that seed directory.
+    """
+    if preference_source in base_output_dir.parts:
+        return base_output_dir
+    if base_output_dir.name.startswith("seed_"):
+        return base_output_dir.parent / preference_source / base_output_dir.name
+    return base_output_dir / preference_source
+
+
 def _rrf_prior_scores_for_query(
     query_id: str,
     candidate_nodes: set[str],
     score_prior_sets: list[dict[str, list[tuple[str, float]]]],
+    fallback_scores: dict[str, float] | None = None,
 ) -> dict[str, float]:
     """Aggregate score priors with reciprocal-rank fusion over files."""
+    if not score_prior_sets:
+        if fallback_scores is None:
+            return {doc_id: 0.0 for doc_id in candidate_nodes}
+        return {doc_id: fallback_scores.get(doc_id, 0.0) for doc_id in candidate_nodes}
+
     rrf_k = 60.0
     scores: dict[str, float] = defaultdict(float)
     for score_map in score_prior_sets:
@@ -690,7 +728,18 @@ def _rrf_prior_scores_for_query(
         for rank, (doc_id, _score) in enumerate(ranked, start=1):
             scores[doc_id] += 1.0 / (rrf_k + rank)
     for doc_id in candidate_nodes:
-        scores.setdefault(doc_id, 0.0)
+        scores.setdefault(
+            doc_id,
+            0.0 if fallback_scores is None else fallback_scores.get(doc_id, 0.0),
+        )
+    return scores
+
+
+def _score_sum_prior_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return score-sum scores from the original graph for hybrid priors."""
+    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
+    for u, _v, data in graph.edges(data=True):
+        scores[u] += data.get("weight", 1.0)
     return scores
 
 
@@ -1171,6 +1220,7 @@ def run_query(
         query_id=qid,
         candidate_nodes=set(graph.nodes()),
         score_prior_sets=score_prior_sets,
+        fallback_scores=_score_sum_prior_scores(graph),
     )
     with Timer("ranking_fas_score_augmented_topological", accumulator=query_acc):
         rankings["greedy_fas_score_augmented_topological"] = _priority_topological_ranking(
@@ -1450,6 +1500,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Comma-separated alpha values for optional hybrid alpha sweep.",
     )
     parser.add_argument(
+        "--methods",
+        type=str,
+        nargs="*",
+        default=None,
+        help=(
+            "Optional exact method names to evaluate. "
+            "If omitted, all standard baselines/FAS/hybrid defaults are run."
+        ),
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -1464,7 +1524,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--save-timings",
         action="store_true",
-        help="Save timing CSV and JSON to outputs/timings/.",
+        help="Save timing CSV and JSON under <output-dir>/<preference_source>/timings/.",
     )
     parser.add_argument(
         "--profile",
@@ -1503,6 +1563,7 @@ def run_experiment(
     include_hybrid_ablation: bool = False,
     hybrid_alpha_sweep_components: list[str] | None = None,
     hybrid_alpha_values: str = "0.0,0.1,0.2,0.3,0.5,0.7,1.0",
+    methods_filter: list[str] | None = None,
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -1532,7 +1593,7 @@ def run_experiment(
     dict
         Experiment summary.
     """
-    output_dir = Path(output_dir)
+    output_dir = _resolve_output_dir(Path(output_dir), preference_source)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'='*65}")
@@ -1558,6 +1619,7 @@ def run_experiment(
         include_hybrid_ablation=include_hybrid_ablation,
         alpha_sweep_components=hybrid_alpha_sweep_components,
         alpha_values=alpha_values,
+        selected_methods=methods_filter,
     )
     print(f"  hybrid_ablation: {include_hybrid_ablation}")
     if hybrid_alpha_sweep_components:
@@ -2075,6 +2137,7 @@ def main(argv: list[str] | None = None) -> None:
         include_hybrid_ablation=args.include_hybrid_ablation,
         hybrid_alpha_sweep_components=args.hybrid_alpha_sweep_components,
         hybrid_alpha_values=args.hybrid_alpha_values,
+        methods_filter=args.methods,
         seed=args.seed,
         output_dir=args.output_dir,
         save_timings=args.save_timings,

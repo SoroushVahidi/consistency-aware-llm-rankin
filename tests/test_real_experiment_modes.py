@@ -13,6 +13,8 @@ from scripts.run_real_experiment import (
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_priority_topological_ranking,
     _build_hybrid_specs,
+    _method_plan,
+    _resolve_output_dir,
     _build_query_preferences,
     _average_precision_at_k,
     _copeland_ranking,
@@ -25,14 +27,16 @@ from scripts.run_real_experiment import (
     _precision_recall_at_k,
     _reference_ranking_for_candidates,
     _rrf_prior_scores_for_query,
+    _score_sum_prior_scores,
     _weighted_out_minus_in_ranking,
     _flip_preference_directions,
     _has_usable_eval_labels,
     _load_pairwise_preference_file,
     _load_score_file,
     _score_entries_to_preferences,
+    run_experiment,
 )
-from consistency_ranker.data.schema import QrelEntry
+from consistency_ranker.data.schema import Document, QrelEntry, Query
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.pairwise_prefs import Preference
 
@@ -203,6 +207,23 @@ def test_rrf_prior_and_hybrid_ranking():
     assert ranking[0] in {"a", "c"}
 
 
+def test_rrf_prior_falls_back_to_score_sum_scores():
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    pri = _rrf_prior_scores_for_query(
+        "q1",
+        {"a", "b", "c"},
+        score_prior_sets=[],
+        fallback_scores=_score_sum_prior_scores(graph),
+    )
+    assert pri == {"a": 3.0, "b": 0.0, "c": 1.0}
+
+
 def test_hybrid_component_variants():
     graph = build_graph(
         [
@@ -244,3 +265,102 @@ def test_parse_alpha_values_and_prior_only():
         _parse_alpha_values("")
     ranking = _prior_only_ranking(["b", "a", "c"], {"a": 0.2, "b": 0.9, "c": 0.9})
     assert ranking == ["b", "c", "a"]
+
+
+def test_method_plan_can_filter_to_shortlist():
+    methods, hybrids = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        selected_methods=[
+            "score_sum",
+            "borda",
+            "greedy_fas_weighted_balance",
+            "hybrid_rrf_fas_regularized",
+        ],
+    )
+    assert methods == [
+        "score_sum",
+        "borda",
+        "greedy_fas_weighted_balance",
+        "hybrid_rrf_fas_regularized",
+    ]
+    assert set(hybrids) == {"hybrid_rrf_fas_regularized"}
+
+
+def test_resolve_output_dir_separates_preference_sources():
+    assert _resolve_output_dir(Path("outputs/real_small_validation/scidocs"), "qrels") == (
+        Path("outputs/real_small_validation/scidocs/qrels")
+    )
+    assert _resolve_output_dir(
+        Path("outputs/real_full/scidocs/seed_42"),
+        "qrels_flip",
+    ) == Path("outputs/real_full/scidocs/qrels_flip/seed_42")
+    assert _resolve_output_dir(
+        Path("outputs/real_full/scidocs/qrels_flip/seed_42"),
+        "qrels_flip",
+    ) == Path("outputs/real_full/scidocs/qrels_flip/seed_42")
+
+
+def test_run_experiment_writes_preference_source_specific_subdirs(monkeypatch, tmp_path: Path):
+    queries = [Query(query_id="q1", text="query")]
+    documents = [
+        Document(doc_id="d1", text="doc1"),
+        Document(doc_id="d2", text="doc2"),
+        Document(doc_id="d3", text="doc3"),
+    ]
+    qrels = [
+        QrelEntry(query_id="q1", doc_id="d1", relevance=2),
+        QrelEntry(query_id="q1", doc_id="d2", relevance=1),
+        QrelEntry(query_id="q1", doc_id="d3", relevance=0),
+    ]
+
+    monkeypatch.setattr(
+        "scripts.run_real_experiment.load_dataset_splits",
+        lambda _dataset: (queries, documents, qrels),
+    )
+
+    base_output = tmp_path / "real_small_validation" / "toyset"
+    common_kwargs = dict(
+        dataset="toyset",
+        max_queries=1,
+        top_k=3,
+        weight_scheme="grade_diff",
+        pairwise_file=None,
+        score_file=None,
+        score_prior_files=None,
+        seed=42,
+        output_dir=base_output,
+        save_timings=True,
+        profile=False,
+        generate_plots=False,
+        query_id_file=None,
+        include_hybrid_ablation=False,
+        hybrid_alpha_sweep_components=None,
+        hybrid_alpha_values="0.2",
+        methods_filter=["score_sum", "borda"],
+    )
+
+    run_experiment(
+        preference_source="qrels",
+        flip_prob=0.15,
+        **common_kwargs,
+    )
+    qrels_dir = base_output / "qrels"
+    assert (qrels_dir / "toyset_per_query.csv").exists()
+    assert (qrels_dir / "toyset_summary.csv").exists()
+    assert (qrels_dir / "toyset_experiment_summary.json").exists()
+    assert (qrels_dir / "timings" / "toyset_timings.csv").exists()
+    qrels_contents = (qrels_dir / "toyset_per_query.csv").read_text(encoding="utf-8")
+
+    run_experiment(
+        preference_source="qrels_flip",
+        flip_prob=1.0,
+        **common_kwargs,
+    )
+    qrels_flip_dir = base_output / "qrels_flip"
+    assert (qrels_flip_dir / "toyset_per_query.csv").exists()
+    assert (qrels_flip_dir / "toyset_summary.csv").exists()
+    assert (qrels_flip_dir / "toyset_experiment_summary.json").exists()
+    assert (qrels_flip_dir / "timings" / "toyset_timings.csv").exists()
+    assert (qrels_dir / "toyset_per_query.csv").read_text(encoding="utf-8") == qrels_contents

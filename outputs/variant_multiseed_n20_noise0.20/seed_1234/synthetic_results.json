@@ -1,0 +1,752 @@
+{
+  "config": {
+    "n_items": 20,
+    "noise": 0.2,
+    "seed": 1234,
+    "weight_scheme": "margin"
+  },
+  "ground_truth_ranking": [
+    "item_00",
+    "item_04",
+    "item_03",
+    "item_11",
+    "item_08",
+    "item_06",
+    "item_13",
+    "item_14",
+    "item_05",
+    "item_19",
+    "item_01",
+    "item_12",
+    "item_09",
+    "item_16",
+    "item_15",
+    "item_17",
+    "item_07",
+    "item_10",
+    "item_18",
+    "item_02"
+  ],
+  "graph_summary": {
+    "n_nodes": 20,
+    "n_edges": 190,
+    "is_dag": false,
+    "total_weight": 73.91523775504483,
+    "n_sccs": 1
+  },
+  "cycle_summary": {
+    "has_cycle": true,
+    "n_sccs": 1,
+    "n_non_trivial_sccs": 1,
+    "note": "Full cycle enumeration skipped (exponential cost on dense graphs)"
+  },
+  "rankings": {
+    "score_sum": [
+      "item_03",
+      "item_00",
+      "item_04",
+      "item_11",
+      "item_08",
+      "item_14",
+      "item_13",
+      "item_06",
+      "item_01",
+      "item_05",
+      "item_19",
+      "item_02",
+      "item_18",
+      "item_12",
+      "item_09",
+      "item_16",
+      "item_10",
+      "item_17",
+      "item_15",
+      "item_07"
+    ],
+    "borda": [
+      "item_03",
+      "item_11",
+      "item_04",
+      "item_14",
+      "item_00",
+      "item_01",
+      "item_08",
+      "item_13",
+      "item_05",
+      "item_06",
+      "item_09",
+      "item_12",
+      "item_19",
+      "item_02",
+      "item_15",
+      "item_16",
+      "item_17",
+      "item_07",
+      "item_10",
+      "item_18"
+    ],
+    "greedy_fas_topological": [
+      "item_03",
+      "item_06",
+      "item_13",
+      "item_14",
+      "item_17",
+      "item_11",
+      "item_18",
+      "item_19",
+      "item_16",
+      "item_00",
+      "item_01",
+      "item_02",
+      "item_10",
+      "item_12",
+      "item_05",
+      "item_08",
+      "item_09",
+      "item_04",
+      "item_15",
+      "item_07"
+    ],
+    "priority_topological_score_sum": [
+      "item_03",
+      "item_14",
+      "item_13",
+      "item_06",
+      "item_17",
+      "item_11",
+      "item_18",
+      "item_19",
+      "item_16",
+      "item_00",
+      "item_01",
+      "item_02",
+      "item_08",
+      "item_05",
+      "item_12",
+      "item_10",
+      "item_09",
+      "item_04",
+      "item_15",
+      "item_07"
+    ],
+    "fas_weighted_balance": [
+      "item_03",
+      "item_11",
+      "item_14",
+      "item_13",
+      "item_06",
+      "item_00",
+      "item_19",
+      "item_17",
+      "item_08",
+      "item_16",
+      "item_01",
+      "item_18",
+      "item_05",
+      "item_12",
+      "item_04",
+      "item_09",
+      "item_02",
+      "item_10",
+      "item_15",
+      "item_07"
+    ],
+    "fas_copeland": [
+      "item_14",
+      "item_13",
+      "item_11",
+      "item_03",
+      "item_06",
+      "item_00",
+      "item_17",
+      "item_19",
+      "item_16",
+      "item_01",
+      "item_08",
+      "item_18",
+      "item_04",
+      "item_12",
+      "item_09",
+      "item_02",
+      "item_05",
+      "item_10",
+      "item_15",
+      "item_07"
+    ],
+    "hybrid_rrf_fas_regularized": [
+      "item_03",
+      "item_00",
+      "item_11",
+      "item_04",
+      "item_08",
+      "item_14",
+      "item_13",
+      "item_06",
+      "item_01",
+      "item_05",
+      "item_19",
+      "item_18",
+      "item_02",
+      "item_12",
+      "item_09",
+      "item_16",
+      "item_17",
+      "item_10",
+      "item_15",
+      "item_07"
+    ]
+  },
+  "evaluation": {
+    "kendall_tau": {
+      "score_sum": 0.7263157894736842,
+      "borda": 0.7263157894736842,
+      "greedy_fas_topological": 0.21052631578947367,
+      "priority_topological_score_sum": 0.24210526315789474,
+      "fas_weighted_balance": 0.4842105263157895,
+      "fas_copeland": 0.3894736842105263,
+      "hybrid_rrf_fas_regularized": 0.7368421052631579
+    },
+    "n_violations": {
+      "score_sum": 26,
+      "borda": 26,
+      "greedy_fas_topological": 75,
+      "priority_topological_score_sum": 72,
+      "fas_weighted_balance": 49,
+      "fas_copeland": 58,
+      "hybrid_rrf_fas_regularized": 25
+    },
+    "pairwise_inconsistency_count": {
+      "original_graph": 43,
+      "after_fas_dag": 17
+    }
+  },
+  "fas": {
+    "n_removed_edges": 93,
+    "total_removed_weight": 25.952804061417137,
+    "removed_edges": [
+      [
+        "item_04",
+        "item_03",
+        0.02829303491463986
+      ],
+      [
+        "item_05",
+        "item_01",
+        0.14149497388359644
+      ],
+      [
+        "item_03",
+        "item_00",
+        0.05547757324301461
+      ],
+      [
+        "item_05",
+        "item_03",
+        0.32874838939017503
+      ],
+      [
+        "item_07",
+        "item_02",
+        0.07644675677849677
+      ],
+      [
+        "item_06",
+        "item_01",
+        0.23083088231263238
+      ],
+      [
+        "item_04",
+        "item_05",
+        0.3570414243048149
+      ],
+      [
+        "item_04",
+        "item_06",
+        0.26770551587577895
+      ],
+      [
+        "item_07",
+        "item_06",
+        0.5876252546509011
+      ],
+      [
+        "item_07",
+        "item_10",
+        0.053124205110474
+      ],
+      [
+        "item_07",
+        "item_16",
+        0.09915242057284768
+      ],
+      [
+        "item_07",
+        "item_18",
+        0.06931944635017484
+      ],
+      [
+        "item_04",
+        "item_08",
+        0.17278806457196771
+      ],
+      [
+        "item_04",
+        "item_11",
+        0.1504962801274805
+      ],
+      [
+        "item_13",
+        "item_01",
+        0.18254887586381585
+      ],
+      [
+        "item_04",
+        "item_13",
+        0.3159875223245955
+      ],
+      [
+        "item_14",
+        "item_01",
+        0.17508309592826254
+      ],
+      [
+        "item_04",
+        "item_14",
+        0.3234533022601488
+      ],
+      [
+        "item_15",
+        "item_02",
+        0.14106316864970037
+      ],
+      [
+        "item_15",
+        "item_10",
+        0.11774061698167759
+      ],
+      [
+        "item_15",
+        "item_12",
+        0.19753432688883554
+      ],
+      [
+        "item_15",
+        "item_13",
+        0.474726836330881
+      ],
+      [
+        "item_15",
+        "item_17",
+        0.03414166901959992
+      ],
+      [
+        "item_15",
+        "item_18",
+        0.13393585822137843
+      ],
+      [
+        "item_01",
+        "item_02",
+        0.4332411291167655
+      ],
+      [
+        "item_01",
+        "item_04",
+        0.49853639818841133
+      ],
+      [
+        "item_08",
+        "item_00",
+        0.19997260290034247
+      ],
+      [
+        "item_08",
+        "item_03",
+        0.14449502965732786
+      ],
+      [
+        "item_08",
+        "item_06",
+        0.09491745130381124
+      ],
+      [
+        "item_09",
+        "item_02",
+        0.22931830530453057
+      ],
+      [
+        "item_01",
+        "item_08",
+        0.3257483336164436
+      ],
+      [
+        "item_01",
+        "item_09",
+        0.20392282381223492
+      ],
+      [
+        "item_01",
+        "item_10",
+        0.4099185774487427
+      ],
+      [
+        "item_01",
+        "item_12",
+        0.09464363357822958
+      ],
+      [
+        "item_01",
+        "item_16",
+        0.25764195176542104
+      ],
+      [
+        "item_01",
+        "item_17",
+        0.32631962948666504
+      ],
+      [
+        "item_01",
+        "item_18",
+        0.42611381868844356
+      ],
+      [
+        "item_01",
+        "item_19",
+        0.04601894142940566
+      ],
+      [
+        "item_04",
+        "item_16",
+        0.7561783499538324
+      ],
+      [
+        "item_04",
+        "item_17",
+        0.8248560276750764
+      ],
+      [
+        "item_04",
+        "item_18",
+        0.9246502168768549
+      ],
+      [
+        "item_04",
+        "item_19",
+        0.4525174567590057
+      ],
+      [
+        "item_05",
+        "item_08",
+        0.18425335973284718
+      ],
+      [
+        "item_05",
+        "item_09",
+        0.34541779769583136
+      ],
+      [
+        "item_05",
+        "item_10",
+        0.5514135513323392
+      ],
+      [
+        "item_11",
+        "item_00",
+        0.17768081845585526
+      ],
+      [
+        "item_05",
+        "item_11",
+        0.20654514417733438
+      ],
+      [
+        "item_12",
+        "item_09",
+        0.10927919023400534
+      ],
+      [
+        "item_05",
+        "item_12",
+        0.23613860746182602
+      ],
+      [
+        "item_05",
+        "item_17",
+        0.4678146033702615
+      ],
+      [
+        "item_05",
+        "item_19",
+        0.09547603245419078
+      ],
+      [
+        "item_09",
+        "item_06",
+        0.4347537061248673
+      ],
+      [
+        "item_09",
+        "item_14",
+        0.37900591974049747
+      ],
+      [
+        "item_09",
+        "item_16",
+        0.05371912795318612
+      ],
+      [
+        "item_09",
+        "item_17",
+        0.12239680567443012
+      ],
+      [
+        "item_09",
+        "item_18",
+        0.22219099487620864
+      ],
+      [
+        "item_08",
+        "item_10",
+        0.7356669110651863
+      ],
+      [
+        "item_12",
+        "item_10",
+        0.31527494387051314
+      ],
+      [
+        "item_08",
+        "item_12",
+        0.4203919671946732
+      ],
+      [
+        "item_08",
+        "item_13",
+        0.14319945775262777
+      ],
+      [
+        "item_08",
+        "item_16",
+        0.5833902853818647
+      ],
+      [
+        "item_08",
+        "item_17",
+        0.6520679631031087
+      ],
+      [
+        "item_08",
+        "item_19",
+        0.27972939218703796
+      ],
+      [
+        "item_02",
+        "item_10",
+        0.023322551668022773
+      ],
+      [
+        "item_02",
+        "item_12",
+        0.3385974955385359
+      ],
+      [
+        "item_02",
+        "item_16",
+        0.17559917735134445
+      ],
+      [
+        "item_02",
+        "item_18",
+        0.007127310428321931
+      ],
+      [
+        "item_11",
+        "item_06",
+        0.11720923574829845
+      ],
+      [
+        "item_03",
+        "item_11",
+        0.12220324521284065
+      ],
+      [
+        "item_12",
+        "item_11",
+        0.4426837516391604
+      ],
+      [
+        "item_12",
+        "item_16",
+        0.16299831818719146
+      ],
+      [
+        "item_12",
+        "item_17",
+        0.23167599590843546
+      ],
+      [
+        "item_06",
+        "item_03",
+        0.2394124809611391
+      ],
+      [
+        "item_00",
+        "item_06",
+        0.2948900542041537
+      ],
+      [
+        "item_12",
+        "item_18",
+        0.331470185110214
+      ],
+      [
+        "item_12",
+        "item_19",
+        0.14066257500763524
+      ],
+      [
+        "item_03",
+        "item_13",
+        0.2876944874099556
+      ],
+      [
+        "item_14",
+        "item_06",
+        0.055747786384369835
+      ],
+      [
+        "item_03",
+        "item_14",
+        0.29516026734550893
+      ],
+      [
+        "item_03",
+        "item_16",
+        0.7278853150391925
+      ],
+      [
+        "item_03",
+        "item_17",
+        0.7965629927604365
+      ],
+      [
+        "item_10",
+        "item_03",
+        0.8801619407225142
+      ],
+      [
+        "item_10",
+        "item_18",
+        0.01619524123970084
+      ],
+      [
+        "item_13",
+        "item_14",
+        0.007465779935553307
+      ],
+      [
+        "item_00",
+        "item_13",
+        0.34317206065297023
+      ],
+      [
+        "item_00",
+        "item_14",
+        0.35063784058852354
+      ],
+      [
+        "item_06",
+        "item_13",
+        0.04828200644881653
+      ],
+      [
+        "item_11",
+        "item_13",
+        0.16549124219711497
+      ],
+      [
+        "item_11",
+        "item_14",
+        0.17295702213266828
+      ],
+      [
+        "item_16",
+        "item_06",
+        0.4884728340780534
+      ],
+      [
+        "item_16",
+        "item_17",
+        0.068677677721244
+      ],
+      [
+        "item_16",
+        "item_18",
+        0.16847186692302252
+      ],
+      [
+        "item_19",
+        "item_17",
+        0.3723385709160707
+      ]
+    ]
+  },
+  "timings": {
+    "data_generation": {
+      "total_s": 9.3e-05,
+      "mean_s": 9.3e-05
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.000395,
+      "mean_s": 0.000395
+    },
+    "graph_construction": {
+      "total_s": 0.003881,
+      "mean_s": 0.003881
+    },
+    "cycle_detection": {
+      "total_s": 0.000189,
+      "mean_s": 0.000189
+    },
+    "ranking_score_sum": {
+      "total_s": 0.000133,
+      "mean_s": 0.000133
+    },
+    "ranking_borda": {
+      "total_s": 3.5e-05,
+      "mean_s": 3.5e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.013693,
+      "mean_s": 0.013693
+    },
+    "ranking_topological": {
+      "total_s": 0.000171,
+      "mean_s": 0.000171
+    },
+    "ranking_priority_topological_score_sum": {
+      "total_s": 0.000152,
+      "mean_s": 0.000152
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 6.9e-05,
+      "mean_s": 6.9e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 4.8e-05,
+      "mean_s": 4.8e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 9.5e-05,
+      "mean_s": 9.5e-05
+    },
+    "evaluation": {
+      "total_s": 0.000716,
+      "mean_s": 0.000716
+    },
+    "total_experiment": {
+      "total_s": 0.019838,
+      "mean_s": 0.019838
+    }
+  }
+}

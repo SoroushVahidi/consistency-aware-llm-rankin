@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "experiment": "synthetic",
+    "n_items": 20,
+    "noise": 0.2,
+    "seed": 456,
+    "weight_scheme": "margin"
+  },
+  "summary": [
+    {
+      "stage": "data_generation",
+      "n_calls": 1,
+      "total_s": 9.7e-05,
+      "mean_s": 9.7e-05,
+      "median_s": 9.7e-05,
+      "max_s": 9.7e-05
+    },
+    {
+      "stage": "pairwise_preference_generation",
+      "n_calls": 1,
+      "total_s": 0.000404,
+      "mean_s": 0.000404,
+      "median_s": 0.000404,
+      "max_s": 0.000404
+    },
+    {
+      "stage": "graph_construction",
+      "n_calls": 1,
+      "total_s": 0.003562,
+      "mean_s": 0.003562,
+      "median_s": 0.003562,
+      "max_s": 0.003562
+    },
+    {
+      "stage": "cycle_detection",
+      "n_calls": 1,
+      "total_s": 0.002059,
+      "mean_s": 0.002059,
+      "median_s": 0.002059,
+      "max_s": 0.002059
+    },
+    {
+      "stage": "ranking_score_sum",
+      "n_calls": 1,
+      "total_s": 0.000123,
+      "mean_s": 0.000123,
+      "median_s": 0.000123,
+      "max_s": 0.000123
+    },
+    {
+      "stage": "ranking_borda",
+      "n_calls": 1,
+      "total_s": 6.1e-05,
+      "mean_s": 6.1e-05,
+      "median_s": 6.1e-05,
+      "max_s": 6.1e-05
+    },
+    {
+      "stage": "greedy_fas_solver",
+      "n_calls": 1,
+      "total_s": 0.015471,
+      "mean_s": 0.015471,
+      "median_s": 0.015471,
+      "max_s": 0.015471
+    },
+    {
+      "stage": "ranking_topological",
+      "n_calls": 1,
+      "total_s": 0.000132,
+      "mean_s": 0.000132,
+      "median_s": 0.000132,
+      "max_s": 0.000132
+    },
+    {
+      "stage": "ranking_priority_topological_score_sum",
+      "n_calls": 1,
+      "total_s": 0.000125,
+      "mean_s": 0.000125,
+      "median_s": 0.000125,
+      "max_s": 0.000125
+    },
+    {
+      "stage": "ranking_fas_weighted_balance",
+      "n_calls": 1,
+      "total_s": 7.2e-05,
+      "mean_s": 7.2e-05,
+      "median_s": 7.2e-05,
+      "max_s": 7.2e-05
+    },
+    {
+      "stage": "ranking_fas_copeland",
+      "n_calls": 1,
+      "total_s": 4.9e-05,
+      "mean_s": 4.9e-05,
+      "median_s": 4.9e-05,
+      "max_s": 4.9e-05
+    },
+    {
+      "stage": "ranking_hybrid_rrf_fas_regularized",
+      "n_calls": 1,
+      "total_s": 9.5e-05,
+      "mean_s": 9.5e-05,
+      "median_s": 9.5e-05,
+      "max_s": 9.5e-05
+    },
+    {
+      "stage": "evaluation",
+      "n_calls": 1,
+      "total_s": 0.000708,
+      "mean_s": 0.000708,
+      "median_s": 0.000708,
+      "max_s": 0.000708
+    },
+    {
+      "stage": "total_experiment",
+      "n_calls": 1,
+      "total_s": 0.023217,
+      "mean_s": 0.023217,
+      "median_s": 0.023217,
+      "max_s": 0.023217
+    }
+  ],
+  "raw": {
+    "data_generation": [
+      9.701599992695265e-05
+    ],
+    "pairwise_preference_generation": [
+      0.000404299999900104
+    ],
+    "graph_construction": [
+      0.0035623630001282436
+    ],
+    "cycle_detection": [
+      0.0020588289999068365
+    ],
+    "ranking_score_sum": [
+      0.00012333100039541023
+    ],
+    "ranking_borda": [
+      6.132300040917471e-05
+    ],
+    "greedy_fas_solver": [
+      0.01547077299983357
+    ],
+    "ranking_topological": [
+      0.00013191400012146914
+    ],
+    "ranking_priority_topological_score_sum": [
+      0.00012534500001493143
+    ],
+    "ranking_fas_weighted_balance": [
+      7.203399945865385e-05
+    ],
+    "ranking_fas_copeland": [
+      4.888300009042723e-05
+    ],
+    "ranking_hybrid_rrf_fas_regularized": [
+      9.514799967291765e-05
+    ],
+    "evaluation": [
+      0.0007076460005919216
+    ],
+    "total_experiment": [
+      0.023216858000523644
+    ]
+  }
+}
