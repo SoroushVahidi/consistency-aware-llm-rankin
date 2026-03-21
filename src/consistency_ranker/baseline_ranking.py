@@ -145,6 +145,19 @@ def priority_topological_ranking(
 ) -> list[str]:
     """Topological ranking with deterministic priority tie-breaking.
 
+    Parameters
+    ----------
+    dag:
+        Directed acyclic graph.
+    priority_scores:
+        Per-node scores used to resolve ties among currently available
+        zero-in-degree nodes.
+
+    Returns
+    -------
+    list[str]
+        Node ids in a valid topological order.
+
     At each step, choose the currently available source node with highest
     ``priority_scores[node]``; ties fall back to node id for determinism.
     """

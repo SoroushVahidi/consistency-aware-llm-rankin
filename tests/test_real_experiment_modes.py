@@ -14,6 +14,8 @@ from scripts.run_real_experiment import (
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_priority_topological_ranking,
     _build_hybrid_specs,
+    _method_plan,
+    _resolve_output_dir,
     _build_query_preferences,
     _average_precision_at_k,
     _copeland_ranking,
@@ -26,6 +28,7 @@ from scripts.run_real_experiment import (
     _precision_recall_at_k,
     _reference_ranking_for_candidates,
     _rrf_prior_scores_for_query,
+    _score_sum_prior_scores,
     _weighted_out_minus_in_ranking,
     _flip_preference_directions,
     _filter_methods,
@@ -34,6 +37,7 @@ from scripts.run_real_experiment import (
     _resolve_output_dir,
     _load_score_file,
     _score_entries_to_preferences,
+    run_experiment,
 )
 from consistency_ranker.baseline_ranking import fas_balance_score_prior_alpha_beta_ranking
 from consistency_ranker.data.schema import QrelEntry
@@ -207,6 +211,23 @@ def test_rrf_prior_and_hybrid_ranking():
     assert ranking[0] in {"a", "c"}
 
 
+def test_rrf_prior_falls_back_to_score_sum_scores():
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    pri = _rrf_prior_scores_for_query(
+        "q1",
+        {"a", "b", "c"},
+        score_prior_sets=[],
+        fallback_scores=_score_sum_prior_scores(graph),
+    )
+    assert pri == {"a": 3.0, "b": 0.0, "c": 1.0}
+
+
 def test_hybrid_component_variants():
     graph = build_graph(
         [
@@ -250,7 +271,6 @@ def test_parse_alpha_values_and_prior_only():
     assert ranking == ["b", "c", "a"]
 
 
-
 def test_filter_methods_keeps_requested_shortlist():
     methods = [
         "score_sum",
@@ -269,6 +289,13 @@ def test_filter_methods_keeps_requested_shortlist():
         },
         selected_methods=["score_sum", "hybrid_rrf_fas_regularized"],
     )
+    assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
+    assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
+        "score_sum",
+        "borda",
+        "greedy_fas_weighted_balance",
+        "hybrid_rrf_fas_regularized",
+    ]
     assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
     assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
 
@@ -340,4 +367,3 @@ def test_fas_balance_score_prior_alpha_beta_in_pipeline(tmp_path: Path):
     assert skip is None
     method_names = {r["method"] for r in rows}
     assert "fas_balance_score_prior_alpha_beta" in method_names
-

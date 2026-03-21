@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "experiment": "synthetic",
+    "n_items": 20,
+    "noise": 0.2,
+    "seed": 42,
+    "weight_scheme": "margin"
+  },
+  "summary": [
+    {
+      "stage": "data_generation",
+      "n_calls": 1,
+      "total_s": 0.000134,
+      "mean_s": 0.000134,
+      "median_s": 0.000134,
+      "max_s": 0.000134
+    },
+    {
+      "stage": "pairwise_preference_generation",
+      "n_calls": 1,
+      "total_s": 0.000381,
+      "mean_s": 0.000381,
+      "median_s": 0.000381,
+      "max_s": 0.000381
+    },
+    {
+      "stage": "graph_construction",
+      "n_calls": 1,
+      "total_s": 0.003579,
+      "mean_s": 0.003579,
+      "median_s": 0.003579,
+      "max_s": 0.003579
+    },
+    {
+      "stage": "cycle_detection",
+      "n_calls": 1,
+      "total_s": 0.00018,
+      "mean_s": 0.00018,
+      "median_s": 0.00018,
+      "max_s": 0.00018
+    },
+    {
+      "stage": "ranking_score_sum",
+      "n_calls": 1,
+      "total_s": 0.0001,
+      "mean_s": 0.0001,
+      "median_s": 0.0001,
+      "max_s": 0.0001
+    },
+    {
+      "stage": "ranking_borda",
+      "n_calls": 1,
+      "total_s": 3.9e-05,
+      "mean_s": 3.9e-05,
+      "median_s": 3.9e-05,
+      "max_s": 3.9e-05
+    },
+    {
+      "stage": "greedy_fas_solver",
+      "n_calls": 1,
+      "total_s": 0.011126,
+      "mean_s": 0.011126,
+      "median_s": 0.011126,
+      "max_s": 0.011126
+    },
+    {
+      "stage": "ranking_topological",
+      "n_calls": 1,
+      "total_s": 0.000227,
+      "mean_s": 0.000227,
+      "median_s": 0.000227,
+      "max_s": 0.000227
+    },
+    {
+      "stage": "ranking_priority_topological_score_sum",
+      "n_calls": 1,
+      "total_s": 0.000167,
+      "mean_s": 0.000167,
+      "median_s": 0.000167,
+      "max_s": 0.000167
+    },
+    {
+      "stage": "ranking_fas_weighted_balance",
+      "n_calls": 1,
+      "total_s": 8.9e-05,
+      "mean_s": 8.9e-05,
+      "median_s": 8.9e-05,
+      "max_s": 8.9e-05
+    },
+    {
+      "stage": "ranking_fas_copeland",
+      "n_calls": 1,
+      "total_s": 5.8e-05,
+      "mean_s": 5.8e-05,
+      "median_s": 5.8e-05,
+      "max_s": 5.8e-05
+    },
+    {
+      "stage": "ranking_hybrid_rrf_fas_regularized",
+      "n_calls": 1,
+      "total_s": 0.00013,
+      "mean_s": 0.00013,
+      "median_s": 0.00013,
+      "max_s": 0.00013
+    },
+    {
+      "stage": "evaluation",
+      "n_calls": 1,
+      "total_s": 0.001253,
+      "mean_s": 0.001253,
+      "median_s": 0.001253,
+      "max_s": 0.001253
+    },
+    {
+      "stage": "total_experiment",
+      "n_calls": 1,
+      "total_s": 0.017816,
+      "mean_s": 0.017816,
+      "median_s": 0.017816,
+      "max_s": 0.017816
+    }
+  ],
+  "raw": {
+    "data_generation": [
+      0.00013427399971988052
+    ],
+    "pairwise_preference_generation": [
+      0.0003813900002569426
+    ],
+    "graph_construction": [
+      0.0035792569997283863
+    ],
+    "cycle_detection": [
+      0.0001803519999157288
+    ],
+    "ranking_score_sum": [
+      9.970700011763256e-05
+    ],
+    "ranking_borda": [
+      3.9264000406546984e-05
+    ],
+    "greedy_fas_solver": [
+      0.01112583799931599
+    ],
+    "ranking_topological": [
+      0.00022715300019626739
+    ],
+    "ranking_priority_topological_score_sum": [
+      0.00016691899963916512
+    ],
+    "ranking_fas_weighted_balance": [
+      8.858300043357303e-05
+    ],
+    "ranking_fas_copeland": [
+      5.8444999922357965e-05
+    ],
+    "ranking_hybrid_rrf_fas_regularized": [
+      0.00012979899929632666
+    ],
+    "evaluation": [
+      0.0012534950001281686
+    ],
+    "total_experiment": [
+      0.017816067999774532
+    ]
+  }
+}

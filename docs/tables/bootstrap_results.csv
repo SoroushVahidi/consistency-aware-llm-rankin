@@ -1,0 +1,2 @@
+status,reason,blocked_stage,attempted_command,error_type,error_message,next_fix
+blocked,"No real-data per_query.csv exists in the repository, and live dataset download failed in this environment.",real_data_download_and_bootstrap,python scripts/download_datasets.py --dataset hotpotqa --max-queries 20,httpx.ProxyError,403 Forbidden,"Restore HuggingFace access or provide prepared data/outputs/*_per_query.csv, then run scripts/bootstrap_method_deltas.py."

@@ -60,6 +60,14 @@ from consistency_ranker.synthetic_data import generate_items, ground_truth_ranki
 from consistency_ranker.utils.timing import Timer, TimingAccumulator
 
 
+def _score_sum_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Return original-graph score-sum scores for all nodes."""
+    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
+    for u, _, data in graph.edges(data=True):
+        scores[u] += data.get("weight", 1.0)
+    return scores
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run the end-to-end synthetic consistency-ranking experiment.",
@@ -310,6 +318,7 @@ def run_experiment(
         with Timer("greedy_fas_solver", accumulator=acc):
             dag, removed_edges = greedy_fas(graph)
             fas_weight = greedy_fas_total_weight(removed_edges)
+            score_prior = _score_sum_scores(graph)
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
         score_sum_priority_scores = score_sum_scores(graph)
@@ -357,7 +366,6 @@ def run_experiment(
         print(f"    FAS bal+prior alpha (top 5) : {fas_balance_score_prior_alpha[:5]}")
         print(f"    FAS bal+prior a/b (top 5)   : {fas_balance_score_prior_alpha_beta[:5]}")
         print(f"    FAS bal+ss+borda (top 5)    : {fas_balance_score_sum_borda_hybrid[:5]}")
-
         # Verify the dag produced is truly acyclic
         assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
 
