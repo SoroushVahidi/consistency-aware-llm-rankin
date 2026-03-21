@@ -1,0 +1,46 @@
+[
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "borda",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": 0.0,
+    "ci95_low": 0.0,
+    "ci95_high": 0.0,
+    "positive_delta": false,
+    "ci_excludes_zero": false
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "greedy_fas_weighted_balance",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.0002078800000000003,
+    "ci95_low": -0.0006236400000000008,
+    "ci95_high": 0.0,
+    "positive_delta": false,
+    "ci_excludes_zero": false
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "hybrid_rrf_fas_regularized",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.0002078800000000003,
+    "ci95_low": -0.0006236400000000008,
+    "ci95_high": 0.0,
+    "positive_delta": false,
+    "ci_excludes_zero": false
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "fas_balance_score_prior_alpha_beta",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": 0.0,
+    "ci95_low": 0.0,
+    "ci95_high": 0.0,
+    "positive_delta": false,
+    "ci_excludes_zero": false
+  }
+]

@@ -1,0 +1,5 @@
+metric,method_a,method_b,n_paired_queries,mean_delta,ci95_low,ci95_high,positive_delta,ci_excludes_zero
+ndcg_at_k,borda,score_sum,50,-0.042635139999999995,-0.059032,-0.029033460000000004,False,True
+ndcg_at_k,greedy_fas_weighted_balance,score_sum,50,-0.0277548,-0.0394263,-0.01754998,False,True
+ndcg_at_k,hybrid_rrf_fas_regularized,score_sum,50,-0.0277548,-0.0394263,-0.01754998,False,True
+ndcg_at_k,fas_balance_score_prior_alpha_beta,score_sum,50,-0.014200479999999998,-0.02484213999999999,-0.005341719999999999,False,True

@@ -60,8 +60,10 @@ import networkx as nx
 
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
+    fas_balance_score_prior_alpha_beta_ranking,
     pagerank_ranking,
     score_sum_ranking,
+    score_sum_scores,
     topological_ranking,
 )
 from consistency_ranker.cycle_detection import has_cycle
@@ -100,6 +102,7 @@ NON_HYBRID_METHODS = (
     "greedy_fas_weighted_balance",
     "greedy_fas_copeland",
     "greedy_fas_score_augmented_topological",
+    "fas_balance_score_prior_alpha_beta",
 )
 """Core baseline/FAS methods always evaluated."""
 
@@ -1207,6 +1210,18 @@ def run_query(
     with Timer("ranking_fas_copeland", accumulator=query_acc):
         rankings["greedy_fas_copeland"] = _copeland_ranking(dag)
     ranking_stage_by_method["greedy_fas_copeland"] = "ranking_fas_copeland"
+
+    # Score-sum prior from the original (pre-repair) graph: used by
+    # fas_balance_score_prior_alpha_beta and score-augmented topological.
+    _score_sum_prior: dict[str, float] = score_sum_scores(graph)
+
+    with Timer("ranking_fas_balance_score_prior_alpha_beta", accumulator=query_acc):
+        rankings["fas_balance_score_prior_alpha_beta"] = (
+            fas_balance_score_prior_alpha_beta_ranking(dag, _score_sum_prior)
+        )
+    ranking_stage_by_method["fas_balance_score_prior_alpha_beta"] = (
+        "ranking_fas_balance_score_prior_alpha_beta"
+    )
 
     prior_scores = _rrf_prior_scores_for_query(
         query_id=qid,

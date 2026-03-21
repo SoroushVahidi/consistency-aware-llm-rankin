@@ -1,0 +1,46 @@
+[
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "borda",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.042635139999999995,
+    "ci95_low": -0.059032,
+    "ci95_high": -0.029033460000000004,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "greedy_fas_weighted_balance",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.0277548,
+    "ci95_low": -0.0394263,
+    "ci95_high": -0.01754998,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "hybrid_rrf_fas_regularized",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.0277548,
+    "ci95_low": -0.0394263,
+    "ci95_high": -0.01754998,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "fas_balance_score_prior_alpha_beta",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.014200479999999998,
+    "ci95_low": -0.02484213999999999,
+    "ci95_high": -0.005341719999999999,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  }
+]

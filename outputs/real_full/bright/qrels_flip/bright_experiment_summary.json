@@ -1,0 +1,150 @@
+{
+  "dataset": "bright",
+  "top_k": 20,
+  "preference_source": "qrels_flip",
+  "preference_source_note": "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts.",
+  "flip_prob": 0.15,
+  "n_processed": 50,
+  "n_skipped": 0,
+  "skipped_reasons": [],
+  "avg_n_nodes": 20.0,
+  "avg_n_edges": 86.26,
+  "avg_largest_scc": 13.52,
+  "pct_cyclic_graphs": 100.0,
+  "avg_runtime_by_method_s": {
+    "score_sum": 0.010303,
+    "borda": 0.010303,
+    "pagerank": 0.010303,
+    "greedy_fas_topological": 0.010303,
+    "greedy_fas_weighted_balance": 0.010303,
+    "greedy_fas_copeland": 0.010303,
+    "greedy_fas_score_augmented_topological": 0.010303,
+    "fas_balance_score_prior_alpha_beta": 0.010303,
+    "hybrid_rrf_fas_regularized": 0.010303,
+    "hybrid_rrf_balance_a05": 0.010303,
+    "hybrid_rrf_copeland_a03": 0.010303,
+    "hybrid_rrf_priority_topo_a03": 0.010303
+  },
+  "avg_bew_by_method": {
+    "score_sum": 17.76,
+    "borda": 18.02,
+    "pagerank": 21.6,
+    "greedy_fas_topological": 18.08,
+    "greedy_fas_weighted_balance": 18.04,
+    "greedy_fas_copeland": 20.52,
+    "greedy_fas_score_augmented_topological": 17.82,
+    "fas_balance_score_prior_alpha_beta": 17.78,
+    "hybrid_rrf_fas_regularized": 18.04,
+    "hybrid_rrf_balance_a05": 18.04,
+    "hybrid_rrf_copeland_a03": 20.52,
+    "hybrid_rrf_priority_topo_a03": 17.0
+  },
+  "best_method_by_bew": "hybrid_rrf_priority_topo_a03",
+  "primary_metric": "ndcg_at_k",
+  "avg_primary_by_method": {
+    "score_sum": 1.0,
+    "borda": 0.973434,
+    "pagerank": 0.900762,
+    "greedy_fas_topological": 0.745557,
+    "greedy_fas_weighted_balance": 0.983725,
+    "greedy_fas_copeland": 0.881379,
+    "greedy_fas_score_augmented_topological": 0.747972,
+    "fas_balance_score_prior_alpha_beta": 0.996143,
+    "hybrid_rrf_fas_regularized": 0.983725,
+    "hybrid_rrf_balance_a05": 0.983725,
+    "hybrid_rrf_copeland_a03": 0.881379,
+    "hybrid_rrf_priority_topo_a03": 0.761413
+  },
+  "best_method_by_primary": "score_sum",
+  "avg_graph_ref_pic_pre": 12.64,
+  "avg_graph_ref_pic_post": 6.78,
+  "avg_graph_ref_bew_pre": 17.76,
+  "avg_graph_ref_bew_post": 10.56,
+  "avg_fas_removed_weight": 20.9,
+  "global_timings": {
+    "preference_source_loading": {
+      "total_s": 2e-06,
+      "mean_s": 2e-06
+    },
+    "dataset_loading": {
+      "total_s": 0.032332,
+      "mean_s": 0.032332
+    },
+    "candidate_selection": {
+      "total_s": 0.001018,
+      "mean_s": 0.001018
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.00996,
+      "mean_s": 0.000199
+    },
+    "graph_construction": {
+      "total_s": 0.008556,
+      "mean_s": 0.000171
+    },
+    "cycle_detection": {
+      "total_s": 0.000865,
+      "mean_s": 1.7e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.103509,
+      "mean_s": 0.00207
+    },
+    "ranking_score_sum": {
+      "total_s": 0.001701,
+      "mean_s": 3.4e-05
+    },
+    "ranking_borda": {
+      "total_s": 0.00096,
+      "mean_s": 1.9e-05
+    },
+    "ranking_pagerank": {
+      "total_s": 0.289911,
+      "mean_s": 0.005798
+    },
+    "ranking_topological": {
+      "total_s": 0.003284,
+      "mean_s": 6.6e-05
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 0.001893,
+      "mean_s": 3.8e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 0.001362,
+      "mean_s": 2.7e-05
+    },
+    "ranking_fas_balance_score_prior_alpha_beta": {
+      "total_s": 0.002785,
+      "mean_s": 5.6e-05
+    },
+    "ranking_fas_score_augmented_topological": {
+      "total_s": 0.00243,
+      "mean_s": 4.9e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 0.002272,
+      "mean_s": 4.5e-05
+    },
+    "ranking_hybrid_rrf_balance_a05": {
+      "total_s": 0.00207,
+      "mean_s": 4.1e-05
+    },
+    "ranking_hybrid_rrf_copeland_a03": {
+      "total_s": 0.001705,
+      "mean_s": 3.4e-05
+    },
+    "ranking_hybrid_rrf_priority_topo_a03": {
+      "total_s": 0.003953,
+      "mean_s": 7.9e-05
+    },
+    "evaluation": {
+      "total_s": 0.077943,
+      "mean_s": 0.001559
+    },
+    "total_pipeline": {
+      "total_s": 0.551689,
+      "mean_s": 0.551689
+    }
+  }
+}
