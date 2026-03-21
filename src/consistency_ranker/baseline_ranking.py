@@ -16,6 +16,16 @@ topological_ranking:
 borda_ranking:
     Rank items by Borda count: each win over another item contributes 1 point.
     Equivalent to score_sum_ranking with uniform weights.
+
+weighted_out_minus_in_ranking:
+    Rank items by weighted out-degree minus weighted in-degree.
+
+copeland_ranking:
+    Rank items by out-degree minus in-degree (unweighted Copeland score).
+
+priority_topological_ranking:
+    Deterministic topological extraction that uses a priority score map for
+    tie-breaking among currently available source nodes.
 """
 
 from __future__ import annotations
@@ -69,6 +79,50 @@ def topological_ranking(graph: nx.DiGraph) -> list[str]:
             "Use greedy_fas or mwfas_solver to remove cycles first."
         )
     return list(nx.topological_sort(graph))
+
+
+def priority_topological_ranking(
+    dag: nx.DiGraph,
+    priority_scores: dict[str, float],
+) -> list[str]:
+    """Topological ranking with deterministic priority tie-breaking.
+
+    At each step, choose the currently available source node with highest
+    ``priority_scores[node]``; ties fall back to node id for determinism.
+    """
+    if not nx.is_directed_acyclic_graph(dag):
+        raise nx.NetworkXUnfeasible(
+            "priority_topological_ranking requires a DAG. "
+            "Use greedy_fas or mwfas_solver first."
+        )
+    in_deg = {n: dag.in_degree(n) for n in dag.nodes()}
+    available = [n for n, d in in_deg.items() if d == 0]
+    ranking: list[str] = []
+    while available:
+        best = max(available, key=lambda n: (priority_scores.get(n, 0.0), n))
+        available.remove(best)
+        ranking.append(best)
+        for child in dag.successors(best):
+            in_deg[child] -= 1
+            if in_deg[child] == 0:
+                available.append(child)
+    return ranking
+
+
+def weighted_out_minus_in_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank nodes by weighted out-degree minus weighted in-degree."""
+    scores: dict[str, float] = {n: 0.0 for n in graph.nodes()}
+    for u, v, data in graph.edges(data=True):
+        w = float(data.get("weight", 1.0))
+        scores[u] += w
+        scores[v] -= w
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def copeland_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank by Copeland wins-losses score (out-degree minus in-degree)."""
+    scores = {n: graph.out_degree(n) - graph.in_degree(n) for n in graph.nodes()}
+    return sorted(scores, key=lambda n: (-scores[n], n))
 
 
 def pagerank_ranking(

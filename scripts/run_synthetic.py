@@ -18,7 +18,8 @@ The script:
 3. Builds a weighted directed preference graph.
 4. Reports cycle statistics.
 5. Ranks items with score-sum and Borda baselines.
-6. Applies the greedy FAS heuristic to obtain a DAG, then ranks by topological sort.
+6. Applies the greedy FAS heuristic to obtain a DAG and runs multiple
+   post-repair extraction variants.
 7. Evaluates all rankings against the ground truth with Kendall τ.
 8. Saves the results to ``<output_dir>/synthetic_results.json``.
 9. Optionally saves per-stage timings to ``<output_dir>/timings/``.
@@ -36,7 +37,14 @@ import networkx as nx
 # Allow running as `python scripts/run_synthetic.py` from repo root
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from consistency_ranker.baseline_ranking import borda_ranking, score_sum_ranking, topological_ranking
+from consistency_ranker.baseline_ranking import (
+    borda_ranking,
+    copeland_ranking,
+    priority_topological_ranking,
+    score_sum_ranking,
+    topological_ranking,
+    weighted_out_minus_in_ranking,
+)
 from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.evaluation import kendall_tau, n_violations, pairwise_inconsistency_count
 from consistency_ranker.graph_construction import build_graph, graph_summary
@@ -198,15 +206,27 @@ def run_experiment(
         print(f"    Borda ranking (top 5)     : {borda[:5]}")
 
         # ------------------------------------------------------------------
-        # 6. Greedy FAS → topological ranking
+        # 6. Greedy FAS repair + post-repair extraction variants
         # ------------------------------------------------------------------
         with Timer("greedy_fas_solver", accumulator=acc):
             dag, removed_edges = greedy_fas(graph)
             fas_weight = greedy_fas_total_weight(removed_edges)
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
+        score_sum_priority_scores = {n: 0.0 for n in graph.nodes()}
+        for u, _, data in graph.edges(data=True):
+            score_sum_priority_scores[u] += float(data.get("weight", 1.0))
+        with Timer("ranking_priority_topological_score_sum", accumulator=acc):
+            priority_topo_ss = priority_topological_ranking(dag, score_sum_priority_scores)
+        with Timer("ranking_fas_weighted_balance", accumulator=acc):
+            fas_weighted_balance = weighted_out_minus_in_ranking(dag)
+        with Timer("ranking_fas_copeland", accumulator=acc):
+            fas_copeland = copeland_ranking(dag)
         print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
         print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
+        print(f"    Priority topo + score-sum   : {priority_topo_ss[:5]}")
+        print(f"    FAS weighted balance (top 5): {fas_weighted_balance[:5]}")
+        print(f"    FAS Copeland (top 5)        : {fas_copeland[:5]}")
 
         # Verify the dag produced is truly acyclic
         assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
@@ -218,10 +238,16 @@ def run_experiment(
             tau_ss = kendall_tau(ss_ranking, gt_ranking)
             tau_borda = kendall_tau(borda, gt_ranking)
             tau_topo = kendall_tau(topo_ranking, gt_ranking)
+            tau_priority_topo_ss = kendall_tau(priority_topo_ss, gt_ranking)
+            tau_fas_weighted_balance = kendall_tau(fas_weighted_balance, gt_ranking)
+            tau_fas_copeland = kendall_tau(fas_copeland, gt_ranking)
 
             viol_ss = n_violations(ss_ranking, gt_ranking)
             viol_borda = n_violations(borda, gt_ranking)
             viol_topo = n_violations(topo_ranking, gt_ranking)
+            viol_priority_topo_ss = n_violations(priority_topo_ss, gt_ranking)
+            viol_fas_weighted_balance = n_violations(fas_weighted_balance, gt_ranking)
+            viol_fas_copeland = n_violations(fas_copeland, gt_ranking)
 
             incons_original = pairwise_inconsistency_count(graph, gt_ranking)
             incons_dag = pairwise_inconsistency_count(dag, gt_ranking)
@@ -232,6 +258,15 @@ def run_experiment(
     print(f"    {'Score-sum':<20} {tau_ss:>10.4f} {viol_ss:>12}")
     print(f"    {'Borda':<20} {tau_borda:>10.4f} {viol_borda:>12}")
     print(f"    {'Greedy-FAS + Topo':<20} {tau_topo:>10.4f} {viol_topo:>12}")
+    print(
+        f"    {'Priority Topo + SS':<20} {tau_priority_topo_ss:>10.4f} "
+        f"{viol_priority_topo_ss:>12}"
+    )
+    print(
+        f"    {'FAS Weighted Balance':<20} {tau_fas_weighted_balance:>10.4f} "
+        f"{viol_fas_weighted_balance:>12}"
+    )
+    print(f"    {'FAS Copeland':<20} {tau_fas_copeland:>10.4f} {viol_fas_copeland:>12}")
     print(f"\n    Pairwise inconsistencies (original graph) : {incons_original}")
     print(f"    Pairwise inconsistencies (after FAS DAG)  : {incons_dag}")
 
@@ -242,6 +277,35 @@ def run_experiment(
     # 8. Save results
     # ------------------------------------------------------------------
     timing_summary = {row["stage"]: row for row in acc.summary_rows()}
+    stage_by_method = {
+        "score_sum": "ranking_score_sum",
+        "borda": "ranking_borda",
+        "greedy_fas_topological": "ranking_topological",
+        "priority_topological_score_sum": "ranking_priority_topological_score_sum",
+        "fas_weighted_balance": "ranking_fas_weighted_balance",
+        "fas_copeland": "ranking_fas_copeland",
+    }
+    fas_methods = {
+        "greedy_fas_topological",
+        "priority_topological_score_sum",
+        "fas_weighted_balance",
+        "fas_copeland",
+    }
+    method_metrics: dict[str, dict[str, float | int]] = {}
+    for method, stage in stage_by_method.items():
+        ranking_time = timing_summary.get(stage, {}).get("total_s", 0.0)
+        repair_time = timing_summary.get("greedy_fas_solver", {}).get("total_s", 0.0)
+        if method not in fas_methods:
+            repair_time = 0.0
+        method_metrics[method] = {
+            "runtime_total_s": float(ranking_time + repair_time),
+            "runtime_repair_s": float(repair_time),
+            "removed_edges": int(len(removed_edges) if method in fas_methods else 0),
+            "removed_weight": float(fas_weight if method in fas_methods else 0.0),
+            "inconsistency_before": int(incons_original),
+            "inconsistency_after": int(incons_dag if method in fas_methods else incons_original),
+        }
+
     results = {
         "config": {
             "n_items": n_items,
@@ -256,23 +320,33 @@ def run_experiment(
             "score_sum": ss_ranking,
             "borda": borda,
             "greedy_fas_topological": topo_ranking,
+            "priority_topological_score_sum": priority_topo_ss,
+            "fas_weighted_balance": fas_weighted_balance,
+            "fas_copeland": fas_copeland,
         },
         "evaluation": {
             "kendall_tau": {
                 "score_sum": tau_ss,
                 "borda": tau_borda,
                 "greedy_fas_topological": tau_topo,
+                "priority_topological_score_sum": tau_priority_topo_ss,
+                "fas_weighted_balance": tau_fas_weighted_balance,
+                "fas_copeland": tau_fas_copeland,
             },
             "n_violations": {
                 "score_sum": viol_ss,
                 "borda": viol_borda,
                 "greedy_fas_topological": viol_topo,
+                "priority_topological_score_sum": viol_priority_topo_ss,
+                "fas_weighted_balance": viol_fas_weighted_balance,
+                "fas_copeland": viol_fas_copeland,
             },
             "pairwise_inconsistency_count": {
                 "original_graph": incons_original,
                 "after_fas_dag": incons_dag,
             },
         },
+        "method_metrics": method_metrics,
         "fas": {
             "n_removed_edges": len(removed_edges),
             "total_removed_weight": fas_weight,

@@ -9,9 +9,12 @@ import pytest
 
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
+    copeland_ranking,
     pagerank_ranking,
+    priority_topological_ranking,
     score_sum_ranking,
     topological_ranking,
+    weighted_out_minus_in_ranking,
 )
 
 
@@ -64,6 +67,23 @@ class TestTopologicalRanking:
         g.add_edges_from([("x", "y"), ("y", "z"), ("x", "z")])
         ranking = topological_ranking(g)
         assert set(ranking) == {"x", "y", "z"}
+
+
+class TestPriorityTopologicalRanking:
+    def test_respects_edges_and_priorities(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "c"), ("b", "c")])
+        # a and b are both available first; pick b due to higher priority.
+        ranking = priority_topological_ranking(g, {"a": 1.0, "b": 2.0, "c": 0.0})
+        assert ranking.index("a") < ranking.index("c")
+        assert ranking.index("b") < ranking.index("c")
+        assert ranking[0] == "b"
+
+    def test_raises_on_cycle(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("b", "a")])
+        with pytest.raises(nx.NetworkXUnfeasible):
+            priority_topological_ranking(g, {"a": 1.0, "b": 1.0})
 
 
 class TestBordaRanking:
@@ -136,3 +156,23 @@ class TestPageRankRanking:
         r1 = pagerank_ranking(g, alpha=0.50)
         r2 = pagerank_ranking(g, alpha=0.99)
         assert set(r1) == set(r2) == {"a", "b", "c"}
+
+
+class TestWeightedBalanceRanking:
+    def test_weighted_out_minus_in(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=3.0)
+        g.add_edge("c", "a", weight=1.0)
+        # scores: a=+2, b=-3, c=+1 => a first, b last
+        ranking = weighted_out_minus_in_ranking(g)
+        assert ranking[0] == "a"
+        assert ranking[-1] == "b"
+
+
+class TestCopelandRanking:
+    def test_out_minus_in_degree(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("a", "c"), ("b", "c")])
+        ranking = copeland_ranking(g)
+        assert ranking[0] == "a"
+        assert ranking[-1] == "c"
