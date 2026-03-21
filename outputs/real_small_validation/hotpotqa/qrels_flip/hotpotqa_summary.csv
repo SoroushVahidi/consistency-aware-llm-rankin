@@ -1,0 +1,5 @@
+method,n_queries,bew_mean,bew_median,bew_max,bew_min,pic_mean,pic_median,pic_max,tau_mean,tau_median,tau_max,tau_legacy_mean,ndcg_mean,map_mean,precision_at_k_mean,recall_at_k_mean,pairwise_accuracy_mean,runtime_mean_s,runtime_median_s,runtime_max_s,n_nodes_mean,n_edges_mean,cyclic_pct,fas_removed_weight_mean,graph_ref_bew_pre_mean,graph_ref_bew_post_mean,graph_ref_pic_pre_mean,graph_ref_pic_post_mean
+score_sum,20,3.0,3.5,5.0,0.0,3.0,3.5,5,0.75111105,0.7555555,1.0,0.75111105,1.0,1.0,0.25,1.0,1.0,0.01727565,0.0033135,0.275336,10.0,18.5,60.0,1.5,3.0,2.3,3.0,2.3
+borda,20,3.0,3.5,5.0,0.0,3.0,3.5,5,0.75111105,0.7555555,1.0,0.75111105,1.0,1.0,0.25,1.0,1.0,0.01727565,0.0033135,0.275336,10.0,18.5,60.0,1.5,3.0,2.3,3.0,2.3
+greedy_fas_weighted_balance,20,2.9,3.0,5.0,0.0,2.9,3.0,5,0.7133334,0.711111,1.0,0.7133334,0.9846712999999999,0.97916665,0.25,1.0,0.99375,0.01727565,0.0033135,0.275336,10.0,18.5,60.0,1.5,3.0,2.3,3.0,2.3
+hybrid_rrf_fas_regularized,20,2.9,3.0,5.0,0.0,2.9,3.0,5,0.7133334,0.711111,1.0,0.7133334,0.9846712999999999,0.97916665,0.25,1.0,0.99375,0.01727565,0.0033135,0.275336,10.0,18.5,60.0,1.5,3.0,2.3,3.0,2.3

@@ -27,8 +27,10 @@ from scripts.run_real_experiment import (
     _rrf_prior_scores_for_query,
     _weighted_out_minus_in_ranking,
     _flip_preference_directions,
+    _filter_methods,
     _has_usable_eval_labels,
     _load_pairwise_preference_file,
+    _resolve_output_dir,
     _load_score_file,
     _score_entries_to_preferences,
 )
@@ -244,3 +246,36 @@ def test_parse_alpha_values_and_prior_only():
         _parse_alpha_values("")
     ranking = _prior_only_ranking(["b", "a", "c"], {"a": 0.2, "b": 0.9, "c": 0.9})
     assert ranking == ["b", "c", "a"]
+
+
+def test_filter_methods_keeps_requested_shortlist():
+    methods = [
+        "score_sum",
+        "borda",
+        "greedy_fas_weighted_balance",
+        "hybrid_rrf_fas_regularized",
+    ]
+    filtered_methods, filtered_specs = _filter_methods(
+        methods,
+        {
+            "hybrid_rrf_fas_regularized": _build_hybrid_specs(
+                include_ablation=False,
+                alpha_sweep_components=None,
+                alpha_values=[0.2],
+            )[0]
+        },
+        selected_methods=["score_sum", "hybrid_rrf_fas_regularized"],
+    )
+    assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
+    assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
+
+
+def test_resolve_output_dir_nests_dataset_and_source():
+    root = Path("outputs/real_small_validation")
+    assert _resolve_output_dir(root, "scidocs", "qrels") == root / "scidocs" / "qrels"
+    assert _resolve_output_dir(root / "scidocs", "scidocs", "qrels_flip") == (
+        root / "scidocs" / "qrels_flip"
+    )
+    assert _resolve_output_dir(root / "scidocs" / "qrels", "scidocs", "qrels") == (
+        root / "scidocs" / "qrels"
+    )

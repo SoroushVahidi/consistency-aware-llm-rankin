@@ -1,0 +1,43 @@
+{
+  "datasets": [
+    "scidocs",
+    "fiqa",
+    "hotpotqa",
+    "bright"
+  ],
+  "sources": [
+    "qrels",
+    "qrels_flip"
+  ],
+  "top_k": 10,
+  "max_queries": 20,
+  "flip_prob": 0.15,
+  "seed": 42,
+  "wall_time_s": 34.94,
+  "results": {
+    "scidocs": {
+      "acquire": true,
+      "prepare": true,
+      "experiment_qrels": true,
+      "experiment_qrels_flip": true
+    },
+    "fiqa": {
+      "acquire": true,
+      "prepare": true,
+      "experiment_qrels": true,
+      "experiment_qrels_flip": true
+    },
+    "hotpotqa": {
+      "acquire": true,
+      "prepare": true,
+      "experiment_qrels": true,
+      "experiment_qrels_flip": true
+    },
+    "bright": {
+      "acquire": true,
+      "prepare": true,
+      "experiment_qrels": true,
+      "experiment_qrels_flip": true
+    }
+  }
+}

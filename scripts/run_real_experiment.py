@@ -31,12 +31,12 @@ Quick start
     python scripts/run_real_experiment.py --dataset scidocs \\
         --preference-source llm_pairwise_file --pairwise-file path/to/pairs.jsonl
 
-Outputs (under ``--output-dir``, default ``outputs/``):
-- ``<dataset>_per_query.csv``        per-query × per-method results
-- ``<dataset>_summary.csv``          aggregate statistics per method
-- ``timings/<dataset>_timings.csv``  timing data (CSV)
-- ``timings/<dataset>_timings.json`` timing data (JSON)
-- ``plots/``                         timing plots (if matplotlib available)
+Outputs (under ``--output-dir``, default ``outputs/real_full/``):
+- ``<dataset>/<preference_source>/<dataset>_per_query.csv``        per-query × per-method results
+- ``<dataset>/<preference_source>/<dataset>_summary.csv``          aggregate statistics per method
+- ``<dataset>/<preference_source>/timings/<dataset>_timings.csv``  timing data (CSV)
+- ``<dataset>/<preference_source>/timings/<dataset>_timings.json`` timing data (JSON)
+- ``<dataset>/<preference_source>/plots/``                         timing plots (if matplotlib available)
 """
 
 from __future__ import annotations
@@ -659,6 +659,47 @@ def _method_plan(
     hybrid_by_name = {s.name: s for s in specs}
     methods = list(NON_HYBRID_METHODS) + [s.name for s in specs]
     return methods, hybrid_by_name
+
+
+def _filter_methods(
+    methods: list[str],
+    hybrid_specs: dict[str, HybridMethodSpec],
+    selected_methods: list[str] | None,
+) -> tuple[list[str], dict[str, HybridMethodSpec]]:
+    """Restrict the method plan to an explicit shortlist when requested."""
+    if not selected_methods:
+        return methods, hybrid_specs
+
+    missing = sorted(set(selected_methods) - set(methods))
+    if missing:
+        raise ValueError(
+            f"Unknown method(s) requested via --methods: {missing}. "
+            f"Available methods: {sorted(methods)}"
+        )
+
+    filtered_methods = [m for m in methods if m in selected_methods]
+    filtered_hybrid_specs = {name: spec for name, spec in hybrid_specs.items() if name in filtered_methods}
+    return filtered_methods, filtered_hybrid_specs
+
+
+def _resolve_output_dir(
+    output_dir: Path,
+    dataset: str,
+    preference_source: str,
+) -> Path:
+    """Normalize output_dir to a source-specific real-data directory.
+
+    Accepted inputs include:
+    - a root like ``outputs/real_full``
+    - a dataset directory like ``outputs/real_full/scidocs``
+    - a fully resolved directory like ``outputs/real_full/scidocs/qrels``
+    """
+    output_dir = Path(output_dir)
+    if len(output_dir.parts) >= 2 and output_dir.parts[-2:] == (dataset, preference_source):
+        return output_dir
+    if output_dir.name == dataset:
+        return output_dir / preference_source
+    return output_dir / dataset / preference_source
 
 
 def _load_score_prior_files(
@@ -1450,6 +1491,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Comma-separated alpha values for optional hybrid alpha sweep.",
     )
     parser.add_argument(
+        "--methods",
+        nargs="*",
+        default=None,
+        help=(
+            "Optional explicit shortlist of methods to run. "
+            "Useful for low-cost validation packages."
+        ),
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -1458,8 +1508,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("outputs"),
-        help="Root directory for all outputs.",
+        default=Path("outputs/real_full"),
+        help="Root or fully resolved directory for real-data outputs.",
     )
     parser.add_argument(
         "--save-timings",
@@ -1496,6 +1546,7 @@ def run_experiment(
     score_prior_files: list[Path] | None,
     seed: int,
     output_dir: Path,
+    methods_filter: list[str] | None = None,
     save_timings: bool = False,
     profile: bool = False,
     generate_plots: bool = True,
@@ -1532,7 +1583,7 @@ def run_experiment(
     dict
         Experiment summary.
     """
-    output_dir = Path(output_dir)
+    output_dir = _resolve_output_dir(output_dir, dataset=dataset, preference_source=preference_source)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'='*65}")
@@ -1558,6 +1609,11 @@ def run_experiment(
         include_hybrid_ablation=include_hybrid_ablation,
         alpha_sweep_components=hybrid_alpha_sweep_components,
         alpha_values=alpha_values,
+    )
+    methods, hybrid_specs = _filter_methods(
+        methods,
+        hybrid_specs,
+        selected_methods=methods_filter,
     )
     print(f"  hybrid_ablation: {include_hybrid_ablation}")
     if hybrid_alpha_sweep_components:
@@ -2077,6 +2133,7 @@ def main(argv: list[str] | None = None) -> None:
         hybrid_alpha_values=args.hybrid_alpha_values,
         seed=args.seed,
         output_dir=args.output_dir,
+        methods_filter=args.methods,
         save_timings=args.save_timings,
         profile=args.profile,
         generate_plots=not args.no_plots,
