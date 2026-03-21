@@ -1,0 +1,150 @@
+{
+  "dataset": "fiqa",
+  "top_k": 20,
+  "preference_source": "qrels",
+  "preference_source_note": "Real preference edges derived directly from qrels (label-order DAG baseline).",
+  "flip_prob": null,
+  "n_processed": 50,
+  "n_skipped": 0,
+  "skipped_reasons": [],
+  "avg_n_nodes": 20.0,
+  "avg_n_edges": 109.32,
+  "avg_largest_scc": 1.0,
+  "pct_cyclic_graphs": 0.0,
+  "avg_runtime_by_method_s": {
+    "score_sum": 0.009206,
+    "borda": 0.009206,
+    "pagerank": 0.009206,
+    "greedy_fas_topological": 0.009206,
+    "greedy_fas_weighted_balance": 0.009206,
+    "greedy_fas_copeland": 0.009206,
+    "greedy_fas_score_augmented_topological": 0.009206,
+    "fas_balance_score_prior_alpha_beta": 0.009206,
+    "hybrid_rrf_fas_regularized": 0.009206,
+    "hybrid_rrf_balance_a05": 0.009206,
+    "hybrid_rrf_copeland_a03": 0.009206,
+    "hybrid_rrf_priority_topo_a03": 0.009206
+  },
+  "avg_bew_by_method": {
+    "score_sum": 0.0,
+    "borda": 0.0,
+    "pagerank": 0.0,
+    "greedy_fas_topological": 0.0,
+    "greedy_fas_weighted_balance": 0.0,
+    "greedy_fas_copeland": 0.0,
+    "greedy_fas_score_augmented_topological": 0.0,
+    "fas_balance_score_prior_alpha_beta": 0.0,
+    "hybrid_rrf_fas_regularized": 0.0,
+    "hybrid_rrf_balance_a05": 0.0,
+    "hybrid_rrf_copeland_a03": 0.0,
+    "hybrid_rrf_priority_topo_a03": 0.0
+  },
+  "best_method_by_bew": "score_sum",
+  "primary_metric": "ndcg_at_k",
+  "avg_primary_by_method": {
+    "score_sum": 1.0,
+    "borda": 1.0,
+    "pagerank": 1.0,
+    "greedy_fas_topological": 1.0,
+    "greedy_fas_weighted_balance": 1.0,
+    "greedy_fas_copeland": 1.0,
+    "greedy_fas_score_augmented_topological": 1.0,
+    "fas_balance_score_prior_alpha_beta": 1.0,
+    "hybrid_rrf_fas_regularized": 1.0,
+    "hybrid_rrf_balance_a05": 1.0,
+    "hybrid_rrf_copeland_a03": 1.0,
+    "hybrid_rrf_priority_topo_a03": 1.0
+  },
+  "best_method_by_primary": "score_sum",
+  "avg_graph_ref_pic_pre": 0.0,
+  "avg_graph_ref_pic_post": 0.0,
+  "avg_graph_ref_bew_pre": 0.0,
+  "avg_graph_ref_bew_post": 0.0,
+  "avg_fas_removed_weight": 0.0,
+  "global_timings": {
+    "preference_source_loading": {
+      "total_s": 2e-06,
+      "mean_s": 2e-06
+    },
+    "dataset_loading": {
+      "total_s": 0.337871,
+      "mean_s": 0.337871
+    },
+    "candidate_selection": {
+      "total_s": 0.006946,
+      "mean_s": 0.006946
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.008706,
+      "mean_s": 0.000174
+    },
+    "graph_construction": {
+      "total_s": 0.009411,
+      "mean_s": 0.000188
+    },
+    "cycle_detection": {
+      "total_s": 0.001716,
+      "mean_s": 3.4e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.038742,
+      "mean_s": 0.000775
+    },
+    "ranking_score_sum": {
+      "total_s": 0.001908,
+      "mean_s": 3.8e-05
+    },
+    "ranking_borda": {
+      "total_s": 0.000943,
+      "mean_s": 1.9e-05
+    },
+    "ranking_pagerank": {
+      "total_s": 0.293442,
+      "mean_s": 0.005869
+    },
+    "ranking_topological": {
+      "total_s": 0.003448,
+      "mean_s": 6.9e-05
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 0.002436,
+      "mean_s": 4.9e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 0.001343,
+      "mean_s": 2.7e-05
+    },
+    "ranking_fas_balance_score_prior_alpha_beta": {
+      "total_s": 0.003274,
+      "mean_s": 6.5e-05
+    },
+    "ranking_fas_score_augmented_topological": {
+      "total_s": 0.00271,
+      "mean_s": 5.4e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 0.00272,
+      "mean_s": 5.4e-05
+    },
+    "ranking_hybrid_rrf_balance_a05": {
+      "total_s": 0.002442,
+      "mean_s": 4.9e-05
+    },
+    "ranking_hybrid_rrf_copeland_a03": {
+      "total_s": 0.001707,
+      "mean_s": 3.4e-05
+    },
+    "ranking_hybrid_rrf_priority_topo_a03": {
+      "total_s": 0.00474,
+      "mean_s": 9.5e-05
+    },
+    "evaluation": {
+      "total_s": 0.080628,
+      "mean_s": 0.001613
+    },
+    "total_pipeline": {
+      "total_s": 0.496289,
+      "mean_s": 0.496289
+    }
+  }
+}
