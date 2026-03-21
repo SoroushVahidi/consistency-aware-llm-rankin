@@ -40,6 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
     copeland_ranking,
+    fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
     hybrid_rrf_fas_regularized_ranking,
     priority_topological_ranking,
@@ -97,6 +98,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=0.5,
         help="Alpha for fas_balance_score_prior_alpha hybrid extraction",
     )
+    parser.add_argument(
+        "--fas-balance-alpha-beta-alpha",
+        type=float,
+        default=2.0,
+        help="Alpha for fas_balance_score_prior_alpha_beta hybrid extraction",
+    )
+    parser.add_argument(
+        "--fas-balance-alpha-beta-beta",
+        type=float,
+        default=1.0,
+        help="Beta for fas_balance_score_prior_alpha_beta hybrid extraction",
+    )
     return parser.parse_args(argv)
 
 
@@ -106,6 +119,8 @@ def run_experiment(
     seed: int,
     weight_scheme: str = "margin",
     fas_balance_alpha: float = 0.5,
+    fas_balance_alpha_beta_alpha: float = 2.0,
+    fas_balance_alpha_beta_beta: float = 1.0,
     output_dir: Path = Path("outputs"),
     save_timings: bool = False,
     profile: bool = False,
@@ -124,6 +139,10 @@ def run_experiment(
         ``"uniform"`` or ``"margin"``.
     fas_balance_alpha:
         Mixing coefficient for fas_balance_score_prior_alpha hybrid extraction.
+    fas_balance_alpha_beta_alpha:
+        Alpha for fas_balance_score_prior_alpha_beta hybrid extraction.
+    fas_balance_alpha_beta_beta:
+        Beta for fas_balance_score_prior_alpha_beta hybrid extraction.
     output_dir:
         Directory where ``synthetic_results.json`` will be written.
     save_timings:
@@ -142,6 +161,16 @@ def run_experiment(
         save_timings = True
     if fas_balance_alpha < 0:
         raise ValueError(f"fas_balance_alpha must be non-negative. Got {fas_balance_alpha}.")
+    if fas_balance_alpha_beta_alpha < 0:
+        raise ValueError(
+            "fas_balance_alpha_beta_alpha must be non-negative. "
+            f"Got {fas_balance_alpha_beta_alpha}."
+        )
+    if fas_balance_alpha_beta_beta < 0:
+        raise ValueError(
+            "fas_balance_alpha_beta_beta must be non-negative. "
+            f"Got {fas_balance_alpha_beta_beta}."
+        )
 
     acc = TimingAccumulator()
     acc.set_metadata(
@@ -151,6 +180,8 @@ def run_experiment(
         seed=seed,
         weight_scheme=weight_scheme,
         fas_balance_alpha=fas_balance_alpha,
+        fas_balance_alpha_beta_alpha=fas_balance_alpha_beta_alpha,
+        fas_balance_alpha_beta_beta=fas_balance_alpha_beta_beta,
     )
     print(f"\n{'='*60}")
     print("  Consistency-Aware Ranking — Synthetic Experiment")
@@ -160,6 +191,8 @@ def run_experiment(
     print(f"  seed         : {seed}")
     print(f"  weight_scheme: {weight_scheme}")
     print(f"  fas_bal_alpha: {fas_balance_alpha}")
+    print(f"  fas_ab_alpha : {fas_balance_alpha_beta_alpha}")
+    print(f"  fas_ab_beta  : {fas_balance_alpha_beta_beta}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
 
@@ -248,6 +281,13 @@ def run_experiment(
                 score_sum_priority_scores,
                 alpha=fas_balance_alpha,
             )
+        with Timer("ranking_fas_balance_score_prior_alpha_beta", accumulator=acc):
+            fas_balance_score_prior_alpha_beta = fas_balance_score_prior_alpha_beta_ranking(
+                dag,
+                score_sum_priority_scores,
+                alpha=fas_balance_alpha_beta_alpha,
+                beta=fas_balance_alpha_beta_beta,
+            )
         print(f"[6] Greedy FAS removed {len(removed_edges)} edges (total weight={fas_weight:.4f})")
         print(f"    Topological ranking (top 5): {topo_ranking[:5]}")
         print(f"    Priority topo + score-sum   : {priority_topo_ss[:5]}")
@@ -255,6 +295,7 @@ def run_experiment(
         print(f"    FAS Copeland (top 5)        : {fas_copeland[:5]}")
         print(f"    Hybrid RRF FAS reg (top 5)  : {hybrid_rrf_fas_regularized[:5]}")
         print(f"    FAS bal+prior alpha (top 5) : {fas_balance_score_prior_alpha[:5]}")
+        print(f"    FAS bal+prior a/b (top 5)   : {fas_balance_score_prior_alpha_beta[:5]}")
 
         # Verify the dag produced is truly acyclic
         assert not has_cycle(dag), "BUG: greedy FAS produced a graph that still has cycles!"
@@ -274,6 +315,10 @@ def run_experiment(
                 fas_balance_score_prior_alpha,
                 gt_ranking,
             )
+            tau_fas_balance_score_prior_alpha_beta = kendall_tau(
+                fas_balance_score_prior_alpha_beta,
+                gt_ranking,
+            )
 
             viol_ss = n_violations(ss_ranking, gt_ranking)
             viol_borda = n_violations(borda, gt_ranking)
@@ -287,6 +332,10 @@ def run_experiment(
             )
             viol_fas_balance_score_prior_alpha = n_violations(
                 fas_balance_score_prior_alpha,
+                gt_ranking,
+            )
+            viol_fas_balance_score_prior_alpha_beta = n_violations(
+                fas_balance_score_prior_alpha_beta,
                 gt_ranking,
             )
 
@@ -316,6 +365,10 @@ def run_experiment(
         f"    {'FAS bal+prior alpha':<20} {tau_fas_balance_score_prior_alpha:>10.4f} "
         f"{viol_fas_balance_score_prior_alpha:>12}"
     )
+    print(
+        f"    {'FAS bal+prior a/b':<20} {tau_fas_balance_score_prior_alpha_beta:>10.4f} "
+        f"{viol_fas_balance_score_prior_alpha_beta:>12}"
+    )
     print(f"\n    Pairwise inconsistencies (original graph) : {incons_original}")
     print(f"    Pairwise inconsistencies (after FAS DAG)  : {incons_dag}")
 
@@ -335,6 +388,7 @@ def run_experiment(
         "fas_copeland": "ranking_fas_copeland",
         "hybrid_rrf_fas_regularized": "ranking_hybrid_rrf_fas_regularized",
         "fas_balance_score_prior_alpha": "ranking_fas_balance_score_prior_alpha",
+        "fas_balance_score_prior_alpha_beta": "ranking_fas_balance_score_prior_alpha_beta",
     }
     fas_methods = {
         "greedy_fas_topological",
@@ -343,6 +397,7 @@ def run_experiment(
         "fas_copeland",
         "hybrid_rrf_fas_regularized",
         "fas_balance_score_prior_alpha",
+        "fas_balance_score_prior_alpha_beta",
     }
     method_metrics: dict[str, dict[str, float | int]] = {}
     for method, stage in stage_by_method.items():
@@ -366,6 +421,8 @@ def run_experiment(
             "seed": seed,
             "weight_scheme": weight_scheme,
             "fas_balance_alpha": fas_balance_alpha,
+            "fas_balance_alpha_beta_alpha": fas_balance_alpha_beta_alpha,
+            "fas_balance_alpha_beta_beta": fas_balance_alpha_beta_beta,
         },
         "ground_truth_ranking": gt_ranking,
         "graph_summary": g_summary,
@@ -379,6 +436,7 @@ def run_experiment(
             "fas_copeland": fas_copeland,
             "hybrid_rrf_fas_regularized": hybrid_rrf_fas_regularized,
             "fas_balance_score_prior_alpha": fas_balance_score_prior_alpha,
+            "fas_balance_score_prior_alpha_beta": fas_balance_score_prior_alpha_beta,
         },
         "evaluation": {
             "kendall_tau": {
@@ -390,6 +448,7 @@ def run_experiment(
                 "fas_copeland": tau_fas_copeland,
                 "hybrid_rrf_fas_regularized": tau_hybrid_rrf_fas_regularized,
                 "fas_balance_score_prior_alpha": tau_fas_balance_score_prior_alpha,
+                "fas_balance_score_prior_alpha_beta": tau_fas_balance_score_prior_alpha_beta,
             },
             "n_violations": {
                 "score_sum": viol_ss,
@@ -400,6 +459,7 @@ def run_experiment(
                 "fas_copeland": viol_fas_copeland,
                 "hybrid_rrf_fas_regularized": viol_hybrid_rrf_fas_regularized,
                 "fas_balance_score_prior_alpha": viol_fas_balance_score_prior_alpha,
+                "fas_balance_score_prior_alpha_beta": viol_fas_balance_score_prior_alpha_beta,
             },
             "pairwise_inconsistency_count": {
                 "original_graph": incons_original,
@@ -449,6 +509,8 @@ def main(argv: list[str] | None = None) -> None:
         save_timings=args.save_timings,
         profile=args.profile,
         fas_balance_alpha=args.fas_balance_alpha,
+        fas_balance_alpha_beta_alpha=args.fas_balance_alpha_beta_alpha,
+        fas_balance_alpha_beta_beta=args.fas_balance_alpha_beta_beta,
     )
 
 

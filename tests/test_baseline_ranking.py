@@ -10,6 +10,7 @@ import pytest
 from consistency_ranker.baseline_ranking import (
     borda_ranking,
     copeland_ranking,
+    fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
     hybrid_rrf_fas_regularized_ranking,
     pagerank_ranking,
@@ -217,6 +218,39 @@ class TestFasBalanceScorePriorAlphaRanking:
         dag.add_edge("a", "b", weight=1.0)
         with pytest.raises(ValueError):
             fas_balance_score_prior_alpha_ranking(dag, {"a": 1.0, "b": 0.0}, alpha=-0.1)
+
+    def test_matches_alpha_beta_when_beta_is_one(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=4.0)
+        dag.add_edge("a", "c", weight=1.0)
+        dag.add_edge("b", "c", weight=2.0)
+        prior = {"a": 1.0, "b": 3.0, "c": 2.0}
+        r_old = fas_balance_score_prior_alpha_ranking(dag, prior, alpha=0.75)
+        r_new = fas_balance_score_prior_alpha_beta_ranking(dag, prior, alpha=0.75, beta=1.0)
+        assert r_old == r_new
+
+
+class TestFasBalanceScorePriorAlphaBetaRanking:
+    def test_reducing_beta_increases_prior_effect(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=5.0)
+        dag.add_edge("a", "c", weight=1.0)
+        dag.add_edge("b", "c", weight=1.0)
+        prior = {"a": 0.0, "b": 100.0, "c": 0.0}
+        low_beta = fas_balance_score_prior_alpha_beta_ranking(dag, prior, alpha=2.0, beta=0.1)
+        high_beta = fas_balance_score_prior_alpha_beta_ranking(dag, prior, alpha=2.0, beta=1.0)
+        assert low_beta.index("b") <= high_beta.index("b")
+
+    def test_negative_beta_raises(self):
+        dag = nx.DiGraph()
+        dag.add_edge("a", "b", weight=1.0)
+        with pytest.raises(ValueError):
+            fas_balance_score_prior_alpha_beta_ranking(
+                dag,
+                {"a": 1.0, "b": 0.0},
+                alpha=1.0,
+                beta=-0.1,
+            )
 
 
 class TestHybridRrfFasRegularizedRanking:

@@ -31,6 +31,10 @@ fas_balance_score_prior_alpha_ranking:
     Hybrid post-repair ranking that combines normalized repaired-graph balance
     with normalized original score-sum prior.
 
+fas_balance_score_prior_alpha_beta_ranking:
+    Generalized two-parameter hybrid post-repair ranking:
+    beta * norm(repaired-balance) + alpha * norm(original score-sum prior).
+
 hybrid_rrf_fas_regularized_ranking:
     Baseline hybrid variant that combines normalized original score prior with
     normalized repaired-graph balance regularizer.
@@ -156,13 +160,33 @@ def fas_balance_score_prior_alpha_ranking(
     alpha: float = 0.5,
 ) -> list[str]:
     """Hybrid score = norm(balance_repaired) + alpha * norm(score_sum_prior)."""
+    return fas_balance_score_prior_alpha_beta_ranking(
+        repaired_graph,
+        score_sum_prior_scores,
+        alpha=alpha,
+        beta=1.0,
+    )
+
+
+def fas_balance_score_prior_alpha_beta_ranking(
+    repaired_graph: nx.DiGraph,
+    score_sum_prior_scores: dict[str, float],
+    alpha: float = 0.5,
+    beta: float = 1.0,
+) -> list[str]:
+    """Hybrid score = beta * norm(balance_repaired) + alpha * norm(score_sum_prior)."""
     if alpha < 0:
         raise ValueError(f"alpha must be non-negative. Got {alpha}.")
+    if beta < 0:
+        raise ValueError(f"beta must be non-negative. Got {beta}.")
     balance_raw = weighted_out_minus_in_scores(repaired_graph)
     prior_raw = {n: float(score_sum_prior_scores.get(n, 0.0)) for n in repaired_graph.nodes()}
     bal_n = _normalize_scores(balance_raw)
     prior_n = _normalize_scores(prior_raw)
-    combo = {n: bal_n.get(n, 0.0) + alpha * prior_n.get(n, 0.0) for n in repaired_graph.nodes()}
+    combo = {
+        n: beta * bal_n.get(n, 0.0) + alpha * prior_n.get(n, 0.0)
+        for n in repaired_graph.nodes()
+    }
     return sorted(combo, key=lambda n: (-combo[n], n))
 
 
