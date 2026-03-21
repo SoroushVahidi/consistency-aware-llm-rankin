@@ -23,6 +23,7 @@ n_violations:
 from __future__ import annotations
 
 import itertools
+import math
 
 import networkx as nx
 
@@ -159,3 +160,104 @@ def pairwise_inconsistency_count(
         if u_pos is not None and v_pos is not None and v_pos < u_pos:
             count += 1
     return count
+
+
+# ---------------------------------------------------------------------------
+# Retrieval metrics (NDCG, MRR, Recall@k)
+# ---------------------------------------------------------------------------
+
+
+def ndcg_at_k(
+    ranking: list[str],
+    relevance_map: dict[str, int],
+    k: int = 10,
+) -> float:
+    """Compute NDCG@k for a ranking given graded relevance.
+
+    Uses the standard formula: DCG@k = sum_{i=1}^{k} (2^{rel_i} - 1) / log2(i+1).
+    IDCG is computed from the ideal ranking (relevant docs sorted by grade).
+    NDCG = DCG / IDCG; returns 0.0 if IDCG is 0 (no relevant docs).
+
+    Parameters
+    ----------
+    ranking:
+        Predicted ranking (index 0 = best). Doc ids not in *relevance_map*
+        are treated as relevance 0.
+    relevance_map:
+        doc_id -> relevance grade (0 = not relevant, higher = more relevant).
+    k:
+        Cut-off position.
+
+    Returns
+    -------
+    float
+        NDCG@k in [0.0, 1.0].
+    """
+    def dcg(ordered_relevances: list[int], cutoff: int) -> float:
+        total = 0.0
+        for i in range(min(cutoff, len(ordered_relevances))):
+            rel = ordered_relevances[i]
+            total += (math.pow(2, rel) - 1) / math.log2(i + 2)
+        return total
+
+    relevances = [relevance_map.get(doc_id, 0) for doc_id in ranking[:k]]
+    dcg_val = dcg(relevances, k)
+
+    ideal_relevances = sorted(relevance_map.values(), reverse=True)
+    idcg_val = dcg(ideal_relevances, k)
+
+    if idcg_val <= 0:
+        return 0.0
+    return dcg_val / idcg_val
+
+
+def mrr(
+    ranking: list[str],
+    relevant_ids: set[str],
+) -> float:
+    """Compute Reciprocal Rank — 1 / rank of first relevant document.
+
+    Parameters
+    ----------
+    ranking:
+        Predicted ranking (index 0 = best).
+    relevant_ids:
+        Set of document ids that are considered relevant.
+
+    Returns
+    -------
+    float
+        1/rank of first relevant doc, or 0.0 if no relevant doc in ranking.
+    """
+    for i, doc_id in enumerate(ranking):
+        if doc_id in relevant_ids:
+            return 1.0 / (i + 1)
+    return 0.0
+
+
+def recall_at_k(
+    ranking: list[str],
+    relevant_ids: set[str],
+    k: int,
+) -> float:
+    """Compute Recall@k — fraction of relevant docs in top-k.
+
+    Parameters
+    ----------
+    ranking:
+        Predicted ranking (index 0 = best).
+    relevant_ids:
+        Set of document ids that are considered relevant.
+    k:
+        Cut-off position.
+
+    Returns
+    -------
+    float
+        |relevant ∩ ranking[:k]| / |relevant|. Returns 0.0 if no relevant docs.
+    """
+    if not relevant_ids:
+        return 0.0
+    top_k = set(ranking[:k])
+    hits = len(relevant_ids & top_k)
+    return hits / len(relevant_ids)

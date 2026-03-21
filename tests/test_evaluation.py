@@ -9,9 +9,12 @@ import pytest
 
 from consistency_ranker.evaluation import (
     kendall_tau,
+    mrr,
     n_violations,
+    ndcg_at_k,
     pairwise_inconsistency_count,
     ranking_agreement,
+    recall_at_k,
 )
 
 
@@ -92,3 +95,60 @@ class TestPairwiseInconsistencyCount:
         # a→b is consistent; c→a is inconsistent
         g.add_edges_from([("a", "b"), ("c", "a")])
         assert pairwise_inconsistency_count(g, ref) == 1
+
+
+class TestNdcgAtK:
+    def test_perfect_ranking(self):
+        ranking = ["d1", "d2", "d3"]
+        rel = {"d1": 2, "d2": 1, "d3": 0}
+        assert ndcg_at_k(ranking, rel, k=10) == pytest.approx(1.0)
+
+    def test_worst_ranking(self):
+        ranking = ["d3", "d2", "d1"]  # reversed
+        rel = {"d1": 2, "d2": 1, "d3": 0}
+        ndcg = ndcg_at_k(ranking, rel, k=3)
+        assert 0 < ndcg < 1
+
+    def test_no_relevant_returns_zero(self):
+        ranking = ["d1", "d2"]
+        rel = {"d1": 0, "d2": 0}
+        assert ndcg_at_k(ranking, rel, k=10) == 0.0
+
+    def test_binary_relevance(self):
+        ranking = ["rel", "nonrel"]
+        rel = {"rel": 1, "nonrel": 0}
+        assert ndcg_at_k(ranking, rel, k=2) == pytest.approx(1.0)
+
+    def test_missing_relevant_documents_reduce_ndcg(self):
+        ranking = ["d3", "d4"]
+        rel = {"d1": 3, "d2": 2, "d3": 1, "d4": 0}
+        ndcg = ndcg_at_k(ranking, rel, k=2)
+        assert 0 < ndcg < 1
+
+
+class TestMrr:
+    def test_first_is_relevant(self):
+        ranking = ["rel", "other"]
+        assert mrr(ranking, {"rel"}) == pytest.approx(1.0)
+
+    def test_second_is_relevant(self):
+        ranking = ["other", "rel"]
+        assert mrr(ranking, {"rel"}) == pytest.approx(0.5)
+
+    def test_no_relevant_returns_zero(self):
+        ranking = ["a", "b"]
+        assert mrr(ranking, set()) == 0.0
+        assert mrr(ranking, {"c"}) == 0.0
+
+
+class TestRecallAtK:
+    def test_all_in_top_k(self):
+        ranking = ["r1", "r2", "x"]
+        assert recall_at_k(ranking, {"r1", "r2"}, k=3) == pytest.approx(1.0)
+
+    def test_half_in_top_k(self):
+        ranking = ["r1", "x", "r2"]
+        assert recall_at_k(ranking, {"r1", "r2"}, k=2) == pytest.approx(0.5)
+
+    def test_no_relevant_returns_zero(self):
+        assert recall_at_k(["a", "b"], set(), k=10) == 0.0
