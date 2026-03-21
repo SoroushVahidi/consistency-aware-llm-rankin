@@ -310,8 +310,34 @@ def main() -> None:
             )
 
     method_path = args.tables_dir / "diagnostic_method_properties.csv"
+    method_run_path = args.tables_dir / "diagnostic_method_run_level.csv"
     regime_path = args.tables_dir / "diagnostic_regime_breakdown.csv"
     run_path = args.tables_dir / "diagnostic_run_level.csv"
+
+    _write_csv(
+        method_run_path,
+        [
+            "seed",
+            "noise",
+            "n_items",
+            "method",
+            "kendall_tau",
+            "tau_to_score_sum",
+            "tau_to_borda",
+            "weighted_agreement_original",
+            "unweighted_agreement_original",
+            "weighted_agreement_repaired_dag",
+            "unweighted_agreement_repaired_dag",
+            "removed_edges",
+            "removed_weight",
+            "topo_incomparable_ratio",
+            "topo_mean_available_sources",
+            "topo_max_available_sources",
+            "topo_mean_log2_choices",
+            "topo_multi_source_step_ratio",
+        ],
+        sorted(method_rows, key=lambda r: (r["noise"], r["seed"], r["method"])),
+    )
 
     _write_csv(
         run_path,
@@ -561,6 +587,7 @@ def main() -> None:
     plt.close()
 
     print(f"Wrote: {method_path}")
+    print(f"Wrote: {method_run_path}")
     print(f"Wrote: {regime_path}")
     print(f"Wrote: {run_path}")
     print(f"Wrote: {args.figures_dir / 'diagnostic_gap_vs_noise.png'}")
