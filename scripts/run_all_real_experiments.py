@@ -19,7 +19,8 @@ Pipeline stages (per dataset)
 
 Outputs
 -------
-All results land under ``outputs/real_full/<dataset>/``:
+Each preference source gets its own sub-directory to prevent overwriting:
+``outputs/real_full/<dataset>/<preference_source>/``:
 
 - ``<dataset>_per_query.csv``           per-query × per-method metrics
 - ``<dataset>_summary.csv``             aggregate per-method statistics
@@ -105,7 +106,7 @@ def _processed_files_exist(name: str) -> bool:
 
 
 def _experiment_output_exists(name: str, source: str, output_dir: Path) -> bool:
-    ds_dir = output_dir / name
+    ds_dir = output_dir / name / source
     return (ds_dir / f"{name}_experiment_summary.json").exists()
 
 
@@ -196,7 +197,7 @@ def _run_experiment(
     profile: bool,
 ) -> bool:
     """Run run_real_experiment.py for *name* and *source*."""
-    ds_out = output_dir / name
+    ds_out = output_dir / name / source
     summary_path = ds_out / f"{name}_experiment_summary.json"
 
     if summary_path.exists() and not force:
