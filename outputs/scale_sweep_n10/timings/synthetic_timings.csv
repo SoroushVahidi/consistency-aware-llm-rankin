@@ -1,0 +1,11 @@
+stage,n_calls,total_s,mean_s,median_s,max_s
+data_generation,1,4.3e-05,4.3e-05,4.3e-05,4.3e-05
+pairwise_preference_generation,1,7.7e-05,7.7e-05,7.7e-05,7.7e-05
+graph_construction,1,0.001661,0.001661,0.001661,0.001661
+cycle_detection,1,7.9e-05,7.9e-05,7.9e-05,7.9e-05
+ranking_score_sum,1,4.3e-05,4.3e-05,4.3e-05,4.3e-05
+ranking_borda,1,2.4e-05,2.4e-05,2.4e-05,2.4e-05
+greedy_fas_solver,1,0.002162,0.002162,0.002162,0.002162
+ranking_topological,1,7e-05,7e-05,7e-05,7e-05
+evaluation,1,0.000116,0.000116,0.000116,0.000116
+total_experiment,1,0.004377,0.004377,0.004377,0.004377
