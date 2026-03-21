@@ -212,10 +212,7 @@ def ndcg_at_k(
     relevances = [relevance_map.get(doc_id, 0) for doc_id in ranking[:k]]
     dcg_val = dcg(relevances, k)
 
-    ideal_relevances = sorted(
-        (relevance_map.get(doc_id, 0) for doc_id in ranking),
-        reverse=True,
-    )
+    ideal_relevances = sorted(relevance_map.values(), reverse=True)
     idcg_val = dcg(ideal_relevances, k)
 
     if idcg_val <= 0:

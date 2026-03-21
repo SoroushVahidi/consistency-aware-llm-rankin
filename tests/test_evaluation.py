@@ -10,8 +10,8 @@ import pytest
 from consistency_ranker.evaluation import (
     kendall_tau,
     mrr,
-    ndcg_at_k,
     n_violations,
+    ndcg_at_k,
     pairwise_inconsistency_count,
     ranking_agreement,
     recall_at_k,
@@ -118,6 +118,12 @@ class TestNdcgAtK:
         ranking = ["rel", "nonrel"]
         rel = {"rel": 1, "nonrel": 0}
         assert ndcg_at_k(ranking, rel, k=2) == pytest.approx(1.0)
+
+    def test_missing_relevant_documents_reduce_ndcg(self):
+        ranking = ["d3", "d4"]
+        rel = {"d1": 3, "d2": 2, "d3": 1, "d4": 0}
+        ndcg = ndcg_at_k(ranking, rel, k=2)
+        assert 0 < ndcg < 1
 
 
 class TestMrr:
