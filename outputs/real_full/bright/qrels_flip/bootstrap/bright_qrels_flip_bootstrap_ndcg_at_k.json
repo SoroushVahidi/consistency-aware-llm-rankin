@@ -1,0 +1,46 @@
+[
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "borda",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.02656637999999999,
+    "ci95_low": -0.04332795999999999,
+    "ci95_high": -0.013590019999999996,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "greedy_fas_weighted_balance",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.016275440000000002,
+    "ci95_low": -0.02841054,
+    "ci95_high": -0.005869420000000001,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "hybrid_rrf_fas_regularized",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.016275440000000002,
+    "ci95_low": -0.02841054,
+    "ci95_high": -0.005869420000000001,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  },
+  {
+    "metric": "ndcg_at_k",
+    "method_a": "fas_balance_score_prior_alpha_beta",
+    "method_b": "score_sum",
+    "n_paired_queries": 50,
+    "mean_delta": -0.0038572000000000007,
+    "ci95_low": -0.008790360000000002,
+    "ci95_high": -0.0002157600000000004,
+    "positive_delta": false,
+    "ci_excludes_zero": true
+  }
+]

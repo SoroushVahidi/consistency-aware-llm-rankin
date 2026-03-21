@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from scripts.run_real_experiment import (
+    NON_HYBRID_METHODS,
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_priority_topological_ranking,
     _build_hybrid_specs,
@@ -32,6 +33,7 @@ from scripts.run_real_experiment import (
     _load_score_file,
     _score_entries_to_preferences,
 )
+from consistency_ranker.baseline_ranking import fas_balance_score_prior_alpha_beta_ranking
 from consistency_ranker.data.schema import QrelEntry
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.pairwise_prefs import Preference
@@ -244,3 +246,63 @@ def test_parse_alpha_values_and_prior_only():
         _parse_alpha_values("")
     ranking = _prior_only_ranking(["b", "a", "c"], {"a": 0.2, "b": 0.9, "c": 0.9})
     assert ranking == ["b", "c", "a"]
+
+
+def test_fas_balance_score_prior_alpha_beta_in_non_hybrid_methods():
+    """fas_balance_score_prior_alpha_beta must be listed in NON_HYBRID_METHODS."""
+    assert "fas_balance_score_prior_alpha_beta" in NON_HYBRID_METHODS
+
+
+def test_fas_balance_score_prior_alpha_beta_ranking_runs():
+    """fas_balance_score_prior_alpha_beta_ranking produces a valid ordering."""
+    graph = build_graph(
+        [
+            Preference("a", "b", 2.0),
+            Preference("a", "c", 1.0),
+            Preference("c", "b", 1.0),
+        ]
+    )
+    score_sum_prior = {"a": 3.0, "b": 0.0, "c": 1.0}
+    ranking = fas_balance_score_prior_alpha_beta_ranking(graph, score_sum_prior)
+    assert set(ranking) == {"a", "b", "c"}
+    # 'a' has both the highest balance and the highest prior — must rank first.
+    assert ranking[0] == "a"
+
+
+def test_fas_balance_score_prior_alpha_beta_in_pipeline(tmp_path: Path):
+    """Run a mini pipeline and confirm fas_balance_score_prior_alpha_beta appears
+    in the per-query output rows produced by run_query."""
+    import sys
+    from scripts.run_real_experiment import run_query, _method_plan
+    from consistency_ranker.utils.timing import TimingAccumulator
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+    )
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+    )
+
+    assert skip is None
+    method_names = {r["method"] for r in rows}
+    assert "fas_balance_score_prior_alpha_beta" in method_names
