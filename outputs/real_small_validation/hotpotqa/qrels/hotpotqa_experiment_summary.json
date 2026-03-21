@@ -1,0 +1,110 @@
+{
+  "dataset": "hotpotqa",
+  "top_k": 10,
+  "preference_source": "qrels",
+  "preference_source_note": "Real preference edges derived directly from qrels (label-order DAG baseline).",
+  "flip_prob": null,
+  "n_processed": 20,
+  "n_skipped": 0,
+  "skipped_reasons": [],
+  "avg_n_nodes": 10.0,
+  "avg_n_edges": 18.5,
+  "avg_largest_scc": 1.0,
+  "pct_cyclic_graphs": 0.0,
+  "avg_runtime_by_method_s": {
+    "score_sum": 0.01637,
+    "borda": 0.01637,
+    "greedy_fas_weighted_balance": 0.01637,
+    "hybrid_rrf_fas_regularized": 0.01637
+  },
+  "avg_bew_by_method": {
+    "score_sum": 0.0,
+    "borda": 0.0,
+    "greedy_fas_weighted_balance": 0.0,
+    "hybrid_rrf_fas_regularized": 0.0
+  },
+  "best_method_by_bew": "score_sum",
+  "primary_metric": "ndcg_at_k",
+  "avg_primary_by_method": {
+    "score_sum": 1.0,
+    "borda": 1.0,
+    "greedy_fas_weighted_balance": 1.0,
+    "hybrid_rrf_fas_regularized": 1.0
+  },
+  "best_method_by_primary": "score_sum",
+  "avg_graph_ref_pic_pre": 0.0,
+  "avg_graph_ref_pic_post": 0.0,
+  "avg_graph_ref_bew_pre": 0.0,
+  "avg_graph_ref_bew_post": 0.0,
+  "avg_fas_removed_weight": 0.0,
+  "global_timings": {
+    "preference_source_loading": {
+      "total_s": 2e-06,
+      "mean_s": 2e-06
+    },
+    "dataset_loading": {
+      "total_s": 0.049758,
+      "mean_s": 0.049758
+    },
+    "candidate_selection": {
+      "total_s": 0.002311,
+      "mean_s": 0.002311
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.001355,
+      "mean_s": 6.8e-05
+    },
+    "graph_construction": {
+      "total_s": 0.001615,
+      "mean_s": 8.1e-05
+    },
+    "cycle_detection": {
+      "total_s": 0.000413,
+      "mean_s": 2.1e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.006569,
+      "mean_s": 0.000328
+    },
+    "ranking_score_sum": {
+      "total_s": 0.000327,
+      "mean_s": 1.6e-05
+    },
+    "ranking_borda": {
+      "total_s": 0.00028,
+      "mean_s": 1.4e-05
+    },
+    "ranking_pagerank": {
+      "total_s": 0.303955,
+      "mean_s": 0.015198
+    },
+    "ranking_topological": {
+      "total_s": 0.000938,
+      "mean_s": 4.7e-05
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 0.000451,
+      "mean_s": 2.3e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 0.000463,
+      "mean_s": 2.3e-05
+    },
+    "ranking_fas_score_augmented_topological": {
+      "total_s": 0.000571,
+      "mean_s": 2.9e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 0.000648,
+      "mean_s": 3.2e-05
+    },
+    "evaluation": {
+      "total_s": 0.009806,
+      "mean_s": 0.00049
+    },
+    "total_pipeline": {
+      "total_s": 0.338072,
+      "mean_s": 0.338072
+    }
+  }
+}

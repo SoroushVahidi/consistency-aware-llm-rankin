@@ -192,9 +192,10 @@ def _run_experiment(
     flip_prob: float,
     seed: int,
     output_dir: Path,
-    force: bool,
-    save_timings: bool,
-    profile: bool,
+    methods: list[str] | None = None,
+    force: bool = False,
+    save_timings: bool = False,
+    profile: bool = False,
 ) -> bool:
     """Run run_real_experiment.py for *name* and *source*."""
     ds_out = output_dir / name / source
@@ -216,6 +217,8 @@ def _run_experiment(
         "--seed", str(seed),
         "--output-dir", str(ds_out),
     ]
+    if methods:
+        cmd += ["--methods", *methods]
     if max_queries:
         cmd += ["--max-queries", str(max_queries)]
     if source == "qrels_flip":
@@ -287,6 +290,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Root output directory (default: outputs/real_full)",
     )
     parser.add_argument(
+        "--methods",
+        nargs="*",
+        default=None,
+        help="Optional explicit shortlist of methods to pass through to run_real_experiment.py",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Re-run stages even if output files already exist",
@@ -356,6 +365,7 @@ def main(argv: Sequence[str] | None = None) -> None:
                 flip_prob=args.flip_prob,
                 seed=args.seed,
                 output_dir=output_dir,
+                methods=args.methods,
                 force=args.force,
                 save_timings=args.save_timings,
                 profile=args.profile,

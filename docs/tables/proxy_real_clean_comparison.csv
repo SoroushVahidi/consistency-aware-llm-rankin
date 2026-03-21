@@ -1,0 +1,9 @@
+dataset,preference_source,best_method_ndcg,best_method_tau,best_FAS_method_ndcg,gap_FAS_to_best_ndcg,bootstrap_result_vs_score_sum,bootstrap_result_vs_borda
+bright,qrels,borda,borda,greedy_fas_weighted_balance,0.000000,"not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000","not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000"
+bright,qrels_flip,score_sum,borda,greedy_fas_weighted_balance,-0.031673,"significant_negative;mean=-0.031673;ci=[-0.065325,-0.006703];p=0.006000","not_significant_negative;mean=-0.021170;ci=[-0.058999,0.009574];p=0.213200"
+fiqa,qrels,borda,borda,greedy_fas_weighted_balance,0.000000,"not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000","not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000"
+fiqa,qrels_flip,score_sum,borda,greedy_fas_weighted_balance,-0.020034,"not_significant_negative;mean=-0.020034;ci=[-0.050558,0.002884];p=0.102800","not_significant_negative;mean=-0.006283;ci=[-0.036677,0.020992];p=0.693600"
+hotpotqa,qrels,borda,borda,greedy_fas_weighted_balance,0.000000,"not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000","not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000"
+hotpotqa,qrels_flip,borda,borda,greedy_fas_weighted_balance,-0.015329,"not_significant_negative;mean=-0.015329;ci=[-0.045986,0.000000];p=0.732800","not_significant_negative;mean=-0.015329;ci=[-0.045986,0.000000];p=0.732800"
+scidocs,qrels,borda,borda,greedy_fas_weighted_balance,0.000000,"not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000","not_significant_negative;mean=0.000000;ci=[0.000000,0.000000];p=1.000000"
+scidocs,qrels_flip,borda,borda,greedy_fas_weighted_balance,-0.003277,"not_significant_negative;mean=-0.003277;ci=[-0.008205,0.000000];p=0.250000","not_significant_negative;mean=-0.003277;ci=[-0.008205,0.000000];p=0.250000"

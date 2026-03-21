@@ -217,6 +217,8 @@ outputs/timings/*.csv
 outputs/timings/*.json
 outputs/plots/*.png
 outputs/plots/*.pdf
+outputs/**/plots/*.png
+outputs/**/plots/*.pdf
 data/raw/beir/scidocs/*.jsonl
 data/raw/beir/scidocs/*.arrow
 data/raw/beir/scidocs/*.parquet
