@@ -27,7 +27,11 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
    - Datasets: `data/dataset_registry.py`, loaders under `data/`  
    - Publication pipeline: `scripts/run_publication_vote_suite.py` → `build_paper_evidence_package.py`
 
-6. **Environment notes (Wulver / cluster)**  
+6. **Publication audit (claims vs evidence)**  
+   - [`../reports/repo_publication_audit.md`](../reports/repo_publication_audit.md) — canonical package, v2 vs all4, safe framing  
+   - [`../reports/README.md`](../reports/README.md) — index of CSV/claim matrices
+
+7. **Environment notes (Wulver / cluster)**  
    - Use conda env `feedback-weighted-maximization` when running Gurobi-backed exact solver.  
    - Do **not** point `GRB_LICENSE_FILE` at an expired license file if the default works.
 
@@ -40,3 +44,4 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
 
 - [`WULVER_EXECUTION_SUMMARY.md`](WULVER_EXECUTION_SUMMARY.md) — what was run on Wulver and what was pushed.
 - [`PAPER_PACKAGE_STATUS_AFTER_WULVER.md`](PAPER_PACKAGE_STATUS_AFTER_WULVER.md) — four-dataset package status.
+- [`../reports/repo_cleanup_recommendations.md`](../reports/repo_cleanup_recommendations.md) — optional repo coherence steps (e.g. regenerate Q1 tables from `pub_vote_cmp_all4`).

@@ -16,7 +16,7 @@ source /workspace/.venv/bin/activate
 |------|---------|
 | Install deps | `pip install -r requirements.txt && pip install -e ".[dev]"` |
 | Lint | `ruff check .` |
-| Tests | `pytest` (165 tests, runs in < 1 s) |
+| Tests | `pytest` (~275 tests after `pip install -e .`; use `PYTHONPATH=src` if package not installed) |
 | Synthetic experiment | `python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42` |
 
 ### Notes

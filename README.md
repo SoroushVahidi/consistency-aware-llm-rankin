@@ -170,6 +170,7 @@ consistency-aware-llm-rankin/
 │   │   └── paper_package/
 │   └── q1_journal_package/         # Aggregated Q1 tables (auto-generated)
 ├── figures/                        # Curated manuscript figures + graphical abstract
+├── reports/                        # Publication audit, claim matrix, merged result tables
 ├── docs/                           # Extended documentation
 ├── pyproject.toml
 ├── requirements.txt

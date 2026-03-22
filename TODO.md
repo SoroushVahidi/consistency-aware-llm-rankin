@@ -4,6 +4,7 @@ A living task list for the consistency-aware LLM ranking project.
 
 ## Near-term
 
+- [ ] Regenerate `outputs/q1_journal_package/` with `python scripts/generate_q1_tables.py --pub-root outputs/pub_vote_cmp_all4` so journal tables match the four-dataset package (see `reports/repo_cleanup_recommendations.md`)
 - [ ] Integrate a real LLM pairwise comparator (e.g. GPT-4o, Llama-3) in `pairwise_prefs.py`
 - [x] Add ILP-based exact MWFAS solver using `gurobipy`
 - [ ] Experiment with larger synthetic graphs (N=100–500 items)
