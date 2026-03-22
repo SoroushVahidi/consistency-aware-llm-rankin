@@ -12,6 +12,7 @@
 | `scripts/run_publication_vote_suite.py` | SciDocs + HotpotQA publication comparison (ms2 / ms1 / drop-mutual) |
 | `scripts/analyze_publication_vote_deltas.py` | Bootstrap ΔnDCG (repaired − unrepaired) |
 | `scripts/build_paper_evidence_package.py` | Tables + figures + `MANUSCRIPT_SUMMARY.md` |
+| `scripts/generate_paper_tables.py` | Build manuscript-ready CSV bundle in `reports/paper_tables/` |
 | `scripts/summarize_publication_vote_suite.py` | Markdown-style aggregate table |
 
 **Pinned evidence (in git):** `outputs/pub_vote_cmp_v2/paper_package/` (regenerate commands in that folder’s README).

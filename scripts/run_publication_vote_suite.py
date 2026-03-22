@@ -196,6 +196,7 @@ def main() -> None:
                     *METHODS,
                     "--save-timings",
                     "--no-plots",
+                    "--overwrite-existing",
                     "--output-dir",
                     str(outd),
                     "--seed",

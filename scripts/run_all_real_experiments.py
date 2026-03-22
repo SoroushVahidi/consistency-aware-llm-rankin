@@ -227,6 +227,8 @@ def _run_experiment(
         cmd.append("--save-timings")
     if profile:
         cmd.append("--profile")
+    if force:
+        cmd.append("--overwrite-existing")
 
     rc = _run(cmd, label=f"Experiment {name} / {source}")
     return rc == 0
