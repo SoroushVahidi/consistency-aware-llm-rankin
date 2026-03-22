@@ -1,0 +1,11 @@
+path,exists,row_count_if_csv
+outputs/q1_journal_package/table_main_performance.csv,yes,6
+outputs/q1_journal_package/table_significance.csv,yes,24
+outputs/q1_journal_package/table_structural_consistency.csv,yes,6
+outputs/q1_journal_package/table_failure_cases.csv,yes,1
+outputs/q1_journal_package/summary_report.md,yes,
+outputs/pub_vote_cmp_v2/paper_package/tables/table_graph_ndcg_and_consistency.csv,yes,6
+outputs/pub_vote_cmp_v2/paper_package/tables/table_bootstrap_delta_ndcg.csv,yes,24
+outputs/pub_vote_cmp_v2/paper_package/tables/table_consistency_qrels_bew.csv,yes,6
+outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md,yes,
+outputs/real_full/PROVENANCE.md,yes,

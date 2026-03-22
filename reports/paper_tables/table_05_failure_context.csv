@@ -1,0 +1,2 @@
+dataset,vote_construction,method_pair,n_queries,mean_delta_ndcg,ci95_low,ci95_high,pct_cyclic_graphs,mean_fas_weight_removed,delta_bew_pre_minus_post,delta_pic_pre_minus_post
+scidocs,ms1,copeland,120,-0.009117,-0.016692,-0.002905,97.50,2.5387,1.1303,11.7583

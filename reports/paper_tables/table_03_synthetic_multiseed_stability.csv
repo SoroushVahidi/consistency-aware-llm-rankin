@@ -1,0 +1,14 @@
+run_family,method,n_seeds,kendall_tau_mean,kendall_tau_std,kendall_tau_min,kendall_tau_max
+margin_multiseed_n20_noise0.20,borda,5,0.755789,0.035228,0.715789,0.800000
+margin_multiseed_n20_noise0.20,greedy_fas_topological,5,0.282105,0.102975,0.210526,0.452632
+margin_multiseed_n20_noise0.20,score_sum,5,0.688421,0.060743,0.610526,0.757895
+uniform_multiseed_n20_noise0.20,borda,5,0.755789,0.035228,0.715789,0.800000
+uniform_multiseed_n20_noise0.20,greedy_fas_topological,5,-0.006316,0.223619,-0.200000,0.357895
+uniform_multiseed_n20_noise0.20,score_sum,5,0.755789,0.035228,0.715789,0.800000
+variant_multiseed_n20_noise0.20,borda,5,0.755789,0.035228,0.715789,0.800000
+variant_multiseed_n20_noise0.20,fas_copeland,5,0.473684,0.097900,0.347368,0.557895
+variant_multiseed_n20_noise0.20,fas_weighted_balance,5,0.593684,0.106467,0.484211,0.736842
+variant_multiseed_n20_noise0.20,greedy_fas_topological,5,0.282105,0.102975,0.210526,0.452632
+variant_multiseed_n20_noise0.20,hybrid_rrf_fas_regularized,5,0.684211,0.082213,0.589474,0.757895
+variant_multiseed_n20_noise0.20,priority_topological_score_sum,5,0.311579,0.104630,0.221053,0.484211
+variant_multiseed_n20_noise0.20,score_sum,5,0.688421,0.060743,0.610526,0.757895

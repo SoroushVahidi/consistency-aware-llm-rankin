@@ -8,14 +8,21 @@
 ## Key Finding
 
 > *Repairing cyclic preference graphs improves structural consistency, but does
-> not uniformly improve retrieval effectiveness; the outcome depends on vote
-> construction, graph regime, and repair strategy.*
+> not uniformly improve retrieval effectiveness; outcomes depend on vote
+> construction, graph regime, and extraction strategy.*
 
 The pre-committed evidence package (`outputs/pub_vote_cmp_v2/paper_package/`)
-shows that FAS repair is **neutral** under near-acyclic vote constructions and
-**significantly harmful** (nDCG, bootstrap 95% CI strictly negative) under
-high-cyclicity constructions on SciDocs.  See [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md)
-for the full list of safe and unsupported claims.
+shows that FAS repair is **neutral/inactive** under near-acyclic vote
+constructions and **significantly harmful** (nDCG, bootstrap 95% CI strictly
+negative) under high-cyclicity construction on SciDocs. See
+[`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) and
+[`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) for conservative claim wording.
+
+**Scope caveat (important):**
+- Canonical paper-package results currently cover SciDocs + HotpotQA.
+- Preference edges in the committed publication package are generated from
+  multi-ranker score votes (BM25/TF-IDF/MiniLM), not direct human annotation.
+- Additional proxy runs for FiQA/BRIGHT are available under `outputs/real_full/`.
 
 ---
 
@@ -30,7 +37,7 @@ pip install -r requirements.txt && pip install -e ".[dev]"
 # 2. Verify the repository is ready
 python scripts/check_repo_ready.py
 
-# 3. Run tests (212 tests, < 2 s)
+# 3. Run tests
 pytest
 
 # 4. Run a synthetic experiment (no network needed)
@@ -51,8 +58,15 @@ reproduction guide including real-data experiments.
 | Document | Description |
 |---|---|
 | [`docs/Q1_JOURNAL_GAP_ANALYSIS.md`](docs/Q1_JOURNAL_GAP_ANALYSIS.md) | Rigorous audit of the repo against Q1 journal standards |
+| [`docs/Q1_PUBLICATION_GAP_ANALYSIS.md`](docs/Q1_PUBLICATION_GAP_ANALYSIS.md) | Current hardening-pass publication gap analysis with explicit action list |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | Exact commands to reproduce all tables and figures |
 | [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing |
+| [`docs/Q1_CLAIM_EVIDENCE_MAP.md`](docs/Q1_CLAIM_EVIDENCE_MAP.md) | Claim-by-claim mapping to scripts/artifacts/support levels |
+| [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims |
+| [`docs/JOURNAL_READY_CONTRIBUTIONS.md`](docs/JOURNAL_READY_CONTRIBUTIONS.md) | Candidate journal-style contribution statements |
+| [`docs/RESULTS_FOR_PAPER.md`](docs/RESULTS_FOR_PAPER.md) | What to include vs avoid in manuscript results section |
+| [`docs/THREATS_TO_VALIDITY.md`](docs/THREATS_TO_VALIDITY.md) | Structured threats-to-validity section draft |
+| [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | New analysis family to generate `reports/paper_tables/` |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
 | [`docs/AUDIT.md`](docs/AUDIT.md) | Full systematic repository audit |
 | [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Human-readable manuscript findings |
@@ -61,12 +75,13 @@ reproduction guide including real-data experiments.
 
 ## Research Motivation
 
-Large language models (LLMs) are increasingly used to rank documents, compare candidate answers, or evaluate action sequences via *pairwise preference judgements*: "Is answer A better than answer B?"  
-However, these pairwise preferences are often **inconsistent**: A > B, B > C, yet C > A — a cycle that makes a globally consistent ranking impossible to derive directly.
+Pairwise preferences from rankers, LLM judges, or annotators can be
+**inconsistent**: A > B, B > C, yet C > A.  These cycles prevent direct
+construction of a globally consistent ranking.
 
 This repository investigates:
 
-1. **How frequently do LLM pairwise preferences form cycles?**
+1. **How frequently do pairwise preference graphs form cycles under different vote constructions?**
 2. **Can graph-based combinatorial optimisation (specifically the Minimum Weighted Feedback Arc Set problem) repair these inconsistencies?**
 3. **How does the repaired ranking compare to baselines like score-sum or topological sort?**
 4. **Does vote construction mediate the repair effect?**
@@ -109,7 +124,7 @@ consistency-aware-llm-rankin/
 │       ├── greedy_fas.py           # Greedy feedback arc removal heuristic
 │       ├── mwfas_solver.py         # MWFAS solver interface (greedy + ILP stub)
 │       └── evaluation.py           # Metrics: Kendall τ, inconsistency count, etc.
-├── tests/                          # Unit tests (pytest, 212 tests)
+├── tests/                          # Unit tests (pytest)
 ├── scripts/
 │   ├── run_synthetic.py            # CLI: end-to-end synthetic experiment
 │   ├── generate_q1_tables.py       # Regenerate all Q1 journal tables

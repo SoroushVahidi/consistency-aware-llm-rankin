@@ -38,16 +38,16 @@ import networkx as nx
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from consistency_ranker.baseline_ranking import (
-    borda_scores,
     borda_ranking,
+    borda_scores,
     copeland_ranking,
     fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
     fas_balance_score_sum_borda_hybrid_ranking,
     hybrid_rrf_fas_regularized_ranking,
     priority_topological_ranking,
-    score_sum_scores,
     score_sum_ranking,
+    score_sum_scores,
     topological_ranking,
     weighted_out_minus_in_ranking,
 )
@@ -58,14 +58,6 @@ from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.pairwise_prefs import generate_preferences
 from consistency_ranker.synthetic_data import generate_items, ground_truth_ranking, quality_map
 from consistency_ranker.utils.timing import Timer, TimingAccumulator
-
-
-def _score_sum_scores(graph: nx.DiGraph) -> dict[str, float]:
-    """Return original-graph score-sum scores for all nodes."""
-    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
-    for u, _, data in graph.edges(data=True):
-        scores[u] += data.get("weight", 1.0)
-    return scores
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -89,6 +81,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         default=Path("outputs"),
         help="Directory to save experiment results",
+    )
+    parser.add_argument(
+        "--overwrite-existing",
+        action="store_true",
+        default=False,
+        help=(
+            "Allow overwriting existing synthetic outputs in --output-dir. "
+            "By default, existing files cause an error to avoid accidental result clobbering."
+        ),
     )
     parser.add_argument(
         "--save-timings",
@@ -141,6 +142,39 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _validate_config(
+    *,
+    n_items: int,
+    noise: float,
+    output_dir: Path,
+    save_timings: bool,
+    overwrite_existing: bool,
+) -> None:
+    """Validate experiment parameters and output-path safety."""
+    if n_items < 2:
+        raise ValueError(f"n_items must be >= 2. Got {n_items}.")
+    if not (0.0 <= noise < 1.0):
+        raise ValueError(f"noise must be in [0.0, 1.0). Got {noise}.")
+    if output_dir.exists() and not output_dir.is_dir():
+        raise ValueError(f"output_dir must be a directory path. Got file: {output_dir}")
+
+    reserved = [output_dir / "synthetic_results.json"]
+    if save_timings:
+        reserved.extend(
+            [
+                output_dir / "timings" / "synthetic_timings.csv",
+                output_dir / "timings" / "synthetic_timings.json",
+            ]
+        )
+    collisions = [path for path in reserved if path.exists()]
+    if collisions and not overwrite_existing:
+        existing = ", ".join(str(path) for path in collisions)
+        raise FileExistsError(
+            "Refusing to overwrite existing synthetic output files: "
+            f"{existing}. Use --overwrite-existing to allow overwrites."
+        )
+
+
 def run_experiment(
     n_items: int,
     noise: float,
@@ -155,6 +189,7 @@ def run_experiment(
     output_dir: Path = Path("outputs"),
     save_timings: bool = False,
     profile: bool = False,
+    overwrite_existing: bool = False,
 ) -> dict:
     """Run the full synthetic experiment and return a results dict.
 
@@ -188,6 +223,8 @@ def run_experiment(
     profile:
         If ``True``, print a detailed timing summary to stdout (also
         activates ``save_timings``).
+    overwrite_existing:
+        If ``False`` (default), raises if output files already exist.
 
     Returns
     -------
@@ -196,6 +233,14 @@ def run_experiment(
     """
     if profile:
         save_timings = True
+    output_dir = Path(output_dir)
+    _validate_config(
+        n_items=n_items,
+        noise=noise,
+        output_dir=output_dir,
+        save_timings=save_timings,
+        overwrite_existing=overwrite_existing,
+    )
     if fas_balance_alpha < 0:
         raise ValueError(f"fas_balance_alpha must be non-negative. Got {fas_balance_alpha}.")
     if fas_balance_alpha_beta_alpha < 0:
@@ -318,7 +363,6 @@ def run_experiment(
         with Timer("greedy_fas_solver", accumulator=acc):
             dag, removed_edges = greedy_fas(graph)
             fas_weight = greedy_fas_total_weight(removed_edges)
-            score_prior = _score_sum_scores(graph)
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
         score_sum_priority_scores = score_sum_scores(graph)
@@ -567,7 +611,6 @@ def run_experiment(
         },
     }
 
-    output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     out_path = output_dir / "synthetic_results.json"
     with out_path.open("w") as fh:
@@ -597,6 +640,7 @@ def main(argv: list[str] | None = None) -> None:
         output_dir=args.output_dir,
         save_timings=args.save_timings,
         profile=args.profile,
+        overwrite_existing=args.overwrite_existing,
         fas_balance_alpha=args.fas_balance_alpha,
         fas_balance_alpha_beta_alpha=args.fas_balance_alpha_beta_alpha,
         fas_balance_alpha_beta_beta=args.fas_balance_alpha_beta_beta,
