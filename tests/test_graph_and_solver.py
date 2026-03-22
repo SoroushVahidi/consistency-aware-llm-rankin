@@ -82,8 +82,13 @@ def test_mwfas_solver_dispatch_and_errors():
     assert not has_cycle(dag)
     assert removed
 
-    with pytest.raises(NotImplementedError):
-        solve(g, method="ilp")
+    try:
+        dag_ilp, removed_ilp = solve(g, method="ilp")
+    except ImportError:
+        pass  # gurobipy / Gurobi not installed
+    else:
+        assert not has_cycle(dag_ilp)
+        assert removed_ilp
     with pytest.raises(ValueError):
         solve(g, method="unknown")
 

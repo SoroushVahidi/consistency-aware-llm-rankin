@@ -152,7 +152,7 @@ def _validate_config(
 ) -> None:
     """Validate experiment parameters and output-path safety."""
     if n_items < 2:
-        raise ValueError(f"n_items must be >= 2. Got {n_items}.")
+        raise ValueError(f"--n-items must be >= 2. Got {n_items}.")
     if not (0.0 <= noise < 1.0):
         raise ValueError(f"noise must be in [0.0, 1.0). Got {noise}.")
     if output_dir.exists() and not output_dir.is_dir():
