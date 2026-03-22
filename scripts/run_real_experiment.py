@@ -722,6 +722,71 @@ def _resolve_output_dir(
     return output_dir / dataset / preference_source
 
 
+def _validate_run_configuration(
+    *,
+    max_queries: int,
+    top_k: int,
+    preference_source: str,
+    flip_prob: float,
+    pairwise_file: Path | None,
+    score_file: Path | None,
+    score_prior_files: list[Path] | None,
+    query_id_file: Path | None,
+    output_dir: Path,
+    save_timings: bool,
+    overwrite_existing: bool,
+    dataset: str,
+) -> None:
+    """Validate CLI/runtime configuration before running expensive experiments."""
+    if max_queries <= 0:
+        raise ValueError(f"max_queries must be > 0. Got {max_queries}.")
+    if top_k < 2:
+        raise ValueError(f"top_k must be >= 2. Got {top_k}.")
+    if not (0.0 <= flip_prob <= 1.0):
+        raise ValueError(f"flip_prob must be in [0.0, 1.0]. Got {flip_prob}.")
+
+    if preference_source in {"llm_pairwise_file", "votes_file"}:
+        if pairwise_file is None:
+            raise ValueError(
+                "--pairwise-file is required for llm_pairwise_file/votes_file modes."
+            )
+        if not pairwise_file.exists():
+            raise FileNotFoundError(f"Pairwise preference file not found: {pairwise_file}")
+    if preference_source == "score_file":
+        if score_file is None:
+            raise ValueError("--score-file is required for score_file mode.")
+        if not score_file.exists():
+            raise FileNotFoundError(f"Score file not found: {score_file}")
+    if query_id_file is not None and not query_id_file.exists():
+        raise FileNotFoundError(f"query_id_file not found: {query_id_file}")
+    for score_prior in score_prior_files or []:
+        if not score_prior.exists():
+            raise FileNotFoundError(f"score_prior_file not found: {score_prior}")
+
+    if output_dir.exists() and not output_dir.is_dir():
+        raise ValueError(f"output_dir must be a directory path. Got file: {output_dir}")
+
+    reserved = [
+        output_dir / f"{dataset}_per_query.csv",
+        output_dir / f"{dataset}_summary.csv",
+        output_dir / f"{dataset}_experiment_summary.json",
+    ]
+    if save_timings:
+        reserved.extend(
+            [
+                output_dir / "timings" / f"{dataset}_timings.csv",
+                output_dir / "timings" / f"{dataset}_timings.json",
+            ]
+        )
+    collisions = [path for path in reserved if path.exists()]
+    if collisions and not overwrite_existing:
+        paths = ", ".join(str(path) for path in collisions)
+        raise FileExistsError(
+            "Refusing to overwrite existing output files: "
+            f"{paths}. Use --overwrite-existing to allow this."
+        )
+
+
 def _load_score_prior_files(
     score_prior_files: list[Path] | None,
 ) -> list[dict[str, list[tuple[str, float]]]]:
@@ -1563,6 +1628,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Root or fully resolved directory for real-data outputs.",
     )
     parser.add_argument(
+        "--overwrite-existing",
+        action="store_true",
+        help=(
+            "Allow overwriting existing output files in the resolved output directory. "
+            "Default behavior is fail-fast to prevent accidental clobbering."
+        ),
+    )
+    parser.add_argument(
         "--save-timings",
         action="store_true",
         help="Save timing CSV and JSON under <output-dir>/<preference_source>/timings/.",
@@ -1605,6 +1678,7 @@ def run_experiment(
     include_hybrid_ablation: bool = False,
     hybrid_alpha_sweep_components: list[str] | None = None,
     hybrid_alpha_values: str = "0.0,0.1,0.2,0.3,0.5,0.7,1.0",
+    overwrite_existing: bool = False,
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -1628,6 +1702,8 @@ def run_experiment(
         If ``True``, print timing summary to stdout.
     generate_plots:
         If ``True``, generate timing and metric plots (requires matplotlib).
+    overwrite_existing:
+        If ``False`` (default), fail when output files already exist.
 
     Returns
     -------
@@ -1636,7 +1712,20 @@ def run_experiment(
     """
 
     output_dir = _resolve_output_dir(Path(output_dir), dataset=dataset, preference_source=preference_source)
-
+    _validate_run_configuration(
+        max_queries=max_queries,
+        top_k=top_k,
+        preference_source=preference_source,
+        flip_prob=flip_prob,
+        pairwise_file=pairwise_file,
+        score_file=score_file,
+        score_prior_files=score_prior_files,
+        query_id_file=query_id_file,
+        output_dir=output_dir,
+        save_timings=save_timings,
+        overwrite_existing=overwrite_existing,
+        dataset=dataset,
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'='*65}")
@@ -2135,15 +2224,15 @@ def _print_experiment_summary(summary: dict, dataset: str) -> None:
         f"  Graph inconsistency pre/post (weight): "
         f"{summary['avg_graph_ref_bew_pre']:.4f} -> {summary['avg_graph_ref_bew_post']:.4f}"
     )
-    print(f"\n  Average runtime by method (s):")
+    print("\n  Average runtime by method (s):")
     for m, v in summary["avg_runtime_by_method_s"].items():
         print(f"    {m:<30} {v:.6f}")
     print(f"\n  Best method by backward-edge weight: {summary['best_method_by_bew']}")
-    print(f"  Average BEW by method:")
+    print("  Average BEW by method:")
     for m, v in summary["avg_bew_by_method"].items():
         print(f"    {m:<30} {v:.4f}")
     print(f"\n  Best method by primary metric: {summary['best_method_by_primary']}")
-    print(f"  Average primary metric by method:")
+    print("  Average primary metric by method:")
     for m, v in summary["avg_primary_by_method"].items():
         print(f"    {m:<30} {v:.4f}")
 
@@ -2181,27 +2270,31 @@ def _write_csv(rows: list[dict], path: Path) -> None:
 def main(argv: list[str] | None = None) -> None:
     """CLI entry point."""
     args = parse_args(argv)
-    run_experiment(
-        dataset=args.dataset,
-        max_queries=args.max_queries,
-        top_k=args.top_k,
-        weight_scheme=args.weight_scheme,
-        preference_source=args.preference_source,
-        flip_prob=args.flip_prob,
-        pairwise_file=args.pairwise_file,
-        score_file=args.score_file,
-        score_prior_files=args.score_prior_files,
-        query_id_file=args.query_id_file,
-        include_hybrid_ablation=args.include_hybrid_ablation,
-        hybrid_alpha_sweep_components=args.hybrid_alpha_sweep_components,
-        hybrid_alpha_values=args.hybrid_alpha_values,
-        methods_filter=args.methods,
-        seed=args.seed,
-        output_dir=args.output_dir,
-        save_timings=args.save_timings,
-        profile=args.profile,
-        generate_plots=not args.no_plots,
-    )
+    try:
+        run_experiment(
+            dataset=args.dataset,
+            max_queries=args.max_queries,
+            top_k=args.top_k,
+            weight_scheme=args.weight_scheme,
+            preference_source=args.preference_source,
+            flip_prob=args.flip_prob,
+            pairwise_file=args.pairwise_file,
+            score_file=args.score_file,
+            score_prior_files=args.score_prior_files,
+            query_id_file=args.query_id_file,
+            include_hybrid_ablation=args.include_hybrid_ablation,
+            hybrid_alpha_sweep_components=args.hybrid_alpha_sweep_components,
+            hybrid_alpha_values=args.hybrid_alpha_values,
+            methods_filter=args.methods,
+            seed=args.seed,
+            output_dir=args.output_dir,
+            save_timings=args.save_timings,
+            profile=args.profile,
+            generate_plots=not args.no_plots,
+            overwrite_existing=args.overwrite_existing,
+        )
+    except (ValueError, FileNotFoundError, FileExistsError) as exc:
+        raise SystemExit(f"ERROR: {exc}") from exc
 
 
 if __name__ == "__main__":

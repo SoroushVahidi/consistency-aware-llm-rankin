@@ -111,6 +111,7 @@ def check_key_scripts() -> None:
         "scripts/run_synthetic.py",
         "scripts/run_real_experiment.py",
         "scripts/build_paper_evidence_package.py",
+        "scripts/generate_paper_tables.py",
         "scripts/bootstrap_method_deltas.py",
         "scripts/generate_q1_tables.py",
         "scripts/run_publication_vote_suite.py",
@@ -128,8 +129,14 @@ def check_docs() -> None:
     """Verify expected documentation files exist."""
     docs = [
         "docs/Q1_JOURNAL_GAP_ANALYSIS.md",
+        "docs/Q1_PUBLICATION_GAP_ANALYSIS.md",
         "docs/REPRODUCTION_Q1.md",
         "docs/Q1_POSITIONING_AND_CLAIMS.md",
+        "docs/Q1_CLAIM_EVIDENCE_MAP.md",
+        "docs/SAFE_Q1_CLAIMS.md",
+        "docs/JOURNAL_READY_CONTRIBUTIONS.md",
+        "docs/RESULTS_FOR_PAPER.md",
+        "docs/THREATS_TO_VALIDITY.md",
         "docs/EXPERIMENTS.md",
         "docs/FINAL_REPRODUCTION_GUIDE.md",
         "docs/AUDIT.md",

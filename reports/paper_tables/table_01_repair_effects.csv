@@ -1,0 +1,13 @@
+dataset,vote_construction,comparison,n_queries,mean_delta_ndcg,ci95_low,ci95_high,effect_label
+hotpotqa,ms1,balance,52,0.000000,0.000000,0.000000,inactive
+hotpotqa,ms1,copeland,52,-0.000868,-0.002182,0.000000,no_significant_change
+hotpotqa,ms1_drop_mutual,balance,52,0.000000,0.000000,0.000000,inactive
+hotpotqa,ms1_drop_mutual,copeland,52,0.000000,0.000000,0.000000,inactive
+hotpotqa,ms2,balance,52,0.000000,0.000000,0.000000,inactive
+hotpotqa,ms2,copeland,52,0.000000,0.000000,0.000000,inactive
+scidocs,ms1,balance,120,-0.000025,-0.000074,0.000000,no_significant_change
+scidocs,ms1,copeland,120,-0.009117,-0.016692,-0.002905,significant_harm
+scidocs,ms1_drop_mutual,balance,120,0.000000,0.000000,0.000000,inactive
+scidocs,ms1_drop_mutual,copeland,120,0.000021,0.000000,0.000062,no_significant_change
+scidocs,ms2,balance,119,0.000000,0.000000,0.000000,inactive
+scidocs,ms2,copeland,119,0.000000,0.000000,0.000000,inactive
