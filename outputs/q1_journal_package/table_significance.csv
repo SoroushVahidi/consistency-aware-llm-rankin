@@ -1,0 +1,25 @@
+dataset,vote_construction,comparison,n_queries,mean_delta_ndcg,ci95_low,ci95_high,bootstrap_reps,significance
+scidocs,ms2,copeland,119,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+scidocs,ms2,copeland_scc_high,119,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+scidocs,ms2,copeland_scc_low,0,,,,2000,n/a
+scidocs,ms2,balance,119,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+scidocs,ms1,copeland,120,-0.009117,-0.016692,-0.002905,2000,✗ sig. negative
+scidocs,ms1,copeland_scc_high,70,-0.015125,-0.027054,-0.005738,2000,✗ sig. negative
+scidocs,ms1,copeland_scc_low,50,-0.000705,-0.005406,0.004118,2000,− not significant
+scidocs,ms1,balance,120,-0.000025,-0.000074,0.000000,2000,− not significant
+scidocs,ms1_drop_mutual,copeland,120,0.000021,0.000000,0.000062,2000,− not significant
+scidocs,ms1_drop_mutual,copeland_scc_high,120,0.000021,0.000000,0.000062,2000,− not significant
+scidocs,ms1_drop_mutual,copeland_scc_low,0,,,,2000,n/a
+scidocs,ms1_drop_mutual,balance,120,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms2,copeland,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms2,copeland_scc_high,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms2,copeland_scc_low,0,,,,2000,n/a
+hotpotqa,ms2,balance,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms1,copeland,52,-0.000868,-0.002182,0.000000,2000,− not significant
+hotpotqa,ms1,copeland_scc_high,34,-0.001328,-0.003125,0.000000,2000,− not significant
+hotpotqa,ms1,copeland_scc_low,18,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms1,balance,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms1_drop_mutual,copeland,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms1_drop_mutual,copeland_scc_high,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)
+hotpotqa,ms1_drop_mutual,copeland_scc_low,0,,,,2000,n/a
+hotpotqa,ms1_drop_mutual,balance,52,0.000000,0.000000,0.000000,2000,− inactive (Δ=0)

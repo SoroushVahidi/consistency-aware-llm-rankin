@@ -1,0 +1,13 @@
+dataset,vote_construction,scc_regime,n_queries,mean_delta_ndcg_copeland,ci95_low,ci95_high,interpretation
+scidocs,ms2,high_scc,119,0.000000,0.000000,0.000000,repair inactive
+scidocs,ms2,low_scc,0,,,,skipped (n=0)
+scidocs,ms1,high_scc,70,-0.015125,-0.027054,-0.005738,repair harms nDCG (sig.)
+scidocs,ms1,low_scc,50,-0.000705,-0.005406,0.004118,no significant change
+scidocs,ms1_drop_mutual,high_scc,120,0.000021,0.000000,0.000062,no significant change
+scidocs,ms1_drop_mutual,low_scc,0,,,,skipped (n=0)
+hotpotqa,ms2,high_scc,52,0.000000,0.000000,0.000000,repair inactive
+hotpotqa,ms2,low_scc,0,,,,skipped (n=0)
+hotpotqa,ms1,high_scc,34,-0.001328,-0.003125,0.000000,no significant change
+hotpotqa,ms1,low_scc,18,0.000000,0.000000,0.000000,repair inactive
+hotpotqa,ms1_drop_mutual,high_scc,52,0.000000,0.000000,0.000000,repair inactive
+hotpotqa,ms1_drop_mutual,low_scc,0,,,,skipped (n=0)

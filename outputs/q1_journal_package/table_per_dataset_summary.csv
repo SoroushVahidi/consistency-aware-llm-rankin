@@ -1,0 +1,7 @@
+dataset,vote_construction,n_queries,pct_cyclic_graphs,best_method,best_mean_ndcg,copeland_delta_ndcg_R_minus_U,copeland_significance,balance_significance
+scidocs,ms2,119,1.68,unrepaired_copeland,0.4282,0.0000,− inactive (Δ=0),− inactive (Δ=0)
+scidocs,ms1,120,97.50,unrepaired_copeland,0.4362,-0.0091,✗ sig. negative,− not significant
+scidocs,ms1_drop_mutual,120,9.17,unrepaired_copeland,0.4362,0.0000,− not significant,− inactive (Δ=0)
+hotpotqa,ms2,52,0.00,prior_only,0.9120,0.0000,− inactive (Δ=0),− inactive (Δ=0)
+hotpotqa,ms1,52,94.23,prior_only,0.9120,-0.0009,− not significant,− inactive (Δ=0)
+hotpotqa,ms1_drop_mutual,52,0.00,prior_only,0.9120,0.0000,− inactive (Δ=0),− inactive (Δ=0)

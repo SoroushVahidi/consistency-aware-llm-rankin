@@ -1,7 +1,61 @@
 # consistency-aware-llm-rankin
 
-> **PhD Research Repository** — Consistency-Aware Retrieval and Reasoning in LLM Systems  
-> Using Combinatorial Optimisation (Minimum Weighted Feedback Arc Set)
+> **Research Repository** — Consistency-Aware Retrieval Ranking via Graph Repair  
+> Using Minimum Weighted Feedback Arc Set (MWFAS) Optimisation
+
+---
+
+## Key Finding
+
+> *Repairing cyclic preference graphs improves structural consistency, but does
+> not uniformly improve retrieval effectiveness; the outcome depends on vote
+> construction, graph regime, and repair strategy.*
+
+The pre-committed evidence package (`outputs/pub_vote_cmp_v2/paper_package/`)
+shows that FAS repair is **neutral** under near-acyclic vote constructions and
+**significantly harmful** (nDCG, bootstrap 95% CI strictly negative) under
+high-cyclicity constructions on SciDocs.  See [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md)
+for the full list of safe and unsupported claims.
+
+---
+
+## Quickstart (No Network Required)
+
+```bash
+# 1. Install
+git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
+cd consistency-aware-llm-rankin
+pip install -r requirements.txt && pip install -e ".[dev]"
+
+# 2. Verify the repository is ready
+python scripts/check_repo_ready.py
+
+# 3. Run tests (212 tests, < 2 s)
+pytest
+
+# 4. Run a synthetic experiment (no network needed)
+python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42
+
+# 5. Regenerate the Q1 journal tables from pre-committed outputs (no network needed)
+python scripts/generate_q1_tables.py
+#  → outputs/q1_journal_package/  (7 tables + summary_report.md)
+```
+
+See [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) for the full
+reproduction guide including real-data experiments.
+
+---
+
+## Documentation Index
+
+| Document | Description |
+|---|---|
+| [`docs/Q1_JOURNAL_GAP_ANALYSIS.md`](docs/Q1_JOURNAL_GAP_ANALYSIS.md) | Rigorous audit of the repo against Q1 journal standards |
+| [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | Exact commands to reproduce all tables and figures |
+| [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing |
+| [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
+| [`docs/AUDIT.md`](docs/AUDIT.md) | Full systematic repository audit |
+| [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Human-readable manuscript findings |
 
 ---
 
@@ -15,6 +69,7 @@ This repository investigates:
 1. **How frequently do LLM pairwise preferences form cycles?**
 2. **Can graph-based combinatorial optimisation (specifically the Minimum Weighted Feedback Arc Set problem) repair these inconsistencies?**
 3. **How does the repaired ranking compare to baselines like score-sum or topological sort?**
+4. **Does vote construction mediate the repair effect?**
 
 The Minimum Weighted Feedback Arc Set (MWFAS) problem asks: *given a weighted directed graph, remove the minimum-weight set of edges that make the graph a DAG (directed acyclic graph).* This is NP-hard in general, but good heuristics and ILP formulations exist.
 
@@ -54,10 +109,14 @@ consistency-aware-llm-rankin/
 │       ├── greedy_fas.py           # Greedy feedback arc removal heuristic
 │       ├── mwfas_solver.py         # MWFAS solver interface (greedy + ILP stub)
 │       └── evaluation.py           # Metrics: Kendall τ, inconsistency count, etc.
-├── tests/                          # Unit tests (pytest)
-├── notebooks/                      # Jupyter exploration notebooks
+├── tests/                          # Unit tests (pytest, 212 tests)
 ├── scripts/
 │   ├── run_synthetic.py            # CLI: end-to-end synthetic experiment
+│   ├── generate_q1_tables.py       # Regenerate all Q1 journal tables
+│   ├── check_repo_ready.py         # Verify repository setup
+│   ├── run_publication_vote_suite.py  # Full real-data publication pipeline
+│   ├── build_paper_evidence_package.py # Tables + figures from pub suite output
+│   ├── bootstrap_method_deltas.py  # Bootstrap ΔnDCG CIs
 │   ├── download_datasets.py        # CLI: download real benchmark datasets
 │   └── prepare_datasets.py         # CLI: convert raw data to unified JSONL format
 ├── data/
@@ -73,7 +132,10 @@ consistency-aware-llm-rankin/
 │   │   └── bright/pairwise/
 │   ├── interim/                    # Scratch space
 │   └── cache/                      # HuggingFace cache
-├── outputs/                        # Experiment results (JSON, CSV)
+├── outputs/
+│   ├── pub_vote_cmp_v2/            # Publication vote suite results (committed)
+│   │   └── paper_package/          # Manuscript-facing tables + figures + summary
+│   └── q1_journal_package/         # Aggregated Q1 tables (auto-generated)
 ├── docs/                           # Extended documentation
 ├── pyproject.toml
 ├── requirements.txt
@@ -96,11 +158,12 @@ cd consistency-aware-llm-rankin
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 
-# 3. Install dependencies
+# 3. Install package + dev dependencies (pytest, ruff)
 pip install -r requirements.txt
+pip install -e ".[dev]"
 
-# 4. Install the package in editable mode
-pip install -e .
+# 4. Verify everything is ready
+python scripts/check_repo_ready.py
 ```
 
 ---
