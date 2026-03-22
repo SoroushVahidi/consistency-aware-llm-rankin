@@ -1,0 +1,278 @@
+[
+  {
+    "id": "SYN-1",
+    "name": "Noise Sweep",
+    "script": "scripts/run_synthetic.py",
+    "datasets": ["synthetic"],
+    "key_args": "--n-items 20 --weight-scheme margin --seed 42 --noise {0.05,0.10,0.15,0.20,0.25,0.30}",
+    "output_paths": [
+      "outputs/noise_sweep_n0.05/synthetic_results.json",
+      "outputs/noise_sweep_n0.10/synthetic_results.json",
+      "outputs/noise_sweep_n0.15/synthetic_results.json",
+      "outputs/noise_sweep_n0.20/synthetic_results.json",
+      "outputs/noise_sweep_n0.25/synthetic_results.json",
+      "outputs/noise_sweep_n0.30/synthetic_results.json"
+    ],
+    "aggregated_table": "docs/tables/main_results.csv",
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "Single seed only; multi-seed variant exists separately (SYN-3)"
+  },
+  {
+    "id": "SYN-2",
+    "name": "Scale Sweep",
+    "script": "scripts/run_synthetic.py",
+    "datasets": ["synthetic"],
+    "key_args": "--noise 0.1 --weight-scheme margin --seed 42 --n-items {10,20,50,100} --save-timings",
+    "output_paths": [
+      "outputs/scale_sweep_n10/",
+      "outputs/scale_sweep_n20/",
+      "outputs/scale_sweep_n50/",
+      "outputs/scale_sweep_n100/"
+    ],
+    "aggregated_table": "docs/tables/runtime_results.csv",
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "Supports runtime scaling claim (Claim S8)"
+  },
+  {
+    "id": "SYN-3",
+    "name": "Margin Multi-Seed Replication",
+    "script": "scripts/run_synthetic.py",
+    "datasets": ["synthetic"],
+    "key_args": "--n-items 20 --noise 0.20 --weight-scheme margin --seed {42,123,456,789,1234}",
+    "output_paths": [
+      "outputs/margin_multiseed_n20_noise0.20/seed_42/",
+      "outputs/margin_multiseed_n20_noise0.20/seed_123/",
+      "outputs/margin_multiseed_n20_noise0.20/seed_456/",
+      "outputs/margin_multiseed_n20_noise0.20/seed_789/",
+      "outputs/margin_multiseed_n20_noise0.20/seed_1234/"
+    ],
+    "aggregated_table": "docs/tables/main_results.csv",
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "5 seeds; supports cross-seed stability (Claim S7)"
+  },
+  {
+    "id": "SYN-4",
+    "name": "Uniform Multi-Seed Replication",
+    "script": "scripts/run_synthetic.py",
+    "datasets": ["synthetic"],
+    "key_args": "--n-items 20 --noise 0.20 --weight-scheme uniform --seed {42,123,456,789,1234}",
+    "output_paths": [
+      "outputs/uniform_multiseed_n20_noise0.20/seed_42/",
+      "outputs/uniform_multiseed_n20_noise0.20/seed_123/",
+      "outputs/uniform_multiseed_n20_noise0.20/seed_456/",
+      "outputs/uniform_multiseed_n20_noise0.20/seed_789/",
+      "outputs/uniform_multiseed_n20_noise0.20/seed_1234/"
+    ],
+    "aggregated_table": "docs/tables/main_results.csv",
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "Uniform weight scheme comparison"
+  },
+  {
+    "id": "SYN-5",
+    "name": "Variant Method Follow-up",
+    "script": "scripts/run_variant_followup.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "outputs/noise_sweep_variant_followup/",
+      "outputs/variant_multiseed_n20_noise0.20/"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "Additional method variants; supplementary material"
+  },
+  {
+    "id": "SYN-6",
+    "name": "Exact vs Greedy FAS Comparison",
+    "script": "scripts/run_exact_vs_greedy.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "docs/tables/exact_vs_greedy_fas.csv",
+      "docs/tables/exact_vs_greedy_summary.csv",
+      "docs/tables/exact_vs_greedy_report.txt"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "ILP solver is stubbed; 'exact' results not truly exact"
+  },
+  {
+    "id": "SYN-7",
+    "name": "FAS Balance Alpha Sweep",
+    "script": "scripts/run_fas_balance_alpha_sweep.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "docs/tables/fas_balance_alpha_sweep.csv",
+      "docs/tables/fas_balance_alpha_summary.csv"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "Synthetic only; no real-data alpha validation"
+  },
+  {
+    "id": "SYN-8",
+    "name": "FAS Balance Alpha-Beta Grid",
+    "script": "scripts/run_fas_balance_alpha_beta_grid.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "docs/tables/fas_balance_alpha_beta_grid.csv",
+      "docs/tables/fas_balance_alpha_beta_generalization.csv"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "2D hyperparameter grid; synthetic only"
+  },
+  {
+    "id": "SYN-9",
+    "name": "Regime Analysis",
+    "script": "scripts/run_regime_analysis.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "docs/tables/regime_analysis.csv",
+      "docs/tables/regime_deltas.csv",
+      "docs/figures/regime_analysis_ndcg.png",
+      "docs/figures/regime_analysis_kendall_tau.png"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "Regime analysis on synthetic data only"
+  },
+  {
+    "id": "SYN-10",
+    "name": "Diagnostic Experiments",
+    "script": "scripts/run_diagnostic_experiments.py",
+    "datasets": ["synthetic"],
+    "key_args": "see script",
+    "output_paths": [
+      "docs/tables/diagnostic_method_properties.csv",
+      "docs/tables/diagnostic_run_level.csv",
+      "docs/tables/diagnostic_regime_breakdown.csv"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": false,
+    "notes": "Diagnostic/investigative results"
+  },
+  {
+    "id": "REAL-1",
+    "name": "Publication Vote Comparison v2 (Canonical Evidence)",
+    "script": "scripts/run_publication_vote_suite.py",
+    "datasets": ["scidocs", "hotpotqa"],
+    "key_args": "vote constructions: ms2, ms1, ms1_drop_mutual; rankers: BM25, TF-IDF, MiniLM",
+    "output_paths": [
+      "outputs/pub_vote_cmp_v2/paper_package/tables/table_graph_ndcg_and_consistency.csv",
+      "outputs/pub_vote_cmp_v2/paper_package/tables/table_bootstrap_delta_ndcg.csv",
+      "outputs/pub_vote_cmp_v2/paper_package/tables/table_consistency_qrels_bew.csv",
+      "outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "Primary publication evidence package; requires HuggingFace access to re-run from scratch"
+  },
+  {
+    "id": "REAL-2",
+    "name": "Real-Data Bootstrap Significance",
+    "script": "scripts/bootstrap_method_deltas.py",
+    "datasets": ["scidocs", "hotpotqa"],
+    "key_args": "--bootstrap-reps 2000",
+    "output_paths": [
+      "outputs/pub_vote_cmp_v2/paper_package/tables/table_bootstrap_delta_ndcg.csv"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "Integrated into REAL-1 pipeline"
+  },
+  {
+    "id": "REAL-3",
+    "name": "FiQA Experiment",
+    "script": "scripts/run_publication_vote_suite.py",
+    "datasets": ["fiqa"],
+    "key_args": "--dataset fiqa",
+    "output_paths": [],
+    "status": "implemented",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "Loader exists; no committed output; requires HuggingFace download"
+  },
+  {
+    "id": "REAL-4",
+    "name": "BRIGHT Experiment",
+    "script": "scripts/run_publication_vote_suite.py",
+    "datasets": ["bright"],
+    "key_args": "--dataset bright",
+    "output_paths": [],
+    "status": "implemented",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "Loader exists with manual-download fallback; no committed output"
+  },
+  {
+    "id": "REAL-5",
+    "name": "Real Experiment Validation Run",
+    "script": "scripts/run_real_experiment.py",
+    "datasets": ["any supported"],
+    "key_args": "--dataset scidocs --max-queries 20",
+    "output_paths": [
+      "outputs/real_small_validation/",
+      "outputs/real_full/"
+    ],
+    "status": "partial",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "Output directories present but contain no substantive CSV outputs"
+  },
+  {
+    "id": "PLAN-1",
+    "name": "LLM Pairwise Comparator",
+    "script": null,
+    "datasets": ["any"],
+    "key_args": null,
+    "output_paths": [],
+    "status": "planned",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "Mentioned in TODO.md; GPT-4o or Llama-3 comparator not yet implemented"
+  },
+  {
+    "id": "PLAN-2",
+    "name": "ILP Exact MWFAS Solver",
+    "script": "src/consistency_ranker/mwfas_solver.py",
+    "datasets": ["synthetic", "real"],
+    "key_args": null,
+    "output_paths": [],
+    "status": "planned",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "Stub exists in mwfas_solver.py; pulp/gurobipy integration not implemented"
+  },
+  {
+    "id": "PLAN-3",
+    "name": "Additional Rankers (cross-encoder)",
+    "script": "scripts/generate_score_file.py",
+    "datasets": ["any"],
+    "key_args": null,
+    "output_paths": [],
+    "status": "planned",
+    "results_present": false,
+    "paper_evidence_ready": false,
+    "notes": "score_file generator is extensible; MonoBERT or similar not added yet"
+  }
+]

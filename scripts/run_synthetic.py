@@ -196,6 +196,10 @@ def run_experiment(
     """
     if profile:
         save_timings = True
+    if n_items < 2:
+        raise ValueError(f"--n-items must be at least 2. Got {n_items}.")
+    if not (0.0 <= noise < 1.0):
+        raise ValueError(f"--noise must be in [0, 1). Got {noise}.")
     if fas_balance_alpha < 0:
         raise ValueError(f"fas_balance_alpha must be non-negative. Got {fas_balance_alpha}.")
     if fas_balance_alpha_beta_alpha < 0:
