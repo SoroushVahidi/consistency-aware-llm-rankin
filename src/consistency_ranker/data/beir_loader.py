@@ -31,6 +31,18 @@ from .schema import Document, QrelEntry, Query
 
 
 # ---------------------------------------------------------------------------
+# Errors
+# ---------------------------------------------------------------------------
+
+class BeirNotAvailableError(RuntimeError):
+    """Raised when a BEIR dataset cannot be downloaded automatically.
+
+    This mirrors :class:`~consistency_ranker.data.bright_loader.BrightNotAvailableError`
+    so callers can handle both gracefully with a single except clause.
+    """
+
+
+# ---------------------------------------------------------------------------
 # Load from local JSONL files
 # ---------------------------------------------------------------------------
 
@@ -132,55 +144,69 @@ def download_beir_dataset(
     try:
         from datasets import load_dataset  # type: ignore[import]
     except ImportError as exc:
-        raise ImportError(
+        raise BeirNotAvailableError(
             "The 'datasets' library is required to download BEIR datasets. "
             "Install it with: pip install datasets"
         ) from exc
 
     cache_dir = str(raw_path)
 
-    # --- Corpus ---
-    print(f"  Loading corpus from {corpus_name} …")
-    corpus_ds = load_dataset(corpus_name, "corpus", cache_dir=cache_dir)
-    corpus_split = corpus_ds["corpus"]
-    documents: list[Document] = []
-    for i, row in enumerate(corpus_split):
-        if max_docs is not None and i >= max_docs:
-            break
-        documents.append(
-            Document(
-                doc_id=str(row["_id"]),
-                text=str(row.get("text", "")),
-                title=str(row.get("title", "")),
-            )
-        )
-
-    # --- Queries ---
-    print(f"  Loading queries from {corpus_name} …")
-    queries_ds = load_dataset(corpus_name, "queries", cache_dir=cache_dir)
-    queries_split = queries_ds["queries"]
-    queries: list[Query] = []
-    for row in queries_split:
-        queries.append(
-            Query(
-                query_id=str(row["_id"]),
-                text=str(row.get("text", "")),
-            )
-        )
-
-    # --- QRels ---
-    print(f"  Loading qrels from {qrels_name} …")
-    qrels_ds = load_dataset(qrels_name, cache_dir=cache_dir)
-    qrels: list[QrelEntry] = []
-    for split_name in qrels_ds:
-        for row in qrels_ds[split_name]:
-            qrels.append(
-                QrelEntry(
-                    query_id=str(row["query-id"]),
-                    doc_id=str(row["corpus-id"]),
-                    relevance=int(row.get("score", 1)),
+    try:
+        # --- Corpus ---
+        print(f"  Loading corpus from {corpus_name} …")
+        corpus_ds = load_dataset(corpus_name, "corpus", cache_dir=cache_dir)
+        corpus_split = corpus_ds["corpus"]
+        documents: list[Document] = []
+        for i, row in enumerate(corpus_split):
+            if max_docs is not None and i >= max_docs:
+                break
+            documents.append(
+                Document(
+                    doc_id=str(row["_id"]),
+                    text=str(row.get("text", "")),
+                    title=str(row.get("title", "")),
                 )
             )
+
+        # --- Queries ---
+        print(f"  Loading queries from {corpus_name} …")
+        queries_ds = load_dataset(corpus_name, "queries", cache_dir=cache_dir)
+        queries_split = queries_ds["queries"]
+        queries: list[Query] = []
+        for row in queries_split:
+            queries.append(
+                Query(
+                    query_id=str(row["_id"]),
+                    text=str(row.get("text", "")),
+                )
+            )
+
+        # --- QRels ---
+        print(f"  Loading qrels from {qrels_name} …")
+        qrels_ds = load_dataset(qrels_name, cache_dir=cache_dir)
+        qrels: list[QrelEntry] = []
+        for split_name in qrels_ds:
+            for row in qrels_ds[split_name]:
+                qrels.append(
+                    QrelEntry(
+                        query_id=str(row["query-id"]),
+                        doc_id=str(row["corpus-id"]),
+                        relevance=int(row.get("score", 1)),
+                    )
+                )
+
+    except (OSError, ConnectionError, ValueError) as exc:
+        raise BeirNotAvailableError(
+            f"Could not download {corpus_name!r} automatically: {exc}\n"
+            "Check your internet connection and that 'huggingface.co' is reachable.\n"
+            "If the network is unavailable, place the JSONL files manually in the "
+            "expected raw directory and re-run prepare_datasets.py."
+        ) from exc
+    except Exception as exc:  # noqa: BLE001 — catch-all for any HuggingFace/network error
+        raise BeirNotAvailableError(
+            f"Unexpected error downloading {corpus_name!r} ({type(exc).__name__}): {exc}\n"
+            "Check your internet connection and that 'huggingface.co' is reachable."
+        ) from exc
 
     return queries, documents, qrels
 
