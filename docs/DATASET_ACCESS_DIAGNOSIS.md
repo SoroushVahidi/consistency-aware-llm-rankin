@@ -18,7 +18,7 @@
 | HuggingFace network reachable from this env | ❌ No | ❌ No |
 | Raw files present (`data/raw/…`) | ❌ No | ❌ No |
 | Processed files present (`data/processed/…`) | ❌ No | ❌ No |
-| Publication outputs present | ❌ No | ❌ No |
+| Publication outputs present | ⚠️ Partial / see §10 | ⚠️ Partial / see §10 |
 | Dataset gated / requires login | ❓ Unknown (cannot check without network) | ❓ Unknown (code assumes possible gating) |
 | Blocking issue #1 | `ModuleNotFoundError: No module named 'datasets'` | `ModuleNotFoundError: No module named 'datasets'` |
 | Blocking issue #2 | DNS resolution failure for `huggingface.co` | DNS resolution failure for `huggingface.co` |
@@ -40,8 +40,8 @@
 
 | Dataset | Code supports | Raw data obtainable here | Publication outputs exist |
 |---|---|---|---|
-| FiQA | ✅ Yes | ❌ No | ❌ No |
-| BRIGHT | ✅ Yes | ❌ No | ❌ No |
+| FiQA | ✅ Yes | ❌ No | ⚠️ See §9–10 (`pub_vote_cmp_all4` may be on `main`) |
+| BRIGHT | ✅ Yes | ❌ No | ⚠️ See §9–10 (`pub_vote_cmp_all4` may be on `main`) |
 
 ---
 
@@ -126,15 +126,15 @@ files exist for FiQA or BRIGHT.  No Hugging Face local cache exists either.
 
 ---
 
-### Root Cause D — No publication outputs committed
+### Root Cause D — Publication pipeline vs. large per-query outputs
 
-`build_paper_evidence_package.py` line 26:
-```python
-DATASETS = ("scidocs", "hotpotqa")   # FiQA and BRIGHT intentionally absent
-```
+Some **paper-facing** scripts historically defaulted to two datasets, while the
+full experiment stack supports four benchmarks. Check the current contents of
+`scripts/build_paper_evidence_package.py` and `scripts/summarize_publication_vote_suite.py`.
 
-FiQA and BRIGHT are not in the canonical evidence pipeline. There are no pre-committed
-per-query CSV files under `outputs/` for either dataset.
+Aggregated manuscript tables/plots for the four-dataset vote-comparison run may
+live under `outputs/pub_vote_cmp_all4/paper_package/` when committed — this is
+distinct from huge per-query CSV trees that remain gitignored.
 
 ---
 
@@ -216,7 +216,7 @@ python scripts/prepare_datasets.py --dataset bright
 |---|---|---|
 | (a) Missing raw files | ✅ Yes | ✅ Yes |
 | (b) Missing processed files | ✅ Yes | ✅ Yes |
-| (c) Missing committed outputs | ✅ Yes | ✅ Yes |
+| (c) Missing committed outputs | ⚠️ Depends on branch | ⚠️ Depends on branch |
 | (d) Missing internet access (DNS-blocked) | ✅ Yes | ✅ Yes |
 | (e) Missing Python package | ✅ Yes (`datasets`, `huggingface-hub`) | ✅ Yes |
 | (f) Missing HuggingFace authentication | ❓ Unknown | ❓ Possible |
@@ -303,7 +303,7 @@ python scripts/prepare_datasets.py --dataset bright
 |---|---|---|
 | 1. Code supports FiQA | ✅ Yes | `dataset_registry.py` entry; `beir_loader.py`; `download_datasets.py::download_beir`; `prepare_datasets.py::prepare_beir`; `run_real_experiment.py --dataset fiqa` |
 | 2. Raw data can be obtained in this environment | ❌ No | `datasets` not installed; `huggingface.co` DNS-blocked |
-| 3. Publication outputs exist | ❌ No | `build_paper_evidence_package.py` `DATASETS = ("scidocs", "hotpotqa")`; no committed FiQA CSVs in `outputs/` |
+| 3. Publication outputs exist | ⚠️ See note | Aggregated bundle may exist at `outputs/pub_vote_cmp_all4/paper_package/`; raw per-query CSVs may remain uncommitted. |
 
 ### BRIGHT
 
@@ -311,4 +311,27 @@ python scripts/prepare_datasets.py --dataset bright
 |---|---|---|
 | 1. Code supports BRIGHT | ✅ Yes | `dataset_registry.py` entry; `bright_loader.py`; `download_datasets.py::download_bright`; `prepare_datasets.py::prepare_bright`; `run_real_experiment.py --dataset bright` |
 | 2. Raw data can be obtained in this environment | ❌ No | `datasets` not installed; `huggingface.co` DNS-blocked; possible additional gating on `xlangai/BRIGHT` |
-| 3. Publication outputs exist | ❌ No | Not in `DATASETS`; no committed BRIGHT CSVs in `outputs/` |
+| 3. Publication outputs exist | ⚠️ See note | Same as FiQA — check `outputs/pub_vote_cmp_all4/paper_package/` on `main`. |
+
+---
+
+## 10. Alternate environment: networked HPC (e.g. Wulver-class clusters)
+
+Sections 1–9 above describe a **strict offline / DNS-blocked** CI-style environment.
+On many research clusters, Hugging Face **is** reachable and `datasets` /
+`huggingface-hub` are installed. A separate probe on such a machine (2026-03) found:
+
+- **FiQA:** HF file listings and direct downloads can succeed, but **BEIR script-style**
+  loading may fail on `datasets>=4` (e.g. *Dataset scripts are no longer supported*).
+  The repo pins `datasets<4` in `pyproject.toml` — use a compatible virtualenv or
+  manually materialise `data/raw/beir/fiqa/{queries,documents,qrels}.jsonl`, then run
+  `prepare_datasets.py`.
+- **BRIGHT:** `bright_loader.download_bright(...)` smoke tests succeeded when HF was
+  reachable; populate `data/raw/bright/` then `prepare_datasets.py`.
+- **Large `outputs/` trees** (e.g. `outputs/real_full/`) may exist on a developer
+  machine but are often **not** committed; the manuscript-facing **aggregated**
+  tables/plots may appear under `outputs/pub_vote_cmp_all4/paper_package/` on `main`.
+
+This appendix does **not** contradict §§1–9: it documents different network and
+dependency assumptions.
+

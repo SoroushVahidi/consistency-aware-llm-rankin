@@ -11,18 +11,21 @@
 > not uniformly improve retrieval effectiveness; outcomes depend on vote
 > construction, graph regime, and extraction strategy.*
 
-The pre-committed evidence package (`outputs/pub_vote_cmp_v2/paper_package/`)
-shows that FAS repair is **neutral/inactive** under near-acyclic vote
-constructions and **significantly harmful** (nDCG, bootstrap 95% CI strictly
-negative) under high-cyclicity construction on SciDocs. See
+The pre-committed evidence packages (`outputs/pub_vote_cmp_all4/paper_package/`,
+`outputs/pub_vote_cmp_v2/paper_package/`) show that FAS repair is **neutral/inactive**
+under near-acyclic vote constructions and can be **significantly harmful** (nDCG,
+bootstrap 95% CI strictly negative) under high-cyclicity construction on some
+benchmarks (e.g. SciDocs in the committed bundles). See
 [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) and
 [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) for conservative claim wording.
 
 **Scope caveat (important):**
-- Canonical paper-package results currently cover SciDocs + HotpotQA.
+- Canonical **paper-package** tables/plots for the vote-comparison manuscript live under
+  `outputs/pub_vote_cmp_all4/paper_package/` (four datasets) with an earlier two-dataset
+  bundle under `outputs/pub_vote_cmp_v2/paper_package/`.
 - Preference edges in the committed publication package are generated from
   multi-ranker score votes (BM25/TF-IDF/MiniLM), not direct human annotation.
-- Additional proxy runs for FiQA/BRIGHT are available under `outputs/real_full/`.
+- Additional experiment trees (including per-dataset runs) may appear under `outputs/real_full/`.
 
 ---
 
@@ -62,6 +65,7 @@ reproduction guide including real-data experiments.
 
 | Document | Description |
 |---|---|
+| [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | **Start here** — orientation for humans and AI assistants |
 | [`docs/Q1_JOURNAL_GAP_ANALYSIS.md`](docs/Q1_JOURNAL_GAP_ANALYSIS.md) | Rigorous audit of the repo against Q1 journal standards |
 | [`docs/Q1_PUBLICATION_GAP_ANALYSIS.md`](docs/Q1_PUBLICATION_GAP_ANALYSIS.md) | Current hardening-pass publication gap analysis with explicit action list |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | Exact commands to reproduce all tables and figures |
@@ -78,7 +82,9 @@ reproduction guide including real-data experiments.
 | [`docs/experiment_inventory.md`](docs/experiment_inventory.md) | Machine-readable summary of every experiment family |
 | [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels |
 | [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing |
-| [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Human-readable manuscript findings |
+| [`outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md) | Latest four-dataset manuscript summary (SciDocs, FiQA, HotpotQA, BRIGHT) |
+| [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Earlier two-dataset manuscript findings (historical) |
+| [`figures/manuscript/README.md`](figures/manuscript/README.md) | Curated manuscript figures + graphical abstract pointer |
 
 ---
 
@@ -131,7 +137,7 @@ consistency-aware-llm-rankin/
 │       ├── cycle_detection.py      # Detect and enumerate cycles
 │       ├── baseline_ranking.py     # Score-sum & topological-sort baselines
 │       ├── greedy_fas.py           # Greedy feedback arc removal heuristic
-│       ├── mwfas_solver.py         # MWFAS solver interface (greedy + ILP stub)
+│       ├── mwfas_solver.py         # MWFAS solver interface (greedy + exact Gurobi ILP)
 │       └── evaluation.py           # Metrics: Kendall τ, inconsistency count, etc.
 ├── tests/                          # Unit tests (pytest)
 ├── scripts/
@@ -157,9 +163,12 @@ consistency-aware-llm-rankin/
 │   ├── interim/                    # Scratch space
 │   └── cache/                      # HuggingFace cache
 ├── outputs/
-│   ├── pub_vote_cmp_v2/            # Publication vote suite results (committed)
-│   │   └── paper_package/          # Manuscript-facing tables + figures + summary
+│   ├── pub_vote_cmp_all4/          # Four-dataset publication vote suite (tables/plots committed)
+│   │   └── paper_package/
+│   ├── pub_vote_cmp_v2/            # Earlier two-dataset publication bundle (historical)
+│   │   └── paper_package/
 │   └── q1_journal_package/         # Aggregated Q1 tables (auto-generated)
+├── figures/                        # Curated manuscript figures + graphical abstract
 ├── docs/                           # Extended documentation
 ├── pyproject.toml
 ├── requirements.txt
@@ -535,15 +544,15 @@ outputs/
 
 | Area | Status |
 |---|---|
-| Core library (`src/consistency_ranker/`) | ✅ Implemented and unit-tested (244 tests) |
+| Core library (`src/consistency_ranker/`) | ✅ Implemented and unit-tested (see `pytest`) |
 | Synthetic experiments | ✅ Executed (noise sweep, scale sweep, multi-seed) |
-| Real-data pipeline — SciDocs, HotpotQA | ✅ Executed; canonical evidence in `outputs/pub_vote_cmp_v2/paper_package/` |
-| Bootstrap significance analysis | ✅ Executed (2000 reps, results committed) |
-| Real-data pipeline — FiQA, BRIGHT | ⚙️ Implemented (loaders exist); outputs not yet committed |
-| Exact ILP MWFAS solver | ⚠️ Stubbed only; not yet functional |
-| LLM pairwise preferences | ⏳ Planned; all current experiments use score-derived votes |
+| Real-data pipeline — four benchmarks | ✅ Publication-facing tables/plots in `outputs/pub_vote_cmp_all4/paper_package/` |
+| Bootstrap significance analysis | ✅ Executed (2000 reps; tables in paper packages where applicable) |
+| Real-data pipeline — per-dataset full trees | ⚙️ Additional runs may live under `outputs/real_full/` (not all committed) |
+| Exact ILP MWFAS solver (Gurobi) | ✅ Implemented in `mwfas_solver.py` (optional dependency) |
+| LLM pairwise preferences | ⏳ Planned; current publication experiments use score-derived votes |
 
-**What is implemented but not evidenced:** FiQA and BRIGHT loaders are ready; running them requires HuggingFace Hub access (blocked in network-restricted environments).
+**Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
 
 **What is not yet implemented:** ILP-based exact MWFAS solver; real LLM pairwise comparator; cross-encoder ranker.
 
@@ -555,13 +564,17 @@ These limitations must be understood before drawing conclusions from this reposi
 
 1. **Vote source:** All experiments use pairwise votes derived from BM25, TF-IDF, and MiniLM-L6 *scores* — not from actual LLM pairwise judgements. Findings may not transfer directly to LLM-generated preferences.
 
-2. **Dataset breadth:** The canonical evidence package covers only two benchmarks (SciDocs, HotpotQA). Both are small (≤ 120 queries after eligibility filtering).
+2. **Dataset breadth:** The committed paper packages summarize multiple benchmarks, but
+   query counts and filtering differ per dataset — read `MANUSCRIPT_SUMMARY.md` in the
+   relevant `paper_package/` directory.
 
 3. **Direction of effect:** Under the conditions tested, FAS repair *harms* retrieval effectiveness (negative ΔnDCG) when cycles are abundant, and is *inactive* when they are rare. There is no condition in the committed evidence where repair is unconditionally beneficial.
 
 4. **Structural metrics are not independent:** BEW and PIC measure graph–label alignment against the same qrels used to compute nDCG. A decrease in BEW/PIC is expected by construction and does not imply an improvement in retrieval quality.
 
-5. **ILP solver is stubbed:** The exact MWFAS path in `src/consistency_ranker/mwfas_solver.py` is not yet functional. All "exact" results in `docs/tables/exact_vs_greedy_fas.csv` use the greedy approximation.
+5. **Exact solver availability:** The Gurobi-backed ILP path in `mwfas_solver.py` requires a
+   licensed Gurobi install. Greedy FAS remains the default in many scripts; older CSV notes in
+   `docs/tables/` may pre-date the exact path.
 
 6. **Scale:** Only n ≤ 100 items tested in synthetic experiments. Real-world graph densities and sizes may differ substantially.
 

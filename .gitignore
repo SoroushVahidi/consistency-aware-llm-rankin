@@ -220,6 +220,27 @@ outputs/**/plots/*.pdf
 !outputs/pub_vote_cmp_v2/paper_package/plots/
 !outputs/pub_vote_cmp_v2/paper_package/plots/*.png
 !outputs/pub_vote_cmp_v2/paper_package/plots/*.pdf
+!outputs/pub_vote_cmp_all4/paper_package/
+!outputs/pub_vote_cmp_all4/paper_package/**
+!outputs/pub_vote_cmp_all4/analysis/
+!outputs/pub_vote_cmp_all4/analysis/**
+
+# HuggingFace/datasets transient lock files under data/raw (machine-specific paths)
+data/raw/**/*.lock
+
+# Ad-hoc audit smoke outputs (not part of canonical pipelines)
+outputs/bright_access_validation/
+outputs/dataset_access_smoke/
+outputs/scidocs_access_validation/
+
+# Cluster job logs (machine-specific; not needed for reproducibility)
+outputs/slurm/
+
+# Four-dataset publication run: keep tables/plots/analysis only (regenerate scores/votes with scripts)
+outputs/pub_vote_cmp_all4/scidocs/
+outputs/pub_vote_cmp_all4/fiqa/
+outputs/pub_vote_cmp_all4/hotpotqa/
+outputs/pub_vote_cmp_all4/bright/
 
 # Large local experiment trees (regenerate with scripts; paper tables/plots tracked separately)
 outputs/diag_cycles_v1/

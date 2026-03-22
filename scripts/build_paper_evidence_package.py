@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 from pathlib import Path
 
 import matplotlib
@@ -23,7 +24,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 VARIANTS = ("ms2", "ms1", "ms1_drop_mutual")
-DATASETS = ("scidocs", "hotpotqa")
+DATASETS = ("scidocs", "fiqa", "hotpotqa", "bright")
 REF_METHOD = "hybrid_rrf_repaired_copeland_a03"
 METHODS = {
     "uco": "hybrid_rrf_unrepaired_copeland_a03",
@@ -168,8 +169,28 @@ def _write_csv(path: Path, fieldnames: list[str], rows: list[dict]) -> None:
             w.writerow({k: r.get(k) for k in fieldnames})
 
 
+def _make_dataset_grid(
+    ncols: int = 2,
+    *,
+    figsize_per_cell: tuple[float, float],
+    sharex: bool = False,
+):
+    n = len(DATASETS)
+    nrows = max(1, math.ceil(n / ncols))
+    fig, axes = plt.subplots(
+        nrows,
+        ncols,
+        figsize=(figsize_per_cell[0] * ncols, figsize_per_cell[1] * nrows),
+        sharex=sharex,
+    )
+    axes_list = list(axes.flat) if hasattr(axes, "flat") else [axes]
+    for ax in axes_list[n:]:
+        ax.set_visible(False)
+    return fig, axes_list
+
+
 def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(9, 3.5))
+    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 3.5))
     labels = ["ms2", "ms1", "ms1+drop"]
     x = range(3)
     for ax_idx, ds in enumerate(DATASETS):
@@ -198,7 +219,7 @@ def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
 
 
 def plot_ndcg_hybrids(agg: list[dict], outdir: Path) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+    fig, axes = _make_dataset_grid(figsize_per_cell=(5.0, 4.0))
     labels = ["ms2", "ms1", "ms1+drop"]
     w = 0.18
     for ax_idx, ds in enumerate(DATASETS):
@@ -252,7 +273,7 @@ def plot_ndcg_hybrids(agg: list[dict], outdir: Path) -> None:
 
 def plot_delta_forest(root: Path, outdir: Path) -> None:
     rows = [r for r in load_bootstrap_table(root) if r["pair"] in ("copeland", "balance")]
-    fig, axes = plt.subplots(1, 2, figsize=(9, 5.2), sharex=True)
+    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 5.2), sharex=True)
     colors = {"copeland": "#2ca02c", "balance": "#9467bd"}
     for ax_idx, ds in enumerate(DATASETS):
         ax = axes[ax_idx]
@@ -298,7 +319,7 @@ def plot_delta_forest(root: Path, outdir: Path) -> None:
 
 def plot_qrels_bew(agg: list[dict], outdir: Path) -> None:
     """Graph–qrels backward-edge mass: pre (raw graph) vs post (DAG after FAS)."""
-    fig, axes = plt.subplots(1, 2, figsize=(9, 3.8))
+    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 3.8))
     labels = ["ms2", "ms1", "ms1+drop"]
     x = range(3)
     for ax_idx, ds in enumerate(DATASETS):
@@ -339,73 +360,47 @@ def plot_qrels_bew(agg: list[dict], outdir: Path) -> None:
     plt.close(fig)
 
 
-def write_manuscript_summary(path: Path, agg: list[dict], boot: list[dict]) -> None:
-    text = """# Manuscript-ready summary (``outputs/pub_vote_cmp_v2``)
+def write_manuscript_summary(path: Path, root: Path, agg: list[dict], boot: list[dict]) -> None:
+    datasets_with_agg = sorted({r["dataset"] for r in agg})
+    datasets_with_boot = sorted({r["dataset"] for r in boot})
+    text = f"""# Manuscript-ready summary (``{root}``)
 
-## Main claim (supported by this evidence package)
+## Coverage
 
-1. **Vote aggregation controls cycle incidence.** Majority-style filtering (**ms2**:
-   ``min_support=2``, ``min_aggregate_margin=0.1``) yields **near-acyclic**
-   preference graphs; **per-ranker edges** (**ms1**: ``min_support=1``) yield
-   **high** ``pct_cyclic_graphs`` and **large** average largest SCC. Dropping
-   **mutual 2-cycle pairs** after **ms1** (**ms1_drop_mutual**) **restores**
-   low cyclicity while keeping most edges.
+- Datasets configured in this package: {", ".join(DATASETS)}
+- Datasets with aggregate graph / nDCG rows: {", ".join(datasets_with_agg) if datasets_with_agg else "none"}
+- Datasets with bootstrap delta rows: {", ".join(datasets_with_boot) if datasets_with_boot else "none"}
+- Vote variants expected: {", ".join(VARIANTS)}
 
-2. **Graph repair (FAS) relative to qrels is measurable:** mean
-   **graph–reference backward-edge weight** (BEW) **decreases** from the raw
-   graph to the repaired DAG (**fig_graph_qrels_bew_pre_post**,
-   ``table_consistency_qrels_bew.csv``). Thus repair **does** reduce a
-   **label-aligned inconsistency** metric on the preference graph itself.
+## What this package contains
 
-3. **nDCG@k gains from “repaired vs unrepaired” Copeland hybrids are not
-   guaranteed.** With **ms1** on SciDocs, mean ΔnDCG (repaired − unrepaired
-   Copeland) is **negative** with a **bootstrap 95% CI strictly below zero**.
-   With **ms1** on HotpotQA the mean Δ is slightly negative with a CI that
-   touches zero. **Balance** hybrids show **no meaningful** ΔnDCG. Under
-   **ms2** or **ms1_drop_mutual**, Copeland **ΔnDCG ≈ 0** (repair inactive or
-   rankings coincide).
+1. `table_graph_ndcg_and_consistency.csv`
+   - one row per dataset × vote variant
+   - graph cyclicity, SCC size, edge counts, qrels-aligned inconsistency metrics,
+     and mean nDCG for repaired / unrepaired hybrids
+2. `table_bootstrap_delta_ndcg.csv`
+   - paired bootstrap mean ΔnDCG rows for repaired minus unrepaired method pairs
+3. `table_consistency_qrels_bew.csv`
+   - compact pre/post qrels-aligned consistency summary
+4. plots in `paper_package/plots/`
+   - rendered directly from the available dataset rows
 
-4. **Conditional effect (SciDocs, ms1, Copeland):** ΔnDCG is **more negative**
-   for queries with **largest SCC ≥ median** than below median (see
-   ``table_bootstrap_delta_ndcg.csv``, rows ``copeland_scc_high`` /
-   ``copeland_scc_low``), suggesting **harm concentrates in higher-conflict
-   subgraphs** under this construction.
+## Interpretation guidance
 
----
+- Treat the CSV tables as the primary source of truth.
+- Use the manuscript package to compare vote constructions (`ms2`, `ms1`, `ms1_drop_mutual`)
+  across the datasets actually present in the package output.
+- When bootstrap rows are missing for a dataset/variant pair, that indicates the
+  upstream publication analysis JSON was not generated for that pair.
 
 ## Limitations
 
-- **Fixed query lists** (SciDocs **n≈119–120**, HotpotQA **n=52** after
-  eligibility); CIs are **query-level bootstrap** of mean Δ, not a hierarchical
-  model.
-- **Three rankers** (BM25, TF-IDF, MiniLM) and **fixed** vote hyperparameters.
-- **ms1_drop_mutual** is a **post hoc** edge filter (not fit to validation
-  data).
-- **graph_ref_bew_*** is **one** consistency view (graph vs **qrels-derived**
-  reference); it does not assert “closer to truth,” only **alignment with
-  labeled preferences** over the candidate pool.
-
----
-
-## Recommended protocol for the paper body
-
-1. **Pre-register two vote constructions:** **(A) ms2** = pragmatic
-   majority/aggregate votes; **(B) ms1_drop_mutual** = preserve multi-ranker
-   edges but **abstain** on pure **head-to-head conflicts** (mutual pairs).
-   Optionally report **ms1** in appendix as **full-disagreement** / **high-cycle**
-   regime.
-
-2. **Report for each construction:** ``pct_cyclic_graphs``, **avg largest SCC**,
-   **avg n_edges**, mean **nDCG@k** for **unrepaired vs repaired** Copeland and
-   balance, **bootstrap CI** on **mean per-query ΔnDCG**.
-
-3. **Add one graph–labels consistency line:** mean **graph_ref_bew_pre** and
-   **post** (or mean **Δ BEW = pre − post**) to show **FAS reduces
-   graph–reference tension** even when **nDCG** does not improve.
-
-4. **Frame repair** as **conditionally** affecting **ranking quality** on
-   **nDCG@k**, while **unambiguously** changing **structural** inconsistency
-   metrics—**not** as a uniformly beneficial reranker under vote-based graphs.
+- This summary is intentionally conservative and does not hard-code dataset-specific
+  claims; it reflects whatever datasets and analysis JSON files are actually present
+  under `{root}`.
+- Query subsets, ranker choices, and vote hyperparameters are determined upstream by
+  `scripts/run_publication_vote_suite.py` and its command-line arguments.
+- Graph/qrels consistency metrics are alignment diagnostics, not claims of external truth.
 
 ---
 *Generated by* ``scripts/build_paper_evidence_package.py``.
@@ -458,7 +453,7 @@ def main() -> None:
     plot_delta_forest(args.root, pdir)
     plot_qrels_bew(agg, pdir)
 
-    write_manuscript_summary(pkg / "MANUSCRIPT_SUMMARY.md", agg, boot)
+    write_manuscript_summary(pkg / "MANUSCRIPT_SUMMARY.md", args.root, agg, boot)
     print(f"[paper_package] wrote {pkg}")
 
 

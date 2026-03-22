@@ -1,0 +1,42 @@
+{
+  "n_queries": 120,
+  "method_a": "hybrid_rrf_unrepaired_copeland_a03",
+  "method_b": "hybrid_rrf_repaired_copeland_a03",
+  "mean_delta_ndcg": -0.0001266000000000003,
+  "ci_low": -0.0008435833333333341,
+  "ci_high": 0.0005953333333333319,
+  "bootstrap": 2000,
+  "median_largest_scc": 9,
+  "strata": {
+    "all": {
+      "n": 120,
+      "mean_delta_ndcg": -0.0001266000000000003,
+      "ci_low": -0.0008764500000000013,
+      "ci_high": 0.0006309749999999993
+    },
+    "largest_scc_ge_median": {
+      "n": 64,
+      "mean_delta_ndcg": -0.00047909375000000035,
+      "ci_low": -0.001571171875000001,
+      "ci_high": 0.0005737187500000004
+    },
+    "largest_scc_lt_median": {
+      "n": 56,
+      "mean_delta_ndcg": 0.0002762499999999997,
+      "ci_low": -0.00041980357142857146,
+      "ci_high": 0.0014126428571428543
+    },
+    "is_cyclic": {
+      "n": 105,
+      "mean_delta_ndcg": -0.00014468571428571464,
+      "ci_low": -0.0009551714285714288,
+      "ci_high": 0.000735076190476189
+    },
+    "acyclic": {
+      "n": 15,
+      "mean_delta_ndcg": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    }
+  }
+}

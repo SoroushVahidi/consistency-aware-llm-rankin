@@ -49,7 +49,7 @@ def main() -> None:
     sep = "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"
     lines = [hdr, sep]
 
-    for ds in ("scidocs", "hotpotqa"):
+    for ds in ("scidocs", "fiqa", "hotpotqa", "bright"):
         for var in variants:
             summ_path = args.root / ds / var / ds / "votes_file" / f"{ds}_experiment_summary.json"
             csv_path = args.root / ds / var / ds / "votes_file" / f"{ds}_per_query.csv"

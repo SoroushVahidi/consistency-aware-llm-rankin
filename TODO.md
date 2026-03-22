@@ -5,14 +5,15 @@ A living task list for the consistency-aware LLM ranking project.
 ## Near-term
 
 - [ ] Integrate a real LLM pairwise comparator (e.g. GPT-4o, Llama-3) in `pairwise_prefs.py`
-- [ ] Add ILP-based exact MWFAS solver using `pulp` or `gurobipy`
+- [x] Add ILP-based exact MWFAS solver using `gurobipy`
 - [ ] Experiment with larger synthetic graphs (N=100–500 items)
 - [ ] Add Spearman ρ and NDCG evaluation metrics to `evaluation.py`
 - [ ] Create a Jupyter notebook walkthrough of the synthetic experiment
+- [x] Finish the four-dataset publication vote package under `outputs/pub_vote_cmp_all4/`
 
 ## Medium-term
 
-- [ ] Benchmark greedy heuristic vs. ILP on controlled inconsistency levels
+- [ ] Benchmark greedy heuristic vs. ILP on controlled inconsistency levels and bounded real vote graphs
 - [ ] Integrate real retrieval datasets (MS-MARCO, TREC-DL)
 - [ ] Implement sinkhorn-based soft ranking baseline
 - [ ] Add confidence / uncertainty estimates for pairwise preferences

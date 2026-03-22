@@ -1,0 +1,42 @@
+{
+  "n_queries": 117,
+  "method_a": "hybrid_rrf_unrepaired_copeland_a03",
+  "method_b": "hybrid_rrf_repaired_copeland_a03",
+  "mean_delta_ndcg": 0.0,
+  "ci_low": 0.0,
+  "ci_high": 0.0,
+  "bootstrap": 2000,
+  "median_largest_scc": 1,
+  "strata": {
+    "all": {
+      "n": 117,
+      "mean_delta_ndcg": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    "largest_scc_ge_median": {
+      "n": 117,
+      "mean_delta_ndcg": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    "largest_scc_lt_median": {
+      "n": 0,
+      "mean_delta_ndcg": null,
+      "ci_low": null,
+      "ci_high": null
+    },
+    "is_cyclic": {
+      "n": 0,
+      "mean_delta_ndcg": null,
+      "ci_low": null,
+      "ci_high": null
+    },
+    "acyclic": {
+      "n": 117,
+      "mean_delta_ndcg": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    }
+  }
+}

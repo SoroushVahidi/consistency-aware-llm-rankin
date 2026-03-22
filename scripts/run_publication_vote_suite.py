@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Run publication-style vote comparison: three vote constructions × SciDocs + HotpotQA.
+Run publication-style vote comparison for publication-facing vote experiments.
 
 Vote variants (per dataset, shared ``query_ids.txt`` and score files):
   - ``ms2``: ``build_votes_file`` with ``--min-support 2``
@@ -8,6 +8,12 @@ Vote variants (per dataset, shared ``query_ids.txt`` and score files):
   - ``ms1_drop_mutual``: ``ms1`` votes then ``postprocess_votes_drop_mutual_pairs``
 
 Then ``run_real_experiment`` with a short hybrid-only method list.
+
+Supported datasets in this script:
+  - ``scidocs``
+  - ``hotpotqa``
+  - optionally ``fiqa`` when ``--include-fiqa`` is passed
+  - optionally ``bright`` when ``--include-bright`` is passed
 
 Example::
     python scripts/run_publication_vote_suite.py --root outputs/pub_vote_cmp_v2
@@ -23,6 +29,7 @@ from pathlib import Path
 
 _REPO = Path(__file__).resolve().parent.parent
 _SCRIPTS = _REPO / "scripts"
+DEFAULT_RANKERS = ("bm25", "tfidf", "minilm")
 METHODS = [
     "hybrid_rrf_prior_only",
     "hybrid_rrf_unrepaired_copeland_a03",
@@ -39,13 +46,20 @@ def _run(cmd: list[str]) -> None:
         sys.exit(r.returncode)
 
 
-def _write_query_ids_from_processed(dataset: str, path: Path, n: int) -> int:
+def _processed_queries_path(dataset: str) -> Path:
     if dataset == "scidocs":
-        qpath = _REPO / "data/processed/beir/scidocs/queries.jsonl"
-    elif dataset == "hotpotqa":
-        qpath = _REPO / "data/processed/hotpotqa/queries.jsonl"
-    else:
-        raise ValueError(dataset)
+        return _REPO / "data/processed/beir/scidocs/queries.jsonl"
+    if dataset == "fiqa":
+        return _REPO / "data/processed/beir/fiqa/queries.jsonl"
+    if dataset == "hotpotqa":
+        return _REPO / "data/processed/hotpotqa/queries.jsonl"
+    if dataset == "bright":
+        return _REPO / "data/processed/bright/queries.jsonl"
+    raise ValueError(dataset)
+
+
+def _write_query_ids_from_processed(dataset: str, path: Path, n: int) -> int:
+    qpath = _processed_queries_path(dataset)
     ids: list[str] = []
     with qpath.open(encoding="utf-8") as fh:
         for line in fh:
@@ -65,25 +79,69 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--root", type=Path, default=Path("outputs/pub_vote_cmp_v2"))
     p.add_argument("--scidocs-queries", type=int, default=120)
+    p.add_argument("--fiqa-queries", type=int, default=120)
     p.add_argument("--hotpot-queries", type=int, default=70)
+    p.add_argument(
+        "--include-fiqa",
+        action="store_true",
+        help="Include FiQA in the publication vote suite.",
+    )
+    p.add_argument(
+        "--include-bright",
+        action="store_true",
+        help="Include BRIGHT in the publication vote suite.",
+    )
+    p.add_argument(
+        "--fiqa-top-n",
+        type=int,
+        default=50,
+        help="Retrieval depth per FiQA ranker when --include-fiqa is enabled.",
+    )
+    p.add_argument(
+        "--bright-queries",
+        type=int,
+        default=50,
+        help="Number of BRIGHT queries when --include-bright is enabled.",
+    )
     p.add_argument("--scidocs-top-n", type=int, default=50)
     p.add_argument("--hotpot-top-n", type=int, default=35)
+    p.add_argument(
+        "--bright-top-n",
+        type=int,
+        default=50,
+        help="Retrieval depth per BRIGHT ranker when --include-bright is enabled.",
+    )
+    p.add_argument(
+        "--rankers",
+        nargs="+",
+        default=list(DEFAULT_RANKERS),
+        choices=list(DEFAULT_RANKERS),
+        help="Rankers used to build publication votes.",
+    )
     p.add_argument("--seed", type=int, default=42)
     args = p.parse_args()
     py = sys.executable
 
-    for dataset, nq, topn, topk in (
+    dataset_specs = [
         ("scidocs", args.scidocs_queries, args.scidocs_top_n, 20),
         ("hotpotqa", args.hotpot_queries, args.hotpot_top_n, 10),
-    ):
+    ]
+    if args.include_fiqa:
+        dataset_specs.append(("fiqa", args.fiqa_queries, args.fiqa_top_n, 20))
+    if args.include_bright:
+        dataset_specs.append(("bright", args.bright_queries, args.bright_top_n, 20))
+
+    for dataset, nq, topn, topk in dataset_specs:
         base = args.root / dataset
         base.mkdir(parents=True, exist_ok=True)
         qfile = base / "query_ids.txt"
         n_written = _write_query_ids_from_processed(dataset, qfile, nq)
         print(f"[suite] {dataset}: wrote {n_written} query ids → {qfile}")
 
-        for ranker in ("bm25", "tfidf", "minilm"):
+        score_files: list[Path] = []
+        for ranker in args.rankers:
             outp = base / f"scores_{ranker}.jsonl"
+            score_files.append(outp)
             _run(
                 [
                     py,
@@ -105,9 +163,6 @@ def main() -> None:
                 ]
             )
 
-        s_bm = base / "scores_bm25.jsonl"
-        s_tf = base / "scores_tfidf.jsonl"
-        s_mn = base / "scores_minilm.jsonl"
         v_ms2 = base / "votes_ms2.jsonl"
         v_ms1 = base / "votes_ms1.jsonl"
         v_dm = base / "votes_ms1_drop_mutual.jsonl"
@@ -118,9 +173,7 @@ def main() -> None:
             "--dataset",
             dataset,
             "--score-files",
-            str(s_bm),
-            str(s_tf),
-            str(s_mn),
+            *[str(p) for p in score_files],
             "--top-k",
             str(topk),
             "--vote-weight-scheme",
@@ -184,9 +237,7 @@ def main() -> None:
                     "--query-id-file",
                     str(qfile),
                     "--score-prior-files",
-                    str(s_bm),
-                    str(s_tf),
-                    str(s_mn),
+                    *[str(p) for p in score_files],
                     "--max-queries",
                     str(n_written),
                     "--top-k",
