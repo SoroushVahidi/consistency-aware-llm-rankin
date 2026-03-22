@@ -16,7 +16,6 @@ import statistics
 from pathlib import Path
 from typing import Any
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -55,7 +54,12 @@ def _fmt(value: float | None, ndigits: int = 6) -> str:
     return f"{value:.{ndigits}f}"
 
 
-def _effect_label(mean_delta: float | None, ci_low: float | None, ci_high: float | None, n_q: int) -> str:
+def _effect_label(
+    mean_delta: float | None,
+    ci_low: float | None,
+    ci_high: float | None,
+    n_q: int,
+) -> str:
     if n_q <= 0:
         return "no_data"
     if mean_delta is None or ci_low is None or ci_high is None:
@@ -64,7 +68,11 @@ def _effect_label(mean_delta: float | None, ci_low: float | None, ci_high: float
         return "significant_gain"
     if ci_high < 0.0:
         return "significant_harm"
-    if abs(mean_delta) <= 1.0e-10 and abs(ci_low) <= 1.0e-10 and abs(ci_high) <= 1.0e-10:
+    if (
+        abs(mean_delta) <= 1.0e-10
+        and abs(ci_low) <= 1.0e-10
+        and abs(ci_high) <= 1.0e-10
+    ):
         return "inactive"
     return "no_significant_change"
 
@@ -210,7 +218,11 @@ def build_failure_context_table(q1_dir: Path) -> list[dict[str, str]]:
     return out
 
 
-def build_artifact_inventory(q1_dir: Path, paper_pkg_dir: Path, real_dir: Path) -> list[dict[str, str]]:
+def build_artifact_inventory(
+    q1_dir: Path,
+    paper_pkg_dir: Path,
+    real_dir: Path,
+) -> list[dict[str, str]]:
     tracked_paths = [
         q1_dir / "table_main_performance.csv",
         q1_dir / "table_significance.csv",
@@ -230,9 +242,13 @@ def build_artifact_inventory(q1_dir: Path, paper_pkg_dir: Path, real_dir: Path) 
         row_count = ""
         if exists and path.suffix.lower() == ".csv":
             row_count = str(len(_read_csv(path)))
+        try:
+            display_path = str(path.relative_to(REPO_ROOT))
+        except ValueError:
+            display_path = str(path)
         rows.append(
             {
-                "path": str(path.relative_to(REPO_ROOT)),
+                "path": display_path,
                 "exists": "yes" if exists else "no",
                 "row_count_if_csv": row_count,
             }
@@ -263,7 +279,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Generate manuscript-ready evidence tables from committed outputs."
     )
     parser.add_argument("--q1-dir", type=Path, default=Path("outputs/q1_journal_package"))
-    parser.add_argument("--paper-package-dir", type=Path, default=Path("outputs/pub_vote_cmp_v2/paper_package"))
+    parser.add_argument(
+        "--paper-package-dir",
+        type=Path,
+        default=Path("outputs/pub_vote_cmp_v2/paper_package"),
+    )
     parser.add_argument("--real-dir", type=Path, default=Path("outputs/real_full"))
     parser.add_argument("--synthetic-dir", type=Path, default=Path("outputs"))
     parser.add_argument("--out-dir", type=Path, default=Path("reports/paper_tables"))
@@ -301,9 +321,18 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"[generate_paper_tables] out_dir={out_dir}")
     print(f"[generate_paper_tables] table_01_repair_effects.csv rows={len(table_repair)}")
-    print(f"[generate_paper_tables] table_02_proxy_baseline_leaderboard.csv rows={len(table_proxy)}")
-    print(f"[generate_paper_tables] table_03_synthetic_multiseed_stability.csv rows={len(table_multiseed)}")
-    print(f"[generate_paper_tables] table_04_synthetic_noise_sweep.csv rows={len(table_noise)}")
+    print(
+        "[generate_paper_tables] table_02_proxy_baseline_leaderboard.csv "
+        f"rows={len(table_proxy)}"
+    )
+    print(
+        "[generate_paper_tables] table_03_synthetic_multiseed_stability.csv "
+        f"rows={len(table_multiseed)}"
+    )
+    print(
+        "[generate_paper_tables] table_04_synthetic_noise_sweep.csv "
+        f"rows={len(table_noise)}"
+    )
     print(f"[generate_paper_tables] table_05_failure_context.csv rows={len(table_failure)}")
     print(f"[generate_paper_tables] table_06_artifact_inventory.csv rows={len(table_inventory)}")
     return 0

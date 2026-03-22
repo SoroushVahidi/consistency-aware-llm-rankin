@@ -228,6 +228,24 @@ Output structure under `outputs/q1_journal_package/`:
 
 ---
 
+## 4.1 Manuscript-Support CSV Bundle (`reports/paper_tables/`)
+
+Generate additional machine-readable tables for manuscript drafting:
+
+```bash
+python scripts/generate_paper_tables.py --out-dir reports/paper_tables
+```
+
+This produces:
+- `table_01_repair_effects.csv`
+- `table_02_proxy_baseline_leaderboard.csv`
+- `table_03_synthetic_multiseed_stability.csv`
+- `table_04_synthetic_noise_sweep.csv`
+- `table_05_failure_context.csv`
+- `table_06_artifact_inventory.csv`
+
+---
+
 ## 5. Notes on Restricted Environments
 
 If Hugging Face Hub access is blocked (e.g. sandbox environments):

@@ -2224,15 +2224,15 @@ def _print_experiment_summary(summary: dict, dataset: str) -> None:
         f"  Graph inconsistency pre/post (weight): "
         f"{summary['avg_graph_ref_bew_pre']:.4f} -> {summary['avg_graph_ref_bew_post']:.4f}"
     )
-    print(f"\n  Average runtime by method (s):")
+    print("\n  Average runtime by method (s):")
     for m, v in summary["avg_runtime_by_method_s"].items():
         print(f"    {m:<30} {v:.6f}")
     print(f"\n  Best method by backward-edge weight: {summary['best_method_by_bew']}")
-    print(f"  Average BEW by method:")
+    print("  Average BEW by method:")
     for m, v in summary["avg_bew_by_method"].items():
         print(f"    {m:<30} {v:.4f}")
     print(f"\n  Best method by primary metric: {summary['best_method_by_primary']}")
-    print(f"  Average primary metric by method:")
+    print("  Average primary metric by method:")
     for m, v in summary["avg_primary_by_method"].items():
         print(f"    {m:<30} {v:.4f}")
 

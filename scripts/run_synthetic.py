@@ -38,16 +38,16 @@ import networkx as nx
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from consistency_ranker.baseline_ranking import (
-    borda_scores,
     borda_ranking,
+    borda_scores,
     copeland_ranking,
     fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
     fas_balance_score_sum_borda_hybrid_ranking,
     hybrid_rrf_fas_regularized_ranking,
     priority_topological_ranking,
-    score_sum_scores,
     score_sum_ranking,
+    score_sum_scores,
     topological_ranking,
     weighted_out_minus_in_ranking,
 )
@@ -58,14 +58,6 @@ from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.pairwise_prefs import generate_preferences
 from consistency_ranker.synthetic_data import generate_items, ground_truth_ranking, quality_map
 from consistency_ranker.utils.timing import Timer, TimingAccumulator
-
-
-def _score_sum_scores(graph: nx.DiGraph) -> dict[str, float]:
-    """Return original-graph score-sum scores for all nodes."""
-    scores: dict[str, float] = {node: 0.0 for node in graph.nodes()}
-    for u, _, data in graph.edges(data=True):
-        scores[u] += data.get("weight", 1.0)
-    return scores
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -371,7 +363,6 @@ def run_experiment(
         with Timer("greedy_fas_solver", accumulator=acc):
             dag, removed_edges = greedy_fas(graph)
             fas_weight = greedy_fas_total_weight(removed_edges)
-            score_prior = _score_sum_scores(graph)
         with Timer("ranking_topological", accumulator=acc):
             topo_ranking = topological_ranking(dag)
         score_sum_priority_scores = score_sum_scores(graph)

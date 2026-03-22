@@ -69,7 +69,15 @@ def test_generate_paper_tables_end_to_end(tmp_path: Path):
     )
     _write_csv(
         q1_dir / "table_failure_cases.csv",
-        ["dataset", "vote_construction", "method_pair", "n_queries", "mean_delta_ndcg", "ci95_low", "ci95_high"],
+        [
+            "dataset",
+            "vote_construction",
+            "method_pair",
+            "n_queries",
+            "mean_delta_ndcg",
+            "ci95_low",
+            "ci95_high",
+        ],
         [["scidocs", "ms1", "copeland", "100", "-0.01", "-0.02", "-0.005"]],
     )
     (q1_dir / "summary_report.md").write_text("ok", encoding="utf-8")
