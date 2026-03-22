@@ -8,8 +8,8 @@ import networkx as nx
 import pytest
 
 from consistency_ranker.baseline_ranking import (
-    borda_scores,
     borda_ranking,
+    borda_scores,
     copeland_ranking,
     fas_balance_score_prior_alpha_beta_ranking,
     fas_balance_score_prior_alpha_ranking,
@@ -17,8 +17,8 @@ from consistency_ranker.baseline_ranking import (
     hybrid_rrf_fas_regularized_ranking,
     pagerank_ranking,
     priority_topological_ranking,
-    score_sum_scores,
     score_sum_ranking,
+    score_sum_scores,
     topological_ranking,
     weighted_out_minus_in_ranking,
 )
@@ -133,7 +133,7 @@ class TestFasAwareRankings:
         g.add_edge("a", "b", weight=3.0)
         g.add_edge("a", "c", weight=2.0)
         g.add_edge("b", "c", weight=1.0)
-        ranking = weighted_balance_ranking(g)
+        ranking = weighted_out_minus_in_ranking(g)
         assert ranking[0] == "a"
         assert ranking[-1] == "c"
 
@@ -155,10 +155,10 @@ class TestFasAwareRankings:
         g.add_edge("a", "b", weight=2.0)
         g.add_edge("a", "c", weight=1.0)
         g.add_edge("b", "c", weight=1.0)
-        ranking = hybrid_regularized_ranking(
+        ranking = hybrid_rrf_fas_regularized_ranking(
             g,
             {"a": 3.0, "b": 1.0, "c": 0.0},
-            regularization=0.2,
+            fas_regularization=0.2,
         )
         assert ranking[0] == "a"
         assert ranking[-1] == "c"
