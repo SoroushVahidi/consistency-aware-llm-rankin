@@ -46,6 +46,11 @@ python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42
 # 5. Regenerate the Q1 journal tables from pre-committed outputs (no network needed)
 python scripts/generate_q1_tables.py
 #  → outputs/q1_journal_package/  (7 tables + summary_report.md)
+
+# Alternative: use make targets
+make help          # list all available targets
+make smoke-test    # quick single synthetic run
+make q1-tables     # regenerate Q1 tables
 ```
 
 See [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) for the full
@@ -69,6 +74,10 @@ reproduction guide including real-data experiments.
 | [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | New analysis family to generate `reports/paper_tables/` |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
 | [`docs/AUDIT.md`](docs/AUDIT.md) | Full systematic repository audit |
+| [`docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md`](docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md) | Publication-readiness and evidence-hardening audit |
+| [`docs/experiment_inventory.md`](docs/experiment_inventory.md) | Machine-readable summary of every experiment family |
+| [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels |
+| [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing |
 | [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Human-readable manuscript findings |
 
 ---
@@ -519,6 +528,44 @@ outputs/
 3. **Vectorize Kendall τ with scipy or numpy:** the current all-pairs loop in
    `kendall_tau` is O(n²) pure Python.  `scipy.stats.kendalltau` (C
    implementation) is 10–100× faster for n > 100.
+
+---
+
+## Current Status
+
+| Area | Status |
+|---|---|
+| Core library (`src/consistency_ranker/`) | ✅ Implemented and unit-tested (244 tests) |
+| Synthetic experiments | ✅ Executed (noise sweep, scale sweep, multi-seed) |
+| Real-data pipeline — SciDocs, HotpotQA | ✅ Executed; canonical evidence in `outputs/pub_vote_cmp_v2/paper_package/` |
+| Bootstrap significance analysis | ✅ Executed (2000 reps, results committed) |
+| Real-data pipeline — FiQA, BRIGHT | ⚙️ Implemented (loaders exist); outputs not yet committed |
+| Exact ILP MWFAS solver | ⚠️ Stubbed only; not yet functional |
+| LLM pairwise preferences | ⏳ Planned; all current experiments use score-derived votes |
+
+**What is implemented but not evidenced:** FiQA and BRIGHT loaders are ready; running them requires HuggingFace Hub access (blocked in network-restricted environments).
+
+**What is not yet implemented:** ILP-based exact MWFAS solver; real LLM pairwise comparator; cross-encoder ranker.
+
+---
+
+## Limitations / Honest Interpretation
+
+These limitations must be understood before drawing conclusions from this repository:
+
+1. **Vote source:** All experiments use pairwise votes derived from BM25, TF-IDF, and MiniLM-L6 *scores* — not from actual LLM pairwise judgements. Findings may not transfer directly to LLM-generated preferences.
+
+2. **Dataset breadth:** The canonical evidence package covers only two benchmarks (SciDocs, HotpotQA). Both are small (≤ 120 queries after eligibility filtering).
+
+3. **Direction of effect:** Under the conditions tested, FAS repair *harms* retrieval effectiveness (negative ΔnDCG) when cycles are abundant, and is *inactive* when they are rare. There is no condition in the committed evidence where repair is unconditionally beneficial.
+
+4. **Structural metrics are not independent:** BEW and PIC measure graph–label alignment against the same qrels used to compute nDCG. A decrease in BEW/PIC is expected by construction and does not imply an improvement in retrieval quality.
+
+5. **ILP solver is stubbed:** The exact MWFAS path in `src/consistency_ranker/mwfas_solver.py` is not yet functional. All "exact" results in `docs/tables/exact_vs_greedy_fas.csv` use the greedy approximation.
+
+6. **Scale:** Only n ≤ 100 items tested in synthetic experiments. Real-world graph densities and sizes may differ substantially.
+
+See [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) for a full set of safe and unsafe claims, and [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) for the claim-to-evidence mapping.
 
 ---
 

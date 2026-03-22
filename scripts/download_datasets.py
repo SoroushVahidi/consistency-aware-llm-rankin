@@ -71,7 +71,7 @@ def _raw_files_exist(raw_path: Path) -> bool:
 
 def download_beir(name: str, force: bool, max_docs: int | None, max_queries: int | None) -> None:
     """Download a BEIR dataset (scidocs or fiqa)."""
-    from consistency_ranker.data.beir_loader import download_beir_dataset
+    from consistency_ranker.data.beir_loader import BeirNotAvailableError, download_beir_dataset
 
     cfg = get_config(name)
     raw_path = cfg.raw_path
@@ -82,12 +82,16 @@ def download_beir(name: str, force: bool, max_docs: int | None, max_queries: int
         return
 
     print(f"[{name}] Downloading from HuggingFace …")
-    queries, documents, qrels = download_beir_dataset(
-        corpus_name=cfg.hf_corpus_name,
-        qrels_name=cfg.hf_qrels_name,
-        raw_path=raw_path,
-        max_docs=max_docs,
-    )
+    try:
+        queries, documents, qrels = download_beir_dataset(
+            corpus_name=cfg.hf_corpus_name,
+            qrels_name=cfg.hf_qrels_name,
+            raw_path=raw_path,
+            max_docs=max_docs,
+        )
+    except BeirNotAvailableError as exc:
+        print(f"\n[{name}] ⚠  Could not download automatically:\n  {exc}\n")
+        return
     if max_queries is not None:
         queries = queries[:max_queries]
 
