@@ -39,6 +39,7 @@ Outputs (under ``--output-dir``, default ``outputs/real_full``):
 - ``<dataset>/<preference_source>/timings/<dataset>_timings.json`` timing data (JSON)
 - ``<dataset>/<preference_source>/plots/``                       timing plots (if matplotlib available)
 
+"""
 
 from __future__ import annotations
 
@@ -712,6 +713,8 @@ def _resolve_output_dir(
     - a fully resolved directory like ``outputs/real_full/scidocs/qrels``
     """
     output_dir = Path(output_dir)
+    if preference_source in output_dir.parts:
+        return output_dir
     if len(output_dir.parts) >= 2 and output_dir.parts[-2:] == (dataset, preference_source):
         return output_dir
     if output_dir.name == dataset:
@@ -726,25 +729,6 @@ def _load_score_prior_files(
     if not score_prior_files:
         return []
     return [_load_score_file(path) for path in score_prior_files]
-
-
-def _resolve_output_dir(
-    base_output_dir: Path,
-    preference_source: str,
-) -> Path:
-    """Return a preference-source-specific output directory.
-
-    This prevents `qrels`, `qrels_flip`, `score_file`, and `votes_file`
-    runs from writing into the same directory tree. If the supplied path
-    already contains the preference source, it is left unchanged. If the
-    final path component looks like `seed_*`, the preference source is
-    inserted before that seed directory.
-    """
-    if preference_source in base_output_dir.parts:
-        return base_output_dir
-    if base_output_dir.name.startswith("seed_"):
-        return base_output_dir.parent / preference_source / base_output_dir.name
-    return base_output_dir / preference_source
 
 
 def _rrf_prior_scores_for_query(
@@ -1558,15 +1542,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--methods",
-
-            nargs="*",
-    default=None,
-    help=(
-        "Optional explicit shortlist of methods to run. "
-        "If omitted, all standard baselines/FAS/hybrid defaults are run. "
-        "Useful for low-cost validation packages."
-    ),
-
+        nargs="*",
+        default=None,
+        help=(
+            "Optional explicit shortlist of methods to run. "
+            "If omitted, all standard baselines/FAS/hybrid defaults are run. "
+            "Useful for low-cost validation packages."
         ),
     )
     parser.add_argument(
@@ -1624,7 +1605,6 @@ def run_experiment(
     include_hybrid_ablation: bool = False,
     hybrid_alpha_sweep_components: list[str] | None = None,
     hybrid_alpha_values: str = "0.0,0.1,0.2,0.3,0.5,0.7,1.0",
-    methods_filter: list[str] | None = None,
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -1655,7 +1635,7 @@ def run_experiment(
         Experiment summary.
     """
 
-      output_dir = _resolve_output_dir(Path(output_dir), dataset=dataset, preference_source=preference_source)
+    output_dir = _resolve_output_dir(Path(output_dir), dataset=dataset, preference_source=preference_source)
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -2038,8 +2018,18 @@ def _build_experiment_summary(
     n_processed = len(query_ids)
     n_skipped = len(skipped)
 
-    # Average graph size (from score_sum rows to avoid duplicating per method)
+    # Graph stats are identical across methods per query; prefer score_sum if present
+    # (full runs), else any hybrid from shortlist-only experiments.
     ss_rows = [r for r in all_rows if r["method"] == "score_sum"]
+    if not ss_rows:
+        for fallback in (
+            "hybrid_rrf_repaired_copeland_a03",
+            "hybrid_rrf_unrepaired_copeland_a03",
+            "hybrid_rrf_prior_only",
+        ):
+            ss_rows = [r for r in all_rows if r["method"] == fallback]
+            if ss_rows:
+                break
     avg_n_nodes = sum(r["n_nodes"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
     avg_n_edges = sum(r["n_edges"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
     avg_scc = sum(r["largest_scc"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
@@ -2208,7 +2198,6 @@ def main(argv: list[str] | None = None) -> None:
         methods_filter=args.methods,
         seed=args.seed,
         output_dir=args.output_dir,
-        methods_filter=args.methods,
         save_timings=args.save_timings,
         profile=args.profile,
         generate_plots=not args.no_plots,

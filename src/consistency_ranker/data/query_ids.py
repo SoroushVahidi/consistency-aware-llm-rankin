@@ -15,10 +15,33 @@ MIN_JUDGED_DOCS = 2
 
 
 def has_usable_eval_labels(qrels_for_query: list[QrelEntry]) -> bool:
-    """Return True when qrels support evaluation ranking comparisons."""
+    """Return True when qrels support evaluation ranking comparisons.
+
+    Two cases are accepted:
+
+    1. **Explicit multi-grade qrels** (classic): at least ``MIN_JUDGED_DOCS``
+       distinct judged documents and at least two distinct relevance values
+       on those judgments.
+
+    2. **Shallow / positive-only qrels** (common for BEIR-style exports):
+       at least one judged document with strictly positive relevance.
+       Documents that appear in the evaluation candidate pool but are absent
+       from qrels are treated as relevance **0** when metrics are computed
+       in the real-data experiment pipeline (candidate-aligned qrels).
+       This matches pooled retrieval evaluation where only positives (or a
+       sparse judgment file) are listed.
+
+    Queries with no positive judgments remain ineligible.
+    """
+    if not qrels_for_query:
+        return False
     unique_docs = {e.doc_id for e in qrels_for_query}
     n_distinct_grades = len({e.relevance for e in qrels_for_query})
-    return len(unique_docs) >= MIN_JUDGED_DOCS and n_distinct_grades >= 2
+    if len(unique_docs) >= MIN_JUDGED_DOCS and n_distinct_grades >= 2:
+        return True
+    if len(unique_docs) >= 1 and any(e.relevance > 0 for e in qrels_for_query):
+        return True
+    return False
 
 
 def eligible_query_ids(qrels: list[QrelEntry]) -> list[str]:

@@ -5,6 +5,15 @@ Build pairwise vote edges from multiple ranker score files.
 
 Output schema (one row per ranker-vote pair):
 {"query_id":"...","winner_doc_id":"...","loser_doc_id":"...","weight":<float>,"voter":"..."}
+
+**Why ``votes_file`` graphs are often acyclic:** for each unordered document
+pair, votes are grouped by *direction* (winner → loser). Only directions with
+``--min-support`` rankers and sufficient ``--min-aggregate-margin`` are kept.
+With ``--min-support 2`` and three similar rankers (e.g. BM25, TF‑IDF, MiniLM),
+one direction usually dominates every pair, so the merged graph is close to a
+**total order** (DAG). Use ``--min-support 1`` to emit each ranker's direction,
+allowing **both** orientations when rankers disagree (2-cycles and longer cycles
+become possible). See also ``scripts/diagnose_vote_graph_cycles.py``.
 """
 
 from __future__ import annotations

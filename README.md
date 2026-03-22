@@ -139,6 +139,8 @@ pytest
 pytest --cov=consistency_ranker
 ```
 
+For a concise index of experiment and publication scripts (vote graphs, bootstrap ΔnDCG, paper tables), see [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md).
+
 ---
 
 ## Real Benchmark Datasets

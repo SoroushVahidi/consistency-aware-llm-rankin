@@ -53,8 +53,19 @@ def test_has_usable_eval_labels_true():
     assert _has_usable_eval_labels(_qrels(("q1", "d1", 1), ("q1", "d2", 0)))
 
 
-def test_has_usable_eval_labels_false_single_grade():
-    assert not _has_usable_eval_labels(_qrels(("q1", "d1", 1), ("q1", "d2", 1)))
+def test_has_usable_eval_labels_positive_only_implicit_negatives():
+    """Two positives, no explicit negatives: still eligible (zeros at eval time)."""
+    assert _has_usable_eval_labels(_qrels(("q1", "d1", 1), ("q1", "d2", 1)))
+
+
+def test_has_usable_eval_labels_single_positive_doc():
+    """BEIR-style single judged positive per query."""
+    assert _has_usable_eval_labels(_qrels(("q1", "d1", 1)))
+
+
+def test_has_usable_eval_labels_false_no_positive():
+    assert not _has_usable_eval_labels(_qrels(("q1", "d1", 0), ("q1", "d2", 0)))
+    assert not _has_usable_eval_labels([])
 
 
 def test_score_entries_to_preferences_builds_pairs():
@@ -289,13 +300,6 @@ def test_filter_methods_keeps_requested_shortlist():
         },
         selected_methods=["score_sum", "hybrid_rrf_fas_regularized"],
     )
-    assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
-    assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
-        "score_sum",
-        "borda",
-        "greedy_fas_weighted_balance",
-        "hybrid_rrf_fas_regularized",
-    ]
     assert filtered_methods == ["score_sum", "hybrid_rrf_fas_regularized"]
     assert list(filtered_specs) == ["hybrid_rrf_fas_regularized"]
 

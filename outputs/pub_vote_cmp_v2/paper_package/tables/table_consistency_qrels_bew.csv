@@ -1,0 +1,7 @@
+dataset,variant,n_queries,mean_bew_pre,mean_bew_post,mean_delta_bew_pre_minus_post,mean_pic_pre,mean_pic_post,mean_fas_weight_removed
+scidocs,ms2,119,178.1267,178.1251,0.0016,31.9244,31.916,0.002879
+scidocs,ms1,120,309.0856,307.9553,1.1303,99.8417,88.0833,2.53872
+scidocs,ms1_drop_mutual,120,268.1012,268.093,0.0082,75.2333,75.1,0.014367
+hotpotqa,ms2,52,82.4006,82.4006,0.0,11.3269,11.3269,0.0
+hotpotqa,ms1,52,101.6153,101.2879,0.3275,20.8462,17.8077,0.702197
+hotpotqa,ms1_drop_mutual,52,89.0062,89.0062,0.0,14.7692,14.7692,0.0

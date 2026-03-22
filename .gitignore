@@ -175,11 +175,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Project-specific: experiment outputs (keep .gitkeep, ignore results)
-outputs/*.json
-outputs/*.csv
-outputs/*.pkl
-
 # Ignore directories containing user credentials, local state, and settings.
 # Learn more at https://abstra.io/docs
 .abstra/
@@ -209,7 +204,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Project-specific: experiment outputs (keep .gitkeep, ignore results)
+# ---------------------------------------------------------------------------
+# Project-specific: outputs, datasets, caches
+# ---------------------------------------------------------------------------
 outputs/*.json
 outputs/*.csv
 outputs/*.pkl
@@ -219,6 +216,23 @@ outputs/plots/*.png
 outputs/plots/*.pdf
 outputs/**/plots/*.png
 outputs/**/plots/*.pdf
+# Keep manuscript figures for the publication evidence bundle
+!outputs/pub_vote_cmp_v2/paper_package/plots/
+!outputs/pub_vote_cmp_v2/paper_package/plots/*.png
+!outputs/pub_vote_cmp_v2/paper_package/plots/*.pdf
+
+# Large local experiment trees (regenerate with scripts; paper tables/plots tracked separately)
+outputs/diag_cycles_v1/
+outputs/pub_pilot_20250322/
+outputs/pub_vote_cmp_v2/scidocs/
+outputs/pub_vote_cmp_v2/hotpotqa/
+outputs/pub_vote_cmp_v2/analysis/
+
+# HuggingFace `datasets` Arrow/cache directories under data/raw (not JSONL exports)
+data/raw/**/BeIR___*/
+data/raw/**/xlangai___*/
+data/raw/hotpotqa/hotpot_qa/
+
 data/raw/beir/scidocs/*.jsonl
 data/raw/beir/scidocs/*.arrow
 data/raw/beir/scidocs/*.parquet
