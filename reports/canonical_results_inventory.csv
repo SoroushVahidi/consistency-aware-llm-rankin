@@ -1,0 +1,12 @@
+path,experiment_family,datasets_included,methods_metrics,final_or_exploratory,cited_in_readme_or_docs,conflicts_with
+outputs/pub_vote_cmp_all4/paper_package/,Publication vote suite → evidence package (build_paper_evidence_package),scidocs fiqa hotpotqa bright,"Hybrids: prior U/R Copeland U/R balance (RRF α=0.3); nDCG@k; BEW/PIC; bootstrap ΔnDCG; cyclicity/SCC",final (canonical breadth),yes README docs READ_ME_FIRST figures,"Differs numerically from pub_vote_cmp_v2 for overlapping dataset×variant (see audit)"
+outputs/pub_vote_cmp_all4/analysis/,Bootstrap / delta analysis JSONs for publication suite,same as above,delta method pairs copeland balance,final supporting analysis,yes (WULVER docs),none if interpreted as all4-only
+outputs/pub_vote_cmp_v2/paper_package/,Older publication vote suite (2 benchmark focus),scidocs hotpotqa (tables),same metric family,final but superseded for breadth,yes README SAFE_CLAIMS RESULTS REPRODUCTION,"Headline SciDocs ms1 ΔnDCG & cyclicity stats differ from all4 (same names not same run)"
+outputs/q1_journal_package/,Q1 journal tables from generate_q1_tables.py (default pub-root v2),scidocs hotpotqa in committed CSV,"Aggregated performance significance regime failure cases",final narrative package,"yes SAFE_Q1_CLAIMS REPRODUCTION","Stale vs four-dataset story: built from v2 tables unless regenerated with --pub-root all4"
+outputs/real_full/,run_real_experiment qrels / qrels_flip trees,multi-dataset (large per-query),"Many ranking methods; not same vote-file protocol as pub suite",exploratory / supplementary,yes FULL_DATASET_ACCESS,"Different preference-source (qrels vs votes_file); not comparable headline Δ to pub suite"
+docs/tables/*.csv,Legacy aggregated bootstrap and synthetic tables,varies,synthetic Kendall τ bootstrap etc.,mixed,yes SAFE_CLAIMS SC-8,"May reference older experiment IDs; cross-check dates"
+reports/paper_tables/,Paper table extraction / inventory helpers,synthetic + proxy baselines,varies,exploratory / drafting,yes PAPER_TABLES_GENERATION,none
+outputs/noise_sweep_*,Synthetic noise sweep,synthetic n=20,greedy FAS vs baselines Kendall,exploratory committed,yes reproduction docs,none
+outputs/margin_multiseed_*,Synthetic multiseed margin noise,synthetic,repeatability,exploratory committed,less central,none
+outputs/pub_vote_cmp_all4/SUMMARY.md,CLI summary from summarize_publication_vote_suite,same as all4,compact means deltas,final companion,yes internal,none
+outputs/real_full/PROVENANCE.md,Provenance note for real_full,,,metadata,yes,—

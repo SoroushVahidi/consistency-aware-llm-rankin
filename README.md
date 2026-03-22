@@ -76,6 +76,7 @@ reproduction guide including real-data experiments.
 | [`docs/RESULTS_FOR_PAPER.md`](docs/RESULTS_FOR_PAPER.md) | What to include vs avoid in manuscript results section |
 | [`docs/THREATS_TO_VALIDITY.md`](docs/THREATS_TO_VALIDITY.md) | Structured threats-to-validity section draft |
 | [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | New analysis family to generate `reports/paper_tables/` |
+| [`reports/repo_publication_audit.md`](reports/repo_publication_audit.md) | **Evidence audit** — canonical result package, claim support, v2 vs all4 |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
 | [`docs/AUDIT.md`](docs/AUDIT.md) | Full systematic repository audit |
 | [`docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md`](docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md) | Publication-readiness and evidence-hardening audit |
