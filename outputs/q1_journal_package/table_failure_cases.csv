@@ -1,0 +1,2 @@
+dataset,vote_construction,method_pair,n_queries,mean_delta_ndcg,ci95_low,ci95_high,threshold,note
+scidocs,ms1,copeland,120,-0.009117,-0.016692,-0.002905,-0.005,repair harms retrieval quality

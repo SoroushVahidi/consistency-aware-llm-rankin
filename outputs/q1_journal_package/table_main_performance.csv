@@ -1,0 +1,7 @@
+dataset,vote_construction,n_queries,pct_cyclic_graphs,mean_ndcg_prior_only,mean_ndcg_unrepaired_copeland,mean_ndcg_repaired_copeland,mean_ndcg_unrepaired_balance,mean_ndcg_repaired_balance,delta_ndcg_copeland_R_minus_U
+scidocs,ms2,119,1.68,0.4249,0.4282,0.4282,0.4240,0.4240,0.0000
+scidocs,ms1,120,97.50,0.4361,0.4362,0.4270,0.4304,0.4303,-0.0091
+scidocs,ms1_drop_mutual,120,9.17,0.4361,0.4362,0.4362,0.4305,0.4305,0.0000
+hotpotqa,ms2,52,0.00,0.9120,0.9120,0.9120,0.9049,0.9049,0.0000
+hotpotqa,ms1,52,94.23,0.9120,0.9056,0.9047,0.9046,0.9046,-0.0009
+hotpotqa,ms1_drop_mutual,52,0.00,0.9120,0.9056,0.9056,0.9049,0.9049,0.0000

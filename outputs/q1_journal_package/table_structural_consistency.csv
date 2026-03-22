@@ -1,0 +1,7 @@
+dataset,vote_construction,n_queries,avg_n_edges,mean_fas_weight_removed,bew_pre,bew_post,delta_bew_pre_minus_post,pic_pre,pic_post,delta_pic_pre_minus_post
+scidocs,ms2,119,72.4,0.0029,178.13,178.13,0.0016,31.92,31.92,0.0084
+scidocs,ms1,120,208.6,2.5387,309.09,307.96,1.1303,99.84,88.08,11.7583
+scidocs,ms1_drop_mutual,120,159.4,0.0144,268.10,268.09,0.0082,75.23,75.10,0.1333
+hotpotqa,ms2,52,32.0,0.0000,82.40,82.40,0.0000,11.33,11.33,0.0000
+hotpotqa,ms1,52,51.0,0.7022,101.62,101.29,0.3275,20.85,17.81,3.0385
+hotpotqa,ms1_drop_mutual,52,38.8,0.0000,89.01,89.01,0.0000,14.77,14.77,0.0000
