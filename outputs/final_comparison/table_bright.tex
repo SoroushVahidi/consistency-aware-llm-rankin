@@ -1,0 +1,28 @@
+\begin{table}[ht]
+\centering
+\caption{Comparison of reranking methods on BRIGHT}
+\label{tab:modern_baselines_bright}
+\begin{tabular}{lcccc}
+\toprule
+Method & nDCG@k & MAP@k & Prec@k & BEW \\
+\midrule
+borda & 1.0000 & 1.0000 & 0.2040 & 2.87 \\
+bt\_from\_qrels & 1.0000 & 1.0000 & 0.2040 & 0.00 \\
+fas\_balance\_score\_prior\_alpha\_beta & 1.0000 & 0.9999 & 0.2040 & 2.87 \\
+hybrid\_rrf\_balance\_a05 & 1.0000 & 1.0000 & 0.2040 & 2.87 \\
+hybrid\_rrf\_copeland\_a03 & 1.0000 & 1.0000 & 0.2040 & 2.87 \\
+hybrid\_rrf\_fas\_regularized & 1.0000 & 1.0000 & 0.2040 & 2.87 \\
+markov\_from\_qrels & 1.0000 & 1.0000 & 0.2040 & 0.00 \\
+score\_sum & 1.0000 & 1.0000 & 0.2040 & 2.87 \\
+win\_rate\_from\_qrels & 1.0000 & 1.0000 & 0.2040 & 0.00 \\
+greedy\_fas\_copeland & 0.9989 & 0.9974 & 0.2040 & 2.86 \\
+greedy\_fas\_weighted\_balance & 0.9989 & 0.9974 & 0.2040 & 2.86 \\
+pagerank & 0.9704 & 0.9553 & 0.2040 & 3.38 \\
+cross\_encoder & 0.8877 & 0.8424 & 0.7131 & 0.62 \\
+hybrid\_rrf\_priority\_topo\_a03 & 0.8590 & 0.7920 & 0.2040 & 1.66 \\
+greedy\_fas\_score\_augmented\_topological & 0.8582 & 0.7906 & 0.2040 & 1.63 \\
+greedy\_fas\_topological & 0.8562 & 0.7863 & 0.2040 & 1.70 \\
+tournament\_sort\_from\_qrels & 0.6999 & 0.5776 & 0.2040 & 0.63 \\
+\bottomrule
+\end{tabular}
+\end{table}
