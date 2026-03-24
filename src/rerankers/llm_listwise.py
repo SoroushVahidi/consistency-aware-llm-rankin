@@ -28,7 +28,7 @@ from __future__ import annotations
 import hashlib
 import logging
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from rerankers.common import BudgetTracker, JudgmentCache, RerankerResult
@@ -53,6 +53,44 @@ class ListwiseConfig:
     max_calls: int | None = None
     dry_run: bool = False
     seed: int = 42
+    strict_parsing: bool = False
+
+
+@dataclass
+class ListwiseCallStats:
+    """Accumulated API/cache statistics for listwise runs."""
+
+    api_calls: int = 0
+    cache_hits: int = 0
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    parse_failures: int = 0
+    parse_error_details: list[str] = field(default_factory=list)
+
+    def record_call(self, usage) -> None:
+        self.api_calls += 1
+        if usage is not None:
+            self.prompt_tokens += getattr(usage, "prompt_tokens", 0)
+            self.completion_tokens += getattr(usage, "completion_tokens", 0)
+            self.total_tokens += getattr(usage, "total_tokens", 0)
+
+    def record_cache_hit(self) -> None:
+        self.cache_hits += 1
+
+    def record_parse_failure(self, response_text: str) -> None:
+        self.parse_failures += 1
+        self.parse_error_details.append(response_text)
+
+    def summary(self) -> dict:
+        return {
+            "api_calls": self.api_calls,
+            "cache_hits": self.cache_hits,
+            "prompt_tokens": self.prompt_tokens,
+            "completion_tokens": self.completion_tokens,
+            "total_tokens": self.total_tokens,
+            "parse_failures": self.parse_failures,
+        }
 
 
 def _load_prompt_template(path: Path) -> str:
@@ -69,13 +107,20 @@ def _format_documents(candidates: list[tuple[str, str]], indices: list[int]) -> 
     return "\n\n".join(lines)
 
 
-def _parse_ranking(response_text: str, valid_indices: list[int]) -> list[int]:
+def _parse_ranking(
+    response_text: str,
+    valid_indices: list[int],
+    *,
+    strict: bool = False,
+) -> list[int]:
     """Parse a ranking from LLM response.
 
     Looks for patterns like "[3] > [1] > [5]" or "3, 1, 5" or "3 > 1 > 5".
     Returns 0-indexed positions.
     """
     numbers = [int(x) for x in re.findall(r"\d+", response_text)]
+    if strict and not numbers:
+        raise ValueError(f"Could not parse listwise ranking from response: {response_text!r}")
 
     valid_set = set(valid_indices)
     parsed = []
@@ -107,7 +152,7 @@ def _mock_ranking(
     return [idx for idx, _ in scored]
 
 
-def _call_llm(prompt: str, config: ListwiseConfig) -> str:
+def _call_llm(prompt: str, config: ListwiseConfig) -> tuple[str, object]:
     """Call the LLM API."""
     import openai
 
@@ -118,17 +163,19 @@ def _call_llm(prompt: str, config: ListwiseConfig) -> str:
         temperature=config.temperature,
         max_tokens=config.max_tokens,
     )
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message.content.strip(), response.usage
 
 
 def _sliding_window_pass(
     query_text: str,
+    query_id: str,
     candidates: list[tuple[str, str]],
     current_order: list[int],
     config: ListwiseConfig,
     prompt_template: str,
     cache: JudgmentCache | None,
     budget: BudgetTracker | None,
+    stats: ListwiseCallStats | None,
 ) -> list[int]:
     """One pass of the sliding window through the candidate list."""
     n = len(current_order)
@@ -140,13 +187,34 @@ def _sliding_window_pass(
             if budget is not None and budget.budget_exhausted:
                 return current_order
 
+            cache_doc_ids = [candidates[idx][0] for idx in window_indices]
+            if cache is not None:
+                cached = cache.get(query_id=query_id, doc_ids=cache_doc_ids)
+                if cached is not None:
+                    if stats is not None:
+                        stats.record_cache_hit()
+                    return list(cached.get("ranked_indices", window_indices))
             docs_str = _format_documents(candidates, window_indices)
             prompt = prompt_template.format(query=query_text, documents=docs_str)
-            response = _call_llm(prompt, config)
-            ranked = _parse_ranking(response, window_indices)
+            response, usage = _call_llm(prompt, config)
+            try:
+                ranked = _parse_ranking(response, window_indices, strict=config.strict_parsing)
+            except ValueError:
+                if stats is not None:
+                    stats.record_parse_failure(response)
+                raise
+            if cache is not None:
+                cache.put(
+                    query_id=query_id,
+                    doc_ids=cache_doc_ids,
+                    result={"ranked_indices": ranked, "response_text": response},
+                )
+            if stats is not None:
+                stats.record_call(usage)
             if budget is not None:
                 budget.record(
-                    tokens_in=len(prompt.split()), tokens_out=len(response.split())
+                    tokens_in=getattr(usage, "prompt_tokens", 0) if usage else 0,
+                    tokens_out=getattr(usage, "completion_tokens", 0) if usage else 0,
                 )
         return ranked
 
@@ -167,13 +235,40 @@ def _sliding_window_pass(
         else:
             if budget is not None and budget.budget_exhausted:
                 break
+            cache_doc_ids = [candidates[idx][0] for idx in window_indices]
+            if cache is not None:
+                cached = cache.get(query_id=query_id, doc_ids=cache_doc_ids)
+                if cached is not None:
+                    if stats is not None:
+                        stats.record_cache_hit()
+                    result[start:end] = list(cached.get("ranked_indices", window_indices))
+                    end -= config.step_size
+                    continue
             docs_str = _format_documents(candidates, window_indices)
             prompt = prompt_template.format(query=query_text, documents=docs_str)
-            response = _call_llm(prompt, config)
-            ranked_window = _parse_ranking(response, window_indices)
+            response, usage = _call_llm(prompt, config)
+            try:
+                ranked_window = _parse_ranking(
+                    response,
+                    window_indices,
+                    strict=config.strict_parsing,
+                )
+            except ValueError:
+                if stats is not None:
+                    stats.record_parse_failure(response)
+                raise
+            if cache is not None:
+                cache.put(
+                    query_id=query_id,
+                    doc_ids=cache_doc_ids,
+                    result={"ranked_indices": ranked_window, "response_text": response},
+                )
+            if stats is not None:
+                stats.record_call(usage)
             if budget is not None:
                 budget.record(
-                    tokens_in=len(prompt.split()), tokens_out=len(response.split())
+                    tokens_in=getattr(usage, "prompt_tokens", 0) if usage else 0,
+                    tokens_out=getattr(usage, "completion_tokens", 0) if usage else 0,
                 )
 
         result[start:end] = ranked_window
@@ -192,9 +287,10 @@ def rerank_query(
     if config is None:
         config = ListwiseConfig(dry_run=True)
 
+    stats = ListwiseCallStats()
     cache = None
     if config.cache_dir is not None:
-        cache = JudgmentCache(config.cache_dir, "llm_listwise")
+        cache = JudgmentCache(config.cache_dir, "llm_listwise", preserve_doc_order=True)
 
     budget = BudgetTracker(max_calls=config.max_calls)
     prompt_template = _load_prompt_template(config.prompt_template_path)
@@ -204,12 +300,14 @@ def rerank_query(
     for pass_num in range(config.num_passes):
         current_order = _sliding_window_pass(
             query_text,
+            query_id,
             candidates,
             current_order,
             config,
             prompt_template,
             cache,
             budget,
+            stats,
         )
 
     ranked_ids = [candidates[idx][0] for idx in current_order]
@@ -228,5 +326,6 @@ def rerank_query(
             "step_size": config.step_size,
             "num_passes": config.num_passes,
             "budget": budget.summary(),
+            "api_stats": stats.summary(),
         },
     )

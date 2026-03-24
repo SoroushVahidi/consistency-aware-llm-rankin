@@ -1,0 +1,29 @@
+{
+  "label": "REAL OPENAI POINTWISE RUN (5 queries) \u2014 NOT mock",
+  "dataset": "scidocs",
+  "baseline": "llm_pointwise",
+  "provider": "openai",
+  "max_queries": 5,
+  "top_k": 15,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "temperature": 0.3,
+  "dry_run": false,
+  "n_queries_processed": 5,
+  "partial_run": false,
+  "api_error": null,
+  "cache_dir": "outputs/openai_robustness_checks/scidocs_pointwise_temp03_q5_k15/judgment_cache",
+  "api_stats": {
+    "api_calls": 75,
+    "cache_hits": 0,
+    "prompt_tokens": 25716,
+    "completion_tokens": 75,
+    "total_tokens": 25791,
+    "parse_failures": 0
+  },
+  "wall_time_s": 37.7,
+  "cost_estimate_usd": 0.0039,
+  "score_file": "outputs/openai_robustness_checks/scidocs_pointwise_temp03_q5_k15/pointwise_scores.jsonl",
+  "per_query_csv": "outputs/openai_robustness_checks/scidocs_pointwise_temp03_q5_k15/pointwise_per_query.csv",
+  "summary_csv": "outputs/openai_robustness_checks/scidocs_pointwise_temp03_q5_k15/pointwise_summary.csv"
+}

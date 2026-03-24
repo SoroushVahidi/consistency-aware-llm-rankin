@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Main performance comparison from tracked output artifacts.}
+\label{tab:main_performance}
+\begin{tabular}{lccccc}
+\toprule
+Method & SciDocs nDCG & SciDocs MAP & HotpotQA nDCG & HotpotQA MAP & Note \\
+\midrule
+Cross-encoder & 0.8977 & 0.7807 & 0.9499 & 0.9241 & -- \\
+Pointwise LLM & 0.6061 & 0.3635 & -- & -- & tracked mock only \\
+Pairwise LLM & 0.9566 & 0.9141 & 0.8929 & 0.8444 & -- \\
+Listwise LLM & 0.6474 & 0.4488 & -- & -- & tracked mock only \\
+Bradley-Terry & 1.0000 & 1.0000 & 1.0000 & 1.0000 & -- \\
+Win-rate & 1.0000 & 1.0000 & 1.0000 & 1.0000 & -- \\
+Markov & 1.0000 & 1.0000 & 1.0000 & 1.0000 & -- \\
+Tournament sort & 0.8059 & 0.6518 & 1.0000 & 1.0000 & -- \\
+Hybrid unrepaired & 0.9566 & 0.9141 & 0.8929 & 0.8444 & -- \\
+Hybrid repaired & 0.9563 & 0.9132 & 0.8859 & 0.8361 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

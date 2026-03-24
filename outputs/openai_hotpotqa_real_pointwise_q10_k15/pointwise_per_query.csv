@@ -1,0 +1,11 @@
+dataset,query_id,method,n_candidates,ndcg_at_k,map_at_k,precision_at_k,recall_at_k,backward_edge_weight,pairwise_inconsistency,api_calls,cache_hits,prompt_tokens,completion_tokens,total_tokens,parse_failures
+hotpotqa,5a88a42f554299206df2b317,llm_pointwise,10,1.0,1.0,0.2,1.0,0,0,10,0,2679,10,2689,0
+hotpotqa,5ae663b05542992ae0d16316,llm_pointwise,10,1.0,1.0,0.1,1.0,0,0,10,0,3358,10,3368,0
+hotpotqa,5ab6993f554299110f219a2b,llm_pointwise,10,0.5,0.333333,0.1,1.0,2.0,2,10,0,2485,10,2495,0
+hotpotqa,5ab7948b5542995dae37e969,llm_pointwise,10,0.693426,0.583333,0.2,1.0,2.0,2,10,0,3019,10,3029,0
+hotpotqa,5ac560235542993e66e82396,llm_pointwise,10,0.63093,0.5,0.1,1.0,1.0,1,10,0,2647,10,2657,0
+hotpotqa,5a72b8de5542994cef4bc3df,llm_pointwise,10,1.0,1.0,0.1,1.0,0,0,10,0,2997,10,3007,0
+hotpotqa,5ae18d615542997283cd2229,llm_pointwise,10,0.63093,0.5,0.1,1.0,1.0,1,10,0,2807,10,2817,0
+hotpotqa,5a866b5b554299211dda2b23,llm_pointwise,10,1.0,1.0,0.1,1.0,0,0,10,0,3645,10,3655,0
+hotpotqa,5ae504a855429908b63264df,llm_pointwise,10,0.806574,0.625,0.2,1.0,6.0,6,10,0,3044,10,3054,0
+hotpotqa,5a7a1b845542990783324e5f,llm_pointwise,10,1.0,1.0,0.1,1.0,0,0,10,0,2837,10,2847,0

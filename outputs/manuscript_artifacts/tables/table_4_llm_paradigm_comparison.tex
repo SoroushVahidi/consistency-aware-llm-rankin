@@ -1,0 +1,14 @@
+\begin{table}[t]
+\centering
+\caption{LLM paradigm comparison on SciDocs from tracked artifacts.}
+\label{tab:llm_paradigms}
+\begin{tabular}{lcccccc}
+\toprule
+Paradigm & nDCG & MAP & Status & API calls & Cost & Runtime (s) \\
+\midrule
+Pointwise & 0.6061 & 0.3635 & mock & -- & -- & -- \\
+Pairwise & 0.9566 & 0.9141 & real & 2100 & 0.1466 & 1219.0 \\
+Listwise & 0.6474 & 0.4488 & mock & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

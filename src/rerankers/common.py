@@ -48,9 +48,22 @@ class BudgetTracker:
         }
 
 
-def _cache_key(query_id: str, doc_ids: list[str], method: str) -> str:
+def _cache_key(
+    query_id: str,
+    doc_ids: list[str],
+    method: str,
+    *,
+    preserve_doc_order: bool = False,
+) -> str:
     """Deterministic cache key from query, docs, and method identifier."""
-    payload = json.dumps({"q": query_id, "d": sorted(doc_ids), "m": method}, sort_keys=True)
+    payload = json.dumps(
+        {
+            "q": query_id,
+            "d": list(doc_ids) if preserve_doc_order else sorted(doc_ids),
+            "m": method,
+        },
+        sort_keys=True,
+    )
     return hashlib.sha256(payload.encode()).hexdigest()[:24]
 
 
@@ -60,10 +73,17 @@ class JudgmentCache:
     Stores one JSON object per line.  Thread-safe for append-only writes.
     """
 
-    def __init__(self, cache_dir: Path | str, method: str) -> None:
+    def __init__(
+        self,
+        cache_dir: Path | str,
+        method: str,
+        *,
+        preserve_doc_order: bool = False,
+    ) -> None:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.method = method
+        self.preserve_doc_order = preserve_doc_order
         self._file = self.cache_dir / f"{method}_judgments.jsonl"
         self._index: dict[str, dict] = {}
         self._load_existing()
@@ -86,11 +106,21 @@ class JudgmentCache:
         log.info("Loaded %d cached judgments for %s", len(self._index), self.method)
 
     def get(self, query_id: str, doc_ids: list[str]) -> dict | None:
-        key = _cache_key(query_id, doc_ids, self.method)
+        key = _cache_key(
+            query_id,
+            doc_ids,
+            self.method,
+            preserve_doc_order=self.preserve_doc_order,
+        )
         return self._index.get(key)
 
     def put(self, query_id: str, doc_ids: list[str], result: dict) -> None:
-        key = _cache_key(query_id, doc_ids, self.method)
+        key = _cache_key(
+            query_id,
+            doc_ids,
+            self.method,
+            preserve_doc_order=self.preserve_doc_order,
+        )
         entry = {"cache_key": key, "query_id": query_id, "doc_ids": doc_ids, **result}
         self._index[key] = entry
         with self._file.open("a", encoding="utf-8") as fh:

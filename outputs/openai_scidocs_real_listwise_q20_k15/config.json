@@ -1,0 +1,28 @@
+{
+  "label": "REAL OPENAI LISTWISE RUN (20 queries) \u2014 NOT mock",
+  "dataset": "scidocs",
+  "max_queries": 20,
+  "top_k": 15,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "provider": "openai",
+  "dry_run": false,
+  "temperature": 0.0,
+  "window_size": 15,
+  "step_size": 7,
+  "num_passes": 1,
+  "n_queries_processed": 20,
+  "partial_run": false,
+  "api_error": null,
+  "cache_dir": "outputs/openai_scidocs_real_listwise_q20_k15/judgment_cache",
+  "api_stats": {
+    "api_calls": 20,
+    "cache_hits": 0,
+    "prompt_tokens": 29365,
+    "completion_tokens": 1168,
+    "total_tokens": 30533,
+    "parse_failures": 0
+  },
+  "wall_time_s": 35.0,
+  "cost_estimate_usd": 0.0051
+}

@@ -1,0 +1,2 @@
+analysis_type,method_a,method_b,n_paired_queries,mean_value,mean_delta,ci95_low,ci95_high,direction,ci_excludes_zero
+ndcg_ci,llm_pointwise,,20,0.908113,,0.845436,0.960287,,

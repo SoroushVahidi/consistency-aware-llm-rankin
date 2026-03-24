@@ -1,0 +1,7 @@
+dataset,regime,pct_cyclic_queries,avg_largest_scc,avg_fas_edges_removed
+scidocs,qrels,0.00,1.000,0.000
+hotpotqa,qrels,0.00,1.000,0.000
+scidocs,llm_pairwise,95.0,--,7.2
+hotpotqa,llm_pairwise,90.0,--,4.3
+scidocs,publication_votes_ms1,87.50,9.333,0.682
+hotpotqa,publication_votes_ms1,51.92,2.519,0.121
