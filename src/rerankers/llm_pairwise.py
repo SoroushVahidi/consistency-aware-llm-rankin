@@ -16,7 +16,8 @@ Provenance
 - Label: "practical proxy baseline — LLM pairwise comparison reranking"
 
 Supports:
-- Real OpenAI API calls (default) with retry + exponential backoff
+- Real OpenAI API calls (provider="openai") with retry + exponential backoff
+- Real Google Gemini API calls (provider="gemini") with retry + exponential backoff
 - Deterministic decoding (temperature=0)
 - Disk-backed judgment caching (query-aware keys)
 - Budget controls (max API calls)
@@ -44,6 +45,9 @@ MAX_RETRIES = 4
 RETRY_BASE_SECONDS = 2.0
 
 
+SUPPORTED_PROVIDERS = ("openai", "gemini")
+
+
 @dataclass
 class PairwiseConfig:
     model: str = "gpt-4o-mini"
@@ -55,6 +59,15 @@ class PairwiseConfig:
     dry_run: bool = False
     debias_position: bool = False
     seed: int = 42
+    provider: str = "openai"
+    call_delay: float = 0.0
+
+    def __post_init__(self) -> None:
+        if self.provider not in SUPPORTED_PROVIDERS:
+            raise ValueError(
+                f"Unknown provider {self.provider!r}. "
+                f"Supported: {SUPPORTED_PROVIDERS}"
+            )
 
 
 @dataclass
@@ -128,8 +141,8 @@ def _is_quota_exhausted(exc) -> bool:
     return "insufficient_quota" in msg or "exceeded your current quota" in msg
 
 
-def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
-    """Call the LLM API with retry and exponential backoff.
+def _call_openai(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
+    """Call the OpenAI API with retry and exponential backoff.
 
     Returns (response_text, usage_object).
     Retries on transient errors but fails immediately on quota exhaustion.
@@ -177,6 +190,94 @@ def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
             else:
                 raise
     raise last_error  # unreachable but satisfies type checker
+
+
+class _GeminiUsage:
+    """Lightweight usage object that mirrors the OpenAI usage interface."""
+
+    def __init__(self, prompt_tokens: int = 0, completion_tokens: int = 0):
+        self.prompt_tokens = prompt_tokens or 0
+        self.completion_tokens = completion_tokens or 0
+        self.total_tokens = self.prompt_tokens + self.completion_tokens
+
+
+def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
+    """Call the Google Gemini API with retry and exponential backoff.
+
+    Uses the ``google-genai`` SDK (``google.genai``).
+    Returns (response_text, usage_object).
+    """
+    import os
+
+    from google import genai
+    from google.genai import types
+
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY environment variable is not set")
+
+    client = genai.Client(api_key=api_key)
+
+    gen_config = types.GenerateContentConfig(
+        temperature=config.temperature,
+        max_output_tokens=config.max_tokens,
+    )
+
+    gemini_max_retries = MAX_RETRIES + 4  # extra retries for transient rate limits
+    last_error = None
+    for attempt in range(gemini_max_retries + 1):
+        try:
+            response = client.models.generate_content(
+                model=config.model,
+                contents=prompt,
+                config=gen_config,
+            )
+            raw_text = response.text
+            if raw_text is None:
+                raise ValueError("Gemini returned empty response (response.text is None)")
+            text = raw_text.strip()
+            um = response.usage_metadata
+            usage = _GeminiUsage(
+                prompt_tokens=getattr(um, "prompt_token_count", 0) if um else 0,
+                completion_tokens=getattr(um, "candidates_token_count", 0) if um else 0,
+            )
+            return text, usage
+        except Exception as exc:
+            err_msg = str(exc).lower()
+            is_rate_limit = "resource_exhausted" in err_msg or "429" in err_msg
+            is_hard_quota = is_rate_limit and "per_day" in err_msg.replace(" ", "_").lower()
+            if is_hard_quota:
+                raise
+            if is_rate_limit and attempt < gemini_max_retries:
+                wait = min(RETRY_BASE_SECONDS * (2 ** attempt), 60.0)
+                log.warning(
+                    "Gemini rate limit (attempt %d/%d): retrying in %.1fs",
+                    attempt + 1, gemini_max_retries + 1, wait,
+                )
+                time.sleep(wait)
+                continue
+            if not is_rate_limit and ("quota" in err_msg):
+                raise
+            last_error = exc
+            if attempt < gemini_max_retries:
+                wait = RETRY_BASE_SECONDS * (2 ** min(attempt, 4))
+                log.warning(
+                    "Gemini API error (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, gemini_max_retries + 1, exc, wait,
+                )
+                time.sleep(wait)
+            else:
+                raise
+    raise last_error  # unreachable but satisfies type checker
+
+
+def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
+    """Dispatch to the appropriate provider backend."""
+    if config.call_delay > 0:
+        time.sleep(config.call_delay)
+    if config.provider == "gemini":
+        return _call_gemini(prompt, config)
+    return _call_openai(prompt, config)
 
 
 def compare_pair(
@@ -308,6 +409,7 @@ def collect_all_pairs(
 
     metadata = {
         "method": "llm_pairwise",
+        "provider": config.provider,
         "model": config.model,
         "dry_run": config.dry_run,
         "debias_position": config.debias_position,

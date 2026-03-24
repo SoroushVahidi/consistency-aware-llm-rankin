@@ -146,7 +146,7 @@ def build_candidate_pool(
 
 def get_llm_api_key() -> str | None:
     """Retrieve LLM API key from environment."""
-    for var in ("OPENAI_API_KEY", "ANTHROPIC_API_KEY", "LLM_API_KEY"):
+    for var in ("OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY", "LLM_API_KEY"):
         key = os.environ.get(var)
         if key:
             return key
