@@ -20,6 +20,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
+VARIANT_ORDER = ("ms2", "ms1", "ms1_drop_mutual")
+DATASET_ORDER = ("scidocs", "fiqa", "hotpotqa", "bright")
+
 
 def _repo_root() -> Path:
     return Path(__file__).resolve().parent.parent
@@ -33,6 +36,74 @@ def copy_plots(src_plots: Path, dst: Path) -> list[Path]:
         shutil.copy2(p, out)
         copied.append(out)
     return copied
+
+
+def plot_cyclicity_scc(table_csv: Path, out_png: Path) -> None:
+    """Bar charts: % cyclic queries and average largest SCC by vote construction."""
+    rows: list[dict[str, str]] = []
+    with table_csv.open(encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            if row.get("variant") in VARIANT_ORDER and row.get("dataset") in DATASET_ORDER:
+                rows.append(row)
+    if not rows:
+        raise SystemExit(f"No cyclicity rows in {table_csv}")
+
+    fig, axes = plt.subplots(2, 2, figsize=(9, 7))
+    labels = ["ms2", "ms1", "ms1+drop"]
+    x = range(3)
+    legend_handles = None
+    legend_labels = None
+
+    for ax, dataset in zip(axes.flat, DATASET_ORDER):
+        sub = [r for r in rows if r["dataset"] == dataset]
+        sub = sorted(sub, key=lambda r: VARIANT_ORDER.index(r["variant"]))
+        if len(sub) != 3:
+            ax.set_visible(False)
+            continue
+
+        pct = [float(r["pct_cyclic"]) for r in sub]
+        scc = [float(r["avg_largest_scc"]) for r in sub]
+        ax2 = ax.twinx()
+        bars1 = ax.bar(
+            [i - 0.2 for i in x],
+            pct,
+            width=0.4,
+            label="% cyclic graphs",
+            color="#4C72B0",
+        )
+        bars2 = ax2.bar(
+            [i + 0.2 for i in x],
+            scc,
+            width=0.4,
+            label="Avg largest SCC",
+            color="#DD8452",
+        )
+        ax.set_xticks(list(x))
+        ax.set_xticklabels(labels)
+        ax.set_ylabel("% queries with cycle")
+        ax2.set_ylabel("Avg largest SCC size")
+        ax.set_title(dataset, pad=10)
+        ax.set_ylim(0, max(105, max(pct) * 1.1))
+        if legend_handles is None:
+            legend_handles = [bars1[0], bars2[0]]
+            legend_labels = ["% cyclic graphs", "Avg largest SCC"]
+
+    if legend_handles and legend_labels:
+        fig.legend(
+            legend_handles,
+            legend_labels,
+            loc="upper center",
+            bbox_to_anchor=(0.5, 0.99),
+            ncol=2,
+            fontsize=8,
+            frameon=False,
+            columnspacing=1.6,
+            handletextpad=0.6,
+        )
+    fig.tight_layout(rect=[0, 0, 1, 0.93])
+    out_png.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out_png, dpi=300, bbox_inches="tight")
+    plt.close(fig)
 
 
 def plot_ndcg_copeland_ms1(table_csv: Path, out_png: Path) -> None:
@@ -86,6 +157,9 @@ def main() -> None:
         raise SystemExit(f"Missing {table_csv}")
 
     copied = copy_plots(src_plots, fig_manuscript) if src_plots.is_dir() else []
+    cyc = root / "figures" / "manuscript" / "fig_cyclicity_and_scc.png"
+    plot_cyclicity_scc(table_csv, cyc)
+    shutil.copy2(cyc, root / "figures" / "fig_cyclicity_and_scc.png")
     extra = root / "figures" / "manuscript" / "fig_ndcg_copeland_ms1_four_datasets.png"
     plot_ndcg_copeland_ms1(table_csv, extra)
 
