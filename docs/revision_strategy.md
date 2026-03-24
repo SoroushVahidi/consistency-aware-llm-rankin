@@ -44,8 +44,8 @@ published since 2022, including:
 
 | Action | Status | Blocker |
 |--------|--------|---------|
-| LLM pointwise **run** on real data | **pending** | Requires `OPENAI_API_KEY`; no API key in environment |
-| LLM pairwise **run** on real data | **pending** | Same |
+| LLM pointwise **run** on real data | **pending** | Requires `OPENAI_API_KEY` with billing credits |
+| LLM pairwise **run** on real data | **dry-run validated; real run pending** | Pipeline runs end-to-end (50 SciDocs queries, mock judgments); real API run blocked by quota (`outputs/llm_scidocs_real_pilot/`) |
 | LLM listwise **run** on real data | **pending** | Same |
 | LLM results included in final comparison table | **pending** | Downstream of above |
 
@@ -174,7 +174,7 @@ paradigm of "LLMs as rankers / judges / preference generators."
 | Modern neural baseline (cross-encoder) | **strong** — pre-trained model, 3 datasets, real completed run |
 | Tournament aggregation baselines | **strong** — BT MLE, win-rate, Markov, tournament-sort, 3 datasets |
 | Noise robustness analysis | **partial** — 7 synthetic noise levels, 2 datasets (SciDocs, HotpotQA), bootstrap CI |
-| LLM reranking baselines | **gap** — code only; no API key for live evaluation |
+| LLM reranking baselines | **gap** — dry-run pipeline validated; real API results blocked by quota |
 | Literature positioning | **partially addressed** — note doc written; manuscript edits pending |
 
 ---
@@ -204,5 +204,36 @@ The pipeline is ready in `src/rerankers/llm_pairwise.py` and
 | **Cover letter** | Use §1–3 "What is already fixed" tables verbatim to demonstrate that you have added cross-encoder and tournament-aggregation baselines and repositioned relative to the LLM literature. Use §3 "What is still missing" to proactively acknowledge the LLM preference gap. |
 | **§Baselines / §Experiments** | Use the tables in §2A and §2B for the baseline description paragraphs. Cite artifact paths as supplementary material links. |
 | **§Results / §Analysis** | Use the noise-sensitivity table in §2C (with CIs) to support any claim about FAS-balance robustness. |
-| **§Limitations** | Use §2 "What is still missing" (LLM pointwise/pairwise/listwise runs; FiQA exclusion; ILP solver) verbatim as the basis for the Limitations paragraph. Be explicit that LLM-preference results are not yet available. |
+| **§Limitations** | Use §2 "What is still missing" (LLM pointwise/pairwise/listwise runs; FiQA exclusion; ILP solver) verbatim as the basis for the Limitations paragraph. Be explicit that real LLM-preference results are not yet available. |
+| **§Implementation** | Cite `scripts/run_llm_scidocs_real_pilot.py` and the dry-run validation (`outputs/llm_scidocs_pilot_comparison/`) to demonstrate the pipeline is ready; note API access is needed for full evaluation. |
 | **§Discussion** | The §5 framing (LLM pairwise as highest-priority next experiment) can be adapted into a Future Work paragraph without implying the result has been obtained. |
+
+---
+
+## 7. LLM Pilot Status and Editor-Concern Assessment
+
+> **Updated:** See `docs/LLM_PILOT_STATUS.md` for the authoritative tracking
+> document. The summary below reflects the state at the time of this revision.
+
+### Current pilot state
+
+| Pilot | Type | Queries | Status | Artifact |
+|-------|------|---------|--------|----------|
+| Dry-run pipeline validation | mock (deterministic MD5 hashing) | 50 SciDocs | **completed** | `outputs/llm_scidocs_pilot_comparison/` |
+| Real API pilot (30 queries, gpt-4o-mini) | real OpenAI | 0 of 30 | **blocked** — `insufficient_quota` | `outputs/llm_scidocs_real_pilot/` |
+
+### Editor's LLM-baseline concern — resolution status
+
+> **Status: PARTIALLY DONE**
+
+| Concern element | Resolution |
+|-----------------|------------|
+| LLM baselines implemented in code | ✅ done — `src/rerankers/llm_*.py` |
+| LLM pairwise pipeline runs end-to-end | ✅ done — dry-run validation, 50 queries |
+| Real LLM preferences used in evaluation | ❌ not done — blocked by API quota |
+| LLM results in comparison table | ❌ not done — pending real API run |
+
+The editor's concern about missing LLM baselines is **partially addressed**:
+the implementation gap is closed and the pipeline is validated. The empirical
+gap (real API results) remains open. This must be stated explicitly in the
+manuscript cover letter and §Limitations.
