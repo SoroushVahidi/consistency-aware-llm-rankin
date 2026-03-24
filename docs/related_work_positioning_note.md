@@ -15,8 +15,9 @@
 ## 1. Taxonomy of Modern Reranking Paradigms
 
 The field of learned and LLM-based reranking can be organised into five
-paradigms. This work sits at the intersection of **Paradigm 4** and
-**Paradigm 5**.
+paradigms. This work primarily addresses **Paradigm 5** (graph/tournament
+aggregation), with implementation scaffolding covering Paradigms 2–4. Executed
+experiments exist only for Paradigms 1 and 5.
 
 | Paradigm | Representative approach | Our coverage |
 |----------|------------------------|--------------|
@@ -48,11 +49,12 @@ We include `cross-encoder/ms-marco-MiniLM-L-6-v2` as an external reference
 baseline to situate our graph-based ranking quality. Results are from a
 **real completed run** on SciDocs, HotpotQA, and BRIGHT.
 
-**Our contribution is orthogonal:** We study the aggregation of pairwise
+**Our contribution is distinct in focus:** We study the aggregation of pairwise
 preference graphs, not the generation of relevance scores from document text.
-A cross-encoder operating on text is not a competitor to our method; it
-represents a different source of preference signal. However, including it
-contextualises where graph methods stand relative to text-aware reranking.
+A cross-encoder and our method operate at different stages of the pipeline and
+consume different inputs. Including the cross-encoder contextualises our
+graph-method results relative to text-aware reranking, but the two are not
+direct competitors.
 
 ### How to describe in manuscript
 
@@ -89,20 +91,20 @@ label. Documents are then ranked by these scores.
 ### Positioning note
 
 LLM pointwise reranking produces a single-document relevance score, bypassing
-the preference-graph construction entirely. It is therefore a baseline from a
-different paradigm rather than a variant of our approach. Including it in the
-comparison would answer: "Do our graph-repair methods add value over simply
-asking an LLM to score each document?"
+preference-graph construction entirely. It is therefore a baseline from a
+different paradigm rather than a variant of our approach. If run, it would
+inform the question of whether graph-repair methods provide benefit beyond
+direct LLM scoring — but that question is not yet answered in this repository.
 
 ### How to describe in manuscript
 
 > "LLM-based pointwise reranking (e.g., Zhuang et al., 2023) bypasses
 > pairwise comparison altogether and directly scores document relevance.
-> We implement this baseline [see §Implementation] and note that its
+> We implement this baseline (§Implementation) and note that its
 > evaluation requires LLM API access, which is deferred to future work.
-> The architectural contrast is instructive: pointwise scoring ignores
-> inter-document consistency constraints that our graph-repair framework
-> explicitly addresses."
+> The architectural distinction is that pointwise scoring does not model
+> inter-document consistency constraints; our graph-repair framework
+> addresses those constraints explicitly within the preference-graph layer."
 
 ---
 
@@ -129,28 +131,29 @@ a ranking. This paradigm is sometimes called Pairwise Ranking Prompting (PRP).
 
 **Run status:** Code implemented; **run pending** (requires `OPENAI_API_KEY`).
 
-### Positioning note — the strongest connection
+### Positioning note — most directly analogous paradigm
 
-LLM pairwise reranking is the closest paradigm to our work. Our entire
-pipeline assumes a directed preference graph built from pairwise comparisons.
-The key question this positions us to answer:
+LLM pairwise reranking is the most directly analogous paradigm to our work.
+Our pipeline assumes a directed preference graph built from pairwise
+comparisons; the source of those comparisons (multi-ranker scoring vs.
+LLM prompting) is the main variable. The unanswered question is:
 
-> *If the pairwise comparisons come from an LLM (rather than from multi-ranker
-> score voting), does FAS repair of the resulting preference graph still improve
+> *If the pairwise comparisons come from an LLM rather than from multi-ranker
+> score voting, does FAS repair of the resulting preference graph improve
 > retrieval quality?*
 
-This experiment is the **single highest-priority pending run** described in
-`docs/revision_strategy.md`. Until it is executed, we describe LLM pairwise
+This experiment is the **single highest-priority pending run** (see
+`docs/revision_strategy.md`). Until it is executed, LLM pairwise is described
 as an "implemented but not yet evaluated baseline."
 
 ### How to describe in manuscript
 
 > "LLM pairwise reranking (Qin et al., 2023) generates the same type of
 > pairwise preference signal our framework consumes. A natural extension of
-> our work is to apply FAS repair to LLM-elicited preference graphs, replacing
-> score-derived votes with LLM judgements. We have implemented this pipeline
-> (§Implementation); evaluation with real LLM preferences is deferred to
-> future work due to API constraints."
+> this work is to apply FAS repair to LLM-elicited preference graphs,
+> replacing score-derived votes with LLM judgements. We have implemented
+> this pipeline (§Implementation); evaluation with real LLM preferences
+> is deferred to future work due to API access constraints."
 
 ---
 
@@ -182,20 +185,18 @@ to scale beyond the context window. RankGPT is the canonical example.
 
 Listwise LLM reranking is an end-to-end method that requires no preference
 graph and no aggregation step. It produces a ranking directly from document
-text via the LLM's in-context ordering ability. It does not share our
+text via the LLM's in-context ordering ability and does not share our
 framework's assumptions (multi-ranker ensemble, preference graph, cycle
-repair). Including it as a baseline answers: "Does explicitly modeling
-inter-document consistency (via repair) offer any advantage over a single
-LLM pass that implicitly considers all documents jointly?"
+repair). If run, it would inform the question of whether explicit
+consistency repair provides benefit over a single-model reranking pass.
 
 ### How to describe in manuscript
 
 > "Listwise reranking (Sun et al., 2023; Ma et al., 2023) reformulates ranking
 > as a direct permutation generation problem, bypassing pairwise consistency
-> constraints. While powerful, these methods depend on single-model coherence
-> and do not explicitly repair inconsistencies introduced by multi-ranker
-> disagreement. We implement a RankGPT-style sliding-window baseline
-> [§Implementation]; full evaluation is deferred pending API access."
+> constraints. This approach does not model inter-ranker inconsistencies
+> explicitly. We implement a RankGPT-style sliding-window baseline
+> (§Implementation); full evaluation is deferred pending API access."
 
 ---
 
@@ -250,13 +251,14 @@ ranking quality, and can repair improve outcomes."
 
 > "Graph-based tournament aggregation has a rich theoretical foundation
 > (Bradley & Terry, 1952; Dwork et al., 2001; Copeland, 1951). We include
-> representative modern aggregation methods — Bradley–Terry MLE, win-rate,
+> representative aggregation methods — Bradley–Terry MLE, win-rate,
 > Markov-chain, and tournament sort — as baselines evaluated on the same
-> preference graphs (§Experiments). Our contribution is the explicit modeling
+> preference graphs (§Experiments). Our contribution is the explicit modelling
 > and repair of graph-level inconsistencies, which these aggregation methods
-> do not address. We find that FAS repair outperforms Bradley–Terry under
-> synthetic preference noise [Claim S8], while the two approaches are
-> equivalent on clean acyclic graphs."
+> do not address. Under synthetic preference noise at 15% flip probability,
+> FAS-balance achieves higher nDCG than Bradley–Terry MLE on both evaluation
+> datasets, with 95% CIs strictly above zero (§Results). On clean acyclic
+> graphs the two approaches yield equivalent results."
 
 ---
 
@@ -264,7 +266,7 @@ ranking quality, and can repair improve outcomes."
 
 | Modern paradigm | Our stance | Baseline run status |
 |-----------------|-----------|---------------------|
-| Cross-encoder reranking | External reference; orthogonal to our framework | real completed run |
+| Cross-encoder reranking | External reference; distinct in focus from our framework | real completed run |
 | LLM pointwise | Different paradigm; no preference graph | code only — pending |
 | LLM pairwise (PRP) | Closest paradigm; feeds into our pipeline | code only — pending |
 | LLM listwise (RankGPT) | End-to-end alternative; no explicit repair | code only — pending |
@@ -283,10 +285,8 @@ We describe our baselines as **representative modern baselines** because:
 3. Numerical comparisons are valid only within our evaluation protocol
    (same datasets, same candidate pools, same qrels).
 4. The goal is to establish relative ordering of methods *within our
-   framework*, not to rank against externally reported numbers.
-
-This framing is consistent with SIGIR/ECIR/ACL norms for reproducibility
-studies where exact replication of prior systems is not the primary claim.
+   evaluation framework*, not to rank against externally reported numbers
+   from different corpora or candidate pools.
 
 ---
 
@@ -299,3 +299,16 @@ studies where exact replication of prior systems is not the primary claim.
   (candidate pools, k, preprocessing) may differ.
 - We do NOT claim generality beyond the three-ranker (BM25, TF-IDF, MiniLM-L6)
   ensemble used to construct preference votes.
+
+---
+
+## 10. How to Use This in the Manuscript
+
+| Manuscript location | What to adapt from this document |
+|---------------------|----------------------------------|
+| **§Related Work — Neural reranking** | Use §2 "How to describe in manuscript" for the cross-encoder paragraph. One sentence; cite Nogueira & Cho (2019) or similar. |
+| **§Related Work — LLM-based reranking** | Use §3, §4, §5 "How to describe" blocks for a three-paragraph treatment of pointwise / pairwise / listwise. Keep each to 2–3 sentences. End each with the "deferred to future work" clause. |
+| **§Related Work — Aggregation methods** | Use §6 "How to describe" for the tournament-aggregation paragraph. Cite Bradley & Terry (1952), Dwork et al. (2001), Copeland (1951). |
+| **§Implementation / §Baselines** | Reference §1 taxonomy table to justify baseline selection. State explicitly which paradigms have run results and which are pending. |
+| **§Limitations / Future Work** | Cite §4 "most directly analogous paradigm" framing as the basis for the Future Work paragraph on LLM preference sources. |
+| **Cover letter** | Use §7 "Summary Positioning Table" as a one-paragraph summary of how the paper now engages with the modern literature. |

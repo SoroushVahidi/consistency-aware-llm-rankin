@@ -18,16 +18,16 @@
 
 ---
 
-### Claim S1 — Vote construction is the dominant factor controlling graph cyclicity
+### Claim S1 — Vote construction is the primary driver of graph cyclicity
 
 **Statement:**  
-The choice of vote-aggregation strategy determines cycle prevalence more
-strongly than any downstream repair algorithm. Majority-filtered aggregation
-(ms2: min_support=2, margin ≥ 0.1) yields near-acyclic graphs on SciDocs
-(0% cyclic queries). Per-ranker inclusion (ms1: min_support=1) yields high
-cyclicity (SciDocs: 87.5% cyclic, avg largest SCC 9.3). A post-filter that
-drops mutual 2-cycles (ms1_drop_mutual) restores near-acyclicity while
-retaining more edges than ms2.
+In our experimental setup, the choice of vote-aggregation strategy is the
+primary driver of cycle prevalence in multi-ranker preference graphs.
+Majority-filtered aggregation (ms2: min_support=2, margin ≥ 0.1) yields
+near-acyclic graphs on all four datasets (e.g., SciDocs: 0% cyclic queries).
+Per-ranker inclusion (ms1: min_support=1) yields high cyclicity (SciDocs:
+87.5% cyclic, avg largest SCC 9.3). A post-filter that drops mutual 2-cycles
+(ms1_drop_mutual) restores near-acyclicity while retaining more edges than ms2.
 
 **Evidence type:** real completed run  
 **Artifact:** `reports/jis_final_tables/T01_main_real_vote_graph_ndcg_structural_metrics.csv`  
@@ -77,7 +77,7 @@ Under HotpotQA ms1, the effect is weakly positive: ΔnDCG = +0.017
 
 ---
 
-### Claim S4 — Harm from repair concentrates in high-SCC queries
+### Claim S4 — Repair effects trend more negatively in high-SCC queries (directional observation only)
 
 **Statement:**  
 On SciDocs ms1, queries with largest SCC ≥ median show more negative mean
@@ -86,8 +86,9 @@ to low-SCC queries (copeland_scc_low: +0.00028, CI [−0.0004, +0.0014], n=56).
 
 **Evidence type:** real completed run  
 **Artifact:** `reports/jis_final_tables/T02_main_real_bootstrap_delta_ndcg_pairs.csv`  
-**Caveat:** Difference between scc_high and scc_low CIs overlaps; this is a
-directional observation, not a statistically significant split.
+**Caveat:** The 95% CIs for high-SCC and low-SCC subgroups overlap; the
+difference is a directional observation only, not a statistically significant
+subgroup effect. Do not state this as a confirmed finding.
 
 ---
 
@@ -124,16 +125,17 @@ same datasets.
 
 **Evidence type:** real completed run  
 **Artifact:** `outputs/final_modern_baselines/{dataset}/summary.csv`  
-**Caveat:** nDCG = 1.0 results follow trivially from perfect preferences;
-they illustrate preference-quality ceiling, not aggregation superiority.
+**Caveat:** nDCG = 1.0 results follow directly from perfect preferences;
+they illustrate a preference-quality ceiling, not aggregation superiority.
 
 ---
 
-### Claim S8 — FAS repair outperforms parametric aggregation under preference noise
+### Claim S8 — FAS repair outperforms parametric aggregation under synthetic preference noise
 
 **Statement:**  
-Under 15% synthetic noise flip probability, FAS-balance significantly
-outperforms Bradley–Terry on two datasets:
+Under 15% synthetic noise flip probability (injected into qrels-derived
+preferences), FAS-balance achieves higher nDCG than Bradley–Terry on two
+datasets, with 95% CIs strictly above zero:
 
 | Comparison | Dataset | Δ nDCG | 95% CI |
 |------------|---------|--------|--------|
@@ -145,12 +147,13 @@ outperforms Bradley–Terry on two datasets:
 
 ---
 
-### Claim S9 — Score-sum and Borda are most noise-robust
+### Claim S9 — Score-sum and Borda are most noise-robust in our two-dataset synthetic experiment
 
 **Statement:**  
-Score-sum and Borda maintain nDCG = 1.0 at 30% noise on SciDocs. Borda
-achieves Kendall τ = 0.756 (mean, 5 seeds) at 20% noise in synthetic
-experiments (n=20, margin weights).
+Score-sum and Borda maintain nDCG = 1.0 at 30% synthetic noise on SciDocs.
+Borda achieves Kendall τ = 0.756 (mean, 5 seeds) at 20% noise in synthetic
+experiments (n=20, margin weights). This finding is limited to the two
+datasets and noise injection method used.
 
 **Evidence type:** real completed run (noise sensitivity) + real completed run (synthetic)  
 **Artifacts:**  
@@ -159,7 +162,7 @@ experiments (n=20, margin weights).
 
 ---
 
-### Claim S10 — Synthetic rankings are stable across seeds at moderate noise
+### Claim S10 — Synthetic rankings are stable across seeds at moderate noise (n=20, margin weights)
 
 **Statement:**  
 Borda achieves Kendall τ mean = 0.756 (std = 0.035) across 5 seeds at
@@ -178,7 +181,7 @@ confirming that topological extraction alone is least stable.
 FAS repair is inert (ΔnDCG = 0) under near-acyclic constructions across all
 four datasets. Under high-cyclicity construction (ms1) the effect ranges
 from weakly positive (HotpotQA: CI includes +0.04) to neutral (FiQA, BRIGHT)
-to trivially negative with CI near zero (SciDocs). No configuration shows a
+to a point estimate slightly below zero with CI near zero (SciDocs). No configuration shows a
 strongly positive and statistically significant retrieval benefit.
 
 **Evidence type:** real completed run  
@@ -285,10 +288,10 @@ speculative. They must be labeled explicitly as `pending` in any discussion.
 
 **Safe version:** "Under high-cyclicity ms1 vote construction on SciDocs,
 repaired Copeland hybrid shows ΔnDCG = −0.0001 (CI [−0.0008, +0.0006]);
-the harm signal is present in the point estimate but the CI includes zero."  
+the harm signal is present in the point estimate but the CI includes zero,
+so this cannot be stated as a confirmed negative effect."  
 **Unsafe version (do not use):** "Repair consistently harms nDCG" — this
-overgeneralises. The earlier version of the repository reported a more negative
-value from a pilot run that was subsequently corrected.
+overgeneralises across datasets and vote constructions.
 
 ---
 
@@ -309,3 +312,17 @@ four datasets."
 **Qualifier required:** This finding is specific to the three-ranker ensemble
 (BM25, TF-IDF, MiniLM-L6) used here. Different ranker compositions may yield
 different cycle rates.
+
+---
+
+## Part D — How to Use This in the Manuscript
+
+| Manuscript location | Which claims to use |
+|---------------------|---------------------|
+| **Abstract** | S1 (vote construction controls cyclicity), S3 (repair does not uniformly improve nDCG), S11 (regime-dependence). Keep numbers out of the abstract; use directional language only. |
+| **Introduction** | S1 and S11 for the motivation paragraph; S3 as the honest framing of the key finding. |
+| **§Results — structural metrics** | S2 (BEW/PIC tables), S5 (balance hybrid neutrality). Always accompany S2 with DN3 as a caveat. |
+| **§Results — retrieval metrics** | S3 (main result), S4 (directional subgroup observation — label it as such), S6/S7 for baseline context, S8 for noise condition. |
+| **§Results — synthetic** | S9 and S10, scoped explicitly to n=20/margin-weights. |
+| **§Limitations** | DN1–DN4, DN6–DN10 for direct limitations language. DN3 (BEW/PIC circularity) and DN4 (no LLM preferences) are the two most important to state. |
+| **Appendix** | CC1–CC3 as explicit qualifier notes, particularly if reviewers question the framing. |

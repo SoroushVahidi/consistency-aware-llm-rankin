@@ -5,9 +5,11 @@
 > baselines — especially LLM-based, and (3) weak positioning relative to
 > current research.
 >
-> **Grounding rule:** Every claim below is tied to a committed artifact.
-> Nothing is projected or invented. Run labels follow the four-tier system:
-> `real completed run` | `pilot run` | `dry-run validation` | `pending`.
+> **Grounding rule:** Every claim in this document is tied to a committed
+> artifact. Nothing is projected or invented. Run labels follow the four-tier
+> system: `real completed run` | `pilot run` | `dry-run validation` | `pending`.
+> "Fixed" means an artifact exists; it does not mean the manuscript has been
+> updated.
 
 ---
 
@@ -15,8 +17,8 @@
 
 ### What the editor flagged
 
-The manuscript did not adequately cite or engage with the wave of
-LLM-based reranking work published since 2022, specifically:
+The manuscript lacked citations to the class of LLM-based reranking work
+published since 2022, including:
 
 - Pointwise scoring prompts (relevance classification/grading)
 - Pairwise preference elicitation (Pairwise Ranking Prompting, PRP)
@@ -76,20 +78,21 @@ Borda, Copeland, topological sort) and did not include:
 Pre-trained MS MARCO MiniLM cross-encoder (`cross-encoder/ms-marco-MiniLM-L-6-v2`)
 evaluated on three datasets:
 
-| Dataset | Queries | cross_encoder nDCG@k | Best graph method | Gap |
-|---------|---------|----------------------|-------------------|-----|
-| SciDocs | 500 | 0.8977 | 1.0000 (score_sum) | −0.102 |
-| HotpotQA | 497 | 0.9499 | 1.0000 (score_sum) | −0.050 |
-| BRIGHT | 71 | 0.8877 | 1.0000 (score_sum) | −0.112 |
+| Dataset | Queries | cross_encoder nDCG@k | Best graph method | Δ (graph − cross-encoder) |
+|---------|---------|----------------------|-------------------|--------------------------|
+| SciDocs | 500 | 0.8977 | 1.0000 (score_sum) | +0.102 |
+| HotpotQA | 497 | 0.9499 | 1.0000 (score_sum) | +0.050 |
+| BRIGHT | 71 | 0.8877 | 1.0000 (score_sum) | +0.112 |
 
 **Run label:** real completed run  
 **Evidence:** `outputs/final_modern_baselines/{dataset}/summary.csv`
 
 > **Interpretive note:** Graph methods reach nDCG = 1.0 because they consume
 > qrels-derived (perfect) pairwise preferences. The cross-encoder uses only
-> document text and has no access to relevance labels. The comparison
-> illustrates that preference quality is the binding factor, not aggregation
-> algorithm sophistication.
+> document text and has no access to relevance labels. The gap is consistent
+> with the interpretation that preference quality — not aggregation algorithm
+> sophistication — is the binding factor, but a controlled experiment varying
+> preference quality independently would be needed to confirm this.
 
 #### B. Tournament aggregation baselines (real completed run)
 
@@ -137,14 +140,16 @@ paradigm of "LLMs as rankers / judges / preference generators."
 
 ### What is already fixed
 
-- `docs/related_work_positioning_note.md` provides a structured positioning
-  against all four modern paradigms (pointwise / pairwise / listwise LLM
-  reranking; graph/tournament aggregation).
-- The unique contribution is clearly scoped: **graph-structure analysis and
-  cycle-repair for pairwise preference aggregation**, which is orthogonal to
-  the LLM-as-ranker paradigm and complementary to tournament-aggregation work.
-- The paper explicitly notes that FAS-repair is more robust than parametric
-  aggregation (Bradley–Terry) under preference noise.
+- `docs/related_work_positioning_note.md` provides structured positioning
+  against all five modern reranking paradigms (cross-encoder; pointwise,
+  pairwise, and listwise LLM reranking; graph/tournament aggregation).
+- The contribution is defined as **graph-structure analysis and cycle-repair
+  for pairwise preference aggregation**, which is distinct in focus from the
+  LLM-as-ranker paradigm and complementary to tournament-aggregation work.
+- The evidence package documents that FAS-balance outperforms Bradley–Terry
+  aggregation under synthetic preference noise on two datasets (Claim S8;
+  `outputs/bootstrap_modern/`). This result is available for the §Results
+  section of the manuscript.
 
 ### What is still missing
 
@@ -163,12 +168,12 @@ paradigm of "LLMs as rankers / judges / preference generators."
 | Aspect | Status |
 |--------|--------|
 | Core graph-repair methodology | **strong** — fully implemented and tested |
-| Real-data evaluation (4 datasets, nDCG, bootstrap CIs) | **strong** — 4 datasets, 120–500 queries, 2000 bootstrap reps |
+| Real-data evaluation (4 datasets, nDCG, bootstrap CIs) | **strong** — 4 datasets (FiQA excluded from modern-baseline comparison; grade-1 qrels only), 52–500 queries, 2000 bootstrap reps |
 | Structural consistency metrics (BEW, PIC) | **strong** — pre/post repair with quantified effect |
 | Classical baselines (Borda, score-sum, Copeland, PageRank) | **strong** — all implemented and run |
 | Modern neural baseline (cross-encoder) | **strong** — pre-trained model, 3 datasets, real completed run |
 | Tournament aggregation baselines | **strong** — BT MLE, win-rate, Markov, tournament-sort, 3 datasets |
-| Noise robustness analysis | **strong** — 7 noise levels, 2 datasets, bootstrap CI |
+| Noise robustness analysis | **partial** — 7 synthetic noise levels, 2 datasets (SciDocs, HotpotQA), bootstrap CI |
 | LLM reranking baselines | **gap** — code only; no API key for live evaluation |
 | Literature positioning | **partially addressed** — note doc written; manuscript edits pending |
 
@@ -189,3 +194,15 @@ This experiment would:
 **Blockers:** Requires `OPENAI_API_KEY` or a locally-hosted LLM endpoint.
 The pipeline is ready in `src/rerankers/llm_pairwise.py` and
 `scripts/run_modern_baselines.py`.
+
+---
+
+## 6. How to Use This in the Manuscript
+
+| Section | What to take from this document |
+|---------|--------------------------------|
+| **Cover letter** | Use §1–3 "What is already fixed" tables verbatim to demonstrate that you have added cross-encoder and tournament-aggregation baselines and repositioned relative to the LLM literature. Use §3 "What is still missing" to proactively acknowledge the LLM preference gap. |
+| **§Baselines / §Experiments** | Use the tables in §2A and §2B for the baseline description paragraphs. Cite artifact paths as supplementary material links. |
+| **§Results / §Analysis** | Use the noise-sensitivity table in §2C (with CIs) to support any claim about FAS-balance robustness. |
+| **§Limitations** | Use §2 "What is still missing" (LLM pointwise/pairwise/listwise runs; FiQA exclusion; ILP solver) verbatim as the basis for the Limitations paragraph. Be explicit that LLM-preference results are not yet available. |
+| **§Discussion** | The §5 framing (LLM pairwise as highest-priority next experiment) can be adapted into a Future Work paragraph without implying the result has been obtained. |
