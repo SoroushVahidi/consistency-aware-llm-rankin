@@ -283,12 +283,19 @@ def main():
     all_metadata: dict[str, dict] = {}
 
     wall_start = time.time()
+    api_error_msg = None
     print("\n[4] Collecting REAL LLM pairwise judgments (with position debiasing) …")
     for idx, (qid, query_text, candidate_pool) in enumerate(queries_pool):
         q_start = time.time()
-        pairs, metadata = collect_all_pairs(
-            qid, query_text, candidate_pool, config, stats=global_stats
-        )
+        try:
+            pairs, metadata = collect_all_pairs(
+                qid, query_text, candidate_pool, config, stats=global_stats
+            )
+        except Exception as exc:
+            api_error_msg = str(exc)
+            print(f"\n  ERROR at query {idx + 1} [{qid}]: {exc}")
+            print("  Stopping judgment collection. Will evaluate queries collected so far.")
+            break
         q_elapsed = time.time() - q_start
         all_llm_preferences[qid] = pairs
         all_metadata[qid] = metadata
@@ -300,6 +307,18 @@ def main():
             f"(API={n_api}, cache={n_cache})"
         )
     wall_elapsed = time.time() - wall_start
+
+    if not all_llm_preferences:
+        print("\nFATAL: No judgments were collected.")
+        if api_error_msg and "insufficient_quota" in api_error_msg.lower():
+            print("The OpenAI API key has insufficient quota.")
+            print("Please add billing/credits at https://platform.openai.com/settings/organization/billing")
+        sys.exit(1)
+
+    # Filter queries_pool to only those with judgments
+    queries_pool = [
+        (qid, qt, cp) for qid, qt, cp in queries_pool if qid in all_llm_preferences
+    ]
 
     total_pairs = sum(len(p) for p in all_llm_preferences.values())
     stats_summary = global_stats.summary()
@@ -494,8 +513,14 @@ def main():
     print(f"[7] Summary CSV → {summary_path}")
 
     # ---- 8. Config ----
+    n_actual_queries = len(queries_pool)
+    is_partial = api_error_msg is not None
+    label = (
+        f"REAL PILOT ({n_actual_queries} queries"
+        f"{', PARTIAL — API error' if is_partial else ''}) — NOT mock/synthetic"
+    )
     config_data = {
-        "label": "REAL PILOT (30 queries) — NOT mock/synthetic",
+        "label": label,
         "dataset": DATASET,
         "max_queries": MAX_QUERIES,
         "top_k": TOP_K,
@@ -504,7 +529,9 @@ def main():
         "dry_run": False,
         "debias_position": True,
         "temperature": 0.0,
-        "n_queries_processed": len(queries_pool),
+        "n_queries_processed": n_actual_queries,
+        "partial_run": is_partial,
+        "api_error": api_error_msg,
         "total_pairwise_comparisons": total_pairs,
         "methods": METHOD_LABELS,
         "cache_dir": str(cache_dir),
@@ -545,7 +572,7 @@ def main():
     md_lines = [
         "# Real LLM Pairwise Pilot Comparison — SciDocs",
         "",
-        "**Label: REAL PILOT (30 queries) — NOT mock/synthetic**",
+        f"**Label: {label}**",
         "",
         "## Experiment Configuration",
         "",

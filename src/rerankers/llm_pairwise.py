@@ -122,10 +122,17 @@ def _mock_compare(query: str, doc_a: str, doc_b: str, seed: int) -> str:
     return "A" if int(h[:4], 16) % 2 == 0 else "B"
 
 
+def _is_quota_exhausted(exc) -> bool:
+    """Return True if the error is a hard quota exhaustion (not a transient rate limit)."""
+    msg = str(exc).lower()
+    return "insufficient_quota" in msg or "exceeded your current quota" in msg
+
+
 def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
     """Call the LLM API with retry and exponential backoff.
 
     Returns (response_text, usage_object).
+    Retries on transient errors but fails immediately on quota exhaustion.
     """
     import openai
 
@@ -141,9 +148,21 @@ def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
             )
             text = response.choices[0].message.content.strip()
             return text, response.usage
+        except openai.RateLimitError as exc:
+            if _is_quota_exhausted(exc):
+                raise
+            last_error = exc
+            if attempt < MAX_RETRIES:
+                wait = RETRY_BASE_SECONDS * (2 ** attempt)
+                log.warning(
+                    "Rate limit (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, MAX_RETRIES + 1, exc, wait,
+                )
+                time.sleep(wait)
+            else:
+                raise
         except (
             openai.APIConnectionError,
-            openai.RateLimitError,
             openai.APITimeoutError,
             openai.InternalServerError,
         ) as exc:
