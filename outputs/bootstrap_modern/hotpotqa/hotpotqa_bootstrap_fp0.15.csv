@@ -1,0 +1,11 @@
+dataset,flip_prob,method_a,method_b,comparison,n_paired,mean_delta,ci_lo_95,ci_hi_95,significant
+hotpotqa,0.15,score_sum,greedy_fas_topological,score_sum vs FAS topological,497,0.322888,0.305537,0.339036,***
+hotpotqa,0.15,score_sum,bt_aggregation,score_sum vs Bradley-Terry,497,0.274882,0.257271,0.292704,***
+hotpotqa,0.15,score_sum,win_rate_aggregation,score_sum vs win-rate,497,0.24231,0.223347,0.262066,***
+hotpotqa,0.15,score_sum,tournament_sort_aggregation,score_sum vs tournament sort,497,0.190269,0.17049,0.209904,***
+hotpotqa,0.15,greedy_fas_weighted_balance,bt_aggregation,FAS-balance vs BT,497,0.264395,0.246228,0.281669,***
+hotpotqa,0.15,greedy_fas_weighted_balance,win_rate_aggregation,FAS-balance vs win-rate,497,0.231824,0.212095,0.251266,***
+hotpotqa,0.15,greedy_fas_weighted_balance,markov_aggregation,FAS-balance vs Markov,497,0.009595,0.001753,0.017289,***
+hotpotqa,0.15,greedy_fas_copeland,copeland_unrepaired,FAS-copeland vs unrepaired copeland,497,-0.000993,-0.001982,-0.000176,***
+hotpotqa,0.15,greedy_fas_copeland,bt_aggregation,FAS-copeland vs BT,497,0.264395,0.246228,0.281669,***
+hotpotqa,0.15,borda,win_rate_aggregation,Borda vs win-rate,497,0.24231,0.223347,0.262066,***
