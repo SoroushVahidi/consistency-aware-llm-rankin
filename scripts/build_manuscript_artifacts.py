@@ -600,19 +600,12 @@ def build_figures(tracked: set[str]) -> None:
             "s_repaired": 104,
         },
     }
-    point_offsets = {
-        ("SciDocs", "Unrepaired"): (6, 10),
-        ("SciDocs", "Repaired"): (-52, -14),
-        ("HotpotQA", "Unrepaired"): (6, 8),
-        ("HotpotQA", "Repaired"): (-54, -14),
-    }
     arrow_offsets = {
-        ("SciDocs", "Copeland"): (-20, 14),
-        ("SciDocs", "Balance"): (-18, -16),
-        ("HotpotQA", "Copeland"): (-16, 14),
-        ("HotpotQA", "Balance"): (-16, -18),
+        ("SciDocs", "Copeland"): (-16, 18),
+        ("SciDocs", "Balance"): (-18, -20),
+        ("HotpotQA", "Copeland"): (18, 14),
+        ("HotpotQA", "Balance"): (20, -18),
     }
-    annotated_points: set[tuple[str, str]] = set()
     all_x: list[float] = []
     all_y: list[float] = []
     for rows, dataset in [(pair_sc, "SciDocs"), (pair_hp, "HotpotQA")]:
@@ -667,23 +660,10 @@ def build_figures(tracked: set[str]) -> None:
                 textcoords="offset points",
                 ha="center",
                 va="center",
-                fontsize=8,
+                fontsize=8.5,
                 color=cfg["color"],
                 bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.85),
             )
-            for state, px, py in [("Unrepaired", ux, uy), ("Repaired", rx, ry)]:
-                key = (dataset, state)
-                if key in annotated_points:
-                    continue
-                annotated_points.add(key)
-                ax.annotate(
-                    f"{dataset} {state[0]}",
-                    xy=(px, py),
-                    xytext=point_offsets[key],
-                    textcoords="offset points",
-                    fontsize=8.5,
-                    color="#1f2937",
-                )
     ax.set_xlabel("Mean backward-edge weight (BEW)")
     ax.set_ylabel("nDCG")
     ax.set_title("Structural vs retrieval tradeoff (tracked real pairwise runs)", fontsize=11, pad=10)
