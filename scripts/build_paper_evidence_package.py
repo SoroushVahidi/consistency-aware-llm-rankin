@@ -190,9 +190,11 @@ def _make_dataset_grid(
 
 
 def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
-    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 3.5))
+    fig, axes = _make_dataset_grid(figsize_per_cell=(4.6, 3.8))
     labels = ["ms2", "ms1", "ms1+drop"]
     x = range(3)
+    legend_handles = None
+    legend_labels = None
     for ax_idx, ds in enumerate(DATASETS):
         ax = axes[ax_idx]
         sub = [r for r in agg if r["dataset"] == ds]
@@ -212,8 +214,20 @@ def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
         ax.set_ylim(0, max(105, max(pct) * 1.1))
         lines1, lab1 = ax.get_legend_handles_labels()
         lines2, lab2 = ax2.get_legend_handles_labels()
-        ax.legend(lines1 + lines2, lab1 + lab2, loc="upper right", fontsize=8)
-    fig.tight_layout()
+        if legend_handles is None:
+            legend_handles = lines1 + lines2
+            legend_labels = lab1 + lab2
+    if legend_handles and legend_labels:
+        fig.legend(
+            legend_handles,
+            legend_labels,
+            loc="upper center",
+            ncol=2,
+            bbox_to_anchor=(0.5, 0.995),
+            fontsize=8.5,
+            frameon=False,
+        )
+    fig.tight_layout(rect=[0, 0, 1, 0.93])
     fig.savefig(outdir / "fig_cyclicity_and_scc.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
