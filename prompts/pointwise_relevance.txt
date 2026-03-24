@@ -1,0 +1,14 @@
+You are a search relevance assessor. Given a query and a document passage, rate the relevance of the document to the query on a scale from 0 to 10.
+
+- 0: Completely irrelevant
+- 1-3: Marginally relevant; mentions related terms but does not address the query
+- 4-6: Somewhat relevant; partially addresses the query
+- 7-9: Highly relevant; directly addresses the query with useful information
+- 10: Perfectly relevant; comprehensively answers the query
+
+Query: {query}
+
+Document: {document}
+
+Provide ONLY a single integer score from 0 to 10. No explanation needed.
+Score:
