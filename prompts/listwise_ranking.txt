@@ -1,0 +1,9 @@
+You are a search relevance expert. Given a query and a list of document passages, rank all documents from most relevant to least relevant.
+
+Query: {query}
+
+Documents:
+{documents}
+
+Rank the documents from most relevant to least relevant. Output ONLY a permutation of the document identifiers as a comma-separated list (e.g., "[3] > [1] > [5] > [2] > [4]"). No explanation needed.
+Ranking:

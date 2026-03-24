@@ -1,0 +1,10 @@
+You are a search relevance judge. Given a query and two document passages, determine which document is more relevant to the query.
+
+Query: {query}
+
+Document A: {document_a}
+
+Document B: {document_b}
+
+Which document is more relevant to the query? Answer with ONLY "A" or "B".
+Answer:

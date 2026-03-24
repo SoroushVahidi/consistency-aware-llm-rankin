@@ -1,0 +1,21 @@
+\begin{table}[ht]
+\centering
+\caption{Bootstrap 95\% CIs for method deltas on HOTPOTQA (flip\_prob=0.15)}
+\label{tab:bootstrap_hotpotqa}
+\begin{tabular}{lrrrl}
+\toprule
+Comparison & $\Delta$ nDCG & CI low & CI high & Sig. \\
+\midrule
+score\_sum vs FAS topological & +0.3229 & +0.3055 & +0.3390 & *** \\
+score\_sum vs Bradley-Terry & +0.2749 & +0.2573 & +0.2927 & *** \\
+score\_sum vs win-rate & +0.2423 & +0.2233 & +0.2621 & *** \\
+score\_sum vs tournament sort & +0.1903 & +0.1705 & +0.2099 & *** \\
+FAS-balance vs BT & +0.2644 & +0.2462 & +0.2817 & *** \\
+FAS-balance vs win-rate & +0.2318 & +0.2121 & +0.2513 & *** \\
+FAS-balance vs Markov & +0.0096 & +0.0018 & +0.0173 & *** \\
+FAS-copeland vs unrepaired copeland & -0.0010 & -0.0020 & -0.0002 & *** \\
+FAS-copeland vs BT & +0.2644 & +0.2462 & +0.2817 & *** \\
+Borda vs win-rate & +0.2423 & +0.2233 & +0.2621 & *** \\
+\bottomrule
+\end{tabular}
+\end{table}

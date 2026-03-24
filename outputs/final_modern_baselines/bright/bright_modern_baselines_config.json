@@ -1,0 +1,19 @@
+{
+  "dataset": "bright",
+  "baselines": [
+    "cross_encoder",
+    "tournament_agg"
+  ],
+  "max_queries": 200,
+  "top_k": 20,
+  "seed": 42,
+  "dry_run": false,
+  "n_queries_processed": 197,
+  "methods": [
+    "cross_encoder",
+    "bt_from_qrels",
+    "win_rate_from_qrels",
+    "markov_from_qrels",
+    "tournament_sort_from_qrels"
+  ]
+}

@@ -1,0 +1,28 @@
+\begin{table}[ht]
+\centering
+\caption{Comparison of reranking methods on HOTPOTQA}
+\label{tab:modern_baselines_hotpotqa}
+\begin{tabular}{lcccc}
+\toprule
+Method & nDCG@k & MAP@k & Prec@k & BEW \\
+\midrule
+borda & 1.0000 & 1.0000 & 0.1375 & 0.88 \\
+bt\_from\_qrels & 1.0000 & 1.0000 & 0.1375 & 0.00 \\
+hybrid\_rrf\_fas\_regularized & 1.0000 & 1.0000 & 0.1375 & 0.88 \\
+markov\_from\_qrels & 1.0000 & 1.0000 & 0.1375 & 0.00 \\
+score\_sum & 1.0000 & 1.0000 & 0.1375 & 0.88 \\
+tournament\_sort\_from\_qrels & 1.0000 & 1.0000 & 0.1375 & 0.00 \\
+win\_rate\_from\_qrels & 1.0000 & 1.0000 & 0.1375 & 0.00 \\
+hybrid\_rrf\_balance\_a05 & 0.9999 & 0.9998 & 0.1375 & 0.88 \\
+hybrid\_rrf\_copeland\_a03 & 0.9999 & 0.9998 & 0.1375 & 0.88 \\
+fas\_balance\_score\_prior\_alpha\_beta & 0.9988 & 0.9980 & 0.1375 & 0.86 \\
+greedy\_fas\_copeland & 0.9948 & 0.9920 & 0.1375 & 0.85 \\
+greedy\_fas\_weighted\_balance & 0.9948 & 0.9920 & 0.1375 & 0.85 \\
+pagerank & 0.9900 & 0.9841 & 0.1375 & 0.79 \\
+cross\_encoder & 0.9499 & 0.9241 & 0.1392 & 0.44 \\
+hybrid\_rrf\_priority\_topo\_a03 & 0.8388 & 0.7761 & 0.1375 & 0.14 \\
+greedy\_fas\_score\_augmented\_topological & 0.8387 & 0.7760 & 0.1375 & 0.14 \\
+greedy\_fas\_topological & 0.8386 & 0.7756 & 0.1375 & 0.13 \\
+\bottomrule
+\end{tabular}
+\end{table}

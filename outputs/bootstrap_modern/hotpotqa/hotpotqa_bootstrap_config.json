@@ -1,0 +1,8 @@
+{
+  "dataset": "hotpotqa",
+  "flip_prob": 0.15,
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "metric": "ndcg_at_k",
+  "n_queries": 497
+}

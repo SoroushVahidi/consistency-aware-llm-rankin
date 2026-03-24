@@ -1,0 +1,11 @@
+dataset,flip_prob,method_a,method_b,comparison,n_paired,mean_delta,ci_lo_95,ci_hi_95,significant
+scidocs,0.3,score_sum,greedy_fas_topological,score_sum vs FAS topological,500,0.152684,0.142316,0.16328,***
+scidocs,0.3,score_sum,bt_aggregation,score_sum vs Bradley-Terry,500,0.16692,0.157364,0.17661,***
+scidocs,0.3,score_sum,win_rate_aggregation,score_sum vs win-rate,500,0.058813,0.051175,0.067247,***
+scidocs,0.3,score_sum,tournament_sort_aggregation,score_sum vs tournament sort,500,0.342473,0.330207,0.354577,***
+scidocs,0.3,greedy_fas_weighted_balance,bt_aggregation,FAS-balance vs BT,500,0.126822,0.117245,0.136353,***
+scidocs,0.3,greedy_fas_weighted_balance,win_rate_aggregation,FAS-balance vs win-rate,500,0.018715,0.011525,0.026318,***
+scidocs,0.3,greedy_fas_weighted_balance,markov_aggregation,FAS-balance vs Markov,500,-0.014731,-0.023114,-0.006677,***
+scidocs,0.3,greedy_fas_copeland,copeland_unrepaired,FAS-copeland vs unrepaired copeland,500,-0.024331,-0.030095,-0.019441,***
+scidocs,0.3,greedy_fas_copeland,bt_aggregation,FAS-copeland vs BT,500,0.126822,0.117245,0.136353,***
+scidocs,0.3,borda,win_rate_aggregation,Borda vs win-rate,500,0.058813,0.051175,0.067247,***

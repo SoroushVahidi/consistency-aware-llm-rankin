@@ -1,0 +1,6 @@
+method,n_queries,ndcg_mean,map_mean,precision_at_k_mean,recall_at_k_mean,bew_mean,pic_mean
+cross_encoder,498,0.949931,0.924099,0.139192,1.0,0.43662,0.43662
+bt_from_qrels,497,1.0,1.0,0.13746,1.0,0.0,0.0
+win_rate_from_qrels,497,1.0,1.0,0.13746,1.0,0.0,0.0
+markov_from_qrels,497,1.0,1.0,0.13746,1.0,0.0,0.0
+tournament_sort_from_qrels,497,1.0,1.0,0.13746,1.0,0.0,0.0

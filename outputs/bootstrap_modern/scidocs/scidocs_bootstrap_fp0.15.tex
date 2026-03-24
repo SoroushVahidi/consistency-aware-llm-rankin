@@ -1,0 +1,21 @@
+\begin{table}[ht]
+\centering
+\caption{Bootstrap 95\% CIs for method deltas on SCIDOCS (flip\_prob=0.15)}
+\label{tab:bootstrap_scidocs}
+\begin{tabular}{lrrrl}
+\toprule
+Comparison & $\Delta$ nDCG & CI low & CI high & Sig. \\
+\midrule
+score\_sum vs FAS topological & +0.0642 & +0.0600 & +0.0686 & *** \\
+score\_sum vs Bradley-Terry & +0.0500 & +0.0448 & +0.0552 & *** \\
+score\_sum vs win-rate & +0.0018 & +0.0011 & +0.0028 & *** \\
+score\_sum vs tournament sort & +0.2720 & +0.2597 & +0.2849 & *** \\
+FAS-balance vs BT & +0.0491 & +0.0438 & +0.0543 & *** \\
+FAS-balance vs win-rate & +0.0009 & +0.0000 & +0.0019 & *** \\
+FAS-balance vs Markov & +0.0692 & +0.0615 & +0.0766 & *** \\
+FAS-copeland vs unrepaired copeland & -0.0007 & -0.0012 & -0.0003 & *** \\
+FAS-copeland vs BT & +0.0491 & +0.0438 & +0.0543 & *** \\
+Borda vs win-rate & +0.0018 & +0.0011 & +0.0028 & *** \\
+\bottomrule
+\end{tabular}
+\end{table}
