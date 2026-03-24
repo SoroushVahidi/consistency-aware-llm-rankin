@@ -203,35 +203,41 @@ class _GeminiUsage:
 def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
     """Call the Google Gemini API with retry and exponential backoff.
 
+    Uses the ``google-genai`` SDK (``google.genai``).
     Returns (response_text, usage_object).
-    Uses the same retry strategy as the OpenAI path.
     """
     import os
 
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY environment variable is not set")
 
-    genai.configure(api_key=api_key)
+    client = genai.Client(api_key=api_key)
 
-    generation_config = genai.types.GenerationConfig(
+    gen_config = types.GenerateContentConfig(
         temperature=config.temperature,
         max_output_tokens=config.max_tokens,
     )
 
-    model = genai.GenerativeModel(config.model)
     last_error = None
     for attempt in range(MAX_RETRIES + 1):
         try:
-            response = model.generate_content(prompt, generation_config=generation_config)
-            text = response.text.strip()
+            response = client.models.generate_content(
+                model=config.model,
+                contents=prompt,
+                config=gen_config,
+            )
+            raw_text = response.text
+            if raw_text is None:
+                raise ValueError("Gemini returned empty response (response.text is None)")
+            text = raw_text.strip()
+            um = response.usage_metadata
             usage = _GeminiUsage(
-                prompt_tokens=getattr(response.usage_metadata, "prompt_token_count", 0),
-                completion_tokens=getattr(
-                    response.usage_metadata, "candidates_token_count", 0
-                ),
+                prompt_tokens=getattr(um, "prompt_token_count", 0) if um else 0,
+                completion_tokens=getattr(um, "candidates_token_count", 0) if um else 0,
             )
             return text, usage
         except Exception as exc:

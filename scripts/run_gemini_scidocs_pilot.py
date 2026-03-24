@@ -50,7 +50,7 @@ DATASET = "scidocs"
 MAX_QUERIES = 20
 TOP_K = 20
 SEED = 42
-MODEL = "gemini-2.0-flash"
+MODEL = "gemini-2.5-flash-lite"
 PROVIDER = "gemini"
 
 OUTPUT_DIR = Path("outputs/gemini_scidocs_real_pilot")
