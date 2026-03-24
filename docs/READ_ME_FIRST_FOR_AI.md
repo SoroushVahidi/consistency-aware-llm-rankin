@@ -31,17 +31,11 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
    - [`../reports/repo_publication_audit.md`](../reports/repo_publication_audit.md) — canonical package, v2 vs all4, safe framing  
    - [`../reports/README.md`](../reports/README.md) — index of CSV/claim matrices
 
-7. **Environment notes (Wulver / cluster)**  
-   - Use conda env `feedback-weighted-maximization` when running Gurobi-backed exact solver.  
+7. **Environment notes (Gurobi / exact solver)**
+   - Use a conda env with `gurobipy` installed when running the Gurobi-backed exact solver.
    - Do **not** point `GRB_LICENSE_FILE` at an expired license file if the default works.
 
 ## What not to confuse
 
 - **Code support for a dataset** ≠ **local raw/processed files present** — data must be downloaded/prepared (see `README.md`).
 - **Stub vs exact:** `mwfas_solver.solve(..., method="ilp")` is a **real Gurobi** formulation (not a stub), subject to solver availability.
-
-## Session / audit notes (optional)
-
-- [`WULVER_EXECUTION_SUMMARY.md`](WULVER_EXECUTION_SUMMARY.md) — what was run on Wulver and what was pushed.
-- [`PAPER_PACKAGE_STATUS_AFTER_WULVER.md`](PAPER_PACKAGE_STATUS_AFTER_WULVER.md) — four-dataset package status.
-- [`../reports/repo_cleanup_recommendations.md`](../reports/repo_cleanup_recommendations.md) — optional repo coherence steps (e.g. regenerate Q1 tables from `pub_vote_cmp_all4`).

@@ -95,7 +95,7 @@ These can appear in a paper body or abstract without additional qualification
 > Kendall τ than the greedy-FAS topological ranker.  The gap is largest under
 > uniform edge weights."
 
-*Evidence:* `docs/tables/main_results.csv`, `docs/RESULTS_AUDIT.md`.  
+*Evidence:* `docs/tables/main_results.csv`.  
 *Caveat:* Synthetic data only; ground truth is a latent quality score, not qrels.
 
 ---

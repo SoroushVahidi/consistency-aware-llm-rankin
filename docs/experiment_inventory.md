@@ -244,4 +244,4 @@
 | Field | Value |
 |---|---|
 | Name | Mixed-effects model over queries for significance testing |
-| Status | **planned** — mentioned in `docs/Q1_JOURNAL_GAP_ANALYSIS.md` |
+| Status | **planned** |
