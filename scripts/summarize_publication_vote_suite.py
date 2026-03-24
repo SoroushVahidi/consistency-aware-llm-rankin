@@ -29,7 +29,12 @@ def _graph_stats_from_csv(rows: list[dict], ref: str = "hybrid_rrf_repaired_cope
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--root", type=Path, default=Path("outputs/pub_vote_cmp_v2"))
+    p.add_argument(
+        "--root",
+        type=Path,
+        default=Path("outputs/pub_vote_cmp_all4"),
+        help="Publication vote-suite root directory (default: outputs/pub_vote_cmp_all4).",
+    )
     args = p.parse_args()
 
     variants = ("ms2", "ms1", "ms1_drop_mutual")

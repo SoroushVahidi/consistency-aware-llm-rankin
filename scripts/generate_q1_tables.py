@@ -24,7 +24,7 @@ summary_report.md               Human-readable narrative
 Usage (from repository root)
 -----------------------------
     python scripts/generate_q1_tables.py \\
-        --pub-root outputs/pub_vote_cmp_v2 \\
+        --pub-root outputs/pub_vote_cmp_all4 \\
         --synth-results docs/tables/main_results.csv \\
         --out-dir outputs/q1_journal_package
 """
@@ -572,8 +572,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--pub-root",
-        default="outputs/pub_vote_cmp_v2",
-        help="Root of the publication vote suite outputs (default: outputs/pub_vote_cmp_v2).",
+        default="outputs/pub_vote_cmp_all4",
+        help="Root of the publication vote suite outputs "
+        "(default: outputs/pub_vote_cmp_all4).",
     )
     parser.add_argument(
         "--synth-results",
@@ -583,7 +584,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--out-dir",
         default="outputs/q1_journal_package",
-        help="Output directory for generated tables (default: outputs/q1_journal_package).",
+        help="Output directory for generated tables "
+        "(default: outputs/q1_journal_package; regenerate from all4 for current JIS alignment).",
     )
     parser.add_argument(
         "--failure-threshold",

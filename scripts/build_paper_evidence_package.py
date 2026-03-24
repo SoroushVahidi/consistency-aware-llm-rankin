@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Build paper-facing tables and plots from ``outputs/pub_vote_cmp_v2``.
+Build paper-facing tables and plots from a publication vote-suite root.
 
 Writes under ``<root>/paper_package/``:
   - ``tables/table_graph_ndcg_and_consistency.csv``
@@ -410,7 +410,12 @@ def write_manuscript_summary(path: Path, root: Path, agg: list[dict], boot: list
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--root", type=Path, default=Path("outputs/pub_vote_cmp_v2"))
+    ap.add_argument(
+        "--root",
+        type=Path,
+        default=Path("outputs/pub_vote_cmp_all4"),
+        help="Publication vote-suite root directory (default: outputs/pub_vote_cmp_all4).",
+    )
     args = ap.parse_args()
     pkg = args.root / "paper_package"
     tdir = pkg / "tables"
