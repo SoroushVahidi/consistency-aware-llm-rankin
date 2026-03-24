@@ -190,6 +190,29 @@ and `T02_main_real_bootstrap_delta_ndcg_pairs.csv`
 
 ---
 
+### Claim S12 — LLM pairwise pipeline validated end-to-end (dry-run)
+
+**Statement:**  
+The full LLM pairwise → FAS-repair → aggregation pipeline runs end-to-end
+on SciDocs. Under a dry-run (deterministic mock judgments via MD5 hashing,
+seed=42) on 50 queries with top-20 candidates (9500 pairwise comparisons),
+all 12 evaluation methods produced valid results. Every query yielded a cyclic
+preference graph (50/50, 100%), with a mean of 90.8 FAS edges removed per
+query. Under mock judgments, FAS repair produced ΔnDCG = −0.067 relative to
+unrepaired Copeland/balance components, though this directional signal is from
+simulated—not real—LLM preferences and must not be cited as a performance
+finding.
+
+**Evidence type:** dry-run validation  
+**Artifact:** `outputs/llm_scidocs_pilot_comparison/PILOT_COMPARISON.md`,
+`outputs/llm_scidocs_pilot_comparison/pilot_summary.csv`  
+**Caveat:** Mock judgments are deterministic hashes of document IDs, not
+real LLM preferences. The nDCG numbers and ΔnDCG values do not reflect how
+a real language model would rank documents. This claim documents infrastructure
+readiness only.
+
+---
+
 ## Part B — Do Not Claim
 
 The following statements must NOT appear in the manuscript because they are
@@ -227,9 +250,13 @@ qrels. The two measures are not independent.
 ### DN4 — "Results generalise to LLM-generated preferences"
 
 **Reason:** All real-data experiments use BM25 / TF-IDF / MiniLM-score-derived
-pairwise votes. No experiment uses LLM-generated pairwise preferences. The
-LLM reranking modules (`src/rerankers/llm_*.py`) are implemented but have
-not been executed (no API key).
+pairwise votes. No experiment uses **real** LLM-generated pairwise preferences.
+The LLM reranking modules (`src/rerankers/llm_*.py`) are implemented. A
+dry-run pipeline validation pilot (mock/deterministic judgments, 50 SciDocs
+queries) has been executed — see Claim S12. A real API-backed pilot (30
+SciDocs queries, `gpt-4o-mini`) is prepared but was blocked by API quota at
+the time of writing (`outputs/llm_scidocs_real_pilot/`). Do not cite dry-run
+numbers as representative of real LLM behaviour.
 
 ---
 
@@ -324,5 +351,6 @@ different cycle rates.
 | **§Results — structural metrics** | S2 (BEW/PIC tables), S5 (balance hybrid neutrality). Always accompany S2 with DN3 as a caveat. |
 | **§Results — retrieval metrics** | S3 (main result), S4 (directional subgroup observation — label it as such), S6/S7 for baseline context, S8 for noise condition. |
 | **§Results — synthetic** | S9 and S10, scoped explicitly to n=20/margin-weights. |
-| **§Limitations** | DN1–DN4, DN6–DN10 for direct limitations language. DN3 (BEW/PIC circularity) and DN4 (no LLM preferences) are the two most important to state. |
+| **§Limitations** | DN1–DN4, DN6–DN10 for direct limitations language. DN3 (BEW/PIC circularity) and DN4 (no real LLM preferences) are the two most important to state. |
+| **§Implementation** | S12 may be cited to establish that the LLM pairwise pipeline is implemented and validated end-to-end, pending API access for real evaluation. |
 | **Appendix** | CC1–CC3 as explicit qualifier notes, particularly if reviewers question the framing. |

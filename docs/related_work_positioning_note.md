@@ -129,7 +129,12 @@ a ranking. This paradigm is sometimes called Pairwise Ranking Prompting (PRP).
   (bidirectional prompt)
 - Aggregates via Copeland score (out-degree minus in-degree)
 
-**Run status:** Code implemented; **run pending** (requires `OPENAI_API_KEY`).
+**Run status:** Code implemented; dry-run pipeline validation completed
+(50 SciDocs queries, deterministic mock judgments);
+**real API run pending** — a 30-query real pilot script
+(`scripts/run_llm_scidocs_real_pilot.py`) is prepared but was blocked by
+OpenAI API quota at the time of writing. See
+`outputs/llm_scidocs_real_pilot/REAL_PILOT_COMPARISON.md`.
 
 ### Positioning note — most directly analogous paradigm
 
@@ -268,7 +273,7 @@ ranking quality, and can repair improve outcomes."
 |-----------------|-----------|---------------------|
 | Cross-encoder reranking | External reference; distinct in focus from our framework | real completed run |
 | LLM pointwise | Different paradigm; no preference graph | code only — pending |
-| LLM pairwise (PRP) | Closest paradigm; feeds into our pipeline | code only — pending |
+| LLM pairwise (PRP) | Closest paradigm; feeds into our pipeline | dry-run validated; real API run pending |
 | LLM listwise (RankGPT) | End-to-end alternative; no explicit repair | code only — pending |
 | Graph / tournament aggregation | Our core contribution extends this class | real completed run |
 
