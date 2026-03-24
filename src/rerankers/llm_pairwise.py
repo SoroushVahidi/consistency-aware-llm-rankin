@@ -60,6 +60,7 @@ class PairwiseConfig:
     debias_position: bool = False
     seed: int = 42
     provider: str = "openai"
+    call_delay: float = 0.0
 
     def __post_init__(self) -> None:
         if self.provider not in SUPPORTED_PROVIDERS:
@@ -222,8 +223,9 @@ def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
         max_output_tokens=config.max_tokens,
     )
 
+    gemini_max_retries = MAX_RETRIES + 4  # extra retries for transient rate limits
     last_error = None
-    for attempt in range(MAX_RETRIES + 1):
+    for attempt in range(gemini_max_retries + 1):
         try:
             response = client.models.generate_content(
                 model=config.model,
@@ -242,14 +244,26 @@ def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
             return text, usage
         except Exception as exc:
             err_msg = str(exc).lower()
-            if "quota" in err_msg or "resource_exhausted" in err_msg:
+            is_rate_limit = "resource_exhausted" in err_msg or "429" in err_msg
+            is_hard_quota = is_rate_limit and "per_day" in err_msg.replace(" ", "_").lower()
+            if is_hard_quota:
+                raise
+            if is_rate_limit and attempt < gemini_max_retries:
+                wait = min(RETRY_BASE_SECONDS * (2 ** attempt), 60.0)
+                log.warning(
+                    "Gemini rate limit (attempt %d/%d): retrying in %.1fs",
+                    attempt + 1, gemini_max_retries + 1, wait,
+                )
+                time.sleep(wait)
+                continue
+            if not is_rate_limit and ("quota" in err_msg):
                 raise
             last_error = exc
-            if attempt < MAX_RETRIES:
-                wait = RETRY_BASE_SECONDS * (2 ** attempt)
+            if attempt < gemini_max_retries:
+                wait = RETRY_BASE_SECONDS * (2 ** min(attempt, 4))
                 log.warning(
                     "Gemini API error (attempt %d/%d): %s — retrying in %.1fs",
-                    attempt + 1, MAX_RETRIES + 1, exc, wait,
+                    attempt + 1, gemini_max_retries + 1, exc, wait,
                 )
                 time.sleep(wait)
             else:
@@ -259,6 +273,8 @@ def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
 
 def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
     """Dispatch to the appropriate provider backend."""
+    if config.call_delay > 0:
+        time.sleep(config.call_delay)
     if config.provider == "gemini":
         return _call_gemini(prompt, config)
     return _call_openai(prompt, config)

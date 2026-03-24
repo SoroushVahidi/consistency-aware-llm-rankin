@@ -274,6 +274,7 @@ def main():
         temperature=0.0,
         max_tokens=4,
         debias_position=False,
+        call_delay=4.5,
     )
 
     global_stats = LLMCallStats()
