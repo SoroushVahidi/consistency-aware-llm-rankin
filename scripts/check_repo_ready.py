@@ -155,9 +155,12 @@ def check_committed_tables() -> None:
         "docs/tables/main_results.csv",
         "docs/tables/regime_analysis.csv",
         "docs/tables/bootstrap_results_combined_summary.csv",
-        "outputs/pub_vote_cmp_v2/paper_package/tables/table_graph_ndcg_and_consistency.csv",
-        "outputs/pub_vote_cmp_v2/paper_package/tables/table_bootstrap_delta_ndcg.csv",
-        "outputs/pub_vote_cmp_v2/paper_package/tables/table_consistency_qrels_bew.csv",
+        "outputs/pub_vote_cmp_all4/paper_package/tables/table_graph_ndcg_and_consistency.csv",
+        "outputs/pub_vote_cmp_all4/paper_package/tables/table_bootstrap_delta_ndcg.csv",
+        "outputs/pub_vote_cmp_all4/paper_package/tables/table_consistency_qrels_bew.csv",
+        "outputs/final_jis_package/tables/table_graph_ndcg_and_consistency.csv",
+        "outputs/final_jis_package/tables/table_bootstrap_delta_ndcg.csv",
+        "outputs/final_jis_package/tables/table_consistency_qrels_bew.csv",
     ]
     import csv
 
@@ -178,8 +181,9 @@ def check_output_directories() -> None:
     """Verify output directories exist or can be created."""
     dirs = [
         "outputs",
-        "outputs/pub_vote_cmp_v2",
-        "outputs/pub_vote_cmp_v2/paper_package",
+        "outputs/pub_vote_cmp_all4",
+        "outputs/pub_vote_cmp_all4/paper_package",
+        "outputs/final_jis_package",
         "outputs/q1_journal_package",
         "data/processed",
         "data/raw",

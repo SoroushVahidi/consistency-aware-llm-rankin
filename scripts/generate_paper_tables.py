@@ -278,15 +278,44 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate manuscript-ready evidence tables from committed outputs."
     )
-    parser.add_argument("--q1-dir", type=Path, default=Path("outputs/q1_journal_package"))
+    parser.add_argument(
+        "--q1-dir",
+        type=Path,
+        default=Path("outputs/q1_journal_package"),
+        help=(
+            "Directory containing aggregated Q1 tables. "
+            "For JIS manuscript use, regenerate this directory from "
+            "outputs/pub_vote_cmp_all4 before running this script "
+            "(default: outputs/q1_journal_package)."
+        ),
+    )
     parser.add_argument(
         "--paper-package-dir",
         type=Path,
-        default=Path("outputs/pub_vote_cmp_v2/paper_package"),
+        default=Path("outputs/pub_vote_cmp_all4/paper_package"),
+        help=(
+            "Publication paper_package directory to inventory/reference "
+            "(default: outputs/pub_vote_cmp_all4/paper_package)."
+        ),
     )
-    parser.add_argument("--real-dir", type=Path, default=Path("outputs/real_full"))
-    parser.add_argument("--synthetic-dir", type=Path, default=Path("outputs"))
-    parser.add_argument("--out-dir", type=Path, default=Path("reports/paper_tables"))
+    parser.add_argument(
+        "--real-dir",
+        type=Path,
+        default=Path("outputs/real_full"),
+        help="Directory for real-data non-vote-suite summaries (default: outputs/real_full).",
+    )
+    parser.add_argument(
+        "--synthetic-dir",
+        type=Path,
+        default=Path("outputs"),
+        help="Root directory containing synthetic result families (default: outputs).",
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        default=Path("reports/paper_tables"),
+        help="Output directory for generated manuscript-support tables (default: reports/paper_tables).",
+    )
     return parser.parse_args(argv)
 
 

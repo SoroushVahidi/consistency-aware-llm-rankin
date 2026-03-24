@@ -16,7 +16,7 @@ Supported datasets in this script:
   - optionally ``bright`` when ``--include-bright`` is passed
 
 Example::
-    python scripts/run_publication_vote_suite.py --root outputs/pub_vote_cmp_v2
+    python scripts/run_publication_vote_suite.py --root outputs/pub_vote_cmp_all4
 """
 
 from __future__ import annotations
@@ -77,7 +77,13 @@ def _write_query_ids_from_processed(dataset: str, path: Path, n: int) -> int:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--root", type=Path, default=Path("outputs/pub_vote_cmp_v2"))
+    p.add_argument(
+        "--root",
+        type=Path,
+        default=Path("outputs/pub_vote_cmp_all4"),
+        help="Root output directory for the publication vote suite "
+        "(default: outputs/pub_vote_cmp_all4).",
+    )
     p.add_argument("--scidocs-queries", type=int, default=120)
     p.add_argument("--fiqa-queries", type=int, default=120)
     p.add_argument("--hotpot-queries", type=int, default=70)
