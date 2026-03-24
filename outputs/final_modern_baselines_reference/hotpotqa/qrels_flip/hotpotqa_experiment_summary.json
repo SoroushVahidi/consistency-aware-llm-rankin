@@ -1,0 +1,154 @@
+{
+  "dataset": "hotpotqa",
+  "top_k": 10,
+  "preference_source": "qrels_flip",
+  "preference_source_note": "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts.",
+  "flip_prob": 0.15,
+  "n_processed": 497,
+  "n_skipped": 3,
+  "skipped_reasons": [
+    "no preferences generated from source='qrels_flip'",
+    "no preferences generated from source='qrels_flip'",
+    "no preferences generated from source='qrels_flip'"
+  ],
+  "avg_n_nodes": 9.98,
+  "avg_n_edges": 11.57,
+  "avg_largest_scc": 1.72,
+  "pct_cyclic_graphs": 18.3,
+  "avg_runtime_by_method_s": {
+    "score_sum": 0.002125,
+    "borda": 0.002125,
+    "pagerank": 0.002125,
+    "greedy_fas_topological": 0.002125,
+    "greedy_fas_weighted_balance": 0.002125,
+    "greedy_fas_copeland": 0.002125,
+    "greedy_fas_score_augmented_topological": 0.002125,
+    "fas_balance_score_prior_alpha_beta": 0.002125,
+    "hybrid_rrf_fas_regularized": 0.002125,
+    "hybrid_rrf_balance_a05": 0.002125,
+    "hybrid_rrf_copeland_a03": 0.002125,
+    "hybrid_rrf_priority_topo_a03": 0.002125
+  },
+  "avg_bew_by_method": {
+    "score_sum": 1.756539,
+    "borda": 1.756539,
+    "pagerank": 1.589537,
+    "greedy_fas_topological": 0.261569,
+    "greedy_fas_weighted_balance": 1.698189,
+    "greedy_fas_copeland": 1.698189,
+    "greedy_fas_score_augmented_topological": 0.275654,
+    "fas_balance_score_prior_alpha_beta": 1.72837,
+    "hybrid_rrf_fas_regularized": 1.756539,
+    "hybrid_rrf_balance_a05": 1.754527,
+    "hybrid_rrf_copeland_a03": 1.754527,
+    "hybrid_rrf_priority_topo_a03": 0.285714
+  },
+  "best_method_by_bew": "greedy_fas_topological",
+  "primary_metric": "ndcg_at_k",
+  "avg_primary_by_method": {
+    "score_sum": 1.0,
+    "borda": 1.0,
+    "pagerank": 0.979918,
+    "greedy_fas_topological": 0.677112,
+    "greedy_fas_weighted_balance": 0.989514,
+    "greedy_fas_copeland": 0.989514,
+    "greedy_fas_score_augmented_topological": 0.677474,
+    "fas_balance_score_prior_alpha_beta": 0.997584,
+    "hybrid_rrf_fas_regularized": 1.0,
+    "hybrid_rrf_balance_a05": 0.999838,
+    "hybrid_rrf_copeland_a03": 0.999838,
+    "hybrid_rrf_priority_topo_a03": 0.677676
+  },
+  "best_method_by_primary": "score_sum",
+  "avg_graph_ref_pic_pre": 1.756539,
+  "avg_graph_ref_pic_post": 1.722334,
+  "avg_graph_ref_bew_pre": 1.756539,
+  "avg_graph_ref_bew_post": 1.722334,
+  "avg_fas_removed_weight": 0.285714,
+  "global_timings": {
+    "preference_source_loading": {
+      "total_s": 1e-06,
+      "mean_s": 1e-06
+    },
+    "dataset_loading": {
+      "total_s": 0.36925,
+      "mean_s": 0.36925
+    },
+    "candidate_selection": {
+      "total_s": 0.034383,
+      "mean_s": 0.034383
+    },
+    "pairwise_preference_generation": {
+      "total_s": 0.024166,
+      "mean_s": 4.9e-05
+    },
+    "graph_construction": {
+      "total_s": 0.011872,
+      "mean_s": 2.4e-05
+    },
+    "cycle_detection": {
+      "total_s": 0.005715,
+      "mean_s": 1.1e-05
+    },
+    "greedy_fas_solver": {
+      "total_s": 0.095792,
+      "mean_s": 0.000193
+    },
+    "ranking_score_sum": {
+      "total_s": 0.004549,
+      "mean_s": 9e-06
+    },
+    "ranking_borda": {
+      "total_s": 0.003886,
+      "mean_s": 8e-06
+    },
+    "ranking_pagerank": {
+      "total_s": 0.642652,
+      "mean_s": 0.001293
+    },
+    "ranking_topological": {
+      "total_s": 0.012417,
+      "mean_s": 2.5e-05
+    },
+    "ranking_fas_weighted_balance": {
+      "total_s": 0.005853,
+      "mean_s": 1.2e-05
+    },
+    "ranking_fas_copeland": {
+      "total_s": 0.005771,
+      "mean_s": 1.2e-05
+    },
+    "ranking_fas_balance_score_prior_alpha_beta": {
+      "total_s": 0.009555,
+      "mean_s": 1.9e-05
+    },
+    "ranking_fas_score_augmented_topological": {
+      "total_s": 0.007853,
+      "mean_s": 1.6e-05
+    },
+    "ranking_hybrid_rrf_fas_regularized": {
+      "total_s": 0.007471,
+      "mean_s": 1.5e-05
+    },
+    "ranking_hybrid_rrf_balance_a05": {
+      "total_s": 0.005979,
+      "mean_s": 1.2e-05
+    },
+    "ranking_hybrid_rrf_copeland_a03": {
+      "total_s": 0.006166,
+      "mean_s": 1.2e-05
+    },
+    "ranking_hybrid_rrf_priority_topo_a03": {
+      "total_s": 0.011703,
+      "mean_s": 2.4e-05
+    },
+    "evaluation": {
+      "total_s": 0.194931,
+      "mean_s": 0.000392
+    },
+    "total_pipeline": {
+      "total_s": 1.232323,
+      "mean_s": 1.232323
+    }
+  }
+}

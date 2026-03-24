@@ -417,6 +417,8 @@ def parse_args(argv=None):
     )
     parser.add_argument("--dry-run", action="store_true",
                         help="Use mock LLM judgments (no API key needed).")
+    parser.add_argument("--no-llm", action="store_true",
+                        help="Skip LLM baselines (pointwise, pairwise, listwise).")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--query-id-file", type=Path, default=None)
     return parser.parse_args(argv)
@@ -430,6 +432,8 @@ def main(argv=None):
     output_dir.mkdir(parents=True, exist_ok=True)
 
     baselines_to_run = list(BASELINES) if args.baseline == "all" else [args.baseline]
+    if args.no_llm:
+        baselines_to_run = [b for b in baselines_to_run if not b.startswith("llm_")]
 
     print(f"\n{'=' * 65}")
     print(f"  Modern Baselines — {dataset.upper()}")
