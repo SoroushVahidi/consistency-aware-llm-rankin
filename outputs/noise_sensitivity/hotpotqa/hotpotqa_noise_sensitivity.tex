@@ -1,0 +1,22 @@
+\begin{table}[ht]
+\centering
+\caption{Noise sensitivity on HOTPOTQA (nDCG@10)}
+\label{tab:noise_sensitivity_hotpotqa}
+\begin{tabular}{lccccccc}
+\toprule
+Method & 0.00 & 0.05 & 0.10 & 0.15 & 0.20 & 0.25 & 0.30 \\
+\midrule
+score\_sum & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.9996 & 0.9993 \\
+borda & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.9996 & 0.9993 \\
+copeland\_unrepaired & 1.0000 & 0.9998 & 0.9993 & 0.9905 & 0.9669 & 0.9275 & 0.8689 \\
+pagerank & 1.0000 & 0.9865 & 0.9837 & 0.9799 & 0.9775 & 0.9797 & 0.9810 \\
+greedy\_fas\_topological & 1.0000 & 0.8801 & 0.7725 & 0.6771 & 0.6136 & 0.5634 & 0.5183 \\
+greedy\_fas\_weighted\_balance & 1.0000 & 0.9998 & 0.9991 & 0.9895 & 0.9613 & 0.9156 & 0.8493 \\
+greedy\_fas\_copeland & 1.0000 & 0.9998 & 0.9991 & 0.9895 & 0.9613 & 0.9156 & 0.8493 \\
+bt\_aggregation & 1.0000 & 0.8897 & 0.7995 & 0.7251 & 0.6657 & 0.6143 & 0.5635 \\
+win\_rate\_aggregation & 1.0000 & 0.9047 & 0.8242 & 0.7577 & 0.7010 & 0.6513 & 0.5978 \\
+markov\_aggregation & 1.0000 & 0.9865 & 0.9837 & 0.9799 & 0.9775 & 0.9797 & 0.9810 \\
+tournament\_sort\_aggregation & 1.0000 & 0.9352 & 0.8713 & 0.8097 & 0.7603 & 0.7032 & 0.6483 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,29 @@
+{
+  "dataset": "hotpotqa",
+  "max_queries": 500,
+  "top_k": 10,
+  "seed": 42,
+  "noise_levels": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "n_queries": 498,
+  "methods": [
+    "score_sum",
+    "borda",
+    "copeland_unrepaired",
+    "pagerank",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "bt_aggregation",
+    "win_rate_aggregation",
+    "markov_aggregation",
+    "tournament_sort_aggregation"
+  ]
+}

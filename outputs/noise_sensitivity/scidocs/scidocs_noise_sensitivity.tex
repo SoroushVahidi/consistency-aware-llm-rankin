@@ -1,0 +1,22 @@
+\begin{table}[ht]
+\centering
+\caption{Noise sensitivity on SCIDOCS (nDCG@20)}
+\label{tab:noise_sensitivity_scidocs}
+\begin{tabular}{lccccccc}
+\toprule
+Method & 0.00 & 0.05 & 0.10 & 0.15 & 0.20 & 0.25 & 0.30 \\
+\midrule
+score\_sum & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 \\
+borda & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 1.0000 \\
+copeland\_unrepaired & 1.0000 & 1.0000 & 1.0000 & 0.9999 & 0.9988 & 0.9956 & 0.9842 \\
+pagerank & 1.0000 & 0.9461 & 0.9316 & 0.9299 & 0.9448 & 0.9638 & 0.9746 \\
+greedy\_fas\_topological & 1.0000 & 0.9759 & 0.9572 & 0.9358 & 0.9156 & 0.8873 & 0.8473 \\
+greedy\_fas\_weighted\_balance & 1.0000 & 1.0000 & 0.9999 & 0.9991 & 0.9951 & 0.9849 & 0.9599 \\
+greedy\_fas\_copeland & 1.0000 & 1.0000 & 0.9999 & 0.9991 & 0.9951 & 0.9849 & 0.9599 \\
+bt\_aggregation & 1.0000 & 0.9866 & 0.9732 & 0.9500 & 0.9204 & 0.8813 & 0.8331 \\
+win\_rate\_aggregation & 1.0000 & 1.0000 & 0.9997 & 0.9982 & 0.9930 & 0.9775 & 0.9412 \\
+markov\_aggregation & 1.0000 & 0.9461 & 0.9316 & 0.9299 & 0.9448 & 0.9638 & 0.9746 \\
+tournament\_sort\_aggregation & 0.8059 & 0.7815 & 0.7574 & 0.7280 & 0.7098 & 0.6829 & 0.6575 \\
+\bottomrule
+\end{tabular}
+\end{table}
