@@ -1,0 +1,29 @@
+{
+  "label": "REAL OPENAI POINTWISE RUN (10 queries) \u2014 NOT mock",
+  "dataset": "hotpotqa",
+  "baseline": "llm_pointwise",
+  "provider": "openai",
+  "max_queries": 10,
+  "top_k": 15,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "temperature": 0.0,
+  "dry_run": false,
+  "n_queries_processed": 10,
+  "partial_run": false,
+  "api_error": null,
+  "cache_dir": "outputs/openai_hotpotqa_real_pointwise_q10_k15/judgment_cache",
+  "api_stats": {
+    "api_calls": 100,
+    "cache_hits": 0,
+    "prompt_tokens": 29518,
+    "completion_tokens": 100,
+    "total_tokens": 29618,
+    "parse_failures": 0
+  },
+  "wall_time_s": 66.4,
+  "cost_estimate_usd": 0.0045,
+  "score_file": "outputs/openai_hotpotqa_real_pointwise_q10_k15/pointwise_scores.jsonl",
+  "per_query_csv": "outputs/openai_hotpotqa_real_pointwise_q10_k15/pointwise_per_query.csv",
+  "summary_csv": "outputs/openai_hotpotqa_real_pointwise_q10_k15/pointwise_summary.csv"
+}

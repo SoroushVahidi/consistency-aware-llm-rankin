@@ -1,0 +1,6 @@
+dataset,query_id,method,n_candidates,ndcg_at_k,map_at_k,precision_at_k,recall_at_k,backward_edge_weight,pairwise_inconsistency,api_calls,cache_hits,prompt_tokens,completion_tokens,total_tokens,parse_failures
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,llm_listwise,15,1.0,1.0,0.333333,1.0,0,0,1,0,1395,59,1454,0
+scidocs,7526f88d4ee7a380fecd05c1f92208ad94605cec,llm_listwise,15,0.929467,0.816667,0.266667,1.0,11.0,11,1,0,1440,59,1499,0
+scidocs,dc344ea8e993584b924522d95febaeb74de2ad30,llm_listwise,15,1.0,1.0,0.333333,1.0,0,0,1,0,1519,59,1578,0
+scidocs,e5adfc2f23602a5256e89b84615e1434e5375f0e,llm_listwise,15,0.906825,0.81,0.333333,1.0,4.0,4,1,0,1545,59,1604,0
+scidocs,09109a5375d8e2ca752bedde17ba5acad1df61cb,llm_listwise,15,1.0,1.0,0.333333,1.0,0,0,1,0,1503,55,1558,0

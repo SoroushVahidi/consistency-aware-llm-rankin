@@ -1,0 +1,29 @@
+{
+  "figures": [
+    "figure_1_pipeline_diagram.pdf",
+    "figure_1_pipeline_diagram.png",
+    "figure_2_cyclicity_comparison.pdf",
+    "figure_2_cyclicity_comparison.png",
+    "figure_3_repair_effect_ndcg.pdf",
+    "figure_3_repair_effect_ndcg.png",
+    "figure_4_structural_retrieval_tradeoff.pdf",
+    "figure_4_structural_retrieval_tradeoff.png",
+    "figure_5_llm_paradigm_comparison.pdf",
+    "figure_5_llm_paradigm_comparison.png"
+  ],
+  "tables": [
+    "table_1_main_performance.csv",
+    "table_1_main_performance.tex",
+    "table_2_repair_deltas.csv",
+    "table_2_repair_deltas.tex",
+    "table_3_cyclicity_statistics.csv",
+    "table_3_cyclicity_statistics.tex",
+    "table_4_llm_paradigm_comparison.csv",
+    "table_4_llm_paradigm_comparison.tex"
+  ],
+  "graphical_abstract": [
+    "graphical_abstract.pdf",
+    "graphical_abstract.png"
+  ],
+  "deletions": []
+}

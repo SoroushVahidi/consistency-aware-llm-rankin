@@ -1,0 +1,5 @@
+dataset,comparison,delta_ndcg_repaired_minus_unrepaired,delta_bew_unrepaired_minus_repaired,delta_pic_unrepaired_minus_repaired
+scidocs,Copeland,-0.0003,+0.15,+0.15
+scidocs,Balance,-0.0003,+0.15,+0.15
+hotpotqa,Copeland,-0.0070,+0.20,+0.20
+hotpotqa,Balance,-0.0070,+0.20,+0.20

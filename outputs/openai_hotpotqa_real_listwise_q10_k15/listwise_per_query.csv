@@ -1,0 +1,11 @@
+dataset,query_id,method,n_candidates,ndcg_at_k,map_at_k,precision_at_k,recall_at_k,backward_edge_weight,pairwise_inconsistency,api_calls,cache_hits,prompt_tokens,completion_tokens,total_tokens,parse_failures
+hotpotqa,5a88a42f554299206df2b317,llm_listwise,10,1.0,1.0,0.2,1.0,0,0,1,0,1061,39,1100,0
+hotpotqa,5ae663b05542992ae0d16316,llm_listwise,10,1.0,1.0,0.1,1.0,0,0,1,0,1266,39,1305,0
+hotpotqa,5ab6993f554299110f219a2b,llm_listwise,10,0.63093,0.5,0.1,1.0,1.0,1,1,0,856,39,895,0
+hotpotqa,5ab7948b5542995dae37e969,llm_listwise,10,1.0,1.0,0.2,1.0,0,0,1,0,1042,39,1081,0
+hotpotqa,5ac560235542993e66e82396,llm_listwise,10,0.356207,0.166667,0.1,1.0,5.0,5,1,0,1137,35,1172,0
+hotpotqa,5a72b8de5542994cef4bc3df,llm_listwise,10,1.0,1.0,0.1,1.0,0,0,1,0,1176,39,1215,0
+hotpotqa,5ae18d615542997283cd2229,llm_listwise,10,1.0,1.0,0.1,1.0,0,0,1,0,991,39,1030,0
+hotpotqa,5a866b5b554299211dda2b23,llm_listwise,10,1.0,1.0,0.1,1.0,0,0,1,0,1309,39,1348,0
+hotpotqa,5ae504a855429908b63264df,llm_listwise,10,1.0,1.0,0.2,1.0,0,0,1,0,1291,39,1330,0
+hotpotqa,5a7a1b845542990783324e5f,llm_listwise,10,1.0,1.0,0.1,1.0,0,0,1,0,1230,39,1269,0

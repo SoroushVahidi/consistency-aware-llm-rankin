@@ -21,6 +21,7 @@ from rerankers.llm_listwise import rerank_query as lw_rerank
 from rerankers.llm_pairwise import PairwiseConfig, collect_all_pairs
 from rerankers.llm_pairwise import rerank_query as pw_rerank
 from rerankers.llm_pointwise import PointwiseConfig
+from rerankers.llm_pointwise import score_document as pointwise_score_document
 from rerankers.llm_pointwise import rerank_query as pt_rerank
 from rerankers.tournament_agg import (
     aggregate_preferences,
@@ -171,6 +172,30 @@ class TestLLMPointwiseDryRun:
         assert set(result.ranked_doc_ids) == {"d1", "d2", "d3"}
         assert result.metadata["dry_run"] is True
 
+    def test_cache_is_query_aware(self, tmp_path):
+        cache = JudgmentCache(tmp_path, "llm_pointwise")
+        config = PointwiseConfig(dry_run=True, seed=42)
+        score_q1 = pointwise_score_document(
+            "q1",
+            "query one",
+            "d1",
+            "shared document",
+            config=config,
+            cache=cache,
+        )
+        score_q2 = pointwise_score_document(
+            "q2",
+            "query two",
+            "d1",
+            "shared document",
+            config=config,
+            cache=cache,
+        )
+        assert len(cache) == 2
+        assert cache.get("q1", ["d1"]) is not None
+        assert cache.get("q2", ["d1"]) is not None
+        assert score_q1 != score_q2
+
 
 class TestLLMPairwiseDryRun:
     def test_dry_run_produces_ranking(self):
@@ -203,6 +228,41 @@ class TestLLMListwiseDryRun:
         config = ListwiseConfig(dry_run=True, seed=42, window_size=5, step_size=3)
         result = lw_rerank("q1", "test query", candidates, config=config)
         assert len(result.ranked_doc_ids) == 15
+
+    def test_cache_writes_for_real_listwise_windows(self, monkeypatch, tmp_path):
+        responses = iter([
+            "[5] > [4] > [3] > [2] > [1]",
+            "[2] > [1] > [5] > [4] > [3]",
+            "[5] > [4] > [3] > [2] > [1]",
+            "[2] > [1] > [5] > [4] > [3]",
+        ])
+
+        class Usage:
+            prompt_tokens = 11
+            completion_tokens = 7
+            total_tokens = 18
+
+        def fake_call_llm(prompt, config):
+            return next(responses), Usage()
+
+        monkeypatch.setattr("rerankers.llm_listwise._call_llm", fake_call_llm)
+
+        candidates = [(f"d{i}", f"text {i}") for i in range(10)]
+        config = ListwiseConfig(
+            dry_run=False,
+            window_size=5,
+            step_size=3,
+            cache_dir=tmp_path,
+        )
+        first = lw_rerank("q1", "test query", candidates, config=config)
+        second = lw_rerank("q1", "test query", candidates, config=config)
+
+        assert first.ranked_doc_ids == second.ranked_doc_ids
+        assert first.metadata["api_stats"]["api_calls"] == 3
+        assert second.metadata["api_stats"]["api_calls"] == 0
+        assert second.metadata["api_stats"]["cache_hits"] == 3
+        cache_file = tmp_path / "llm_listwise_judgments.jsonl"
+        assert cache_file.exists()
 
 
 class TestCrossEncoderConfig:

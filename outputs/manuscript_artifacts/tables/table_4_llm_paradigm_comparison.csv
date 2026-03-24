@@ -1,0 +1,4 @@
+paradigm,scidocs_ndcg,scidocs_map,evidence_status,api_calls,cost_usd,runtime_s
+Pointwise,0.6061,0.3635,mock,--,--,--
+Pairwise,0.9566,0.9141,real,2100,0.1466,1219.0
+Listwise,0.6474,0.4488,mock,--,--,--

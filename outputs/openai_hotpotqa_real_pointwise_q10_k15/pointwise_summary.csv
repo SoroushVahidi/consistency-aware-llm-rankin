@@ -1,0 +1,2 @@
+method,n_queries,ndcg_mean,map_mean,precision_mean,recall_mean,bew_mean,pic_mean
+llm_pointwise,10,0.8262,0.7542,0.13,1.0,1.2,1.2
