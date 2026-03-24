@@ -21,7 +21,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib import patches  # noqa: E402
+from matplotlib import patches, ticker as mticker  # noqa: E402
+from matplotlib.lines import Line2D  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT_ROOT = REPO_ROOT / "outputs" / "manuscript_artifacts"
@@ -410,6 +411,7 @@ def build_table_4(tracked: set[str]) -> None:
 
 def build_figures(tracked: set[str]) -> None:
     FIG_DIR.mkdir(parents=True, exist_ok=True)
+    dataset_display = {"scidocs": "SciDocs", "hotpotqa": "HotpotQA"}
 
     # Figure 1: pipeline diagram
     fig, ax = plt.subplots(figsize=(9, 3))
@@ -432,55 +434,329 @@ def build_figures(tracked: set[str]) -> None:
 
     # Figure 2: cyclicity comparison
     cyc_rows = _read_csv(TABLE_DIR / "table_3_cyclicity_statistics.csv")
-    order = ["scidocs-qrels", "scidocs-llm_pairwise", "scidocs-publication_votes_ms1", "hotpotqa-qrels", "hotpotqa-llm_pairwise", "hotpotqa-publication_votes_ms1"]
-    labels = []
-    vals = []
-    for key in order:
-        ds, regime = key.split("-", 1)
+    order = [
+        ("scidocs", "qrels", 0.0),
+        ("scidocs", "llm_pairwise", 1.15),
+        ("scidocs", "publication_votes_ms1", 2.3),
+        ("hotpotqa", "qrels", 4.1),
+        ("hotpotqa", "llm_pairwise", 5.25),
+        ("hotpotqa", "publication_votes_ms1", 6.4),
+    ]
+    label_map = {
+        "qrels": "Qrels",
+        "llm_pairwise": "Pairwise\nLLM",
+        "publication_votes_ms1": "Publication\nvotes\n(ms1)",
+    }
+    color_map = {
+        "qrels": "#94a3b8",
+        "llm_pairwise": "#2563eb",
+        "publication_votes_ms1": "#7c3aed",
+    }
+    x_positions: list[float] = []
+    labels: list[str] = []
+    vals: list[float] = []
+    colors: list[str] = []
+    for ds, regime, xpos in order:
         row = next((r for r in cyc_rows if r["dataset"] == ds and r["regime"] == regime), None)
         if row is None:
             continue
-        labels.append(f"{ds}\n{regime}")
+        x_positions.append(xpos)
+        labels.append(label_map[regime])
         vals.append(float(row["pct_cyclic_queries"]))
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.bar(labels, vals, color=["#94a3b8", "#2563eb", "#7c3aed", "#94a3b8", "#2563eb", "#7c3aed"][: len(vals)])
+        colors.append(color_map[regime])
+    fig, ax = plt.subplots(figsize=(9.1, 4.8))
+    ax.bar(
+        x_positions,
+        vals,
+        width=0.8,
+        color=colors,
+        edgecolor="#475569",
+        linewidth=0.5,
+    )
+    ax.set_xticks(x_positions)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.tick_params(axis="x", pad=8)
     ax.set_ylabel("% cyclic queries")
     ax.set_ylim(0, 105)
-    ax.set_title("Cyclicity comparison across tracked regimes")
-    fig.tight_layout()
+    ax.set_xlim(-0.7, 7.1)
+    ax.set_title("Cyclicity comparison across tracked regimes", fontsize=11, pad=10)
+    ax.yaxis.grid(True, linestyle=":", linewidth=0.8, alpha=0.4)
+    ax.set_axisbelow(True)
+    ax.axvline(3.25, color="#cbd5e1", linewidth=1.0)
+    ax.text(
+        1.15,
+        -0.24,
+        dataset_display["scidocs"],
+        transform=ax.get_xaxis_transform(),
+        ha="center",
+        va="top",
+        fontsize=10,
+        fontweight="bold",
+    )
+    ax.text(
+        5.25,
+        -0.24,
+        dataset_display["hotpotqa"],
+        transform=ax.get_xaxis_transform(),
+        ha="center",
+        va="top",
+        fontsize=10,
+        fontweight="bold",
+    )
+    fig.tight_layout(rect=[0, 0.08, 1, 0.97])
     _save_figure(fig, "figure_2_cyclicity_comparison")
 
     # Figure 3: repair effect on nDCG
     delta_rows = _read_csv(TABLE_DIR / "table_2_repair_deltas.csv")
-    labels = [f"{r['dataset']}\n{r['comparison']}" for r in delta_rows]
+    delta_positions = [0.0, 1.1, 3.0, 4.1]
+    tick_labels = [r["comparison"] for r in delta_rows]
     vals = [float(r["delta_ndcg_repaired_minus_unrepaired"]) for r in delta_rows]
-    fig, ax = plt.subplots(figsize=(6.5, 4))
-    colors = ["#dc2626" if v < 0 else "#16a34a" for v in vals]
-    ax.bar(labels, vals, color=colors)
-    ax.axhline(0, color="black", lw=0.8)
+    datasets = [r["dataset"] for r in delta_rows]
+    colors = [
+        "#fca5a5" if dataset == "scidocs" else "#dc2626"
+        for dataset in datasets
+    ]
+    hatches = ["", "//", "", "//"]
+    fig, ax = plt.subplots(figsize=(7.2, 4.5))
+    bars = ax.bar(
+        delta_positions,
+        vals,
+        width=0.78,
+        color=colors,
+        edgecolor="#7f1d1d",
+        linewidth=0.6,
+    )
+    for bar, hatch in zip(bars, hatches):
+        bar.set_hatch(hatch)
+    ax.set_xticks(delta_positions)
+    ax.set_xticklabels(tick_labels, fontsize=9)
+    ax.tick_params(axis="x", pad=8)
+    ax.axhline(0, color="#0f172a", lw=1.0, linestyle="--", zorder=3)
     ax.set_ylabel(r"$\Delta$ nDCG (repaired - unrepaired)")
-    ax.set_title("Repair effect on nDCG from tracked real pairwise runs")
-    fig.tight_layout()
+    ax.set_title("Repair effect on nDCG from tracked real pairwise runs", fontsize=11, pad=10)
+    ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.4f"))
+    ax.yaxis.grid(True, linestyle=":", linewidth=0.8, alpha=0.4)
+    ax.set_axisbelow(True)
+    ymin = min(vals)
+    ymax = max(vals)
+    ax.set_ylim(ymin - 0.0012, max(0.0015, ymax + 0.0010))
+    ax.set_xlim(-0.7, 4.8)
+    ax.text(
+        0.55,
+        -0.18,
+        dataset_display["scidocs"],
+        transform=ax.get_xaxis_transform(),
+        ha="center",
+        va="top",
+        fontsize=10,
+        fontweight="bold",
+    )
+    ax.text(
+        3.55,
+        -0.18,
+        dataset_display["hotpotqa"],
+        transform=ax.get_xaxis_transform(),
+        ha="center",
+        va="top",
+        fontsize=10,
+        fontweight="bold",
+    )
+    for xpos, val in zip(delta_positions, vals):
+        ax.text(
+            xpos,
+            val - 0.00025,
+            f"{val:+.4f}",
+            ha="center",
+            va="top",
+            fontsize=8.5,
+            color="#7f1d1d",
+        )
+    fig.tight_layout(rect=[0, 0.06, 1, 0.97])
     _save_figure(fig, "figure_3_repair_effect_ndcg")
 
     # Figure 4: structural vs retrieval tradeoff
     pair_sc = _read_csv(REPO_ROOT / "outputs/openai_scidocs_real_run_q20_k15/openai_summary.csv")
     pair_hp = _read_csv(REPO_ROOT / "outputs/openai_hotpotqa_real_run_q10_k15/openai_summary.csv")
-    fig, ax = plt.subplots(figsize=(6.5, 4.5))
-    for rows, dataset, marker in [(pair_sc, "SciDocs", "o"), (pair_hp, "HotpotQA", "s")]:
-        for repaired, unrepaired, color in [
-            ("hybrid_rrf_repaired_copeland_a03", "hybrid_rrf_unrepaired_copeland_a03", "#16a34a"),
-            ("hybrid_rrf_repaired_balance_a03", "hybrid_rrf_unrepaired_balance_a03", "#dc2626"),
-        ]:
-            rr = next(r for r in rows if r["method"] == repaired)
-            uu = next(r for r in rows if r["method"] == unrepaired)
-            ax.scatter(float(uu["bew_mean"]), float(uu["ndcg_mean"]), marker=marker, color=color, alpha=0.45)
-            ax.scatter(float(rr["bew_mean"]), float(rr["ndcg_mean"]), marker=marker, edgecolors="black", facecolors=color)
-            ax.annotate("", xy=(float(rr["bew_mean"]), float(rr["ndcg_mean"])), xytext=(float(uu["bew_mean"]), float(uu["ndcg_mean"])), arrowprops=dict(arrowstyle="->", color=color, lw=1))
-    ax.set_xlabel("BEW")
+    fig, ax = plt.subplots(figsize=(7.1, 4.8))
+    dataset_styles = {
+        "SciDocs": {"marker": "o"},
+        "HotpotQA": {"marker": "s"},
+    }
+    comparison_styles = {
+        "Copeland": {
+            "repaired": "hybrid_rrf_repaired_copeland_a03",
+            "unrepaired": "hybrid_rrf_unrepaired_copeland_a03",
+            "color": "#16a34a",
+            "rad": 0.14,
+            "s_unrepaired": 100,
+            "s_repaired": 72,
+        },
+        "Balance": {
+            "repaired": "hybrid_rrf_repaired_balance_a03",
+            "unrepaired": "hybrid_rrf_unrepaired_balance_a03",
+            "color": "#dc2626",
+            "rad": -0.14,
+            "s_unrepaired": 138,
+            "s_repaired": 104,
+        },
+    }
+    point_offsets = {
+        ("SciDocs", "Unrepaired"): (6, 10),
+        ("SciDocs", "Repaired"): (-52, -14),
+        ("HotpotQA", "Unrepaired"): (6, 8),
+        ("HotpotQA", "Repaired"): (-54, -14),
+    }
+    arrow_offsets = {
+        ("SciDocs", "Copeland"): (-20, 14),
+        ("SciDocs", "Balance"): (-18, -16),
+        ("HotpotQA", "Copeland"): (-16, 14),
+        ("HotpotQA", "Balance"): (-16, -18),
+    }
+    annotated_points: set[tuple[str, str]] = set()
+    all_x: list[float] = []
+    all_y: list[float] = []
+    for rows, dataset in [(pair_sc, "SciDocs"), (pair_hp, "HotpotQA")]:
+        marker = dataset_styles[dataset]["marker"]
+        for comparison, cfg in comparison_styles.items():
+            repaired = next(r for r in rows if r["method"] == cfg["repaired"])
+            unrepaired = next(r for r in rows if r["method"] == cfg["unrepaired"])
+            ux = float(unrepaired["bew_mean"])
+            uy = float(unrepaired["ndcg_mean"])
+            rx = float(repaired["bew_mean"])
+            ry = float(repaired["ndcg_mean"])
+            all_x.extend([ux, rx])
+            all_y.extend([uy, ry])
+            ax.scatter(
+                ux,
+                uy,
+                marker=marker,
+                s=cfg["s_unrepaired"],
+                facecolors="white",
+                edgecolors=cfg["color"],
+                linewidths=1.5,
+                zorder=3,
+            )
+            ax.scatter(
+                rx,
+                ry,
+                marker=marker,
+                s=cfg["s_repaired"],
+                facecolors=cfg["color"],
+                edgecolors="black",
+                linewidths=0.8,
+                zorder=4,
+            )
+            ax.annotate(
+                "",
+                xy=(rx, ry),
+                xytext=(ux, uy),
+                arrowprops=dict(
+                    arrowstyle="->",
+                    color=cfg["color"],
+                    lw=1.2,
+                    connectionstyle=f"arc3,rad={cfg['rad']}",
+                ),
+                zorder=2,
+            )
+            mx = (ux + rx) / 2
+            my = (uy + ry) / 2
+            ax.annotate(
+                f"{dataset} {comparison}",
+                xy=(mx, my),
+                xytext=arrow_offsets[(dataset, comparison)],
+                textcoords="offset points",
+                ha="center",
+                va="center",
+                fontsize=8,
+                color=cfg["color"],
+                bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.85),
+            )
+            for state, px, py in [("Unrepaired", ux, uy), ("Repaired", rx, ry)]:
+                key = (dataset, state)
+                if key in annotated_points:
+                    continue
+                annotated_points.add(key)
+                ax.annotate(
+                    f"{dataset} {state[0]}",
+                    xy=(px, py),
+                    xytext=point_offsets[key],
+                    textcoords="offset points",
+                    fontsize=8.5,
+                    color="#1f2937",
+                )
+    ax.set_xlabel("Mean backward-edge weight (BEW)")
     ax.set_ylabel("nDCG")
-    ax.set_title("Structural vs retrieval tradeoff (tracked real pairwise runs)")
-    fig.tight_layout()
+    ax.set_title("Structural vs retrieval tradeoff (tracked real pairwise runs)", fontsize=11, pad=10)
+    ax.grid(True, linestyle=":", linewidth=0.8, alpha=0.35)
+    ax.set_axisbelow(True)
+    x_pad = max(0.15, (max(all_x) - min(all_x)) * 0.18)
+    y_pad = max(0.004, (max(all_y) - min(all_y)) * 0.18)
+    ax.set_xlim(min(all_x) - x_pad, max(all_x) + x_pad)
+    ax.set_ylim(min(all_y) - y_pad, max(all_y) + y_pad)
+    dataset_handles = [
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="none",
+            markerfacecolor="#94a3b8",
+            markeredgecolor="#334155",
+            markersize=7,
+            label="SciDocs",
+        ),
+        Line2D(
+            [0],
+            [0],
+            marker="s",
+            color="none",
+            markerfacecolor="#94a3b8",
+            markeredgecolor="#334155",
+            markersize=7,
+            label="HotpotQA",
+        ),
+    ]
+    encoding_handles = [
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="none",
+            markerfacecolor="white",
+            markeredgecolor="#475569",
+            markersize=7,
+            label="Unrepaired",
+        ),
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="none",
+            markerfacecolor="#94a3b8",
+            markeredgecolor="black",
+            markersize=7,
+            label="Repaired",
+        ),
+        Line2D([0, 1], [0, 0], color="#16a34a", lw=1.5, label="Copeland"),
+        Line2D([0, 1], [0, 0], color="#dc2626", lw=1.5, label="Balance"),
+    ]
+    legend1 = ax.legend(
+        handles=dataset_handles,
+        loc="upper left",
+        frameon=False,
+        fontsize=8,
+        title="Dataset",
+        title_fontsize=9,
+    )
+    ax.add_artist(legend1)
+    ax.legend(
+        handles=encoding_handles,
+        loc="lower right",
+        frameon=False,
+        fontsize=8,
+        title="Encoding",
+        title_fontsize=9,
+    )
+    fig.tight_layout(rect=[0, 0.02, 1, 0.97])
     _save_figure(fig, "figure_4_structural_retrieval_tradeoff")
 
     # Figure 5: LLM paradigm comparison

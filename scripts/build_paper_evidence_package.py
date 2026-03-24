@@ -214,7 +214,7 @@ def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
         lines2, lab2 = ax2.get_legend_handles_labels()
         ax.legend(lines1 + lines2, lab1 + lab2, loc="upper right", fontsize=8)
     fig.tight_layout()
-    fig.savefig(outdir / "fig_cyclicity_and_scc.png", dpi=200)
+    fig.savefig(outdir / "fig_cyclicity_and_scc.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -356,7 +356,7 @@ def plot_qrels_bew(agg: list[dict], outdir: Path) -> None:
         fontsize=11,
     )
     fig.tight_layout(rect=(0, 0, 1, 0.9))
-    fig.savefig(outdir / "fig_graph_qrels_bew_pre_post.png", dpi=200)
+    fig.savefig(outdir / "fig_graph_qrels_bew_pre_post.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
