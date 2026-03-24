@@ -16,7 +16,7 @@ dominant factor determining cycle prevalence in multi-ranker preference graphs.
 | Support level | **Strong** |
 | Supporting scripts | `scripts/run_publication_vote_suite.py`, `scripts/diagnose_vote_graph_cycles.py` |
 | Supporting output files | `outputs/pub_vote_cmp_v2/paper_package/tables/table_graph_ndcg_and_consistency.csv` |
-| Supporting report files | `outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`, `docs/FINAL_PROJECT_STATE.md` |
+| Supporting report files | `outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md` |
 | Key numbers | SciDocs: ms2 → 1.68% cyclic; ms1 → 97.5% cyclic; ms1_drop_mutual → 9.17% cyclic |
 | What would upgrade it | Replicate on FiQA and BRIGHT datasets (REAL-3, REAL-4) |
 
@@ -128,7 +128,7 @@ largest under uniform edge weights.
 | Support level | **Strong** |
 | Supporting scripts | `scripts/run_synthetic.py`, `scripts/build_results_audit_artifacts.py` |
 | Supporting output files | Individual `outputs/*/synthetic_results.json` files |
-| Supporting report files | `docs/tables/main_results.csv`, `docs/RESULTS_AUDIT.md` |
+| Supporting report files | `docs/tables/main_results.csv` |
 | Key numbers | Scale sweep n=100: borda τ=0.932, score_sum τ=0.896, greedy_fas_topological τ=0.549 |
 | Limitation | Synthetic only; no corresponding real-data Kendall τ |
 | What would upgrade it | Report Kendall τ for real-data rankings vs qrels-derived reference |

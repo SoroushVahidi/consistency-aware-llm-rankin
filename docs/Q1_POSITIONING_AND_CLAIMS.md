@@ -93,7 +93,7 @@ The CI always includes zero and effect sizes are negligible (|Δ| < 0.0001).
 (n=10–100), `borda` and `score_sum` achieve higher Kendall τ than
 `greedy_fas_topological`.  The gap is largest under uniform edge weights.
 
-**Primary evidence:** `docs/tables/main_results.csv`, `docs/RESULTS_AUDIT.md`
+**Primary evidence:** `docs/tables/main_results.csv`
 
 ---
 

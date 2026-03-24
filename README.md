@@ -66,23 +66,18 @@ reproduction guide including real-data experiments.
 | Document | Description |
 |---|---|
 | [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | **Start here** — orientation for humans and AI assistants |
-| [`docs/Q1_JOURNAL_GAP_ANALYSIS.md`](docs/Q1_JOURNAL_GAP_ANALYSIS.md) | Rigorous audit of the repo against Q1 journal standards |
-| [`docs/Q1_PUBLICATION_GAP_ANALYSIS.md`](docs/Q1_PUBLICATION_GAP_ANALYSIS.md) | Current hardening-pass publication gap analysis with explicit action list |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | Exact commands to reproduce all tables and figures |
+| [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
 | [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing |
-| [`docs/Q1_CLAIM_EVIDENCE_MAP.md`](docs/Q1_CLAIM_EVIDENCE_MAP.md) | Claim-by-claim mapping to scripts/artifacts/support levels |
+| [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing |
 | [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims |
+| [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels |
 | [`docs/JOURNAL_READY_CONTRIBUTIONS.md`](docs/JOURNAL_READY_CONTRIBUTIONS.md) | Candidate journal-style contribution statements |
 | [`docs/RESULTS_FOR_PAPER.md`](docs/RESULTS_FOR_PAPER.md) | What to include vs avoid in manuscript results section |
 | [`docs/THREATS_TO_VALIDITY.md`](docs/THREATS_TO_VALIDITY.md) | Structured threats-to-validity section draft |
-| [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | New analysis family to generate `reports/paper_tables/` |
+| [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | Guide for generating `reports/paper_tables/` |
+| [`docs/experiment_inventory.md`](docs/experiment_inventory.md) | Summary of every experiment family |
 | [`reports/repo_publication_audit.md`](reports/repo_publication_audit.md) | **Evidence audit** — canonical result package, claim support, v2 vs all4 |
-| [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
-| [`docs/AUDIT.md`](docs/AUDIT.md) | Full systematic repository audit |
-| [`docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md`](docs/REPOSITORY_AUDIT_AND_GAP_ANALYSIS.md) | Publication-readiness and evidence-hardening audit |
-| [`docs/experiment_inventory.md`](docs/experiment_inventory.md) | Machine-readable summary of every experiment family |
-| [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels |
-| [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing |
 | [`outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md) | Latest four-dataset manuscript summary (SciDocs, FiQA, HotpotQA, BRIGHT) |
 | [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Earlier two-dataset manuscript findings (historical) |
 | [`figures/manuscript/README.md`](figures/manuscript/README.md) | Curated manuscript figures + graphical abstract pointer |
@@ -556,7 +551,7 @@ outputs/
 
 **Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
 
-**What is not yet implemented:** ILP-based exact MWFAS solver; real LLM pairwise comparator; cross-encoder ranker.
+**What is not yet implemented:** Real LLM pairwise comparator; cross-encoder ranker.
 
 ---
 
