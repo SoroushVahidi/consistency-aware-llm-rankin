@@ -50,7 +50,7 @@ DATASET = "scidocs"
 MAX_QUERIES = 20
 TOP_K = 20
 SEED = 42
-MODEL = "gemini-2.5-flash-lite"
+MODEL = "gemini-3.1-flash-lite-preview"
 PROVIDER = "gemini"
 
 OUTPUT_DIR = Path("outputs/gemini_scidocs_real_pilot")
@@ -272,9 +272,9 @@ def main():
         seed=SEED,
         cache_dir=cache_dir,
         temperature=0.0,
-        max_tokens=4,
+        max_tokens=8,
         debias_position=False,
-        call_delay=4.5,
+        call_delay=5.0,
     )
 
     global_stats = LLMCallStats()

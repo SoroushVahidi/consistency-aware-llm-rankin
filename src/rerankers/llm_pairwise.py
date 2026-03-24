@@ -196,9 +196,9 @@ class _GeminiUsage:
     """Lightweight usage object that mirrors the OpenAI usage interface."""
 
     def __init__(self, prompt_tokens: int = 0, completion_tokens: int = 0):
-        self.prompt_tokens = prompt_tokens
-        self.completion_tokens = completion_tokens
-        self.total_tokens = prompt_tokens + completion_tokens
+        self.prompt_tokens = prompt_tokens or 0
+        self.completion_tokens = completion_tokens or 0
+        self.total_tokens = self.prompt_tokens + self.completion_tokens
 
 
 def _call_gemini(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
