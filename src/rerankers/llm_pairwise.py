@@ -16,19 +16,22 @@ Provenance
 - Label: "practical proxy baseline — LLM pairwise comparison reranking"
 
 Supports:
-- Deterministic decoding
-- Judgment caching
-- Budget controls
+- Real OpenAI API calls (default) with retry + exponential backoff
+- Deterministic decoding (temperature=0)
+- Disk-backed judgment caching (query-aware keys)
+- Budget controls (max API calls)
 - Position de-biasing (compare A-B and B-A, majority wins)
-- Dry-run / mock mode
+- Resumable runs via cache
+- Dry-run / mock mode (only when explicitly requested)
 """
 
 from __future__ import annotations
 
 import hashlib
 import logging
+import time
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from rerankers.common import BudgetTracker, JudgmentCache, RerankerResult
@@ -36,6 +39,9 @@ from rerankers.common import BudgetTracker, JudgmentCache, RerankerResult
 log = logging.getLogger(__name__)
 
 _PROMPT_PATH = Path(__file__).resolve().parent.parent.parent / "prompts" / "pairwise_comparison.txt"
+
+MAX_RETRIES = 4
+RETRY_BASE_SECONDS = 2.0
 
 
 @dataclass
@@ -49,6 +55,43 @@ class PairwiseConfig:
     dry_run: bool = False
     debias_position: bool = False
     seed: int = 42
+
+
+@dataclass
+class LLMCallStats:
+    """Accumulated real token / call statistics from API responses."""
+
+    api_calls: int = 0
+    cache_hits: int = 0
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    total_tokens: int = 0
+    errors: int = 0
+    error_details: list = field(default_factory=list)
+
+    def record_call(self, usage) -> None:
+        self.api_calls += 1
+        if usage is not None:
+            self.prompt_tokens += getattr(usage, "prompt_tokens", 0)
+            self.completion_tokens += getattr(usage, "completion_tokens", 0)
+            self.total_tokens += getattr(usage, "total_tokens", 0)
+
+    def record_cache_hit(self) -> None:
+        self.cache_hits += 1
+
+    def record_error(self, err_msg: str) -> None:
+        self.errors += 1
+        self.error_details.append(err_msg)
+
+    def summary(self) -> dict:
+        return {
+            "api_calls": self.api_calls,
+            "cache_hits": self.cache_hits,
+            "prompt_tokens": self.prompt_tokens,
+            "completion_tokens": self.completion_tokens,
+            "total_tokens": self.total_tokens,
+            "errors": self.errors,
+        }
 
 
 def _load_prompt_template(path: Path) -> str:
@@ -79,18 +122,61 @@ def _mock_compare(query: str, doc_a: str, doc_b: str, seed: int) -> str:
     return "A" if int(h[:4], 16) % 2 == 0 else "B"
 
 
-def _call_llm(prompt: str, config: PairwiseConfig) -> str:
-    """Call the LLM API."""
+def _is_quota_exhausted(exc) -> bool:
+    """Return True if the error is a hard quota exhaustion (not a transient rate limit)."""
+    msg = str(exc).lower()
+    return "insufficient_quota" in msg or "exceeded your current quota" in msg
+
+
+def _call_llm(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
+    """Call the LLM API with retry and exponential backoff.
+
+    Returns (response_text, usage_object).
+    Retries on transient errors but fails immediately on quota exhaustion.
+    """
     import openai
 
     client = openai.OpenAI()
-    response = client.chat.completions.create(
-        model=config.model,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=config.temperature,
-        max_tokens=config.max_tokens,
-    )
-    return response.choices[0].message.content.strip()
+    last_error = None
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            response = client.chat.completions.create(
+                model=config.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=config.temperature,
+                max_tokens=config.max_tokens,
+            )
+            text = response.choices[0].message.content.strip()
+            return text, response.usage
+        except openai.RateLimitError as exc:
+            if _is_quota_exhausted(exc):
+                raise
+            last_error = exc
+            if attempt < MAX_RETRIES:
+                wait = RETRY_BASE_SECONDS * (2 ** attempt)
+                log.warning(
+                    "Rate limit (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, MAX_RETRIES + 1, exc, wait,
+                )
+                time.sleep(wait)
+            else:
+                raise
+        except (
+            openai.APIConnectionError,
+            openai.APITimeoutError,
+            openai.InternalServerError,
+        ) as exc:
+            last_error = exc
+            if attempt < MAX_RETRIES:
+                wait = RETRY_BASE_SECONDS * (2 ** attempt)
+                log.warning(
+                    "LLM API error (attempt %d/%d): %s — retrying in %.1fs",
+                    attempt + 1, MAX_RETRIES + 1, exc, wait,
+                )
+                time.sleep(wait)
+            else:
+                raise
+    raise last_error  # unreachable but satisfies type checker
 
 
 def compare_pair(
@@ -98,18 +184,22 @@ def compare_pair(
     doc_a: tuple[str, str],
     doc_b: tuple[str, str],
     *,
+    query_id: str = "",
     config: PairwiseConfig,
     cache: JudgmentCache | None = None,
     budget: BudgetTracker | None = None,
     prompt_template: str | None = None,
+    stats: LLMCallStats | None = None,
 ) -> tuple[str, str, float]:
     """Compare two documents and return (winner_id, loser_id, weight=1.0)."""
     id_a, text_a = doc_a
     id_b, text_b = doc_b
 
     if cache is not None:
-        cached = cache.get(query_id="", doc_ids=[id_a, id_b])
+        cached = cache.get(query_id=query_id, doc_ids=[id_a, id_b])
         if cached is not None:
+            if stats is not None:
+                stats.record_cache_hit()
             return cached["winner"], cached["loser"], cached.get("weight", 1.0)
 
     if budget is not None and budget.budget_exhausted:
@@ -122,23 +212,41 @@ def compare_pair(
             prompt_template = _load_prompt_template(config.prompt_template_path)
 
         prompt_ab = _format_prompt(prompt_template, query_text, text_a, text_b)
-        response_ab = _call_llm(prompt_ab, config)
+        try:
+            response_ab, usage_ab = _call_llm(prompt_ab, config)
+        except Exception as exc:
+            if stats is not None:
+                stats.record_error(f"pair({id_a},{id_b}): {exc}")
+            log.error("API call failed for pair (%s, %s): %s", id_a, id_b, exc)
+            raise
         winner_label = _parse_winner(response_ab)
 
+        if stats is not None:
+            stats.record_call(usage_ab)
         if budget is not None:
             budget.record(
-                tokens_in=len(prompt_ab.split()),
-                tokens_out=len(response_ab.split()),
+                tokens_in=getattr(usage_ab, "prompt_tokens", 0) if usage_ab else 0,
+                tokens_out=getattr(usage_ab, "completion_tokens", 0) if usage_ab else 0,
             )
 
         if config.debias_position:
             prompt_ba = _format_prompt(prompt_template, query_text, text_b, text_a)
-            response_ba = _call_llm(prompt_ba, config)
+            try:
+                response_ba, usage_ba = _call_llm(prompt_ba, config)
+            except Exception as exc:
+                if stats is not None:
+                    stats.record_error(f"debias({id_b},{id_a}): {exc}")
+                log.error("API debias call failed for pair (%s, %s): %s", id_b, id_a, exc)
+                raise
             winner_ba = _parse_winner(response_ba)
+            if stats is not None:
+                stats.record_call(usage_ba)
             if budget is not None:
                 budget.record(
-                    tokens_in=len(prompt_ba.split()),
-                    tokens_out=len(response_ba.split()),
+                    tokens_in=getattr(usage_ba, "prompt_tokens", 0) if usage_ba else 0,
+                    tokens_out=(
+                        getattr(usage_ba, "completion_tokens", 0) if usage_ba else 0
+                    ),
                 )
             ab_vote = 0 if winner_label == "A" else 1
             ba_vote = 1 if winner_ba == "A" else 0
@@ -149,7 +257,7 @@ def compare_pair(
 
     if cache is not None:
         cache.put(
-            query_id="",
+            query_id=query_id,
             doc_ids=[id_a, id_b],
             result={"winner": winner_id, "loser": loser_id, "weight": 1.0},
         )
@@ -162,6 +270,7 @@ def collect_all_pairs(
     query_text: str,
     candidates: list[tuple[str, str]],
     config: PairwiseConfig | None = None,
+    stats: LLMCallStats | None = None,
 ) -> tuple[list[tuple[str, str, float]], dict]:
     """Run pairwise comparisons for all O(n^2/2) candidate pairs.
 
@@ -188,10 +297,12 @@ def collect_all_pairs(
                 query_text,
                 candidates[i],
                 candidates[j],
+                query_id=query_id,
                 config=config,
                 cache=cache,
                 budget=budget,
                 prompt_template=prompt_template,
+                stats=stats,
             )
             pairs.append((winner, loser, weight))
 
@@ -199,10 +310,13 @@ def collect_all_pairs(
         "method": "llm_pairwise",
         "model": config.model,
         "dry_run": config.dry_run,
+        "debias_position": config.debias_position,
         "n_pairs": len(pairs),
         "n_candidates": n,
         "budget": budget.summary(),
     }
+    if stats is not None:
+        metadata["llm_stats"] = stats.summary()
     return pairs, metadata
 
 

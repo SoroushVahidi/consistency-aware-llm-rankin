@@ -1,0 +1,24 @@
+{
+  "dataset": "scidocs",
+  "max_queries": 50,
+  "top_k": 20,
+  "seed": 42,
+  "dry_run": true,
+  "n_queries_processed": 50,
+  "total_pairwise_comparisons": 9500,
+  "methods": [
+    "llm_pairwise_copeland",
+    "bt_from_llm",
+    "win_rate_from_llm",
+    "markov_from_llm",
+    "tournament_sort_from_llm",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "hybrid_rrf_repaired_copeland_a03",
+    "hybrid_rrf_unrepaired_copeland_a03",
+    "hybrid_rrf_repaired_balance_a03",
+    "hybrid_rrf_unrepaired_balance_a03"
+  ],
+  "cache_dir": "outputs/llm_scidocs_pilot_comparison/judgment_cache"
+}

@@ -1,0 +1,32 @@
+{
+  "label": "REAL PILOT (30 queries) — BLOCKED: API quota exhausted",
+  "status": "blocked",
+  "blocked_reason": "OpenAI API key has insufficient_quota — billing limit exceeded",
+  "dataset": "scidocs",
+  "max_queries": 30,
+  "top_k": 20,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "dry_run": false,
+  "debias_position": true,
+  "temperature": 0.0,
+  "n_queries_processed": 0,
+  "total_pairwise_comparisons": 0,
+  "estimated_api_calls": 11400,
+  "estimated_cost_usd": "0.10-0.30",
+  "methods": [
+    "llm_pairwise_copeland",
+    "bt_from_llm",
+    "win_rate_from_llm",
+    "markov_from_llm",
+    "tournament_sort_from_llm",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "hybrid_rrf_repaired_copeland_a03",
+    "hybrid_rrf_unrepaired_copeland_a03",
+    "hybrid_rrf_repaired_balance_a03",
+    "hybrid_rrf_unrepaired_balance_a03"
+  ],
+  "run_command": "source /workspace/.venv/bin/activate && python scripts/run_llm_scidocs_real_pilot.py"
+}
