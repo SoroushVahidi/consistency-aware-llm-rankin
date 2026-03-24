@@ -1,0 +1,31 @@
+\begin{table}[ht]
+\centering
+\caption{Comparison of reranking methods on SCIDOCS}
+\label{tab:modern_baselines_scidocs}
+\begin{tabular}{lcccc}
+\toprule
+Method & nDCG@k & MAP@k & Prec@k & BEW \\
+\midrule
+borda & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+bt\_from\_qrels & 1.0000 & 1.0000 & 0.2470 & 0.00 \\
+fas\_balance\_score\_prior\_alpha\_beta & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+hybrid\_rrf\_balance\_a05 & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+hybrid\_rrf\_copeland\_a03 & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+hybrid\_rrf\_fas\_regularized & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+markov\_from\_qrels & 1.0000 & 1.0000 & 0.2470 & 0.00 \\
+score\_sum & 1.0000 & 1.0000 & 0.2470 & 7.51 \\
+win\_rate\_from\_qrels & 1.0000 & 1.0000 & 0.2470 & 0.00 \\
+greedy\_fas\_copeland & 0.9992 & 0.9976 & 0.2470 & 7.49 \\
+greedy\_fas\_weighted\_balance & 0.9992 & 0.9976 & 0.2470 & 7.49 \\
+hybrid\_rrf\_priority\_topo\_a03 & 0.9459 & 0.8642 & 0.2470 & 6.13 \\
+greedy\_fas\_score\_augmented\_topological & 0.9441 & 0.8597 & 0.2470 & 5.93 \\
+greedy\_fas\_topological & 0.9398 & 0.8492 & 0.2470 & 6.52 \\
+pagerank & 0.9295 & 0.8769 & 0.2470 & 8.33 \\
+cross\_encoder & 0.9083 & 0.7983 & 0.2470 & 7.71 \\
+tournament\_sort\_from\_qrels & 0.8190 & 0.6693 & 0.2470 & 4.49 \\
+llm\_listwise\_mock & 0.6474 & 0.4488 & 0.2470 & 11.69 \\
+llm\_pointwise\_mock & 0.6061 & 0.3635 & 0.2470 & 21.66 \\
+llm\_pairwise\_mock & 0.5817 & 0.3379 & 0.2470 & 22.46 \\
+\bottomrule
+\end{tabular}
+\end{table}

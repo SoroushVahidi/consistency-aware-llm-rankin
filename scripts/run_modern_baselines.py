@@ -284,11 +284,14 @@ def run_tournament_aggregation(
             ("markov_from_qrels", "markov_chain"),
             ("tournament_sort_from_qrels", "tournament_sort"),
         ]:
+            extra_kwargs = {}
+            if agg_method == "tournament_sort":
+                extra_kwargs["seed"] = seed
             result = aggregate_preferences(
                 method=agg_method,
                 preferences=prefs,
                 all_doc_ids=all_ids,
-                seed=seed,
+                **extra_kwargs,
             )
             result.query_id = qid
             result.metadata["method"] = method_label

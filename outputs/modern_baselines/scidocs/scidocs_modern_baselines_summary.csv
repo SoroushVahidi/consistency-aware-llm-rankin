@@ -1,0 +1,9 @@
+method,n_queries,ndcg_mean,map_mean,precision_at_k_mean,recall_at_k_mean,bew_mean,pic_mean
+cross_encoder,100,0.908332,0.798313,0.247,1.0,7.71,7.71
+llm_pointwise_mock,100,0.606052,0.363505,0.247,1.0,21.66,21.66
+llm_pairwise_mock,100,0.581726,0.337861,0.247,1.0,22.46,22.46
+llm_listwise_mock,100,0.647378,0.448832,0.247,1.0,11.69,11.69
+bt_from_qrels,100,1.0,1.0,0.247,1.0,0.0,0.0
+win_rate_from_qrels,100,1.0,1.0,0.247,1.0,0.0,0.0
+markov_from_qrels,100,1.0,1.0,0.247,1.0,0.0,0.0
+tournament_sort_from_qrels,100,0.819049,0.669285,0.247,1.0,4.49,4.49

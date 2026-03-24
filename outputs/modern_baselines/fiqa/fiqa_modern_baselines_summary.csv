@@ -1,0 +1,5 @@
+method,n_queries,ndcg_mean,map_mean,precision_at_k_mean,recall_at_k_mean,bew_mean,pic_mean
+cross_encoder,29,1.0,1.0,1.0,1.0,,
+llm_pointwise_mock,29,1.0,1.0,1.0,1.0,,
+llm_pairwise_mock,29,1.0,1.0,1.0,1.0,,
+llm_listwise_mock,29,1.0,1.0,1.0,1.0,,

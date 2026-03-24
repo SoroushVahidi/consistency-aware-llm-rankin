@@ -1,0 +1,25 @@
+{
+  "dataset": "scidocs",
+  "baselines": [
+    "cross_encoder",
+    "llm_pointwise",
+    "llm_pairwise",
+    "llm_listwise",
+    "tournament_agg"
+  ],
+  "max_queries": 100,
+  "top_k": 20,
+  "seed": 42,
+  "dry_run": true,
+  "n_queries_processed": 100,
+  "methods": [
+    "cross_encoder",
+    "llm_pointwise_mock",
+    "llm_pairwise_mock",
+    "llm_listwise_mock",
+    "bt_from_qrels",
+    "win_rate_from_qrels",
+    "markov_from_qrels",
+    "tournament_sort_from_qrels"
+  ]
+}
