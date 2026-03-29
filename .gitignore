@@ -229,6 +229,10 @@ outputs/**/plots/*.pdf
 !outputs/analysis/
 !outputs/analysis/**
 
+# Routing paper tables placeholder / blocker logs (when routing outputs exist, expand)
+!outputs/paper_tables/
+!outputs/paper_tables/**
+
 # HuggingFace/datasets transient lock files under data/raw (machine-specific paths)
 data/raw/**/*.lock
 
