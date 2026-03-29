@@ -1,0 +1,5 @@
+dataset,budget_rule,baseline_cost_min_runtime_s,budget_cap_multiplier,best_method_by_accuracy,best_accuracy,oracle_accuracy,gap_to_oracle
+fiqa,budget_le_1.10x_min_runtime,0.00920632,1.1,score_sum,1.0,1.0,0.0
+fiqa,budget_le_1.30x_min_runtime,0.00920632,1.3,score_sum,1.0,1.0,0.0
+fiqa,budget_le_1.50x_min_runtime,0.00920632,1.5,score_sum,1.0,1.0,0.0
+fiqa,budget_unconstrained,0.00920632,inf,score_sum,1.0,1.0,0.0

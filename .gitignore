@@ -225,6 +225,14 @@ outputs/**/plots/*.pdf
 !outputs/pub_vote_cmp_all4/analysis/
 !outputs/pub_vote_cmp_all4/analysis/**
 
+# Cost–accuracy analysis bundle (scripts/generate_cost_accuracy_analysis.py)
+!outputs/analysis/
+!outputs/analysis/**
+
+# Routing paper tables placeholder / blocker logs (when routing outputs exist, expand)
+!outputs/paper_tables/
+!outputs/paper_tables/**
+
 # HuggingFace/datasets transient lock files under data/raw (machine-specific paths)
 data/raw/**/*.lock
 

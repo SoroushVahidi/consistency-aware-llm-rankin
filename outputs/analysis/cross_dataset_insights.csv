@@ -1,0 +1,5 @@
+dataset,oracle_accuracy,best_accuracy_method,best_accuracy,cheapest_method,cheapest_cost,accuracy_spread_ndcg,cost_ratio_max_over_min,revise_helpful_rate,notes
+bright,1.0,score_sum,1.0,score_sum,0.0048217605633802,0.11233099999999996,1.0,,revise_helpful_rate not logged in these outputs
+fiqa,1.0,score_sum,1.0,score_sum,0.00920632,0.0,1.0,,revise_helpful_rate not logged in these outputs
+hotpotqa,1.0,score_sum,1.0,score_sum,0.0020530583501006,0.12219999999999998,11.884708488097477,,revise_helpful_rate not logged in these outputs
+scidocs,1.0,score_sum,1.0,score_sum,0.003142176,0.10231999999999997,46.655566079048405,,revise_helpful_rate not logged in these outputs

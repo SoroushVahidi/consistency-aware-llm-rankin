@@ -1,0 +1,14 @@
+dataset,method,accuracy,avg_cost,on_pareto_frontier,dominated_by
+bright,score_sum,1.0,0.0048217605633802,True,
+bright,borda,1.0,0.0048217605633802,True,
+bright,pagerank,1.0,0.0048217605633802,True,
+bright,greedy_fas_topological,1.0,0.0048217605633802,True,
+bright,greedy_fas_weighted_balance,1.0,0.0048217605633802,True,
+bright,greedy_fas_copeland,1.0,0.0048217605633802,True,
+bright,greedy_fas_score_augmented_topological,1.0,0.0048217605633802,True,
+bright,fas_balance_score_prior_alpha_beta,1.0,0.0048217605633802,True,
+bright,hybrid_rrf_fas_regularized,1.0,0.0048217605633802,True,
+bright,hybrid_rrf_balance_a05,1.0,0.0048217605633802,True,
+bright,hybrid_rrf_copeland_a03,1.0,0.0048217605633802,True,
+bright,hybrid_rrf_priority_topo_a03,1.0,0.0048217605633802,True,
+bright,cross_encoder,0.887669,0.0048217605633802,False,borda;fas_balance_score_prior_alpha_beta;greedy_fas_copeland;greedy_fas_score_augmented_topological;greedy_fas_topological;greedy_fas_weighted_balance;hybrid_rrf_balance_a05;hybrid_rrf_copeland_a03;hybrid_rrf_fas_regularized;hybrid_rrf_priority_topo_a03;pagerank;score_sum

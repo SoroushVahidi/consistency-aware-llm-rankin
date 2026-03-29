@@ -1,0 +1,49 @@
+PAPER-READY ROUTING TABLES / FIGURES — BLOCKED
+==============================================
+
+Latest validation: 2026-03-29 — all five canonical routing roots still absent
+under /workspace/outputs/. No main_cross_dataset_table.csv or
+baseline_comparison_table.csv generated (would be incomplete).
+
+Date: workspace validation (no routing outputs present).
+
+STEP 1 — CANONICAL ROUTING PATHS CHECKED
+------------------------------------------
+The following directories were required and do NOT exist under
+/workspace/outputs/:
+
+  outputs/real_policy_eval/        MISSING
+  outputs/real_routing_model/      MISSING
+  outputs/multi_action_models/   MISSING
+  outputs/baselines/             MISSING
+  outputs/oracle_routing_eval/   MISSING
+
+No equivalent oracle routing summary tree was found (glob search for
+oracle_routing_eval and routing-eval-style roots: no matches).
+
+ALLOWED DATASETS (GSM8K, Hard GSM8K, MATH500, AIME, GPQA)
+----------------------------------------------------------
+No files from these routing studies are present to load; dataset-specific
+subfolders were not discoverable because parent experiment roots are absent.
+
+RETRIEVAL / RANKING / QRELS
+---------------------------
+Per instructions, outputs such as real_full/, final_modern_baselines*/,
+openai_*, q1_journal_package/, etc. were NOT used.
+
+STEP 2–4 — OUTPUTS NOT GENERATED (incomplete tables forbidden)
+----------------------------------------------------------------
+The following were NOT created because inputs are missing:
+
+  outputs/paper_tables/main_cross_dataset_table.csv
+  outputs/paper_tables/baseline_comparison_table.csv
+  outputs/paper_tables/{dataset}_cost_accuracy.csv
+  outputs/paper_tables/{dataset}_cost_accuracy*.png
+  Any Pareto / regret plots derived from routing runs
+
+UNBLOCK CHECKLIST
+-----------------
+1. Commit routing experiment outputs under the canonical paths above.
+2. Ensure oracle summaries live under outputs/oracle_routing_eval/ (or document
+   the actual equivalent path and update the ingestion script).
+3. Re-run validation; then generate tables/figures from real metrics only.

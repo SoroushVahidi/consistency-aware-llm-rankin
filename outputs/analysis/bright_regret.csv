@@ -1,0 +1,14 @@
+dataset,method,accuracy,avg_cost,oracle_accuracy,regret_accuracy,oracle_utility_lambda_0.10,method_utility_lambda_0.10,regret_utility_lambda_0.10,oracle_utility_lambda_0.25,method_utility_lambda_0.25,regret_utility_lambda_0.25
+bright,score_sum,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,borda,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,pagerank,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,greedy_fas_topological,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,greedy_fas_weighted_balance,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,greedy_fas_copeland,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,greedy_fas_score_augmented_topological,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,fas_balance_score_prior_alpha_beta,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,hybrid_rrf_fas_regularized,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,hybrid_rrf_balance_a05,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,hybrid_rrf_copeland_a03,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,hybrid_rrf_priority_topo_a03,1.0,0.0048217605633802,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+bright,cross_encoder,0.887669,0.0048217605633802,1.0,0.11233099999999996,0.9,0.7876690000000001,0.11233099999999996,0.75,0.637669,0.11233099999999996
