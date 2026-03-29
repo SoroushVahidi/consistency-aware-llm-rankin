@@ -1,0 +1,52 @@
+ROUTING STUDY ARTIFACT VALIDATION — FAILED (stop; no analysis produced)
+Generated: validation-only (no unified table, no plots)
+
+================================================================================
+STEP 1 — ACCEPTED FILES (routing-study sources only)
+================================================================================
+(none)
+
+No files were accepted from:
+  outputs/real_policy_eval/*
+  outputs/real_routing_model/*
+  outputs/multi_action_models/*
+  outputs/baselines/*
+  outputs/*oracle*summary*.json (restricted to GSM8K, Hard GSM8K, MATH500, AIME, GPQA)
+
+Reason: The above paths do not exist in this workspace snapshot (directories absent
+or empty; no matching oracle summary JSON files found under outputs/).
+
+================================================================================
+STEP 1 — REJECTED / NOT USED
+================================================================================
+All committed outputs under this repository that are NOT in the allowed routing
+paths were excluded by instruction, including but not limited to:
+  outputs/real_full/, outputs/final_modern_baselines*/, outputs/openai_*,
+  outputs/q1_journal_package/, outputs/analysis/* (prior retrieval-based bundle), etc.
+
+================================================================================
+REQUIRED PATHS CHECKED (missing)
+================================================================================
+/workspace/outputs/real_policy_eval/     — MISSING (directory does not exist)
+/workspace/outputs/real_routing_model/   — MISSING
+/workspace/outputs/multi_action_models/ — MISSING
+/workspace/outputs/baselines/          — MISSING
+
+Oracle summaries:
+  Pattern outputs/**/*oracle*summary*.json — no matches under /workspace/outputs
+
+================================================================================
+ALLOWED DATASETS (no routing artifacts found for any)
+================================================================================
+GSM8K, Hard GSM8K, MATH500, AIME, GPQA — no routing-study files present to bind.
+
+================================================================================
+NEXT STEPS (for unblock)
+================================================================================
+1. Run or copy in real_policy_eval / real_routing_model / multi_action_models /
+   baselines experiment outputs under outputs/ with the expected layout.
+2. Add oracle summary JSON files matching outputs/*oracle*summary*.json for the
+   listed reasoning datasets.
+3. Re-run validation; only then generate:
+   unified_routing_results.csv, per-dataset plots, Pareto, regret, decision tables,
+   cross_dataset_routing_insights.csv
