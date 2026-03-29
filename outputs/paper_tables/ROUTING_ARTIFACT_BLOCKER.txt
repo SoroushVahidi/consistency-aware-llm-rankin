@@ -1,6 +1,10 @@
 PAPER-READY ROUTING TABLES / FIGURES — BLOCKED
 ==============================================
 
+Latest validation: 2026-03-29 — all five canonical routing roots still absent
+under /workspace/outputs/. No main_cross_dataset_table.csv or
+baseline_comparison_table.csv generated (would be incomplete).
+
 Date: workspace validation (no routing outputs present).
 
 STEP 1 — CANONICAL ROUTING PATHS CHECKED
