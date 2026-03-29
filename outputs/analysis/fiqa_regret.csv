@@ -1,0 +1,14 @@
+dataset,method,accuracy,avg_cost,oracle_accuracy,regret_accuracy,oracle_utility_lambda_0.10,method_utility_lambda_0.10,regret_utility_lambda_0.10,oracle_utility_lambda_0.25,method_utility_lambda_0.25,regret_utility_lambda_0.25
+fiqa,score_sum,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,borda,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,pagerank,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,greedy_fas_topological,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,greedy_fas_weighted_balance,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,greedy_fas_copeland,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,greedy_fas_score_augmented_topological,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,fas_balance_score_prior_alpha_beta,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,hybrid_rrf_fas_regularized,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,hybrid_rrf_balance_a05,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,hybrid_rrf_copeland_a03,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,hybrid_rrf_priority_topo_a03,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0
+fiqa,cross_encoder,1.0,0.00920632,1.0,0.0,0.9,0.9,0.0,0.75,0.75,0.0

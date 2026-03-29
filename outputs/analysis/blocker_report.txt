@@ -1,0 +1,12 @@
+Expected reasoning/routing method 'reasoning_greedy' not found in outputs/ or data/. Depends on experiment: real_policy_eval / multi_action_models (not present).
+Expected reasoning/routing method 'self_consistency_3' not found in outputs/ or data/. Depends on experiment: real_policy_eval / multi_action_models (not present).
+Expected reasoning/routing method 'self_consistency_5' not found in outputs/ or data/. Depends on experiment: real_policy_eval / multi_action_models (not present).
+Expected reasoning/routing method 'direct_plus_revise' not found in outputs/ or data/. Depends on experiment: real_policy_eval / multi_action_models (not present).
+Expected reasoning/routing method 'reasoning_then_revise' not found in outputs/ or data/. Depends on experiment: real_policy_eval / multi_action_models (not present).
+
+Missing paths:
+(none)
+
+
+Note: GSM8K / MATH500 / Hard GSM8K not present under outputs/ or data/.
+OpenAI pilot rows share one cost_estimate_usd per run (not per-method marginal cost).
