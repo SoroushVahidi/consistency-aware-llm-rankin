@@ -93,6 +93,7 @@ def main() -> int:
 
     openai_key_present = _present("OPENAI_API_KEY")
     hf_token_present = _present("HF_TOKEN")
+    gemini_key_present = _present("GEMINI_API_KEY")
 
     openai_import_ok, openai_import_msg = _import_status("openai")
     hfhub_import_ok, hfhub_import_msg = _import_status("huggingface_hub")
@@ -138,6 +139,7 @@ def main() -> int:
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "OPENAI_API_KEY_present": openai_key_present,
         "HF_TOKEN_present": hf_token_present,
+        "GEMINI_API_KEY_present": gemini_key_present,
         "openai_import_ok": openai_import_ok,
         "openai_import_message": openai_import_msg,
         "huggingface_hub_import_ok": hfhub_import_ok,
@@ -163,6 +165,7 @@ def main() -> int:
         "",
         f"- OPENAI_API_KEY_present: **{'yes' if openai_key_present else 'no'}**",
         f"- HF_TOKEN_present: **{'yes' if hf_token_present else 'no'}**",
+        f"- GEMINI_API_KEY_present: **{'yes' if gemini_key_present else 'no'}**",
         f"- openai_import_ok: **{'yes' if openai_import_ok else 'no'}** ({openai_import_msg})",
         (
             f"- huggingface_hub_import_ok: **{'yes' if hfhub_import_ok else 'no'}** "
