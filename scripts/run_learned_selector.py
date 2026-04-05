@@ -112,10 +112,10 @@ def main():
         from sklearn.tree import DecisionTreeClassifier
         clf = LogisticRegression(max_iter=500, random_state=args.seed, C=0.5)
         clf.fit(X_train, y_train)
-        learned_pred = [bool(clf.predict([x])[0]) for x in X_test]
+        learned_pred = [bool(pred) for pred in clf.predict(X_test)]
         dt = DecisionTreeClassifier(max_depth=3, random_state=args.seed)
         dt.fit(X_train, y_train)
-        dt_pred = [bool(dt.predict([x])[0]) for x in X_test]
+        dt_pred = [bool(pred) for pred in dt.predict(X_test)]
     except ImportError:
         print("sklearn not installed; using best_fixed only")
         learned_pred = [r["bew_before"] >= p75 for r in test_rows]
