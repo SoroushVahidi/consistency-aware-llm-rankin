@@ -1,5 +1,6 @@
 #!/bin/bash
-# Run multi-scorer experiments for fiqa and scidocs.
+# Run multi-scorer experiments for fiqa and scidocs using the validated pipeline.
+# All methods use the same union candidate set for a fair comparison.
 # Scorers: bm25, synthetic_perturbed
 # Aggregation: majority_vote, summed_margin, vote_plus_margin
 # top_k: 20, 50
@@ -17,11 +18,9 @@ for dataset in fiqa scidocs; do
       dir="$OUT/$name"
       mkdir -p "$dir"
       echo "=== $name ==="
-      python3 scripts/run_real_experiment.py \
+      python3 scripts/run_validated_multi_scorer.py \
         --dataset "$dataset" \
-        --preference-source multi_scores \
-        --scorers bm25,synthetic_perturbed \
-        --multi-score-weight-mode "$mode" \
+        --mode "$mode" \
         --top-k "$k" \
         --max-queries 50 \
         --output-dir "$dir" \

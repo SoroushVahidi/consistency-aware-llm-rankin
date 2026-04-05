@@ -297,15 +297,17 @@ def pagerank_ranking(
 ) -> list[str]:
     """Rank items using a weighted PageRank-style centrality score.
 
-    Items that are beaten by many other highly-ranked items accumulate a
-    higher "authority" score.  The graph is **reversed** before computing
-    PageRank so that an edge ``u → v`` (meaning "u beats v") translates to
-    *authority flowing from u to v* — i.e. being beaten by a strong
-    competitor increases your authority.
+    Items that **win** many pairwise comparisons against other high-scoring
+    items accumulate a higher score.  The preference graph is **reversed**
+    before computing PageRank so that an edge ``u → v`` (meaning "u beats v")
+    becomes ``v → u`` in the reversed graph.  Authority then flows from losers
+    to winners: a node that beats many strong competitors receives more incoming
+    edges in the reversed graph and therefore a higher PageRank score.
 
-    In practice, nodes with many high-weight incoming edges (i.e. beaten by
-    strong competitors) receive high scores.  To produce a *preference*
-    ranking (best first), the scores are sorted in **descending** order.
+    In practice, nodes with many high-weight outgoing edges in the original
+    graph (i.e. strong winners) receive high scores, which is the desired
+    preference ranking (best first).  The scores are sorted in **descending**
+    order.
 
     Parameters
     ----------
@@ -377,6 +379,12 @@ def local_adjacent_swap_refinement(
     n = len(r)
     if n < 2:
         return r
+
+    _VALID_OBJECTIVES = {"bew", "count"}
+    if objective not in _VALID_OBJECTIVES:
+        raise ValueError(
+            f"Unknown objective {objective!r}. Expected one of {sorted(_VALID_OBJECTIVES)}."
+        )
 
     def _bew(rank: list[str], use_weights: bool = True) -> float:
         pos = {x: i for i, x in enumerate(rank)}

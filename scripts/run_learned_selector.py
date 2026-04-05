@@ -97,30 +97,39 @@ def main():
     y_train = [1 if r["fas_helps"] else 0 for r in train_rows]
     X_test = [feats(r) for r in test_rows]
 
-    # Best fixed threshold on validation
-    bew_vals = sorted(r["bew_before"] for r in per_query)
+    # Best fixed threshold — computed from val_rows only to avoid leaking test info
+    bew_vals = sorted(r["bew_before"] for r in val_rows)
     p75 = bew_vals[len(bew_vals) * 3 // 4] if bew_vals else 0
     best_fixed_ndcg = sum(
         r["ndcg_greedy_fas_topological"] if r["bew_before"] >= p75 else r["ndcg_rrf_fusion"]
         for r in val_rows
     ) / len(val_rows) if val_rows else 0
 
-    # Learned selector
+    # Learned selector — only train if splits are non-empty and training labels have 2 classes
     dt_pred = None
+    can_train = len(train_rows) > 0 and len(set(y_train)) > 1
     try:
         from sklearn.linear_model import LogisticRegression
         from sklearn.tree import DecisionTreeClassifier
-        clf = LogisticRegression(max_iter=500, random_state=args.seed, C=0.5)
-        clf.fit(X_train, y_train)
-        learned_pred = [bool(pred) for pred in clf.predict(X_test)]
-        dt = DecisionTreeClassifier(max_depth=3, random_state=args.seed)
-        dt.fit(X_train, y_train)
-        dt_pred = [bool(pred) for pred in dt.predict(X_test)]
+        if can_train:
+            clf = LogisticRegression(max_iter=500, random_state=args.seed, C=0.5)
+            clf.fit(X_train, y_train)
+            learned_pred = [bool(pred) for pred in clf.predict(X_test)]
+            dt = DecisionTreeClassifier(max_depth=3, random_state=args.seed)
+            dt.fit(X_train, y_train)
+            dt_pred = [bool(pred) for pred in dt.predict(X_test)]
+        else:
+            print("WARNING: Training set empty or single-class; falling back to best_fixed policy")
+            learned_pred = [r["bew_before"] >= p75 for r in test_rows]
     except ImportError:
         print("sklearn not installed; using best_fixed only")
         learned_pred = [r["bew_before"] >= p75 for r in test_rows]
 
     n_test = len(test_rows)
+    if n_test == 0:
+        print("WARNING: No test queries available; cannot compute test metrics.")
+        return
+
     ndcg_never = sum(r["ndcg_rrf_fusion"] for r in test_rows) / n_test
     ndcg_always = sum(r["ndcg_greedy_fas_topological"] for r in test_rows) / n_test
     ndcg_best_fixed = sum(

@@ -82,9 +82,12 @@ def main() -> int:
 
     existing_outputs = [path for path in (out_q, out_d, out_r) if path.exists()]
     if existing_outputs and not args.force:
+        if len(existing_outputs) == 3:
+            existing_names = ", ".join(path.name for path in existing_outputs)
+            print(f"Outputs already exist ({existing_names}). Use --force to overwrite.")
+            return 0
         existing_names = ", ".join(path.name for path in existing_outputs)
-        print(f"Output exists ({existing_names}). Use --force to overwrite.")
-        return 0
+        print(f"WARNING: Partial existing output detected ({existing_names}); regenerating all outputs.")
 
     def write_jsonl(records, path: Path, to_dict):
         with path.open("w", encoding="utf-8") as f:

@@ -43,9 +43,12 @@ def perturb_ranking(
 ) -> list[tuple[str, float]]:
     """Perturb ranking by swapping adjacent pairs with probability swap_prob.
 
-    After perturbation, assigns new scores = 1/rank so the synthetic scorer has
-    different scores from BM25. This creates real disagreement for multi-scorer
-    aggregation (cycles possible with summed_margin / vote_plus_margin).
+    After perturbation, assigns new scores using linear interpolation in [lo, hi]
+    so the synthetic scorer has different scores from BM25. This creates real
+    disagreement for multi-scorer aggregation (cycles possible with
+    summed_margin / vote_plus_margin).
+
+    Rank 1 (best) gets score ``hi`` and rank n (worst) gets exactly ``lo``.
     """
     rng = random.Random(seed)
     result = [(doc_id, score) for doc_id, score in candidates]
@@ -54,15 +57,16 @@ def perturb_ranking(
         for i in range(len(result) - 1):
             if rng.random() < swap_prob:
                 result[i], result[i + 1] = result[i + 1], result[i]
-    # Assign scores in same range as BM25 so both scorers can "win" when they disagree
+    # Assign scores in same range as BM25 so both scorers can "win" when they disagree.
+    # Linear interpolation: rank 1 gets hi, rank n gets lo.
     bm25_scores = [s for _, s in candidates]
     lo, hi = min(bm25_scores), max(bm25_scores)
     if hi <= lo:
         hi = lo + 1.0
-    # Rank-based in [lo, hi]: rank 1 gets hi, rank n gets lo
     n = len(result)
+    denom = max(n - 1, 1)
     return [
-        (doc_id, lo + (hi - lo) * (n - r) / max(n, 1))
+        (doc_id, lo + (hi - lo) * (n - 1 - r) / denom)
         for r, (doc_id, _) in enumerate(result)
     ]
 

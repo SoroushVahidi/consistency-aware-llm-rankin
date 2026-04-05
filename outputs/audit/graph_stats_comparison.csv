@@ -1,4 +1,0 @@
-dataset,n_queries,pct_cyclic,avg_n_edges,avg_n_sccs,total_edges_removed,avg_bew_rrf,avg_bew_fas,pct_fas_changes
-hotpotqa,100,0.0,44.5,9.9,0,6.56,0.00,99.0
-fiqa,100,98.0,—,—,>0,60.37,0.40,100.0
-scidocs,100,97.0,—,—,>0,71.77,0.39,100.0

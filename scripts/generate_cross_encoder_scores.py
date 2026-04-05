@@ -3,7 +3,7 @@
 Generate cross-encoder reranking scores for multi-scorer experiments.
 
 Reranks the union of BM25 and dense top-k candidates per query. Uses
-cross-encoder/ms-marco-MiniLM-L6-2-v2 (stronger than bi-encoder for reranking).
+cross-encoder/ms-marco-MiniLM-L-6-v2 (stronger than bi-encoder for reranking).
 
 Output: data/processed/beir/<dataset>/scores/cross_encoder.jsonl
 
@@ -40,8 +40,8 @@ def main() -> None:
     parser.add_argument(
         "--model",
         type=str,
-        default="cross-encoder/ms-marco-MiniLM-L6-v2",
-        help="Cross-encoder model (ms-marco-MiniLM-L6-v2 or ms-marco-MiniLM-L-2-v2)",
+        default="cross-encoder/ms-marco-MiniLM-L-6-v2",
+        help="Cross-encoder model (e.g. ms-marco-MiniLM-L-6-v2 or ms-marco-MiniLM-L-2-v2)",
     )
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--force", action="store_true")
