@@ -293,7 +293,7 @@ def _aggregate_and_report(
                 "sweep_name": sweep_name,
                 "repair_weighting": exemplar.get("repair_weighting", ""),
                 "metric_aware_beta": beta_disp,
-                "metric_aware_focus_top_k": focus_disp,
+                "metric_aware_top_k": focus_disp,
                 "method": method,
                 "n_queries": len(vals),
                 "mean_ndcg_at_k": sum(vals) / len(vals),
@@ -306,7 +306,7 @@ def _aggregate_and_report(
             "sweep_name",
             "repair_weighting",
             "metric_aware_beta",
-            "metric_aware_focus_top_k",
+            "metric_aware_top_k",
             "method",
             "n_queries",
             "mean_ndcg_at_k",
@@ -340,7 +340,7 @@ def _aggregate_and_report(
     best_line = (
         f"{best_sweep} "
         f"(β={best_ma_row['metric_aware_beta']}, "
-        f"focus_top_k={best_ma_row['metric_aware_focus_top_k']})"
+        f"top_k={best_ma_row['metric_aware_top_k']})"
     )
 
     improved_over_plain = plain_rep is not None and best_mean > plain_rep
@@ -396,7 +396,7 @@ def _aggregate_and_report(
             "## Best metric-aware repaired Copeland (max mean nDCG@k)",
             "",
             f"- **metric_aware_beta:** `{best_ma_row['metric_aware_beta']}`",
-            f"- **metric_aware_top_k (focus):** `{best_ma_row['metric_aware_focus_top_k']}`",
+            f"- **metric_aware_top_k:** `{best_ma_row['metric_aware_top_k']}`",
             f"- **Sweep id:** `{best_sweep}`",
             f"- **Mean nDCG@k:** **{best_mean:.6f}** (`{best_line}`)",
             "",
