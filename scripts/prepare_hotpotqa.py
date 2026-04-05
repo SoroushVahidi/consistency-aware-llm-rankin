@@ -80,8 +80,10 @@ def main() -> int:
     out_d = args.output_dir / "documents.jsonl"
     out_r = args.output_dir / "qrels.jsonl"
 
-    if out_q.exists() and not args.force:
-        print(f"Output exists. Use --force to overwrite.")
+    existing_outputs = [path for path in (out_q, out_d, out_r) if path.exists()]
+    if existing_outputs and not args.force:
+        existing_names = ", ".join(path.name for path in existing_outputs)
+        print(f"Output exists ({existing_names}). Use --force to overwrite.")
         return 0
 
     def write_jsonl(records, path: Path, to_dict):
