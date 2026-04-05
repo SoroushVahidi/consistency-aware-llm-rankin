@@ -1,0 +1,5 @@
+dataset,variant,n_queries,n_cyclic,n_acyclic,trigger_rate_repair,skip_rate_repair,mean_ndcg_prior,mean_ndcg_unrepaired_copeland,mean_ndcg_repaired_copeland,mean_ndcg_adaptive_copeland,mean_delta_adaptive_minus_repaired,mean_delta_adaptive_minus_unrepaired,mean_delta_unrepaired_minus_repaired_acyclic,mean_ndcg_unrepaired_balance,mean_ndcg_repaired_balance,mean_ndcg_adaptive_balance,mean_delta_adaptive_minus_repaired_balance
+scidocs,ms1,120,105,15,0.875,0.125,0.30652,0.302274,0.302148,0.302148,0.0,-0.00012599999999995948,0.0,0.301644,0.301644,0.301644,0.0
+fiqa,ms1,120,114,6,0.95,0.05,0.237183,0.241381,0.242837,0.242837,0.0,0.001455999999999985,0.0,0.241522,0.241522,0.241522,0.0
+hotpotqa,ms1,52,27,25,0.5192307692307693,0.4807692307692308,0.876742,0.889175,0.905888,0.905888,0.0,0.016712999999999978,0.0,0.909397,0.909397,0.909397,0.0
+bright,ms1,50,30,20,0.6,0.4,0.522822,0.520101,0.520122,0.520122,0.0,2.0999999999937735e-05,0.0,0.532291,0.532291,0.532291,0.0

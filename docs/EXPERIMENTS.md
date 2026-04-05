@@ -10,6 +10,7 @@
 | `scripts/diagnose_vote_graph_cycles.py` | Cycle / mutual-edge stats for a votes file |
 | `scripts/run_real_experiment.py` | Full real-data ranking + metrics; **Markov graph** (`markov_graph`, `markov_graph_repaired`) on preference graphs; **RRF** + **CombSUM** + **`borda_fuse`** when `--score-prior-files` is set; optional **`--repair-weighting`** `plain` (default) / `metric_aware` / `both` (LambdaRank-style edge reweighting before greedy FAS; `both` adds `*_ma` methods) |
 | `scripts/run_metric_aware_first_experiment.py` | **SciDocs ms1 only:** small grid (plain vs metric-aware × β × focus_top_k) using existing `votes_ms1.jsonl` + score files; writes `outputs/metric_aware_first/scidocs_ms1/` + `REPORT.md` |
+| `scripts/run_adaptive_repair_policy_experiment.py` | **All4 ms1 lightweight policy analysis:** uses committed `pub_vote_cmp_all4` tables + bootstrap strata to estimate “repair only when needed” (skip on acyclic) for Copeland (and optional balance); writes `outputs/adaptive_repair_policy/all4_ms1/`. |
 | `scripts/run_publication_vote_suite.py` | Full publication vote comparison (up to four datasets; ms2 / ms1 / ms1_drop_mutual) |
 | `scripts/analyze_publication_vote_deltas.py` | Bootstrap ΔnDCG (repaired − unrepaired) |
 | `scripts/build_paper_evidence_package.py` | Tables + figures + `MANUSCRIPT_SUMMARY.md` under `<root>/paper_package/`; optional `--datasets` for extra benchmarks under the same root |
