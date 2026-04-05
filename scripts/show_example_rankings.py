@@ -7,7 +7,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "src"))
 
-from consistency_ranker.baseline_ranking import score_sum_ranking, topological_ranking
+from consistency_ranker.baseline_ranking import topological_ranking
 from consistency_ranker.data.dataset_registry import get_config
 from consistency_ranker.data.unified_loader import (
     load_dataset_splits,
@@ -30,10 +30,7 @@ def main():
     mode = "summed_margin"
 
     cyclic_qids = ["2376", "4946", "620", "7911", "932"]
-    queries, _, qrels = load_dataset_splits("fiqa")
-    qrels_by_q = {}
-    for e in qrels:
-        qrels_by_q.setdefault(e.query_id, []).append(e)
+    queries, _, _ = load_dataset_splits("fiqa")
 
     print("\n" + "=" * 80)
     print("5 EXAMPLE QUERIES: Cyclic multi-scorer graph, FAS changed ranking")
