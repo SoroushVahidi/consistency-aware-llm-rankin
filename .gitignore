@@ -212,8 +212,6 @@ outputs/*.csv
 outputs/*.pkl
 outputs/timings/*.csv
 outputs/timings/*.json
-outputs/plots/*.png
-outputs/plots/*.pdf
 outputs/**/plots/*.png
 outputs/**/plots/*.pdf
 # Keep manuscript figures for the publication evidence bundle

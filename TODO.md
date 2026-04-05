@@ -8,7 +8,7 @@ A living task list for the consistency-aware LLM ranking project.
 - [ ] Integrate a real LLM pairwise comparator (e.g. GPT-4o, Llama-3) in `pairwise_prefs.py`
 - [x] Add ILP-based exact MWFAS solver using `gurobipy`
 - [ ] Experiment with larger synthetic graphs (N=100–500 items)
-- [ ] Add Spearman ρ and NDCG evaluation metrics to `evaluation.py`
+- [ ] Add Spearman ρ to `evaluation.py` (NDCG/MRR/Recall@k already live there)
 - [ ] Create a Jupyter notebook walkthrough of the synthetic experiment
 - [x] Finish the four-dataset publication vote package under `outputs/pub_vote_cmp_all4/`
 
