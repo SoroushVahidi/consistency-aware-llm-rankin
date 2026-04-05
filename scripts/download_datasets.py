@@ -61,10 +61,11 @@ def _check_datasets_installed() -> bool:
 
 
 def _raw_files_exist(raw_path: Path) -> bool:
-    """Return True if corpus/queries files already present."""
+    """Return True if all required raw dataset files are already present."""
     return (
         (raw_path / "queries.jsonl").exists()
         and (raw_path / "documents.jsonl").exists()
+        and (raw_path / "qrels.jsonl").exists()
     )
 
 
