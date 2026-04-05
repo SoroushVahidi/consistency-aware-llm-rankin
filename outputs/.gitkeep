@@ -1,1 +1,2 @@
-# outputs directory — experiment results are saved here (not tracked in git)
+# outputs directory — generated experiment results may be saved here locally
+# keep only this .gitkeep file tracked in git; do not commit generated outputs
