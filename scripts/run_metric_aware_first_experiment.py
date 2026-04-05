@@ -48,6 +48,17 @@ METHOD_REPAIRED = "hybrid_rrf_repaired_copeland_a03"
 BETAS = (0.25, 0.5, 1.0, 2.0)
 FOCUS_TOP_KS = (10, 20)
 
+# Publication trees usually ship BM25 + TF-IDF + MiniLM; MiniLM may be absent on some clusters.
+SCORE_PRIOR_FILENAMES = (
+    "scores_bm25.jsonl",
+    "scores_tfidf.jsonl",
+    "scores_minilm.jsonl",
+)
+
+
+def _score_prior_paths(root: Path) -> list[Path]:
+    return [root / name for name in SCORE_PRIOR_FILENAMES if (root / name).exists()]
+
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
@@ -62,8 +73,9 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         default=None,
         help=(
-            "Directory with query_ids.txt, votes_ms1.jsonl, scores_*.jsonl. "
-            "If omitted, first existing path among pub_vote_cmp_all4/v2 scidocs is used."
+            "Directory with query_ids.txt, votes_ms1.jsonl, and at least one of "
+            "scores_bm25.jsonl / scores_tfidf.jsonl / scores_minilm.jsonl (all three preferred). "
+            "If omitted, picks the best match under pub_vote_cmp_all4/v2 scidocs."
         ),
     )
     p.add_argument(
@@ -98,36 +110,46 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def _discover_inputs(explicit: Path | None) -> Path:
+    """Resolve SciDocs ms1 directory; prefers a tree with all three score priors when available."""
     if explicit is not None:
         root = explicit.resolve()
         if not root.is_dir():
             raise FileNotFoundError(f"--inputs-root is not a directory: {root}")
     else:
-        root = None
-        for c in INPUT_CANDIDATES:
-            if (c / "votes_ms1.jsonl").exists():
-                root = c.resolve()
-                break
-        if root is None:
+        ranked: list[tuple[tuple[int, int, int], Path]] = []
+        for i, c in enumerate(INPUT_CANDIDATES):
+            if not (c / "votes_ms1.jsonl").exists():
+                continue
+            n = len(_score_prior_paths(c))
+            if n == 0:
+                continue
+            # Prefer full BM25+TF-IDF+MiniLM, then more files, then earlier candidate.
+            key = (-(n == len(SCORE_PRIOR_FILENAMES)), -n, i)
+            ranked.append((key, c.resolve()))
+        if not ranked:
             searched = ", ".join(str(c) for c in INPUT_CANDIDATES)
             raise FileNotFoundError(
-                "Could not find SciDocs ms1 inputs. Expected votes_ms1.jsonl under one of:\n"
+                "Could not find SciDocs ms1 inputs. Expected votes_ms1.jsonl and at least one "
+                f"of {list(SCORE_PRIOR_FILENAMES)} under one of:\n"
                 f"  {searched}\n"
                 "Run scripts/run_publication_vote_suite.py for scidocs, or pass --inputs-root."
             )
-    need = [
-        root / "query_ids.txt",
-        root / "votes_ms1.jsonl",
-        root / "scores_bm25.jsonl",
-        root / "scores_tfidf.jsonl",
-        root / "scores_minilm.jsonl",
-    ]
-    missing = [p for p in need if not p.exists()]
-    if missing:
+        ranked.sort(key=lambda t: t[0])
+        root = ranked[0][1]
+
+    core = [root / "query_ids.txt", root / "votes_ms1.jsonl"]
+    missing_core = [p for p in core if not p.exists()]
+    if missing_core:
         raise FileNotFoundError(
             "Missing required input files:\n  "
-            + "\n  ".join(str(m) for m in missing)
+            + "\n  ".join(str(m) for m in missing_core)
             + f"\n\nUnder inputs root: {root}"
+        )
+    scores = _score_prior_paths(root)
+    if not scores:
+        raise FileNotFoundError(
+            f"No score prior JSONL found under {root}. Expected at least one of: "
+            f"{list(SCORE_PRIOR_FILENAMES)}"
         )
     return root
 
@@ -162,6 +184,7 @@ def _run_real_cmd(
     graph_top_k: int,
     seed: int,
     methods: list[str],
+    score_prior_files: list[Path],
     dry_run: bool,
 ) -> None:
     py = sys.executable
@@ -177,9 +200,7 @@ def _run_real_cmd(
         "--query-id-file",
         str(inputs_root / "query_ids.txt"),
         "--score-prior-files",
-        str(inputs_root / "scores_bm25.jsonl"),
-        str(inputs_root / "scores_tfidf.jsonl"),
-        str(inputs_root / "scores_minilm.jsonl"),
+        *[str(p) for p in score_prior_files],
         "--max-queries",
         str(max_queries),
         "--top-k",
@@ -234,6 +255,7 @@ def _aggregate_and_report(
     output_root: Path,
     rows: list[dict],
     dry_run: bool,
+    inputs_note: str = "",
 ) -> None:
     if dry_run or not rows:
         return
@@ -358,6 +380,8 @@ def _aggregate_and_report(
         "",
         f"- Output root: `{output_root}`",
     ]
+    if inputs_note:
+        lines.append(inputs_note)
     if plain_rep is not None:
         lines.append(f"- Plain repaired Copeland mean nDCG@k: **{plain_rep:.6f}**")
     else:
@@ -391,8 +415,10 @@ def _aggregate_and_report(
             "",
             "## Verdict (quick read)",
             "",
-            f"- Best MA **{'beats' if improved_over_plain else 'does not beat'}** plain repaired Copeland on mean nDCG@k.",
-            f"- Best MA **{'beats' if improved_over_unrep else 'does not beat'}** unrepaired Copeland on mean nDCG@k.",
+            f"- Best MA **{'beats' if improved_over_plain else 'does not beat'}** "
+            "plain repaired Copeland on mean nDCG@k.",
+            f"- Best MA **{'beats' if improved_over_unrep else 'does not beat'}** "
+            "unrepaired Copeland on mean nDCG@k.",
             "",
             "## Top 10 queries: largest gain (best MA − plain repaired, nDCG@k)",
             "",
@@ -454,6 +480,14 @@ def main(argv: list[str] | None = None) -> None:
     inputs_root = _discover_inputs(
         args.inputs_root.resolve() if args.inputs_root else None
     )
+    score_prior_files = _score_prior_paths(inputs_root)
+    if len(score_prior_files) < len(SCORE_PRIOR_FILENAMES):
+        miss = [n for n in SCORE_PRIOR_FILENAMES if not (inputs_root / n).exists()]
+        print(
+            f"[warn] Using {len(score_prior_files)}/{len(SCORE_PRIOR_FILENAMES)} score priors "
+            f"(missing: {miss}). RRF prior will differ from full three-scorer setup.",
+            flush=True,
+        )
     nq_file = _count_query_ids(inputs_root / "query_ids.txt")
     max_q = args.max_queries if args.max_queries is not None else nq_file
 
@@ -470,6 +504,7 @@ def main(argv: list[str] | None = None) -> None:
         "command": " ".join(sys.argv),
         "git_commit": _git_head(),
         "inputs_root": str(inputs_root),
+        "score_prior_files": [str(p) for p in score_prior_files],
         "output_root": str(output_root),
         "graph_top_k": args.graph_top_k,
         "max_queries": max_q,
@@ -488,6 +523,7 @@ def main(argv: list[str] | None = None) -> None:
     print("Metric-aware first experiment — SciDocs ms1")
     print("=" * 72)
     print(f"  inputs_root   : {inputs_root}")
+    print(f"  score_priors  : {', '.join(p.name for p in score_prior_files)}")
     print(f"  output_root   : {output_root}")
     print(f"  query ids file: {nq_file} lines (using max_queries={max_q})")
     print(f"  graph_top_k   : {args.graph_top_k}")
@@ -507,6 +543,7 @@ def main(argv: list[str] | None = None) -> None:
         metric_aware_beta=1.0,
         metric_aware_top_k=None,
         inputs_root=inputs_root,
+        score_prior_files=score_prior_files,
         max_queries=max_q,
         graph_top_k=args.graph_top_k,
         seed=args.seed,
@@ -532,6 +569,7 @@ def main(argv: list[str] | None = None) -> None:
                 metric_aware_beta=beta,
                 metric_aware_top_k=focus,
                 inputs_root=inputs_root,
+                score_prior_files=score_prior_files,
                 max_queries=max_q,
                 graph_top_k=args.graph_top_k,
                 seed=args.seed,
@@ -547,7 +585,17 @@ def main(argv: list[str] | None = None) -> None:
                     row["sweep_name"] = tag
                     all_rows.append(row)
 
-    _aggregate_and_report(output_root=output_root, rows=all_rows, dry_run=args.dry_run)
+    note = ""
+    if len(score_prior_files) < len(SCORE_PRIOR_FILENAMES):
+        note = (
+            "- **Score priors:** "
+            + ", ".join(f"`{p.name}`" for p in score_prior_files)
+            + " — *subset of BM25+TF-IDF+MiniLM; "
+            "not directly comparable to full three-scorer runs.*"
+        )
+    _aggregate_and_report(
+        output_root=output_root, rows=all_rows, dry_run=args.dry_run, inputs_note=note
+    )
     print("[done] Experiment finished.", flush=True)
 
 

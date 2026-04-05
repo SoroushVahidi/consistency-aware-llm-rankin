@@ -38,6 +38,52 @@ def test_discover_inputs_accepts_explicit_root(tmp_path: Path):
     assert found.resolve() == root.resolve()
 
 
+def test_discover_accepts_bm25_tfidf_without_minilm(tmp_path: Path):
+    import scripts.run_metric_aware_first_experiment as m
+
+    root = tmp_path / "scidocs"
+    root.mkdir()
+    for name in (
+        "query_ids.txt",
+        "votes_ms1.jsonl",
+        "scores_bm25.jsonl",
+        "scores_tfidf.jsonl",
+    ):
+        (root / name).write_text("q\n" if name.endswith(".txt") else '{"q":1}\n', encoding="utf-8")
+
+    found = m._discover_inputs(root)
+    assert found == root.resolve()
+    paths = m._score_prior_paths(found)
+    assert len(paths) == 2
+    assert paths[0].name == "scores_bm25.jsonl"
+
+
+def test_discover_prefers_tree_with_all_three_score_files(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    partial = tmp_path / "pub_vote_cmp_all4" / "scidocs"
+    full = tmp_path / "pub_vote_cmp_v2" / "scidocs"
+    for root in (partial, full):
+        root.mkdir(parents=True)
+        names = (
+            "query_ids.txt",
+            "votes_ms1.jsonl",
+            "scores_bm25.jsonl",
+            "scores_tfidf.jsonl",
+        )
+        for name in names:
+            body = "q\n" if name.endswith(".txt") else '{"q":1}\n'
+            (root / name).write_text(body, encoding="utf-8")
+        if root is full:
+            (root / "scores_minilm.jsonl").write_text('{"q":1}\n', encoding="utf-8")
+
+    import scripts.run_metric_aware_first_experiment as m
+
+    monkeypatch.setattr(m, "INPUT_CANDIDATES", [partial, full])
+    found = m._discover_inputs(None)
+    assert found.resolve() == full.resolve()
+
+
 def test_dry_run_exits_zero(tmp_path: Path):
     root = tmp_path / "scidocs"
     root.mkdir()
