@@ -51,7 +51,8 @@ notebook = [
 run-synthetic = "scripts.run_synthetic:main"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src", "."]
+include = ["consistency_ranker*", "scripts*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
