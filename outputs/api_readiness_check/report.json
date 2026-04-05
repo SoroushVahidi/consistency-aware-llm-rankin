@@ -1,0 +1,30 @@
+{
+  "timestamp_utc": "2026-04-05T17:59:57.826482+00:00",
+  "OPENAI_API_KEY_present": false,
+  "HF_TOKEN_present": false,
+  "GEMINI_API_KEY_present": false,
+  "openai_import_ok": false,
+  "openai_import_message": "import_error: ModuleNotFoundError: No module named 'openai'",
+  "huggingface_hub_import_ok": false,
+  "huggingface_hub_import_message": "import_error: ModuleNotFoundError: No module named 'huggingface_hub'",
+  "datasets_import_ok": false,
+  "datasets_import_message": "import_error: ModuleNotFoundError: No module named 'datasets'",
+  "openai_probe_attempted": false,
+  "openai_probe_success": false,
+  "openai_probe_category": "missing_key",
+  "openai_probe_message": "blocked: OPENAI_API_KEY absent",
+  "hf_probe_attempted": false,
+  "hf_probe_success": false,
+  "hf_probe_category": "missing_token",
+  "hf_probe_message": "blocked: HF_TOKEN absent",
+  "ready_for_small_llm_pairwise_experiment": false,
+  "blocking_issues": [
+    "OPENAI_API_KEY is absent",
+    "HF_TOKEN is absent",
+    "Python package 'openai' is not importable",
+    "Python package 'huggingface_hub' is not importable",
+    "Python package 'datasets' is not importable",
+    "OpenAI probe failed: blocked: OPENAI_API_KEY absent",
+    "Hugging Face probe failed: blocked: HF_TOKEN absent"
+  ]
+}
