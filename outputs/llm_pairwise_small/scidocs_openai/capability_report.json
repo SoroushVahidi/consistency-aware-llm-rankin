@@ -1,0 +1,21 @@
+{
+  "selected_provider": "openai",
+  "providers": {
+    "openai": {
+      "provider": "openai",
+      "env_present": false,
+      "import_ok": true,
+      "probe_ok": false,
+      "message": "OPENAI_API_KEY/AZURE_OPENAI_API_KEY missing",
+      "details": null
+    },
+    "gemini": {
+      "provider": "gemini",
+      "env_present": false,
+      "import_ok": true,
+      "probe_ok": false,
+      "message": "GEMINI_API_KEY/GOOGLE_API_KEY missing",
+      "details": null
+    }
+  }
+}
