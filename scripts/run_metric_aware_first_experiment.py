@@ -6,6 +6,14 @@ Compares plain vs metric-aware **repaired Copeland** hybrids against unrepaired
 Copeland and prior-only, using existing ``votes_file`` + score priors from a
 publication-style tree (e.g. ``outputs/pub_vote_cmp_all4/scidocs``).
 
+Edge reweighting (training-free) follows ``metric_aware_repair.py``::
+
+    w_new = w_conf * (1 + beta * u)
+
+with ``u ≈ |gain_i - gain_j| · |d(pos_i) - d(pos_j)|``, ``d(pos)=1/log2(pos+1)``
+(1-based ranks from the prior), optional tail down-weighting via
+``--metric-aware-top-k``.
+
 Does not modify the publication suite; writes under ``outputs/metric_aware_first/``.
 """
 
@@ -346,7 +354,7 @@ def _aggregate_and_report(
     lines = [
         "# Metric-aware FAS — first experiment (SciDocs, ms1)",
         "",
-        "## Setup",
+        "## Baseline means (plain repair sweep)",
         "",
         f"- Output root: `{output_root}`",
     ]
@@ -361,10 +369,12 @@ def _aggregate_and_report(
     lines.extend(
         [
             "",
-            "## Best metric-aware setting (max mean nDCG@k, repaired Copeland)",
+            "## Best metric-aware repaired Copeland (max mean nDCG@k)",
             "",
-            f"- **{best_line}**",
-            f"- Mean nDCG@k (repaired Copeland): **{best_mean:.6f}**",
+            f"- **metric_aware_beta:** `{best_ma_row['metric_aware_beta']}`",
+            f"- **metric_aware_top_k (focus):** `{best_ma_row['metric_aware_focus_top_k']}`",
+            f"- **Sweep id:** `{best_sweep}`",
+            f"- **Mean nDCG@k:** **{best_mean:.6f}** (`{best_line}`)",
             "",
             "### vs baselines",
             "",

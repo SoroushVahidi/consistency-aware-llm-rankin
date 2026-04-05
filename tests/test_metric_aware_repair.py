@@ -65,6 +65,25 @@ def test_beta_zero_leaves_weights_equal_to_confidence():
     assert w[("a", "b")] == pytest.approx(2.5)
 
 
+def test_beta_zero_reweight_same_greedy_fas_removed_edges():
+    """β=0 ⇒ w_new = w_conf; greedy FAS should match the plain-weight graph."""
+    g = nx.DiGraph()
+    g.add_edge("a", "b", weight=10.0)
+    g.add_edge("b", "c", weight=10.0)
+    g.add_edge("c", "a", weight=1.0)
+    prior = {"a": 1.0, "b": 0.5, "c": 0.0}
+    gr = reweight_graph_for_metric_aware_fas(
+        g,
+        prior_scores=prior,
+        gain_source="prior_score",
+        beta=0.0,
+        focus_top_k=20,
+    )
+    _d1, removed_plain = greedy_fas(g)
+    _d2, removed_ma = greedy_fas(gr)
+    assert removed_ma == removed_plain
+
+
 def test_metric_aware_reweight_changes_removed_edge_weight():
     """Same broken edge may be removed but with reweighted cost (objective differs)."""
     g = nx.DiGraph()
