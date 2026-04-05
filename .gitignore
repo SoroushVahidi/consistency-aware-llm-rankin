@@ -249,6 +249,7 @@ outputs/pub_vote_cmp_all4/hotpotqa/
 outputs/pub_vote_cmp_all4/bright/
 
 # Large local experiment trees (regenerate with scripts; paper tables/plots tracked separately)
+outputs/metric_aware_first/
 outputs/diag_cycles_v1/
 outputs/pub_pilot_20250322/
 outputs/pub_vote_cmp_v2/scidocs/
