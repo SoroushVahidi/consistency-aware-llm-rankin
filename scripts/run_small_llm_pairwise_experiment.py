@@ -21,11 +21,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import random
+import subprocess
 import sys
 from collections import defaultdict
 from dataclasses import asdict
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Iterable
 
@@ -48,6 +51,47 @@ def _sample_queries(qrels, max_queries: int, seed: int) -> list[str]:
     rng = random.Random(seed)
     rng.shuffle(eligible)
     return eligible[:max_queries]
+
+
+def _probe_model(provider: str, model: str) -> tuple[bool, str]:
+    """Run the smallest safe sanity call for a specific provider/model."""
+    if provider == "openai":
+        try:
+            import openai  # type: ignore
+
+            client = openai.OpenAI()
+            resp = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": "Reply with a single letter: A"}],
+                temperature=0.0,
+                max_tokens=1,
+            )
+            text = (resp.choices[0].message.content or "").strip() if resp.choices else ""
+            return True, f"success ({text[:20]})"
+        except Exception as exc:
+            return False, str(exc)
+    if provider == "gemini":
+        try:
+            import os
+
+            from google import genai  # type: ignore
+            from google.genai import types  # type: ignore
+
+            api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+            client = genai.Client(api_key=api_key)
+            resp = client.models.generate_content(
+                model=model,
+                contents="Reply with a single letter: A",
+                config=types.GenerateContentConfig(
+                    temperature=0.0,
+                    max_output_tokens=1,
+                ),
+            )
+            text = (resp.text or "").strip()
+            return True, f"success ({text[:20]})"
+        except Exception as exc:
+            return False, str(exc)
+    return False, f"unsupported provider: {provider}"
 
 
 def _build_candidate_pool(
@@ -132,11 +176,17 @@ def _evaluate_rankings(
     return rows
 
 
-def _write_capability_report(output_dir: Path, statuses: dict, selected: str) -> None:
+def _write_capability_report(
+    output_dir: Path,
+    statuses: dict,
+    probes: dict[str, dict[str, str | bool]],
+    selected: str | None,
+) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     summary = {
         "selected_provider": selected,
         "providers": {k: asdict(v) for k, v in statuses.items()},
+        "model_probes": probes,
     }
     (output_dir / "capability_report.json").write_text(
         json.dumps(summary, indent=2),
@@ -146,12 +196,14 @@ def _write_capability_report(output_dir: Path, statuses: dict, selected: str) ->
     lines = [
         "# LLM API Capability Check",
         "",
-        f"- Selected provider: **{selected}**",
+        f"- Selected provider: **{selected or 'none'}**",
     ]
     for name, res in statuses.items():
+        probe = probes.get(name, {})
         lines.append(
             f"- {name}: env_present={res.env_present} import_ok={res.import_ok} "
-            f"probe_ok={res.probe_ok} — {res.message}"
+            f"probe_ok={res.probe_ok}; model_tested={probe.get('model', 'n/a')} "
+            f"model_probe_ok={probe.get('ok', False)} — {probe.get('message', res.message)}"
         )
     (output_dir / "capability_report.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -180,13 +232,13 @@ def _summarize(rows: list[dict]) -> list[dict]:
     return summary
 
 
-def main() -> int:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Small LLM pairwise preference experiment.")
     parser.add_argument("--dataset", default="scidocs")
-    parser.add_argument("--provider", choices=["openai", "gemini"], default="openai")
+    parser.add_argument("--provider", choices=["openai", "gemini", "auto"], default="auto")
     parser.add_argument("--model", default="gpt-4o-mini")
-    parser.add_argument("--max-queries", type=int, default=5)
-    parser.add_argument("--top-k", type=int, default=8)
+    parser.add_argument("--max-queries", type=int, default=20)
+    parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--probe", action="store_true", help="Attempt live model listing probe.")
     parser.add_argument(
@@ -212,7 +264,12 @@ def main() -> int:
         action="store_true",
         help="Use deterministic mock judgments (no API calls).",
     )
-    args = parser.parse_args()
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
 
     output_dir = args.output_dir
     if output_dir is None:
@@ -220,19 +277,54 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     statuses = detect_providers(probe=args.probe)
-    selected_status = statuses[args.provider]
-    _write_capability_report(output_dir, statuses, args.provider)
+    provider_models = {
+        "openai": args.model if args.provider == "openai" else "gpt-4o-mini",
+        "gemini": args.model if args.provider == "gemini" else "gemini-2.5-flash",
+    }
+    probes: dict[str, dict[str, str | bool]] = {}
+    for provider_name in ("openai", "gemini"):
+        st = statuses[provider_name]
+        model_name = provider_models[provider_name]
+        if st.env_present and st.import_ok:
+            ok, message = _probe_model(provider_name, model_name)
+        else:
+            ok, message = False, st.message
+        probes[provider_name] = {
+            "model": model_name,
+            "ok": ok,
+            "message": message,
+        }
 
-    if not (selected_status.env_present and selected_status.import_ok):
-        print(f"[capability] Provider '{args.provider}' not ready: {selected_status.message}")
-        print(f"[capability] See {output_dir/'capability_report.md'}")
-        return 1
-    if args.probe and not selected_status.probe_ok:
-        print(f"[capability] Probe for '{args.provider}' failed: {selected_status.message}")
-        print(f"[capability] See {output_dir/'capability_report.md'}")
-        return 1
+    selected_provider = args.provider
+    if args.provider == "auto":
+        selected_provider = None
+        for name in ("openai", "gemini"):
+            if probes.get(name, {}).get("ok", False):
+                selected_provider = name
+                break
+        _write_capability_report(output_dir, statuses, probes, selected_provider)
+        if selected_provider is None:
+            print("[capability] No working provider found (OpenAI/Gemini).")
+            print(f"[capability] See {output_dir/'capability_report.md'}")
+            return 1
+    else:
+        _write_capability_report(output_dir, statuses, probes, selected_provider)
+        selected_probe = probes[selected_provider]
+        if not bool(selected_probe.get("ok", False)):
+            print(
+                f"[capability] Provider '{selected_provider}' failed model sanity call: "
+                f"{selected_probe.get('message', 'unknown error')}"
+            )
+            print(f"[capability] See {output_dir/'capability_report.md'}")
+            return 1
 
-    print(f"[setup] dataset={args.dataset} provider={args.provider} model={args.model}")
+    selected_model = args.model if args.provider != "auto" else str(
+        probes[selected_provider]["model"]
+    )
+
+    print(
+        f"[setup] dataset={args.dataset} provider={selected_provider} model={selected_model}"
+    )
     print(f"[setup] output_dir={output_dir}")
 
     pool = _build_candidate_pool(
@@ -249,8 +341,8 @@ def main() -> int:
     budget = BudgetTracker(max_calls=args.max_calls)
 
     config = PairwiseConfig(
-        model=args.model,
-        provider=args.provider,
+        model=selected_model,
+        provider=selected_provider,
         dry_run=args.dry_run,
         cache_dir=cache_dir,
         call_delay=args.call_delay,
@@ -343,14 +435,15 @@ def main() -> int:
 
     manifest = {
         "dataset": args.dataset,
-        "provider": args.provider,
-        "model": args.model,
+        "provider": selected_provider,
+        "model": selected_model,
         "max_queries": args.max_queries,
         "top_k": args.top_k,
         "seed": args.seed,
         "dry_run": args.dry_run,
         "probe": args.probe,
         "api_status": {k: asdict(v) for k, v in statuses.items()},
+        "model_probes": probes,
         "n_queries_collected": len(all_prefs),
         "api_calls": stats.api_calls,
         "cache_hits": stats.cache_hits,
@@ -359,13 +452,25 @@ def main() -> int:
         "per_query_csv": str(per_query_csv),
         "summary_csv": str(summary_csv),
     }
+    prompt_text = config.prompt_template_path.read_text(encoding="utf-8")
+    manifest["prompt_template"] = prompt_text
+    manifest["prompt_template_sha256"] = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
+    manifest["timestamp_utc"] = datetime.now(UTC).isoformat()
+    try:
+        git_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL
+        ).strip()
+    except Exception:
+        git_commit = "unknown"
+    manifest["git_commit"] = git_commit
+    manifest["query_ids_collected"] = sorted(all_prefs.keys())
     (output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     lines = [
         f"# Small LLM Pairwise Experiment — {args.dataset}",
         "",
-        f"- Provider: **{args.provider}**",
-        f"- Model: **{args.model}**",
+        f"- Provider: **{selected_provider}**",
+        f"- Model: **{selected_model}**",
         f"- Queries attempted: {len(pool)}",
         f"- Queries collected: {len(all_prefs)}",
         f"- top_k: {args.top_k}",
@@ -376,9 +481,11 @@ def main() -> int:
         "## Provider capability",
     ]
     for name, res in statuses.items():
+        probe = probes.get(name, {})
         lines.append(
             f"- {name}: env_present={res.env_present} import_ok={res.import_ok} "
-            f"probe_ok={res.probe_ok} — {res.message}"
+            f"probe_ok={res.probe_ok}; model_tested={probe.get('model', 'n/a')} "
+            f"model_probe_ok={probe.get('ok', False)} — {probe.get('message', res.message)}"
         )
     lines.append("")
 
