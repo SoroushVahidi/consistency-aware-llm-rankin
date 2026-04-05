@@ -97,3 +97,19 @@ def test_available_methods_includes_greedy():
     methods = available_methods()
     assert "greedy" in methods
 
+
+def test_metric_aware_reweight_keeps_same_nodes_and_edge_set():
+    from consistency_ranker.metric_aware_repair import reweight_graph_for_metric_aware_fas
+
+    g = nx.DiGraph()
+    g.add_edge("x", "y", weight=1.0)
+    g.add_edge("y", "z", weight=2.0)
+    gr = reweight_graph_for_metric_aware_fas(
+        g,
+        prior_scores={"x": 1.0, "y": 0.5, "z": 0.0},
+        gain_source="prior_score",
+        beta=0.5,
+    )
+    assert set(gr.nodes()) == set(g.nodes())
+    assert set(gr.edges()) == set(g.edges())
+

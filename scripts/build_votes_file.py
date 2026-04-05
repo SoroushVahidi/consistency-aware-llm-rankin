@@ -33,6 +33,7 @@ from consistency_ranker.data.query_ids import (  # noqa: E402
     eligible_query_ids,
     load_query_ids_file,
 )
+from consistency_ranker.data.dataset_registry import DATASET_NAMES  # noqa: E402
 from consistency_ranker.data.unified_loader import load_dataset_splits  # noqa: E402
 
 
@@ -276,7 +277,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Build pairwise vote edges from multiple score files.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--dataset", type=str, required=True)
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        required=True,
+        choices=sorted(DATASET_NAMES),
+    )
     parser.add_argument(
         "--score-files",
         type=Path,

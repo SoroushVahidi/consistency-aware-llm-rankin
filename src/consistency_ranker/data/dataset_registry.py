@@ -68,13 +68,19 @@ class DatasetConfig:
     """Random seed for reproducible subsampling."""
 
     loader_type: str = "beir"
-    """Which loader to use: ``'beir'``, ``'hotpotqa'``, or ``'bright'``."""
+    """Which loader to use (see ``download_datasets.py`` / ``prepare_datasets.py``)."""
 
     notes: str = ""
     """Any extra notes, e.g. manual download instructions."""
 
     hf_kwargs: dict = field(default_factory=dict)
     """Extra keyword arguments passed to ``datasets.load_dataset``."""
+
+    corpus_dependency: str | None = None
+    """If set, another dataset id whose raw ``documents.jsonl`` may be reused (e.g. TREC DL + MS MARCO)."""
+
+    ir_dataset_name: str | None = None
+    """If set, ``ir_datasets.load(name)`` id used by the optional ``ir-datasets`` export path."""
 
 
 def _p(rel: str) -> Path:
@@ -140,6 +146,76 @@ REGISTRY: dict[str, DatasetConfig] = {
             "See data/raw/bright/README.md for instructions."
         ),
     ),
+    # --- Additional manuscript / IR benchmarks ---
+    "nfcorpus": DatasetConfig(
+        name="nfcorpus",
+        hf_corpus_name="BeIR/nfcorpus",
+        hf_queries_name="BeIR/nfcorpus",
+        hf_qrels_name="BeIR/nfcorpus-qrels",
+        raw_path=_p("data/raw/beir/nfcorpus"),
+        processed_path=_p("data/processed/beir/nfcorpus"),
+        top_k=100,
+        max_queries=500,
+        seed=42,
+        loader_type="beir",
+        notes="NFCorpus (BEIR): biomedical queries and narrative documents. Hugging Face mirrors.",
+    ),
+    "msmarco_passage": DatasetConfig(
+        name="msmarco_passage",
+        hf_corpus_name="BeIR/msmarco",
+        hf_queries_name="BeIR/msmarco",
+        hf_qrels_name="BeIR/msmarco-qrels",
+        raw_path=_p("data/raw/msmarco_passage"),
+        processed_path=_p("data/processed/msmarco_passage"),
+        top_k=50,
+        max_queries=5000,
+        seed=42,
+        loader_type="msmarco_passage",
+        notes=(
+            "MS MARCO passage ranking (BEIR mirror on Hugging Face). Full corpus is ~8.8M passages; "
+            "download streams to JSONL. Always pass --max-docs (and optionally --max-queries) unless "
+            "you intentionally want the full export. See data/raw/msmarco_passage/README.md."
+        ),
+    ),
+    "trec_dl_passage": DatasetConfig(
+        name="trec_dl_passage",
+        hf_corpus_name="",
+        hf_queries_name="",
+        hf_qrels_name="",
+        raw_path=_p("data/raw/trec_dl_passage"),
+        processed_path=_p("data/processed/trec_dl_passage"),
+        top_k=50,
+        max_queries=500,
+        seed=42,
+        loader_type="trec_dl_passage",
+        corpus_dependency="msmarco_passage",
+        ir_dataset_name="msmarco-passage/trec-dl-2019",
+        notes=(
+            "TREC 2019 Deep Learning track passage task (judged qrels over MS MARCO passages). "
+            "Requires: pip install 'consistency-ranker[ir]' (ir-datasets). "
+            "Documents are MS MARCO passage texts for judged doc ids (not the full corpus). "
+            "Optional: reuse documents from msmarco_passage raw JSONL via --trec-dl-docs-from-msmarco. "
+            "See data/raw/trec_dl_passage/README.md."
+        ),
+    ),
+    "robust04": DatasetConfig(
+        name="robust04",
+        hf_corpus_name="",
+        hf_queries_name="",
+        hf_qrels_name="",
+        raw_path=_p("data/raw/robust04"),
+        processed_path=_p("data/processed/robust04"),
+        top_k=100,
+        max_queries=500,
+        seed=42,
+        loader_type="robust04",
+        ir_dataset_name="robust04",
+        notes=(
+            "TREC Robust 2004 ad hoc corpus. Requires ir-datasets (pip install 'consistency-ranker[ir]'); "
+            "first run triggers ir-datasets downloads (TREC redistribution terms apply). "
+            "See data/raw/robust04/README.md for manual alternatives."
+        ),
+    ),
 }
 
 DATASET_NAMES = list(REGISTRY.keys())
@@ -151,8 +227,7 @@ def get_config(name: str) -> DatasetConfig:
     Parameters
     ----------
     name:
-        Dataset short name, e.g. ``"scidocs"``, ``"fiqa"``,
-        ``"hotpotqa"``, or ``"bright"``.
+        Dataset short name registered in :data:`REGISTRY` (see ``DATASET_NAMES``).
 
     Raises
     ------
@@ -165,3 +240,8 @@ def get_config(name: str) -> DatasetConfig:
             f"Available datasets: {DATASET_NAMES}"
         )
     return REGISTRY[name]
+
+
+def processed_queries_jsonl(name: str) -> Path:
+    """Path to ``queries.jsonl`` under the dataset's processed directory."""
+    return get_config(name).processed_path / "queries.jsonl"

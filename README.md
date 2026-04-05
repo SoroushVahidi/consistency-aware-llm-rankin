@@ -133,7 +133,12 @@ consistency-aware-llm-rankin/
 │       ├── cycle_detection.py      # Detect and enumerate cycles
 │       ├── baseline_ranking.py     # Score-sum & topological-sort baselines
 │       ├── greedy_fas.py           # Greedy feedback arc removal heuristic
+│       ├── metric_aware_repair.py  # Optional LambdaRank-style edge reweighting before FAS
 │       ├── mwfas_solver.py         # MWFAS solver interface (greedy + exact Gurobi ILP)
+│       ├── rrf_ranking.py          # Reciprocal Rank Fusion (multi-ranker list baseline)
+│       ├── combsum_ranking.py      # CombSUM score fusion (min-max per ranker by default)
+│       ├── borda_fuse_ranking.py   # Borda count over score-prior lists (partial-list safe)
+│       ├── markov_graph_ranking.py # Rank Centrality–style Markov chain on preference graphs
 │       └── evaluation.py           # Metrics: Kendall τ, inconsistency count, etc.
 ├── tests/                          # Unit tests (pytest)
 ├── scripts/
@@ -238,8 +243,9 @@ For a concise index of experiment and publication scripts (vote graphs, bootstra
 
 ## Real Benchmark Datasets
 
-This project supports four real retrieval benchmarks.  All datasets are
-downloaded from HuggingFace and normalised into a common JSONL format.
+This project supports multiple real retrieval benchmarks.  Most are downloaded
+from Hugging Face (or via optional ``ir-datasets`` for TREC-style collections)
+and normalised into a common JSONL format.
 
 ### Dataset Overview
 
@@ -249,6 +255,10 @@ downloaded from HuggingFace and normalised into a common JSONL format.
 | BEIR / FiQA-2018 | `fiqa` | [BeIR/fiqa](https://huggingface.co/BeIR/fiqa) | Financial opinion QA and retrieval |
 | HotpotQA | `hotpotqa` | [hotpot_qa](https://huggingface.co/datasets/hotpot_qa) | Multi-hop question answering over Wikipedia |
 | BRIGHT | `bright` | [xlangai/BRIGHT](https://huggingface.co/datasets/xlangai/BRIGHT) | Reasoning-intensive retrieval (may need manual download) |
+| BEIR / NFCorpus | `nfcorpus` | [BeIR/nfcorpus](https://huggingface.co/datasets/BeIR/nfcorpus) | Biomedical narrative retrieval (BEIR) |
+| MS MARCO passage | `msmarco_passage` | [BeIR/msmarco](https://huggingface.co/datasets/BeIR/msmarco) | Large passage ranking; **streamed** export — use ``--max-docs`` (see raw README) |
+| TREC DL passage | `trec_dl_passage` | [ir-datasets](https://ir-datasets.com/) ``msmarco-passage/trec-dl-*`` | Judged DL topics/qrels over MS MARCO passages; requires ``pip install 'consistency-ranker[ir]'`` |
+| TREC Robust 2004 | `robust04` | [ir-datasets robust04](https://huggingface.co/datasets/irds/trec-robust04) | Classic ad hoc/news retrieval; requires ``ir-datasets`` (TREC / disk terms) |
 
 ### Where Files Are Stored
 
@@ -257,12 +267,24 @@ data/
 ├── raw/
 │   ├── beir/scidocs/        # Raw downloaded files (queries, docs, qrels JSONL)
 │   ├── beir/fiqa/
+│   ├── beir/nfcorpus/
+│   ├── msmarco_passage/     # Streamed passage export; see README.md
+│   ├── trec_dl_passage/     # ir-datasets export or manual JSONL
+│   ├── robust04/            # ir-datasets export or manual JSONL
 │   ├── hotpotqa/
 │   └── bright/              # Contains README.md with manual instructions if needed
 ├── processed/
 │   ├── beir/scidocs/        # Unified queries.jsonl, documents.jsonl, qrels.jsonl
 │   │   └── pairwise/        # preferences.jsonl derived from qrels
 │   ├── beir/fiqa/
+│   │   └── pairwise/
+│   ├── beir/nfcorpus/
+│   │   └── pairwise/
+│   ├── msmarco_passage/
+│   │   └── pairwise/
+│   ├── trec_dl_passage/
+│   │   └── pairwise/
+│   ├── robust04/
 │   │   └── pairwise/
 │   ├── hotpotqa/
 │   │   └── pairwise/
@@ -278,6 +300,13 @@ data/
 pip install datasets huggingface-hub
 ```
 
+For **TREC Deep Learning passage** and **Robust04** automatic export, also install::
+
+```bash
+pip install 'consistency-ranker[ir]'
+# or: pip install ir-datasets
+```
+
 ### Step 2 — Download Datasets
 
 ```bash
@@ -286,6 +315,16 @@ python scripts/download_datasets.py --dataset scidocs
 python scripts/download_datasets.py --dataset fiqa
 python scripts/download_datasets.py --dataset hotpotqa
 python scripts/download_datasets.py --dataset bright
+python scripts/download_datasets.py --dataset nfcorpus
+
+# MS MARCO passage (always cap corpus size; default max_docs=100k if omitted)
+python scripts/download_datasets.py --dataset msmarco_passage --max-docs 50000 --max-queries 5000
+
+# TREC DL 2019 passage (requires ir-datasets)
+python scripts/download_datasets.py --dataset trec_dl_passage --trec-dl-year 2019
+
+# TREC Robust 2004 (requires ir-datasets; first run may download large shards)
+python scripts/download_datasets.py --dataset robust04 --max-queries 250 --max-docs 50000
 
 # Download a specific BRIGHT task/domain
 python scripts/download_datasets.py --dataset bright --bright-task examples
@@ -313,6 +352,10 @@ python scripts/prepare_datasets.py --dataset scidocs
 python scripts/prepare_datasets.py --dataset fiqa
 python scripts/prepare_datasets.py --dataset hotpotqa
 python scripts/prepare_datasets.py --dataset bright
+python scripts/prepare_datasets.py --dataset nfcorpus
+python scripts/prepare_datasets.py --dataset msmarco_passage
+python scripts/prepare_datasets.py --dataset trec_dl_passage
+python scripts/prepare_datasets.py --dataset robust04
 
 # Prepare all datasets
 python scripts/prepare_datasets.py --dataset all
@@ -337,6 +380,14 @@ python scripts/run_real_experiment.py --dataset scidocs --max-queries 50 --top-k
 # Stress-test mode (synthetic conflict injection)
 python scripts/run_real_experiment.py --dataset scidocs --preference-source qrels_flip --flip-prob 0.15 \
   --max-queries 50 --top-k 20 --save-timings --profile
+```
+
+**Metric-aware repair (optional):** by default FAS uses raw edge weights only. To bias removal toward a training-free DCG surrogate built from the same **score prior** as hybrid methods, use `--repair-weighting metric_aware`, or `--repair-weighting both` to also emit `*_ma` methods (e.g. `hybrid_rrf_copeland_a03` vs `hybrid_rrf_copeland_a03_ma`) for side-by-side CSV columns. Formula: `w_new = w_conf × (1 + β × u)` with `u ≈ |gain_i − gain_j| × |discount(pos_i) − discount(pos_j)|`. See `src/consistency_ranker/metric_aware_repair.py` and `--metric-aware-*` CLI flags.
+
+```bash
+# Plain vs metric-aware hybrids in one run (adds *_ma method names)
+python scripts/run_real_experiment.py --dataset scidocs --max-queries 30 --top-k 20 \
+  --repair-weighting both --include-hybrid-ablation --overwrite-existing
 ```
 
 ### Main real-signal experiment (recommended): `votes_file`
@@ -400,6 +451,20 @@ python scripts/run_real_experiment.py --dataset scidocs --preference-source vote
   --max-queries 50 --top-k 20 --save-timings --profile --no-plots
 ```
 
+When you pass **one or more** `--score-prior-files`, the pipeline also evaluates three **multi-ranker fusion** baselines that do not use graph repair:
+
+- **RRF** (method id `rrf`): per ranker, sort by score (`doc_id` tie-break); RRF(d) = Σ<sub>s</sub> 1/(k + rank<sub>s</sub>(d)) with default **k = 60** (Cormack, Clarke, Buettcher, SIGIR 2009). Override with `--rrf-k`. Missing documents contribute 0 per ranker.
+
+- **CombSUM** (method id `combsum`): CombSUM(d) = Σ<sub>s</sub> normalized<sub>s</sub>(d). Default **`--combsum-normalization minmax`**: per query and per ranker, min–max scores to [0, 1]; if all scores in that ranker are equal, normalized values are **0** (no discriminative signal from that ranker for that query). Use **`none`** to sum raw scores (only sensible when scales are comparable). Missing documents contribute 0 per ranker. Tie-break: higher CombSUM, then better best rank, then `doc_id` (Fox & Shaw–style combination; see also Lee, SIGIR 1997).
+
+- **Borda list fusion** (method id **`borda_fuse`**): partial-list Borda over the same score JSONLs. Let **U<sub>q</sub>** be the union of `doc_id`s appearing in the score-prior files for that query and **N<sub>q</sub> = |U<sub>q</sub>|**. After the usual per-ranker sort (descending score, `doc_id` tie-break), assign **borda_points<sub>s</sub>(d) = N<sub>q</sub> − rank<sub>s</sub>(d)** if *d* appears in ranker *s*, else **0**; **Borda(d) = Σ<sub>s</sub> borda_points<sub>s</sub>(d)** (Dwork et al., WWW 2001). Tie-break: higher Borda score, then better best rank, then `doc_id`. This uses **rank positions only** (like RRF), not raw score magnitude (unlike CombSUM).
+
+**Naming:** graph **`borda`** in `baseline_ranking` is **tournament / preference-graph** Borda (out-neighbor counts on the vote graph). **`borda_fuse`** is **retrieval-list** Borda on `--score-prior-files` only. They can both appear in one run under different method ids.
+
+**Not** the same as graph **`score_sum`**: the existing `score_sum` method sums **outgoing edge weights** on the pairwise preference graph; **`combsum`** / **`borda_fuse`** fuse **retrieval scores** from `--score-prior-files`. All can appear in the same experiment CSV.
+
+**Graph-native Markov / Rank Centrality** (no score priors): **`markov_graph`** runs a Rank Centrality–style Markov chain on the **raw** query preference graph; **`markov_graph_repaired`** runs the same construction on the **greedy-FAS–repaired DAG**. Edge `u → v` with weight `w` means *u is preferred over v*. Rows of the transition matrix are `P_ij ∝` (weight of `j → i`) for `j ≠ i`, scaled so each row sums to 1 (Negahban, Oh, Shah, OR 2016). Stationary mass is computed by power iteration with **uniform teleportation** **`--markov-damping`** (default **0.15**, same role as PageRank’s restart mass). This is **not** the same as **`pagerank`**, which applies NetworkX PageRank to the **transposed** graph for an “authority” interpretation. Tie-break: higher stationary mass, then lower **weighted in-degree**, then `doc_id`. Unlike **`greedy_fas_copeland`** (Copeland on the repaired DAG) or **`greedy_fas_weighted_balance`**, this is a **global** Markov solution on the full node set, not a local win-count or out-minus-in heuristic.
+
 Optional weaker mode (`score_file`):
 
 ```bash
@@ -420,6 +485,8 @@ Expected external file formats:
 - Qrels remain evaluation labels in all modes.
 - Primary ranking-quality metric in `run_real_experiment.py` is candidate-aligned `nDCG@k` (with MAP@k, Precision@k, Recall@k, and pairwise accuracy also reported). Kendall tau is secondary.
 - Hybrid post-repair methods can consume `--score-prior-files` to combine ranker score priors with repaired-graph consistency signals.
+- The **`rrf`**, **`combsum`**, and **`borda_fuse`** methods are standard multi-list fusion baselines (same score files as hybrids); they do not use graph repair.
+- **`markov_graph`** and **`markov_graph_repaired`** are standalone graph Markov baselines (no `--score-prior-files` required).
 
 ### BRIGHT — Manual Download (if needed)
 
@@ -516,7 +583,10 @@ outputs/
 | `graph_construction` | O(e) | Linear in edges; fast in practice |
 | `cycle_detection` (SCC) | O(n + e) | Very fast; full enumeration is exponential — avoided |
 | `ranking_score_sum` | O(n + e) | Fast |
-| `ranking_borda` | O(n + e) | Fast |
+| `ranking_borda` | O(n + e) | Graph tournament Borda (preference graph) |
+| `ranking_borda_fuse` | O(n · rankers) | Borda count over score-prior lists per query |
+| `ranking_markov_graph` | O(n² · iter) | Rank Centrality–style power iteration (sparse small n) |
+| `ranking_markov_graph_repaired` | O(n² · iter) | Same on FAS-repaired DAG |
 | `evaluation` | O(n²) | Quadratic in items due to all-pairs Kendall τ |
 
 ### Three Concrete Optimization Suggestions

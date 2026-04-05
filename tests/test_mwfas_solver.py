@@ -8,6 +8,7 @@ import networkx as nx
 import pytest
 
 from consistency_ranker.exact_fas import exact_fas
+from consistency_ranker.metric_aware_repair import reweight_graph_for_metric_aware_fas
 from consistency_ranker.mwfas_solver import available_methods, solve
 
 
@@ -54,3 +55,19 @@ def test_available_methods_reports_ilp_when_gurobi_present():
     assert "greedy" in methods
     if _has_gurobi():
         assert "ilp" in methods
+
+
+def test_solve_greedy_on_metric_reweighted_graph():
+    g = nx.DiGraph()
+    g.add_edge("a", "b", weight=1.0)
+    g.add_edge("b", "a", weight=1.0)
+    gr = reweight_graph_for_metric_aware_fas(
+        g,
+        prior_scores={"a": 1.0, "b": 0.0},
+        gain_source="prior_score",
+        beta=2.0,
+    )
+    dag, removed = solve(gr, method="greedy")
+    assert not nx.is_directed_acyclic_graph(g)
+    assert nx.is_directed_acyclic_graph(dag)
+    assert removed

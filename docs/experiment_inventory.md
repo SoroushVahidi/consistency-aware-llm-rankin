@@ -244,4 +244,17 @@
 | Field | Value |
 |---|---|
 | Name | Mixed-effects model over queries for significance testing |
-| Status | **planned** |
+| Status | **planned** — mentioned in `docs/Q1_JOURNAL_GAP_ANALYSIS.md` |
+
+---
+
+## Additional real benchmarks (registry support)
+
+| Dataset id | Acquisition | Notes |
+|---|---|---|
+| `nfcorpus` | Hugging Face `BeIR/nfcorpus` | Same BEIR path as SciDocs/FiQA |
+| `msmarco_passage` | Hugging Face `BeIR/msmarco` (streaming) | Use `--max-docs`; full corpus is multi-million passages |
+| `trec_dl_passage` | Optional `ir-datasets` → `msmarco-passage/trec-dl-{2019,2020}` | Judged evaluation layer; passage text via MS MARCO doc store |
+| `robust04` | Optional `ir-datasets` | TREC Robust 2004; licensing via ir-datasets / TREC |
+
+Status: **implemented** (download/prepare scripts + registry); manuscript runs are **not** pre-committed for these ids.

@@ -165,3 +165,27 @@ def test_main_returns_zero():
 
     crr._results.clear()
     crr._results.extend(original)
+
+
+def test_check_optional_ir_datasets_records_ok_or_warn():
+    """ir-datasets check must record optional_deps as OK or WARN, never FAIL."""
+    import importlib.util
+
+    import scripts.check_repo_ready as crr
+
+    original = crr._results[:]
+    crr._results.clear()
+
+    crr.check_optional_ir_datasets()
+    optional = [r for r in crr._results if r[1] == "optional_deps"]
+    assert len(optional) >= 1
+    assert all(r[0] in ("OK", "WARN") for r in optional)
+
+    has_ir = importlib.util.find_spec("ir_datasets") is not None
+    if has_ir:
+        assert any(r[0] == "OK" for r in optional)
+    else:
+        assert any(r[0] == "WARN" for r in optional)
+
+    crr._results.clear()
+    crr._results.extend(original)

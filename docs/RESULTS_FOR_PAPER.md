@@ -54,6 +54,15 @@ Primary files:
 - Present in broader proxy outputs (`outputs/real_full/**`) but not in canonical
   paper package tables; should be treated as supplementary until canonicalized.
 
+### Metric-aware FAS (`--repair-weighting` in `run_real_experiment.py`)
+- **Not** in pre-committed publication tables. Use per-query CSV columns `repair_weighting`, `fas_repair_variant`, `fas_weight_removed_ma`, and method suffixes `*_ma` when running with `--repair-weighting both` to compare plain vs metric-aware repaired hybrids (e.g. `hybrid_rrf_copeland_a03` vs `hybrid_rrf_copeland_a03_ma`, or ablation names like `hybrid_rrf_repaired_copeland_a03` vs `…_ma` when `--include-hybrid-ablation` is on).
+
+### Optional IR benchmarks (`nfcorpus`, `msmarco_passage`, `trec_dl_passage`, `robust04`)
+- Registered for download/prepare and `run_real_experiment.py`; **no pre-committed
+  vote-suite or paper_package tables** in this repository.
+- Treat any numbers you generate locally as **manuscript supplements** until you
+  pin a new `outputs/.../paper_package/` tree and cite that path explicitly.
+
 ---
 
 ## 3) Cross-dataset pattern summary

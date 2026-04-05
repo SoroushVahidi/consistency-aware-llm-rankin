@@ -54,7 +54,7 @@ def load_dataset_splits(
     Parameters
     ----------
     name_or_config:
-        Dataset short name (``"scidocs"``, ``"fiqa"``, etc.) or a
+        Dataset short name (see ``dataset_registry.DATASET_NAMES``) or a
         :class:`~consistency_ranker.data.dataset_registry.DatasetConfig`.
 
     Returns

@@ -21,6 +21,10 @@ Usage
 
     python scripts/prepare_datasets.py --dataset scidocs
     python scripts/prepare_datasets.py --dataset fiqa
+    python scripts/prepare_datasets.py --dataset nfcorpus
+    python scripts/prepare_datasets.py --dataset msmarco_passage
+    python scripts/prepare_datasets.py --dataset trec_dl_passage
+    python scripts/prepare_datasets.py --dataset robust04
     python scripts/prepare_datasets.py --dataset hotpotqa
     python scripts/prepare_datasets.py --dataset bright
     python scripts/prepare_datasets.py --dataset all
@@ -94,8 +98,21 @@ def _processed_files_exist(processed_path: Path) -> bool:
 # Per-dataset prepare functions
 # ---------------------------------------------------------------------------
 
-def prepare_beir(name: str, args: argparse.Namespace) -> None:
-    """Prepare a BEIR-format dataset (scidocs or fiqa)."""
+# Datasets that ship raw data as three JSONL files (queries, documents, qrels).
+_STANDARD_RAW_JSONL = frozenset(
+    {
+        "scidocs",
+        "fiqa",
+        "nfcorpus",
+        "msmarco_passage",
+        "trec_dl_passage",
+        "robust04",
+    }
+)
+
+
+def prepare_standard_jsonl_raw(name: str, args: argparse.Namespace) -> None:
+    """Prepare from raw ``queries.jsonl`` / ``documents.jsonl`` / ``qrels.jsonl``."""
     cfg = get_config(name)
     raw = cfg.raw_path
     out = cfg.processed_path
@@ -127,6 +144,11 @@ def prepare_beir(name: str, args: argparse.Namespace) -> None:
         _write_jsonl(qrels, out / "qrels.jsonl")
 
     _generate_preferences(name, out, args)
+
+
+def prepare_beir(name: str, args: argparse.Namespace) -> None:
+    """Backward-compatible alias for BEIR-style raw JSONL."""
+    prepare_standard_jsonl_raw(name, args)
 
 
 def prepare_hotpotqa(args: argparse.Namespace) -> None:
@@ -283,8 +305,8 @@ def main() -> None:
         print(f"\n{'='*60}")
         print(f"  Preparing: {name}")
         print(f"{'='*60}")
-        if name in ("scidocs", "fiqa"):
-            prepare_beir(name, args)
+        if name in _STANDARD_RAW_JSONL:
+            prepare_standard_jsonl_raw(name, args)
         elif name == "hotpotqa":
             prepare_hotpotqa(args)
         elif name == "bright":

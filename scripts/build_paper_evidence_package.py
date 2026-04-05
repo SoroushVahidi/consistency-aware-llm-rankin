@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 """
-Build paper-facing tables and plots from a publication vote-suite root.
+Build paper-facing tables and plots from a publication vote-suite root (e.g.
+``outputs/pub_vote_cmp_all4`` or the historical two-dataset bundle ``outputs/pub_vote_cmp_v2``).
+
+Use ``--datasets`` to align tables and the plot grid with registered benchmarks (e.g. ``nfcorpus``)
+once those trees exist under ``<root>/``.
 
 Writes under ``<root>/paper_package/``:
   - ``tables/table_graph_ndcg_and_consistency.csv``
@@ -24,7 +28,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 VARIANTS = ("ms2", "ms1", "ms1_drop_mutual")
-DATASETS = ("scidocs", "fiqa", "hotpotqa", "bright")
+DEFAULT_DATASETS = ("scidocs", "fiqa", "hotpotqa", "bright")
+DATASETS = DEFAULT_DATASETS  # backward-compatible alias
 REF_METHOD = "hybrid_rrf_repaired_copeland_a03"
 METHODS = {
     "uco": "hybrid_rrf_unrepaired_copeland_a03",
@@ -61,9 +66,11 @@ def _method_mean_ndcg(rows: list[dict], method: str) -> float:
     return _mean(sub)
 
 
-def aggregate_graph_and_ndcg(root: Path) -> list[dict]:
+def aggregate_graph_and_ndcg(
+    root: Path, datasets: tuple[str, ...] = DEFAULT_DATASETS
+) -> list[dict]:
     out: list[dict] = []
-    for ds in DATASETS:
+    for ds in datasets:
         for var in VARIANTS:
             p = _per_query_path(root, ds, var)
             if not p.exists():
@@ -98,6 +105,15 @@ def aggregate_graph_and_ndcg(root: Path) -> list[dict]:
                     "mean_graph_ref_pic_post": round(pic_post, 4),
                     "mean_delta_pic_qrels_pre_minus_post": round(pic_pre - pic_post, 4),
                     "mean_fas_weight_removed": round(fas_w, 6),
+                    "mean_ndcg_rrf": round(_method_mean_ndcg(rows, "rrf"), 6),
+                    "mean_ndcg_combsum": round(_method_mean_ndcg(rows, "combsum"), 6),
+                    "mean_ndcg_borda": round(_method_mean_ndcg(rows, "borda_fuse"), 6),
+                    "mean_ndcg_markov_graph": round(
+                        _method_mean_ndcg(rows, "markov_graph"), 6
+                    ),
+                    "mean_ndcg_markov_graph_repaired": round(
+                        _method_mean_ndcg(rows, "markov_graph_repaired"), 6
+                    ),
                     "mean_ndcg_prior": round(_method_mean_ndcg(rows, METHODS["prior"]), 6),
                     "mean_ndcg_uco": round(_method_mean_ndcg(rows, METHODS["uco"]), 6),
                     "mean_ndcg_rco": round(_method_mean_ndcg(rows, METHODS["rco"]), 6),
@@ -108,9 +124,11 @@ def aggregate_graph_and_ndcg(root: Path) -> list[dict]:
     return out
 
 
-def load_bootstrap_table(root: Path) -> list[dict]:
+def load_bootstrap_table(
+    root: Path, datasets: tuple[str, ...] = DEFAULT_DATASETS
+) -> list[dict]:
     rows: list[dict] = []
-    for ds in DATASETS:
+    for ds in datasets:
         for var in VARIANTS:
             for kind in ("copeland", "balance"):
                 jp = _analysis_path(root, ds, var, kind)
@@ -170,12 +188,13 @@ def _write_csv(path: Path, fieldnames: list[str], rows: list[dict]) -> None:
 
 
 def _make_dataset_grid(
+    datasets: tuple[str, ...],
     ncols: int = 2,
     *,
     figsize_per_cell: tuple[float, float],
     sharex: bool = False,
 ):
-    n = len(DATASETS)
+    n = len(datasets)
     nrows = max(1, math.ceil(n / ncols))
     fig, axes = plt.subplots(
         nrows,
@@ -189,11 +208,15 @@ def _make_dataset_grid(
     return fig, axes_list
 
 
-def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
-    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 3.5))
+def plot_cyclicity_scc(
+    agg: list[dict],
+    outdir: Path,
+    datasets: tuple[str, ...] = DEFAULT_DATASETS,
+) -> None:
+    fig, axes = _make_dataset_grid(datasets, figsize_per_cell=(4.5, 3.5))
     labels = ["ms2", "ms1", "ms1+drop"]
     x = range(3)
-    for ax_idx, ds in enumerate(DATASETS):
+    for ax_idx, ds in enumerate(datasets):
         ax = axes[ax_idx]
         sub = [r for r in agg if r["dataset"] == ds]
         sub = sorted(sub, key=lambda r: VARIANTS.index(r["variant"]))
@@ -218,11 +241,15 @@ def plot_cyclicity_scc(agg: list[dict], outdir: Path) -> None:
     plt.close(fig)
 
 
-def plot_ndcg_hybrids(agg: list[dict], outdir: Path) -> None:
-    fig, axes = _make_dataset_grid(figsize_per_cell=(5.0, 4.3))
+def plot_ndcg_hybrids(
+    agg: list[dict],
+    outdir: Path,
+    datasets: tuple[str, ...] = DEFAULT_DATASETS,
+) -> None:
+    fig, axes = _make_dataset_grid(datasets, figsize_per_cell=(5.0, 4.3))
     labels = ["ms2", "ms1", "ms1+drop"]
     w = 0.18
-    for ax_idx, ds in enumerate(DATASETS):
+    for ax_idx, ds in enumerate(datasets):
         ax = axes[ax_idx]
         sub = sorted(
             [r for r in agg if r["dataset"] == ds],
@@ -271,11 +298,21 @@ def plot_ndcg_hybrids(agg: list[dict], outdir: Path) -> None:
     plt.close(fig)
 
 
-def plot_delta_forest(root: Path, outdir: Path) -> None:
-    rows = [r for r in load_bootstrap_table(root) if r["pair"] in ("copeland", "balance")]
-    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 5.2), sharex=True)
+def plot_delta_forest(
+    root: Path,
+    outdir: Path,
+    datasets: tuple[str, ...] = DEFAULT_DATASETS,
+) -> None:
+    rows = [
+        r
+        for r in load_bootstrap_table(root, datasets=datasets)
+        if r["pair"] in ("copeland", "balance")
+    ]
+    fig, axes = _make_dataset_grid(
+        datasets, figsize_per_cell=(4.5, 5.2), sharex=True
+    )
     colors = {"copeland": "#2ca02c", "balance": "#9467bd"}
-    for ax_idx, ds in enumerate(DATASETS):
+    for ax_idx, ds in enumerate(datasets):
         ax = axes[ax_idx]
         y_labels: list[str] = []
         y = 0
@@ -317,12 +354,16 @@ def plot_delta_forest(root: Path, outdir: Path) -> None:
     plt.close(fig)
 
 
-def plot_qrels_bew(agg: list[dict], outdir: Path) -> None:
+def plot_qrels_bew(
+    agg: list[dict],
+    outdir: Path,
+    datasets: tuple[str, ...] = DEFAULT_DATASETS,
+) -> None:
     """Graph–qrels backward-edge mass: pre (raw graph) vs post (DAG after FAS)."""
-    fig, axes = _make_dataset_grid(figsize_per_cell=(4.5, 3.8))
+    fig, axes = _make_dataset_grid(datasets, figsize_per_cell=(4.5, 3.8))
     labels = ["ms2", "ms1", "ms1+drop"]
     x = range(3)
-    for ax_idx, ds in enumerate(DATASETS):
+    for ax_idx, ds in enumerate(datasets):
         ax = axes[ax_idx]
         sub = sorted(
             [r for r in agg if r["dataset"] == ds],
@@ -360,14 +401,20 @@ def plot_qrels_bew(agg: list[dict], outdir: Path) -> None:
     plt.close(fig)
 
 
-def write_manuscript_summary(path: Path, root: Path, agg: list[dict], boot: list[dict]) -> None:
+def write_manuscript_summary(
+    path: Path,
+    root: Path,
+    agg: list[dict],
+    boot: list[dict],
+    datasets: tuple[str, ...] = DEFAULT_DATASETS,
+) -> None:
     datasets_with_agg = sorted({r["dataset"] for r in agg})
     datasets_with_boot = sorted({r["dataset"] for r in boot})
     text = f"""# Manuscript-ready summary (``{root}``)
 
 ## Coverage
 
-- Datasets configured in this package: {", ".join(DATASETS)}
+- Datasets configured in this package: {", ".join(datasets)}
 - Datasets with aggregate graph / nDCG rows: {", ".join(datasets_with_agg) if datasets_with_agg else "none"}
 - Datasets with bootstrap delta rows: {", ".join(datasets_with_boot) if datasets_with_boot else "none"}
 - Vote variants expected: {", ".join(VARIANTS)}
@@ -377,7 +424,8 @@ def write_manuscript_summary(path: Path, root: Path, agg: list[dict], boot: list
 1. `table_graph_ndcg_and_consistency.csv`
    - one row per dataset × vote variant
    - graph cyclicity, SCC size, edge counts, qrels-aligned inconsistency metrics,
-     and mean nDCG for repaired / unrepaired hybrids
+     and mean nDCG for RRF, CombSUM, Borda (``borda_fuse``), Markov graph baselines,
+     and repaired/unrepaired hybrids
 2. `table_bootstrap_delta_ndcg.csv`
    - paired bootstrap mean ΔnDCG rows for repaired minus unrepaired method pairs
 3. `table_consistency_qrels_bew.csv`
@@ -414,15 +462,31 @@ def main() -> None:
         "--root",
         type=Path,
         default=Path("outputs/pub_vote_cmp_all4"),
-        help="Publication vote-suite root directory (default: outputs/pub_vote_cmp_all4).",
+        help=(
+            "Publication vote-suite root directory (default: outputs/pub_vote_cmp_all4). "
+            "Use outputs/pub_vote_cmp_v2 for the historical two-dataset bundle."
+        ),
+    )
+    ap.add_argument(
+        "--datasets",
+        nargs="*",
+        default=None,
+        metavar="NAME",
+        help=(
+            "Datasets to iterate for tables and plot grid (default: scidocs fiqa hotpotqa bright). "
+            "Per-dataset files under --root are still required; missing trees are skipped in plots."
+        ),
     )
     args = ap.parse_args()
+    datasets: tuple[str, ...] = (
+        tuple(args.datasets) if args.datasets else DEFAULT_DATASETS
+    )
     pkg = args.root / "paper_package"
     tdir = pkg / "tables"
     pdir = pkg / "plots"
     pdir.mkdir(parents=True, exist_ok=True)
 
-    agg = aggregate_graph_and_ndcg(args.root)
+    agg = aggregate_graph_and_ndcg(args.root, datasets=datasets)
     if not agg:
         raise SystemExit(f"No data under {args.root}")
 
@@ -449,16 +513,18 @@ def main() -> None:
     ]
     _write_csv(tdir / "table_consistency_qrels_bew.csv", list(slim[0].keys()), slim)
 
-    boot = load_bootstrap_table(args.root)
+    boot = load_bootstrap_table(args.root, datasets=datasets)
     if boot:
         _write_csv(tdir / "table_bootstrap_delta_ndcg.csv", list(boot[0].keys()), boot)
 
-    plot_cyclicity_scc(agg, pdir)
-    plot_ndcg_hybrids(agg, pdir)
-    plot_delta_forest(args.root, pdir)
-    plot_qrels_bew(agg, pdir)
+    plot_cyclicity_scc(agg, pdir, datasets=datasets)
+    plot_ndcg_hybrids(agg, pdir, datasets=datasets)
+    plot_delta_forest(args.root, pdir, datasets=datasets)
+    plot_qrels_bew(agg, pdir, datasets=datasets)
 
-    write_manuscript_summary(pkg / "MANUSCRIPT_SUMMARY.md", args.root, agg, boot)
+    write_manuscript_summary(
+        pkg / "MANUSCRIPT_SUMMARY.md", args.root, agg, boot, datasets=datasets
+    )
     print(f"[paper_package] wrote {pkg}")
 
 

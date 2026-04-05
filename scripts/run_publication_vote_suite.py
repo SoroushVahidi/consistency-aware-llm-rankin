@@ -7,7 +7,9 @@ Vote variants (per dataset, shared ``query_ids.txt`` and score files):
   - ``ms1``: ``--min-support 1``
   - ``ms1_drop_mutual``: ``ms1`` votes then ``postprocess_votes_drop_mutual_pairs``
 
-Then ``run_real_experiment`` with a short hybrid-only method list.
+Then ``run_real_experiment`` with a method list that includes **RRF**,
+**CombSUM**, **Borda list fusion** (``borda_fuse``), **Markov graph** baselines
+(``markov_graph``, ``markov_graph_repaired``), plus hybrid ablations.
 
 Supported datasets in this script:
   - ``scidocs``
@@ -29,8 +31,16 @@ from pathlib import Path
 
 _REPO = Path(__file__).resolve().parent.parent
 _SCRIPTS = _REPO / "scripts"
+sys.path.insert(0, str(_REPO / "src"))
+from consistency_ranker.data.dataset_registry import processed_queries_jsonl  # noqa: E402
+
 DEFAULT_RANKERS = ("bm25", "tfidf", "minilm")
 METHODS = [
+    "rrf",
+    "combsum",
+    "borda_fuse",
+    "markov_graph",
+    "markov_graph_repaired",
     "hybrid_rrf_prior_only",
     "hybrid_rrf_unrepaired_copeland_a03",
     "hybrid_rrf_repaired_copeland_a03",
@@ -47,15 +57,8 @@ def _run(cmd: list[str]) -> None:
 
 
 def _processed_queries_path(dataset: str) -> Path:
-    if dataset == "scidocs":
-        return _REPO / "data/processed/beir/scidocs/queries.jsonl"
-    if dataset == "fiqa":
-        return _REPO / "data/processed/beir/fiqa/queries.jsonl"
-    if dataset == "hotpotqa":
-        return _REPO / "data/processed/hotpotqa/queries.jsonl"
-    if dataset == "bright":
-        return _REPO / "data/processed/bright/queries.jsonl"
-    raise ValueError(dataset)
+    """Path to ``queries.jsonl`` for any registered dataset (repo-absolute)."""
+    return processed_queries_jsonl(dataset)
 
 
 def _write_query_ids_from_processed(dataset: str, path: Path, n: int) -> int:

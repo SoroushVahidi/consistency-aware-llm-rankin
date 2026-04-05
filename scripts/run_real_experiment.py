@@ -50,6 +50,7 @@ import logging
 import math
 import random
 import sys
+from dataclasses import replace
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -68,19 +69,39 @@ from consistency_ranker.baseline_ranking import (
     score_sum_scores,
     topological_ranking,
 )
-from consistency_ranker.cycle_detection import has_cycle
-from consistency_ranker.data.unified_loader import (
-    load_dataset_splits,
-    preferences_from_qrels,
+from consistency_ranker.borda_fuse_ranking import (
+    per_query_borda_fuse_ranking_from_score_maps,
 )
+from consistency_ranker.combsum_ranking import (
+    COMBSUM_NORM_MINMAX,
+    per_query_combsum_ranking_from_score_maps,
+)
+from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.data.query_ids import (
     eligible_query_ids,
     has_usable_eval_labels,
     load_query_ids_file,
 )
+from consistency_ranker.data.dataset_registry import DATASET_NAMES
+from consistency_ranker.data.unified_loader import (
+    load_dataset_splits,
+    preferences_from_qrels,
+)
 from consistency_ranker.graph_construction import build_graph, graph_summary
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
+from consistency_ranker.metric_aware_repair import (
+    mean_edge_weight,
+    reweight_graph_for_metric_aware_fas,
+)
+from consistency_ranker.markov_graph_ranking import (
+    DEFAULT_MARKOV_DAMPING,
+    markov_graph_ranking,
+)
 from consistency_ranker.pairwise_prefs import Preference
+from consistency_ranker.rrf_ranking import (
+    DEFAULT_RRF_K,
+    per_query_rrf_ranking_from_score_maps,
+)
 from consistency_ranker.utils.timing import Timer, TimingAccumulator
 
 logging.basicConfig(
@@ -100,6 +121,8 @@ NON_HYBRID_METHODS = (
     "score_sum",
     "borda",
     "pagerank",
+    "markov_graph",
+    "markov_graph_repaired",
     "greedy_fas_topological",
     "greedy_fas_weighted_balance",
     "greedy_fas_copeland",
@@ -118,6 +141,7 @@ class HybridMethodSpec:
     alpha: float
     use_repaired_graph: bool
     mode: str = "score_component"  # score_component | priority_topological | prior_only
+    fas_variant: str = "plain"  # plain | ma — which repaired DAG when --repair-weighting both
 
 
 DEFAULT_HYBRID_SPECS = (
@@ -161,9 +185,109 @@ PREFERENCE_SOURCES = (
 )
 """Supported pairwise-preference sources for real-data experiments."""
 
+REPAIR_WEIGHTING_MODES = ("plain", "metric_aware", "both")
+"""How to run FAS: plain weights, metric-aware reweighting, or both (``_ma`` methods)."""
+
+METHODS_USING_REPAIRED_DAG = frozenset(
+    {
+        "markov_graph_repaired",
+        "greedy_fas_topological",
+        "greedy_fas_weighted_balance",
+        "greedy_fas_copeland",
+        "fas_balance_score_prior_alpha_beta",
+        "greedy_fas_score_augmented_topological",
+    }
+)
+"""Non-hybrid methods whose ranking uses the repaired DAG."""
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+
+def _expand_ma_method_plan(
+    methods: list[str],
+    hybrid_specs: dict[str, HybridMethodSpec],
+    *,
+    repair_weighting: str,
+) -> tuple[list[str], dict[str, HybridMethodSpec]]:
+    """When *repair_weighting* is ``both``, append ``_ma`` twins for repaired-DAG methods."""
+    if repair_weighting != "both":
+        return methods, hybrid_specs
+    seen = set(methods)
+    new_methods = list(methods)
+    for m in methods:
+        if m in METHODS_USING_REPAIRED_DAG:
+            ma = f"{m}_ma"
+            if ma not in seen:
+                new_methods.append(ma)
+                seen.add(ma)
+    new_specs = dict(hybrid_specs)
+    for name, spec in list(hybrid_specs.items()):
+        if spec.use_repaired_graph and spec.mode != "prior_only":
+            ma_name = f"{name}_ma"
+            if ma_name not in new_specs:
+                new_specs[ma_name] = replace(spec, name=ma_name, fas_variant="ma")
+            if ma_name not in seen:
+                new_methods.append(ma_name)
+                seen.add(ma_name)
+    return new_methods, new_specs
+
+
+def _repaired_dag_choice(
+    method_name: str,
+    hybrid_specs: dict[str, HybridMethodSpec],
+    *,
+    repair_weighting: str,
+    dag_plain: nx.DiGraph | None,
+    dag_ma: nx.DiGraph | None,
+) -> nx.DiGraph | None:
+    """Pick repaired DAG for *method_name* (may be ``None`` if not computed)."""
+    if repair_weighting == "plain":
+        return dag_plain
+    if repair_weighting == "metric_aware":
+        return dag_ma
+    # both
+    if method_name.endswith("_ma"):
+        return dag_ma
+    spec = hybrid_specs.get(method_name)
+    if spec is not None and getattr(spec, "fas_variant", "plain") == "ma":
+        return dag_ma
+    return dag_plain
+
+
+def _uses_repaired_dag_ranking(
+    method_name: str,
+    hybrid_specs: dict[str, HybridMethodSpec],
+) -> bool:
+    if method_name in METHODS_USING_REPAIRED_DAG or method_name.endswith("_ma"):
+        return True
+    spec = hybrid_specs.get(method_name)
+    return bool(
+        spec is not None
+        and spec.use_repaired_graph
+        and spec.mode != "prior_only"
+    )
+
+
+def _fas_variant_for_method(
+    method_name: str,
+    hybrid_specs: dict[str, HybridMethodSpec],
+    repair_weighting: str,
+) -> str:
+    if not _uses_repaired_dag_ranking(method_name, hybrid_specs):
+        return "none"
+    if repair_weighting == "plain":
+        return "plain"
+    if repair_weighting == "metric_aware":
+        return "ma"
+    # both
+    if method_name.endswith("_ma"):
+        return "ma"
+    spec = hybrid_specs.get(method_name)
+    if spec is not None and getattr(spec, "fas_variant", "plain") == "ma":
+        return "ma"
+    return "plain"
 
 
 def _reference_ranking(qrels_for_query: list) -> list[str]:
@@ -656,6 +780,8 @@ def _method_plan(
     alpha_sweep_components: list[str] | None,
     alpha_values: list[float],
     selected_methods: list[str] | None = None,
+    include_score_fusion_baselines: bool = False,
+    repair_weighting: str = "plain",
 ) -> tuple[list[str], dict[str, HybridMethodSpec]]:
     specs = _build_hybrid_specs(
         include_ablation=include_hybrid_ablation,
@@ -663,7 +789,16 @@ def _method_plan(
         alpha_values=alpha_values,
     )
     hybrid_by_name = {s.name: s for s in specs}
-    methods = list(NON_HYBRID_METHODS) + [s.name for s in specs]
+    non_hybrid = list(NON_HYBRID_METHODS)
+    if include_score_fusion_baselines:
+        insert_at = non_hybrid.index("markov_graph_repaired") + 1
+        non_hybrid.insert(insert_at, "rrf")
+        non_hybrid.insert(insert_at + 1, "combsum")
+        non_hybrid.insert(insert_at + 2, "borda_fuse")
+    methods = non_hybrid + [s.name for s in specs]
+    methods, hybrid_by_name = _expand_ma_method_plan(
+        methods, hybrid_by_name, repair_weighting=repair_weighting
+    )
     if selected_methods:
         selected_set = set(selected_methods)
         unknown = [m for m in selected_methods if m not in methods]
@@ -736,6 +871,7 @@ def _validate_run_configuration(
     save_timings: bool,
     overwrite_existing: bool,
     dataset: str,
+    methods_filter: list[str] | None = None,
 ) -> None:
     """Validate CLI/runtime configuration before running expensive experiments."""
     if max_queries <= 0:
@@ -762,6 +898,15 @@ def _validate_run_configuration(
     for score_prior in score_prior_files or []:
         if not score_prior.exists():
             raise FileNotFoundError(f"score_prior_file not found: {score_prior}")
+
+    if methods_filter and not (score_prior_files or []):
+        need_priors = [m for m in methods_filter if m in ("rrf", "combsum", "borda_fuse")]
+        if need_priors:
+            raise ValueError(
+                f"Method(s) {', '.join(repr(m) for m in need_priors)} require at least one "
+                "--score-prior-files path (JSONL lines: query_id, doc_id, score). "
+                "Use the same BM25 / TF-IDF / MiniLM score files as hybrid priors."
+            )
 
     if output_dir.exists() and not output_dir.is_dir():
         raise ValueError(f"output_dir must be a directory path. Got file: {output_dir}")
@@ -1155,6 +1300,13 @@ def run_query(
     methods: list[str],
     hybrid_specs: dict[str, HybridMethodSpec],
     global_acc: TimingAccumulator,
+    rrf_k: float = DEFAULT_RRF_K,
+    combsum_normalization: str = COMBSUM_NORM_MINMAX,
+    markov_damping: float = DEFAULT_MARKOV_DAMPING,
+    repair_weighting: str = "plain",
+    metric_aware_beta: float = 1.0,
+    metric_aware_top_k: int | None = None,
+    metric_aware_gain_source: str = "prior_score",
 ) -> tuple[list[dict], dict | None]:
     """Run the full pipeline for a single query.
 
@@ -1256,7 +1408,7 @@ def run_query(
         scc_cycle_burden = sum(len(s) for s in sccs if len(s) > 1)
 
     # ------------------------------------------------------------------
-    # 4. Candidate-aligned reference ranking from qrels
+    # 4. Candidate-aligned reference ranking from qrels + score priors
     # ------------------------------------------------------------------
     legacy_ref_ranking = _reference_ranking(qrels_for_query)[:top_k]
     candidate_nodes = set(graph.nodes())
@@ -1266,19 +1418,101 @@ def run_query(
     )
     candidate_set = set(ref_ranking)
 
-    # Graph-vs-qrels inconsistency before/after repair
+    # Graph-vs-qrels inconsistency before repair
     graph_bew_pre = _backward_edge_weight(graph, ref_ranking)
     graph_pic_pre = _pairwise_inconsistency(graph, ref_ranking)
 
+    _score_sum_prior: dict[str, float] = score_sum_scores(graph)
+    prior_scores = _rrf_prior_scores_for_query(
+        query_id=qid,
+        candidate_nodes=candidate_nodes,
+        score_prior_sets=score_prior_sets,
+        fallback_scores=_score_sum_prior_scores(graph),
+    )
+    qrels_gain_map = {d: float(rel_map.get(d, 0)) for d in candidate_nodes}
+    focus_k = metric_aware_top_k if metric_aware_top_k is not None else top_k
+
     # ------------------------------------------------------------------
-    # 5. Greedy FAS (shared repair — used by topological method)
+    # 5. Greedy FAS (plain and/or metric-aware reweighted)
     # ------------------------------------------------------------------
-    with Timer("greedy_fas_solver", accumulator=query_acc):
-        dag, removed_edges = greedy_fas(graph)
-        fas_weight = greedy_fas_total_weight(removed_edges)
-        fas_n_removed = len(removed_edges)
-    graph_bew_post = _backward_edge_weight(dag, ref_ranking)
-    graph_pic_post = _pairwise_inconsistency(dag, ref_ranking)
+    dag_plain: nx.DiGraph | None = None
+    removed_plain: list[tuple[str, str, float]] = []
+    dag_ma: nx.DiGraph | None = None
+    removed_ma: list[tuple[str, str, float]] = []
+    graph_ma_for_stats: nx.DiGraph | None = None
+
+    if repair_weighting in ("plain", "both"):
+        with Timer("greedy_fas_solver", accumulator=query_acc):
+            dag_plain, removed_plain = greedy_fas(graph)
+    if repair_weighting in ("metric_aware", "both"):
+        with Timer("metric_aware_reweight", accumulator=query_acc):
+            graph_ma_for_stats = reweight_graph_for_metric_aware_fas(
+                graph,
+                prior_scores=prior_scores,
+                gain_source=metric_aware_gain_source,
+                qrels_gain_map=qrels_gain_map
+                if metric_aware_gain_source == "qrels_oracle"
+                else None,
+                beta=metric_aware_beta,
+                focus_top_k=focus_k,
+            )
+        fas_ma_stage = "greedy_fas_solver_ma" if repair_weighting == "both" else "greedy_fas_solver"
+        with Timer(fas_ma_stage, accumulator=query_acc):
+            dag_ma, removed_ma = greedy_fas(graph_ma_for_stats)
+
+    fas_weight_plain = (
+        greedy_fas_total_weight(removed_plain) if dag_plain is not None else None
+    )
+    fas_n_plain = len(removed_plain) if dag_plain is not None else None
+    fas_weight_ma = greedy_fas_total_weight(removed_ma) if dag_ma is not None else None
+    fas_n_ma = len(removed_ma) if dag_ma is not None else None
+
+    if dag_plain is not None:
+        graph_bew_post_plain = _backward_edge_weight(dag_plain, ref_ranking)
+        graph_pic_post_plain = _pairwise_inconsistency(dag_plain, ref_ranking)
+    else:
+        graph_bew_post_plain = None
+        graph_pic_post_plain = None
+    if dag_ma is not None:
+        graph_bew_post_ma = _backward_edge_weight(dag_ma, ref_ranking)
+        graph_pic_post_ma = _pairwise_inconsistency(dag_ma, ref_ranking)
+    else:
+        graph_bew_post_ma = None
+        graph_pic_post_ma = None
+
+    mean_ma_edge_w = (
+        mean_edge_weight(graph_ma_for_stats, key="weight")
+        if graph_ma_for_stats is not None
+        else None
+    )
+    mean_removed_ma_w = (
+        sum(w for _, _, w in removed_ma) / len(removed_ma) if removed_ma else None
+    )
+
+    if repair_weighting == "metric_aware":
+        graph_bew_post = graph_bew_post_ma if graph_bew_post_ma is not None else 0.0
+        graph_pic_post = graph_pic_post_ma if graph_pic_post_ma is not None else 0
+    else:
+        graph_bew_post = (
+            graph_bew_post_plain if graph_bew_post_plain is not None else 0.0
+        )
+        graph_pic_post = (
+            graph_pic_post_plain if graph_pic_post_plain is not None else 0
+        )
+
+    def _dag_for_repaired(method_name: str) -> nx.DiGraph:
+        d = _repaired_dag_choice(
+            method_name,
+            hybrid_specs,
+            repair_weighting=repair_weighting,
+            dag_plain=dag_plain,
+            dag_ma=dag_ma,
+        )
+        if d is None:
+            raise RuntimeError(
+                f"No repaired DAG for method={method_name!r}, repair_weighting={repair_weighting!r}"
+            )
+        return d
 
     # ------------------------------------------------------------------
     # 6. Ranking methods
@@ -1298,49 +1532,151 @@ def run_query(
         rankings["pagerank"] = pagerank_ranking(graph)
     ranking_stage_by_method["pagerank"] = "ranking_pagerank"
 
-    with Timer("ranking_topological", accumulator=query_acc):
-        rankings["greedy_fas_topological"] = topological_ranking(dag)
-    ranking_stage_by_method["greedy_fas_topological"] = "ranking_topological"
-
-    with Timer("ranking_fas_weighted_balance", accumulator=query_acc):
-        rankings["greedy_fas_weighted_balance"] = _weighted_out_minus_in_ranking(dag)
-    ranking_stage_by_method["greedy_fas_weighted_balance"] = "ranking_fas_weighted_balance"
-
-    with Timer("ranking_fas_copeland", accumulator=query_acc):
-        rankings["greedy_fas_copeland"] = _copeland_ranking(dag)
-    ranking_stage_by_method["greedy_fas_copeland"] = "ranking_fas_copeland"
-
-    # Score-sum prior from the original (pre-repair) graph: used by
-    # fas_balance_score_prior_alpha_beta and score-augmented topological.
-    _score_sum_prior: dict[str, float] = score_sum_scores(graph)
-
-    with Timer("ranking_fas_balance_score_prior_alpha_beta", accumulator=query_acc):
-        rankings["fas_balance_score_prior_alpha_beta"] = (
-            fas_balance_score_prior_alpha_beta_ranking(dag, _score_sum_prior)
+    with Timer("ranking_markov_graph", accumulator=query_acc):
+        rankings["markov_graph"] = markov_graph_ranking(
+            graph,
+            damping=markov_damping,
         )
-    ranking_stage_by_method["fas_balance_score_prior_alpha_beta"] = (
-        "ranking_fas_balance_score_prior_alpha_beta"
-    )
+    ranking_stage_by_method["markov_graph"] = "ranking_markov_graph"
 
-    prior_scores = _rrf_prior_scores_for_query(
-        query_id=qid,
-        candidate_nodes=set(graph.nodes()),
-        score_prior_sets=score_prior_sets,
-        fallback_scores=_score_sum_prior_scores(graph),
-    )
-    with Timer("ranking_fas_score_augmented_topological", accumulator=query_acc):
-        rankings["greedy_fas_score_augmented_topological"] = _priority_topological_ranking(
-            dag,
-            priority_scores=prior_scores,
+    def _run_markov_repaired(name: str, stage_key: str) -> None:
+        with Timer(stage_key, accumulator=query_acc):
+            rankings[name] = markov_graph_ranking(
+                _dag_for_repaired(name),
+                damping=markov_damping,
+            )
+        ranking_stage_by_method[name] = stage_key
+
+    if "markov_graph_repaired" in methods:
+        _run_markov_repaired("markov_graph_repaired", "ranking_markov_graph_repaired")
+    if "markov_graph_repaired_ma" in methods:
+        _run_markov_repaired("markov_graph_repaired_ma", "ranking_markov_graph_repaired_ma")
+
+    if "rrf" in methods:
+        with Timer("ranking_rrf", accumulator=query_acc):
+            rankings["rrf"] = per_query_rrf_ranking_from_score_maps(
+                qid,
+                score_prior_sets,
+                graph.nodes(),
+                k=rrf_k,
+            )
+        ranking_stage_by_method["rrf"] = "ranking_rrf"
+
+    if "combsum" in methods:
+        with Timer("ranking_combsum", accumulator=query_acc):
+            rankings["combsum"] = per_query_combsum_ranking_from_score_maps(
+                qid,
+                score_prior_sets,
+                graph.nodes(),
+                normalization=combsum_normalization,
+            )
+        ranking_stage_by_method["combsum"] = "ranking_combsum"
+
+    if "borda_fuse" in methods:
+        with Timer("ranking_borda_fuse", accumulator=query_acc):
+            rankings["borda_fuse"] = per_query_borda_fuse_ranking_from_score_maps(
+                qid,
+                score_prior_sets,
+                graph.nodes(),
+            )
+        ranking_stage_by_method["borda_fuse"] = "ranking_borda_fuse"
+
+    if "greedy_fas_topological" in methods:
+        with Timer("ranking_topological", accumulator=query_acc):
+            rankings["greedy_fas_topological"] = topological_ranking(
+                _dag_for_repaired("greedy_fas_topological")
+            )
+        ranking_stage_by_method["greedy_fas_topological"] = "ranking_topological"
+    if "greedy_fas_topological_ma" in methods:
+        with Timer("ranking_topological_ma", accumulator=query_acc):
+            rankings["greedy_fas_topological_ma"] = topological_ranking(
+                _dag_for_repaired("greedy_fas_topological_ma")
+            )
+        ranking_stage_by_method["greedy_fas_topological_ma"] = "ranking_topological_ma"
+
+    if "greedy_fas_weighted_balance" in methods:
+        with Timer("ranking_fas_weighted_balance", accumulator=query_acc):
+            rankings["greedy_fas_weighted_balance"] = _weighted_out_minus_in_ranking(
+                _dag_for_repaired("greedy_fas_weighted_balance")
+            )
+        ranking_stage_by_method["greedy_fas_weighted_balance"] = "ranking_fas_weighted_balance"
+    if "greedy_fas_weighted_balance_ma" in methods:
+        with Timer("ranking_fas_weighted_balance_ma", accumulator=query_acc):
+            rankings["greedy_fas_weighted_balance_ma"] = _weighted_out_minus_in_ranking(
+                _dag_for_repaired("greedy_fas_weighted_balance_ma")
+            )
+        ranking_stage_by_method["greedy_fas_weighted_balance_ma"] = (
+            "ranking_fas_weighted_balance_ma"
         )
-    ranking_stage_by_method["greedy_fas_score_augmented_topological"] = (
-        "ranking_fas_score_augmented_topological"
-    )
+
+    if "greedy_fas_copeland" in methods:
+        with Timer("ranking_fas_copeland", accumulator=query_acc):
+            rankings["greedy_fas_copeland"] = _copeland_ranking(
+                _dag_for_repaired("greedy_fas_copeland")
+            )
+        ranking_stage_by_method["greedy_fas_copeland"] = "ranking_fas_copeland"
+    if "greedy_fas_copeland_ma" in methods:
+        with Timer("ranking_fas_copeland_ma", accumulator=query_acc):
+            rankings["greedy_fas_copeland_ma"] = _copeland_ranking(
+                _dag_for_repaired("greedy_fas_copeland_ma")
+            )
+        ranking_stage_by_method["greedy_fas_copeland_ma"] = "ranking_fas_copeland_ma"
+
+    if "fas_balance_score_prior_alpha_beta" in methods:
+        with Timer("ranking_fas_balance_score_prior_alpha_beta", accumulator=query_acc):
+            rankings["fas_balance_score_prior_alpha_beta"] = (
+                fas_balance_score_prior_alpha_beta_ranking(
+                    _dag_for_repaired("fas_balance_score_prior_alpha_beta"),
+                    _score_sum_prior,
+                )
+            )
+        ranking_stage_by_method["fas_balance_score_prior_alpha_beta"] = (
+            "ranking_fas_balance_score_prior_alpha_beta"
+        )
+    if "fas_balance_score_prior_alpha_beta_ma" in methods:
+        with Timer("ranking_fas_balance_score_prior_alpha_beta_ma", accumulator=query_acc):
+            rankings["fas_balance_score_prior_alpha_beta_ma"] = (
+                fas_balance_score_prior_alpha_beta_ranking(
+                    _dag_for_repaired("fas_balance_score_prior_alpha_beta_ma"),
+                    _score_sum_prior,
+                )
+            )
+        ranking_stage_by_method["fas_balance_score_prior_alpha_beta_ma"] = (
+            "ranking_fas_balance_score_prior_alpha_beta_ma"
+        )
+
+    if "greedy_fas_score_augmented_topological" in methods:
+        with Timer("ranking_fas_score_augmented_topological", accumulator=query_acc):
+            rankings["greedy_fas_score_augmented_topological"] = (
+                _priority_topological_ranking(
+                    _dag_for_repaired("greedy_fas_score_augmented_topological"),
+                    priority_scores=prior_scores,
+                )
+            )
+        ranking_stage_by_method["greedy_fas_score_augmented_topological"] = (
+            "ranking_fas_score_augmented_topological"
+        )
+    if "greedy_fas_score_augmented_topological_ma" in methods:
+        with Timer("ranking_fas_score_augmented_topological_ma", accumulator=query_acc):
+            rankings["greedy_fas_score_augmented_topological_ma"] = (
+                _priority_topological_ranking(
+                    _dag_for_repaired("greedy_fas_score_augmented_topological_ma"),
+                    priority_scores=prior_scores,
+                )
+            )
+        ranking_stage_by_method["greedy_fas_score_augmented_topological_ma"] = (
+            "ranking_fas_score_augmented_topological_ma"
+        )
 
     for method_name, spec in hybrid_specs.items():
+        if method_name not in methods:
+            continue
         stage_name = f"ranking_{method_name}"
         ranking_stage_by_method[method_name] = stage_name
-        source_graph = dag if spec.use_repaired_graph else graph
+        if spec.use_repaired_graph and spec.mode != "prior_only":
+            source_graph = _dag_for_repaired(method_name)
+        else:
+            source_graph = graph
         with Timer(stage_name, accumulator=query_acc):
             if spec.mode == "prior_only":
                 rankings[method_name] = _prior_only_ranking(
@@ -1402,6 +1738,8 @@ def run_query(
     t_graph = timing_rows.get("graph_construction", {}).get("total_s", 0.0)
     t_cycle = timing_rows.get("cycle_detection", {}).get("total_s", 0.0)
     t_fas = timing_rows.get("greedy_fas_solver", {}).get("total_s", 0.0)
+    t_fas_ma = timing_rows.get("greedy_fas_solver_ma", {}).get("total_s", 0.0)
+    t_ma_reweight = timing_rows.get("metric_aware_reweight", {}).get("total_s", 0.0)
     t_eval = timing_rows.get("evaluation", {}).get("total_s", 0.0)
     t_total = sum(r["total_s"] for r in timing_rows.values())
 
@@ -1416,6 +1754,17 @@ def run_query(
     rows = []
     for method_name in methods:
         m_metrics = method_metrics[method_name]
+        fas_var = _fas_variant_for_method(
+            method_name, hybrid_specs, repair_weighting
+        )
+        if fas_var == "ma":
+            fw = fas_weight_ma
+            fn = fas_n_ma
+        elif fas_var == "plain":
+            fw = fas_weight_plain
+            fn = fas_n_plain
+        else:
+            fw, fn = None, None
         rows.append({
             # Identity
             "dataset": dataset,
@@ -1423,6 +1772,11 @@ def run_query(
             "method": method_name,
             "preference_source": preference_source,
             "preference_source_note": pref_note,
+            "repair_weighting": repair_weighting,
+            "fas_repair_variant": fas_var,
+            "metric_aware_beta": metric_aware_beta,
+            "metric_aware_gain_source": metric_aware_gain_source,
+            "metric_aware_focus_top_k": focus_k,
             # Graph stats
             "n_nodes": n_nodes,
             "n_edges": n_edges,
@@ -1432,14 +1786,40 @@ def run_query(
             "is_cyclic": is_cyclic,
             "n_non_trivial_sccs": n_non_trivial_sccs,
             "scc_cycle_burden": scc_cycle_burden,
-            # FAS stats
-            "fas_weight_removed": round(fas_weight, 6),
-            "fas_n_edges_removed": fas_n_removed,
+            # FAS stats (per method variant)
+            "fas_weight_removed": round(fw, 6) if fw is not None else None,
+            "fas_n_edges_removed": fn,
+            "fas_weight_removed_plain": (
+                round(fas_weight_plain, 6) if fas_weight_plain is not None else None
+            ),
+            "fas_n_edges_removed_plain": fas_n_plain,
+            "fas_weight_removed_ma": (
+                round(fas_weight_ma, 6) if fas_weight_ma is not None else None
+            ),
+            "fas_n_edges_removed_ma": fas_n_ma,
+            "mean_ma_edge_weight": (
+                round(mean_ma_edge_w, 6) if mean_ma_edge_w is not None else None
+            ),
+            "mean_ma_removed_edge_weight": (
+                round(mean_removed_ma_w, 6) if mean_removed_ma_w is not None else None
+            ),
             # Graph-vs-qrels inconsistency (pre/post FAS)
             "graph_ref_bew_pre": round(graph_bew_pre, 6),
             "graph_ref_bew_post": round(graph_bew_post, 6),
+            "graph_ref_bew_post_plain": (
+                round(graph_bew_post_plain, 6)
+                if graph_bew_post_plain is not None
+                else None
+            ),
+            "graph_ref_bew_post_ma": (
+                round(graph_bew_post_ma, 6)
+                if graph_bew_post_ma is not None
+                else None
+            ),
             "graph_ref_pic_pre": graph_pic_pre,
             "graph_ref_pic_post": graph_pic_post,
+            "graph_ref_pic_post_plain": graph_pic_post_plain,
+            "graph_ref_pic_post_ma": graph_pic_post_ma,
             # Evaluation context
             "n_eval_candidates": len(ref_ranking),
             "primary_metric": PRIMARY_QUALITY_METRIC,
@@ -1486,6 +1866,8 @@ def run_query(
             "runtime_graph_build_s": round(t_graph, 6),
             "runtime_cycle_detect_s": round(t_cycle, 6),
             "runtime_fas_solver_s": round(t_fas, 6),
+            "runtime_fas_solver_ma_s": round(t_fas_ma, 6),
+            "runtime_metric_aware_reweight_s": round(t_ma_reweight, 6),
             "runtime_ranking_s": round(ranking_stage_times.get(method_name, 0.0), 6),
             "runtime_evaluation_s": round(t_eval, 6),
             "runtime_total_s": round(t_total, 6),
@@ -1507,8 +1889,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--dataset",
         type=str,
+        choices=sorted(DATASET_NAMES),
         default="scidocs",
-        help="Dataset short name: scidocs | fiqa | hotpotqa | bright",
+        help=f"Dataset short name (registered in dataset_registry). Choices: {', '.join(sorted(DATASET_NAMES))}.",
     )
     parser.add_argument(
         "--max-queries",
@@ -1568,7 +1951,36 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help=(
             "Optional score JSONL files used as prior signals for hybrid "
-            "post-repair ranking extractors."
+            "post-repair ranking extractors and for RRF / CombSUM when "
+            "ranker score files are provided (RRF, CombSUM, Borda list fusion)."
+        ),
+    )
+    parser.add_argument(
+        "--combsum-normalization",
+        type=str,
+        default=COMBSUM_NORM_MINMAX,
+        choices=["minmax", "none"],
+        help=(
+            "CombSUM per-ranker normalization: minmax (default) scales each ranker's "
+            "scores to [0,1] per query; none sums raw scores (different scales across rankers)."
+        ),
+    )
+    parser.add_argument(
+        "--rrf-k",
+        type=float,
+        default=DEFAULT_RRF_K,
+        help=(
+            "RRF constant k in RRF(d)=sum_s 1/(k+rank_s(d)) "
+            "(Cormack et al., SIGIR 2009). Default 60."
+        ),
+    )
+    parser.add_argument(
+        "--markov-damping",
+        type=float,
+        default=DEFAULT_MARKOV_DAMPING,
+        help=(
+            "Teleport mass α for markov_graph / markov_graph_repaired "
+            "(uniform restart; default 0.15). Set 0 for almost no teleportation."
         ),
     )
     parser.add_argument(
@@ -1650,6 +2062,42 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Skip generating plots even if matplotlib is available.",
     )
+    parser.add_argument(
+        "--repair-weighting",
+        type=str,
+        default="plain",
+        choices=list(REPAIR_WEIGHTING_MODES),
+        help=(
+            "FAS edge weights: plain (default, vote mass only), metric_aware "
+            "(LambdaRank-style surrogate on prior scores), or both (adds *_ma methods "
+            "alongside plain repaired methods)."
+        ),
+    )
+    parser.add_argument(
+        "--metric-aware-beta",
+        type=float,
+        default=1.0,
+        help="Blends metric utility into repair weight: w = conf * (1 + beta * utility).",
+    )
+    parser.add_argument(
+        "--metric-aware-top-k",
+        type=int,
+        default=None,
+        help=(
+            "Focus utility on edges whose worse endpoint rank (by prior) is at most this "
+            "(default: same as --top-k). Tail edges are down-weighted."
+        ),
+    )
+    parser.add_argument(
+        "--metric-aware-gain-source",
+        type=str,
+        default="prior_score",
+        choices=["prior_score", "rank", "qrels_oracle"],
+        help=(
+            "Pseudo-relevance for the surrogate: normalized prior_score (default), "
+            "rank proxy, or qrels_oracle (diagnostic; uses labels — not leakage-free)."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -1679,6 +2127,13 @@ def run_experiment(
     hybrid_alpha_sweep_components: list[str] | None = None,
     hybrid_alpha_values: str = "0.0,0.1,0.2,0.3,0.5,0.7,1.0",
     overwrite_existing: bool = False,
+    rrf_k: float = DEFAULT_RRF_K,
+    combsum_normalization: str = COMBSUM_NORM_MINMAX,
+    markov_damping: float = DEFAULT_MARKOV_DAMPING,
+    repair_weighting: str = "plain",
+    metric_aware_beta: float = 1.0,
+    metric_aware_top_k: int | None = None,
+    metric_aware_gain_source: str = "prior_score",
 ) -> dict:
     """Run the full real-data experiment for *dataset*.
 
@@ -1725,8 +2180,13 @@ def run_experiment(
         save_timings=save_timings,
         overwrite_existing=overwrite_existing,
         dataset=dataset,
+        methods_filter=methods_filter,
     )
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    score_prior_sets: list[dict[str, list[tuple[str, float]]]] = _load_score_prior_files(
+        score_prior_files
+    )
 
     print(f"\n{'='*65}")
     print(f"  Real-Data Ranking Experiment — {dataset.upper()}")
@@ -1744,6 +2204,13 @@ def run_experiment(
         print(f"  score_file   : {score_file}")
     if score_prior_files:
         print(f"  score_priors : {', '.join(str(p) for p in score_prior_files)}")
+    print(f"  markov_damp  : {markov_damping} (Rank Centrality–style graph chain)")
+    if score_prior_sets:
+        print(
+            f"  rrf_k        : {rrf_k} "
+            "(RRF + CombSUM + borda_fuse list-fusion baselines active)"
+        )
+        print(f"  combsum_norm : {combsum_normalization}")
     if query_id_file is not None:
         print(f"  query_id_file: {query_id_file}")
     alpha_values = _parse_alpha_values(hybrid_alpha_values)
@@ -1752,6 +2219,8 @@ def run_experiment(
         alpha_sweep_components=hybrid_alpha_sweep_components,
         alpha_values=alpha_values,
         selected_methods=methods_filter,
+        include_score_fusion_baselines=len(score_prior_sets) > 0,
+        repair_weighting=repair_weighting,
     )
     methods, hybrid_specs = _filter_methods(
         methods,
@@ -1767,6 +2236,11 @@ def run_experiment(
         )
     print(f"  methods      : {', '.join(methods)}")
     print(f"  seed         : {seed}")
+    print(f"  repair_weight: {repair_weighting}")
+    if repair_weighting != "plain":
+        print(f"  ma_beta      : {metric_aware_beta}")
+        print(f"  ma_gain_src  : {metric_aware_gain_source}")
+        print(f"  ma_focus_k   : {metric_aware_top_k if metric_aware_top_k is not None else top_k}")
     print(f"  output_dir   : {output_dir}")
     print(f"  save_timings : {save_timings}\n")
 
@@ -1781,7 +2255,6 @@ def run_experiment(
 
     pairwise_index: dict[str, list[Preference]] | None = None
     score_index: dict[str, list[tuple[str, float]]] | None = None
-    score_prior_sets: list[dict[str, list[tuple[str, float]]]] = []
     with Timer("preference_source_loading", accumulator=global_acc):
         if preference_source in {"llm_pairwise_file", "votes_file"}:
             if pairwise_file is None:
@@ -1795,9 +2268,11 @@ def run_experiment(
                 raise ValueError("--score-file is required for score_file mode.")
             score_index = _load_score_file(score_file)
             print(f"[0] Loaded score entries for {len(score_index)} queries")
-        score_prior_sets = _load_score_prior_files(score_prior_files)
         if score_prior_sets:
-            print(f"[0] Loaded {len(score_prior_sets)} score prior file(s) for hybrid methods")
+            print(
+                f"[0] Using {len(score_prior_sets)} score prior file(s) "
+                "for RRF / CombSUM / borda_fuse baselines and hybrid extractors"
+            )
 
     # ------------------------------------------------------------------
     # 1. Load dataset
@@ -1871,6 +2346,13 @@ def run_experiment(
                 methods=methods,
                 hybrid_specs=hybrid_specs,
                 global_acc=global_acc,
+                rrf_k=rrf_k,
+                combsum_normalization=combsum_normalization,
+                markov_damping=markov_damping,
+                repair_weighting=repair_weighting,
+                metric_aware_beta=metric_aware_beta,
+                metric_aware_top_k=metric_aware_top_k,
+                metric_aware_gain_source=metric_aware_gain_source,
             )
 
             if skip_info is not None:
@@ -2292,6 +2774,13 @@ def main(argv: list[str] | None = None) -> None:
             profile=args.profile,
             generate_plots=not args.no_plots,
             overwrite_existing=args.overwrite_existing,
+            rrf_k=args.rrf_k,
+            combsum_normalization=args.combsum_normalization,
+            markov_damping=args.markov_damping,
+            repair_weighting=args.repair_weighting,
+            metric_aware_beta=args.metric_aware_beta,
+            metric_aware_top_k=args.metric_aware_top_k,
+            metric_aware_gain_source=args.metric_aware_gain_source,
         )
     except (ValueError, FileNotFoundError, FileExistsError) as exc:
         raise SystemExit(f"ERROR: {exc}") from exc

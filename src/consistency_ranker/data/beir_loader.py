@@ -118,6 +118,7 @@ def download_beir_dataset(
     qrels_name: str,
     raw_path: Path,
     max_docs: int | None = None,
+    max_queries: int | None = None,
 ) -> tuple[list[Query], list[Document], list[QrelEntry]]:
     """Download a BEIR dataset from HuggingFace and return structured objects.
 
@@ -131,6 +132,8 @@ def download_beir_dataset(
         Local directory where the HuggingFace cache will be placed.
     max_docs:
         Optional limit on the number of documents loaded (for fast testing).
+    max_queries:
+        Optional limit on the number of queries loaded.
 
     Returns
     -------
@@ -180,6 +183,8 @@ def download_beir_dataset(
                     text=str(row.get("text", "")),
                 )
             )
+            if max_queries is not None and len(queries) >= max_queries:
+                break
 
         # --- QRels ---
         print(f"  Loading qrels from {qrels_name} …")
@@ -207,6 +212,15 @@ def download_beir_dataset(
             f"Unexpected error downloading {corpus_name!r} ({type(exc).__name__}): {exc}\n"
             "Check your internet connection and that 'huggingface.co' is reachable."
         ) from exc
+
+    if max_queries is not None or max_docs is not None:
+        qid_set = {q.query_id for q in queries}
+        doc_set = {d.doc_id for d in documents}
+        qrels = [
+            qr
+            for qr in qrels
+            if qr.query_id in qid_set and qr.doc_id in doc_set
+        ]
 
     return queries, documents, qrels
 

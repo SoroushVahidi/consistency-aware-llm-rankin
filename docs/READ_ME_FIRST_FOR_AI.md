@@ -23,7 +23,7 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
 
 5. **Code map**  
    - Core library: `src/consistency_ranker/`  
-   - MWFAS: `greedy_fas.py`, `mwfas_solver.py` (exact **Gurobi** ILP + greedy)  
+   - MWFAS: `greedy_fas.py`, `mwfas_solver.py` (exact **Gurobi** ILP + greedy); optional **metric-aware** reweighting before FAS: `metric_aware_repair.py`, `scripts/run_real_experiment.py --repair-weighting …`  
    - Datasets: `data/dataset_registry.py`, loaders under `data/`  
    - Publication pipeline: `scripts/run_publication_vote_suite.py` → `build_paper_evidence_package.py`
 
@@ -38,4 +38,5 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
 ## What not to confuse
 
 - **Code support for a dataset** ≠ **local raw/processed files present** — data must be downloaded/prepared (see `README.md`).
+- **Registry ids** include `nfcorpus`, `msmarco_passage`, `trec_dl_passage`, `robust04` (see `src/consistency_ranker/data/dataset_registry.py`). `trec_dl_passage` and `robust04` need optional **ir-datasets** for automated download; MS MARCO passage uses a **streamed** cap via `--max-docs`.
 - **Stub vs exact:** `mwfas_solver.solve(..., method="ilp")` is a **real Gurobi** formulation (not a stub), subject to solver availability.

@@ -202,6 +202,19 @@ def check_output_directories() -> None:
                 _fail("directories", f"Cannot create {rel}/: {exc}")
 
 
+def check_optional_ir_datasets() -> None:
+    """ir-datasets is optional; warn if missing (TREC DL / Robust04)."""
+    try:
+        import ir_datasets  # noqa: F401
+        _ok("optional_deps", "ir-datasets installed (trec_dl_passage / robust04 downloads)")
+    except ImportError:
+        _warn(
+            "optional_deps",
+            "ir-datasets not installed — "
+            "pip install 'consistency-ranker[ir]' for trec_dl_passage and robust04 exports",
+        )
+
+
 def check_pytest_discovery() -> None:
     """Verify pytest can discover the test suite."""
     result = subprocess.run(
@@ -236,6 +249,7 @@ def run_all_checks() -> None:
     check_docs()
     check_committed_tables()
     check_output_directories()
+    check_optional_ir_datasets()
     check_pytest_discovery()
 
 

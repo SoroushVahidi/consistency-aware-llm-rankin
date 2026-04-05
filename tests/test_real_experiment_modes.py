@@ -9,40 +9,39 @@ from pathlib import Path
 
 import pytest
 
-from scripts.run_real_experiment import (
-    NON_HYBRID_METHODS,
-    _hybrid_rrf_component_ranking,
-    _hybrid_rrf_priority_topological_ranking,
-    _build_hybrid_specs,
-    _method_plan,
-    _resolve_output_dir,
-    _build_query_preferences,
-    _average_precision_at_k,
-    _copeland_ranking,
-    _hybrid_rrf_fas_regularized_ranking,
-    _ndcg_at_k,
-    _parse_alpha_values,
-    _pairwise_accuracy_from_relevance,
-    _prior_only_ranking,
-    _priority_topological_ranking,
-    _precision_recall_at_k,
-    _reference_ranking_for_candidates,
-    _rrf_prior_scores_for_query,
-    _score_sum_prior_scores,
-    _weighted_out_minus_in_ranking,
-    _flip_preference_directions,
-    _filter_methods,
-    _has_usable_eval_labels,
-    _load_pairwise_preference_file,
-    _resolve_output_dir,
-    _load_score_file,
-    _score_entries_to_preferences,
-    run_experiment,
-)
 from consistency_ranker.baseline_ranking import fas_balance_score_prior_alpha_beta_ranking
 from consistency_ranker.data.schema import QrelEntry
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.pairwise_prefs import Preference
+from scripts.run_real_experiment import (
+    NON_HYBRID_METHODS,
+    _average_precision_at_k,
+    _build_hybrid_specs,
+    _build_query_preferences,
+    _copeland_ranking,
+    _filter_methods,
+    _flip_preference_directions,
+    _has_usable_eval_labels,
+    _hybrid_rrf_component_ranking,
+    _hybrid_rrf_fas_regularized_ranking,
+    _hybrid_rrf_priority_topological_ranking,
+    _load_pairwise_preference_file,
+    _load_score_file,
+    _method_plan,
+    _ndcg_at_k,
+    _pairwise_accuracy_from_relevance,
+    _parse_alpha_values,
+    _precision_recall_at_k,
+    _prior_only_ranking,
+    _priority_topological_ranking,
+    _reference_ranking_for_candidates,
+    _resolve_output_dir,
+    _rrf_prior_scores_for_query,
+    _score_entries_to_preferences,
+    _score_sum_prior_scores,
+    _validate_run_configuration,
+    _weighted_out_minus_in_ranking,
+)
 
 
 def _qrels(*rows) -> list[QrelEntry]:
@@ -315,9 +314,104 @@ def test_resolve_output_dir_nests_dataset_and_source():
     )
 
 
+def test_method_plan_inserts_rrf_and_combsum_when_score_priors_available():
+    methods, _ = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=True,
+    )
+    assert "markov_graph" in methods
+    assert "markov_graph_repaired" in methods
+    assert "rrf" in methods
+    assert "combsum" in methods
+    assert "borda_fuse" in methods
+    assert methods.index("markov_graph") == methods.index("pagerank") + 1
+    assert methods.index("markov_graph_repaired") == methods.index("markov_graph") + 1
+    assert methods.index("rrf") == methods.index("markov_graph_repaired") + 1
+    assert methods.index("combsum") == methods.index("rrf") + 1
+    assert methods.index("borda_fuse") == methods.index("combsum") + 1
+
+
+def test_method_plan_omits_fusion_baselines_without_flag():
+    methods, _ = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=False,
+    )
+    assert "markov_graph" in methods
+    assert "markov_graph_repaired" in methods
+    assert "rrf" not in methods
+    assert "combsum" not in methods
+    assert "borda_fuse" not in methods
+
+
+def test_validate_rrf_requires_score_prior_files(tmp_path: Path):
+    with pytest.raises(ValueError, match="rrf"):
+        _validate_run_configuration(
+            max_queries=1,
+            top_k=2,
+            preference_source="qrels",
+            flip_prob=0.0,
+            pairwise_file=None,
+            score_file=None,
+            score_prior_files=None,
+            query_id_file=None,
+            output_dir=tmp_path,
+            save_timings=False,
+            overwrite_existing=False,
+            dataset="scidocs",
+            methods_filter=["rrf"],
+        )
+
+
+def test_validate_combsum_requires_score_prior_files(tmp_path: Path):
+    with pytest.raises(ValueError, match="combsum"):
+        _validate_run_configuration(
+            max_queries=1,
+            top_k=2,
+            preference_source="qrels",
+            flip_prob=0.0,
+            pairwise_file=None,
+            score_file=None,
+            score_prior_files=None,
+            query_id_file=None,
+            output_dir=tmp_path,
+            save_timings=False,
+            overwrite_existing=False,
+            dataset="scidocs",
+            methods_filter=["combsum"],
+        )
+
+
+def test_validate_borda_fuse_requires_score_prior_files(tmp_path: Path):
+    with pytest.raises(ValueError, match="borda_fuse"):
+        _validate_run_configuration(
+            max_queries=1,
+            top_k=2,
+            preference_source="qrels",
+            flip_prob=0.0,
+            pairwise_file=None,
+            score_file=None,
+            score_prior_files=None,
+            query_id_file=None,
+            output_dir=tmp_path,
+            save_timings=False,
+            overwrite_existing=False,
+            dataset="scidocs",
+            methods_filter=["borda_fuse"],
+        )
+
+
 def test_fas_balance_score_prior_alpha_beta_in_non_hybrid_methods():
     """fas_balance_score_prior_alpha_beta must be listed in NON_HYBRID_METHODS."""
     assert "fas_balance_score_prior_alpha_beta" in NON_HYBRID_METHODS
+
+
+def test_markov_graph_methods_in_non_hybrid_plan():
+    assert "markov_graph" in NON_HYBRID_METHODS
+    assert "markov_graph_repaired" in NON_HYBRID_METHODS
 
 
 def test_fas_balance_score_prior_alpha_beta_ranking_runs():
@@ -338,8 +432,8 @@ def test_fas_balance_score_prior_alpha_beta_ranking_runs():
 def test_fas_balance_score_prior_alpha_beta_in_pipeline(tmp_path: Path):
     """Run a mini pipeline and confirm fas_balance_score_prior_alpha_beta appears
     in the per-query output rows produced by run_query."""
-    from scripts.run_real_experiment import _method_plan, run_query
     from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _method_plan, run_query
 
     class _FakeQuery:
         query_id = "q1"
@@ -371,3 +465,309 @@ def test_fas_balance_score_prior_alpha_beta_in_pipeline(tmp_path: Path):
     assert skip is None
     method_names = {r["method"] for r in rows}
     assert "fas_balance_score_prior_alpha_beta" in method_names
+
+
+def test_rrf_method_in_run_query_with_score_priors():
+    """RRF baseline row appears when score prior maps are provided."""
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=True,
+    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["rrf"])
+    score_prior_sets = [
+        {"q1": [("d1", 10.0), ("d2", 5.0), ("d3", 1.0)]},
+        {"q1": [("d3", 9.0), ("d2", 8.0), ("d1", 0.0)]},
+    ]
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=score_prior_sets,
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+        rrf_k=60.0,
+    )
+    assert skip is None
+    assert len(rows) == 1
+    assert rows[0]["method"] == "rrf"
+    assert rows[0]["ndcg_at_k"] is not None
+
+
+def test_combsum_method_in_run_query_with_score_priors():
+    """CombSUM baseline row appears when score prior maps are provided."""
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=True,
+    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["combsum"])
+    score_prior_sets = [
+        {"q1": [("d1", 10.0), ("d2", 5.0), ("d3", 1.0)]},
+        {"q1": [("d3", 9.0), ("d2", 8.0), ("d1", 0.0)]},
+    ]
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=score_prior_sets,
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+        rrf_k=60.0,
+        combsum_normalization="minmax",
+    )
+    assert skip is None
+    assert len(rows) == 1
+    assert rows[0]["method"] == "combsum"
+    assert rows[0]["ndcg_at_k"] is not None
+
+
+def test_borda_fuse_method_in_run_query_with_score_priors():
+    """Borda list-fusion baseline row appears when score prior maps are provided."""
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=True,
+    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["borda_fuse"])
+    score_prior_sets = [
+        {"q1": [("d1", 10.0), ("d2", 5.0), ("d3", 1.0)]},
+        {"q1": [("d3", 9.0), ("d2", 8.0), ("d1", 0.0)]},
+    ]
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=score_prior_sets,
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+        rrf_k=60.0,
+        combsum_normalization="minmax",
+    )
+    assert skip is None
+    assert len(rows) == 1
+    assert rows[0]["method"] == "borda_fuse"
+    assert rows[0]["ndcg_at_k"] is not None
+
+
+def test_markov_graph_method_in_run_query():
+    """Rank Centrality–style graph baseline (unrepaired graph)."""
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=False,
+    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["markov_graph"])
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+    )
+    assert skip is None
+    assert len(rows) == 1
+    assert rows[0]["method"] == "markov_graph"
+    assert rows[0]["ndcg_at_k"] is not None
+
+
+def test_markov_graph_repaired_method_in_run_query():
+    """Same Markov chain on greedy-FAS–repaired DAG."""
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        include_score_fusion_baselines=False,
+    )
+    methods, hybrid_specs = _filter_methods(
+        methods, hybrid_specs, ["markov_graph_repaired"]
+    )
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+    )
+    assert skip is None
+    assert len(rows) == 1
+    assert rows[0]["method"] == "markov_graph_repaired"
+    assert rows[0]["ndcg_at_k"] is not None
+
+
+def test_method_plan_both_adds_ma_method_suffixes():
+    methods, _ = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        repair_weighting="both",
+    )
+    assert "greedy_fas_copeland_ma" in methods
+    assert "hybrid_rrf_copeland_a03_ma" in methods
+
+
+def test_run_query_plain_default_has_repair_metadata():
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["score_sum"])
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+    )
+    assert skip is None
+    assert rows[0]["repair_weighting"] == "plain"
+    assert rows[0]["fas_repair_variant"] == "none"
+    assert rows[0]["runtime_fas_solver_ma_s"] == pytest.approx(0.0)
+
+
+def test_run_query_metric_aware_enables_ma_variant_for_repaired_method():
+    from consistency_ranker.utils.timing import TimingAccumulator
+    from scripts.run_real_experiment import _filter_methods, _method_plan, run_query
+
+    class _FakeQuery:
+        query_id = "q1"
+
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
+    methods, hybrid_specs = _method_plan(
+        include_hybrid_ablation=False,
+        alpha_sweep_components=None,
+        alpha_values=[0.2],
+        repair_weighting="metric_aware",
+    )
+    methods, hybrid_specs = _filter_methods(
+        methods, hybrid_specs, ["greedy_fas_copeland"]
+    )
+    acc = TimingAccumulator()
+    rows, skip = run_query(
+        query=_FakeQuery(),
+        qrels_for_query=qrels,
+        dataset="scidocs",
+        top_k=3,
+        weight_scheme="grade_diff",
+        seed=42,
+        preference_source="qrels",
+        flip_prob=0.0,
+        pairwise_index=None,
+        score_index=None,
+        score_prior_sets=[],
+        methods=methods,
+        hybrid_specs=hybrid_specs,
+        global_acc=acc,
+        repair_weighting="metric_aware",
+        metric_aware_beta=0.5,
+    )
+    assert skip is None
+    r = rows[0]
+    assert r["repair_weighting"] == "metric_aware"
+    assert r["fas_repair_variant"] == "ma"
+    assert r["fas_weight_removed_ma"] is not None
+    assert r["mean_ma_edge_weight"] is not None

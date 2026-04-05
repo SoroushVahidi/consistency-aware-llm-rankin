@@ -9,6 +9,7 @@ import pytest
 
 from consistency_ranker.cycle_detection import has_cycle
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
+from consistency_ranker.metric_aware_repair import reweight_graph_for_metric_aware_fas
 
 
 class TestGreedyFas:
@@ -48,6 +49,21 @@ class TestGreedyFas:
         original_edges = set(g.edges())
         greedy_fas(g)
         assert set(g.edges()) == original_edges
+
+    def test_greedy_fas_on_metric_reweighted_graph_still_yields_dag(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        g.add_edge("b", "c", weight=1.0)
+        g.add_edge("c", "a", weight=1.0)
+        gr = reweight_graph_for_metric_aware_fas(
+            g,
+            prior_scores={"a": 2.0, "b": 1.0, "c": 0.0},
+            gain_source="prior_score",
+            beta=1.0,
+        )
+        dag, removed = greedy_fas(gr)
+        assert not has_cycle(dag)
+        assert len(removed) == 1
 
 
 class TestGreedyFasTotalWeight:

@@ -196,3 +196,34 @@ class TestBeirDownloadWithMock:
             "BeIR/fiqa", "BeIR/fiqa-qrels", tmp_path, max_docs=1
         )
         assert len(docs) == 1
+
+    def test_max_queries_and_qrels_filtered(self, tmp_path, monkeypatch):
+        fake = types.ModuleType("datasets")
+        corpus_rows = [
+            {"_id": "d1", "text": "a", "title": ""},
+            {"_id": "d2", "text": "b", "title": ""},
+        ]
+        query_rows = [
+            {"_id": "q1", "text": "one"},
+            {"_id": "q2", "text": "two"},
+        ]
+        qrel_rows = [
+            {"query-id": "q1", "corpus-id": "d1", "score": 1},
+            {"query-id": "q2", "corpus-id": "d2", "score": 1},
+        ]
+
+        def fake_load_dataset(name, config=None, cache_dir=None):
+            if config == "corpus":
+                return {"corpus": corpus_rows}
+            if config == "queries":
+                return {"queries": query_rows}
+            return {"test": qrel_rows}
+
+        fake.load_dataset = fake_load_dataset
+        monkeypatch.setitem(sys.modules, "datasets", fake)
+        queries, docs, qrels = download_beir_dataset(
+            "BeIR/fiqa", "BeIR/fiqa-qrels", tmp_path, max_queries=1, max_docs=None
+        )
+        assert len(queries) == 1
+        assert queries[0].query_id == "q1"
+        assert all(qr.query_id == "q1" for qr in qrels)

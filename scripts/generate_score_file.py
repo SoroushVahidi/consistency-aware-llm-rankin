@@ -28,6 +28,7 @@ from consistency_ranker.data.query_ids import (  # noqa: E402
     sample_query_ids,
     save_query_ids_file,
 )
+from consistency_ranker.data.dataset_registry import DATASET_NAMES  # noqa: E402
 from consistency_ranker.data.unified_loader import load_dataset_splits  # noqa: E402
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
@@ -238,7 +239,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Generate external score JSONL for real preference-source experiments.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--dataset", type=str, required=True)
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        required=True,
+        choices=sorted(DATASET_NAMES),
+        help="Registered dataset id (see dataset_registry).",
+    )
     parser.add_argument(
         "--ranker",
         type=str,

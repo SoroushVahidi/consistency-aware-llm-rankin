@@ -21,3 +21,7 @@ ruff>=0.3
 # Notebooks (optional – install separately if needed)
 # jupyter>=1.0
 # seaborn>=0.13
+
+# TREC DL passage + Robust04 automatic download (optional):
+# pip install ir-datasets
+# or: pip install 'consistency-ranker[ir]' from pyproject optional-dependencies

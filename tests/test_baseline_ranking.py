@@ -22,6 +22,34 @@ from consistency_ranker.baseline_ranking import (
     topological_ranking,
     weighted_out_minus_in_ranking,
 )
+from consistency_ranker.borda_fuse_ranking import (
+    borda_fuse_ranking,
+    borda_fuse_scores,
+    per_query_borda_fuse_ranking_from_score_maps,
+)
+from consistency_ranker.combsum_ranking import (
+    COMBSUM_NORM_MINMAX,
+    COMBSUM_NORM_NONE,
+    combsum_ranking,
+    combsum_scores,
+    dedupe_best_scores,
+    per_query_combsum_ranking_from_score_maps,
+)
+from consistency_ranker.graph_construction import build_graph
+from consistency_ranker.greedy_fas import greedy_fas
+from consistency_ranker.markov_graph_ranking import (
+    DEFAULT_MARKOV_DAMPING,
+    markov_graph_ranking,
+    markov_graph_scores,
+)
+from consistency_ranker.pairwise_prefs import Preference
+from consistency_ranker.rrf_ranking import (
+    DEFAULT_RRF_K,
+    per_query_rrf_ranking_from_score_maps,
+    ranked_list_from_score_entries,
+    rrf_ranking,
+    rrf_scores_and_best_ranks,
+)
 
 
 class TestScoreSumRanking:
@@ -376,3 +404,275 @@ class TestFasBalanceScoreSumBordaHybridRanking:
                 alpha_b=1.0,
                 beta=-0.1,
             )
+
+
+class TestReciprocalRankFusion:
+    """Cormack et al. (SIGIR 2009) RRF: sum_s 1/(k + rank_s(d))."""
+
+    def test_ranked_list_dedupes_by_max_score(self):
+        assert ranked_list_from_score_entries([("a", 1.0), ("a", 3.0), ("b", 2.0)]) == [
+            "a",
+            "b",
+        ]
+
+    def test_toy_fusion_tie_break_lexicographic(self):
+        s1 = ["a", "b", "c"]
+        s2 = ["b", "a", "c"]
+        out = rrf_ranking([s1, s2], ["a", "b", "c"], k=60.0)
+        assert out[0] == "a"
+        assert out[1] == "b"
+        assert out[2] == "c"
+
+    def test_missing_in_systems_zero_contribution(self):
+        s1 = ["a", "b"]
+        s2 = ["a", "b"]
+        out = rrf_ranking([s1, s2], ["a", "b", "ghost"], k=10.0)
+        assert out[-1] == "ghost"
+
+    def test_tie_break_uses_best_rank_across_systems(self):
+        k = 60.0
+        s1 = ["x", "y"]
+        s2 = ["y", "x"]
+        sc, br = rrf_scores_and_best_ranks([s1, s2], k=k)
+        assert sc["x"] == pytest.approx(sc["y"])
+        assert br["x"] == 1 and br["y"] == 1
+        out = rrf_ranking([s1, s2], ["x", "y"], k=k)
+        assert out == ["x", "y"]
+
+    def test_per_query_from_score_maps_matches_direct_lists(self):
+        smaps = [
+            {"q1": [("d1", 10.0), ("d2", 5.0), ("d3", 1.0)]},
+            {"q1": [("d3", 9.0), ("d2", 8.0), ("d1", 0.0)]},
+        ]
+        lists = [
+            ranked_list_from_score_entries(smaps[0]["q1"]),
+            ranked_list_from_score_entries(smaps[1]["q1"]),
+        ]
+        cand = {"d1", "d2", "d3"}
+        assert per_query_rrf_ranking_from_score_maps("q1", smaps, cand, k=60.0) == rrf_ranking(
+            lists, cand, k=60.0
+        )
+
+    def test_k_must_be_positive(self):
+        with pytest.raises(ValueError):
+            rrf_ranking([["a"]], ["a"], k=0.0)
+
+    def test_default_k_constant(self):
+        assert DEFAULT_RRF_K == 60.0
+
+
+class TestCombSUM:
+    """Fox & Shaw–style CombSUM with per-query per-ranker min–max (default)."""
+
+    def test_toy_minmax_ordering(self):
+        s1 = dedupe_best_scores([("a", 1.0), ("b", 0.0)])
+        s2 = dedupe_best_scores([("a", 0.0), ("c", 1.0)])
+        out = combsum_ranking([s1, s2], ["a", "b", "c"], normalization=COMBSUM_NORM_MINMAX)
+        assert out == ["a", "c", "b"]
+
+    def test_minmax_differs_from_raw_when_scales_differ(self):
+        s1 = dedupe_best_scores([("a", 10.0), ("b", 0.0)])
+        s2 = dedupe_best_scores([("a", 0.0), ("b", 1000.0)])
+        mm = combsum_ranking([s1, s2], ["a", "b"], normalization=COMBSUM_NORM_MINMAX)
+        raw = combsum_ranking([s1, s2], ["a", "b"], normalization=COMBSUM_NORM_NONE)
+        assert mm == ["a", "b"]
+        assert raw == ["b", "a"]
+
+    def test_missing_ranker_contribution_zero(self):
+        s1 = dedupe_best_scores([("a", 1.0), ("b", 0.0)])
+        s2 = dedupe_best_scores([("a", 1.0), ("b", 0.0)])
+        out = combsum_ranking([s1, s2], ["a", "b", "only_here"], normalization=COMBSUM_NORM_MINMAX)
+        assert out[-1] == "only_here"
+
+    def test_flat_ranker_scores_add_zero_after_minmax(self):
+        s1 = dedupe_best_scores([("a", 5.0), ("b", 5.0)])
+        s2 = dedupe_best_scores([("a", 0.0), ("b", 1.0)])
+        out = combsum_ranking([s1, s2], ["a", "b"], normalization=COMBSUM_NORM_MINMAX)
+        assert out == ["b", "a"]
+
+    def test_tie_break_best_rank_then_doc_id(self):
+        s1 = dedupe_best_scores([("a", 10.0), ("b", 0.0)])
+        s2 = dedupe_best_scores([("a", 0.0), ("b", 10.0)])
+        fused = combsum_scores([s1, s2], normalization=COMBSUM_NORM_MINMAX)
+        assert fused["a"] == pytest.approx(fused["b"])
+        out = combsum_ranking([s1, s2], ["a", "b"], normalization=COMBSUM_NORM_MINMAX)
+        assert out == ["a", "b"]
+
+    def test_per_query_from_score_maps(self):
+        smaps = [
+            {"q1": [("d1", 10.0), ("d2", 0.0)]},
+            {"q1": [("d1", 0.0), ("d2", 100.0)]},
+        ]
+        direct = combsum_ranking(
+            [
+                dedupe_best_scores(smaps[0]["q1"]),
+                dedupe_best_scores(smaps[1]["q1"]),
+            ],
+            ["d1", "d2"],
+            normalization=COMBSUM_NORM_MINMAX,
+        )
+        assert (
+            per_query_combsum_ranking_from_score_maps("q1", smaps, ["d1", "d2"]) == direct
+        )
+
+    def test_multi_query_score_maps_independent(self):
+        smaps = [
+            {
+                "q1": [("a", 1.0), ("b", 0.0)],
+                "q2": [("a", 0.0), ("b", 1.0)],
+            },
+            {
+                "q1": [("a", 0.0), ("b", 1.0)],
+                "q2": [("a", 0.0), ("b", 1.0)],
+            },
+        ]
+        o1 = per_query_combsum_ranking_from_score_maps("q1", smaps, ["a", "b"])
+        o2 = per_query_combsum_ranking_from_score_maps("q2", smaps, ["a", "b"])
+        assert o1 == ["a", "b"]
+        assert o2 == ["b", "a"]
+
+    def test_invalid_normalization(self):
+        with pytest.raises(ValueError, match="normalization"):
+            combsum_ranking([{"a": 1.0}], ["a"], normalization="zscore")
+
+    def test_combsum_scores_symmetric_tie_lexicographic(self):
+        systems = [
+            dedupe_best_scores([("x", 1.0), ("y", 0.0)]),
+            dedupe_best_scores([("x", 0.0), ("y", 1.0)]),
+        ]
+        scores = combsum_scores(systems, normalization=COMBSUM_NORM_MINMAX)
+        order = combsum_ranking(systems, ["x", "y"], normalization=COMBSUM_NORM_MINMAX)
+        assert scores["x"] == pytest.approx(scores["y"])
+        assert order == ["x", "y"]
+
+
+class TestBordaFuse:
+    """Borda count over retrieval lists (``borda_fuse``), not graph ``borda``."""
+
+    def test_toy_union_n3_two_rankers(self):
+        # U = {a,b,c}, N=3; R1=[a,b,c], R2=[c,a,b] -> totals a:3, c:2, b:1
+        lists = [["a", "b", "c"], ["c", "a", "b"]]
+        out = borda_fuse_ranking(lists, ["a", "b", "c"], n_q=3)
+        assert out == ["a", "c", "b"]
+
+    def test_missing_ranker_contribution_zero(self):
+        lists = [["a", "b"], ["b", "a"]]  # union from maps would be {a,b}, N=2
+        out = borda_fuse_ranking(lists, ["a", "b", "ghost"], n_q=2)
+        assert out == ["a", "b", "ghost"]
+
+    def test_tie_break_best_rank_then_doc_id(self):
+        # All Borda totals 2; best ranks: a=1, c=1, b=2 -> b last; a before c by id
+        lists = [["a", "b", "c"], ["c", "b", "a"]]
+        out = borda_fuse_ranking(lists, ["a", "b", "c"], n_q=3)
+        assert out == ["a", "c", "b"]
+
+    def test_score_tie_lexicographic_rank_order(self):
+        entries = [("b", 1.0), ("a", 1.0)]
+        lst = ranked_list_from_score_entries(entries)
+        assert lst == ["a", "b"]
+        lists = [lst, lst]
+        out = borda_fuse_ranking(lists, ["a", "b"], n_q=2)
+        assert out == ["a", "b"]
+
+    def test_per_query_from_score_maps_matches_direct(self):
+        smaps = [
+            {"q1": [("a", 1.0), ("b", 0.0), ("c", 0.0)]},
+            {"q1": [("c", 1.0), ("a", 0.0), ("b", 0.0)]},
+        ]
+        lists = [
+            ranked_list_from_score_entries(smaps[0]["q1"]),
+            ranked_list_from_score_entries(smaps[1]["q1"]),
+        ]
+        direct = borda_fuse_ranking(lists, ["a", "b", "c"], n_q=3)
+        assert (
+            per_query_borda_fuse_ranking_from_score_maps("q1", smaps, ["a", "b", "c"])
+            == direct
+        )
+
+    def test_multi_query_universe_independent(self):
+        smaps = [
+            {
+                "q1": [("a", 1.0), ("b", 0.0)],
+                "q2": [("a", 0.0), ("b", 1.0)],
+            },
+            {
+                "q1": [("a", 0.0), ("b", 1.0)],
+                "q2": [("a", 0.0), ("b", 1.0)],
+            },
+        ]
+        o1 = per_query_borda_fuse_ranking_from_score_maps("q1", smaps, ["a", "b"])
+        o2 = per_query_borda_fuse_ranking_from_score_maps("q2", smaps, ["a", "b"])
+        assert o1 == ["a", "b"]
+        assert o2 == ["b", "a"]
+
+    def test_n_q_negative_raises(self):
+        with pytest.raises(ValueError, match="n_q"):
+            borda_fuse_ranking([["a"]], ["a"], n_q=-1)
+
+    def test_borda_fuse_scores_matches_ranking_order(self):
+        lists = [["a", "b", "c"], ["c", "a", "b"]]
+        sc = borda_fuse_scores(lists, n_q=3)
+        assert sc["a"] > sc["c"] > sc["b"]
+        order = borda_fuse_ranking(lists, ["a", "b", "c"], n_q=3)
+        assert order == ["a", "c", "b"]
+
+
+class TestMarkovGraphRanking:
+    """Rank Centrality–style chain (``markov_graph``), not reversed PageRank."""
+
+    def test_acyclic_chain_order(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        g.add_edge("b", "c", weight=1.0)
+        assert markov_graph_ranking(g) == ["a", "b", "c"]
+
+    def test_cycle_is_deterministic(self):
+        g = nx.DiGraph()
+        g.add_edges_from([("a", "b"), ("b", "c"), ("c", "a")], weight=1.0)
+        r1 = markov_graph_ranking(g)
+        r2 = markov_graph_ranking(g)
+        assert r1 == r2 == ["a", "b", "c"]
+
+    def test_disconnected_component_tie_break(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        g.add_node("z")
+        out = markov_graph_ranking(g)
+        assert set(out) == {"a", "b", "z"}
+        assert out[0] == "a"
+
+    def test_empty_graph(self):
+        assert markov_graph_ranking(nx.DiGraph()) == []
+
+    def test_single_node(self):
+        g = nx.DiGraph()
+        g.add_node("only")
+        assert markov_graph_ranking(g) == ["only"]
+        assert markov_graph_scores(g)["only"] == pytest.approx(1.0)
+
+    def test_invalid_damping_raises(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        with pytest.raises(ValueError, match="damping"):
+            markov_graph_ranking(g, damping=1.5)
+
+    def test_default_damping_constant(self):
+        assert DEFAULT_MARKOV_DAMPING == 0.15
+
+    def test_unrepaired_vs_repaired_can_differ(self):
+        g = build_graph(
+            [
+                Preference("a", "b", 1.0),
+                Preference("b", "c", 1.0),
+                Preference("c", "a", 1.0),
+            ]
+        )
+        dag, _ = greedy_fas(g)
+        assert markov_graph_ranking(g) != markov_graph_ranking(dag)
+
+    def test_scores_stronger_endpoints_in_chain(self):
+        g = nx.DiGraph()
+        g.add_edge("a", "b", weight=1.0)
+        g.add_edge("b", "c", weight=1.0)
+        sc = markov_graph_scores(g)
+        assert sc["a"] > sc["c"] and sc["b"] > sc["c"]
