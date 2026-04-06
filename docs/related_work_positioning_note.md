@@ -1,6 +1,6 @@
 # Related Work Positioning Note — LLM Baselines
 
-> **Updated:** 2026-03-24
+> **Updated:** 2026-04-06
 > **Purpose:** How to position this work relative to LLM-based reranking
 > literature, given the current evidence.
 
@@ -15,7 +15,7 @@
 | Win-rate ranking | Full | **Yes** — same |
 | Markov chain (PageRank) | Full | **Yes** — same |
 | Tournament sort | Full | **Yes** — same |
-| LLM pairwise (PRP-style, OpenAI) | Full, multi-provider | **Yes** — SciDocs 20q, HotpotQA 10q |
+| LLM pairwise (PRP-style, OpenAI) | Full, multi-provider | **Yes** — SciDocs 50q, HotpotQA 20q, FiQA 10 processed |
 | LLM pairwise (Gemini) | Full | **Partial** — 2 SciDocs queries |
 
 ---
@@ -41,10 +41,10 @@
 
 > "We implement PRP-style (Qin et al., 2023) pairwise comparison using LLM
 > judges and evaluate multiple aggregation strategies on the resulting
-> preference graphs. Bounded pilot studies on SciDocs (20 queries) and
-> HotpotQA (10 queries) using gpt-4o-mini confirm that LLM pairwise
-> preferences produce highly cyclic graphs (90–95%) where FAS repair is
-> active but does not improve nDCG."
+> preference graphs. Bounded real runs on SciDocs (50 queries), HotpotQA
+> (20 queries), and FiQA (10 processed queries) using gpt-4o-mini show
+> regime-sensitive cyclicity and small/non-uniform repaired-vs-unrepaired
+> nDCG effects (negative on SciDocs, near-zero on HotpotQA/FiQA)."
 
 ---
 
@@ -63,7 +63,7 @@
 > Agrawal et al., 2026) demonstrates strong zero-shot ranking performance.
 > Our study is complementary: we investigate how pairwise preferences should
 > be aggregated, and whether graph-theoretic cycle repair improves the
-> resulting rankings. Bounded pilot studies with gpt-4o-mini on two datasets
-> confirm that our qrels-derived findings transfer to LLM-generated
-> preferences. A supplementary pilot with Google Gemini provides additional
+> resulting rankings. Bounded real runs with gpt-4o-mini on three datasets suggest that our
+> qrels-derived regime-sensitivity findings partially transfer to direct
+> LLM-generated preferences, while still requiring caution on generalization. A supplementary pilot with Google Gemini provides additional
 > cross-provider directional evidence."

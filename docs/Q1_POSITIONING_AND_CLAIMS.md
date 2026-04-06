@@ -117,8 +117,8 @@ them in a journal submission would expose the paper to rejection.
 | "FAS repair improves retrieval quality" (unconditionally) | Bootstrap evidence shows strictly negative ΔnDCG for Copeland/ms1 on SciDocs; neutral or zero elsewhere. |
 | "Our method outperforms Borda count on IR benchmarks" | Borda / score_sum dominate in all synthetic experiments; real experiments do not include Borda as a standalone benchmark method. |
 | "Lower BEW/PIC implies better user-facing retrieval quality" | BEW/PIC are graph metrics vs qrels reference; they do not predict nDCG improvement. |
-| "Results generalize to LLM-generated pairwise preferences" | All experiments use BM25/TF-IDF/MiniLM score-derived votes, not actual LLM judgements. |
-| "Results generalize beyond SciDocs and HotpotQA" | FiQA and BRIGHT are in the codebase but not in the canonical paper evidence package. |
+| "Results generalize to LLM-generated pairwise preferences" | Core canonical package is score-derived; separate bounded real-LLM addendum now exists (SciDocs/HotpotQA/FiQA) and supports only conservative regime-conditional claims. |
+| "Results generalize beyond SciDocs and HotpotQA" | Real-LLM addendum now includes bounded FiQA evidence; broad external generalization still requires larger multi-dataset budgets (e.g., BRIGHT + higher query counts). |
 | "The method is efficient enough for production use" | Only up to n=100 items tested; no real-time or batch-size analysis. |
 | "Exact ILP MWFAS improves over the greedy heuristic in practice" | ILP solver is stubbed; exact-vs-greedy comparison is synthetic only. |
 | "Our hybrid α=0.3 is an optimised hyperparameter" | α sweep exists for synthetic data; no validation-set tuning on real data is documented. |
@@ -184,9 +184,9 @@ them in a journal submission would expose the paper to rejection.
 
 **Repository response:** FiQA and BRIGHT loaders and processing scripts exist.
 The pipeline can be extended with `--dataset fiqa` and `--dataset bright`.
-The canonical paper package currently covers SciDocs and HotpotQA only.
+The canonical vote-derived package currently covers SciDocs and HotpotQA only; the real-LLM addendum now includes bounded FiQA evidence.
 
-**Recommended action:** Run the full pipeline for FiQA and BRIGHT, add them to
+**Recommended action:** Increase FiQA real-LLM query budget and run BRIGHT, then add them to
 `DATASETS` in `scripts/build_paper_evidence_package.py`, and regenerate tables.
 
 ---

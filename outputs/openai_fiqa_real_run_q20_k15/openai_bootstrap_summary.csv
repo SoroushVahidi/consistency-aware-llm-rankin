@@ -1,0 +1,4 @@
+analysis_type,method_a,method_b,n_paired_queries,mean_value,mean_delta,ci95_low,ci95_high,direction,ci_excludes_zero
+ndcg_ci,llm_pairwise_copeland,,10,1.0,,1.0,1.0,,
+delta_ci,hybrid_rrf_repaired_copeland_a03,hybrid_rrf_unrepaired_copeland_a03,10,,0.0,0.0,0.0,neutral,False
+delta_ci,hybrid_rrf_repaired_balance_a03,hybrid_rrf_unrepaired_balance_a03,10,,0.0,0.0,0.0,neutral,False

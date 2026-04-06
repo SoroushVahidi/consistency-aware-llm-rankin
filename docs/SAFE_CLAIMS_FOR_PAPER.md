@@ -155,7 +155,7 @@ Do **not** make any of these claims in a submitted manuscript.
 
 > ~~"These findings apply to LLM pairwise preference judgements."~~
 
-*Why unsupported:* All experiments use BM25/TF-IDF/MiniLM score-derived votes; no actual LLM pairwise comparisons are present in the repository.
+*Why unsupported (for canonical package):* Core canonical experiments use BM25/TF-IDF/MiniLM score-derived votes. Separate bounded real-LLM addendum exists (SciDocs/HotpotQA/FiQA) and supports only conservative regime-conditional transfer language.
 
 ---
 
@@ -163,7 +163,7 @@ Do **not** make any of these claims in a submitted manuscript.
 
 > ~~"We demonstrate consistent behaviour across diverse retrieval benchmarks."~~
 
-*Why unsupported:* Only two datasets in the canonical evidence package.  FiQA and BRIGHT loaders exist but have no committed results.
+*Why unsupported (for broad generalization):* Canonical package remains two-dataset, while the real-LLM addendum now includes bounded FiQA evidence. Broader claims still require larger query budgets and more datasets (e.g., BRIGHT).
 
 ---
 
@@ -199,7 +199,7 @@ Do **not** make any of these claims in a submitted manuscript.
 | "our method outperforms baselines" | "score-sum and Borda count consistently outperform the greedy-FAS topological ranker in synthetic experiments" |
 | "we demonstrate that …" | "our results suggest that …" / "under the conditions tested, …" |
 | "cycle repair is beneficial" | "cycle repair is conditionally harmful (high-cyclicity regime) or inactive (low-cyclicity regime)" |
-| "results generalise" | "results hold on the two datasets examined (SciDocs, HotpotQA); generalisation requires further study" |
+| "results generalise" | "results hold on the currently examined bounded datasets (SciDocs, HotpotQA, bounded FiQA); broader generalisation requires further study" |
 | "the dominant factor is …" | "the dominant factor under our experimental conditions is …" |
 | "proves that BEW/PIC reduction is useful" | "shows that FAS repair measurably reduces graph–label backward-edge weight; the connection to retrieval quality requires caution (see §X)" |
 
