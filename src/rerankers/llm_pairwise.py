@@ -141,6 +141,40 @@ def _is_quota_exhausted(exc) -> bool:
     return "insufficient_quota" in msg or "exceeded your current quota" in msg
 
 
+def _needs_responses_api_fallback(exc) -> bool:
+    """Return True when the endpoint rejects chat-completions ``messages``."""
+    msg = str(exc).lower()
+    return (
+        "unsupported parameter: 'messages'" in msg
+        or "parameter has moved to 'input'" in msg
+        or "responses api" in msg
+    )
+
+
+class _OpenAIResponsesUsage:
+    """Normalize OpenAI Responses usage to the chat-completions token shape."""
+
+    def __init__(self, usage) -> None:
+        self.prompt_tokens = getattr(usage, "input_tokens", 0) if usage else 0
+        self.completion_tokens = getattr(usage, "output_tokens", 0) if usage else 0
+        self.total_tokens = getattr(usage, "total_tokens", 0) if usage else 0
+
+
+def _extract_openai_responses_text(response) -> str:
+    """Extract text robustly from a Responses API object."""
+    output_text = getattr(response, "output_text", None)
+    if output_text:
+        return str(output_text)
+
+    for item in getattr(response, "output", []) or []:
+        for block in getattr(item, "content", []) or []:
+            if getattr(block, "type", "") in {"output_text", "text"}:
+                text = getattr(block, "text", "")
+                if text:
+                    return str(text)
+    return ""
+
+
 def _call_openai(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
     """Call the OpenAI API with retry and exponential backoff.
 
@@ -161,6 +195,18 @@ def _call_openai(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
             )
             text = response.choices[0].message.content.strip()
             return text, response.usage
+        except openai.BadRequestError as exc:
+            if not _needs_responses_api_fallback(exc):
+                raise
+            max_output_tokens = max(16, int(config.max_tokens))
+            response = client.responses.create(
+                model=config.model,
+                input=prompt,
+                temperature=config.temperature,
+                max_output_tokens=max_output_tokens,
+            )
+            text = _extract_openai_responses_text(response).strip()
+            return text, _OpenAIResponsesUsage(getattr(response, "usage", None))
         except openai.RateLimitError as exc:
             if _is_quota_exhausted(exc):
                 raise

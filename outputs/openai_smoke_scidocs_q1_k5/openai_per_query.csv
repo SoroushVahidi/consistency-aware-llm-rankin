@@ -1,0 +1,13 @@
+dataset,query_id,method,n_candidates,is_cyclic,n_fas_removed,ndcg_at_k,map_at_k,precision_at_k,recall_at_k,backward_edge_weight,pairwise_inconsistency
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,llm_pairwise_copeland,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,bt_from_llm,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,win_rate_from_llm,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,markov_from_llm,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,tournament_sort_from_llm,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,greedy_fas_topological,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,greedy_fas_weighted_balance,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,greedy_fas_copeland,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,hybrid_rrf_repaired_copeland_a03,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,hybrid_rrf_unrepaired_copeland_a03,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,hybrid_rrf_repaired_balance_a03,5,True,1,1.0,1.0,1.0,1.0,1.0,1
+scidocs,ba69c46c62b525941e91d0788d20b6ef91847cc4,hybrid_rrf_unrepaired_balance_a03,5,True,1,1.0,1.0,1.0,1.0,1.0,1

@@ -1,0 +1,13 @@
+method,n_queries,ndcg_mean,map_mean,precision_mean,recall_mean,bew_mean,pic_mean
+llm_pairwise_copeland,1,1.0,1.0,1.0,1.0,1.0,1.0
+bt_from_llm,1,1.0,1.0,1.0,1.0,1.0,1.0
+win_rate_from_llm,1,1.0,1.0,1.0,1.0,1.0,1.0
+markov_from_llm,1,1.0,1.0,1.0,1.0,1.0,1.0
+tournament_sort_from_llm,1,1.0,1.0,1.0,1.0,1.0,1.0
+greedy_fas_topological,1,1.0,1.0,1.0,1.0,1.0,1.0
+greedy_fas_weighted_balance,1,1.0,1.0,1.0,1.0,1.0,1.0
+greedy_fas_copeland,1,1.0,1.0,1.0,1.0,1.0,1.0
+hybrid_rrf_repaired_copeland_a03,1,1.0,1.0,1.0,1.0,1.0,1.0
+hybrid_rrf_unrepaired_copeland_a03,1,1.0,1.0,1.0,1.0,1.0,1.0
+hybrid_rrf_repaired_balance_a03,1,1.0,1.0,1.0,1.0,1.0,1.0
+hybrid_rrf_unrepaired_balance_a03,1,1.0,1.0,1.0,1.0,1.0,1.0

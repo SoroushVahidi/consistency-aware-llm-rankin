@@ -1,0 +1,41 @@
+{
+  "label": "REAL OPENAI RUN (1 queries) \u2014 NOT mock",
+  "dataset": "scidocs",
+  "max_queries": 1,
+  "top_k": 5,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "provider": "openai",
+  "dry_run": false,
+  "debias_position": false,
+  "temperature": 0.0,
+  "n_queries_processed": 1,
+  "partial_run": false,
+  "api_error": null,
+  "total_pairwise_comparisons": 10,
+  "methods": [
+    "llm_pairwise_copeland",
+    "bt_from_llm",
+    "win_rate_from_llm",
+    "markov_from_llm",
+    "tournament_sort_from_llm",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "hybrid_rrf_repaired_copeland_a03",
+    "hybrid_rrf_unrepaired_copeland_a03",
+    "hybrid_rrf_repaired_balance_a03",
+    "hybrid_rrf_unrepaired_balance_a03"
+  ],
+  "cache_dir": "outputs/openai_smoke_scidocs_q1_k5/judgment_cache",
+  "api_stats": {
+    "api_calls": 10,
+    "cache_hits": 0,
+    "prompt_tokens": 3832,
+    "completion_tokens": 20,
+    "total_tokens": 3852,
+    "errors": 0
+  },
+  "wall_time_s": 10.8,
+  "cost_estimate_usd": 0.0006
+}
