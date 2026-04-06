@@ -159,6 +159,6 @@ FAS time share rises from ~49% (n=10) to ~97% (n=100).
 | FAS repair improves nDCG@k unconditionally | **Unsupported** | Bootstrap evidence shows harm or neutrality everywhere tested |
 | Method outperforms Borda on IR benchmarks | **Unsupported** | Borda/score_sum dominate in synthetic; not tested as standalone benchmark on real data |
 | BEW/PIC improvement predicts retrieval improvement | **Unsupported** | Both measured against qrels-derived reference; not independent of nDCG signal |
-| Results generalise to LLM-generated preferences | **Unsupported** | All votes derived from BM25/TF-IDF/MiniLM scores, not real LLM judgements |
+| Results generalise to LLM-generated preferences | **Partially supported (bounded)** | Core evidence is score-derived; separate bounded real-LLM runs (SciDocs/HotpotQA/FiQA) support only conservative regime-conditional transfer claims |
 | Results generalise to FiQA and BRIGHT | **Unsupported** | Loaders exist but no committed results |
 | Exact ILP MWFAS outperforms greedy on real data | **Unsupported** | ILP solver is stubbed; comparison is synthetic only |

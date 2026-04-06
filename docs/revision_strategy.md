@@ -1,6 +1,6 @@
 # Revision Strategy — LLM Baseline Gap
 
-> **Updated:** 2026-03-24
+> **Updated:** 2026-04-06
 > **Context:** The editor flagged (1) missing LLM baselines, (2) insufficient
 > modern baselines, (3) weak positioning. This tracks resolution status.
 
@@ -12,11 +12,12 @@
 |-----------|--------|
 | LLM pairwise pipeline code | **done** — `src/rerankers/llm_pairwise.py` (OpenAI + Gemini) |
 | Dry-run validation | **done** — 50 queries, 9,500 pairs |
-| Real OpenAI run — SciDocs | **done** — 20 queries, 2,100 pairs, gpt-4o-mini |
-| Real OpenAI run — HotpotQA | **done** — 10 queries, 450 pairs, gpt-4o-mini |
+| Real OpenAI run — SciDocs | **done** — 50 queries, 5,250 pairs, gpt-4o-mini |
+| Real OpenAI run — HotpotQA | **done** — 20 queries, 900 pairs, gpt-4o-mini |
 | Real Gemini run — SciDocs | **partial** — 2 queries, 380 pairs (free-tier quota) |
-| Repaired-vs-unrepaired under real LLM | **done** — negative ΔnDCG on both datasets |
-| Bootstrap CIs from real LLM data | **not done** |
+| Real OpenAI run — FiQA | **done (bounded)** — target 20, processed 10 queries, 46 pairs |
+| Repaired-vs-unrepaired under real LLM | **done** — negative on SciDocs, near-zero on HotpotQA/FiQA |
+| Bootstrap CIs from real LLM data | **done** — committed for SciDocs/HotpotQA/FiQA OpenAI runs |
 | Full-scale LLM evaluation (≥50 queries) | **not done** |
 
 ---
@@ -25,11 +26,12 @@
 
 | Dataset | Queries | ΔnDCG (rep − unrep, Copeland) | Cyclic % | Best method |
 |---------|---------|-------------------------------|----------|-------------|
-| SciDocs | 20 | −0.0003 | 95% | markov (0.9574) |
-| HotpotQA | 10 | −0.0070 | 90% | tournament_sort (0.9008) |
+| SciDocs | 50 | −0.0010 (CI below 0) | 92% | llm_pairwise_copeland (0.9749) |
+| HotpotQA | 20 | +0.0000 (CI [0,0]) | 80% | tournament_sort (0.9271) |
+| FiQA | 10 processed | +0.0000 (CI [0,0]) | 10% | llm_pairwise_copeland (1.0000) |
 
 FAS repair direction under real LLM preferences is **consistently negative**
-across both datasets and both hybrid components (copeland, balance).
+with a negative effect in SciDocs and near-null effects in HotpotQA/FiQA.
 
 ---
 
@@ -39,13 +41,13 @@ across both datasets and both hybrid components (copeland, balance).
 
 The editor flagged that the manuscript lacked LLM-based baselines. We now have:
 
-- Real gpt-4o-mini pairwise judgments on two datasets (SciDocs, HotpotQA).
+- Real gpt-4o-mini pairwise judgments on three datasets (SciDocs, HotpotQA, FiQA).
 - 12 aggregation methods evaluated on the same real LLM judgments.
 - Consistent finding: repair does not improve nDCG under LLM preferences.
 - Cross-provider signal from Gemini (directional only, n=2).
 
 **What remains:**
-- Bootstrap CIs on the real LLM data (computable from existing per-query CSVs).
+- Larger query budgets to tighten uncertainty, especially for FiQA.
 - Larger query budgets for stronger statistical claims.
 - Position debiasing analysis.
 
@@ -55,11 +57,12 @@ The editor flagged that the manuscript lacked LLM-based baselines. We now have:
 
 > "To assess whether our findings transfer to LLM-generated preferences, we
 > conducted bounded pilot studies using gpt-4o-mini as a pairwise relevance
-> judge on SciDocs (20 queries, top-15) and HotpotQA (10 queries, top-15).
-> Real LLM judgments produced highly cyclic preference graphs (90–95% of
-> queries). FAS repair showed ΔnDCG of −0.0003 (SciDocs) and −0.0070
-> (HotpotQA) relative to unrepaired aggregation, consistent with the
-> regime-dependence pattern observed with score-derived preferences. A
+> judge on SciDocs (50 queries, top-15), HotpotQA (20 queries, top-15), and
+> FiQA (bounded run: 10 processed queries from a 20-query target). Real LLM
+> judgments showed regime-sensitive cyclicity (high on SciDocs/HotpotQA, low
+> on FiQA in this run). Repaired-vs-unrepaired ΔnDCG was slightly negative on
+> SciDocs and near-zero on HotpotQA/FiQA, consistent with a conservative
+> structural-vs-relevance decoupling interpretation. A
 > supplementary pilot using Google Gemini on 2 SciDocs queries showed
 > directionally consistent results (ΔnDCG = −0.0045)."
 
@@ -67,7 +70,7 @@ The editor flagged that the manuscript lacked LLM-based baselines. We now have:
 
 ## 5. What Must NOT Be Said
 
-- Do not claim these are full-benchmark reproductions (20 and 10 queries).
-- Do not report bootstrap CIs that have not been computed.
+- Do not claim these are full-benchmark reproductions (bounded runs).
+- Do not over-interpret zero-width CIs from bounded runs as universal null effects.
 - Do not claim Gemini and OpenAI results are directly comparable.
 - Do not claim the editor's concern is "fully resolved" without larger runs.

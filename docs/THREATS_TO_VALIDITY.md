@@ -2,24 +2,29 @@
 
 ## 1) Dataset limitations
 
-1. Canonical paper package currently centers on SciDocs + HotpotQA.
-2. Query counts after eligibility filtering are limited in some regimes.
-3. Domain coverage is narrower than a typical broad IR benchmark suite.
+1. Canonical vote-derived package centers on SciDocs + HotpotQA, while the
+   real-LLM addendum now includes SciDocs + HotpotQA + bounded FiQA evidence.
+2. Query counts after eligibility filtering remain limited in some regimes
+   (notably bounded FiQA processed-query count).
+3. Domain coverage is broader than before but still narrower than a typical
+   broad IR benchmark suite.
 
 Mitigation path:
-- add FiQA/BRIGHT canonical runs and report query-count sensitivity.
+- expand real-LLM query budgets and add additional datasets (e.g., BRIGHT)
+  under the same reporting template.
 
 ---
 
 ## 2) LLM preference noise / bias issues
 
 1. Canonical committed publication package uses ranker-score-derived votes,
-   not direct LLM pairwise judgments.
-2. Any LLM-centric interpretation must be scoped as prospective unless direct
-   LLM pairwise experiments are added.
+   while a separate real-LLM addendum now reports direct OpenAI pairwise runs.
+2. LLM-centric interpretation should still be scoped as bounded and
+   regime-conditional rather than universal.
 
 Mitigation path:
-- add dedicated `llm_pairwise_file` experiments with transparent prompt/model setup.
+- continue expanding direct `llm_pairwise` evidence with matched query budgets
+  and transparent prompt/model configuration.
 
 ---
 
