@@ -87,4 +87,4 @@ rm -rf $(OUTPUTS)/noise_sweep_n* $(OUTPUTS)/scale_sweep_n* \
        $(OUTPUTS)/uniform_multiseed_n20_noise0.20 \
        $(OUTPUTS)/q1_journal_package \
        $(OUTPUTS)/synthetic_smoke
-@echo "Done. Canonical evidence package (pub_vote_cmp_v2) preserved."
+@echo "Done. Canonical evidence packages (pub_vote_cmp_all4/paper_package and historical pub_vote_cmp_v2) preserved."
