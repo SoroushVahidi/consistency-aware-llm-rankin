@@ -1,0 +1,41 @@
+{
+  "label": "REAL OPENAI RUN (20 queries) \u2014 NOT mock",
+  "dataset": "hotpotqa",
+  "max_queries": 20,
+  "top_k": 15,
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "provider": "openai",
+  "dry_run": false,
+  "debias_position": false,
+  "temperature": 0.0,
+  "n_queries_processed": 20,
+  "partial_run": false,
+  "api_error": null,
+  "total_pairwise_comparisons": 900,
+  "methods": [
+    "llm_pairwise_copeland",
+    "bt_from_llm",
+    "win_rate_from_llm",
+    "markov_from_llm",
+    "tournament_sort_from_llm",
+    "greedy_fas_topological",
+    "greedy_fas_weighted_balance",
+    "greedy_fas_copeland",
+    "hybrid_rrf_repaired_copeland_a03",
+    "hybrid_rrf_unrepaired_copeland_a03",
+    "hybrid_rrf_repaired_balance_a03",
+    "hybrid_rrf_unrepaired_balance_a03"
+  ],
+  "cache_dir": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache",
+  "api_stats": {
+    "api_calls": 900,
+    "cache_hits": 0,
+    "prompt_tokens": 314442,
+    "completion_tokens": 1856,
+    "total_tokens": 316298,
+    "errors": 0
+  },
+  "wall_time_s": 1040.5,
+  "cost_estimate_usd": 0.0483
+}

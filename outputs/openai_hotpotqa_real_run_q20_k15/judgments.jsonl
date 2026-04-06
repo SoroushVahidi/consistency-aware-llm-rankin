@@ -1,0 +1,900 @@
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::Further (bus)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::Farmall H", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::Farmall M", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Further (bus)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::Farmall H", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::Farmall M", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::The Electric Kool-Aid Acid Test", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall H", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall M", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "loser_doc_id": "5a88a42f554299206df2b317::Carl Bailey Company Building", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall H", "loser_doc_id": "5a88a42f554299206df2b317::Farmall M", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester", "loser_doc_id": "5a88a42f554299206df2b317::Farmall H", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::Farmall H", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall H", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall H", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "loser_doc_id": "5a88a42f554299206df2b317::Farmall H", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall M", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::Farmall M", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall M", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::Farmall M", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "loser_doc_id": "5a88a42f554299206df2b317::Farmall M", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester C-Series", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester L-Series", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "weight": 1.0}
+{"query_id": "5a88a42f554299206df2b317", "winner_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series (bus chassis)", "loser_doc_id": "5a88a42f554299206df2b317::International Harvester S-Series", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Edithvale railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Bihar Sharif Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Bueng Phra Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Chandanattop railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Hilal railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Khwae Noi Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Mulankunnathukavu railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Pak Nam Pho Railway Station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ae663b05542992ae0d16316", "winner_doc_id": "5ae663b05542992ae0d16316::Sabarmati Junction railway station", "loser_doc_id": "5ae663b05542992ae0d16316::Shoranur Junction railway station", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Alcaraz", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Emilio P\u00e9rez Touri\u00f1o", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Felipe Carrillo Puerto (municipality)", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Ignacio Vel\u00e1zquez Rivera", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Bono Mart\u00ednez", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Mar\u00eda Barreda", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Jos\u00e9 Ram\u00f3n Bauz\u00e0", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Juan Jos\u00e9 G\u00fcemes", "weight": 1.0}
+{"query_id": "5ab6993f554299110f219a2b", "winner_doc_id": "5ab6993f554299110f219a2b::Ria\u00f1o, Le\u00f3n", "loser_doc_id": "5ab6993f554299110f219a2b::Miguel \u00c1ngel Revilla", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Lennon or McCartney", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::The Day the Universe Changed", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "loser_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "loser_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dee Hibbert-Jones", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "loser_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "loser_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "loser_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Dominica: Charting a Future for Paradise", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "loser_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Ivan Vaughan", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::James Burke (science historian)", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "loser_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Kelly Glenn Williams", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "loser_doc_id": "5ab7948b5542995dae37e969::Last Day of Freedom", "weight": 1.0}
+{"query_id": "5ab7948b5542995dae37e969", "winner_doc_id": "5ab7948b5542995dae37e969::Peter Richardson (filmmaker)", "loser_doc_id": "5ab7948b5542995dae37e969::Sister Rose's Passion", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Registered Offender", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (filmmaker)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Real Rob", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Registered Offender", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Big Stan", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::Elle King", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::Registered Offender", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Deuce Bigalow: Male Gigolo", "loser_doc_id": "5ac560235542993e66e82396::The Hot Chick", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Registered Offender", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Elle King", "loser_doc_id": "5ac560235542993e66e82396::The Hot Chick", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Real Rob", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Registered Offender", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::John Schneider (producer)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Registered Offender", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Real Rob", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "loser_doc_id": "5ac560235542993e66e82396::Registered Offender", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::Registered Offender", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Registered Offender", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "loser_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Rob (TV series)", "weight": 1.0}
+{"query_id": "5ac560235542993e66e82396", "winner_doc_id": "5ac560235542993e66e82396::The Hot Chick", "loser_doc_id": "5ac560235542993e66e82396::Sarah Price (author)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Next Boyfriend", "loser_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol Season 5: Encores", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "loser_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::American Idol: Greatest Moments", "loser_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::An American Idol Christmas", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::Bo Bice", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::Change Nothing (song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Diana DeGarmo", "loser_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::Falling (Trent Harmon song)", "weight": 1.0}
+{"query_id": "5a72b8de5542994cef4bc3df", "winner_doc_id": "5a72b8de5542994cef4bc3df::Shelby Dressel", "loser_doc_id": "5a72b8de5542994cef4bc3df::Mayr\u00e9 Mart\u00ednez", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Atomweight", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight (MMA)", "loser_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Amber Brown (fighter)", "loser_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "loser_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Aminoacyl tRNA synthetases, class I", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Atomweight", "loser_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Flower hat jelly", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Human rights and youth sport", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Lesche", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Lesche", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Lesche", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Neurofilament", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Neurofilament", "weight": 1.0}
+{"query_id": "5ae18d615542997283cd2229", "winner_doc_id": "5ae18d615542997283cd2229::Ruqsana Begum", "loser_doc_id": "5ae18d615542997283cd2229::Noun class", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Mick Chatterton", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "loser_doc_id": "5a866b5b554299211dda2b23::2005\u201306 FC Vaslui season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Ergotelis F.C. season", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "loser_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::2014\u201315 Udinese Calcio season", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Billy Roe", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Charles Moran (racing driver)", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Dancing Rain", "loser_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "loser_doc_id": "5a866b5b554299211dda2b23::Nadzeya Vysotskaya", "weight": 1.0}
+{"query_id": "5a866b5b554299211dda2b23", "winner_doc_id": "5a866b5b554299211dda2b23::Vuk Ra\u0111enovi\u0107", "loser_doc_id": "5a866b5b554299211dda2b23::Tien Chia-chen", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's mother", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "loser_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "loser_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::My Kid Could Paint That", "loser_doc_id": "5ae504a855429908b63264df::\u00c6schere", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::Grendel", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Wrath of Gods", "loser_doc_id": "5ae504a855429908b63264df::\u00c6schere", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::Grendel", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Beowulf &amp; Grendel", "loser_doc_id": "5ae504a855429908b63264df::\u00c6schere", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "loser_doc_id": "5ae504a855429908b63264df::Grendel", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel", "loser_doc_id": "5ae504a855429908b63264df::\u00c6schere", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's mother", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::\u00c6schere", "loser_doc_id": "5ae504a855429908b63264df::Grendel's Cave", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's mother", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "loser_doc_id": "5ae504a855429908b63264df::Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "loser_doc_id": "5ae504a855429908b63264df::Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Grendel's mother", "loser_doc_id": "5ae504a855429908b63264df::\u00c6schere", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::\u00c6schere", "loser_doc_id": "5ae504a855429908b63264df::List of artistic depictions of Grendel's mother", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::\u00c6schere", "loser_doc_id": "5ae504a855429908b63264df::Marla Olmstead", "weight": 1.0}
+{"query_id": "5ae504a855429908b63264df", "winner_doc_id": "5ae504a855429908b63264df::\u00c6schere", "loser_doc_id": "5ae504a855429908b63264df::The Dragon (Beowulf)", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1977 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1961 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1963 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1976 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1978 European Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1982 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1985 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1992 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7a1b845542990783324e5f", "winner_doc_id": "5a7a1b845542990783324e5f::1993 European Cup Winners' Cup Final", "loser_doc_id": "5a7a1b845542990783324e5f::1994 European Cup Winners' Cup Final", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karlsschrein", "loser_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Cingoli", "loser_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Battle of Parma", "loser_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "loser_doc_id": "5a7283355542991f9a20c4b1::Concordat of Worms", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Constance, Queen of Sicily", "loser_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "loser_doc_id": "5a7283355542991f9a20c4b1::Gerasim Zeli\u0107", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "loser_doc_id": "5a7283355542991f9a20c4b1::Karl Anselm, 4th Prince of Thurn and Taxis", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "loser_doc_id": "5a7283355542991f9a20c4b1::List of Holy Roman Empresses", "weight": 1.0}
+{"query_id": "5a7283355542991f9a20c4b1", "winner_doc_id": "5a7283355542991f9a20c4b1::Papal election, 1241", "loser_doc_id": "5a7283355542991f9a20c4b1::Treaty of Ceprano (1230)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Citybus (Hong Kong)", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "loser_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hair Raiser", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Hong Kong Disneyland Resort", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "loser_doc_id": "5a8f2ba155429918e830d1b9::Jia Jia (giant panda)", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Conservation Foundation Hong Kong", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "loser_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Halloween Bash", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5a8f2ba155429918e830d1b9", "winner_doc_id": "5a8f2ba155429918e830d1b9::Ocean Park Station", "loser_doc_id": "5a8f2ba155429918e830d1b9::Randy Dickison", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Third Window Films", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Jesus' Son (film)", "loser_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "loser_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Fish &amp; Cat", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Gianfranco Rosi (director)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Third Window Films", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Grand Jury Prize (Venice Film Festival)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "loser_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Heartstone (film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "loser_doc_id": "5ab925fd554299131ca42281::Third Window Films", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Leonardo Corbucci", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Still Life (2013 film)", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Third Window Films", "loser_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "weight": 1.0}
+{"query_id": "5ab925fd554299131ca42281", "winner_doc_id": "5ab925fd554299131ca42281::Volpi Cup for Best Actor", "loser_doc_id": "5ab925fd554299131ca42281::Venice Film Festival", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Emmanuel Chabrier", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin malgr\u00e9 lui", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le M\u00e9decin volant", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Le roi l'a dit", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::Pascal Mazzotti", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (1931 film)", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Doctor in Spite of Himself (film)", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5a8cec13554299441c6b9f7d", "winner_doc_id": "5a8cec13554299441c6b9f7d::The Warlock in Spite of Himself", "loser_doc_id": "5a8cec13554299441c6b9f7d::The king is dead, long live the king!", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Point coloration", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Balinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Colorpoint Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Balinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Point coloration", "loser_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Duan goat", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Knabstrupper", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Antelope jackrabbit", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Balinese cat", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Balinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Cat coat genetics", "loser_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Duan goat", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Duan goat", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Duan goat", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Knabstrupper", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Knabstrupper", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Oriental Shorthair", "weight": 1.0}
+{"query_id": "5adbf43655429947ff173864", "winner_doc_id": "5adbf43655429947ff173864::Tonkinese cat", "loser_doc_id": "5adbf43655429947ff173864::Silver Swallow", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Neil Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::Neil Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks, Houston", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "loser_doc_id": "5ab64285554299637185c67c::Neil Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::George Bush Intercontinental Airport", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Neil Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Inauguration of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Neil Bush", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Neil Bush", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Neil Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Neil Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Neil Bush", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Presidency of George H. W. Bush", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::USS Houston (SSN-713)", "loser_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "loser_doc_id": "5ab64285554299637185c67c::West Oaks", "weight": 1.0}
+{"query_id": "5ab64285554299637185c67c", "winner_doc_id": "5ab64285554299637185c67c::Willowick Place, Houston", "loser_doc_id": "5ab64285554299637185c67c::West Oaks Mall (Houston)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. Academy", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal F.C. league record by opponent", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal Football Club Museum", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "loser_doc_id": "5ae1dadf5542997f29b3c14f::Arsenal W.F.C.", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. managers", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (1\u201324 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. players (25\u201399 appearances)", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5ae1dadf5542997f29b3c14f", "winner_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. records and statistics", "loser_doc_id": "5ae1dadf5542997f29b3c14f::List of Arsenal F.C. seasons", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Making Today a Perfect Day", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Perfect Day (song)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "loser_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::A Young Girl in 1941 with No Waist at All", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Naruto: Shippuden (season 21)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::New Scandinavian Cooking", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::One Perfect Day (Lydia Denker song)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Cascada album)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "loser_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Perfect Day (Jim Jones song)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a7cb9b95542990527d55515", "winner_doc_id": "5a7cb9b95542990527d55515::Shaggy Dog Story (TV)", "loser_doc_id": "5a7cb9b95542990527d55515::Walk on the Wild Side (Lou Reed song)", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Se\u00e1n Heuston", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Con Colbert", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Grace Gifford", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "loser_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Heuston Gate", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Kilmainham Treaty", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Old Melbourne Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "loser_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Pavlyuk uprising", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5a90c8165542995651fb51ee", "winner_doc_id": "5a90c8165542995651fb51ee::Ruthin Gaol", "loser_doc_id": "5a90c8165542995651fb51ee::Tibradden Mountain", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Age of Not Believing", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "loser_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "loser_doc_id": "5adf8fe55542993344016d0f::Baseball Hall of Fame balloting, 1971", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "loser_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "loser_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Dicen que soy mujeriego", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "loser_doc_id": "5adf8fe55542993344016d0f::Final Fantasy VII: Advent Children", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Kingsglaive: Final Fantasy XV", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Once Upon a Time in Vietnam", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "loser_doc_id": "5adf8fe55542993344016d0f::Sianoa Smit-McPhee", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::Stark Electric Jesus", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
+{"query_id": "5adf8fe55542993344016d0f", "winner_doc_id": "5adf8fe55542993344016d0f::The Golden Voyage of Sinbad", "loser_doc_id": "5adf8fe55542993344016d0f::Tim Burton", "weight": 1.0}
