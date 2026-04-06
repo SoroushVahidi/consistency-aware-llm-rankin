@@ -8,3 +8,6 @@
 | [`repaired_vs_unrepaired_master_table.csv`](repaired_vs_unrepaired_master_table.csv) | Merged repaired vs unrepaired table from `outputs/pub_vote_cmp_all4/paper_package/tables/` |
 | [`paper_safe_contributions.md`](paper_safe_contributions.md) | Conservative contribution paragraph |
 | [`repo_cleanup_recommendations.md`](repo_cleanup_recommendations.md) | Cleanup and coherence steps |
+
+**Canonical package:** `outputs/pub_vote_cmp_all4/paper_package/` (four datasets).  
+**Historical package:** `outputs/pub_vote_cmp_v2/paper_package/` (do not mix with all4).

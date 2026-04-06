@@ -3,6 +3,10 @@
 > **Purpose:** Exact commands to reproduce every result referenced in the
 > journal manuscript, from environment setup through final tables and figures.
 > The guide is self-contained and uses only standard shell commands.
+> Canonical publication evidence for the vote-comparison paper is committed under
+> `outputs/pub_vote_cmp_all4/paper_package/` (four datasets). This guide rebuilds the
+> **historical** Q1 journal bundle derived from the earlier two-dataset
+> `outputs/pub_vote_cmp_v2/` package; keep those numbers separate from the all4 package.
 
 ---
 

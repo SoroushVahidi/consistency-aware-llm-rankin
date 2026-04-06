@@ -11,18 +11,21 @@
 > not uniformly improve retrieval effectiveness; outcomes depend on vote
 > construction, graph regime, and extraction strategy.*
 
-The pre-committed evidence packages (`outputs/pub_vote_cmp_all4/paper_package/`,
-`outputs/pub_vote_cmp_v2/paper_package/`) show that FAS repair is **neutral/inactive**
-under near-acyclic vote constructions and can be **significantly harmful** (nDCG,
-bootstrap 95% CI strictly negative) under high-cyclicity construction on some
-benchmarks (e.g. SciDocs in the committed bundles). See
+The **canonical evidence package** is `outputs/pub_vote_cmp_all4/paper_package/`
+(four datasets). An earlier two-dataset package lives at
+`outputs/pub_vote_cmp_v2/paper_package/` and is **historical**; do not mix its numbers
+with the all4 package in manuscripts. Both packages show that FAS repair is
+**neutral/inactive** under near-acyclic vote constructions and can be **significantly
+harmful** (nDCG, bootstrap 95% CI strictly negative) under high-cyclicity construction
+on some benchmarks (e.g. SciDocs in the committed bundles). See
 [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) and
 [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) for conservative claim wording.
 
 **Scope caveat (important):**
 - Canonical **paper-package** tables/plots for the vote-comparison manuscript live under
-  `outputs/pub_vote_cmp_all4/paper_package/` (four datasets) with an earlier two-dataset
-  bundle under `outputs/pub_vote_cmp_v2/paper_package/`.
+  `outputs/pub_vote_cmp_all4/paper_package/` (four datasets). The bundle under
+  `outputs/pub_vote_cmp_v2/paper_package/` is **historical** and should be cited only
+  as such (e.g., ablation lineage), not mixed with the all4 package.
 - Preference edges in the committed publication package are generated from
   multi-ranker score votes (BM25/TF-IDF/MiniLM), not direct human annotation.
 - Additional experiment trees (including per-dataset runs) may appear under `outputs/real_full/`.
@@ -46,9 +49,9 @@ pytest
 # 4. Run a synthetic experiment (no network needed)
 python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42
 
-# 5. Regenerate the Q1 journal tables from pre-committed outputs (no network needed)
+# 5. Regenerate the Q1 journal tables from the historical two-dataset package (no network needed)
 python scripts/generate_q1_tables.py
-#  → outputs/q1_journal_package/  (7 tables + summary_report.md)
+#  → outputs/q1_journal_package/  (7 tables + summary_report.md; derived from pub_vote_cmp_v2)
 
 # Alternative: use make targets
 make help          # list all available targets
