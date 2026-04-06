@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-04-05T15:31:17.838270+00:00",
+  "credentials": {
+    "OPENAI_API_KEY_present": false,
+    "HF_TOKEN_present": false
+  },
+  "imports": {
+    "openai": {
+      "ok": false,
+      "message": "import_error: ModuleNotFoundError: No module named 'openai'"
+    },
+    "huggingface_hub": {
+      "ok": true,
+      "message": "ok"
+    },
+    "datasets": {
+      "ok": true,
+      "message": "ok"
+    }
+  },
+  "probes": {
+    "openai": {
+      "attempted": false,
+      "ok": false,
+      "message": "blocked: OPENAI_API_KEY absent"
+    },
+    "huggingface": {
+      "attempted": false,
+      "ok": false,
+      "message": "blocked: HF_TOKEN absent"
+    }
+  },
+  "ready_for_small_llm_pairwise_experiment": false,
+  "blocking_issues": [
+    "OPENAI_API_KEY is absent",
+    "HF_TOKEN is absent",
+    "Python package 'openai' is not importable",
+    "OpenAI probe failed: blocked: OPENAI_API_KEY absent",
+    "Hugging Face probe failed: blocked: HF_TOKEN absent"
+  ]
+}
