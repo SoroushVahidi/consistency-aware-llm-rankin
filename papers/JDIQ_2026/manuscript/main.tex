@@ -2,8 +2,10 @@
 % Anonymous double-blind review submission mode, per JDIQ_GUIDELINE_SUMMARY.md Sec.4-5.
 % Do NOT alter margins, spacing, or font definitions in this file or via \geometry etc.
 % Upon acceptance: remove the "manuscript,anonymous,review" options and submit to ACM TAPS.
+\usepackage{array}
 \usepackage{amsmath}
 \usepackage{placeins}
+\usepackage{tabularx}
 % NOTE: amssymb is NOT loaded here -- acmart already loads it internally, and
 % an explicit \usepackage{amssymb} clashes on \Bbbk ("already defined").
 % Discovered and fixed during this pass's compile-and-fix step.
@@ -846,19 +848,30 @@ records, so Gemini is not treated as analyzed evidence in this revision.
     checks.}
   \label{tab:llm-config}
   \small
-  \begin{tabular}{p{2.3cm}p{1.7cm}p{1.9cm}p{2.4cm}}
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabularx}{\columnwidth}{
+      >{\raggedright\arraybackslash}p{1.85cm}
+      >{\raggedright\arraybackslash}p{2.35cm}
+      >{\raggedright\arraybackslash}p{1.55cm}
+      >{\raggedright\arraybackslash}X}
     \toprule
-    Stream & Mode / model & Scope & Role \\
+    Provider / platform & Model & Mode & Datasets / role \\
     \midrule
-    OpenAI API & Pairwise, \texttt{gpt-4o-mini} & SciDocs 50, HotpotQA 20, FiQA 10 usable of 20 target queries & Primary paired pilot \\
-    OpenAI API & Pointwise / listwise, \texttt{gpt-4o-mini} & SciDocs 20+20, HotpotQA 10+10 queries & Auxiliary prompt-style scope check \\
-    Cohere compatibility API & Pairwise, \texttt{command-r-plus-08-2024} & FiQA, HotpotQA, BRIGHT; 200 query$\times$regime records & Protocol-distinct corroborative corpus \\
-    Azure OpenAI v1 API & Pairwise, \texttt{gpt-4.1-mini} & FiQA, HotpotQA, BRIGHT; 200 query$\times$regime records & Protocol-distinct corroborative corpus \\
+    OpenAI API & \texttt{gpt-4o-mini} & Pairwise & Primary paired pilot on SciDocs, HotpotQA, and FiQA. \\
+    OpenAI API & \texttt{gpt-4o-mini} & \shortstack[l]{Pointwise /\\listwise} & Auxiliary prompt-style scope check on SciDocs and HotpotQA. \\
+    Cohere API & \shortstack[l]{\texttt{command-r-plus-}\\\texttt{08-2024}} & Pairwise & Protocol-distinct corroborative corpus on FiQA, HotpotQA, and BRIGHT. \\
+    Azure OpenAI & \texttt{gpt-4.1-mini} & Pairwise & Protocol-distinct corroborative corpus on FiQA, HotpotQA, and BRIGHT. \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Across these runs, decoding is deterministic (temperature 0.0). The paired
+OpenAI pilot targets 50 SciDocs queries, 20 HotpotQA queries, and 20 FiQA
+queries, of which 10 FiQA queries completed successfully. The auxiliary
+pointwise/listwise check covers 20 SciDocs queries and 10 HotpotQA queries per
+prompt style. Each protocol-distinct corroborative provider contributes 200
+query$\times$regime records across FiQA, HotpotQA, and BRIGHT. The paired
 OpenAI pilot uses top-$k=15$ candidate pools, seed 42, no candidate-order
 debiasing, and pairwise responses constrained to a one-letter A/B judgment
 with up to four retries and exponential backoff on API failures; ambiguous
@@ -976,7 +989,7 @@ that it does not follow uniformly.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\linewidth]{../../../figures/manuscript/fig_graph_qrels_bew_pre_post.png}
+  \includegraphics[width=0.98\linewidth]{../../../figures/manuscript/fig_graph_qrels_bew_pre_post.pdf}
   \caption{Mean backward-edge weight (BEW) before and after FAS repair for all
     four datasets and all three vote-extraction regimes
     (\texttt{ms2}, \texttt{ms1}, and \texttt{ms1\_drop\_mutual});
