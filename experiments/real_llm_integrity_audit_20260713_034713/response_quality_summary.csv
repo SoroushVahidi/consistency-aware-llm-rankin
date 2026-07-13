@@ -1,0 +1,7 @@
+provider,dataset,total_responses,exact,verbose_valid,contains_only,ambiguous,malformed,empty,fallback_used_count,fallback_rate
+azure,bright,2050,1978,3,58,11,0,0,11,0.0054
+azure,fiqa,2250,2250,0,0,0,0,0,0,0.0
+azure,hotpotqa,1710,1628,0,50,18,14,0,32,0.0187
+cohere,bright,2050,2024,0,3,0,23,0,23,0.0112
+cohere,fiqa,2250,2250,0,0,0,0,0,0,0.0
+cohere,hotpotqa,1710,1645,0,0,0,65,0,65,0.038

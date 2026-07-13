@@ -1,0 +1,15 @@
+provider,model,dataset,prompt_mode,experiment,total_responses,raw_response_text_available,exact_ab_responses,verbose_valid_responses,ambiguous_responses,malformed_responses,empty_responses,exact_ranking_string_responses,fallback_usage_count,unobservable_raw_text_responses,retry_distribution
+openai,gpt-4o-mini,scidocs,pairwise,openai_scidocs_real_pairwise_q50_k15,5250,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,5250,UNRECORDED
+openai,gpt-4o-mini,hotpotqa,pairwise,openai_hotpotqa_real_run_q20_k15,900,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,900,UNRECORDED
+openai,gpt-4o-mini,fiqa,pairwise,openai_fiqa_real_run_q20_k15,46,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,46,UNRECORDED
+gemini,gemini-3.1-flash-lite-preview,scidocs,pairwise,gemini_scidocs_real_pilot,491,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,491,UNRECORDED
+openai,gpt-4o-mini,scidocs,pairwise,openai_scidocs_real_run_q20_k15,2100,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,2100,UNRECORDED
+openai,gpt-4o-mini,scidocs,pairwise,openai_scidocs_real_pairwise_q30_k15,3150,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,3150,UNRECORDED
+openai,gpt-4o-mini,hotpotqa,pairwise,openai_hotpotqa_real_run_q10_k15,450,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,450,UNRECORDED
+openai,gpt-4o-mini,scidocs,pairwise,openai_smoke_scidocs_q1_k5,10,0,0,,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,10,UNRECORDED
+openai,gpt-4o-mini,scidocs,pointwise,openai_scidocs_real_pointwise_q20_k15,300,0,,0,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,300,UNRECORDED
+openai,gpt-4o-mini,hotpotqa,pointwise,openai_hotpotqa_real_pointwise_q10_k15,100,0,,0,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,100,UNRECORDED
+openai,gpt-4o-mini,scidocs,pointwise,openai_robustness_checks/scidocs_pointwise_temp03_q5_k15,75,0,,0,UNAUDITABLE,UNAUDITABLE,UNAUDITABLE,,UNAUDITABLE,75,UNRECORDED
+openai,gpt-4o-mini,scidocs,listwise,openai_scidocs_real_listwise_q20_k15,20,20,,0,0,0,0,20,0,0,UNRECORDED
+openai,gpt-4o-mini,hotpotqa,listwise,openai_hotpotqa_real_listwise_q10_k15,10,10,,0,0,0,0,10,0,0,UNRECORDED
+openai,gpt-4o-mini,scidocs,listwise,openai_robustness_checks/scidocs_listwise_temp03_q5_k15,5,5,,0,0,0,0,5,0,0,UNRECORDED

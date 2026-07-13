@@ -1,0 +1,7 @@
+provider,model,dataset,experiment,manuscript_role,usable_queries,pairwise_records,query_regime_records,status
+openai,gpt-4o-mini,scidocs,openai_scidocs_real_pairwise_q50_k15,yes-primary-pairwise,50,5250,N/A,committed-and-auditable
+openai,gpt-4o-mini,hotpotqa,openai_hotpotqa_real_run_q20_k15,yes-primary-pairwise,20,900,N/A,committed-and-auditable
+openai,gpt-4o-mini,fiqa,openai_fiqa_real_run_q20_k15,yes-primary-pairwise,10,46,N/A,committed-and-auditable
+gemini,gemini-3.1-flash-lite-preview,scidocs,gemini_scidocs_real_pilot,no-not-analyzed-evidence,2,491,N/A,partial-pilot-not-analyzed
+cohere,command-r-plus-08-2024,UNVERIFIED,not present in committed artifacts,claimed in manuscript,0,0,0,no-committed-evidence-found
+azure_openai,gpt-4.1-mini,UNVERIFIED,not present in committed artifacts,claimed in manuscript,0,0,0,no-committed-evidence-found

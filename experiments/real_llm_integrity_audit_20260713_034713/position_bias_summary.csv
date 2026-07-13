@@ -1,0 +1,17 @@
+provider,dataset,scope,n,a_count,b_count,a_rate,b_rate,binomial_p_two_sided
+azure,bright,all_current_parser,2050,1226,824,0.598,0.402,6.398979823798094e-19
+azure,bright,exact_only,1978,1154,824,0.5834,0.4166,1.2220029509862236e-13
+azure,bright,fallback_only,11,11,0,1.0,0.0,0.0009765625
+azure,fiqa,all_current_parser,2250,1198,1052,0.5324,0.4676,0.0022295751874253085
+azure,fiqa,exact_only,2250,1198,1052,0.5324,0.4676,0.0022295751874253085
+azure,hotpotqa,all_current_parser,1710,987,723,0.5772,0.4228,1.861641857331633e-10
+azure,hotpotqa,exact_only,1628,905,723,0.5559,0.4441,7.1113121945977655e-06
+azure,hotpotqa,fallback_only,32,32,0,1.0,0.0,4.656612873077393e-10
+cohere,bright,all_current_parser,2050,642,1408,0.3132,0.6868,1.4355359922127222e-65
+cohere,bright,exact_only,2024,617,1407,0.3048,0.6952,1.161771945097308e-70
+cohere,bright,fallback_only,23,23,0,1.0,0.0,2.384185791015625e-07
+cohere,fiqa,all_current_parser,2250,880,1370,0.3911,0.6089,4.188328341678718e-25
+cohere,fiqa,exact_only,2250,880,1370,0.3911,0.6089,4.188328341678718e-25
+cohere,hotpotqa,all_current_parser,1710,592,1118,0.3462,0.6538,1.672170713180685e-37
+cohere,hotpotqa,exact_only,1645,527,1118,0.3204,0.6796,5.58230451438193e-49
+cohere,hotpotqa,fallback_only,65,65,0,1.0,0.0,5.421010862427522e-20

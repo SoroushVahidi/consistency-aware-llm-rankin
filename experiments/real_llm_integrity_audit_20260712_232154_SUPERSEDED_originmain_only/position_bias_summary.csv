@@ -1,0 +1,25 @@
+provider,model,dataset,prompt_mode,subset,total_edges,a_choice_count,b_choice_count,a_choice_rate,binomtest_pvalue,auditable_note
+openai,gpt-4o-mini,scidocs,pairwise,all_parsed_pairwise_edges,5250,4363,887,0.831048,0.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,scidocs,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,hotpotqa,pairwise,all_parsed_pairwise_edges,900,651,249,0.723333,0.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,hotpotqa,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,hotpotqa,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,fiqa,pairwise,all_parsed_pairwise_edges,46,28,18,0.608696,0.143865088441,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,fiqa,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,fiqa,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+gemini,gemini-3.1-flash-lite-preview,scidocs,pairwise,all_parsed_pairwise_edges,491,454,37,0.924644,0.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+gemini,gemini-3.1-flash-lite-preview,scidocs,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+gemini,gemini-3.1-flash-lite-preview,scidocs,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,all_parsed_pairwise_edges,2100,1702,398,0.810476,0.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,scidocs,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,all_parsed_pairwise_edges,3150,2548,602,0.808889,0.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,scidocs,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,hotpotqa,pairwise,all_parsed_pairwise_edges,450,289,161,0.642222,1.674e-09,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,hotpotqa,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,hotpotqa,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,all_parsed_pairwise_edges,10,5,5,0.5,1.0,Inferred from stored winner vs prompt-order doc_ids; exact/fallback split unavailable.
+openai,gpt-4o-mini,scidocs,pairwise,exact_responses_only,,,,,,UNAUDITABLE: raw pairwise response texts not preserved.
+openai,gpt-4o-mini,scidocs,pairwise,fallback_responses_only,,,,,,UNAUDITABLE: parser fallback events not recorded and raw texts not preserved.

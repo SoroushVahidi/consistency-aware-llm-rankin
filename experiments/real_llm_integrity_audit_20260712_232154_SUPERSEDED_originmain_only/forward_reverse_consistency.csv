@@ -1,0 +1,9 @@
+provider,model,dataset,experiment,debias_position,forward_reverse_pairs_auditable,agreement_rate,contradiction_rate,order_sensitivity_rate,missingness_rate,cohens_kappa,note
+openai,gpt-4o-mini,scidocs,openai_scidocs_real_pairwise_q50_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,hotpotqa,openai_hotpotqa_real_run_q20_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,fiqa,openai_fiqa_real_run_q20_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+gemini,gemini-3.1-flash-lite-preview,scidocs,gemini_scidocs_real_pilot,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,scidocs,openai_scidocs_real_run_q20_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,scidocs,openai_scidocs_real_pairwise_q30_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,hotpotqa,openai_hotpotqa_real_run_q10_k15,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.
+openai,gpt-4o-mini,scidocs,openai_smoke_scidocs_q1_k5,False,no,,,,,,No forward/reverse paired prompts preserved in this experiment.

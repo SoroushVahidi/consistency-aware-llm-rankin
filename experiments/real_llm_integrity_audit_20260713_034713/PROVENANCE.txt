@@ -1,0 +1,68 @@
+REAL-LLM JUDGMENT INTEGRITY AUDIT -- PROVENANCE
+================================================
+Audit directory: experiments/real_llm_integrity_audit_20260713_034713/
+Worktree: /tmp/real_llm_audit_worktree (branch real-llm-integrity-audit,
+  based on origin/main @ 1635d4b0535c1c2268a4b5510ff5bea5e92689db
+  "Fix JDIQ manuscript Figures 1 and 3 assets")
+Primary working tree (never modified by this audit): /home/soroush/consistency-aware-llm-rankin
+
+RESUMED-AND-CORRECTED RUN
+--------------------------
+A first attempt at this exact task ran earlier the same day in the same
+worktree, strictly from origin/main only. It is preserved, unmodified, at
+experiments/real_llm_integrity_audit_20260712_232154_SUPERSEDED_originmain_only/.
+That attempt correctly found that the OpenAI primary-pairwise pilot has no
+preserved raw response text, but it concluded the Cohere/Azure corpus was
+"absent" -- because that corpus (reports/failure_mining_llm_v3/) was never
+committed to origin/main; it exists only as uncommitted local data on the
+primary tree's `failure-mining-full-records` branch. Per explicit user
+instruction (asked mid-session), this run copies that local-only raw data
+into the audit worktree so the audit can actually be performed, rather than
+reporting it as unavailable. The prior tmux session (name `real_llm_audit`)
+was reused rather than duplicated, per the task's "no duplicate sessions"
+instruction; it had crashed on an OverflowError in a naive binomial-test
+implementation before reaching Section 8.
+
+DATA SOURCES
+------------
+1. Committed / origin/main (read directly from this worktree's checkout):
+   - outputs/openai_scidocs_real_pairwise_q50_k15/, outputs/openai_hotpotqa_real_run_q20_k15/,
+     outputs/openai_fiqa_real_run_q20_k15/, and sibling OpenAI pointwise/listwise/
+     robustness-check output directories.
+   - outputs/gemini_scidocs_real_pilot/ (2-query partial Gemini pilot).
+   - src/rerankers/llm_pairwise.py (the committed parser, `_parse_winner`).
+
+2. Local-only, uncommitted (copied verbatim from the primary working tree into
+   _local_uncommitted_snapshot/ at audit start; never pushed anywhere by this
+   audit):
+   - reports/failure_mining_llm_v3/  <- the corpus matching the manuscript's
+     "200 query-regime records" / "Cohere/Azure" claims (verified by exact
+     count match, see PROVIDER_COUNT_RESOLUTION.md).
+   - reports/failure_mining_llm/, _v2/, _llm_smoke_v2/ (earlier/smoke runs,
+     inventoried but not used for any manuscript-number verification).
+   - reports/selector_llm_extension/ (a related but manuscript-uncited 25-record run).
+   - src/consistency_ranker/failure_mining/ (the package that builds preference
+     graphs, applies greedy-FAS repair, and computes nDCG deltas --
+     process_query_record() is reused, unmodified, by this audit's own
+     P0-P4 reparse so results are produced by the SAME code that produced
+     the original numbers, not a reimplementation).
+   - The locally-modified src/rerankers/llm_pairwise.py (adds the detail_sink
+     prompt/response logging used by the Cohere/Azure runs; diffed against
+     origin/main's version in PARSER_AUDIT.md) and two supporting modified
+     files (baseline_ranking.py: adds rank_centrality; utils/llm_api_status.py).
+
+RUNTIME OVERLAY (not committed)
+--------------------------------
+To import and reuse consistency_ranker.failure_mining.query_processor
+.process_query_record() -- rather than reimplementing graph/repair/nDCG logic
+and risking a second, divergent implementation -- the failure_mining package
+and the three modified files above were copied into this worktree's actual
+src/ tree at runtime. This is a local filesystem overlay for THIS AUDIT RUN
+ONLY. Per the task's commit instructions (only the audit directory, scripts,
+reports, and CSVs), these overlaid src/ changes are never staged or committed;
+only experiments/real_llm_integrity_audit_20260713_034713/ is committed.
+
+NO NEW API CALLS
+-----------------
+This audit reads only already-stored requests/responses/logs. No OpenAI,
+Azure, Cohere, or Gemini API was called at any point in this session.

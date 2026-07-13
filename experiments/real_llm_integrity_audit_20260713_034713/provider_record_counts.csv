@@ -1,0 +1,5 @@
+provider,query_regime_records_attempted,usable_pairwise_reranking_records,note
+cohere,200,200,"each record = one (dataset,vote_regime,query_id) slot; usable means this providers llm_{provider}_pairwise method_output exists"
+azure,200,200,"each record = one (dataset,vote_regime,query_id) slot; usable means this providers llm_{provider}_pairwise method_output exists"
+gemini,200,0,"each record = one (dataset,vote_regime,query_id) slot; usable means this providers llm_{provider}_pairwise method_output exists"
+cohere+azure combined (pooled graph/repair/cyclicity analysis),200,0,the actual 200-record repair/cyclicity/ndcg analysis quoted in the manuscript text uses ZERO records from either provider -- see PROVIDER_COUNT_RESOLUTION.md
