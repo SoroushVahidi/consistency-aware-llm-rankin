@@ -1,0 +1,7 @@
+failure_class,count,percentage,definition,source_file,plot_order,main_text_or_supplement
+Repair-inactive,652,63.9,"FAS repair removes negligible or zero edge weight, so the repaired and unrepaired rankings coincide by construction.",manual_failure_summary.csv,1,main_text
+Tail-only change,210,20.6,"Repair alters the underlying graph ranking, but only below the evaluation cutoff, leaving nDCG@k unchanged.",manual_failure_summary.csv,2,main_text
+Wrong-direction repair,55,5.4,"Repair changes the ranking and the change moves relevant documents down rather than up (the only class with materially negative mean delta nDCG).",manual_failure_summary.csv,3,main_text
+Metric-neutral change,54,5.3,"Repair changes which documents occupy the top ranks without changing their relevance grades, so nDCG is unaffected.",manual_failure_summary.csv,4,main_text
+Extraction-insensitivity,26,2.5,"The Copeland or balance scoring rule is itself insensitive to the specific edges repair removes, so the repaired-graph score reproduces the unrepaired ranking.",manual_failure_summary.csv,5,main_text
+Unknown or mixed,23,2.3,Records that did not cleanly fit the other five categories under manual review.,manual_failure_summary.csv,6,main_text

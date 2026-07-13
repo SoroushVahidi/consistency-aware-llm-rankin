@@ -1,0 +1,13 @@
+dataset,regime_or_pool,method,mean_ndcg,sample_size,graph_dependent,source_file,plot_order
+pooled,pooled,CombSUM,0.4621594872777186,1020,No,final_baseline_comparison.csv,1
+pooled,pooled,Reciprocal rank fusion,0.4586538467987258,1020,No,final_baseline_comparison.csv,2
+pooled,pooled,Prior only,0.45706728225967597,1020,No,final_baseline_comparison.csv,3
+pooled,pooled,Repair-based hybrid (RRF alpha=0.3),0.45488621029735227,1020,Yes,final_baseline_comparison.csv,4
+pooled,pooled,Exact-for-small-components hybrid,0.4548617189919198,1020,Yes,final_baseline_comparison.csv,5
+pooled,pooled,Borda-count fusion,0.4392788096989783,1020,No,final_baseline_comparison.csv,6
+pooled,pooled,Copeland unrepaired,0.43886360495015025,1020,Yes,final_baseline_comparison.csv,7
+pooled,pooled,Copeland repaired,0.43873656865313193,1020,Yes,final_baseline_comparison.csv,8
+pooled,pooled,Markov repaired,0.4350021542198668,1020,Yes,final_baseline_comparison.csv,9
+pooled,pooled,Markov unrepaired,0.4343730043122498,1020,Yes,final_baseline_comparison.csv,10
+pooled,pooled,Balance hybrid,0.4343716931214982,1020,Yes,final_baseline_comparison.csv,11
+pooled,pooled,Score-sum (graph),0.4334223497346488,1020,Yes,final_baseline_comparison.csv,12

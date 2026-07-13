@@ -1,0 +1,5 @@
+# Figure 6 Caption Draft
+
+**Figure 6.** Distribution of manual failure classes across 1,020 query$\times$regime records (Section 7). Repair-inactive (63.9%) and tail-only change (20.6%) together account for the large majority of cases and describe mechanisms by which a structural repair fails to reach the retrieval metric at all, rather than mechanisms of active harm. Wrong-direction repair (5.4%) is the only class with a materially negative mean $\Delta$nDCG and represents the minority of cases in which repair is actively unhelpful. Metric-neutral change (5.3%), extraction-insensitivity (2.5%), and unknown/mixed (2.3%) account for the remainder. See Table 7 for exact counts, percentages, and mean $\Delta$nDCG per class.
+
+**Note for whoever finalizes the image:** this caption deliberately does not repeat Table 7's numbers in full sentence form beyond the two headline figures (63.9%, 20.6%) already used elsewhere in the main text (Section 7's opening paragraph, Section 11 Discussion, Section 13 Conclusion) — see `REPETITION_AUDIT.md` for why the fuller numeric breakdown is left to the table alone.

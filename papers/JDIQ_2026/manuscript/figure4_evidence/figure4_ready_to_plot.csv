@@ -1,0 +1,25 @@
+label,delta,ci_low,ci_high,group,dataset,regime
+fiqa / ms2 / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),fiqa,ms2
+fiqa / ms2 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),fiqa,ms2
+fiqa / ms1 / copeland,0.0014557083333333323,-0.0005147166666666684,0.004236249999999999,Copeland (repaired - unrepaired),fiqa,ms1
+fiqa / ms1 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),fiqa,ms1
+fiqa / ms1_drop_mutual / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),fiqa,ms1_drop_mutual
+fiqa / ms1_drop_mutual / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),fiqa,ms1_drop_mutual
+scidocs / ms2 / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),scidocs,ms2
+scidocs / ms2 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),scidocs,ms2
+scidocs / ms1 / copeland,-0.0001266000000000003,-0.0008435833333333341,0.0005953333333333319,Copeland (repaired - unrepaired),scidocs,ms1
+scidocs / ms1 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),scidocs,ms1
+scidocs / ms1_drop_mutual / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),scidocs,ms1_drop_mutual
+scidocs / ms1_drop_mutual / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),scidocs,ms1_drop_mutual
+bright / ms2 / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),bright,ms2
+bright / ms2 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),bright,ms2
+bright / ms1 / copeland,2.1920000000001938e-05,-0.0018147599999999997,0.001646000000000003,Copeland (repaired - unrepaired),bright,ms1
+bright / ms1 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),bright,ms1
+bright / ms1_drop_mutual / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),bright,ms1_drop_mutual
+bright / ms1_drop_mutual / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),bright,ms1_drop_mutual
+hotpotqa / ms2 / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),hotpotqa,ms2
+hotpotqa / ms2 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),hotpotqa,ms2
+hotpotqa / ms1 / copeland,0.016712884615384616,0.0,0.04052326923076924,Copeland (repaired - unrepaired),hotpotqa,ms1
+hotpotqa / ms1 / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),hotpotqa,ms1
+hotpotqa / ms1_drop_mutual / copeland,0.0,0.0,0.0,Copeland (repaired - unrepaired),hotpotqa,ms1_drop_mutual
+hotpotqa / ms1_drop_mutual / balance,0.0,0.0,0.0,Balance (repaired - unrepaired),hotpotqa,ms1_drop_mutual
