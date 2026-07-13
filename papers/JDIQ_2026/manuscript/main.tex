@@ -1,14 +1,5 @@
 \documentclass[manuscript,anonymous,review]{acmart}
-% Anonymous double-blind review submission mode, per JDIQ_GUIDELINE_SUMMARY.md Sec.4-5.
-% Do NOT alter margins, spacing, or font definitions in this file or via \geometry etc.
-% Upon acceptance: remove the "manuscript,anonymous,review" options and submit to ACM TAPS.
-\usepackage{array}
 \usepackage{amsmath}
-\usepackage{placeins}
-\usepackage{tabularx}
-% NOTE: amssymb is NOT loaded here -- acmart already loads it internally, and
-% an explicit \usepackage{amssymb} clashes on \Bbbk ("already defined").
-% Discovered and fixed during this pass's compile-and-fix step.
 
 \AtBeginDocument{%
   \providecommand\BibTeX{{\normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.25em T\kern-0.1667em\lower0.7ex\hbox{E}\kern-0.125emX}}}
@@ -47,10 +38,9 @@
 
 \keywords{preference graphs, data quality, structural inconsistency, rank aggregation,
   feedback arc set repair, retrieval evaluation, benchmark curation}
-% Keywords per MANUSCRIPT_OUTLINE.md front matter (Title page section).
 
-\title{When Does Repairing Preference-Graph Inconsistency Improve Retrieval Quality?
-  A Multi-Benchmark Data Quality Study}
+\title{Score Calibration Governs Preference-Graph Repair Outcomes in
+  Multi-Ranker Retrieval}
 
 \author{Anonymous Author(s)}
 \affiliation{%
@@ -60,35 +50,32 @@
 
 \begin{document}
 
-% ---------------------------------------------------------------------------
-% Abstract
-% ---------------------------------------------------------------------------
 \begin{abstract}
-Retrieval systems that combine multiple ranking signals often represent
-disagreement between them as a directed preference graph, where an edge
-records evidence that one document should rank above another. When signals
-disagree enough, this graph can contain cycles, so no single ordering can
-satisfy every recorded preference --- a structural data-quality defect in a
-derived artifact. A standard remedy repairs the graph by removing a
-minimum-weight set of cycle-inducing edges before extracting a final
-ranking. This paper asks whether that structural repair also improves the
-quality of the resulting ranking, measured by a standard graded-relevance
-retrieval metric. Across four public retrieval benchmarks and three
-vote-construction regimes, we find that vote construction, not repair, is
-the dominant driver of graph inconsistency, and that repair reliably
-improves graph-level consistency whenever inconsistency is present. This
-structural improvement, however, translates into a measurable
-ranking-quality gain in only one of twelve dataset-and-regime combinations
-tested, and even there the lower endpoint of the reported 95\% interval is
-exactly 0.0. Simple score-fusion baselines that never inspect graph
-structure remain competitive with, or better than, every graph-repair
-method evaluated. A rule-based failure-class analysis identifies why repair
-is usually inactive, often invisible at the evaluation cutoff, and
-occasionally harmful, offering practical guidance on when this intervention
-is worth applying. We therefore treat structural consistency and retrieval
-effectiveness as distinct quality dimensions that must be evaluated
-separately rather than assuming that improvement in one guarantees
-improvement in the other.
+Preference-graph repair is often motivated by the idea that removing cyclic
+inconsistency should improve downstream ranking quality, but that conclusion
+depends on how the graph is constructed. We revisit this question on
+SciDocs, FiQA, HotpotQA, and BRIGHT using the same stored BM25, TF-IDF, and
+MiniLM candidate scores, candidate pools, qrels, repair code, and
+evaluation pipeline as the original study while replacing its unstable
+raw-margin weighting with a calibrated canonical protocol: per-query,
+per-ranker min-max normalization followed by retention-matched vote and edge
+thresholds. The raw implementation proved severely scale dominated: when
+BM25 participated in an edge, its conditional mean weight share was
+approximately 0.988, versus approximately 0.512 under the calibrated
+primary protocol. Calibration materially changed retained votes, edge
+weights, cyclicity, removed edges, and several repaired-versus-unrepaired
+signs. Under the canonical protocol, repair still changes graph structure,
+but structural consistency and retrieval effectiveness remain distinct:
+repair can reduce graph inconsistency without producing a reliable
+improvement in ranked retrieval. No repaired-versus-unrepaired improvement
+remains robust after permutation testing, bootstrap uncertainty, influence
+analysis, and multiplicity correction. Simple baselines such as reciprocal
+rank fusion and CombSUM also remain strong comparators under the calibrated
+graphs. The revised conclusion is therefore methodological as well as
+empirical: score calibration and vote construction jointly determine the
+preference graph on which repair operates, and claims about repair
+effectiveness must report those choices explicitly rather than treating graph
+construction as a neutral preprocessing step.
 \end{abstract}
 
 \maketitle
@@ -96,230 +83,183 @@ improvement in the other.
 % =============================================================================
 \section{Introduction}
 \label{sec:introduction}
-% Full first-draft prose below. See INTRODUCTION_EVIDENCE_MAP.md for a
-% sentence-by-sentence trace of every empirical claim to its canonical source,
-% and REVIEWER_CONCERN_COVERAGE.md for how this section answers each of the
-% ten prior-reviewer concerns.
 
-Modern retrieval pipelines rarely rely on a single ranking signal. It is
-increasingly common to combine sparse retrievers, dense retrievers,
-cross-encoders, and large language models operating in pointwise, pairwise, or
-listwise comparison modes, and to treat their outputs as evidence to be
-aggregated rather than as a final answer~\cite{liu2011learning,burges2005learning,sun-etal-2023-chatgpt,qin-etal-2024-large}.
-A natural way to combine such heterogeneous signals is to represent them as a
-weighted, query-specific preference graph: a directed edge from document $u$ to
-document $v$ records evidence that $u$ should be ranked ahead of $v$, and
-edge weight records the strength of that evidence~\cite{dwork2001rank,ailon2008aggregating,negahban2017rankcentrality}.
-This representation is attractive precisely because it keeps disagreement
-visible instead of collapsing it immediately into a single scalar score. But
-that same property is also its central liability from a data-quality
-standpoint: once preferences from multiple rankers are aggregated into a
-graph, the graph can contain directed cycles, meaning the aggregated evidence
-cannot be represented by any single, globally consistent ordering.
+Modern retrieval pipelines rarely rely on a single ranking signal. Sparse
+retrievers, dense retrievers, and other learned ranking components are often
+treated as separate sources of evidence whose outputs must be reconciled
+rather than trusted individually~\cite{liu2011learning,burges2005learning,dwork2001rank,ailon2008aggregating}.
+Preference graphs offer a natural way to preserve that disagreement: for a
+given query, a directed edge from document $u$ to document $v$ records
+evidence that $u$ should outrank $v$, and the edge weight determines how
+strongly that preference should influence the final ordering. This
+representation is appealing because it makes conflict explicit instead of
+collapsing it immediately into a single scalar score. But the graph is only
+as meaningful as the procedure used to construct it. If heterogeneous ranker
+scores are converted into edge weights without a defensible notion of
+comparability, then the resulting graph can reflect score scale as much as
+evidential quality.
 
-We treat this cyclicity as what it is: a structural data-quality defect in a
-\emph{derived} data artifact. The preference graph is not raw data collected
-from the world; it is manufactured by a specific aggregation procedure applied
-to upstream ranker scores, and its consistency properties are a direct
-consequence of that procedure. Viewed this way, a cyclic preference graph is
-analogous to other well-studied information-quality problems in derived
-data---contradictory records, non-integrable schemas, or inconsistent
-provenance chains---in that the defect is measurable, its severity depends on
-how the data was constructed, and it invites a natural remediation step.
-Feedback-arc-set (FAS) repair is exactly such a remediation step for preference
-graphs: it removes the minimum-weight set of edges needed to make the graph
-acyclic, producing a graph that is, by construction, more internally
-consistent~\cite{ailon2008aggregating,kenyon2007fewerrors}.
+That issue matters because preference-graph repair operates entirely on the
+constructed graph. Once weighted pairwise evidence is aggregated, the graph
+may contain directed cycles, so no single ranking can satisfy every recorded
+preference. A standard response is to repair the graph by removing a
+minimum-weight feedback arc set before extracting a final ranking~\cite{ailon2008aggregating,kenyon2007fewerrors}.
+This intervention improves structural consistency relative to the graph's own
+edge weights, but structural consistency and retrieval effectiveness are not
+the same objective. A repair step can remove cycle-inducing edges, reduce a
+graph-internal inconsistency measure, and still fail to improve a relevance
+metric such as normalized discounted cumulative gain (nDCG) if the modified
+edges do not alter the final ranking in a helpful way. For that reason, a
+study of preference-graph repair must examine not only the repair algorithm
+but also the graph-construction choices that determine what the repair sees.
 
-The unresolved question is whether this kind of structural repair is worth
-performing from the standpoint of the information a retrieval system ultimately
-delivers to a user. Structural consistency and downstream retrieval quality
-are related but conceptually distinct notions of ``quality.'' A repaired graph
-is more internally consistent by the metric that defines the repair, but
-consistency is not the same property that a ranked-retrieval metric such as
-normalized discounted cumulative gain (nDCG) measures. It is possible for a
-repair intervention to measurably improve
-graph-level consistency while leaving the final ranked list unchanged, or even
-making it worse, if the edges it removes happen to be uninformative or
-misleading with respect to the relevance judgments a retrieval system is
-ultimately evaluated against. Prior work on rank aggregation and feedback-arc-set
-methods has largely emphasized the algorithmic and structural side of this
-problem---how to find a good repair, and how to bound its
-approximation quality relative to a graph-internal objective~\cite{dwork2001rank,ailon2008aggregating,kenyon2007fewerrors,fagin2003comparing}---without
-systematically testing whether the resulting structural improvement transfers
-to the retrieval-quality outcome that end users experience. This leaves a gap:
-it is not enough to show that a repair procedure exists and reduces a
-structural inconsistency score; a data-quality account of preference-graph
-repair also has to characterize when, and how reliably, that structural
-improvement translates into better ranked output, and to say plainly when it
-does not.
+This paper studies that upstream dependency directly. Rather than asking for
+a predictive answer to ``when repair helps,'' we examine how score
+calibration and vote construction govern the preference graph on which repair
+operates, and how those choices affect both structural outcomes and
+downstream retrieval behavior. We revisit the same four-benchmark setting as
+the original study---SciDocs, FiQA, HotpotQA, and BRIGHT with stored BM25,
+TF-IDF, and MiniLM score files~\cite{cohan2020scidocs,maia2018fiqa,yang2018hotpotqa,su2024bright}---but
+replace its unstable raw-margin weighting with a calibrated canonical
+protocol: per-query, per-ranker min-max normalization followed by
+retention-matched thresholding. The motivation for this change is empirical,
+not cosmetic. In the historical raw implementation, BM25 contributed nearly
+all aggregate edge weight whenever it participated, so the graph was largely
+BM25-weighted even when three rankers were nominally present. Treating such
+raw heterogeneous margins as directly comparable support signals is not a
+neutral preprocessing choice; it is a substantive graph-construction
+assumption that shapes every downstream result.
 
-This paper closes that gap empirically. We study preference-graph
-inconsistency as a measurable data-quality dimension and evaluate feedback-arc-set
-repair as a candidate data-quality improvement technique, across four public
-retrieval benchmarks (SciDocs, FiQA, HotpotQA, and BRIGHT) and three
-vote-extraction regimes that construct preference graphs from the same
-underlying ranker scores under different retention rules for directional
-evidence~\cite{cohan2020scidocs,maia2018fiqa,yang2018hotpotqa,su2024bright}. This
-design lets us separate three choices that are often bundled together in
-reranking pipelines but that have distinct consequences: how permissively
-pairwise votes are retained during graph construction, whether the resulting
-graph is repaired before scoring, and which graph-scoring rule is used to turn
-the (repaired or unrepaired) graph into a ranking. Because vote-extraction
-regime alone determines whether a graph has any cyclic structure for repair to
-act on, we report every structural and retrieval outcome broken out by regime
-rather than pooled, so that a null result in a near-acyclic regime is not
-mistaken for a failure of the repair procedure itself.
+Once graph construction is treated as a first-class variable, several parts
+of the original narrative change. Calibration materially alters retained
+votes, edge weights, cyclicity, removed edges, and some repaired-versus-unrepaired
+signs. It also sharpens the distinction between total cyclicity and the
+smaller amount of nontrivial cyclicity that remains after direct mutual pairs
+are deleted. Repair therefore remains structurally active under the
+calibrated graphs, but its retrieval effects are method-dependent and
+calibration-sensitive rather than stable properties of ``repair'' in the
+abstract. The central empirical result of the revised study is not that one
+dataset provides a robust positive exception, nor that repair has a
+calibration-independent null effect. It is that graph-construction choices
+substantially determine both the structure being repaired and the retrieval
+conclusions drawn from that repair.
 
-Two results follow from this design. First, vote-extraction regime, not the
-repair step, is the dominant driver of preference-graph inconsistency: a
-conservative, majority-style regime keeps graphs almost entirely acyclic on
-every dataset we test, while a permissive regime that retains every
-ranker-supported directional vote produces substantially cyclic graphs with
-much larger strongly connected components. Second, and centrally, we find
-that structural improvement from repair and downstream retrieval improvement
-are decoupled in the large majority of the conditions we test. When the
-underlying graph is already near-acyclic, repair is retrieval-inactive by
-construction, because there is negligible conflicting edge weight for it to
-remove. Even in the one regime where graphs are substantially cyclic, the
-retrieval effect of repair is heterogeneous across datasets and, in three of
-four cases, remains compatible with no change once bootstrap uncertainty is
-taken into account. The remaining cell, HotpotQA under \texttt{ms1}, has a
-positive mean with interval $[0, 0.0405]$; because the lower endpoint is
-exactly zero and the cell is based on 52 queries, we treat it as bounded and
-dataset-specific rather than as confirmatory evidence of a general gain. We
-treat these null and mixed outcomes as part of the
-contribution, not as a shortfall to be explained away: identifying the
-conditions under which a data-quality intervention does \emph{not} transfer to
-task-level utility is itself the actionable finding a practitioner needs
-before deciding whether to invest in graph repair for a given pipeline.
+This framing changes how the paper's contributions should be understood. We
+do not present feedback-arc-set repair as a generally superior reranking
+strategy, and we do not interpret raw-margin results as canonical evidence.
+Instead, the paper contributes a calibrated evaluation protocol for
+multi-ranker preference graphs, a structural analysis that separates mutual
+pairs from longer-cycle behavior, a four-dataset reassessment of repaired
+versus unrepaired retrieval effects under paired statistical testing and
+robustness checks, and a raw-versus-calibrated ablation showing that some
+historical signs are not stable under defensible graph reconstruction. These
+contributions support a more limited but more defensible conclusion:
+preference-graph repair outcomes are not calibration-invariant, and
+structural consistency should not be assumed to translate into retrieval
+improvement without direct evaluation.
 
-We are equally careful about scope. The main evidence base uses mechanical
-BM25/TF-IDF/MiniLM score files, and we supplement it with bounded real-LLM
-checks rather than presenting those API-based runs as equal-scale replication.
-The greedy repair heuristic used in the main experiments is compared against an
-exact-for-small-components variant that solves small strongly connected
-components exactly under the stated FAS objective and falls back to greedy on
-larger ones; stronger optimization of that structural objective does not change
-the retrieval conclusion. We do not restrict the comparison to the
-repaired-versus-unrepaired pair alone; we additionally evaluate repaired
-hybrids against simple fixed baselines such as reciprocal rank fusion (RRF)
-and CombSUM, and we examine whether fusion can suppress a graph-level change
-before it reaches the final ranking. Finally, where a graph-based diagnostic
-such as backward-edge weight is computed against the same relevance judgments
-used for retrieval evaluation, we flag that dependence explicitly rather than
-presenting it as independent corroboration.
-
-Framed this way, the contribution of this paper is diagnostic and curatorial
-rather than algorithmic. We do not propose a new ranking algorithm, and we do
-not claim that feedback-arc-set repair is a generally superior reranking
-strategy; the evidence does not support that claim.
-Instead, we contribute: (1) a systematic, regime-stratified measurement of
-preference-graph structural inconsistency across four benchmarks and 1{,}006
-query$\times$regime evaluation records (Table~\ref{tab:dataset-stats}); (2) a
-bootstrap-quantified account of when feedback-arc-set repair does and does
-not change downstream retrieval
-quality, including the single cell with a positive mean and lower interval
-endpoint at 0.0; (3) a six-class rule-based failure taxonomy that explains
-\emph{why} repair is retrieval-inactive,
-neutral, or harmful in specific, interpretable terms, rather than reporting
-only aggregate null results; (4) a pooled comparison showing that simple,
-fixed aggregation baselines are competitive with or superior to repaired
-graph-hybrid rankings, which bears directly on whether structural repair is a
-good investment relative to simpler alternatives. Together, these
-contributions position preference-graph consistency as a data-quality problem
-to be measured and diagnosed on its own terms, with retrieval effectiveness
-treated as a separate, empirically evaluated outcome rather than an assumed
-consequence of structural repair.
-
-The remainder of the paper is organized as follows. Section~2 (Background and
-Related Work)
-positions this study relative to data-quality frameworks, rank aggregation and
-preference modeling, and rank fusion. Section~3 (Methodology) formalizes
-preference graphs, the structural data-quality metrics we measure, the
-feedback-arc-set repair operator, and the ranking-extraction rules applied
-before and after repair. Section~4 (Experimental Setup) describes the
-four-dataset protocol, vote-extraction regimes, baselines, and evaluation
-methodology, including the bootstrap procedure used throughout. Sections~5--7
-report structural results, the repaired-versus-unrepaired retrieval comparison
-with bootstrap confidence intervals, and the failure taxonomy, respectively.
-Section~8 reports the bounded real-LLM validation, and Section~9 summarizes
-runtime and memory implications. Section~10 introduces the CARB benchmark.
-Section~11 discusses the findings, Section~12 states limitations, and
-Section~13 concludes; a final section states data and reproducibility
-availability.
+The remainder of the paper is organized as follows. Section~2 positions the
+study relative to data-quality frameworks, rank aggregation, and rank fusion.
+Section~3 formalizes preference graphs, calibrated vote construction,
+structural metrics, and feedback-arc-set repair. Section~4 describes the
+four-dataset protocol, vote-extraction regimes, baselines, and statistical
+evaluation policy. The results sections then report calibrated structural
+behavior, repaired-versus-unrepaired retrieval effects, raw-versus-calibrated
+ablations, and the implications of those findings for baseline comparison and
+practical use. The final sections discuss limitations, reproducibility, and
+the broader lesson that graph-construction choices must be reported
+explicitly in any empirical claim about preference-graph repair.
 
 % =============================================================================
 \section{Background and Related Work}
 \label{sec:background}
 
-Data-quality research distinguishes intrinsic properties of a data artifact
-from contextual, fitness-for-use assessments of whether that artifact supports
-its downstream task~\cite{wang1996beyond,madnick2009overview}. We adopt that
-distinction here. A preference graph is not raw observational data; it is a
-derived artifact produced by aggregating upstream ranking signals. We therefore
-treat cyclicity and related graph properties as structural data-quality
-attributes of that derived representation, while treating retrieval
-effectiveness as a separate task-level outcome that must be measured rather
-than assumed.
+Preference-graph methods sit at the intersection of several literatures:
+rank aggregation, noisy pairwise-comparison ranking, retrieval fusion, and
+data quality for derived analytical artifacts. The revised goal of this paper
+is narrower than a new ranking-method contribution. We do not introduce a new
+feedback-arc-set solver, a new retrieval ranker, or a new fusion rule.
+Instead, we study how heterogeneous ranker scores are converted into weighted
+preference graphs and how those graph-construction choices govern the measured
+effect of repair on both structural consistency and downstream retrieval.
 
-Preference graphs and pairwise-comparison ranking are standard in rank
-aggregation~\cite{dwork2001rank,ailon2008aggregating,negahban2017rankcentrality}.
-Directed cycles indicate that no single total order can satisfy every retained
-pairwise preference simultaneously, and feedback-arc-set (FAS) formulations
-provide a classical way to restore acyclicity by removing a minimum-weight set
-of edges~\cite{ailon2008aggregating,kenyon2007fewerrors}. Related lines of work
-study probabilistic ranking from pairwise outcomes, such as Rank
-Centrality~\cite{negahban2017rankcentrality}, and inconsistency decomposition,
-such as HodgeRank, which uses cyclic components of pairwise data as a
-diagnostic signal~\cite{jiang2011hodge}. Our use of cyclicity is closer to this
-diagnostic tradition than to an optimization paper proposing a new ranker: the
-question here is not whether a graph can be made more internally consistent,
-but whether such structural cleanup propagates to better retrieval.
+\textbf{Rank aggregation and preference graphs.} Preference graphs are a
+standard representation for aggregating pairwise evidence across voters,
+rankers, or judges~\cite{dwork2001rank,ailon2008aggregating,negahban2017rankcentrality}.
+For a query-specific candidate set, a directed edge $u \rightarrow v$ records
+support for ranking document $u$ ahead of document $v$, while the edge weight
+records the strength of that support. This representation is useful because it
+preserves disagreement as explicit graph structure instead of collapsing it
+immediately into a single fused score.
 
-This distinction also separates the present study from work on rank fusion and
-LLM reranking. Rank fusion methods such as CombSUM and reciprocal rank
-fusion~\cite{fox1994combination,cormack2009rrf} collapse multiple signals
-directly into a final score without reasoning over graph structure; they are
-therefore strong and practically important baselines for any graph-repair
-pipeline. Recent LLM reranking work uses pointwise, pairwise, and listwise
-prompting to obtain relevance preferences or direct reorderings from language
-models~\cite{sun-etal-2023-chatgpt,qin-etal-2024-large}. Our bounded real-LLM
-experiments use such judgments only as alternate preference sources to test the
-scope of the main finding; we do not propose a new LLM reranker, nor do we
-pool those smaller API-based runs with the main mechanical-vote evaluation.
+\textbf{Feedback arc set repair and Kemeny-style consistency.} Once a
+preference graph contains a directed cycle, no total ranking can satisfy every
+recorded preference simultaneously. Classical rank-aggregation work connects
+this problem to minimum weighted feedback arc set (MWFAS) and Kemeny-style
+objectives: remove or violate as little edge weight as possible to obtain an
+acyclic ordering~\cite{dwork2001rank,ailon2008aggregating,kenyon2007fewerrors,fagin2003comparing}.
+That optimization target is purely graph-internal. It formalizes
+\emph{structural} consistency, not relevance to external retrieval judgments.
+This distinction is central here: a better solution to the graph's own repair
+objective need not improve a metric such as nDCG.
 
-The paper's main departure from prior rank-aggregation, reranking, and
-inconsistency-modeling work is therefore evaluative. Prior studies typically
-optimize a ranking objective, improve a graph-internal consistency criterion,
-or show that a fusion rule works well as a ranker. We instead ask a narrower
-data-quality question: when a derived preference graph is structurally repaired
-under its own objective, does that intervention improve the retrieval metric of
-interest? Because the repair objective does not directly optimize nDCG, no
-monotonic relationship is guaranteed. The rest of the paper keeps these two
-quality dimensions separate on purpose.
+\textbf{Probabilistic ranking from noisy pairwise preferences.} Related
+probabilistic formulations, such as Rank Centrality, model pairwise outcomes as
+noisy evidence about a latent ordering and derive node scores from the induced
+comparison graph~\cite{negahban2017rankcentrality}. Those methods are useful in
+this paper as graph-dependent baselines, but they share the same upstream
+dependence as feedback-arc-set repair: the statistical object they consume is
+the constructed graph, so changing vote extraction or edge weighting can alter
+their behavior even when the upstream retrieval runs are unchanged.
+
+\textbf{Rank fusion in information retrieval.} Information-retrieval systems
+already combine heterogeneous signals through score or rank fusion, including
+reciprocal rank fusion (RRF), CombSUM, and Borda-style methods~\cite{cormack2009rrf,fox1994combination,dwork2001rank}.
+These baselines matter here for two reasons. First, they provide graph-free
+comparators against which repaired and unrepaired graph methods must be judged.
+Second, they make explicit a design choice that preference-graph work can hide:
+when heterogeneous retrieval scores are merged, some form of scale handling or
+an explicit decision to ignore cross-model score comparability becomes part of
+the method before score magnitudes are interpreted jointly.
+
+\textbf{Score calibration for heterogeneous retrieval signals.} BM25, TF-IDF,
+and neural similarity models operate on different native score scales. A raw
+difference of $0.05$ has no reason to represent comparable evidential strength
+across those models. The methodological issue studied in this paper is
+therefore not whether preference graphs are useful in principle, but whether
+weighted graph construction is stable when native heterogeneous score margins
+are treated as if they were directly comparable. Our calibrated protocol makes
+that assumption explicit and testable rather than leaving it implicit in the
+edge weights.
+
+\textbf{LLM pairwise ranking and inconsistency.} Recent work has used large
+language models as retrieval judges, rerankers, and pairwise preference
+sources~\cite{sun-etal-2023-chatgpt,qin-etal-2024-large}. That line of work
+makes inconsistency salient, but it does not remove the measurement problem
+studied here. Whether the pairwise evidence comes from classical rankers or
+from LLM judgments, downstream claims about ``repair'' still depend on how
+pairwise evidence is filtered, weighted, and aggregated into a graph.
+
+\textbf{Derived-artifact data quality.} We treat the preference graph itself as
+a derived data artifact whose properties can be audited. Cyclicity, strongly
+connected components, mutual contradictions, and removed feedback-arc weight
+are intrinsic properties of the graph produced by a construction pipeline,
+whereas retrieval metrics such as nDCG are extrinsic properties of rankings
+evaluated against qrels. The novelty of this paper lies in separating those
+two measurement families and showing that conclusions about repair are not
+calibration-invariant. In this sense, the paper is a study of graph
+construction and measurement sensitivity, not a claim that a particular repair
+heuristic solves retrieval reranking.
 
 % =============================================================================
 \section{Methodology}
 \label{sec:methodology}
-% Written from scratch and verified line-by-line against the implementation in
-% src/consistency_ranker/{pairwise_prefs,graph_construction,greedy_fas,
-% exact_fas,mwfas_solver,evaluation}.py and scripts/{build_votes_file,
-% postprocess_votes_drop_mutual_pairs,run_real_experiment,
-% run_publication_vote_suite}.py during this pass. Formulas below match the
-% code, not the IJCS manuscript's equations, wherever the two differ (see
-% inline notes).
 
-This section defines the preference-graph construction procedure, the
-structural data-quality metrics computed on it, the feedback-arc-set repair
-operator, and the ranking-extraction rules applied to a graph before and
-after repair. We keep these four stages notationally and conceptually
-distinct throughout, because conflating them is a recurring source of
-ambiguity in prior discussions of ``graph repair for reranking'': repair
-changes which edges a graph contains; extraction turns a (fixed) set of edges
-into a ranking. The same extraction rule is applied to both the unrepaired
-and the repaired graph, so any difference in the resulting ranking is
-attributable to repair and not to a change in the extraction rule itself.
+This section defines the calibrated preference-graph pipeline used in the
+canonical evidence package. The order matters. Upstream score scale affects
+pairwise margins; pairwise margins affect retained votes; retained votes
+determine weighted graph edges; graph structure determines what repair sees;
+and repair influences ranking extraction only through the modified graph.
 Table~\ref{tab:notation} summarizes notation used in this section and
 Section~\ref{sec:experimental-setup}.
 
@@ -332,13 +272,23 @@ Section~\ref{sec:experimental-setup}.
     Symbol & Meaning \\
     \midrule
     $q$, $D_q$ & Query and its candidate document set \\
+    $s$ & Upstream ranker in $\{\mathrm{BM25},\mathrm{TF\mbox{-}IDF},\mathrm{MiniLM}\}$ \\
+    $x_{q,s}(d)$ & Native score assigned by ranker $s$ to document $d$ for query $q$ \\
+    $\bar{x}_{q,s}(d)$ & Calibrated per-query, per-ranker score \\
+    $m_{q,s}(u,v)$ & Absolute pairwise margin for pair $\{u,v\}$ under ranker $s$ \\
     $G_q=(V_q,E_q,w_q)$ & Preference graph for query $q$ ($V_q = D_q$) \\
     $\widetilde G_q$ & Repaired (acyclic) preference graph \\
     $u \succ v$ & Pairwise preference: $u$ ranked ahead of $v$ \\
     $r$ & Vote-extraction regime, $r\in\{\texttt{ms2},\texttt{ms1},\texttt{ms1\_drop\_mutual}\}$ \\
-    $F$ & A feedback arc set (edge subset removed by repair) \\
+    $\kappa_r$ & Regime-specific minimum support threshold \\
+    $\lambda_s$ & Per-ranker vote-retention threshold within one dataset/protocol/regime cell \\
+    $\gamma_r$ & Aggregate edge-retention threshold within one dataset/protocol/regime cell \\
+    $c_q(u,v)$ & Support count for direction $u \rightarrow v$ \\
+    $a_q(u,v)$ & Aggregate retained weight for direction $u \rightarrow v$ \\
+    $F_{\mathrm{opt}}$ & Exact minimum-weight feedback arc set (optimization target) \\
+    $F_{\mathrm{greedy}}$ & Greedy removed-edge set computed in the experiments \\
     $\deg^+(u),\deg^-(u)$ & Out-degree, in-degree of node $u$ in a graph \\
-    $s_{\mathrm{cop}}, s_{\mathrm{bal}}$ & Copeland score, weighted balance score \\
+    $s_{\mathrm{cop}}, s_{\mathrm{bal}}, s_{\mathrm{mc}}$ & Copeland, weighted balance, and Markov graph scores \\
     $\hat{s}(\cdot)$ & Min--max normalization of a score vector to $[0,1]$ \\
     $\alpha$ & Hybrid mixing weight for the graph-derived component \\
     $\pi$ & A ranking (permutation) of $V_q$ \\
@@ -349,149 +299,259 @@ Section~\ref{sec:experimental-setup}.
   \end{tabular}
 \end{table}
 
-\begin{figure}[tbp]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=0.98\linewidth]{../../../figures/manuscript/fig_pipeline.pdf}
+  \fbox{\parbox{0.94\linewidth}{\small\centering
+    \textbf{Stored ranker scores}
+    $\rightarrow$
+    \textbf{Per-query, per-ranker calibration}
+    $\rightarrow$
+    \textbf{Pairwise vote extraction and thresholding}\\[3pt]
+    $\rightarrow$
+    \textbf{Preference graph under regime $r$}
+    $\rightarrow$
+    \textbf{Mutual-pair, SCC, and FAS diagnostics}
+    $\rightarrow$
+    \textbf{Optional greedy repair}\\[3pt]
+    $\rightarrow$
+    \textbf{Ranking extraction and hybrid fusion}
+    $\rightarrow$
+    \textbf{nDCG evaluation and paired statistical analysis}\\[4pt]
+    \emph{Raw-margin ablation: identical downstream pipeline, but without
+    cross-ranker calibration and with fixed thresholds.}}}
   \caption{Preference-graph data-quality evaluation pipeline: upstream ranker
-    scores $\to$ vote extraction under a regime $r$ $\to$ preference graph
-    $G_q$ $\to$ structural metrics $\to$ optional FAS repair producing
-    $\widetilde G_q$ $\to$ ranking extraction (Copeland / balance / hybrid) on
-    either $G_q$ or $\widetilde G_q$ $\to$ nDCG evaluation.}
-  \Description{Left-to-right pipeline diagram showing upstream ranker scores,
-    vote extraction under a regime, a preference graph with a small directed
-    cycle, optional feedback-arc-set repair on the graph-dependent path,
-    structural metrics computed from the graph, ranking extraction, and final
-    nDCG evaluation. A dashed unrepaired path bypasses the repair step.}
+    scores $\to$ per-query/per-ranker calibration $\to$ pairwise vote
+    extraction under a regime $r$ $\to$ preference graph $G_q$ $\to$
+    structural diagnostics $\to$ optional repair producing
+    $\widetilde G_q$ $\to$ ranking extraction on either $G_q$ or
+    $\widetilde G_q$ $\to$ nDCG evaluation. The raw-margin ablation uses the
+    same downstream pipeline but omits cross-ranker calibration and keeps the
+    historical fixed thresholds.}
+  \Description{A boxed left-to-right pipeline schematic showing stored ranker
+    scores, per-query per-ranker calibration, pairwise vote extraction and
+    thresholding, preference-graph construction under a vote regime, mutual-pair
+    and SCC diagnostics, optional greedy repair, ranking extraction and hybrid
+    fusion, and final nDCG evaluation with paired statistical analysis. A note
+    states that the raw-margin ablation uses the same downstream pipeline
+    without cross-ranker calibration and with fixed thresholds.}
   \label{fig:pipeline}
 \end{figure}
 
-\subsection{Vote Extraction and Graph Construction}
+\subsection{Upstream Scores and Candidate Pool}
+
+The canonical pipeline starts from stored score files for three upstream
+rankers: BM25, TF-IDF, and MiniLM. For each query $q$, we first define a
+shared candidate pool $D_q$ from the union of documents scored by at least one
+ranker. If that union already has size at most the dataset-specific pool size,
+we keep all documents. Otherwise we rank the union by reciprocal rank fusion
+with parameter $k=60$ over the full per-ranker native ranked lists and keep
+the top-$|D_q|$ candidates. Candidate pooling therefore uses an RRF-family
+computation, but it is distinct from both the Prior ranking and the reported
+RRF baseline because it is applied before graph construction and before
+candidate restriction.
+
+\subsection{Per-Query, Per-Ranker Score Calibration}
+
+The primary protocol does not treat native BM25, TF-IDF, and MiniLM margins as
+directly comparable edge-weight contributions. For each query $q$ and ranker
+$s$, let $D_{q,s} \subseteq D_q$ be the candidate documents for which ranker
+$s$ supplies a score. We define the calibrated score
+\begin{equation}
+  \bar{x}_{q,s}(d) =
+  \begin{cases}
+    0, & \max_{d' \in D_{q,s}} x_{q,s}(d') - \min_{d' \in D_{q,s}} x_{q,s}(d') \le 10^{-12}, \\[4pt]
+    \dfrac{x_{q,s}(d) - \min_{d' \in D_{q,s}} x_{q,s}(d')}
+    {\max_{d' \in D_{q,s}} x_{q,s}(d') - \min_{d' \in D_{q,s}} x_{q,s}(d')},
+    & \text{otherwise.}
+  \end{cases}
+  \label{eq:minmax-calibration}
+\end{equation}
+This transformation is applied separately for each query and ranker after
+candidate restriction. Missing documents remain missing: if a ranker did not
+score document $d$, no calibrated score is imputed for that document. If a
+ranker's candidate-restricted score vector is constant, every calibrated score
+is set to $0$ and that ranker contributes no nonzero within-query margin.
+
+Calibration is necessary because the edge weights in a multi-ranker preference
+graph inherit whatever comparability assumptions are imposed on the upstream
+scores. We therefore treat the historical raw-margin construction only as an
+ablation and use Eq.~\eqref{eq:minmax-calibration} as the canonical
+graph-construction input.
+
+\subsection{Pairwise Vote Extraction and Graph Construction}
 \label{sec:vote-extraction}
 
-Graph construction begins from per-ranker document scores, not from
-pairwise judgments collected directly. For each query $q$ and each
-constituent ranker $s$, and for every unordered candidate pair $\{u,v\}
-\subset D_q$, ranker $s$ casts a directional \emph{vote} for whichever of
-$u,v$ it scores higher, with vote weight equal to the ranker's own score
-margin $|score_s(u) - score_s(v)|$; a ranker abstains from a pair if either
-document is missing from its score list, or if its margin on that pair falls
-below a fixed per-vote threshold. Votes are then aggregated per unordered
-pair and per direction: for a candidate direction $(u,v)$, let
-$\mathrm{support}(u,v)$ be the number of rankers voting for that direction and
-$\mathrm{margin\_sum}(u,v)$ the sum of their margins. A directed edge
-$(u,v)$ is retained in $E_q$, with weight $w_q(u,v)=\mathrm{margin\_sum}(u,v)$,
-only if
+For each query $q$, ranker $s$, and unordered candidate pair $\{u,v\}
+\subseteq D_q$, the primary protocol compares calibrated scores only if both
+documents are present in $D_{q,s}$. If either document is missing, ranker $s$
+abstains on that pair. If $\bar{x}_{q,s}(u) = \bar{x}_{q,s}(v)$, ranker $s$
+also abstains. Otherwise the absolute pairwise margin is
 \begin{equation}
-  \mathrm{support}(u,v) \;\ge\; \tau_{\mathrm{sup}}
-  \quad\text{and}\quad
-  \mathrm{margin\_sum}(u,v) \;\ge\; \tau_{\mathrm{marg}},
+  m_{q,s}(u,v) = \left| \bar{x}_{q,s}(u) - \bar{x}_{q,s}(v) \right|.
+  \label{eq:pair-margin}
+\end{equation}
+Ranker $s$ casts a directional vote only when $m_{q,s}(u,v) \ge \lambda_s$,
+where $\lambda_s$ is the per-ranker vote-retention threshold for the current
+dataset, protocol, and regime. The direction is given by the larger calibrated
+score. For a candidate direction $u \rightarrow v$, let
+\begin{equation}
+  c_q(u,v) = \sum_{s} \mathbf{1}\!\left[s \text{ retains } u \rightarrow v\right]
+  \label{eq:support-count}
+\end{equation}
+be the support count and
+\begin{equation}
+  a_q(u,v) = \sum_{s} m_{q,s}(u,v)\,
+  \mathbf{1}\!\left[s \text{ retains } u \rightarrow v\right]
+  \label{eq:aggregate-weight}
+\end{equation}
+be the aggregate directional weight. A direction is retained only if
+\begin{equation}
+  \begin{aligned}
+    c_q(u,v) &\ge \kappa_r, \\
+    a_q(u,v) &\ge \gamma_r,
+  \end{aligned}
   \label{eq:retention-rule}
 \end{equation}
-where the thresholds $\tau_{\mathrm{sup}}$ (minimum support) and
-$\tau_{\mathrm{marg}}$ (minimum aggregate margin) are fixed per
-vote-extraction regime $r$ (Section~\ref{sec:regimes}). Because both
-directions of an unordered pair are evaluated independently under
-Eq.~\eqref{eq:retention-rule}, a pair can retain edges in \emph{both}
-directions when rankers disagree and each direction separately clears the
-threshold; this is the mechanism by which cycles enter $G_q$. Candidate
-documents are pooled across rankers by reciprocal rank
-fusion~\cite{cormack2009rrf} before vote extraction, so $D_q$ is a shared set
-regardless of which individual rankers surface which documents.
+where $\kappa_r$ is the regime-specific minimum support and $\gamma_r$ is the
+aggregate threshold for the current dataset/protocol/regime cell. The graph
+builder then sums all retained per-ranker contributions for the same directed
+pair, so the final edge weight is $w_q(u,v)=a_q(u,v)$ whenever
+Eq.~\eqref{eq:retention-rule} is satisfied. Because each direction is tested
+independently, a single unordered pair can retain both $u \rightarrow v$ and
+$v \rightarrow u$.
 
 \subsection{Vote-Extraction Regimes}
 \label{sec:regimes}
 
-We construct three graphs per query from the same underlying ranker scores,
-differing only in $(\tau_{\mathrm{sup}}, \tau_{\mathrm{marg}})$ and one
-post-processing step, which we refer to as \emph{regimes}:
+We evaluate three vote-extraction regimes over the same stored score files and
+candidate pools:
 
 \begin{itemize}
-  \item \textbf{\texttt{ms2}} (conservative): $\tau_{\mathrm{sup}}=2$,
-    $\tau_{\mathrm{marg}}=0.1$. A direction is retained only with majority
-    ranker support and a non-trivial aggregate margin, which suppresses most
-    single-ranker disagreements.
-  \item \textbf{\texttt{ms1}} (permissive): $\tau_{\mathrm{sup}}=1$,
-    $\tau_{\mathrm{marg}}=0.0$. Every ranker-supported direction is retained,
-    so both directions of a pair can coexist whenever rankers disagree.
-  \item \textbf{\texttt{ms1\_drop\_mutual}}: built from the \texttt{ms1}
-    output by deleting \emph{all} edges for any unordered pair that retained
-    both directions, treating mutual disagreement as unresolved rather than
-    keeping either arc.
+  \item \textbf{\texttt{ms2}} requires support $\kappa_r=2$ and applies a
+    nontrivial aggregate threshold $\gamma_r$. Under the historical raw
+    ablation this threshold is $0.1$; under the primary protocol it is
+    retention-matched separately for each dataset.
+  \item \textbf{\texttt{ms1}} requires support $\kappa_r=1$ and uses the
+    dataset-specific aggregate threshold for that protocol/regime cell. It
+    preserves directional disagreement whenever both directions independently
+    survive thresholding.
+  \item \textbf{\texttt{ms1\_drop\_mutual}} uses the same support rule as
+    \texttt{ms1}, but after thresholding deletes every unordered pair that
+    retained both directions. It therefore treats direct bidirectional
+    contradiction as unresolved rather than retaining either arc.
 \end{itemize}
 
-These three regimes hold the upstream ranker scores fixed and vary only the
-rule by which disagreement becomes graph structure, which lets us attribute
-differences in graph cyclicity (Section~\ref{sec:structural-metrics}) to the
-extraction rule rather than to the underlying evidence.
+The interpretation of these regimes is important. Cyclicity under
+\texttt{ms1} does not automatically imply longer-cycle nontransitivity; it can
+arise from direct mutual contradictions alone. We therefore separate mutual
+pair diagnostics from residual cyclic structure after mutual-pair deletion.
 
-\subsection{Structural Data-Quality Metrics}
+\subsection{Retention-Matched Thresholds}
+
+Under the primary protocol, thresholds are not fixed globally at the raw
+values $0.05$ and $0.1$. Instead, for each dataset, regime, and calibration
+variant, we match retention behavior to the historical raw construction
+without using qrels. Let $\rho^{\mathrm{raw}}_{s,r}$ denote the raw retained
+vote rate for ranker $s$ in regime $r$, computed over the stored query subset
+with denominator equal to the number of candidate pairs for which both
+documents are scored by $s$ and the native scores are unequal. For a
+calibration variant, we pool all calibrated margins
+$m_{q,s}(u,v)$ across the dataset and set
+\begin{equation}
+  \lambda_s = Q_{1-\rho^{\mathrm{raw}}_{s,r}}
+  \left(\left\{m_{q,s}(u,v)\right\}\right),
+  \label{eq:vote-threshold-match}
+\end{equation}
+where $Q_p$ denotes the empirical quantile at level $p$. If a ranker has no
+eligible margins in that cell, we set $\lambda_s=0$.
+
+After vote-threshold matching, we choose the aggregate threshold $\gamma_r$
+deterministically to minimize the absolute gap between the retained edge count
+under the calibrated construction and the retained edge count under the raw
+reference construction for the same dataset and regime. The search is over the
+realized aggregate candidate weights in that cell; when multiple thresholds
+yield the same minimum gap, the smaller threshold is selected. Qrels are not
+used at any stage of this threshold selection procedure. This matching
+strategy keeps graph density and vote-retention behavior approximately
+comparable across calibration variants without tuning for nDCG.
+
+\subsection{Mutual Pairs and Nontrivial Cycles}
+
+We distinguish two kinds of cyclic structure. A \emph{mutual pair} is a direct
+contradiction in which both $u \rightarrow v$ and $v \rightarrow u$ are
+retained. A \emph{nontrivial cycle} is any directed cycle that remains after
+deleting all mutual-pair edges. The canonical results therefore report cyclic
+query percentage and largest strongly connected component (SCC) size both
+before and after mutual-pair deletion.
+
+\subsection{Structural Diagnostics}
 \label{sec:structural-metrics}
 
-We measure four structural properties of a preference graph $G_q$: whether
-it is acyclic (a binary indicator), the size of its largest strongly
-connected component (a graph with no cycles has all components of size 1),
-its edge count, and, for repair specifically, the total weight of edges a
-repair operation removes (Section~\ref{sec:repair}). We additionally define
-two metrics that relate a graph or ranking to an external reference ranking
-$\pi_{\mathrm{ref}}$ (in our experiments, a ranking derived from relevance
-judgments): the \textbf{backward-edge weight}
+We group structural measurements into intrinsic graph diagnostics and
+qrels-anchored diagnostics.
+
+\textbf{Intrinsic graph diagnostics.} For each query graph we record edge
+count, graph density $|E_q|/(|D_q|(|D_q|-1))$, mutual-pair count, the share of
+queries containing any mutual pair, cyclic-query indicators before and after
+mutual-pair deletion, largest SCC size before and after mutual-pair deletion,
+directed triangle counts, total graph weight
+$W_q=\sum_{(u,v)\in E_q} w_q(u,v)$, and normalized graph weight
+$W_q/\max(1,|E_q|)$. After repair we also record the number of removed edges,
+their total removed weight, and normalized removed weight
+$W_q^{\mathrm{rem}}/W_q$ when $W_q>0$ and $0$ otherwise.
+
+\textbf{Qrels-anchored diagnostics.} We additionally report two diagnostics
+that compare a graph to an external reference ranking $\pi_{\mathrm{ref}}$
+derived from relevance judgments: the \textbf{backward-edge weight}
 \begin{equation}
   \mathrm{BEW}(\pi_{\mathrm{ref}}, G) \;=\!\! \sum_{(u,v)\in E:\ \pi_{\mathrm{ref}}(v) < \pi_{\mathrm{ref}}(u)} \!\! w(u,v),
   \label{eq:bew}
 \end{equation}
-summing the weight of every edge $(u,v)$ (asserting $u\succ v$) that
-$\pi_{\mathrm{ref}}$ contradicts by ranking $v$ ahead of $u$, and the
-\textbf{pairwise inconsistency count}
+and the \textbf{pairwise inconsistency count}
 \begin{equation}
   \mathrm{PIC}(\pi_{\mathrm{ref}}, G) \;=\; \bigl|\{(u,v)\in E : \pi_{\mathrm{ref}}(v) < \pi_{\mathrm{ref}}(u)\}\bigr|,
   \label{eq:pic}
 \end{equation}
-the unweighted count of the same contradictions. BEW and PIC are
-graph-versus-reference diagnostics, not properties of a graph alone; when the
-reference ranking is derived from the same relevance judgments used to
-compute nDCG (Section~\ref{sec:retrieval-metrics}), this introduces a
-circularity that we flag explicitly rather than treat as an independent
-validation of structural repair (Section~\ref{sec:threats}, forward
-reference).
+the unweighted count of the same contradictions. These are not intrinsic graph
+properties and are not independent validation signals: they use the same qrels
+family as downstream retrieval evaluation. We therefore interpret them as
+reference-alignment diagnostics rather than as separate evidence of retrieval
+quality.
 
 \subsection{Graph Repair}
 \label{sec:repair}
 
-Repair is a single, well-defined operation on a graph: given $G_q$, find a
-feedback arc set $F\subseteq E_q$ minimizing removed weight subject to
-acyclicity of the remainder,
+The weighted feedback arc set optimization problem for graph $G_q$ is
 \begin{equation}
-  F^\star \;=\; \operatorname*{arg\,min}_{F \subseteq E_q \,:\ (V_q,\, E_q\setminus F)\ \text{acyclic}} \ \sum_{(u,v)\in F} w_q(u,v),
+  F_{\mathrm{opt}} \;=\; \operatorname*{arg\,min}_{F \subseteq E_q \,:\ (V_q,\, E_q\setminus F)\ \text{acyclic}} \ \sum_{(u,v)\in F} w_q(u,v),
   \label{eq:mwfas}
 \end{equation}
-and return $\widetilde G_q = (V_q, E_q\setminus F^\star, w_q)$. If $G_q$ is
-already acyclic, $F^\star=\emptyset$ and $\widetilde G_q = G_q$. Solving
-Eq.~\eqref{eq:mwfas} exactly is NP-hard in
-general~\cite{ailon2008aggregating}; our main experiments use a greedy
-heuristic with no approximation guarantee, not an exact solver: repeatedly
-locate any directed cycle, remove its minimum-weight edge, and continue until
-no cycle remains. This is a simple cycle-peeling procedure, not a claim of
-optimality, and we compare it against stronger repair variants in
-Section~\ref{sec:experimental-setup} to test whether the specific choice of
-heuristic changes our conclusions. We report the total weight
-$\sum_{(u,v)\in F^\star} w_q(u,v)$ removed by repair as a direct measure of
-how much repair had to do on a given graph; when this quantity is zero,
-repair is structurally inactive and $\widetilde G_q = G_q$ by construction.
+with repaired graph $\widetilde G_q = (V_q, E_q \setminus F, w_q)$ when a set
+$F$ is removed. In the canonical experiments we do \emph{not} solve
+Eq.~\eqref{eq:mwfas} exactly. Instead, we compute a greedy removal set
+$F_{\mathrm{greedy}}$ by repeatedly finding a directed cycle in the current
+graph, removing the minimum-weight edge from that discovered cycle, and
+continuing until no cycle remains. The implementation uses
+\texttt{networkx.find\_cycle} to identify a cycle at each step.
 
-Repair is defined purely in terms of $w_q$ and does not reference any
-external relevance signal. This is the structural fact underlying the
-Background section's argument (Section~\ref{sec:background}): nothing in
-Eq.~\eqref{eq:mwfas} constrains whether the edges it removes are relevant,
-irrelevant, or misleading with respect to a downstream retrieval metric.
+This procedure approximately minimizes removed edge weight through greedy cycle
+peeling, but it has no approximation guarantee and its output can depend on
+cycle-discovery order. We therefore report removed weight and removed-edge
+overlap empirically, without labeling the computed solution as an exact
+minimum-weight feedback arc set. Repair remains a graph-internal operation: it
+depends only on $w_q$, not on qrels or nDCG.
 
 \subsection{Ranking Extraction}
 \label{sec:extraction}
 
-Ranking extraction is a separate operation that consumes a graph (either
-$G_q$ or $\widetilde G_q$) and produces a ranking $\pi$ of $V_q$; the same
-extraction rule is applied regardless of which graph it receives, so repair
-and extraction can be varied independently. We use two graph-derived
-component scores. The \textbf{Copeland score} is out-degree minus in-degree,
+Ranking extraction is applied separately to $G_q$ and $\widetilde G_q$. Graph
+construction and hybrid normalization must be kept distinct: the calibration
+in Eq.~\eqref{eq:minmax-calibration} is applied before graph construction,
+whereas the normalization in Eq.~\eqref{eq:hybrid} is applied only when
+combining graph-derived scores with a prior ranking.
+
+We evaluate three graph-derived ranking families. The \textbf{Copeland score}
+is out-degree minus in-degree,
 \begin{equation}
   s_{\mathrm{cop}}(u) \;=\; \deg^+(u) - \deg^-(u),
   \label{eq:copeland}
@@ -502,509 +562,430 @@ score} is the signed sum of incident edge weight,
   s_{\mathrm{bal}}(u) \;=\; \sum_{(u,v)\in E} w(u,v) \;-\; \sum_{(v,u)\in E} w(v,u).
   \label{eq:balance}
 \end{equation}
-Both scores are well-defined on a graph with cycles---neither requires
-acyclicity, since they are computed from local degree and weight sums rather
-than from a topological order. This is what makes it possible to compute
-$s_{\mathrm{cop}}$ and $s_{\mathrm{bal}}$ on the \emph{unrepaired} graph
-$G_q$ directly, without first forcing an arbitrary tie-break on its cycles.
+The \textbf{Markov score} $s_{\mathrm{mc}}$ is the stationary distribution of
+a Rank-Centrality-style Markov chain with damping $0.15$ on the weighted
+preference graph~\cite{negahban2017rankcentrality}. Final rankings sort by
+descending score with deterministic tie-breaking by document id when scores
+are equal; the Markov ranking additionally breaks ties by smaller weighted
+in-degree before document id.
 
-The primary ranking methods we evaluate are hybrids that combine one of
-these two component scores with a query's prior ranking, obtained by
-reciprocal rank fusion~\cite{cormack2009rrf} of the constituent rankers'
-score lists. Writing $\hat{s}(\cdot)$ for min--max normalization of a score
-vector to $[0,1]$ over the candidate set (so components on different native
-scales are comparable), the hybrid score is
+The Prior ranking is a candidate-restricted RRF score over the stored ranker
+lists with parameter $k=60$. The reported RRF baseline also uses $k=60$ on the
+candidate-restricted lists, but its tie-breaking is not identical to Prior.
+We therefore name those roles separately rather than treating Prior and RRF as
+the same object.
+
+The primary hybrid methods combine Prior with either Copeland or balance.
+Writing $\hat{s}(\cdot)$ for min--max normalization of a score vector to
+$[0,1]$ over the candidate set, the hybrid score is
 \begin{equation}
   s_{\mathrm{hybrid}}(u) \;=\; \hat{s}_{\mathrm{prior}}(u) \;+\; \alpha\, \hat{s}_{\mathrm{comp}}(u),
   \qquad \mathrm{comp} \in \{\mathrm{cop}, \mathrm{bal}\},
   \label{eq:hybrid}
 \end{equation}
-with $\alpha=0.3$ throughout the main experiments, and the extracted ranking
-$\pi$ sorts $V_q$ by descending $s_{\mathrm{hybrid}}$, breaking exact ties
-deterministically by document id. Applying Eq.~\eqref{eq:hybrid} with
-$s_{\mathrm{comp}}$ computed on $G_q$ yields the \emph{unrepaired} hybrid
-ranking for that component; applying it with $s_{\mathrm{comp}}$ computed on
-$\widetilde G_q$ yields the \emph{repaired} hybrid ranking. The two rankings
-differ only through $s_{\mathrm{comp}}$, since $\hat{s}_{\mathrm{prior}}$ and
-$\alpha$ are identical in both cases---so any difference in downstream nDCG
-between the repaired and unrepaired hybrid is attributable to repair changing
-$s_{\mathrm{comp}}$, not to a change in how the ranking is extracted from a
-score.
+with $\alpha=0.3$ in the main comparisons. The canonical package additionally
+reports a small alpha sensitivity sweep over $\alpha \in \{0.1,0.3,0.5,1.0\}$
+for this primary protocol only.
 
-\subsection{Retrieval Metric}
+\subsection{Retrieval Evaluation}
 \label{sec:retrieval-metrics}
 
-Retrieval quality is measured by normalized discounted cumulative gain at
-cutoff $k$. For a ranking $\pi$ and a relevance map $\mathrm{rel}:D_q\to
-\mathbb{Z}_{\ge 0}$,
+Retrieval quality is measured by nDCG at the dataset-specific cutoff used in
+candidate pooling. For a ranking $\pi$ and a relevance map $\mathrm{rel}:D_q
+\to \mathbb{Z}_{\ge 0}$,
 \begin{equation}
   \mathrm{nDCG@}k(\pi) \;=\; \frac{\displaystyle\sum_{i=1}^{k} \frac{2^{\mathrm{rel}(\pi_i)}-1}{\log_2(i+1)}}
   {\displaystyle\sum_{i=1}^{k} \frac{2^{\mathrm{rel}(\pi_i^{\mathrm{ideal}})}-1}{\log_2(i+1)}},
   \label{eq:ndcg}
 \end{equation}
 where $\pi_i$ is the document at rank $i$ in $\pi$ and $\pi^{\mathrm{ideal}}$
-sorts all judged documents by descending relevance; nDCG@$k$ is defined as
-$0$ when the ideal-ranking denominator is $0$ (no relevant documents judged
-for the query). Eq.~\eqref{eq:ndcg} is the only retrieval-effectiveness
-metric used for the main comparisons in this paper; it is entirely
-independent of the graph-internal metrics of
-Section~\ref{sec:structural-metrics}, which is the property that makes it
-possible to ask, rather than assume, whether repair helps retrieval.
+sorts candidate documents by descending relevance. nDCG@$k$ is defined as $0$
+when the denominator is $0$. All paired comparisons use only the intersection
+of queries for which both methods produce valid outputs.
+
+\subsection{Raw-Margin Ablation}
+
+The historical raw-margin protocol is retained only as an explicitly labeled
+ablation. It uses native BM25, TF-IDF, and MiniLM scores without cross-ranker
+calibration; a fixed per-vote threshold of $0.05$ for all three rankers; and
+the original aggregate/support settings: \texttt{ms2} uses minimum support $2$
+and aggregate threshold $0.1$, while \texttt{ms1} and
+\texttt{ms1\_drop\_mutual} use minimum support $1$ and aggregate threshold
+$0.0$. We do not interpret those raw margins as comparable confidence weights.
 
 % =============================================================================
 \section{Experimental Setup}
 \label{sec:experimental-setup}
-% Written from scratch and verified against scripts/run_publication_vote_suite.py,
-% scripts/build_votes_file.py, scripts/run_real_experiment.py,
-% experiments/final_method_gap_audit_20260711_221113/run_final_method_gap_audit.py,
-% experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py,
-% and scripts/bootstrap_method_deltas.py during this pass.
 
-\subsection{Datasets}
+\subsection{Datasets and Stored Query Sets}
 \label{sec:datasets}
 
 We use four public retrieval benchmarks spanning distinct domains: SciDocs
 (scientific document retrieval)~\cite{cohan2020scidocs}, FiQA (financial
 opinion and question answering)~\cite{maia2018fiqa}, HotpotQA (multi-hop
 question answering)~\cite{yang2018hotpotqa}, and BRIGHT (reasoning-intensive
-retrieval)~\cite{su2024bright}. SciDocs, FiQA, and HotpotQA additionally
-appear in the BEIR zero-shot retrieval benchmark
-suite~\cite{thakur2021beir}; BRIGHT is a more recent addition designed
-specifically to stress-test retrieval under reasoning-heavy queries. Eligible
-queries are sampled without replacement from the processed benchmark exports
-with seed 42 up to per-dataset budgets in the evaluation script. Table~\ref{tab:dataset-stats}
-reports the resulting protocol parameters. ``Usable queries'' counts can differ
-slightly across regimes because eligibility and vote extraction are both
-applied per query: a query can enter the evaluation pool but still contribute
-no votes under a stricter regime if no candidate pair clears that regime's
-retention thresholds.
+retrieval)~\cite{su2024bright}. SciDocs, FiQA, and HotpotQA are also part of
+BEIR~\cite{thakur2021beir}. The calibrated rerun does not draw a fresh query
+sample. It reuses the fixed stored \texttt{query\_ids.txt} files from the
+canonical experiment inputs and then filters them only for evaluation
+eligibility.
+
+A query is eligible if its qrels support ranking comparison: either at least
+two judged documents with at least two distinct relevance grades, or at least
+one judged document with strictly positive relevance. Queries failing this
+criterion are excluded before downstream calibration and are recorded in a
+query-exclusion audit. Table~\ref{tab:dataset-stats} reports the stored query
+subset size, the usable query count under the calibrated package, the upstream
+retrieval depth used for stored score generation, the candidate-pool size, and
+the nDCG cutoff.
 
 \begin{table}[t]
-  \caption{Four-dataset mechanical-vote protocol. ``top-$n$'' is the
-    per-ranker retrieval depth before pooling; $k$ is both the candidate-pool
-    size and the nDCG cutoff. ``Usable queries'' lists realized counts under
-    \texttt{ms2}/\texttt{ms1}/\texttt{ms1\_drop\_mutual}.}
+  \caption{Stored query subsets and evaluation settings reused by the
+    calibrated four-dataset package.}
   \label{tab:dataset-stats}
-  \small
-  \begin{tabular}{lcccc}
+  \begin{tabular}{lccccc}
     \toprule
-    Dataset & Judgments & top-$n$ / $k$ & Source & Usable queries \\
+    Dataset & Stored IDs & Usable queries & Top-$n$ & $|D_q|$ & nDCG@$k$ \\
     \midrule
-    SciDocs  & binary qrels & 50 / 20 & SciDocs + BEIR & 119 / 120 / 120 \\
-    FiQA     & positive-only judged qrels & 50 / 20 & BEIR-FiQA & 117 / 120 / 120 \\
-    HotpotQA & binary qrels & 35 / 10 & HotpotQA & 52 / 52 / 52 \\
-    BRIGHT   & binary qrels & 50 / 20 & BRIGHT & 34 / 50 / 50 \\
+    SciDocs  & 120 & 120 & 50 & 20 & 20 \\
+    FiQA     & 120 & 120 & 50 & 20 & 20 \\
+    HotpotQA & 70  & 52  & 35 & 10 & 10 \\
+    BRIGHT   & 50  & 50  & 50 & 20 & 20 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\subsection{Rankers and Candidate Pooling}
+\subsection{Upstream Rankers and Candidate Pooling}
 \label{sec:rankers}
 
-Upstream score files come from three mechanical rankers: an in-house Okapi
-BM25 implementation ($k_1=1.5$, $b=0.75$), an in-house cosine TF-IDF ranker
-with log-TF and smoothed IDF weighting, and a MiniLM dense encoder
-(\texttt{sentence-transformers/all-MiniLM-L6-v2}) scored by cosine similarity.
-For each query, the candidate pool $D_q$ is formed by reciprocal rank
-fusion~\cite{cormack2009rrf} with the standard constant $k=60$ over the three
-rankers' top-$n$ lists, then truncated to the per-dataset pool size in
-Table~\ref{tab:dataset-stats}. Votes are extracted over that fixed pool as
-described in Section~\ref{sec:vote-extraction}, with margin weighting,
-abstention when a per-ranker score margin is below 0.05, and abstention when a
-ranker lacks a score for either candidate in a pair. We do not vary the
-ranker family across regimes or datasets: \texttt{ms2}, \texttt{ms1}, and
-\texttt{ms1\_drop\_mutual} are three views of the \emph{same} three rankers'
-scores, so any difference between regimes reflects the vote-retention rule,
-not a change in evidence source. We return to the scope this narrows the study to in
-Section~\ref{sec:threats}: the main evidence base uses
-mechanical, score-derived votes rather than direct human or LLM pairwise
-judgments.
+The upstream score files are fixed across all protocols and regimes. They come
+from BM25, TF-IDF, and MiniLM and are never regenerated in the calibrated
+study. Candidate pooling uses the union of documents appearing in those score
+files for a query; if the union exceeds the dataset-specific pool size, it is
+truncated by RRF with $k=60$ over the full native ranked lists. The calibrated
+study therefore evaluates a specific \emph{RRF-centered candidate-pool
+setting}. It does not claim candidate-pool neutrality across alternative pool
+construction policies.
 
-\subsection{Baselines}
+The study uses exactly the same stored score files, candidate pools, and qrels
+for all protocols. Differences among \texttt{ms2}, \texttt{ms1}, and
+\texttt{ms1\_drop\_mutual} therefore reflect only vote extraction and graph
+construction, not changes in upstream evidence.
+
+\subsection{Methods and Baselines}
 \label{sec:baselines}
 
-Table~\ref{tab:baselines} lists the ranking methods evaluated on the
-four-dataset evaluation. The methods of primary interest are the four
-repaired/unrepaired hybrid pairs (Section~\ref{sec:extraction},
-Eq.~\eqref{eq:hybrid}), since these isolate the marginal effect of repair
-while holding the prior ranking, the component score family, and $\alpha$
-fixed. The stored four-dataset outputs use a single fixed mixing weight,
-$\alpha=0.3$; no held-out validation tuning for that parameter is recorded for
-this protocol, so we treat it as an implementation choice rather than an
-optimized setting. We additionally evaluate the prior ranking alone, and a set of
-established fusion and graph-aggregation baselines that do not depend on
-repair at all: reciprocal rank fusion~\cite{cormack2009rrf}, CombSUM~\cite{fox1994combination},
-a Borda-count rank-aggregation baseline (points assigned by rank position,
-summed across rankers), and a Rank-Centrality-style Markov chain
-ranker~\cite{negahban2017rankcentrality} computed on the (unrepaired or
-repaired) preference graph. CombSUM fuses per-ranker scores by summing, for
-each candidate document, a per-(query, ranker) min--max normalization of
-that ranker's score to $[0,1]$; a ranker that did not score a given document
-contributes $0$ to that document's fused score, and exact ties are broken
-first by the smallest rank the document achieved in any individual ranker's
-own list, then by document id. The min--max normalization step is an
-adaptation required by this study's heterogeneous ranker scales (BM25,
-TF-IDF, and dense MiniLM cosine scores) and is not part of the original 1994
-definition, which we note explicitly rather than presenting an adapted
-baseline as an unmodified reproduction. These baselines answer a question
-distinct from the repair-effect question: whether graph repair combined with
-hybrid fusion is competitive with substantially simpler aggregation rules
-that never inspect graph structure at all.
+The calibrated package evaluates four graph-independent baselines and ten
+graph-dependent methods. The graph-independent baselines are Prior, RRF,
+CombSUM, and Borda fusion. The graph-dependent methods are unrepaired and
+repaired variants of Copeland, balance, and Markov extraction, plus unrepaired
+and repaired Copeland and balance hybrids at $\alpha=0.3$.
+
+CombSUM uses per-query, per-ranker min--max normalization before summation, so
+missing documents contribute $0$ for that ranker. Borda fusion operates on the
+rank positions of the stored score lists over the union of scored documents for
+that query. Prior and the RRF baseline both use the RRF family with $k=60$ on
+candidate-restricted lists, but they are not bitwise-identical implementations:
+Prior ranks by fused prior score with document-id tie-breaking, whereas the RRF
+baseline breaks ties by best observed rank and then document id. We therefore
+report both while flagging that distinction explicitly.
 
 \begin{table}[t]
-  \caption{Ranking methods evaluated in the four-dataset evaluation.
-    ``Uses graph?'' indicates whether the method's score depends on the
-    preference graph (as opposed to ranker scores alone); ``Repair
-    variants?'' indicates whether the method is evaluated in both unrepaired
-    and repaired form.}
+  \caption{Method families evaluated in the calibrated four-dataset package.}
   \label{tab:baselines}
   \begin{tabular}{lcc}
     \toprule
-    Method & Uses graph? & Repair variants? \\
+    Method family & Uses graph? & Repaired and unrepaired? \\
     \midrule
-    Prior (RRF of BM25/TF-IDF/MiniLM) & No & --- \\
+    Prior & No & --- \\
     Reciprocal rank fusion (RRF) & No & --- \\
     CombSUM & No & --- \\
     Borda-count fusion & No & --- \\
-    Markov (Rank Centrality-style) & Yes & Yes \\
-    Copeland hybrid (Eq.~\eqref{eq:hybrid}, comp.\ = Copeland) & Yes & Yes \\
-    Balance hybrid (Eq.~\eqref{eq:hybrid}, comp.\ = balance) & Yes & Yes \\
+    Copeland graph & Yes & Yes \\
+    Balance graph & Yes & Yes \\
+    Markov graph & Yes & Yes \\
+    Copeland hybrid (Eq.~\eqref{eq:hybrid}) & Yes & Yes \\
+    Balance hybrid (Eq.~\eqref{eq:hybrid}) & Yes & Yes \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The three baselines marked ``No'' under ``Uses graph?'' in
-Table~\ref{tab:baselines}---the prior ranking, reciprocal rank fusion, and
-CombSUM (Borda-count fusion likewise)---depend only on the constituent
-rankers' score files and are therefore invariant to vote-extraction regime:
-their score for a given query is identical whether that query's graph is
-built under \texttt{ms2}, \texttt{ms1}, or \texttt{ms1\_drop\_mutual}, since
-regime only changes how the graph is constructed from those same scores.
-When we report these baselines broken out by regime alongside the
-graph-dependent methods, the repeated entries reflect the same underlying
-score fused once and aligned across regimes for comparability, not
-independent reruns or additional evidence; any aggregate statistic computed
-over regime-labeled rows for a graph-independent baseline should be read
-with this in mind.
+The graph-independent baselines are identical across vote regimes for a fixed
+query because they operate directly on the stored score files rather than on
+the constructed preference graph. Regime-labeled baseline rows are reported
+only to align comparisons with graph-dependent methods; they are not
+independent reruns.
 
-A separate evaluation protocol (Section~\ref{sec:downstream-results})
-assesses a wider pooled grid of twelve methods, including
-the hybrids above, on a different query pool assembled for failure-taxonomy
-analysis. We keep this pooled comparison clearly labeled as a distinct
-protocol throughout the paper rather than merging its numbers with the
-four-dataset evaluation above: the two protocols share method
-implementations but not query sets, and reporting them as though they were
-one evaluation would overstate the evidence either provides alone.
-
-\subsection{Repair Variants Compared}
+\subsection{Repair Configuration}
 \label{sec:repair-variants}
 
-Table~\ref{tab:repair-variants} lists the repair procedures we compare, both
-fully reproducible from the archived code and stored outputs used in this
-study. The \emph{greedy} heuristic
-(Eq.~\eqref{eq:mwfas} solved by cycle-peeling, Section~\ref{sec:repair}) is
-used throughout the main experiments. The second procedure applies an exact
-solver---exhaustive enumeration of node orderings---to any strongly
-connected component (SCC) with at most 10 nodes, and falls back to the same
-greedy heuristic for larger components within the same query; we call this
-combined procedure \emph{exact-for-small-components}, since it is exact only
-on the (typically majority) share of SCCs at or below that size threshold and
-is not a globally exact solver for the whole graph. Both procedures cover the
-full four-dataset evaluation (all four datasets, all three regimes), not a
-subsampled slice.
+All canonical results in the calibrated package use the greedy cycle-peeling
+repair described in Section~\ref{sec:repair}. Table~\ref{tab:repair-variants}
+records that primary configuration and clarifies the status of stronger-repair
+checks. The latter are not part of the calibrated canonical evidence package
+and are treated only as supplementary historical context.
 
 \begin{table}[t]
-  \caption{Repair procedures compared (see text for reproducibility notes).}
+  \caption{Repair configurations referenced in this manuscript revision.}
   \label{tab:repair-variants}
   \begin{tabular}{p{4.3cm}p{2.9cm}}
     \toprule
-    Procedure & Scope \\
+    Configuration & Role in this paper version \\
     \midrule
-    Greedy (cycle-peeling) & All queries; the repair method used throughout the main experiments \\
-    Exact-for-small-components (brute-force, SCCs $\le 10$ nodes) + greedy fallback above that size & All queries \\
+    Greedy cycle peeling & Primary repair for canonical and raw-ablation runs \\
+    Stronger-repair checks from earlier audits & Supplementary only; not part of the calibrated canonical evidence package \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-This comparison is sufficient to test whether improving the graph-internal
-structural objective (Eq.~\eqref{eq:mwfas}) more thoroughly than the greedy
-heuristic translates into a retrieval-quality gain. Under the stated FAS
-objective, a feasible repair is any edge-removal set that makes the graph
-acyclic, and lower removed weight is better among such repairs.
-Exact-for-small-components is exact only on SCCs of at most 10 nodes and
-falls back to greedy above that size, so it is not a globally exact solver
-for the whole graph. The purpose of this comparison is therefore narrower
-than ``more aggressive repair'': it tests whether solving the same
-graph-internal objective more accurately on small SCCs changes the retrieval
-conclusion of Section~\ref{sec:downstream-results}.
-
-\subsection{Statistical Testing: Paired Bootstrap}
+\subsection{Statistical Analysis}
 \label{sec:bootstrap}
 
-Every repaired-versus-unrepaired comparison in
-Table~\ref{tab:bootstrap-delta-ndcg} and
-Figure~\ref{fig:bootstrap-delta-ndcg} is evaluated with a paired,
-per-query percentile bootstrap. For a method pair (e.g., repaired and
-unrepaired Copeland hybrid) and a set of $n$ queries for which both methods
-produced an nDCG@$k$ value, let $\delta_i = \mathrm{nDCG@}k_i^{\mathrm{repaired}}
-- \mathrm{nDCG@}k_i^{\mathrm{unrepaired}}$ for query $i=1,\dots,n$. We draw
-$B=2{,}000$ bootstrap resamples, each obtained by sampling $n$ query indices
-independently and uniformly with replacement from $\{1,\dots,n\}$ and
-averaging the corresponding $\delta_i$; writing $\bar\delta^{(b)}$ for the
-mean of resample $b$, the reported interval is
+All repaired-versus-unrepaired comparisons are paired at the query level. For
+each cell we report the mean delta, median delta, 5th/25th/75th/95th-percentile
+query-level deltas, and helped/harmed/unchanged query counts. We also report a
+paired sign-flip permutation test and a paired percentile bootstrap interval
+with 10{,}000 resamples. If $\delta_i$ denotes the per-query repaired minus
+unrepaired nDCG difference for a paired set of $n$ queries, and
+$\bar{\delta}^{(b)}$ is the mean of bootstrap resample $b$, the reported
+percentile interval is
 \begin{equation}
   \left[\, \bar\delta^{(\lceil 0.025(B-1)\rceil)},\; \bar\delta^{(\lceil 0.975(B-1)\rceil)} \,\right],
   \label{eq:bootstrap-ci}
 \end{equation}
-the empirical 2.5th and 97.5th percentiles of the sorted resample means
-$\bar\delta^{(1)}\le \cdots \le\bar\delta^{(B)}$, alongside the observed mean
-$\bar\delta = \frac{1}{n}\sum_i \delta_i$. We use this percentile interval
-throughout rather than a normal-approximation interval because many of the
-per-query delta distributions are highly non-normal: in near-acyclic regimes
-(Section~\ref{sec:regimes}), $\delta_i=0$ for every query, and the resample
-distribution is a point mass at zero rather than anything a normal
-approximation would describe well. All confidence intervals reported in this
-paper use $B=2{,}000$ unless stated otherwise, with the stored four-dataset
-tables generated under seed 42. These intervals are descriptive and are not
-adjusted for multiplicity across the 24 repaired-versus-unrepaired cells.
+with $B=10{,}000$. Bootstrap summaries additionally include the fraction of
+bootstrap means greater than zero.
 
-Section~\ref{sec:downstream-results}'s pooled baseline comparison uses a
-different resampling unit. Its underlying corpus contains 1,020
-query$\times$regime records but only 342 independent
-(dataset, query) clusters, because a single query may contribute multiple
-regime-labeled rows and some baselines are regime-invariant by construction.
-For Figure~\ref{fig:mean-ndcg-hybrids}, we therefore report marginal
-method-wise percentile intervals from a clustered bootstrap that resamples
-those 342 query clusters with replacement, carrying all associated rows
-together. The plotted intervals use 1,000 resamples with seed 13 and should
-be read as descriptive marginal uncertainty for each method mean, not as
-paired tests between methods.
+The primary inferential family is the set of repaired-versus-unrepaired cells
+under the canonical min--max plus retention-matched protocol. We apply both
+Holm and Benjamini--Hochberg correction across that family. We do not treat a
+bootstrap interval endpoint equal to zero as evidence of a strictly positive
+effect, and we do not infer robustness from percentile intervals alone. For
+interpretation-sensitive cells we additionally report leave-one-query-out and
+top-influence-removal analyses.
 
-\subsection{Implementation, Hardware, and Resource Measurement}
+\subsection{Implementation and Reproducibility}
 \label{sec:implementation}
 
-The full evaluation procedure (vote extraction, graph construction, greedy
-repair, ranking extraction, nDCG evaluation, and bootstrap analysis) is
-implemented in Python (3.11/3.12) using \texttt{networkx} for graph
-operations, and is reproducible end to end from the archived code
-(Section~\ref{sec:data-availability}).
-Wall-clock timing is measured per pipeline stage with
-\texttt{time.perf\_counter()} around each stage in isolation; we report
-per-stage means over queries rather than a single end-to-end number, since
-the stages have very different and dataset-dependent costs (repair
-dominates on large, cyclic graphs; ranking extraction and evaluation are
-comparatively cheap at every scale we test). Memory is measured as the
-maximum of the process's resident set size (RSS) sampled immediately before
-and immediately after a stage; this is a coarse before/after snapshot, not
-instrumented peak-memory tracking (e.g., \texttt{tracemalloc}), and should be
-read as an approximate, directional indicator rather than a precise memory
-profile. All runtime and memory measurements in this paper were collected on
-a single, unbenchmarked local development machine rather than a controlled or
-standardized hardware configuration; we report relative comparisons across
-methods run on the same machine rather than absolute figures intended to
-generalize to other hardware. The codebase additionally contains a
-complete, self-contained integer-programming formulation of
-Eq.~\eqref{eq:mwfas} that requires a commercial mixed-integer solver license
-to run; it was not used to produce any result reported in this paper. Both
-procedures in Table~\ref{tab:repair-variants} require neither a commercial
-solver license nor any dependency outside the archived codebase.
+The calibrated core package is implemented in Python 3.12.3 using
+\texttt{networkx} for graph operations. The package manifest records the exact
+branch, commit, Python executable, activation command, stored score-file
+hashes, qrels hashes, query-ID lists, protocol definitions, threshold tables,
+and generated paper-package outputs. The canonical evidence package used for
+this revision is the calibrated four-dataset artifact rooted at the internal
+paper-package manifest produced by the full calibrated core run. Because this
+is an anonymous review draft, we point to the artifact package descriptively
+rather than through a public URL.
+
+The calibrated rerun is deterministic given the stored inputs and recorded
+seeds. In particular, it reuses fixed query-ID manifests instead of redrawing
+query samples, and it uses fixed seeds for bootstrap and permutation analysis.
+The study does not claim exact reproducibility for separate real-LLM judgment
+pipelines.
 
 \subsection{Real-LLM Evidence: Scope and Role}
 \label{sec:real-llm-scope}
 
 In addition to the mechanical three-ranker evaluation described above, we
-evaluate a small, bounded sample of real large-language-model judgments
-(pairwise, pointwise, and listwise) on subsets of SciDocs, HotpotQA, and
-FiQA, using the same repaired-versus-unrepaired comparison structure. We
-describe the primary paired OpenAI pilot in Section~\ref{sec:real-llm}, and
-we keep it separate from a second, protocol-distinct multi-provider
-failure-mining corpus with Cohere/Azure pairwise judgments on FiQA,
-HotpotQA, and BRIGHT. We flag this scope here because it is easy to conflate
-any real-LLM evidence with the main mechanical-vote evaluation if the
-protocols are not kept separate. The real-LLM sample is one to two orders of
-magnitude smaller than the main evaluation (tens of queries per dataset
-rather than dozens to low hundreds), and is reported throughout this paper
-as a bounded check on whether the regime-conditional pattern of
-Sections~\ref{sec:structural-results}
-and~\ref{sec:downstream-results} persists under a qualitatively different
-preference source---not as independent confirmatory evidence at the same
-scale or standard of certainty as the main evaluation.
-
-\subsection{LLM Providers and Inference Configuration}
-\label{sec:llm-config}
-
-Table~\ref{tab:llm-config} summarizes the API-based runs that inform the
-manuscript. The primary paired evidence is an OpenAI pairwise pilot using
-\texttt{gpt-4o-mini}. Separate OpenAI pointwise and listwise runs are used only
-as auxiliary scope checks. The protocol-distinct corroborative corpus uses
-Cohere and Azure OpenAI pairwise judgments over a different method pair
-(repaired vs.\ unrepaired Markov), and is therefore not pooled with the
-primary pilot. The same experiment logs also record Gemini setup attempts, but
-the versioned failure-mining corpus used here contains no usable Gemini
-records, so Gemini is not treated as analyzed evidence in this revision.
-
-\begin{table}[t]
-  \caption{API-based experiments used in the manuscript or supporting scope
-    checks.}
-  \label{tab:llm-config}
-  \small
-  \setlength{\tabcolsep}{3pt}
-  \renewcommand{\arraystretch}{1.08}
-  \begin{tabularx}{\columnwidth}{
-      >{\raggedright\arraybackslash}p{1.85cm}
-      >{\raggedright\arraybackslash}p{2.35cm}
-      >{\raggedright\arraybackslash}p{1.55cm}
-      >{\raggedright\arraybackslash}X}
-    \toprule
-    Provider / platform & Model & Mode & Datasets / role \\
-    \midrule
-    OpenAI API & \texttt{gpt-4o-mini} & Pairwise & Primary paired pilot on SciDocs, HotpotQA, and FiQA. \\
-    OpenAI API & \texttt{gpt-4o-mini} & \shortstack[l]{Pointwise /\\listwise} & Auxiliary prompt-style scope check on SciDocs and HotpotQA. \\
-    Cohere API & \shortstack[l]{\texttt{command-r-plus-}\\\texttt{08-2024}} & Pairwise & Protocol-distinct corroborative corpus on FiQA, HotpotQA, and BRIGHT. \\
-    Azure OpenAI & \texttt{gpt-4.1-mini} & Pairwise & Protocol-distinct corroborative corpus on FiQA, HotpotQA, and BRIGHT. \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-Across these runs, decoding is deterministic (temperature 0.0). The paired
-OpenAI pilot targets 50 SciDocs queries, 20 HotpotQA queries, and 20 FiQA
-queries, of which 10 FiQA queries completed successfully. The auxiliary
-pointwise/listwise check covers 20 SciDocs queries and 10 HotpotQA queries per
-prompt style. Each protocol-distinct corroborative provider contributes 200
-query$\times$regime records across FiQA, HotpotQA, and BRIGHT. The paired
-OpenAI pilot uses top-$k=15$ candidate pools, seed 42, no candidate-order
-debiasing, and pairwise responses constrained to a one-letter A/B judgment
-with up to four retries and exponential backoff on API failures; ambiguous
-responses fall back to the parser's default A-label. The failure-mining corpus
-uses the same A/B parsing but enables symmetric A$\rightarrow$B and
-B$\rightarrow$A prompting to reduce position bias. Detailed prompts and API
-logs are better suited to supplementary material than to the main paper, so we
-summarize only the settings needed to interpret scope and comparability here.
+inspect stored real-LLM judgment corpora on subsets of SciDocs, HotpotQA, and
+FiQA, but we no longer treat those records as a parallel retrieval evaluation.
+Section~\ref{sec:real-llm} reframes them as a bounded protocol-quality and
+artifact audit because the stored corpora differ from the calibrated mechanical
+study in prompt symmetry, parser behavior, exclusion logging, and provider
+coverage. We flag that distinction here because those corpora are easy to
+conflate with the main mechanical-vote evaluation if their weaker evidentiary
+status is not made explicit.
 
 % =============================================================================
 \section{Structural Data Quality Results}
 \label{sec:structural-results}
 
-Table~\ref{tab:structural-results} reports the structural metrics defined in
-Section~\ref{sec:structural-metrics} for all four datasets under all three
-vote-extraction regimes.
+This section reports the calibrated canonical protocol introduced in
+Section~\ref{sec:score-calibration}: per-query, per-ranker min--max score
+normalization followed by retention-matched vote thresholds. The historical
+raw-margin construction is retained only as an ablation for sensitivity
+analysis. We separate four questions that were conflated in the earlier
+raw-margin narrative: score-scale imbalance, graph construction, the share of
+cyclicity attributable to direct mutual contradictions, and the amount of
+structural work repair actually performs.
+
+\subsection{Raw Score Scale Imbalance}
+
+The raw protocol is strongly dominated by native BM25 scale. Under the
+historical raw-margin construction, BM25 contributes a mean conditional edge
+weight share of approximately $0.988$ whenever it participates in an edge; under
+the calibrated primary protocol, the corresponding mean falls to approximately
+$0.512$. This shift does not show that BM25 becomes less useful after
+calibration. It shows that the old weighted graph was largely tracking one
+ranker's score scale, not combining commensurate evidence from BM25, TF--IDF,
+and MiniLM. The threshold-scale audit further shows that the fixed raw
+thresholds were not semantically comparable across rankers, so raw score
+margins cannot be interpreted as cross-ranker confidence weights.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/bm25_weight_share_raw_vs_calibrated.png}
+  \caption{Mean conditional BM25 edge-weight share under the raw-margin
+    ablation and the canonical calibrated protocol. The canonical protocol is
+    per-query/per-ranker min--max calibration with retention-matched
+    thresholds; the raw protocol is shown only as an ablation. The figure
+    reports graph-construction weights rather than retrieval quality.}
+  \Description{A grouped comparison of BM25 conditional weight share under the
+    raw-margin ablation and the calibrated canonical protocol, showing a much
+    larger BM25 contribution under the raw protocol and a near-balanced share
+    after calibration.}
+  \label{fig:bm25-share}
+\end{figure}
+
+\subsection{Calibration Changes Graph Construction}
 
 \begin{table}[t]
-  \caption{Structural metrics by dataset and vote-extraction regime. Cyclic\%
-    is the share of query graphs containing at least one directed cycle;
-    Largest SCC is the mean size of the largest strongly connected component.}
+  \caption{Intrinsic graph diagnostics under the canonical calibrated protocol.
+    Cyclic\% is the share of query graphs containing at least one directed
+    cycle before mutual-pair deletion; Post-mutual Cyclic\% recomputes the same
+    statistic after deleting direct mutual pairs; Largest SCC is the mean size
+    of the largest strongly connected component before deletion; normalized FAS
+    is mean removed repair weight divided by total graph weight. Raw-margin
+    results are treated only as an ablation and are not shown as the main
+    evidence here.}
   \label{tab:structural-results}
-  \begin{tabular}{llcc}
+  \scriptsize
+  \begin{tabular}{llrrrr}
     \toprule
-    Dataset & Regime & Cyclic\% & Largest SCC \\
+    Dataset & Regime & Cyclic\% & Post-mutual Cyclic\% & Largest SCC & Norm. FAS \\
     \midrule
-    SciDocs  & \texttt{ms2}               & 0.0  & 1.00 \\
-    SciDocs  & \texttt{ms1}               & 87.5 & 9.33 \\
-    SciDocs  & \texttt{ms1\_drop\_mutual} & 0.0  & 1.00 \\
-    FiQA     & \texttt{ms2}               & 0.0  & 1.00 \\
-    FiQA     & \texttt{ms1}               & 95.0 & 12.51 \\
-    FiQA     & \texttt{ms1\_drop\_mutual} & 0.0  & 1.00 \\
-    HotpotQA & \texttt{ms2}               & 0.0  & 1.00 \\
-    HotpotQA & \texttt{ms1}               & 51.9 & 2.52 \\
-    HotpotQA & \texttt{ms1\_drop\_mutual} & 0.0  & 1.00 \\
-    BRIGHT   & \texttt{ms2}               & 0.0  & 1.00 \\
-    BRIGHT   & \texttt{ms1}               & 60.0 & 6.48 \\
-    BRIGHT   & \texttt{ms1\_drop\_mutual} & 6.0  & 1.40 \\
+    SciDocs  & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    SciDocs  & \texttt{ms1}               & 99.2 & 10.8 & 16.17 & 0.074 \\
+    SciDocs  & \texttt{ms1\_drop\_mutual} & 11.7 & 11.7 & 1.93  & 0.002 \\
+    FiQA     & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    FiQA     & \texttt{ms1}               & 98.3 & 30.8 & 16.12 & 0.080 \\
+    FiQA     & \texttt{ms1\_drop\_mutual} & 30.8 & 30.8 & 3.38  & 0.004 \\
+    HotpotQA & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    HotpotQA & \texttt{ms1}               & 63.5 & 1.9  & 4.06  & 0.029 \\
+    HotpotQA & \texttt{ms1\_drop\_mutual} & 1.9  & 1.9  & 1.13  & 0.000 \\
+    BRIGHT   & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    BRIGHT   & \texttt{ms1}               & 92.0 & 22.0 & 10.82 & 0.055 \\
+    BRIGHT   & \texttt{ms1\_drop\_mutual} & 22.0 & 22.0 & 3.08  & 0.003 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The regime contrast is stark and uniform across datasets. Under \texttt{ms2},
-every dataset is effectively acyclic (0\% cyclic queries, largest SCC $=1.0$);
-under \texttt{ms1}, cyclic-query prevalence rises to 51.9--95.0\% with largest
-SCC 2.5--12.5, an order-of-magnitude structural change from the same
-underlying ranker scores. \texttt{ms1\_drop\_mutual} restores near-acyclicity
-on three of four datasets; BRIGHT retains a small residual (6.0\% cyclic,
-largest SCC $1.4$), the one partial exception to an otherwise clean pattern.
-Figure~\ref{fig:cyclicity-scc} shows this contrast graphically. Because the
-three regimes share identical upstream ranker scores (Section~\ref{sec:regimes}),
-this difference is attributable to the vote-retention rule alone, not to any
-change in evidence quality --- the central structural finding of this study is
-that \emph{construction}, not repair, is the dominant lever on preference-graph
-consistency.
+Calibration changes more than the numeric scale of existing edges. It changes
+which edges are retained, how much total weight they carry, and which edges are
+ultimately selected for repair. The overlap between the primary protocol's
+removed edges and the raw-margin ablation is only $0.090$ on SciDocs
+\texttt{ms1}, $0.055$ on FiQA \texttt{ms1}, $0.328$ on HotpotQA \texttt{ms1},
+and $0.110$ on BRIGHT \texttt{ms1}. These low overlaps show that calibration
+changes repair decisions themselves, not merely the magnitudes assigned to an
+otherwise stable set of edges. Under the primary protocol, \texttt{ms2} remains
+acyclic on all four datasets, while \texttt{ms1} is still highly cyclic before
+mutual-pair deletion. Figure~\ref{fig:cyclicity-scc} summarizes that canonical
+regime-level pattern and Figure~\ref{fig:raw-calibrated-structure} contrasts it
+with the raw-margin ablation.
 
-\begin{figure}[tbp]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\linewidth]{../../../figures/manuscript/fig_cyclicity_and_scc.png}
-  \caption{Percentage of cyclic query graphs and mean largest strongly
-    connected component size, by dataset and vote-extraction regime.
-    \texttt{ms2} and \texttt{ms1\_drop\_mutual} are near-acyclic on every
-    dataset; \texttt{ms1} is substantially cyclic on all four, with HotpotQA
-    showing the mildest effect and FiQA the strongest.}
-  \Description{Grid of four panels, one per dataset (SciDocs, FiQA, HotpotQA,
-    BRIGHT). Each panel shows three vote-extraction regimes (ms2, ms1, ms1
-    drop mutual) on the horizontal axis, with two bars per regime on a
-    dual y-axis: percentage of cyclic query graphs (left axis) and mean
-    largest strongly connected component size (right axis). In every panel,
-    ms1 bars are substantially higher on both axes than ms2 and ms1 drop
-    mutual, which are at or near zero; FiQA shows the highest ms1 cyclicity
-    (about 95 percent) and HotpotQA the lowest (about 52 percent).}
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_primary_by_dataset_regime.png}
+  \caption{Canonical calibrated cyclicity by dataset and vote regime. All
+    values use per-query/per-ranker min--max calibration with
+    retention-matched thresholds. The plot reports cyclicity before
+    mutual-pair deletion; post-deletion values are summarized in
+    Table~\ref{tab:structural-results} and Figure~\ref{fig:cycle-decomposition}.}
+  \Description{A multi-panel plot showing cyclic query percentage under the
+    canonical calibrated protocol for SciDocs, FiQA, HotpotQA, and BRIGHT
+    across the ms2, ms1, and ms1 drop mutual regimes. ms2 is zero throughout,
+    ms1 is highest on every dataset, and ms1 drop mutual is markedly lower.}
   \label{fig:cyclicity-scc}
 \end{figure}
 
-Repair acts only where cyclicity is present, so its structural effect is
-concentrated in \texttt{ms1}. Table~\ref{tab:bew-pic} reports mean
-backward-edge weight (BEW, Eq.~\eqref{eq:bew}) and pairwise inconsistency
-count (PIC, Eq.~\eqref{eq:pic}) before and after repair, computed against a
-ranking derived from relevance judgments, together with the mean FAS weight
-removed (Section~\ref{sec:repair}).
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_structural_results.png}
+  \caption{Raw-margin ablation versus canonical calibrated structure. The raw
+    protocol uses native scores with fixed thresholds and is shown only as an
+    ablation; the canonical protocol uses min--max calibration with
+    retention-matched thresholds. The comparison illustrates that calibration
+    changes edge retention, graph weight, cyclicity, and repair burden.}
+  \Description{A raw-versus-calibrated comparison plot for structural metrics,
+    showing visible shifts in graph weight, cyclicity, and repair burden across
+    datasets and regimes when the canonical calibrated protocol replaces the
+    raw-margin ablation.}
+  \label{fig:raw-calibrated-structure}
+\end{figure}
+
+\subsection{Mutual Pairs Versus Residual Nontrivial Cyclicity}
+
+The calibrated graphs remain cyclic under \texttt{ms1}, but a substantial share
+of that cyclicity comes from direct mutual contradictions rather than longer
+preference loops. Averaged over all dataset$\times$regime cells in the primary
+protocol, cyclic-query prevalence is approximately $0.3495$ before mutual-pair
+deletion and $0.1100$ afterward. The contrast is especially sharp on HotpotQA:
+its \texttt{ms1} cyclic-query rate drops from $63.5\%$ to $1.9\%$ after direct
+mutual pairs are deleted. SciDocs, FiQA, and BRIGHT retain more residual
+nontrivial cyclicity after deletion ($10.8\%$, $30.8\%$, and $22.0\%$,
+respectively), but the residual graphs are structurally much smaller than the
+full \texttt{ms1} graphs. Figure~\ref{fig:cycle-decomposition} shows this
+before/after decomposition directly.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_before_after_mutual_deletion.png}
+  \caption{Canonical calibrated cyclicity before and after deleting direct
+    mutual pairs. The plot distinguishes direct bidirectional contradiction from
+    residual longer-cycle structure; it should not be read as evidence that all
+    \texttt{ms1} cyclicity reflects nontrivial global nontransitivity.}
+  \Description{A before-and-after comparison of cyclic query percentages under
+    the canonical calibrated protocol, showing that deleting direct mutual pairs
+    sharply reduces cyclicity on all datasets and leaves only a smaller residue
+    of longer-cycle structure.}
+  \label{fig:cycle-decomposition}
+\end{figure}
+
+\subsection{Structural Repair Activity}
+
+Repair is active almost entirely where cyclicity remains active. Under the
+primary protocol, \texttt{ms2} removes zero weight on all four datasets, while
+\texttt{ms1} removes nontrivial normalized weight on every dataset and
+\texttt{ms1\_drop\_mutual} removes only a small residual amount. Figure
+\ref{fig:bew-pic} reports normalized removed weight directly. As a secondary
+diagnostic, Table~\ref{tab:bew-pic} reports qrels-anchored BEW/PIC reductions
+under the calibrated \texttt{ms1} graphs. These quantities are computed against
+the same relevance-derived reference used later for nDCG@$k$ evaluation, so
+they should be read as supporting diagnostics rather than independent evidence
+that structural repair must improve retrieval.
 
 \begin{table}[t]
-  \caption{Mean BEW and PIC before and after FAS repair, and mean FAS weight
-    removed, under \texttt{ms1} (the only regime with material cyclicity;
-    \texttt{ms2}/\texttt{ms1\_drop\_mutual} remove $\approx 0$ weight by
-    construction).}
+  \caption{Qrels-anchored structural diagnostics under the canonical calibrated
+    protocol, \texttt{ms1} only. $\Delta$BEW and $\Delta$PIC are mean
+    pre-repair minus post-repair changes computed against the same
+    relevance-derived reference ranking used for downstream nDCG evaluation;
+    mean removed weight is the intrinsic repair objective. These diagnostics are
+    therefore descriptive and qrels-anchored rather than independent validation.}
   \label{tab:bew-pic}
   \begin{tabular}{lccc}
     \toprule
     Dataset & $\Delta$BEW & $\Delta$PIC & Weight removed \\
     \midrule
-    SciDocs  & 0.333 & 4.25 & 0.682 \\
-    FiQA     & 0.472 & 6.22 & 1.099 \\
-    HotpotQA & 0.035 & 0.50 & 0.121 \\
-    BRIGHT   & 0.234 & 2.76 & 0.388 \\
+    SciDocs  & 4.250 & 19.49 & 8.934 \\
+    FiQA     & 3.919 & 18.24 & 7.974 \\
+    HotpotQA & 0.563 & 2.25  & 1.173 \\
+    BRIGHT   & 2.108 & 9.36  & 4.370 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Repair reduces PIC on all four datasets (0.5--6.2 fewer inconsistent pairs)
-with corresponding non-zero FAS weight removed; BEW reductions are smaller in
-absolute magnitude but consistently positive. Figure~\ref{fig:bew-pic} shows
-the BEW pre/post pair graphically (PIC values are in Table~\ref{tab:bew-pic}
-only). We emphasize a caveat that is essential to
-how this result should be read: BEW and PIC are computed against a reference
-ranking derived from the same relevance judgments later used to compute
-nDCG@$k$ (Section~\ref{sec:retrieval-metrics}). Whenever we describe repair as
-improving structural consistency, that improvement is being scored against the
-same evaluation signal used downstream --- a genuine but qrels-anchored
-diagnostic, not an independent measure of ground truth, and not by itself
-evidence that a retrieval-quality gain must follow. Sections~\ref{sec:downstream-results}
-and~\ref{sec:failure-taxonomy} test that separate question directly and find
-that it does not follow uniformly.
-
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.98\linewidth]{../../../figures/manuscript/fig_graph_qrels_bew_pre_post.pdf}
-  \caption{Mean backward-edge weight (BEW) before and after FAS repair for all
-    four datasets and all three vote-extraction regimes
-    (\texttt{ms2}, \texttt{ms1}, and \texttt{ms1\_drop\_mutual});
-    corresponding PIC values are reported in Table~\ref{tab:bew-pic} rather
-    than plotted here. BEW is computed against the same relevance judgments
-    used for downstream nDCG evaluation (Section~\ref{sec:retrieval-metrics})
-    and should be read as a structural diagnostic rather than an independent
-    validation of repair quality.}
-  \Description{Grid of four panels, one per dataset (SciDocs, FiQA, HotpotQA,
-    BRIGHT). Each panel shows mean backward-edge weight against a qrels-derived
-    reference ranking, before FAS repair and after FAS repair, for three
-    vote-extraction regimes (ms2, ms1, ms1 drop mutual). Pre- and post-repair
-    bars are nearly identical in height in every panel, reflecting the small
-    magnitude of the backward-edge-weight reduction reported in
-    Table~\ref{tab:bew-pic}.}
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/normalized_fas_weight_removed.png}
+  \caption{Mean normalized FAS weight removed under the canonical calibrated
+    protocol. This is an intrinsic graph diagnostic: the reported quantity is
+    repair weight removed divided by total graph weight, before any retrieval
+    evaluation. \texttt{ms2} is inactive by construction; most repair activity
+    is concentrated in \texttt{ms1}.}
+  \Description{A plot of normalized FAS weight removed across datasets and
+    regimes under the canonical calibrated protocol, showing zero removal in
+    ms2, substantial removal in ms1, and only small residual removal in
+    ms1 drop mutual.}
   \label{fig:bew-pic}
 \end{figure}
 
@@ -1012,735 +993,552 @@ that it does not follow uniformly.
 \section{Downstream Quality Results: Repair vs.\ Retrieval}
 \label{sec:downstream-results}
 
-Section~\ref{sec:structural-results} established that repair measurably
-improves structural consistency when the graph is cyclic. This section asks
-the separate question motivating this study: does that structural
-improvement translate into a retrieval-quality gain, measured by nDCG@$k$
-(Eq.~\eqref{eq:ndcg})? We report the paired bootstrap comparison
-(Section~\ref{sec:bootstrap}) for the repaired-versus-unrepaired Copeland and
-balance hybrids (Eq.~\eqref{eq:hybrid}), then the pooled comparison against
-fixed aggregation baselines, then the stronger-repair comparison already
-introduced in Table~\ref{tab:repair-variants}.
+The calibrated structural results above do not answer the retrieval question by
+themselves. This section therefore evaluates repaired versus unrepaired ranking
+quality directly under the canonical calibrated protocol, then asks whether any
+positive point estimates survive paired testing, multiplicity correction, and
+influence analysis. We next compare those calibrated graph-based methods with
+simple fusion baselines, examine raw-versus-calibrated sign instability, and
+close with the limited alpha sweep and balance-degeneracy audit.
 
-\subsection{Repaired vs.\ Unrepaired Hybrids}
+\subsection{Repaired vs.\ Unrepaired Retrieval Under the Canonical Protocol}
 
-Table~\ref{tab:bootstrap-delta-ndcg} reports the bootstrap mean
-$\Delta\mathrm{nDCG@}k$ (repaired minus unrepaired) for the Copeland hybrid
-under all four datasets and three regimes; the corresponding balance-hybrid
-row is degenerate at exactly $[0,0]$ in every one of the twelve cells and is
-summarized rather than tabulated in full. Figure~\ref{fig:bootstrap-delta-ndcg}
-plots all twenty-four cells (Copeland and balance) together.
+Table~\ref{tab:bootstrap-delta-ndcg} reports the active \texttt{ms1} cells for
+the calibrated Copeland graph and Copeland hybrid. Figure
+\ref{fig:bootstrap-delta-ndcg} plots the complete calibrated primary grid,
+including the many zero-effect \texttt{ms2} and \texttt{ms1\_drop\_mutual}
+comparisons. Positive point estimates exist in several cells, but none remains
+robust after the full testing and sensitivity pipeline reported below.
 
 \begin{table}[t]
-  \caption{Bootstrap mean $\Delta$nDCG@$k$ (repaired $-$ unrepaired Copeland
-    hybrid), with 95\% CI (2,000 paired query-level resamples,
-    Eq.~\eqref{eq:bootstrap-ci}).}
+  \caption{Canonical calibrated repaired-minus-unrepaired nDCG@$k$ for the
+    active \texttt{ms1} Copeland cells. Intervals are paired percentile
+    bootstrap intervals over common queries; $p_{\mathrm{perm}}$ is the paired
+    permutation test p-value on the same query set. No multiplicity adjustment
+    is applied inside this table; corrected results are discussed in the next
+    subsection.}
   \label{tab:bootstrap-delta-ndcg}
-  \begin{tabular}{llccc}
+  \scriptsize
+  \begin{tabular}{llcccc}
     \toprule
-    Dataset & Regime & $n$ & Mean $\Delta$ & 95\% CI \\
+    Dataset & Pair & Mean $\Delta$ & 95\% CI & $p_{\mathrm{perm}}$ & $+/-/=$ \\
     \midrule
-    SciDocs  & \texttt{ms2}               & 119 & 0.0 & $[0, 0]$ \\
-    SciDocs  & \texttt{ms1}               & 120 & $-0.0001$ & $[-0.0008, 0.0006]$ \\
-    SciDocs  & \texttt{ms1\_drop\_mutual} & 120 & 0.0 & $[0, 0]$ \\
-    FiQA     & \texttt{ms2}               & 117 & 0.0 & $[0, 0]$ \\
-    FiQA     & \texttt{ms1}               & 120 & $+0.0015$ & $[-0.0005, 0.0042]$ \\
-    FiQA     & \texttt{ms1\_drop\_mutual} & 120 & 0.0 & $[0, 0]$ \\
-    HotpotQA & \texttt{ms2}               & 52  & 0.0 & $[0, 0]$ \\
-    HotpotQA & \texttt{ms1}               & 52  & $\mathbf{+0.0167}$ & $\mathbf{[0, 0.0405]}$ \\
-    HotpotQA & \texttt{ms1\_drop\_mutual} & 52  & 0.0 & $[0, 0]$ \\
-    BRIGHT   & \texttt{ms2}               & 34  & 0.0 & $[0, 0]$ \\
-    BRIGHT   & \texttt{ms1}               & 50  & $+0.00002$ & $[-0.0018, 0.0016]$ \\
-    BRIGHT   & \texttt{ms1\_drop\_mutual} & 50  & 0.0 & $[0, 0]$ \\
+    SciDocs  & Copeland graph  & $+0.011$ & $[0.002, 0.022]$  & 0.020 & 36/22/62 \\
+    SciDocs  & Copeland hybrid & $+0.009$ & $[0.002, 0.017]$  & 0.012 & 30/10/80 \\
+    FiQA     & Copeland graph  & $+0.004$ & $[-0.005, 0.011]$ & 0.441 & 21/10/89 \\
+    FiQA     & Copeland hybrid & $-0.005$ & $[-0.013, 0.002]$ & 0.301 & 16/8/96 \\
+    HotpotQA & Copeland graph  & $+0.016$ & $[-0.010, 0.044]$ & 0.314 & 5/3/44 \\
+    HotpotQA & Copeland hybrid & $+0.012$ & $[0.000, 0.031]$  & 0.253 & 3/0/49 \\
+    BRIGHT   & Copeland graph  & $-0.014$ & $[-0.040, 0.006]$ & 0.267 & 19/13/18 \\
+    BRIGHT   & Copeland hybrid & $+0.001$ & $[-0.016, 0.020]$ & 0.910 & 10/10/30 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Twenty of the twenty-four dataset$\times$regime$\times$pair cells (Copeland
-and balance combined) show an interval of exactly $[0,0]$: every \texttt{ms2}
-and \texttt{ms1\_drop\_mutual} cell, and every balance-hybrid cell regardless
-of regime. This is the direct retrieval-level consequence of
-Section~\ref{sec:structural-results}'s structural finding --- when the graph
-is already near-acyclic, repair removes negligible edge weight
-(Table~\ref{tab:bew-pic}), and an intervention with nothing to act on cannot
-change the ranking it produces. Among the four \texttt{ms1}/Copeland cells,
-where the graph is substantially cyclic, three intervals straddle zero
-(SciDocs, FiQA, BRIGHT); one, HotpotQA, has a positive mean with interval
-$[0, 0.0405]$ --- the only cell in the full table whose interval does not
-extend below zero. Because its lower endpoint is exactly $0.0$, the
-appropriate reading is restrained: repair does not show evidence of harm in
-this HotpotQA \texttt{ms1} cell and may help, but the interval does not by
-itself establish a lower bound above zero. Notably, HotpotQA has the
-\emph{lowest} \texttt{ms1} cyclicity
-(51.9\%) of the four datasets (Table~\ref{tab:structural-results}) --- the one
-non-negative interval does not come from the most structurally
-inconsistent dataset, which weighs against a simple ``more cyclicity implies
-more benefit from repair'' reading of these results.
+Most calibrated repaired-versus-unrepaired cells are exactly zero because
+\texttt{ms2} is acyclic and \texttt{ms1\_drop\_mutual} is nearly acyclic on
+most queries. The substantive activity is concentrated in \texttt{ms1}, but
+even there the signs are mixed across datasets and methods. SciDocs
+\texttt{ms1} is the strongest positive point-estimate case for Copeland, with
+paired mean deltas of $+0.011$ for the graph ranking and $+0.009$ for the
+hybrid. FiQA \texttt{ms1} shows a positive Copeland graph estimate but a
+negative Copeland hybrid estimate. BRIGHT \texttt{ms1} is near zero for the
+Copeland hybrid and negative for the Copeland graph. HotpotQA \texttt{ms1}
+retains positive Copeland point estimates, but the effect is influence-sensitive
+and does not survive the robustness checks below. The HotpotQA Markov graph
+also changes sign relative to the raw-margin ablation, moving from a positive
+mean in the raw protocol to a negative mean ($-0.0023$) under the calibrated
+canonical protocol.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\linewidth]{../../../figures/manuscript/fig_delta_ndcg_bootstrap.png}
-  \caption{Bootstrap mean $\Delta$nDCG@$k$ (repaired $-$ unrepaired hybrid
-    ranking) with 95\% confidence intervals, for Copeland and balance hybrids,
-    across four datasets and three vote-extraction regimes (24 cells total,
-    six per dataset panel). Twenty cells are degenerate at $[0,0]$; among the
-    four active \texttt{ms1}/Copeland cells, only HotpotQA's interval does not
-    extend below zero.}
-  \Description{Grid of four forest-plot panels, one per dataset (SciDocs,
-    FiQA, HotpotQA, BRIGHT). Each panel has six rows, one per combination of
-    the three vote-extraction regimes (ms2, ms1, ms1 drop mutual) and the two
-    hybrid pairs (Copeland, balance), showing the bootstrap mean difference in
-    nDCG between repaired and unrepaired rankings with horizontal 95 percent
-    confidence interval whiskers and a vertical dashed reference line at zero.
-    In every panel, five of the six rows are points exactly at zero with
-    zero-width intervals; the sixth row (ms1, Copeland) is non-degenerate in
-    all four panels, and only in the HotpotQA panel does that row's interval
-    not extend below zero.}
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/repair_deltas_primary_with_intervals.png}
+  \caption{Canonical calibrated repaired-minus-unrepaired deltas with paired
+    95\% bootstrap intervals. Each point uses common-query pairing within a
+    dataset, regime, and method pair. The figure is descriptive: multiplicity
+    correction is applied later, and no positive cell remains robust after that
+    correction.}
+  \Description{A calibrated forest plot of repaired-minus-unrepaired nDCG
+    deltas across datasets, regimes, and method pairs, with most cells at or
+    near zero and only a few positive ms1 Copeland cells standing out before
+    multiplicity correction.}
   \label{fig:bootstrap-delta-ndcg}
+\end{figure}
+
+\subsection{Multiplicity and Influence Robustness}
+
+None of the positive repaired-versus-unrepaired cells remains robust after the
+primary multiplicity correction family is applied. The two smallest raw paired
+permutation p-values occur on SciDocs \texttt{ms1} Copeland hybrid
+($p=0.012$) and SciDocs \texttt{ms1} Copeland graph ($p=0.020$), but both lose
+support after Holm and Benjamini--Hochberg adjustment. The HotpotQA
+\texttt{ms1} Copeland hybrid, which previously supplied the paper's positive
+headline, has a fresh paired permutation p-value of approximately $0.253$ under
+the canonical calibrated protocol and an interval whose lower endpoint is
+exactly zero rather than strictly positive.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/hotpotqa_query_level_influence.png}
+
+  \vspace{0.5em}
+
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/scidocs_query_level_influence.png}
+  \caption{Influence sensitivity for the two main positive-point-estimate cases
+    discussed in the text. Top: HotpotQA \texttt{ms1} Copeland hybrid under the
+    canonical calibrated protocol. Bottom: SciDocs \texttt{ms1} Copeland hybrid
+    under the same protocol. These plots are paired-query diagnostics; they are
+    descriptive and no multiplicity correction is applied within the figure.}
+  \Description{Two stacked influence plots. The top plot shows HotpotQA
+    copeland-hybrid query-level repaired-minus-unrepaired deltas under the
+    canonical calibrated protocol, with a few positive queries dominating the
+    mean. The bottom plot shows the corresponding SciDocs plot, where influence
+    is more diffuse and the mean remains positive under top-query removal.}
+  \label{fig:influence-robustness}
+\end{figure}
+
+HotpotQA's positive mean is concentrated in a handful of queries. Removing the
+top one influential query reduces the calibrated \texttt{ms1} Copeland-hybrid
+mean delta from $+0.0123$ to $+0.0053$; removing the top two reduces it to
+$+0.0009$; removing the top three or top four drives the mean to exactly zero.
+SciDocs is less concentrated: the corresponding Copeland-hybrid mean remains
+positive after removing the top one, two, three, and four influential queries
+($+0.0055$, $+0.0036$, $+0.0048$, and $+0.0041$), but these nominal positives
+still do not survive multiplicity correction. The calibrated evidence therefore
+supports influence-sensitive positive point estimates in a small number of
+cells, not a robust positive retrieval effect of repair.
+
+\subsection{Raw Versus Calibrated Sign Instability}
+
+Calibration changes retrieval conclusions as well as structure. Table
+\ref{tab:raw-calibrated-ablation} lists the five most consequential sign flips
+between the raw-margin ablation and the canonical calibrated protocol. These
+flips are not incidental numeric perturbations: they accompany large shifts in
+edge retention, edge weighting, and removed-edge overlap, so they show that the
+paper's downstream conclusions are not calibration invariant.
+
+\begin{table}[t]
+  \caption{Sign changes between the raw-margin ablation and the canonical
+    calibrated protocol. The raw protocol uses native heterogeneous scores with
+    fixed thresholds and is shown only as an ablation. The calibrated protocol
+    uses per-query/per-ranker min--max normalization with retention-matched
+    thresholds. Values are repaired-minus-unrepaired mean nDCG@$k$.}
+  \label{tab:raw-calibrated-ablation}
+  \begin{tabular}{llcc}
+    \toprule
+    Dataset & Cell & Raw & Calibrated \\
+    \midrule
+    SciDocs  & \texttt{ms1} Copeland graph  & $-0.0079$ & $+0.0110$ \\
+    SciDocs  & \texttt{ms1} Copeland hybrid & $-0.0018$ & $+0.0085$ \\
+    FiQA     & \texttt{ms1} Copeland graph  & $-0.0029$ & $+0.0036$ \\
+    BRIGHT   & \texttt{ms1} Copeland hybrid & $-0.0045$ & $+0.0006$ \\
+    HotpotQA & \texttt{ms1} Markov graph    & $+0.0087$ & $-0.0023$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_retrieval_deltas.png}
+  \caption{Raw-margin ablation versus canonical calibrated repaired-minus-unrepaired
+    retrieval deltas. The raw protocol is an ablation only; the calibrated
+    protocol is the main evidence. Sign changes indicate that retrieval
+    conclusions are not stable under score-scale handling.}
+  \Description{A raw-versus-calibrated comparison plot of repaired-minus-unrepaired
+    retrieval deltas, highlighting sign changes in several dataset and method
+    cells when the canonical calibrated protocol replaces the raw-margin
+    ablation.}
+  \label{fig:raw-calibrated-deltas}
 \end{figure}
 
 \subsection{Comparison with Fixed Aggregation Baselines}
 
-The comparison above isolates the marginal effect of repair while holding
-fusion and extraction fixed. A separate question is whether the resulting
-hybrid pipeline is competitive with simple aggregation rules that never
-inspect graph structure at all. Table~\ref{tab:pooled-baseline} reports mean
-nDCG@$k$ pooled over the 1,020-record failure-mining corpus
-(Section~\ref{sec:baselines}) for twelve methods, and
-Figure~\ref{fig:mean-ndcg-hybrids} visualizes the same pooled ordering with
-marginal bootstrap intervals.
+The calibrated repaired-versus-unrepaired analysis isolates the marginal effect
+of repair, but it does not answer whether graph-based methods outperform simple
+fusion baselines. Table~\ref{tab:pooled-baseline} therefore reports dataset
+macro-averages under the primary \texttt{ms1} protocol, and
+Figure~\ref{fig:mean-ndcg-hybrids} shows the corresponding per-dataset baseline
+comparison. We use dataset-level summaries rather than pooled
+query$\times$regime means because the calibrated conclusions are not uniform
+across datasets.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.98\linewidth]{../../../figures/manuscript/fig_mean_ndcg_hybrids.pdf}
-  \caption{Pooled mean nDCG@$k$ by ranking method across 1,020
-    query$\times$regime records from the failure-mining evaluation corpus.
-    Points show method means; horizontal whiskers show 95\%
-    clustered-bootstrap confidence intervals computed over 342 independent
-    query clusters. Methods are ordered by point estimate and grouped by
-    whether their score depends on the preference graph. CombSUM and
-    reciprocal rank fusion have the two highest pooled mean nDCG point
-    estimates, followed by the prior ranking; all graph-dependent methods are
-    lower by point estimate. The intervals shown are marginal method-wise
-    confidence intervals, not paired tests between methods.}
-  \Description{Horizontal point-and-interval plot of pooled mean nDCG at
-    cutoff k for twelve ranking methods across 1,020 query-times-regime
-    records, with clustered 95 percent bootstrap confidence intervals computed
-    over 342 independent queries. Methods are ordered from highest to lowest
-    point estimate and grouped into graph-independent and graph-dependent
-    families. CombSUM is highest by point estimate, followed by reciprocal
-    rank fusion and the prior ranking.}
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/per_dataset_baseline_comparison.png}
+  \caption{Per-dataset baseline comparison under the canonical calibrated
+    protocol. Intervals, where shown, are descriptive bootstrap summaries
+    within a dataset rather than multiplicity-adjusted paired tests across the
+    whole figure. The comparison separates the strong simple baselines from the
+    repaired-versus-unrepaired question.}
+  \Description{A per-dataset comparison of ranking methods under the canonical
+    calibrated protocol, showing simple baselines such as CombSUM, RRF, and the
+    prior alongside graph-based and hybrid methods.}
   \label{fig:mean-ndcg-hybrids}
 \end{figure}
 
 \begin{table}[t]
-  \caption{Pooled mean nDCG@$k$ by method, 1,020 query$\times$regime records
-    (failure-mining protocol; Section~\ref{sec:baselines}).}
+  \caption{Dataset-macro comparison under the canonical calibrated protocol,
+    \texttt{ms1} only. Mean nDCG is averaged across the four datasets; average
+    rank is the mean within-dataset rank by mean nDCG. Because Prior and RRF
+    use closely related but not identical implementations, both are reported
+    separately rather than treated as the same baseline.}
   \label{tab:pooled-baseline}
-  \begin{tabular}{lc}
+  \begin{tabular}{lcc}
     \toprule
-    Method & Mean nDCG \\
+    Method & Macro mean nDCG & Avg. rank \\
     \midrule
-    CombSUM                  & \textbf{0.462} \\
-    Reciprocal rank fusion   & 0.459 \\
-    Prior only               & 0.457 \\
-    Repair-based hybrid ($\alpha=0.3$) & 0.455 \\
-    Exact-for-small-components hybrid & 0.455 \\
-    Borda-count fusion       & 0.439 \\
-    Copeland unrepaired      & 0.439 \\
-    Copeland repaired        & 0.439 \\
-    Markov repaired          & 0.435 \\
-    Markov unrepaired        & 0.434 \\
-    Balance hybrid           & 0.434 \\
-    Score-sum (graph)        & 0.433 \\
+    CombSUM                  & \textbf{0.554} & 3.25 \\
+    Balance hybrid unrepaired& 0.548 & 4.75 \\
+    Balance hybrid repaired  & 0.547 & 6.00 \\
+    RRF                      & 0.546 & 5.50 \\
+    Copeland hybrid repaired & 0.546 & 6.50 \\
+    Prior                    & 0.545 & 6.75 \\
+    Borda fusion             & 0.545 & 6.00 \\
+    Balance repaired         & 0.539 & 8.25 \\
+    Balance unrepaired       & 0.539 & 8.25 \\
+    Markov unrepaired        & 0.537 & 9.50 \\
+    Markov repaired          & 0.537 & 9.25 \\
+    Copeland repaired        & 0.534 & 11.00 \\
+    Copeland unrepaired      & 0.530 & 11.00 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-CombSUM and reciprocal rank fusion --- both graph-independent
-(Section~\ref{sec:baselines}) --- achieve the highest and second-highest
-pooled mean nDCG, ahead of every graph-based method including the repaired
-Copeland hybrid and the repair-based hybrid construction evaluated in this
-paper. The prior ranking alone also exceeds repaired Copeland. This is a
-direct answer to whether graph repair combined with hybrid fusion is a
-better retrieval strategy than substantially simpler alternatives: on this
-pooled comparison, it is not. As noted in Section~\ref{sec:baselines},
-CombSUM, RRF, Borda-count, and the prior ranking are regime-invariant by
-construction, so their pooled $n$ reflects corpus completeness across
-regime-labeled rows for the same underlying queries rather than independent
-per-regime observations; this affects the precision of their own reported
-estimates. We therefore report Figure~\ref{fig:mean-ndcg-hybrids}'s
-uncertainty using a clustered bootstrap over independent queries rather than
-treating all 1,020 rows as exchangeable draws. Even with that correction, the
-main descriptive result is unchanged: graph-independent baselines occupy the
-top of the pooled point-estimate ranking, and the graph-dependent methods form
-the lower group.
+Simple fusion baselines remain strong after calibration. CombSUM has the
+highest dataset-macro mean under primary \texttt{ms1}; RRF is also competitive,
+and both outperform the repaired Copeland graph methods on this summary. The
+Prior baseline uses the same RRF family on candidate nodes but differs from the
+standalone RRF baseline in implementation details and exact tie-breaking, so we
+report both rather than treating them as interchangeable; across the full run,
+their exact rankings match in only 216 of 6,156 comparable cases. The
+calibrated evidence therefore does not support a claim that graph repair makes
+simple baselines obsolete.
 
-\subsection{Stronger Repair Does Not Change the Conclusion}
+\subsection{Alpha Sensitivity and Balance Degeneracy}
 
-Table~\ref{tab:repair-variants} (Section~\ref{sec:repair-variants}) compares
-the greedy heuristic against the exact-for-small-components procedure on the
-full 1,020-record dataset. Exact-for-small-components removes
-marginally less mean structural weight than greedy on this corpus (0.546 vs.\
-0.547), which is the direction favored by the stated objective, and the paired
-pooled Copeland nDCG difference is effectively zero (mean $\Delta =
--0.0000358$, 95\% CI $[-0.000107, 0.0]$). Exact-for-small-components is exact
-only on strongly connected components of at most 10 nodes, falling back to
-greedy above that size; it is not a globally exact solver for the whole graph,
-and we do not describe it as one. This comparison is, by itself, sufficient
-to answer whether more accurate optimization of the same structural objective
-changes the paper's retrieval conclusion: it does not.
-
-% =============================================================================
-\section{Failure Taxonomy and Diagnostic Analysis}
-\label{sec:failure-taxonomy}
-
-Section~\ref{sec:downstream-results} showed that repair's retrieval effect is
-usually null and occasionally negative. This section asks why, decomposing
-the same 1,020-record pooled corpus into six deterministic, mutually
-exclusive failure classes (Table~\ref{tab:failure-taxonomy};
-Figure~\ref{fig:failure-classes}).
-
-\subsection{Rule-Based Taxonomy Assignment}
-
-Failure labels are assigned by a fixed decision sequence over the repaired and
-unrepaired graph/ranking pair for each query$\times$regime record, not by a
-free-form manual coding pass. The rule set first checks whether repair changes
-graph topology at all (\textbf{repair-inactive}); then whether the extracted
-ranking is unchanged despite a graph change (\textbf{extraction-insensitivity});
-then whether any ranking change is confined below the evaluation cutoff while
-$\Delta$nDCG remains zero (\textbf{tail-only change}); then whether the top-$k$
-ranking changes but nDCG remains zero because relevance grades are unchanged
-(\textbf{metric-neutral change}); then whether $\Delta$nDCG is negative
-(\textbf{wrong-direction repair}); and assigns the residual cases to
-\textbf{unknown/mixed}. The class definitions were fixed once in code and
-applied uniformly to all 1,020 records. This makes the taxonomy exactly
-reproducible, but it also means there is no separate adjudication stage or
-inter-annotator agreement statistic; the taxonomy is limited to mechanisms
-expressible in the engineered rules.
+The small alpha sweep does not rescue a robust positive repair result.
+Table~\ref{tab:alpha-sensitivity} reports the primary \texttt{ms1}
+Copeland-hybrid delta over $\alpha\in\{0.1, 0.3, 0.5, 1.0\}$. SciDocs remains
+positive for $\alpha\in\{0.3,0.5,1.0\}$, but those gains are still not robust
+after multiplicity correction. HotpotQA stays positive for
+$\alpha\in\{0.3,0.5,1.0\}$, but the effect remains influence-sensitive. FiQA
+and BRIGHT change sign within this small sweep, showing that stronger graph
+weight does not induce a stable benefit.
 
 \begin{table}[t]
-  \caption{Rule-based failure-class taxonomy, 1,020
-    query$\times$regime records.}
-  \label{tab:failure-taxonomy}
-  \begin{tabular}{lccc}
+  \caption{Copeland-hybrid alpha sensitivity under the canonical calibrated
+    protocol, \texttt{ms1} only. Entries are repaired-minus-unrepaired mean
+    nDCG@$k$; this is a small sensitivity sweep, not a tuned hyperparameter
+    search.}
+  \label{tab:alpha-sensitivity}
+  \begin{tabular}{lrrrr}
     \toprule
-    Class & Count & \% & Mean $\Delta$nDCG \\
+    Dataset & $\alpha=0.1$ & $\alpha=0.3$ & $\alpha=0.5$ & $\alpha=1.0$ \\
     \midrule
-    Repair-inactive              & 652 & 63.9 & 0.000 \\
-    Tail-only change             & 210 & 20.6 & 0.000 \\
-    Wrong-direction repair       & 55  & 5.4  & $-0.034$ \\
-    Metric-neutral change        & 54  & 5.3  & 0.000 \\
-    Extraction-insensitivity     & 26  & 2.5  & $+0.014$ \\
-    Unknown / mixed              & 23  & 2.3  & $+0.036$ \\
+    SciDocs  & $-0.0022$ & $+0.0085$ & $+0.0097$ & $+0.0083$ \\
+    FiQA     & $+0.0006$ & $-0.0046$ & $+0.0010$ & $+0.0038$ \\
+    HotpotQA & $-0.0008$ & $+0.0123$ & $+0.0120$ & $+0.0101$ \\
+    BRIGHT   & $-0.0013$ & $+0.0006$ & $-0.0074$ & $-0.0071$ \\
     \bottomrule
   \end{tabular}
 \end{table}
-
-\textbf{Repair-inactive} (63.9\%, the dominant class) covers cases where FAS
-repair removes negligible or zero edge weight, so the repaired and unrepaired
-rankings coincide by construction --- the direct query-level manifestation of
-the near-acyclic regimes in Section~\ref{sec:structural-results}.
-\textbf{Tail-only change} (20.6\%) covers cases where repair does alter the
-underlying graph ranking, but only below the evaluation cutoff, leaving
-nDCG@$k$ unchanged: the structural intervention is real but invisible to the
-retrieval metric at the depth we score. \textbf{Metric-neutral change} (5.3\%)
-covers cases where repair changes which documents occupy the top ranks
-without changing their relevance grades, so nDCG is unaffected even though
-the ranking itself differs. \textbf{Extraction-insensitivity} (2.5\%) covers
-cases where the Copeland or balance scoring rule (Section~\ref{sec:extraction})
-is itself insensitive to the specific edges repair removes, so the score
-computed from the repaired graph reproduces the unrepaired ranking. Together,
-these four classes --- 91.7\% of all records --- describe mechanisms by which
-a structural intervention fails to reach the retrieval metric at all, not
-mechanisms by which repair actively harms retrieval.
-
-\textbf{Wrong-direction repair} (5.4\%) is the only class with a materially
-negative mean $\Delta$nDCG ($-0.034$): here repair changes the ranking and the
-change moves relevant documents down, not up. This is the class in which
-repair is actively harmful, and it is a minority of cases even within the
-already-small set of records where repair is retrieval-active at all.
-\textbf{Unknown/mixed} (2.3\%) covers records that do not cleanly fit the
-other five rule-defined categories. The counterfactual analysis
-underlying this taxonomy additionally finds that \emph{no repair} is the
-minimal intervention that would have avoided every wrong-direction case ---
-i.e., for the harmful subset, keeping the unrepaired ranking would have been
-sufficient, and no repaired variant recovers the loss.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.98\linewidth]{../../../figures/manuscript/fig_failure_classes.pdf}
-  \caption{Distribution of rule-based failure classes across 1,020
-    query$\times$regime records. Repair-inactive (63.9\%) and tail-only
-    change (20.6\%) account for the large majority of cases and describe
-    mechanisms by which a structural repair fails to reach the retrieval
-    metric at all, rather than mechanisms of active harm. Wrong-direction
-    repair (5.4\%) is the only class with a materially negative mean
-    $\Delta$nDCG and represents the minority of cases in which repair is
-    actively unhelpful. See Table~\ref{tab:failure-taxonomy} for exact
-    counts, percentages, and mean $\Delta$nDCG per class.}
-  \Description{Horizontal bar chart of six rule-based failure classes ordered by
-    count: Repair-inactive 652 (63.9 percent), Tail-only change 210
-    (20.6 percent), Wrong-direction repair 55 (5.4 percent), Metric-neutral
-    change 54 (5.3 percent), Extraction-insensitivity 26 (2.5 percent), and
-    Unknown or mixed 23 (2.3 percent).}
-  \label{fig:failure-classes}
+  \includegraphics[width=0.95\linewidth]{../../../reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/alpha_sensitivity.png}
+  \caption{Alpha sensitivity for the canonical calibrated hybrids. The plot is
+    descriptive: it shows how repaired-minus-unrepaired means move as the graph
+    component receives more or less weight, but it does not constitute a
+    hyperparameter search or multiplicity-adjusted test.}
+  \Description{A multi-line plot of repaired-minus-unrepaired mean nDCG by
+    alpha under the canonical calibrated protocol for the four datasets,
+    showing that signs and magnitudes remain small and unstable.}
+  \label{fig:alpha-sensitivity}
 \end{figure}
 
-Two mechanisms recur across these classes and connect back to earlier
-sections. First, candidate ordering and graph construction jointly determine
-whether repair has anything to act on: Section~\ref{sec:structural-results}
-showed this at the graph level (cyclicity by regime), and the
-repair-inactive class shows it at the query level. Second, fusion can
-suppress a graph-level change from ever reaching the final ranking: for the
-Copeland component under the reciprocal-rank-fusion combination used in the
-main hybrid ($\alpha = 0.3$), a repair-induced change to the raw graph
-ranking is masked by fusion --- the fused ranking is unchanged even though
-the underlying graph ranking is not --- in 14.7\% of query-method comparisons
-where the graph ranking changed at all in a supporting extraction/fusion
-audit;
-the corresponding rate varies by component and fusion mode, from 4.8\% to
-26.4\%. This is a contributing mechanism for a subset of the null results
-above, not a single explanation for all of them: it is consistent with, and
-partially overlaps, the tail-only-change and extraction-insensitivity
-classes, but the taxonomy's six categories should be read as the more
-complete account.
-
-\begin{table}[t]
-  \caption{Additional negative diagnostic evidence beyond the main
-    repaired-versus-unrepaired comparison.}
-  \label{tab:diagnostic-negatives}
-  \small
-  \begin{tabular}{p{2.1cm}p{3.0cm}p{4.0cm}p{3.2cm}}
-    \toprule
-    Analysis & Protocol & Quantitative summary & Interpretation \\
-    \midrule
-    Regret decomposition & 1,020 pooled records; separate counterfactual comparisons against the current repair-based method & Mean foregone nDCG: repair choice 0.0019 (3.7\% of mean total regret), extraction 0.0041 (8.1\%), fusion 0.0085 (16.6\%), selector policy 0.0106 (20.7\%), graph construction 0.0390 (76.6\%), missing candidate information 0.0464 (91.1\%) & Repair choice is a minor contributor relative to graph construction and candidate-set limits; percentages are non-additive counterfactual shares, not a causal partition. \\
-    Learned selector & Features \{BEW, disagreement, SCC count, cyclicity\}; random 60/20/20 split plus leave-one-dataset-out & Best test policy nDCG is a fixed disagreement threshold (0.5360) versus never repair 0.5279; learned logistic 0.5233 and tree 0.5212 are lower & No learned selector improves over the best simple heuristic overall. \\
-    Failure-pattern prediction & Grouped 60/20/20 split by independent query; logistic, shallow tree, random forest & Best operational test metrics are ROC-AUC up to 0.885 and PR-AUC up to 0.325 on rare help/harm or any-non-neutral targets; no permutation-validated deployment rule is retained in the reports & Moderate separability does not translate into a validated operational selector under severe class imbalance. \\
-    Counterfactual stress test & 40 generated counterfactuals, 34 accepted for review & For the main Copeland hybrid: 27 qrel-valid neutral cases, 0 valid help cases, 0 valid harm cases, 7 invalid by qrel-reuse checks & Synthetic counterfactual generation did not produce scientifically usable non-neutral cases in this study. \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-These auxiliary diagnostics sharpen the same conclusion from different angles.
-The regret audit shows that, on this pooled corpus, most mean foregone nDCG is
-associated with graph construction and candidate-set limitations rather than
-with the repair decision itself. The learned-selector study reaches the same
-endpoint operationally: simple disagreement-threshold heuristics match or beat
-the learned policies, and no learned selector outperforms the best fixed rule
-overall. The failure-pattern predictors provide some class separation in ROC
-space, but precision-recall remains modest on the rare positive cases that
-would matter for deployment. Finally, the counterfactual-generation stress
-test does not rescue sample size: after acceptance and qrel-reuse validity
-checks, it yields no scientifically valid non-neutral case for the main
-method. We therefore use these studies as negative diagnostic evidence, not as
-the basis for a deployable repair-trigger policy.
-
-The practical interpretation is direct: for a retrieval pipeline
-considering whether to add graph repair, the taxonomy indicates that the
-typical outcome is inactivity or an invisible tail-only change, a small
-fraction of cases are neutral or actively harmful, and a positive mean whose
-interval does not extend below zero appears in only one dataset/regime cell
-(Section~\ref{sec:downstream-results}).
-This is a diagnostic account of \emph{why} repair behaves this way in the
-cases observed, not a validated predictive rule for deciding in advance
-whether a new query or dataset will fall into one class or another; we
-return to this distinction in Section~\ref{sec:discussion}.
-
-\FloatBarrier
+The balance degeneracy audit explains why many balance results remain exactly
+or nearly zero despite nontrivial graph changes. Under the primary
+\texttt{ms1} protocol, the graph changes on 119/120 SciDocs queries, 118/120
+FiQA queries, 33/52 HotpotQA queries, and 46/50 BRIGHT queries. Those changes
+do not consistently propagate to the evaluation metric: the full
+balance-hybrid ranking changes on only 68, 68, 7, and 20 queries respectively,
+and nDCG changes on only 8, 5, 1, and 8 queries. In other words, the graph can
+change, the balance scores can change, and even the top-$k$ order can change
+without altering the relevance sequence scored by nDCG@$k$. The balance results
+are therefore not mysterious nulls; they are a direct consequence of
+downstream propagation failure from graph repair to the evaluated prefix.
 
 % =============================================================================
-\section{Bounded Real-LLM Validation}
+\clearpage
+\section{Secondary Analyses and Scope Checks}
+\label{sec:secondary-checks}
+
+The calibrated core evidence of this paper is contained in
+Sections~\ref{sec:structural-results} and~\ref{sec:downstream-results}. The
+four topics below are retained only as scoped secondary notes because they do
+not currently meet the same evidentiary standard as the calibrated mechanical
+evaluation.
+
+\subsection{Rule-Based Outcome Taxonomy}
+\label{sec:failure-taxonomy}
+
+An earlier draft summarized repair outcomes with a six-way failure taxonomy
+computed over a separate 1,020-record raw-margin failure-mining corpus. The
+blocking audit showed that this taxonomy is not manually verified: it is an
+automated rule cascade whose final labels depend heavily on branch precedence,
+and its counts were never regenerated for the calibrated canonical protocol.
+Because calibration changes retained edges, removed edges, and
+repaired-versus-unrepaired signs, those historical counts are not appropriate
+as current evidence for the revised paper.
+
+We therefore remove the old taxonomy table and figure from the main empirical
+narrative. A calibrated \emph{rule-based outcome taxonomy} may still be useful
+as future descriptive analysis, but it would need to be regenerated under the
+canonical protocol before interpretation. Such a taxonomy would remain a
+retrospective outcome classification, not a validated predictive mechanism
+available before repair.
+
+\subsection{Protocol Audit of Stored LLM Judgments}
 \label{sec:real-llm}
 
-The main evidence base (Sections~\ref{sec:structural-results}--\ref{sec:failure-taxonomy})
-uses mechanical, score-derived votes from BM25, TF-IDF, and MiniLM
-(Section~\ref{sec:rankers}). This section reports a bounded check of whether
-the same regime-conditional pattern persists under genuine large-language-model
-pairwise judgments. The paired summary in Table~\ref{tab:real-llm-summary}
-uses OpenAI pairwise judgments on SciDocs, HotpotQA, and FiQA. Separately,
-we analyze a protocol-distinct multi-provider failure-mining corpus with
-Cohere/Azure pairwise judgments on FiQA, HotpotQA, and BRIGHT;
-because it compares repaired and unrepaired Markov rankings under a different
-query sample and sampling design, we do not pool it with
-Table~\ref{tab:real-llm-summary} or treat it as a direct replication.
+We also inspected stored real-LLM judgment corpora to determine whether they
+provide an independent validation of the calibrated mechanical study. They do
+not currently support that role. The stored corpora exhibit parser defaults
+that silently map ambiguous or malformed outputs to a fixed label, measurable
+provider-dependent position bias, incomplete raw-text and exclusion logging,
+and protocol differences across providers and method families. These issues are
+serious enough that apparent cyclicity in a naively constructed LLM-derived
+graph can be dominated by pipeline artifacts rather than by genuine model
+disagreement.
 
-\begin{table}[t]
-  \caption{Real-LLM pairwise pilot summary. $\Delta$nDCG is repaired minus
-    unrepaired Copeland hybrid.}
-  \label{tab:real-llm-summary}
-  \begin{tabular}{lccc}
-    \toprule
-    Dataset & Queries & Cyclic\% & $\Delta$nDCG (95\% CI) \\
-    \midrule
-    SciDocs  & 50 & 92.0 & $-0.0010$ $[-0.0019, -0.0002]$ \\
-    HotpotQA & 20 & 80.0 & $0.0$ $[0, 0]$ \\
-    FiQA     & 10\textsuperscript{a} & 10.0 & $0.0$ $[0, 0]$ \\
-    \bottomrule
-  \end{tabular}
-  \\[2pt]
-  \footnotesize\textsuperscript{a}10 of a 20-query target contribute usable
-  paired records in the stored summary; the logs record no API errors for this
-  run, but no per-query exclusion audit is available, so selection bias
-  remains possible.
-\end{table}
+For that reason, we do not pool the stored LLM corpora with the canonical
+mechanical-vote evaluation or treat them as a parallel replication. The main
+lesson from these records is methodological: pairwise-judgment pipelines can
+manufacture apparent inconsistency if prompt symmetry, abstention behavior,
+parser handling, and exclusion accounting are not controlled carefully.
+Accordingly, we retain this material only as a bounded artifact audit.
 
-Cyclicity under real LLM pairwise judgments is, as under the mechanical
-votes, regime- and dataset-sensitive: SciDocs and HotpotQA form a
-high-cyclicity setting (92.0\% and 80.0\% of queries), while FiQA is
-low-cyclicity in this run (10.0\%). Repaired-versus-unrepaired Copeland
-$\Delta$nDCG is small throughout: SciDocs shows a small \emph{negative}
-effect with a 95\% CI that excludes zero ($-0.0010$, $[-0.0019, -0.0002]$);
-HotpotQA and FiQA are both degenerate at exactly zero. We report the SciDocs
-result plainly rather than softening it: the one real-LLM cell with a
-confidently non-null effect in this study is negative, not positive,
-reinforcing rather than contradicting the decoupling pattern of
-Section~\ref{sec:downstream-results}.
+A future LLM-based study intended to support the paper's central claims would
+need randomized candidate order, symmetric A/B and B/A prompting, abstention on
+malformed or ambiguous outputs, no default-label fallback, complete exclusion
+logs, and matched query/method protocols across providers.
 
-The protocol-distinct multi-provider corpus is directionally consistent with
-the same picture while broadening scope to BRIGHT and a second provider
-family. Across its 200 query-regime records, repair is inactive in all
-62 \texttt{ms2} records and all 69 \texttt{ms1\_drop\_mutual} records; in
-\texttt{ms1}, it yields one help case and one harm case among 69 records.
-Because that corpus compares repaired and unrepaired Markov rankings rather
-than the Copeland-hybrid pair summarized in Table~\ref{tab:real-llm-summary},
-we use it only as corroborative scope evidence rather than as a pooled
-estimate.
-
-This evidence is corroborative, not primary. Query budgets are small (10--50
-per dataset, an order of magnitude or more below the mechanical-vote
-per-regime counts in Table~\ref{tab:dataset-stats}), the paired
-cross-dataset summary itself uses a single provider, and FiQA's count
-reflects a usable-query-constrained subset of a larger target without a
-recorded exclusion audit. The separate multi-provider
-corpus extends scope but follows a different protocol and method pair. We
-treat this section as a bounded check that the
-structural/retrieval decoupling pattern is not an artifact specific to
-mechanical score-derived votes, not as an independent confirmation at the
-same evidentiary standard as Sections~\ref{sec:structural-results}--\ref{sec:failure-taxonomy},
-and we do not draw conclusions from it beyond that limited scope.
-
-% =============================================================================
-\section{Efficiency and Practical Considerations}
+\subsection{Implementation Cost Note}
 \label{sec:efficiency}
 
-We summarize existing runtime and memory evidence from the real-data pipeline
-(Section~\ref{sec:implementation}); this section reports only measurements
-already collected, not a new benchmarking exercise. On the full evaluation
-dataset, greedy repair's measured wall-clock cost is effectively at the
-resolution floor of our timing instrumentation ($\approx 0$s per query in the
-pooled aggregation); exact-for-small-components adds a modest, measurable
-overhead (mean $0.062$s per query, mean peak RSS $\approx 1{,}646$MB) relative
-to the same baseline. Given the retrieval-quality comparison in
-Section~\ref{sec:downstream-results}, this additional cost is not accompanied
-by a meaningful change in pooled Copeland nDCG on this corpus: the paired
-difference is effectively zero within the reported interval. We therefore
-report the efficiency evidence descriptively rather than as a general
-recommendation about the favorable operating point for all deployments.
+We retain only a bounded implementation-cost observation. The calibrated core
+pipeline is CPU-only and practical on the graph sizes studied here, but the
+available runtime and memory evidence comes from a single unbenchmarked local
+machine with coarse resident-set-size snapshots and some timings near the
+instrumentation floor. We therefore do not present efficiency as a substantive
+contribution or make cross-system scaling claims. Repair cost depends on graph
+size, density, and SCC structure, and a controlled hardware benchmark would be
+required before stronger conclusions could be justified.
 
-We are explicit about the limits of this evidence. Runtime and memory were
-measured on a single, unbenchmarked local development machine
-(Section~\ref{sec:implementation}), not a controlled hardware configuration,
-so absolute figures should not be read as generalizing to other environments;
-memory is a coarse before/after resident-set-size snapshot, not instrumented
-peak-memory tracking. We are not aware of a publicly documented, comparable real-data
-memory benchmark beyond the single comparison reported here, and we do not
-extrapolate from it to a general efficiency claim. A separate, purely
-synthetic runtime study elsewhere in the supporting materials (dense
-synthetic graphs, up to 100 items) shows repair cost growing steeply with
-graph size, but that study uses artificially dense graphs unlike the sparser
-real preference graphs evaluated here, and we do not treat it as evidence
-about the real pipeline's scaling behavior.
-
-% =============================================================================
-\section{CARB Benchmark}
+\subsection{Planned CARB Resource}
 \label{sec:carb}
 
-A planned companion resource, which we refer to as the
-\emph{Consistency-Aware Reranking Benchmark} (CARB), would package the derived
-graph-theoretic features, repair outcomes, ranking scores, and diagnostic
-labels underlying Sections~\ref{sec:structural-results}--\ref{sec:failure-taxonomy}
-for follow-on preference-graph data-quality research. In the current revision,
-however, CARB is not yet packaged as anonymous supplementary material, so we
-do not present it as a released contribution.
-
-The richest stored layout is a wide query$\times$regime record.
-Table~\ref{tab:carb-stats} therefore summarizes the planned scope as 440
-independent queries across the four datasets studied here and 1,020
-query$\times$regime records (Section~\ref{sec:regimes}). The reported figure
-``366'' refers to the number of method-output fields stored in that wide
-record layout, not to 366 independent methods attached to every long-form
-observation used elsewhere in the paper. Those fields are organized into 14 or
-more feature groups spanning pre-repair graph structure (cyclicity, SCC size,
-edge counts), repair outcomes (FAS weight removed), ranking scores, and the
-failure-class labels of Section~\ref{sec:failure-taxonomy}.
-
-\begin{table}[t]
-  \caption{Planned CARB release statistics.}
-  \label{tab:carb-stats}
-  \begin{tabular}{lc}
-    \toprule
-    Statistic & Value \\
-    \midrule
-    Independent queries        & 440 \\
-    Query$\times$regime records & 1{,}020 \\
-    Method-output fields in wide record & 366 \\
-    Feature groups              & 14+ \\
-    Source datasets             & SciDocs, FiQA, HotpotQA, BRIGHT \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Provenance is derived entirely from the four public source datasets already
-cited (Section~\ref{sec:datasets}) and from the mechanical ranker scores and
-repair pipeline described in Sections~\ref{sec:methodology}
-and~\ref{sec:experimental-setup}; no raw document text or third-party corpus
-content is intended for redistribution, and any eventual redistribution would
-be feature-only (graph statistics, scores, and labels), respecting the
-licensing terms of the underlying source datasets. If prepared for release, a
-data card should document schema, provenance, known limitations (including the
-BEW/PIC circularity noted in Section~\ref{sec:structural-results} and the
-rule-based nature of the failure taxonomy), and intended uses. No empirical
-claim in this paper depends on CARB's public availability.
+We do not present CARB as a released benchmark in this review draft. A
+feature-only companion resource remains planned, but it is not part of the
+current anonymous review package, no empirical claim in this paper depends on
+its availability, and earlier draft release counts were not sufficiently
+reconciled to retain as settled manuscript facts. Any future CARB release would
+need a review-ready package, corrected scope statistics, and a licensing review
+consistent with the source datasets' redistribution terms.
 
 % =============================================================================
 \section{Discussion}
 \label{sec:discussion}
 
-The results assembled in Sections~\ref{sec:structural-results}--\ref{sec:efficiency}
-support a single, consistent interpretation: structural consistency and
-downstream retrieval utility are related but separable dimensions of data
-quality, and improving the former is not a reliable route to improving the
-latter. We discuss what this decoupling means, why it arises mechanically
-rather than incidentally, and what would be required to move beyond a
-diagnostic account toward a predictive one.
+Sections~\ref{sec:structural-results}--\ref{sec:secondary-checks} support a
+more specific conclusion than the manuscript's earlier raw-margin version:
+preference-graph repair cannot be interpreted independently of the score
+calibration and vote-construction protocol that creates the graph. Under the
+canonical \texttt{primary\_minmax\_retention\_matched} protocol, repair still
+changes graph structure, but its downstream retrieval effect remains
+calibration-sensitive, method-dependent, and not robustly positive across the
+tested benchmarks.
 
-\textbf{Why repair can succeed mathematically but fail operationally.} FAS
-repair (Eq.~\eqref{eq:mwfas}) is defined entirely in terms of the preference
-graph's own edge weights; nothing in that objective references the relevance
-judgments a retrieval metric is scored against. Section~\ref{sec:structural-results}
-confirms repair does what it is designed to do --- reduce backward-edge
-weight and pairwise inconsistency relative to a reference ranking --- exactly
-when the graph is cyclic. But because the objective and the downstream metric
-are distinct, a repair step can succeed completely on its own
-terms while being irrelevant, neutral, or actively unhelpful once fused into
-a final ranking. The failure taxonomy (Section~\ref{sec:failure-taxonomy})
-gives this abstract observation concrete mechanisms: inactivity when the
-graph has little to repair, invisibility when the change falls below the
-evaluation cutoff, insensitivity when the scoring rule does not register the
-specific edges removed, and, in a minority of cases, active harm when the
-removed edges happened to be aligned with relevance rather than against it.
+\textbf{Calibration is part of the model, not preprocessing trivia.} The
+preference graph inherits whatever score scale is used to construct pairwise
+margins. In the historical raw package, those margins were not comparable across
+BM25, TF-IDF, and MiniLM, and BM25 contributed almost all conditional edge
+weight when it participated. The calibrated primary protocol substantially
+reduced that scale domination and, with it, changed which votes survived, which
+edges were retained, and which edges were removed during repair. The practical
+lesson is methodological: conclusions about graph repair are inseparable from
+the calibration and threshold semantics used upstream. We do not claim that
+per-query, per-ranker min--max normalization is universally optimal, only that
+it is the best-supported canonical protocol in this repository because it
+materially reduced score-scale distortion and enabled a controlled comparison
+against the raw ablation.
 
-\textbf{Construction and extraction, not repair alone, govern the outcome.}
-A recurring theme across Sections~\ref{sec:structural-results}
-and~\ref{sec:downstream-results} is that vote-extraction regime, not the
-repair step, is the dominant determinant of whether repair has any work to
-do at all (Table~\ref{tab:structural-results}), and that the choice of
-extraction rule (Copeland vs.\ balance, Eqs.~\eqref{eq:copeland}
-and~\eqref{eq:balance}) shapes whether a structural change reaches the final
-score once it does occur --- the balance hybrid is uniformly repair-invariant
-across every cell we test (Table~\ref{tab:bootstrap-delta-ndcg}), while
-Copeland is not. Preference construction, graph repair, and ranking
-extraction are three separable design choices with distinct empirical
-consequences, and treating ``graph repair'' as a single monolithic
-intervention obscures where its effects actually originate.
+\textbf{Structural success does not guarantee retrieval gain.} FAS repair
+(Eq.~\eqref{eq:mwfas}) optimizes a graph-internal objective, whereas nDCG
+evaluates ranked retrieval against qrels. That distinction matters empirically:
+the calibrated experiments still show nonzero repair activity in the cyclic
+regimes, yet structural improvement does not imply a better final ranking.
+Depending on the query, extraction rule, and fusion stage, a repaired graph can
+be retrieval-inactive, evaluation-invisible, neutral, or harmful. The
+qrels-anchored diagnostics in Section~\ref{sec:structural-results} are useful
+for interpretation, but they should not be treated as independent validation of
+the graph objective itself. Structural consistency and retrieval effectiveness
+remain related but distinct empirical targets.
 
-\textbf{Most foregone retrieval quality lies outside the repair choice.}
-A complementary regret audit on the same 1,020-record pooled corpus reinforces
-this ordering of influences. Relative to the current repair-based method,
-separate counterfactual comparisons attribute mean foregone nDCG of 0.0390 to
-graph-construction choice (76.6\% of mean total regret) and 0.0464 to missing
-candidate information (91.1\%), compared with only 0.0019 for the repair
-choice itself (3.7\%). Extraction choice (0.0041), fusion choice (0.0085),
-and selector policy (0.0106) lie in between. These percentages are not
-additive and should not be read as a causal decomposition; each is defined
-against a different counterfactual baseline. They nonetheless make clear that
-repair choice is a comparatively small part of the total performance gap on
-this corpus.
+\textbf{Mutual contradictions and longer-cycle structure should be reported
+separately.} The calibrated results also change how cyclicity should be read.
+Apparent graph cyclicity is substantial under the primary protocol before mutual
+pair deletion, but much of it arises from direct bidirectional contradictions
+rather than from longer cyclic structure. After deleting mutual pairs, the mean
+cyclic-query rate drops markedly, leaving a smaller but still nonzero residual
+of nontrivial cyclicity. This does not make the remaining cycles unimportant,
+but it does mean that total \texttt{ms1} cyclicity should not be interpreted
+automatically as genuine Condorcet-style nontransitivity. Future work should
+report both direct mutual contradiction and post-deletion cyclicity by default.
 
-\textbf{Fusion is both a stabilizer and a suppressor.} The hybrid combination
-(Eq.~\eqref{eq:hybrid}) mixes a graph-derived component into a prior ranking
-at a fixed weight $\alpha$. This stabilizes the final ranking against noisy
-or spurious graph-level changes --- a virtue when the graph signal is
-unreliable --- but the same mechanism can suppress a genuine, repair-induced
-structural change before it reaches the retrieval metric
-(Section~\ref{sec:failure-taxonomy}, 14.7\% suppression rate for the main
-hybrid's component/fusion combination). Which effect dominates is not
-knowable from $\alpha$ alone; it depends on the interaction between how much
-the graph changed and how the fusion weight discounts that change relative
-to the prior, which is why we treat fusion suppression as a diagnostic
-finding rather than a tunable knob to optimize in this study.
+\textbf{Repair effects are method- and calibration-dependent.} The same repaired
+graph does not propagate uniformly through Copeland, Markov, balance, and the
+hybrid variants. Some calibrated cells change sign relative to the raw package,
+and the balance-family zero-delta pattern in this study reflects propagation
+failure through the ranking pipeline rather than a theorem that balance-based
+repair can never matter. The hybrid results similarly show that fusion can
+either dampen noisy graph changes or suppress potentially meaningful ones,
+depending on how much signal survives calibration and how strongly the prior
+ranking dominates the final score. Positive point estimates therefore require
+more than a favorable mean: in this study, none remains robust once paired
+testing, influence analysis, and multiplicity correction are applied together.
+HotpotQA is the clearest example. Its calibrated \texttt{ms1} Copeland-hybrid
+mean is positive, but the effect is concentrated in a few influential queries,
+the paired permutation test is not compelling, and the cell does not survive
+Holm or Benjamini--Hochberg adjustment.
 
-\textbf{Dataset-specific effects resist a simple structural explanation.}
-HotpotQA is the one dataset with a positive mean whose interval does not
-extend below zero, and it is also the least cyclic of the four datasets under
-\texttt{ms1} (Table~\ref{tab:structural-results}) --- the opposite of what a
-naive ``more inconsistency, more room for repair to help'' account would
-predict. We do not have a confirmed explanation for why HotpotQA behaves this
-way; plausible candidates include its multi-hop structure interacting
-differently with the three constituent rankers, or dataset-specific relevance
-grading conventions, but distinguishing between these would require new
-experiments outside this paper's scope. We flag this as the clearest
-open question this study raises rather than resolves.
+\textbf{Simple baselines remain important under calibrated graphs.} The revised
+paper also does not support graph repair as a superior default retrieval
+strategy. Reciprocal-rank fusion and CombSUM remain strong comparators under the
+calibrated protocol, and the prior ranking continues to absorb much of the
+useful signal in the hybrids. At the same time, these comparisons should be
+read with the candidate-pool design in mind: the experiments are centered on an
+RRF-family pooling scheme, and Prior and the RRF baseline, although related, are
+not interchangeable rows. The right takeaway is therefore cautious rather than
+triumphalist: simple fusion baselines remain strong under the calibrated
+protocol, and graph-dependent methods must justify their added complexity on a
+paired, dataset-specific basis.
 
-\textbf{Implications for preference-graph ranking research.} Taken together,
-these findings suggest that future work in this area should report structural
-and retrieval outcomes separately by default, rather than assuming the former
-predicts the latter, and should treat vote construction as a first-class
-experimental factor rather than fixed preprocessing. Stronger optimization of
-the structural objective alone is not sufficient to change this picture:
-Section~\ref{sec:downstream-results}'s exact-for-small-components comparison
-shows that solving the same objective more thoroughly than a greedy heuristic
-does not translate into a retrieval-quality gain, because the objective being
-optimized more thoroughly is still not the metric ultimately being evaluated.
-A genuinely predictive criterion for \emph{when} repair will help --- as
-opposed to the retrospective taxonomy offered here --- would need to identify,
-in advance of running repair, some observable property of a query's graph or
-candidate set that correlates with which failure class it will fall into;
-our exploratory attempts in this direction do not produce such a rule.
-Learned logistic and shallow-tree selectors do not beat a simple
-disagreement-threshold policy overall, and failure-pattern classifiers reach
-ROC-AUC in the mid-0.8s but only modest precision-recall on these rare
-positive cases. We therefore do not claim a validated predictive criterion.
-
-\textbf{Answering the original question.} We set out to ask when repairing
-preference-graph inconsistency improves downstream retrieval quality. The
-answer supported by this study is: rarely, and only when the vote-extraction
-regime has already made the graph substantially cyclic, and even then in a
-dataset-dependent way that is not explained by cyclicity severity alone. The
-more actionable finding is the negative one --- knowing when repair is
-inactive, invisible, or neutral is itself useful guidance for a practitioner
-deciding whether to add a repair step to a retrieval pipeline, since it
-identifies the large majority of cases in which the intervention would not
-change the retrieval metric.
+\textbf{Implications for future preference-graph studies.} Preference-graph
+experiments should report calibration, threshold interpretation, common-query
+pairing, mutual-pair prevalence, residual nontrivial cyclicity, repair
+objective, ranking-extraction method, influence diagnostics, and multiplicity
+correction as first-class design choices rather than hidden preprocessing
+details. Raw-score constructions can still be informative as ablations, but not
+as canonical evidence when the underlying rankers operate on heterogeneous score
+scales. This paper therefore does not offer a validated predictive selector for
+when repair will help. It offers a narrower but more defensible conclusion:
+repair outcomes depend materially on the graph-construction process, and any
+future claim about repair effectiveness should make that dependence explicit.
 
 % =============================================================================
 \section{Limitations}
 \label{sec:threats}
 
-We state the limitations of this study candidly, several of which have
-already been flagged at first relevance earlier in the paper rather than
-held back for this section alone.
+The revised study has a clearer limitations profile than the earlier raw-margin
+version, but it still has important boundaries.
 
-\textbf{Real-LLM scale.} Section~\ref{sec:real-llm}'s paired cross-dataset
-pilot uses 10--50 queries per dataset and a single provider. We also analyze a
-separate 200-record multi-provider failure-mining corpus with Cohere/Azure
-judgments and BRIGHT coverage, but that corpus uses a different method pair,
-query sample, and protocol. Together these streams are
-sufficient to show that the main decoupling pattern is not obviously confined
-to one provider or to the mechanical-vote setting, but not sufficient to
-establish how it behaves under LLM judgments in general.
+\textbf{Calibration remains a design choice, not a proven optimum.} The
+canonical protocol uses per-query, per-ranker min--max normalization with
+retention-matched thresholds because that combination substantially reduced
+score-scale domination and supported the most defensible controlled comparison
+in this repository. It is not the only plausible calibration. Other
+transformations in the pilot changed graph structure and some downstream signs,
+so the present paper demonstrates calibration sensitivity rather than proving
+that one calibration is universally best.
 
-\textbf{No validated predictive selector.} The failure taxonomy
-(Section~\ref{sec:failure-taxonomy}) explains, retrospectively, why repair
-succeeded or failed in the cases observed. It is not a validated criterion
-for predicting, in advance, whether repair will help on a new query or
-dataset; exploratory learned selectors do not beat a fixed disagreement
-threshold overall, and failure-pattern models show limited precision-recall
-on rare positive cases (Section~\ref{sec:discussion}). We do not claim
-otherwise.
+\textbf{Candidate pooling and baseline roles are RRF-centered.} The experiments
+use an RRF-family candidate-pool construction and then compare graph methods
+against Prior, RRF, CombSUM, Borda, and related variants within that setting.
+Because candidate selection, Prior, and the RRF baseline occupy different
+implementation roles, conclusions may differ under independently constructed
+pools or different prior rankings. The paper documents these distinctions, but
+it does not establish pool-invariant behavior.
 
-\textbf{Rule-based rather than human-annotated taxonomy.} The failure classes
-of Section~\ref{sec:failure-taxonomy} are assigned by a pre-specified rule set
-over graph changes, ranking changes, and observed $\Delta$nDCG, not by an
-independent human annotation exercise. This makes the taxonomy reproducible,
-but it also means the analysis can only surface mechanisms expressible in
-those rules and provides no inter-annotator agreement statistic.
+\textbf{Nontrivial cyclicity is smaller than headline cyclicity.} Under the
+primary protocol, cyclicity after removing direct mutual pairs is materially
+lower than cyclicity before deletion. That means some regimes offer limited
+opportunity for repair to act on longer-cycle structure, and the paper does not
+establish how the same methods would behave on corpora with naturally high
+nontrivial cyclicity.
 
-\textbf{Protocol differences across experiment families.} The vote-extraction
-suite (Sections~\ref{sec:structural-results}--\ref{sec:downstream-results},
-first two subsections) and the pooled failure-mining corpus
-(Section~\ref{sec:downstream-results}'s baseline comparison,
-Section~\ref{sec:failure-taxonomy}) share method implementations but not
-query populations; we have flagged this distinction at each point it matters
-(Section~\ref{sec:baselines}), but a reader assembling numbers across
-sections should not treat the two corpora as interchangeable.
+\textbf{The repair algorithm is heuristic and order-sensitive.} Our main repair
+procedure is greedy cycle peeling with no approximation guarantee. The
+exact-for-small-components variant improves coverage only for bounded
+subproblems and is not a globally exact solver for the full graph family. In
+principle, cycle-discovery order, insertion order, and alternative optimization
+strategies could produce different repaired graphs and therefore different
+downstream rankings.
 
-\textbf{HotpotQA sample size.} HotpotQA's \texttt{ms1} cell --- the one
-regime with a positive mean whose interval does not extend below zero --- has
-$n=52$ queries, smaller than SciDocs or FiQA's corresponding cells. The
-bootstrap CI we report (Table~\ref{tab:bootstrap-delta-ndcg}) already
-reflects this sample size, but a result resting on 52 queries warrants
-caution before generalizing beyond this study.
+\textbf{Statistical power and influence remain limiting factors.} Several cells
+have modest query counts, and some positive-looking means are concentrated in a
+small number of influential queries. The paper addresses this with paired
+permutation tests, bootstrap intervals, leave-one-out analysis, influence
+removal, and multiplicity correction, but those diagnostics also reinforce the
+main caution: no positive repaired-versus-unrepaired effect remains robust after
+Holm or Benjamini--Hochberg correction.
 
-\textbf{Structural metrics tied to the repair objective.} BEW and PIC
-(Section~\ref{sec:structural-results}) are computed against a reference
-ranking derived from the same relevance judgments used for downstream nDCG
-evaluation. This is a qrels-anchored structural diagnostic, not an
-independent measure of graph correctness, and should not be read as
-external validation that repair improves some ground truth beyond the
-evaluation data itself.
+\textbf{Metric scope is narrower than graph scope.} nDCG is the main retrieval
+metric, and its cutoff determines whether some ranking changes are visible at
+all. The qrels themselves are incomplete and dataset-dependent, and BEW/PIC are
+computed from the same relevance evidence rather than from an independent source
+of graph truth. The paper therefore does not claim that improved graph
+consistency implies a general improvement in user utility beyond the measured
+retrieval setting.
 
-\textbf{Incomplete memory benchmarking.} As stated in
-Section~\ref{sec:efficiency}, memory measurements are a coarse before/after
-snapshot on a single, unbenchmarked machine, and we are not aware of a
-documented real-data memory benchmark beyond the one comparison reported. We
-do not make a general efficiency claim beyond that bounded evidence.
+\textbf{The stored LLM records are audit-limited.} As Section~\ref{sec:real-llm}
+now makes explicit, parser defaults, position bias, incomplete logging, and
+protocol differences prevent the current LLM artifacts from supporting a clean
+claim about genuine model nontransitivity or from serving as independent
+validation of the calibrated mechanical study.
 
-\textbf{Fixed hybrid weight.} The main hybrid uses $\alpha=0.3$, the fixed
-setting present in the stored outputs. We did not identify a held-out
-validation study establishing this value as optimal for the four-dataset
-protocol, so the conclusions about fusion suppression should not be read as a
-sensitivity analysis over $\alpha$.
+\textbf{External validity remains bounded.} The canonical evidence is drawn from
+four retrieval benchmarks, three mechanical rankers, and a specific set of vote
+regimes, extraction methods, and fusion choices. We do not claim that the same
+calibrated conclusions will hold unchanged for other domains, ranker families,
+pairwise-preference sources, or evaluation metrics.
 
-\textbf{FiQA usable-query constraint.} In the OpenAI pairwise pilot, FiQA
-contributes 10 usable paired records from a 20-query target. The stored logs
-record no API errors, but they do not include a per-query exclusion audit, so
-we cannot verify whether the completed subset is representative of the full
-target. Selection bias is therefore possible in that FiQA real-LLM cell.
-
-\textbf{Derived-data licensing constraints.} The planned CARB resource
-(Section~\ref{sec:carb}) is restricted to feature-only redistribution,
-respecting the source datasets' own licensing terms; it is not a
-redistribution of raw document text, and any use of CARB remains subject to
-the original datasets' licenses for the underlying corpora.
-
-\textbf{No anonymous CARB package in this draft.} Although Section~\ref{sec:carb}
-describes the intended scope of CARB, this revision does not yet include a
-review-ready anonymous package for that resource. We therefore do not treat
-CARB's availability as part of the paper's evidentiary contribution.
-
-\textbf{No claim of universal external validity.} The central findings
-summarized in Section~\ref{sec:discussion} are established on four datasets,
-three vote-extraction regimes, and a three-ranker mechanical voting scheme
-(BM25, TF-IDF, MiniLM). We do not claim these findings generalize to
-arbitrarily different ranker families, domains, or preference-construction
-procedures beyond what Section~\ref{sec:real-llm}'s bounded check already
-covers.
+\textbf{Artifact status is still evolving.} CARB remains a planned resource
+rather than a released benchmark, and no claim in this paper depends on its
+availability. The current anonymous manuscript should therefore be evaluated on
+the calibrated evidence package reported here, not on a promised external
+benchmark release.
 
 % =============================================================================
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper studied preference-graph inconsistency as a measurable structural
-data-quality dimension and evaluated feedback-arc-set repair as a candidate
-improvement technique, across four public retrieval benchmarks and three
-vote-extraction regimes. Repair reliably improves structural consistency
-(reduced backward-edge weight and pairwise inconsistency) whenever the
-underlying graph is substantially cyclic, and vote-extraction regime, not
-repair itself, is the dominant determinant of whether that condition holds
-at all. That structural improvement, however, does not reliably translate
-into a downstream retrieval-quality gain: twenty of twenty-four
-dataset-regime-method cells show no retrieval effect whatsoever, and among
-the four cells where the graph is substantially cyclic, only one --- HotpotQA
-under the most permissive vote-extraction regime --- has a positive mean with
-interval $[0, 0.0405]$, and that bounded result is not explained by cyclicity
-severity alone. Strong, simple aggregation baselines that never inspect
-graph structure at all, CombSUM and reciprocal rank fusion in particular,
-remain competitive with or superior to every graph-based method evaluated,
-including repaired hybrids. A six-class rule-based failure taxonomy indicates
-that the typical outcome of applying repair is inactivity or an evaluation-
-invisible tail change, that active harm is a small minority of cases, and
-that non-negative retrieval effects are rare and regime-specific. These
-findings were corroborated, within a bounded scope, by an OpenAI pairwise
-pilot on SciDocs, HotpotQA, and FiQA and by a separate protocol-distinct
-Cohere/Azure failure-mining corpus that includes BRIGHT. The practical
-takeaway is deliberately modest rather than
-promotional: a practitioner deciding whether to add graph repair to a
-retrieval pipeline should expect it to succeed as a structural intervention
-far more often than as a retrieval-quality one, and should budget for that
-distinction rather than assume the two travel together.
+This paper revisited a narrower question than the manuscript's original title
+implied: not simply whether preference-graph repair helps retrieval, but how
+that answer depends on the graph-construction protocol used to define pairwise
+evidence in the first place. The central correction is methodological. Raw
+heterogeneous ranker margins severely distorted weighted graph construction,
+producing near-total BM25 dominance whenever BM25 participated. Replacing those
+raw margins with per-query, per-ranker min--max calibration and
+retention-matched thresholds materially changed retained edges, cyclicity,
+removed edges, and several repaired-versus-unrepaired signs.
+
+Under this calibrated canonical protocol, repair still improves internal graph
+consistency in the active regimes, but structural consistency and retrieval
+effectiveness do not move together reliably. Positive repaired-versus-unrepaired
+point estimates remain in some cells, yet none survives the combined scrutiny
+of paired testing, influence analysis, and multiplicity correction. The paper
+therefore does not support a calibration-invariant claim that repair helps, nor
+does it support a single robust positive exception. It instead shows that
+repair outcomes are calibration-sensitive and method-dependent, and that simple
+fusion baselines remain strong comparators under the calibrated protocol.
+
+The practical implication is modest but important: preference-graph repair
+should be evaluated together with the score calibration, threshold semantics,
+mutual-pair handling, and ranking-extraction choices that determine the graph on
+which repair operates. Future work may yet find settings where repair yields a
+robust retrieval gain, but this study shows that such a claim cannot be treated
+as independent of graph construction.
 
 % =============================================================================
 \section{Data Availability and Reproducibility}
@@ -1750,29 +1548,39 @@ distinction rather than assume the two travel together.
 HotpotQA, BRIGHT) are publicly available from their original
 sources~\cite{cohan2020scidocs,maia2018fiqa,yang2018hotpotqa,su2024bright}
 under their respective licenses; this paper introduces no new raw-text
-corpus. The derived preference-graph features, repair outcomes, and
-diagnostic labels underlying Sections~\ref{sec:structural-results}--\ref{sec:failure-taxonomy}
-motivate the planned CARB companion resource (Section~\ref{sec:carb}),
-feature-only and license-compatible with the source datasets; that resource is
-not yet packaged as anonymous supplementary material in this draft.
+corpus, and no third-party raw document collection is redistributed by this
+manuscript. CARB is a planned feature-only companion resource
+(Section~\ref{sec:carb}), not a released benchmark, and no empirical claim in
+this paper depends on its present availability.
 
-\textbf{Artifact availability.} The experiments are implemented in code and
-stored outputs maintained by the authors, but no public URL is provided in
-this anonymous manuscript. A citable code release is intended for the
-camera-ready stage rather than claimed as part of the present anonymous draft.
+\textbf{Artifact availability.} The full pipeline (vote extraction, graph
+construction, repair, ranking extraction, evaluation, and statistical analysis;
+Sections~\ref{sec:methodology}--\ref{sec:experimental-setup}) is implemented
+in a single code repository. For double-blind review, the repository
+identity and URL are withheld; an anonymized or author-provided artifact
+will be made available to reviewers upon request through the venue's
+standard mechanism, and a citable release may follow acceptance or the
+camera-ready process. The artifact package contains the stored ranker scores
+used by the mechanical experiments, query-ID manifests, qrels and score-file
+hashes, calibrated and raw-ablation output packages, manuscript-ready tables
+and figures, and run manifests that record the exact branch and commit used to
+generate them. The canonical evidence package is the calibrated
+\texttt{primary\_minmax\_retention\_matched} package; the raw-margin package is
+retained only as a historical ablation.
 
-\textbf{Reproducibility.} Every table in Sections~\ref{sec:structural-results}--\ref{sec:downstream-results}
-is generated from stored intermediate outputs by scripted, deterministic
-aggregation; the vote-extraction protocol
-(Section~\ref{sec:vote-extraction}), regime definitions
-(Section~\ref{sec:regimes}), and bootstrap procedure
-(Section~\ref{sec:bootstrap}) are fully specified with fixed parameters
-(thresholds, $\alpha$, bootstrap seeds and resample counts) so that the
-mechanical-vote tables and figures can be regenerated from the same stored
-inputs without rerunning large retrieval or graph-construction jobs. The
-real-LLM summaries likewise depend on stored API outputs, but a full rerun of
-those experiments would require commercial API access and may not be exactly
-reproducible if provider-side models change over time.
+\textbf{Reproducibility.} The calibrated mechanical results reported in
+Sections~\ref{sec:structural-results}--\ref{sec:downstream-results} are
+generated from stored intermediate artifacts and deterministic scripts. The
+repository records the canonical calibrated package, the historical raw-margin
+ablation package, threshold manifests, common-query manifests, and the tables
+and figures included in the manuscript. These materials are sufficient to
+regenerate the reported calibrated tables and plots from the stored mechanical
+inputs without rerunning upstream retrieval models or external paid APIs. Exact
+reproduction of future real-LLM outputs is not guaranteed because provider
+models and serving behavior can change over time, and the stored LLM records in
+this repository are retained only for bounded protocol audit purposes rather
+than as canonical evidence. No public repository URL is included in this
+anonymous manuscript; release details will be finalized after review.
 
 \begin{acks}
 \end{acks}
