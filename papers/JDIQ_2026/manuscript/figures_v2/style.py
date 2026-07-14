@@ -23,7 +23,23 @@ DATASET_COLORS = {
 }
 
 REGIME_ORDER = ["ms2", "ms1", "ms1_drop_mutual"]
-REGIME_LABELS = {"ms2": "ms2", "ms1": "ms1", "ms1_drop_mutual": "ms1_drop_mutual"}
+REGIME_LABELS = {
+    "ms2": "Two-vote",
+    "ms1": "One-vote",
+    "ms1_drop_mutual": "One-vote,\nmutual pairs\nremoved",
+}
+REGIME_LABELS_INLINE = {
+    "ms2": "Two-vote",
+    "ms1": "One-vote",
+    "ms1_drop_mutual": "One-vote, mutual pairs removed",
+}
+# Compact variant for narrow small-multiple panels (4 datasets sharing one
+# figure width), where the full wrapped label does not fit per tick.
+REGIME_LABELS_SHORT = {
+    "ms2": "2-vote",
+    "ms1": "1-vote",
+    "ms1_drop_mutual": "1-vote,\nno mutual",
+}
 
 # Diverging pair for signed deltas (repaired-minus-unrepaired, raw-vs-calibrated
 # sign changes). Orange = negative, purple = positive; a neutral gray sits at
@@ -93,6 +109,11 @@ def dataset_label(ds: str) -> str:
     return DATASET_LABELS.get(ds, ds)
 
 
+def regime_label(r: str, inline: bool = False, short: bool = False) -> str:
+    table = REGIME_LABELS_SHORT if short else (REGIME_LABELS_INLINE if inline else REGIME_LABELS)
+    return table.get(r, r)
+
+
 def sign_color(value: float) -> str:
     return DIVERGING_POS if value >= 0 else DIVERGING_NEG
 
@@ -120,6 +141,6 @@ def panel_label(ax, letter: str) -> None:
 
 
 def savefig(fig, path_no_ext: str) -> None:
-    fig.savefig(path_no_ext + ".pdf", bbox_inches="tight", pad_inches=0.03)
-    fig.savefig(path_no_ext + ".png", bbox_inches="tight", pad_inches=0.03, dpi=300)
+    fig.savefig(path_no_ext + ".pdf", bbox_inches="tight", pad_inches=0.08)
+    fig.savefig(path_no_ext + ".png", bbox_inches="tight", pad_inches=0.08, dpi=300)
     plt.close(fig)

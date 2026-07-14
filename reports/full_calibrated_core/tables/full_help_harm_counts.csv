@@ -1,0 +1,361 @@
+dataset,protocol,protocol_label,regime,pair_name,pair_family,common_query_count,helped_query_count,harmed_query_count,unchanged_query_count
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_graph,graph,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,markov_graph,graph,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_graph,graph,120,36,22,62
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_graph,graph,120,12,18,90
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,markov_graph,graph,120,18,19,83
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_hybrid,hybrid,120,30,10,80
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_hybrid,hybrid,120,3,5,112
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,1,0,119
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,markov_graph,graph,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms2,copeland_graph,graph,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms2,balance_graph,graph,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms2,markov_graph,graph,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms2,copeland_hybrid,hybrid,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms2,balance_hybrid,hybrid,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms1,copeland_graph,graph,120,19,37,64
+scidocs,ablation_raw_fixed,raw + fixed,ms1,balance_graph,graph,120,2,0,118
+scidocs,ablation_raw_fixed,raw + fixed,ms1,markov_graph,graph,120,3,5,112
+scidocs,ablation_raw_fixed,raw + fixed,ms1,copeland_hybrid,hybrid,120,10,20,90
+scidocs,ablation_raw_fixed,raw + fixed,ms1,balance_hybrid,hybrid,120,1,1,118
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_graph,graph,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,markov_graph,graph,120,1,0,119
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,copeland_graph,graph,120,7,2,111
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,balance_graph,graph,120,4,0,116
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,markov_graph,graph,120,7,1,112
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,copeland_hybrid,hybrid,120,5,0,115
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,balance_hybrid,hybrid,120,2,0,118
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,copeland_graph,graph,120,25,30,65
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,balance_graph,graph,120,15,11,94
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,markov_graph,graph,120,16,17,87
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,copeland_hybrid,hybrid,120,17,17,86
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,balance_hybrid,hybrid,120,5,4,111
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_graph,graph,120,0,2,118
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,markov_graph,graph,120,0,0,120
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_graph,graph,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,markov_graph,graph,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_graph,graph,120,28,30,62
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_graph,graph,120,26,23,71
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,markov_graph,graph,120,29,26,65
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_hybrid,hybrid,120,23,12,85
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_hybrid,hybrid,120,16,5,99
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,markov_graph,graph,120,1,0,119
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,balance_graph,graph,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,markov_graph,graph,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_graph,graph,120,37,21,62
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,balance_graph,graph,120,14,15,91
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,markov_graph,graph,120,15,19,86
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_hybrid,hybrid,120,25,11,84
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,balance_hybrid,hybrid,120,6,5,109
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,markov_graph,graph,120,1,0,119
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_graph,graph,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,markov_graph,graph,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_graph,graph,120,34,25,61
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_graph,graph,120,15,15,90
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,markov_graph,graph,120,18,20,82
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_hybrid,hybrid,120,20,10,90
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_hybrid,hybrid,120,2,5,113
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,0,2,118
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,1,119
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,markov_graph,graph,120,0,1,119
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,1,0,119
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,1,119
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_graph,graph,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,markov_graph,graph,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_graph,graph,120,21,10,89
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_graph,graph,120,16,5,99
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,markov_graph,graph,120,17,7,96
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_hybrid,hybrid,120,16,8,96
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_hybrid,hybrid,120,3,2,115
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,0,2,118
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,1,119
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,markov_graph,graph,120,0,1,119
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms2,copeland_graph,graph,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms2,balance_graph,graph,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms2,markov_graph,graph,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms1,copeland_graph,graph,120,13,20,87
+fiqa,ablation_raw_fixed,raw + fixed,ms1,balance_graph,graph,120,0,3,117
+fiqa,ablation_raw_fixed,raw + fixed,ms1,markov_graph,graph,120,3,4,113
+fiqa,ablation_raw_fixed,raw + fixed,ms1,copeland_hybrid,hybrid,120,3,19,98
+fiqa,ablation_raw_fixed,raw + fixed,ms1,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_graph,graph,120,0,1,119
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,markov_graph,graph,120,0,0,120
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,120,1,2,117
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,copeland_graph,graph,120,1,1,118
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,balance_graph,graph,120,0,1,119
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,markov_graph,graph,120,1,1,118
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,copeland_graph,graph,120,23,14,83
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,balance_graph,graph,120,12,8,100
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,markov_graph,graph,120,14,14,92
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,copeland_hybrid,hybrid,120,12,9,99
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,balance_hybrid,hybrid,120,4,1,115
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_graph,graph,120,0,2,118
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_graph,graph,120,0,1,119
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,markov_graph,graph,120,0,1,119
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,1,119
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_graph,graph,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,markov_graph,graph,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_graph,graph,120,19,17,84
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_graph,graph,120,14,18,88
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,markov_graph,graph,120,17,19,84
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_hybrid,hybrid,120,10,7,103
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_hybrid,hybrid,120,14,5,101
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,2,1,117
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_graph,graph,120,2,2,116
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,markov_graph,graph,120,3,1,116
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,1,0,119
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,1,1,118
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,balance_graph,graph,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,markov_graph,graph,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_graph,graph,120,25,10,85
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,balance_graph,graph,120,10,7,103
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,markov_graph,graph,120,16,12,92
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_hybrid,hybrid,120,15,6,99
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,balance_hybrid,hybrid,120,4,3,113
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,1,1,118
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_graph,graph,120,1,0,119
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,markov_graph,graph,120,1,1,118
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,0,0,120
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_graph,graph,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_graph,graph,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,markov_graph,graph,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_hybrid,hybrid,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_hybrid,hybrid,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_graph,graph,120,25,7,88
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_graph,graph,120,12,3,105
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,markov_graph,graph,120,17,9,94
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_hybrid,hybrid,120,11,4,105
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_hybrid,hybrid,120,3,1,116
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_graph,graph,120,5,3,112
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_graph,graph,120,0,0,120
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,markov_graph,graph,120,1,0,119
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,120,2,0,118
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,120,0,0,120
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_graph,graph,52,5,3,44
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_graph,graph,52,0,1,51
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,markov_graph,graph,52,1,2,49
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_hybrid,hybrid,52,3,0,49
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_hybrid,hybrid,52,1,0,51
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,copeland_graph,graph,52,7,3,42
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,markov_graph,graph,52,2,0,50
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,copeland_hybrid,hybrid,52,5,2,45
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,copeland_graph,graph,52,6,4,42
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,balance_graph,graph,52,1,4,47
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,markov_graph,graph,52,1,1,50
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,copeland_hybrid,hybrid,52,4,0,48
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_graph,graph,52,7,7,38
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_graph,graph,52,3,4,45
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,markov_graph,graph,52,5,7,40
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_hybrid,hybrid,52,3,2,47
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_hybrid,hybrid,52,2,1,49
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_graph,graph,52,5,2,45
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,balance_graph,graph,52,2,0,50
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,markov_graph,graph,52,2,1,49
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_hybrid,hybrid,52,3,0,49
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,balance_hybrid,hybrid,52,1,0,51
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,markov_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_graph,graph,52,3,3,46
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_graph,graph,52,1,1,50
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,markov_graph,graph,52,3,3,46
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_hybrid,hybrid,52,3,1,48
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_hybrid,hybrid,52,1,2,49
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,markov_graph,graph,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,52,0,0,52
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,52,0,0,52
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_graph,graph,50,0,0,50
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_graph,graph,50,0,0,50
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,markov_graph,graph,50,0,0,50
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,copeland_hybrid,hybrid,50,0,0,50
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_graph,graph,50,19,13,18
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_graph,graph,50,10,8,32
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,markov_graph,graph,50,6,13,31
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,copeland_hybrid,hybrid,50,10,10,30
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,balance_hybrid,hybrid,50,2,6,42
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_graph,graph,50,2,3,45
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_graph,graph,50,1,0,49
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,markov_graph,graph,50,2,1,47
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,50,2,0,48
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,50,1,0,49
+bright,ablation_raw_fixed,raw + fixed,ms2,copeland_graph,graph,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms2,balance_graph,graph,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms2,markov_graph,graph,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms2,copeland_hybrid,hybrid,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms1,copeland_graph,graph,50,10,16,24
+bright,ablation_raw_fixed,raw + fixed,ms1,balance_graph,graph,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms1,markov_graph,graph,50,3,3,44
+bright,ablation_raw_fixed,raw + fixed,ms1,copeland_hybrid,hybrid,50,5,11,34
+bright,ablation_raw_fixed,raw + fixed,ms1,balance_hybrid,hybrid,50,0,1,49
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_graph,graph,50,4,2,44
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_graph,graph,50,0,0,50
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,markov_graph,graph,50,2,0,48
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,50,1,1,48
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,balance_hybrid,hybrid,50,0,0,50
+bright,ablation_minmax_fixed,minmax + fixed,ms2,copeland_graph,graph,50,1,1,48
+bright,ablation_minmax_fixed,minmax + fixed,ms2,balance_graph,graph,50,0,0,50
+bright,ablation_minmax_fixed,minmax + fixed,ms2,markov_graph,graph,50,1,1,48
+bright,ablation_minmax_fixed,minmax + fixed,ms2,copeland_hybrid,hybrid,50,0,1,49
+bright,ablation_minmax_fixed,minmax + fixed,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,ablation_minmax_fixed,minmax + fixed,ms1,copeland_graph,graph,50,24,11,15
+bright,ablation_minmax_fixed,minmax + fixed,ms1,balance_graph,graph,50,12,9,29
+bright,ablation_minmax_fixed,minmax + fixed,ms1,markov_graph,graph,50,13,14,23
+bright,ablation_minmax_fixed,minmax + fixed,ms1,copeland_hybrid,hybrid,50,14,7,29
+bright,ablation_minmax_fixed,minmax + fixed,ms1,balance_hybrid,hybrid,50,8,6,36
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_graph,graph,50,7,6,37
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_graph,graph,50,3,2,45
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,markov_graph,graph,50,7,3,40
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,copeland_hybrid,hybrid,50,3,5,42
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,balance_hybrid,hybrid,50,2,0,48
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_graph,graph,50,0,0,50
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_graph,graph,50,0,0,50
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,markov_graph,graph,50,0,0,50
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,copeland_hybrid,hybrid,50,0,0,50
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_graph,graph,50,9,19,22
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_graph,graph,50,15,15,20
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,markov_graph,graph,50,5,19,26
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,copeland_hybrid,hybrid,50,7,11,32
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,balance_hybrid,hybrid,50,9,7,34
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_graph,graph,50,5,1,44
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_graph,graph,50,5,2,43
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,markov_graph,graph,50,3,4,43
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,50,2,1,47
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,50,2,0,48
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_graph,graph,50,0,0,50
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,balance_graph,graph,50,0,0,50
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,markov_graph,graph,50,0,0,50
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,copeland_hybrid,hybrid,50,0,0,50
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_graph,graph,50,18,15,17
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,balance_graph,graph,50,11,12,27
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,markov_graph,graph,50,9,17,24
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,copeland_hybrid,hybrid,50,12,9,29
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,balance_hybrid,hybrid,50,3,6,41
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_graph,graph,50,3,0,47
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_graph,graph,50,2,0,48
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,markov_graph,graph,50,5,0,45
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,50,2,1,47
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,50,2,0,48
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_graph,graph,50,0,0,50
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_graph,graph,50,0,0,50
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,markov_graph,graph,50,0,0,50
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,copeland_hybrid,hybrid,50,0,0,50
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,balance_hybrid,hybrid,50,0,0,50
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_graph,graph,50,20,13,17
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_graph,graph,50,12,12,26
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,markov_graph,graph,50,12,10,28
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,copeland_hybrid,hybrid,50,9,11,30
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,balance_hybrid,hybrid,50,6,4,40
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_graph,graph,50,5,5,40
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_graph,graph,50,2,3,45
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,markov_graph,graph,50,1,3,46
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,copeland_hybrid,hybrid,50,0,1,49
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,balance_hybrid,hybrid,50,0,1,49

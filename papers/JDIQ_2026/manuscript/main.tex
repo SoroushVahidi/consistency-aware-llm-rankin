@@ -376,32 +376,23 @@ the end-to-end pipeline these subsections define, stage by stage.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures_v2/74556F5F-D495-41DF-9EDE-203C4CD1008A.png}
-  \caption{The eight-stage evaluation pipeline (numbered 1--8), color-coded by
-    role: blue stages are data artifacts, green stages are processing steps,
-    and amber stages are diagnostic or evaluation steps. Stored ranker scores
-    are normalized per query and per ranker (Eq.~\eqref{eq:minmax-calibration}),
-    converted to pairwise votes and thresholded into a preference graph
-    $G_q$ under regime $r$, diagnosed structurally, optionally repaired, and
-    finally converted to a ranking and scored by nDCG under paired
-    statistical tests. The dashed arrow marks the raw-margin ablation, which
-    reuses every downstream stage unchanged but skips normalization and keeps
-    fixed raw-margin thresholds. A notation-highlight key below the diagram
-    repeats the symbols most relevant to this pipeline from
-    Table~\ref{tab:notation}. Normalization and repair are distinct, separated
-    stages, not a combined step.}
-  \Description{An eight-stage horizontal pipeline diagram with numbered
-    badges 1 through 8, color-coded by role (data artifacts in blue,
-    processing steps in green, diagnostic or evaluation steps in amber):
-    stored ranker scores, per-query per-ranker normalization, pairwise vote
-    extraction and thresholding, preference graph construction under a vote
-    regime, mutual-pair and SCC/FAS diagnostics, optional greedy repair,
-    ranking extraction and hybrid fusion, and final nDCG evaluation with
-    paired statistical analysis. A dashed arrow indicates that the
-    raw-margin ablation skips the normalization stage and reuses fixed
-    raw-margin thresholds while keeping every other stage identical. Below
-    the diagram, a notation-highlight legend repeats key symbols and their
-    meanings.}
+  \includegraphics[width=\linewidth]{figures_v2/fig1_pipeline.pdf}
+  \caption{The eight-stage evaluation pipeline, color-coded by role: blue
+    stages are data artifacts, green stages are processing steps, and amber
+    stages are diagnostic or evaluation steps. The dashed arrow marks the
+    raw-margin ablation (Section~\ref{sec:raw-margin-ablation}): it skips
+    per-ranker normalization and reuses fixed raw-margin thresholds, but every
+    later stage is unchanged. Symbol definitions are in Table~\ref{tab:notation}.}
+  \Description{An eight-stage horizontal pipeline diagram color-coded by role
+    (data artifacts in blue, processing steps in green, diagnostic or
+    evaluation steps in amber): stored ranker scores, per-query per-ranker
+    normalization, pairwise vote extraction and thresholding, preference
+    graph construction under a vote regime, mutual-pair and SCC/FAS
+    diagnostics, optional greedy repair, ranking extraction and hybrid
+    fusion, and final nDCG evaluation with paired statistical analysis. A
+    dashed arrow indicates that the raw-margin ablation skips the
+    normalization stage and reuses fixed raw-margin thresholds while keeping
+    every other stage identical.}
   \label{fig:pipeline}
 \end{figure}
 
@@ -731,6 +722,7 @@ when the denominator is $0$. All paired comparisons use only the intersection
 of queries for which both methods produce valid outputs.
 
 \subsection{Raw-Margin Ablation}
+\label{sec:raw-margin-ablation}
 
 The unnormalized raw-margin protocol is retained only as an explicitly labeled
 ablation. It uses native BM25, TF-IDF, and MiniLM scores without cross-ranker
@@ -1059,10 +1051,12 @@ directly.
     Cyclic\% is the share of query graphs containing at least one directed
     cycle before mutual-pair deletion; Post-mutual Cyclic\% recomputes the same
     statistic after deleting direct mutual pairs; Largest SCC is the mean size
-    of the largest strongly connected component before deletion; normalized FAS
-    is mean removed repair weight divided by total graph weight. Raw-margin
-    results are treated only as an ablation and are not shown as the main
-    evidence here.}
+    of the largest strongly connected component before deletion; Norm.\ FAS is
+    mean removed weight from the primary \emph{greedy} repair divided by total
+    graph weight (not the exact-solver weight discussed in
+    Section~\ref{sec:repair-variants}, so this column is not a claim of
+    minimum-weight optimality). Raw-margin results are treated only as an
+    ablation and are not shown as the main evidence here.}
   \label{tab:structural-results}
   \scriptsize
   \begin{tabular}{llrrrr}
@@ -1155,7 +1149,7 @@ before/after decomposition directly.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.78\linewidth]{figures_v2/IMG_5312.png}
+  \includegraphics[width=0.78\linewidth]{figures_v2/fig5_cycle_decomposition.pdf}
   \caption{Cyclic-query percentage under \texttt{ms1} before (filled dot) and
     after (open dot) deleting direct mutual pairs, one row per dataset. The
     drop is largest for HotpotQA ($63\%\to2\%$) and smallest for FiQA
@@ -1239,10 +1233,12 @@ close with the limited alpha sweep and balance-degeneracy analysis.
 
 Table~\ref{tab:bootstrap-delta-ndcg} reports the active \texttt{ms1} cells for
 the normalized Copeland graph and Copeland hybrid. Figure
-\ref{fig:bootstrap-delta-ndcg} plots the complete normalized primary grid,
-including the many zero-effect \texttt{ms2} and \texttt{ms1\_drop\_mutual}
-comparisons. Positive point estimates exist in several cells, but none remains
-robust after the full testing and sensitivity pipeline reported below.
+\ref{fig:bootstrap-delta-ndcg} plots all five \texttt{ms1} method pairs for
+every dataset; the many zero-effect \texttt{ms2} and \texttt{ms1\_drop\_mutual}
+comparisons are summarized in Table~\ref{tab:structural-results} instead of
+plotted, since every one of those cells is exactly zero. Positive point
+estimates exist in several \texttt{ms1} cells, but none remains robust after
+the full testing and sensitivity pipeline reported below.
 
 \begin{table}[t]
   \caption{Primary normalized repaired-minus-unrepaired nDCG@$k$ for the
@@ -1288,21 +1284,21 @@ primary protocol.
   \centering
   \includegraphics[width=\linewidth]{figures_v2/fig7_bootstrap_forest.pdf}
   \caption{Repaired-minus-unrepaired $\Delta$nDCG with paired 95\% bootstrap
-    intervals, one panel per dataset and one row per regime$\times$method
-    pair (15 rows: 5 method pairs $\times$ 3 regimes), with a bold vertical
-    line at zero. Every \texttt{ms2} and \texttt{ms1\_drop\_mutual} row
-    collapses to a point exactly at zero; only \texttt{ms1} rows show visible
-    intervals, and most of those still cross zero. The handful of intervals
-    not touching zero (SciDocs and HotpotQA Copeland rows) are the cells
-    discussed in the text below, and even they do not survive multiplicity
-    correction (Section~\ref{sec:downstream-results}).}
+    intervals under the active \texttt{ms1} regime, one panel per dataset and
+    one row per method pair, with a vertical line at zero. The other two
+    regimes (\texttt{ms2}, \texttt{ms1\_drop\_mutual}) are omitted here
+    because every one of their cells collapses to a point exactly at zero
+    (Table~\ref{tab:structural-results}); the full 15-row grid including
+    those zero-effect regimes is in the released artifact. Most \texttt{ms1}
+    intervals still cross zero; the handful that do not (SciDocs and HotpotQA
+    Copeland rows) are discussed in the text below and do not survive
+    multiplicity correction (Section~\ref{sec:downstream-results}).}
   \Description{A forest plot faceted into four panels, one per dataset, each
-    with 15 rows (5 graph-dependent method pairs by 3 vote regimes) showing
-    the repaired-minus-unrepaired mean nDCG delta as a point with a 95
-    percent bootstrap confidence interval, plotted against a bold vertical
-    zero reference line. All ms2 and ms1-drop-mutual rows collapse to a
-    point at zero; only ms1 rows show visible spread, and most still cross
-    zero.}
+    with 5 rows (one per graph-dependent method pair) under the active
+    one-vote regime, showing the repaired-minus-unrepaired mean nDCG delta as
+    a point with a 95 percent bootstrap confidence interval, plotted against
+    a vertical zero reference line. Most intervals cross zero; a few on
+    SciDocs and HotpotQA do not.}
   \label{fig:bootstrap-delta-ndcg}
 \end{figure}
 
@@ -1320,28 +1316,27 @@ exactly zero rather than strictly positive.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.55\linewidth]{figures_v2/IMG_5313.png}
+  \includegraphics[width=0.85\linewidth]{figures_v2/fig8_influence.pdf}
   \caption{Remaining mean $\Delta$nDCG for the normalized \texttt{ms1}
-    Copeland-hybrid cell as the top-$k$ most influential HotpotQA queries are
-    removed ($k=0,\dots,4$), the more concentrated of the two main
-    positive-point-estimate cases. The mean falls from $+0.0123$ to exactly
-    $0$ after removing the top 3 queries, so the positive estimate is
-    concentrated in a handful of queries. The companion SciDocs cell is less
-    concentrated and is reported numerically in the text below rather than
-    plotted here. Values are exact per-query recomputations, not
-    interpolated.}
-  \Description{A single line-and-marker panel titled HotpotQA, showing the
+    Copeland-hybrid cell as the top-$k$ most influential queries are removed
+    ($k=0,\dots,4$), exact per-query recomputations, not interpolated.
+    HotpotQA (A) is the more concentrated case: the mean falls from
+    $+0.0123$ to exactly $0$ after removing the top 3 queries. SciDocs (B) is
+    less concentrated and stays positive through $k=4$ ($+0.0055$ to
+    $+0.0041$); exact values for both panels are given in the text below.}
+  \Description{Two line-and-marker panels. Panel A, HotpotQA, shows the
     remaining mean delta nDCG dropping from 0.0123 at k equals 0 to exactly 0
-    by k equals 3 influential queries removed, with exact values for
-    k=0 through k=4 annotated below the plot.}
+    by k equals 3 influential queries removed. Panel B, SciDocs, shows the
+    remaining mean delta nDCG staying positive from 0.0085 at k equals 0 down
+    to about 0.004 at k equals 4, never reaching zero.}
   \label{fig:influence-robustness}
 \end{figure}
 
-Figure~\ref{fig:influence-robustness} plots this pattern for the more
-concentrated HotpotQA cell. Removing the top one influential query reduces the
-normalized \texttt{ms1} Copeland-hybrid mean delta from $+0.0123$ to
-$+0.0053$; removing the top two reduces it to $+0.0009$; removing the top
-three or top four drives the mean to exactly zero.
+Figure~\ref{fig:influence-robustness} plots this pattern for both cells.
+Removing the top one influential HotpotQA query reduces the normalized
+\texttt{ms1} Copeland-hybrid mean delta from $+0.0123$ to $+0.0053$; removing
+the top two reduces it to $+0.0009$; removing the top three or top four
+drives the mean to exactly zero.
 SciDocs is less concentrated: the corresponding Copeland-hybrid mean remains
 positive after removing the top one, two, three, and four influential queries
 ($+0.0055$, $+0.0036$, $+0.0048$, and $+0.0041$), but these nominal positives
@@ -1382,22 +1377,21 @@ comparison underlying Table~\ref{tab:raw-calibrated-ablation}.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.6\linewidth]{figures_v2/fig9_sign_change_heatmap.pdf}
-  \caption{Repaired-minus-unrepaired $\Delta$nDCG for every dataset$\times$method
-    pair under \texttt{ms1}, raw-margin ablation versus primary normalized
-    protocol, colored by sign and magnitude (purple positive, orange
-    negative). The five rows outlined are the sign flips
-    Table~\ref{tab:raw-calibrated-ablation} calls out in the text; most other
-    cells keep the same sign, or flip only at noise-level magnitude on both
-    sides. A handful of specific, named conclusions reverse under
-    normalization; not every cell is unstable.}
-  \Description{A heatmap with 20 rows (one per dataset by graph-dependent
-    method pair) and two columns, raw and normalized, colored by the sign
-    and magnitude of repaired-minus-unrepaired mean nDCG delta, with each
-    cell's numeric value overlaid. Five rows are outlined in a bold accent
-    color to mark the sign flips discussed in the text: SciDocs Copeland
-    graph and hybrid, FiQA Copeland graph, BRIGHT Copeland hybrid, and
-    HotpotQA Markov graph.}
+  \includegraphics[width=\linewidth]{figures_v2/fig9_sign_change_heatmap.pdf}
+  \caption{Repaired-minus-unrepaired $\Delta$nDCG for every method pair under
+    \texttt{ms1}, one panel per dataset: gray dot is the raw-margin ablation,
+    blue dot is the primary normalized protocol, joined by a line, against a
+    zero reference. The five accent-colored lines are the sign flips
+    Table~\ref{tab:raw-calibrated-ablation} reports exactly; other pairs keep
+    the same sign or flip only at noise-level magnitude on both sides. Exact
+    values are in Table~\ref{tab:raw-calibrated-ablation}.}
+  \Description{Four panels, one per dataset, each with five rows (one per
+    graph-dependent method pair) showing a gray dot for the raw-margin
+    ablation and a blue dot for the primary normalized protocol joined by a
+    line, plotted against a zero reference line. Five lines across the four
+    panels are drawn in a bold accent color to mark the sign flips discussed
+    in the text: SciDocs Copeland graph and hybrid, FiQA Copeland graph,
+    BRIGHT Copeland hybrid, and HotpotQA Markov graph.}
   \label{fig:raw-calibrated-deltas}
 \end{figure}
 
@@ -1416,22 +1410,22 @@ across datasets.
   \centering
   \includegraphics[width=\linewidth]{figures_v2/fig10_baseline_comparison.pdf}
   \caption{Mean nDCG@$k$ under \texttt{ms1}, one panel per dataset, methods
-    sorted left to right by value; solid bars are the four graph-independent
-    baselines (Prior, RRF, CombSUM, Borda), translucent bars are
-    graph-dependent methods. Each panel's $y$-axis is scaled to its own score
+    on the $y$-axis sorted by value; filled markers are the four
+    graph-independent baselines (Prior, RRF, CombSUM, Borda), open markers are
+    graph-dependent methods. Each panel's $x$-axis is scaled to its own score
     range, so only within-panel comparisons are meaningful. A
     graph-independent baseline is within the top three methods on every
     dataset (CombSUM leads on HotpotQA and BRIGHT, RRF on FiQA), while on
     SciDocs a repaired Copeland-hybrid edges out CombSUM narrowly -- consistent
     with Table~\ref{tab:pooled-baseline}'s macro-average ranking, which pools
     across all four datasets.}
-  \Description{Four bar charts, one per dataset, each showing ten methods'
-    mean nDCG at k under the ms1 regime, sorted from highest to lowest. The
-    four graph-independent baselines (CombSUM, RRF, Prior, Borda) are drawn
-    as solid bars and appear near the top of the ranking in every panel;
-    graph-dependent repaired and unrepaired methods are drawn as translucent
-    bars. A repaired Copeland-hybrid method narrowly leads the SciDocs panel;
-    CombSUM or RRF lead the other three panels.}
+  \Description{Four horizontal dot plots, one per dataset, each showing ten
+    methods' mean nDCG at k under the ms1 regime on the y-axis, sorted from
+    lowest to highest. The four graph-independent baselines (CombSUM, RRF,
+    Prior, Borda) are drawn as filled markers and appear near the top of the
+    ranking in every panel; graph-dependent repaired and unrepaired methods
+    are drawn as open markers. A repaired Copeland-hybrid method narrowly
+    leads the SciDocs panel; CombSUM or RRF lead the other three panels.}
   \label{fig:mean-ndcg-hybrids}
 \end{figure}
 
@@ -1483,8 +1477,7 @@ positive for $\alpha\in\{0.3,0.5,1.0\}$, but those gains are still not robust
 after multiplicity correction. HotpotQA stays positive for
 $\alpha\in\{0.3,0.5,1.0\}$, but the effect remains influence-sensitive. FiQA
 and BRIGHT change sign within this small sweep, showing that stronger graph
-weight does not induce a stable benefit. Figure~\ref{fig:alpha-sensitivity}
-plots all four datasets across the full $\alpha$ sweep.
+weight does not induce a stable benefit across the full $\alpha$ sweep.
 
 \begin{table}[t]
   \caption{Copeland-hybrid alpha sensitivity under the primary normalized
@@ -1504,25 +1497,6 @@ plots all four datasets across the full $\alpha$ sweep.
   \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.62\linewidth]{figures_v2/fig11_alpha_heatmap.pdf}
-  \caption{Copeland-hybrid repaired-minus-unrepaired mean $\Delta$nDCG under
-    \texttt{ms1} as the graph-component weight $\alpha$ varies over
-    $\{0.1,0.3,0.5,1.0\}$, colored by sign and magnitude. SciDocs and HotpotQA
-    stay positive for $\alpha\ge0.3$; FiQA and BRIGHT change sign within this
-    small sweep, so increasing the graph component's weight does not produce a
-    consistent direction of effect across datasets. This is a small
-    sensitivity sweep, not a tuned hyperparameter search or a
-    multiplicity-adjusted test.}
-  \Description{A heatmap with four rows (one per dataset) and four columns
-    (alpha equal to 0.1, 0.3, 0.5, and 1.0), colored by the sign and
-    magnitude of repaired-minus-unrepaired mean nDCG delta, with each cell's
-    numeric value overlaid. SciDocs and HotpotQA are positive across alpha
-    0.3 to 1.0; FiQA and BRIGHT change sign across the sweep.}
-  \label{fig:alpha-sensitivity}
-\end{figure}
-
 The balance degeneracy analysis explains why many balance results remain exactly
 or nearly zero despite nontrivial graph changes. Under the primary
 \texttt{ms1} protocol, the graph changes on 119/120 SciDocs queries, 118/120
@@ -1540,26 +1514,13 @@ downstream propagation failure from graph repair to the evaluated prefix.
 \label{sec:secondary-checks}
 
 The normalized-protocol core evidence of this paper is contained in
-Sections~\ref{sec:structural-results} and~\ref{sec:downstream-results}. The
-four topics below are retained only as scoped secondary notes because they do
-not currently meet the same evidentiary standard as the normalized mechanical
-evaluation.
-
-\subsection{Rule-Based Outcome Taxonomy}
-\label{sec:failure-taxonomy}
-
-A separate raw-margin failure-mining corpus of 1{,}020 records was previously
-labeled with a six-way rule-based outcome taxonomy. That taxonomy is not
-manually verified --- it is an automated rule cascade whose final labels
-depend heavily on branch precedence, and its counts were never regenerated
-under the primary normalized protocol --- so, because normalization and vote
-construction change retained edges, removed edges, and
-repaired-versus-unrepaired signs, those raw-margin counts are not appropriate
-as evidence here. We therefore do not treat that taxonomy as part of the main
-empirical narrative. It may still be useful as future descriptive analysis,
-but would need to be regenerated under the primary protocol before
-interpretation, and would remain a retrospective outcome classification, not a
-validated predictive mechanism available before repair.
+Sections~\ref{sec:structural-results} and~\ref{sec:downstream-results}. A
+separate raw-margin failure-mining corpus, labeled with an earlier rule-based
+outcome taxonomy whose counts were never regenerated under the primary
+normalized protocol, is not used as evidence here (see Limitations). The one
+topic below is retained as a scoped secondary note because it does not
+currently meet the same evidentiary standard as the normalized mechanical
+evaluation, but strengthens the paper as a protocol-quality check.
 
 \subsection{Protocol Audit of Stored LLM Judgments}
 \label{sec:real-llm}
@@ -1571,64 +1532,54 @@ malformed outputs to a fixed label, measurable provider-dependent position
 bias, incomplete raw-text and exclusion logging, and protocol differences
 across providers and method families, serious enough that apparent cyclicity
 in a naively constructed LLM-derived graph can be dominated by pipeline
-artifacts rather than genuine model disagreement.
-
-Quantitatively, a stored pairwise-judgment corpus collected from the Cohere
-and Azure OpenAI APIs on FiQA, HotpotQA, and BRIGHT shows the following. The
-shared response parser silently defaults ambiguous or malformed outputs to a
-fixed label on 1.1\% of 12{,}020 responses with preserved raw text (0.0\% on
-FiQA for both providers; up to 3.8\% on HotpotQA for Cohere). Among
-well-formed, unambiguous responses, both providers show statistically
-significant position bias, but in \emph{opposite} directions: Azure prefers the
-first-shown candidate 53--58\% of the time across the three datasets, while
-Cohere prefers the second-shown candidate 61--70\% of the time (exact binomial
-$p<0.01$ in every provider--dataset cell); pooling the two providers would
-largely cancel this out and hide both effects. Forward and reverse
-presentations of the same candidate pair agree with each other only 59--85\% of
-the time depending on provider and dataset (Cohen's $\kappa$ 0.27--0.71, fair
-to substantial). In a preference graph built directly from these judgments
-(not the mechanical graph used elsewhere in this paper), removing edges
-produced by the parser's default-label rule and the position-bias-driven
-disagreement default reduces measured cyclicity by 91--100\% (from a
-31--62\% cyclic range down to 0--5\%), indicating that most of that graph's
-apparent cyclicity reflects these pipeline defaults rather than genuine model
-intransitivity. None of these figures alter the mechanical-graph statistics in
+artifacts rather than genuine model disagreement. None of these figures alter
+the mechanical-graph statistics in
 Sections~\ref{sec:structural-results}--\ref{sec:downstream-results}, which do
-not depend on any LLM judgment; they bound what a future LLM-judgment-derived
-graph-construction study would need to resolve before its cyclicity could be
-interpreted at face value.
+not depend on any LLM judgment.
+
+Table~\ref{tab:llm-audit} summarizes the quantitative audit, drawn from a
+stored pairwise-judgment corpus collected from the Cohere and Azure OpenAI
+APIs on FiQA, HotpotQA, and BRIGHT (12{,}020 responses with preserved raw
+text). Azure and Cohere show statistically significant position bias in
+\emph{opposite} directions (exact binomial $p<0.01$ in every
+provider--dataset cell), so pooling the two providers would largely cancel
+this out and hide both effects. In a preference graph built directly from
+these judgments (not the mechanical graph used elsewhere in this paper),
+removing edges produced by the parser's default-label rule and the
+position-bias-driven disagreement default reduces measured cyclicity by
+91--100\% (from a 31--62\% cyclic range down to 0--5\%), indicating that most
+of that graph's apparent cyclicity reflects these pipeline defaults rather
+than genuine model intransitivity.
+
+\begin{table}[t]
+  \caption{Quantitative protocol audit of the stored real-LLM judgment
+    corpora (Cohere and Azure OpenAI, FiQA/HotpotQA/BRIGHT, 12{,}020
+    responses). Provider-specific detail beyond this summary is in the
+    released artifact.}
+  \label{tab:llm-audit}
+  \begin{tabular}{ll}
+    \toprule
+    Quantity & Value \\
+    \midrule
+    Parser default-label rate & 1.1\% overall (0.0\%--3.8\% by provider/dataset) \\
+    Position bias, Azure & prefers 1st-shown, 53--58\% \\
+    Position bias, Cohere & prefers 2nd-shown, 61--70\% \\
+    Forward/reverse agreement & 59--85\% (Cohen's $\kappa$ 0.27--0.71) \\
+    Cyclicity after artifact removal & $-$91\% to $-$100\% (31--62\% $\to$ 0--5\%) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 We therefore do not pool the stored LLM corpora with the primary
 mechanical-vote evaluation or treat them as a parallel replication. The main
 lesson is methodological: pairwise-judgment pipelines can manufacture apparent
 inconsistency if prompt symmetry, abstention behavior, parser handling, and
 exclusion accounting are not controlled carefully, so we retain this material
-only as a bounded protocol-quality check.
-
-A future LLM-based study intended to support the paper's central claims would
-need randomized candidate order, symmetric A/B and B/A prompting, abstention on
-malformed or ambiguous outputs, no default-label fallback, complete exclusion
-logs, and matched query/method protocols across providers.
-
-\subsection{Implementation Cost Note}
-\label{sec:efficiency}
-
-We retain only a bounded implementation-cost observation. The normalized-protocol
-pipeline is CPU-only and practical on the graph sizes studied here, but the
-available runtime and memory evidence comes from a single unbenchmarked local
-machine with coarse resident-set-size snapshots and some timings near the
-instrumentation floor. We therefore do not present efficiency as a substantive
-contribution or make cross-system scaling claims. Repair cost depends on graph
-size, density, and SCC structure, and a controlled hardware benchmark would be
-required before stronger conclusions could be justified.
-
-\subsection{Planned CARB Resource}
-\label{sec:carb}
-
-CARB is a planned feature-only companion resource, not a released benchmark in
-this review draft. No empirical claim depends on it. Any future release would
-need a review-ready package, corrected scope statistics, and licensing review
-consistent with the source datasets' redistribution terms.
+only as a bounded protocol-quality check. A future LLM-based study intended to
+support the paper's central claims would need randomized candidate order,
+symmetric A/B and B/A prompting, abstention on malformed or ambiguous outputs,
+no default-label fallback, complete exclusion logs, and matched query/method
+protocols across providers.
 
 % =============================================================================
 \section{Discussion}
@@ -1756,54 +1707,75 @@ property of its input.
 \label{sec:practical-implications}
 
 Beyond its methodological conclusion, this study supports concrete practices
-for teams that build or evaluate multi-ranker retrieval systems.
+for teams that build or evaluate multi-ranker retrieval systems, summarized in
+Table~\ref{tab:practical-implications}.
 
 \textbf{Auditing retrieval pipelines for score-scale dominance.} A pipeline
 merging BM25, TF-IDF, and neural similarity scores into one weighted signal
 can be silently dominated by whichever ranker has the largest native score
-range. The conditional BM25 edge-weight share reported in
+range; the conditional BM25 edge-weight share reported in
 Section~\ref{sec:structural-results} ($0.988$ raw versus $0.512$ normalized)
-is a concrete, checkable diagnostic that any such team can compute on its own
-score files before trusting the combined signal.
+is a concrete, checkable diagnostic.
 
 \textbf{Deciding whether graph repair is worth the engineering cost.}
-Feedback-arc-set repair adds a processing stage --- cycle detection, edge
-removal, re-ranking --- whose cost does not reliably translate into a
-measurable nDCG improvement once normalization is handled explicitly and
-paired statistical testing is applied. A team considering repair as a
-production feature should budget for the same evaluation discipline used here
-rather than assuming reduced cyclicity implies an improved ranking.
+Feedback-arc-set repair adds a processing stage whose cost does not reliably
+translate into a measurable nDCG improvement once normalization and paired
+statistical testing are applied.
 
-\textbf{Quality assurance for preference-graph construction.} Because
-normalization and vote-extraction choices materially change retained and
-removed edges (Section~\ref{sec:structural-results}), preference-graph
-construction should carry its own audit trail: normalization method, vote
-thresholds, mutual-pair rate, and cyclicity before and after mutual-pair
-deletion, which the mutual-pair/nontrivial-cycle decomposition introduced here
-(Section~\ref{sec:vote-extraction}) makes concrete where a single cyclicity
-percentage would conflate the two.
+\textbf{Quality assurance for preference-graph construction.} Normalization
+and vote-extraction choices materially change retained and removed edges
+(Section~\ref{sec:structural-results}), so preference-graph construction
+should carry its own audit trail, which the mutual-pair/nontrivial-cycle
+decomposition introduced here (Section~\ref{sec:vote-extraction}) makes
+concrete where a single cyclicity percentage would conflate the two.
 
 \textbf{Benchmarking graph-derived rankings against simple fusion.} RRF and
-CombSUM are inexpensive graph-free baselines that remained competitive with,
-and in several cases stronger than, repaired graph-based rankings under the
-normalized protocol (Section~\ref{sec:downstream-results}); any evaluation of
-a new graph-based ranking method should include these baselines by default,
-since their absence can make a graph-based method appear more valuable than
-it is.
+CombSUM remained competitive with, and in several cases stronger than,
+repaired graph-based rankings under the normalized protocol
+(Section~\ref{sec:downstream-results}); their absence from an evaluation can
+make a graph-based method appear more valuable than it is.
 
 \textbf{Evaluation protocol design.} The raw-versus-normalized ablation shows
 that a fixed threshold policy can support a different repaired-versus-unrepaired
-conclusion than a retention-matched policy on the same data. Reporting
-normalization method, threshold-selection procedure, and vote-extraction
-regime as explicit protocol parameters lets other researchers determine
-whether a reported repair effect belongs to the data or to the construction
-pipeline.
+conclusion than a retention-matched policy on the same data.
+
+\begin{table}[t]
+  \caption{Practical implications for teams building or evaluating
+    multi-ranker retrieval systems (Section~\ref{sec:practical-implications}).}
+  \label{tab:practical-implications}
+  \small
+  \begin{tabular}{p{3.6cm}p{3.9cm}}
+    \toprule
+    Observed condition & Recommended action \\
+    \midrule
+    Native ranker scales differ & Normalize before combining score margins \\
+    Total cyclicity is high & Separate mutual pairs from longer cycles \\
+    Repair changes the graph but not top-$k$ relevance order & Do not expect retrieval gains from reduced cyclicity alone \\
+    Positive mean effect is query-concentrated & Run influence analysis before trusting a point estimate \\
+    Simple fusion matches graph methods & Prefer the simpler baseline unless repair adds demonstrated value \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % =============================================================================
 \section{Limitations}
 \label{sec:threats}
 
 This study's limitations fall into several categories, detailed below.
+
+\textbf{An earlier rule-based outcome taxonomy is excluded as evidence.} A
+separate raw-margin failure-mining corpus was previously labeled with a
+six-way rule-based outcome taxonomy whose counts were never regenerated under
+the primary normalized protocol; because normalization and vote construction
+change retained edges, removed edges, and repaired-versus-unrepaired signs,
+those raw-margin counts are not appropriate as evidence here and are not part
+of the main empirical narrative.
+
+\textbf{Implementation cost is not benchmarked.} The normalized-protocol
+pipeline is CPU-only and practical on the graph sizes studied here, but the
+available runtime and memory evidence comes from a single unbenchmarked local
+machine, so we do not present efficiency as a substantive contribution or make
+cross-system scaling claims.
 
 \textbf{Normalization remains a design choice, not a proven optimum.} The
 primary protocol uses per-query, per-ranker min--max normalization with
@@ -1911,10 +1883,6 @@ different conclusions, if their construction choices differ. This paper
 audits one such pipeline in detail; it does not establish that preference
 graphs in general are reliable independent of how they are built.
 
-\textbf{External companion resources remain optional.} CARB is not released;
-evaluate this manuscript on the primary evidence reported here
-(Section~\ref{sec:data-availability}), not on a promised companion release.
-
 % =============================================================================
 \section{Conclusion}
 \label{sec:conclusion}
@@ -1971,8 +1939,7 @@ the graph as a neutral input.
 \textbf{Data availability.} SciDocs, FiQA, HotpotQA, and BRIGHT are publicly
 available from their original
 sources~\cite{cohan2020scidocs,maia2018fiqa,yang2018hotpotqa,su2024bright}.
-This paper redistributes no raw third-party document collection. CARB remains
-planned only (Section~\ref{sec:carb}).
+This paper redistributes no raw third-party document collection.
 
 \textbf{Artifact availability.} The pipeline in
 Sections~\ref{sec:methodology}--\ref{sec:experimental-setup} is packaged as a

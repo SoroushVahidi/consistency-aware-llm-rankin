@@ -1,0 +1,608 @@
+{
+  "total_checks": 50,
+  "failures": 0,
+  "source_csvs": [
+    "reports/full_calibrated_core/tables/full_structural_results.csv",
+    "reports/full_calibrated_core/tables/full_statistical_tests.csv",
+    "reports/full_calibrated_core/tables/full_influence_removal_summary.csv",
+    "reports/full_calibrated_core/tables/full_paired_deltas.csv",
+    "reports/full_calibrated_core/tables/full_alpha_sensitivity.csv"
+  ],
+  "generation_script": "papers/JDIQ_2026/manuscript/figures_v2/generate_figures.py",
+  "checks": [
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "scidocs",
+      "regime": "ms2",
+      "field": "cyclic_query_pct_%",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "scidocs",
+      "regime": "ms1",
+      "field": "cyclic_query_pct_%",
+      "plotted": 99.2,
+      "manuscript": 99.2,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "scidocs",
+      "regime": "ms1_drop_mutual",
+      "field": "cyclic_query_pct_%",
+      "plotted": 11.7,
+      "manuscript": 11.7,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "fiqa",
+      "regime": "ms2",
+      "field": "cyclic_query_pct_%",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "fiqa",
+      "regime": "ms1",
+      "field": "cyclic_query_pct_%",
+      "plotted": 98.3,
+      "manuscript": 98.3,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "fiqa",
+      "regime": "ms1_drop_mutual",
+      "field": "cyclic_query_pct_%",
+      "plotted": 30.8,
+      "manuscript": 30.8,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "hotpotqa",
+      "regime": "ms2",
+      "field": "cyclic_query_pct_%",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "hotpotqa",
+      "regime": "ms1",
+      "field": "cyclic_query_pct_%",
+      "plotted": 63.5,
+      "manuscript": 63.5,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "hotpotqa",
+      "regime": "ms1_drop_mutual",
+      "field": "cyclic_query_pct_%",
+      "plotted": 1.9,
+      "manuscript": 1.9,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "bright",
+      "regime": "ms2",
+      "field": "cyclic_query_pct_%",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "bright",
+      "regime": "ms1",
+      "field": "cyclic_query_pct_%",
+      "plotted": 92.0,
+      "manuscript": 92.0,
+      "pass": true
+    },
+    {
+      "figure": "fig3",
+      "table": "tab:structural-results",
+      "dataset": "bright",
+      "regime": "ms1_drop_mutual",
+      "field": "cyclic_query_pct_%",
+      "plotted": 22.0,
+      "manuscript": 22.0,
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "scidocs",
+      "pair": "copeland_graph",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.011,
+        0.002,
+        0.022
+      ],
+      "manuscript": [
+        0.011,
+        0.002,
+        0.022
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "scidocs",
+      "pair": "copeland_hybrid",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.009,
+        0.002,
+        0.017
+      ],
+      "manuscript": [
+        0.009,
+        0.002,
+        0.017
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "fiqa",
+      "pair": "copeland_graph",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.004,
+        -0.005,
+        0.011
+      ],
+      "manuscript": [
+        0.004,
+        -0.005,
+        0.011
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "fiqa",
+      "pair": "copeland_hybrid",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        -0.005,
+        -0.013,
+        0.002
+      ],
+      "manuscript": [
+        -0.005,
+        -0.013,
+        0.002
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "hotpotqa",
+      "pair": "copeland_graph",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.016,
+        -0.01,
+        0.044
+      ],
+      "manuscript": [
+        0.016,
+        -0.01,
+        0.044
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "hotpotqa",
+      "pair": "copeland_hybrid",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.012,
+        0.0,
+        0.031
+      ],
+      "manuscript": [
+        0.012,
+        0.0,
+        0.031
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "bright",
+      "pair": "copeland_graph",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        -0.014,
+        -0.04,
+        0.006
+      ],
+      "manuscript": [
+        -0.014,
+        -0.04,
+        0.006
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig7",
+      "table": "tab:bootstrap-delta-ndcg",
+      "dataset": "bright",
+      "pair": "copeland_hybrid",
+      "field": "mean/ci_lo/ci_hi",
+      "plotted": [
+        0.001,
+        -0.016,
+        0.02
+      ],
+      "manuscript": [
+        0.001,
+        -0.016,
+        0.02
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "hotpotqa",
+      "k": 0,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0123,
+      "manuscript": 0.0123,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "hotpotqa",
+      "k": 1,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0053,
+      "manuscript": 0.0053,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "hotpotqa",
+      "k": 2,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0009,
+      "manuscript": 0.0009,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "hotpotqa",
+      "k": 3,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "hotpotqa",
+      "k": 4,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0,
+      "manuscript": 0.0,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "scidocs",
+      "k": 1,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0055,
+      "manuscript": 0.0055,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "scidocs",
+      "k": 2,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0036,
+      "manuscript": 0.0036,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "scidocs",
+      "k": 3,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0048,
+      "manuscript": 0.0048,
+      "pass": true
+    },
+    {
+      "figure": "fig8",
+      "table": "prose (Sec. 6.2)",
+      "dataset": "scidocs",
+      "k": 4,
+      "field": "remaining_mean_delta_ndcg",
+      "plotted": 0.0041,
+      "manuscript": 0.0041,
+      "pass": true
+    },
+    {
+      "figure": "fig9",
+      "table": "tab:raw-calibrated-ablation",
+      "dataset": "scidocs",
+      "pair": "copeland_graph",
+      "field": "raw/normalized",
+      "plotted": [
+        -0.0079,
+        0.011
+      ],
+      "manuscript": [
+        -0.0079,
+        0.011
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig9",
+      "table": "tab:raw-calibrated-ablation",
+      "dataset": "scidocs",
+      "pair": "copeland_hybrid",
+      "field": "raw/normalized",
+      "plotted": [
+        -0.0018,
+        0.0085
+      ],
+      "manuscript": [
+        -0.0018,
+        0.0085
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig9",
+      "table": "tab:raw-calibrated-ablation",
+      "dataset": "fiqa",
+      "pair": "copeland_graph",
+      "field": "raw/normalized",
+      "plotted": [
+        -0.0029,
+        0.0036
+      ],
+      "manuscript": [
+        -0.0029,
+        0.0036
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig9",
+      "table": "tab:raw-calibrated-ablation",
+      "dataset": "bright",
+      "pair": "copeland_hybrid",
+      "field": "raw/normalized",
+      "plotted": [
+        -0.0045,
+        0.0006
+      ],
+      "manuscript": [
+        -0.0045,
+        0.0006
+      ],
+      "pass": true
+    },
+    {
+      "figure": "fig9",
+      "table": "tab:raw-calibrated-ablation",
+      "dataset": "hotpotqa",
+      "pair": "markov_graph",
+      "field": "raw/normalized",
+      "plotted": [
+        0.0087,
+        -0.0023
+      ],
+      "manuscript": [
+        0.0087,
+        -0.0023
+      ],
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "scidocs",
+      "alpha": 0.1,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0022,
+      "manuscript": -0.0022,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "scidocs",
+      "alpha": 0.3,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0085,
+      "manuscript": 0.0085,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "scidocs",
+      "alpha": 0.5,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0097,
+      "manuscript": 0.0097,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "scidocs",
+      "alpha": 1.0,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0083,
+      "manuscript": 0.0083,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "fiqa",
+      "alpha": 0.1,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0006,
+      "manuscript": 0.0006,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "fiqa",
+      "alpha": 0.3,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0046,
+      "manuscript": -0.0046,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "fiqa",
+      "alpha": 0.5,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.001,
+      "manuscript": 0.001,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "fiqa",
+      "alpha": 1.0,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0038,
+      "manuscript": 0.0038,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "hotpotqa",
+      "alpha": 0.1,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0008,
+      "manuscript": -0.0008,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "hotpotqa",
+      "alpha": 0.3,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0123,
+      "manuscript": 0.0123,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "hotpotqa",
+      "alpha": 0.5,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.012,
+      "manuscript": 0.012,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "hotpotqa",
+      "alpha": 1.0,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0101,
+      "manuscript": 0.0101,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "bright",
+      "alpha": 0.1,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0013,
+      "manuscript": -0.0013,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "bright",
+      "alpha": 0.3,
+      "field": "mean_delta_ndcg",
+      "plotted": 0.0006,
+      "manuscript": 0.0006,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "bright",
+      "alpha": 0.5,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0074,
+      "manuscript": -0.0074,
+      "pass": true
+    },
+    {
+      "figure": "(removed fig11, retained Table 10)",
+      "table": "tab:alpha-sensitivity",
+      "dataset": "bright",
+      "alpha": 1.0,
+      "field": "mean_delta_ndcg",
+      "plotted": -0.0071,
+      "manuscript": -0.0071,
+      "pass": true
+    }
+  ]
+}

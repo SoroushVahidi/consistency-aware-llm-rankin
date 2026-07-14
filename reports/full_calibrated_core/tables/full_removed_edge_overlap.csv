@@ -1,0 +1,73 @@
+dataset,protocol,protocol_label,regime,removed_edge_overlap_with_raw,removed_edge_overlap_with_primary,exact_removed_edge_match_fraction_with_raw,exact_removed_edge_match_fraction_with_primary
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,1.0,1.0,1.0,1.0
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,0.09024260986997674,1.0,0.008333333333333333,1.0
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,0.8502032520325203,1.0,0.85,1.0
+scidocs,ablation_raw_fixed,raw + fixed,ms2,1.0,1.0,1.0,1.0
+scidocs,ablation_raw_fixed,raw + fixed,ms1,1.0,0.09024260986997674,1.0,0.008333333333333333
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,1.0,0.8502032520325203,1.0,0.85
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,0.625,0.625,0.625,0.625
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,0.0833619030026586,0.3611252874252235,0.0,0.0
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,0.8166666666666667,0.820138888888889,0.8166666666666667,0.8166666666666667
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,1.0,1.0,1.0,1.0
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,0.2856843196651812,0.3299185062038728,0.025,0.016666666666666666
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,0.9291781393408427,0.8543965777174732,0.925,0.85
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,1.0,1.0,1.0,1.0
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,0.09506613970487174,0.7845709590445012,0.008333333333333333,0.11666666666666667
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,0.8595833333333334,0.9495989789196311,0.8583333333333333,0.925
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,1.0,1.0,1.0,1.0
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,0.08081092908284823,0.4320944837748189,0.0,0.0
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,0.8093531468531469,0.8418544921752769,0.8083333333333333,0.825
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,1.0,1.0,1.0,1.0
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,0.05461699467996864,1.0,0.0,1.0
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,0.6358285537561854,1.0,0.6333333333333333,1.0
+fiqa,ablation_raw_fixed,raw + fixed,ms2,1.0,1.0,1.0,1.0
+fiqa,ablation_raw_fixed,raw + fixed,ms1,1.0,0.05461699467996864,1.0,0.0
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,1.0,0.6358285537561854,1.0,0.6333333333333333
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,0.8666666666666667,0.8666666666666667,0.8666666666666667,0.8666666666666667
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,0.052676458136343245,0.33413333724430133,0.0,0.0
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,0.5672815107597716,0.6072420161968932,0.5666666666666667,0.5833333333333334
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,1.0,1.0,1.0,1.0
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,0.23546681580263998,0.2817550929310918,0.03333333333333333,0.0
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,0.8197631315070831,0.6536118826523908,0.8,0.6333333333333333
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,1.0,1.0,1.0,1.0
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,0.06812830163913261,0.8060095656422365,0.008333333333333333,0.13333333333333333
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,0.6911004273504273,0.8535906535594037,0.6833333333333333,0.7916666666666666
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,1.0,1.0,1.0,1.0
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,0.05858858821349558,0.39523113924553555,0.0,0.008333333333333333
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,0.5710964458247066,0.6338704032981526,0.5666666666666667,0.575
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,1.0,1.0,1.0,1.0
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,0.3284862397259112,1.0,0.2692307692307692,1.0
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,0.9807692307692307,1.0,0.9807692307692307,1.0
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,1.0,1.0,1.0,1.0
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,1.0,0.3284862397259112,1.0,0.2692307692307692
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,1.0,0.9807692307692307,1.0,0.9807692307692307
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,0.9615384615384616,0.9615384615384616,0.9615384615384616,0.9615384615384616
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,0.10579764392516916,0.2795963916176754,0.019230769230769232,0.057692307692307696
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,0.9807692307692307,0.9807692307692307,0.9807692307692307,0.9807692307692307
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,1.0,1.0,1.0,1.0
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,0.6478843329112738,0.4645834078395014,0.4423076923076923,0.3076923076923077
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,0.9807692307692307,0.9846153846153847,0.9807692307692307,0.9807692307692307
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,1.0,1.0,1.0,1.0
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,0.33503147015118034,0.8972569285917703,0.2692307692307692,0.75
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,0.9807692307692307,1.0,0.9807692307692307,1.0
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,1.0,1.0,1.0,1.0
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,0.18588188938667055,0.2497174309356705,0.09615384615384616,0.09615384615384616
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,0.9807692307692307,0.9807692307692307,0.9807692307692307,0.9807692307692307
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,1.0,1.0,1.0,1.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,0.11000074520621386,1.0,0.06,1.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,0.7266666666666667,1.0,0.72,1.0
+bright,ablation_raw_fixed,raw + fixed,ms2,1.0,1.0,1.0,1.0
+bright,ablation_raw_fixed,raw + fixed,ms1,1.0,0.11000074520621386,1.0,0.06
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,1.0,0.7266666666666667,1.0,0.72
+bright,ablation_minmax_fixed,minmax + fixed,ms2,0.9,0.9,0.9,0.9
+bright,ablation_minmax_fixed,minmax + fixed,ms1,0.045579179987149276,0.268001298558483,0.0,0.02
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,0.22399999999999998,0.2741846282372598,0.22,0.24
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,1.0,1.0,1.0,1.0
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,0.3265667229675609,0.30799229035865716,0.18,0.06
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,0.8219084967320263,0.7481245421245422,0.8,0.72
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,1.0,1.0,1.0,1.0
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,0.08725957017119812,0.7678050226111399,0.04,0.28
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,0.6633333333333333,0.8651515151515151,0.66,0.82
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,1.0,1.0,1.0,1.0
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,0.04432506673395435,0.3313335235842847,0.0,0.02
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,0.505,0.5718840579710145,0.5,0.54

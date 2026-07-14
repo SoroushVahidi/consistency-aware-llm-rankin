@@ -21,8 +21,8 @@ from style import (  # noqa: E402
     DATASET_ORDER, DATASET_COLORS, DATASET_LABELS, REGIME_ORDER,
     DIVERGING_NEG, DIVERGING_POS, DIVERGING_NEUTRAL, ROLE_RAW, ROLE_CALIBRATED,
     INK, MUTED_INK, GRID, AXIS, ZERO_LINE, TICK_SIZE, ANNOT_SIZE, BASE_SIZE,
-    apply_style, dataset_color, dataset_label, sign_color, style_axes,
-    panel_label, savefig,
+    apply_style, dataset_color, dataset_label, regime_label, sign_color,
+    style_axes, panel_label, savefig,
 )
 
 TABLES = HERE.parents[3] / "reports" / "full_calibrated_core" / "tables"
@@ -52,7 +52,7 @@ def fig2_bm25_share():
         ax.bar(x - width / 2, raw_vals, width, color=ROLE_RAW, label="Raw" if i == 0 else None)
         ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Normalized" if i == 0 else None)
         ax.set_xticks(x)
-        ax.set_xticklabels(REGIME_ORDER, rotation=30, ha="right", fontsize=TICK_SIZE)
+        ax.set_xticklabels([regime_label(r, short=True) for r in REGIME_ORDER], fontsize=TICK_SIZE - 1.5)
         ax.set_ylim(0, 1.05)
         style_axes(ax, title=dataset_label(ds))
         if i == 0:
@@ -75,8 +75,8 @@ def fig3_cyclicity_primary():
         vals = [sub[(sub.dataset == ds) & (sub.regime == r)]["cyclic_query_pct"].iloc[0] * 100 for r in REGIME_ORDER]
         ax.bar(x + (j - 1.5) * width, vals, width, color=dataset_color(ds), label=dataset_label(ds))
     ax.set_xticks(x)
-    ax.set_xticklabels(REGIME_ORDER)
-    ax.set_ylim(0, 122)
+    ax.set_xticklabels([regime_label(r) for r in REGIME_ORDER], fontsize=TICK_SIZE - 0.5)
+    ax.set_ylim(0, 105)
     ax.set_ylabel("Cyclic queries (%)")
     style_axes(ax, title="Cyclicity by regime, primary normalized protocol")
     ax.legend(loc="upper left", ncol=1, fontsize=ANNOT_SIZE - 0.5, handlelength=1.2, borderaxespad=0.3)
@@ -100,7 +100,7 @@ def fig4_raw_vs_calibrated_structure():
         ax.bar(x - width / 2, raw_vals, width, color=ROLE_RAW, label="Raw" if i == 0 else None)
         ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Normalized" if i == 0 else None)
         ax.set_xticks(x)
-        ax.set_xticklabels(REGIME_ORDER, rotation=30, ha="right", fontsize=TICK_SIZE)
+        ax.set_xticklabels([regime_label(r, short=True) for r in REGIME_ORDER], fontsize=TICK_SIZE - 1.5)
         ax.set_ylim(0, 105)
         style_axes(ax, title=dataset_label(ds))
         if i == 0:
@@ -132,7 +132,7 @@ def fig5_cycle_decomposition():
     ax.set_yticks(ys)
     ax.set_yticklabels([dataset_label(d) for d in order])
     ax.set_xlim(-3, 105)
-    ax.set_xlabel("Cyclic queries (%), ms1")
+    ax.set_xlabel("Cyclic queries (%), one-vote regime")
     style_axes(ax, title="Cyclicity before / after mutual-pair deletion")
     handles = [
         plt.Line2D([0], [0], marker="o", color="none", markerfacecolor=MUTED_INK, markersize=6, label="Before deletion"),
@@ -156,7 +156,7 @@ def fig6_normalized_fas_removed():
         vals = [sub[(sub.dataset == ds) & (sub.regime == r)]["mean_normalized_fas_weight_removed"].iloc[0] for r in REGIME_ORDER]
         ax.bar(x + (j - 1.5) * width, vals, width, color=dataset_color(ds), label=dataset_label(ds))
     ax.set_xticks(x)
-    ax.set_xticklabels(REGIME_ORDER)
+    ax.set_xticklabels([regime_label(r) for r in REGIME_ORDER], fontsize=TICK_SIZE - 0.5)
     ax.set_ylim(0, 0.098)
     ax.set_ylabel("Normalized FAS\nweight removed")
     style_axes(ax, title="Repair activity by regime, primary normalized protocol")
@@ -179,40 +179,71 @@ PAIR_LABELS = {
 PAIR_ORDER = ["copeland_graph", "copeland_hybrid", "balance_graph", "balance_hybrid", "markov_graph"]
 
 
+def _fig7_panel(ax, dsub, rows, ys, row_label_fn, xlabel, title):
+    for y, key in zip(ys, rows):
+        row = dsub[dsub["_row_key"] == key]
+        if row.empty:
+            continue
+        row = row.iloc[0]
+        mean = row["mean_delta_ndcg"]
+        lo, hi = row["bootstrap_ci_low"], row["bootstrap_ci_high"]
+        color = sign_color(mean)
+        ax.plot([lo, hi], [y, y], color=color, lw=1.6, solid_capstyle="round", zorder=2)
+        ax.scatter([mean], [y], color=color, s=22, zorder=3)
+    ax.axvline(0, color=ZERO_LINE, lw=1.1, zorder=1)
+    ax.set_yticks(ys)
+    style_axes(ax, title=title, xlabel=xlabel)
+    ax.tick_params(axis="x", labelsize=6.3)
+    ax.set_xticks([-0.05, 0, 0.05])
+    ax.set_xlim(-0.065, 0.065)
+
+
 def fig7_bootstrap_forest():
+    """Main-paper figure: only the active one-vote (ms1) rows, one panel per
+    dataset, 5 method pairs each. The zero-effect ms2/ms1_drop_mutual regimes
+    are summarized in the surrounding prose and Table 5 rather than plotted
+    here (see fig7_bootstrap_forest_full15 for the complete 15-row grid)."""
     df = pd.read_csv(TABLES / "full_statistical_tests.csv")
-    sub = df[df["protocol"] == PRIMARY]
-    fig, axes = plt.subplots(1, 4, figsize=(7.0, 3.3), sharex=True)
-    rows = [(r, p) for r in REGIME_ORDER for p in PAIR_ORDER]
+    sub = df[(df["protocol"] == PRIMARY) & (df["regime"] == "ms1")].copy()
+    sub["_row_key"] = sub["pair_name"]
+    rows = PAIR_ORDER
     ys = np.arange(len(rows))[::-1]
+    fig, axes = plt.subplots(1, 4, figsize=(7.0, 1.9), sharex=True)
     for i, ds in enumerate(DATASET_ORDER):
         ax = axes[i]
-        dsub = sub[sub.dataset == ds]
-        for y, (regime, pair) in zip(ys, rows):
-            row = dsub[(dsub.regime == regime) & (dsub.pair_name == pair)]
-            if row.empty:
-                continue
-            row = row.iloc[0]
-            mean = row["mean_delta_ndcg"]
-            lo, hi = row["bootstrap_ci_low"], row["bootstrap_ci_high"]
-            color = sign_color(mean)
-            ax.plot([lo, hi], [y, y], color=color, lw=1.4, solid_capstyle="round", zorder=2)
-            ax.scatter([mean], [y], color=color, s=16, zorder=3)
-        ax.axvline(0, color=ZERO_LINE, lw=1.1, zorder=1)
-        ax.set_yticks(ys)
+        _fig7_panel(ax, sub[sub.dataset == ds], rows, ys, None, "Δ nDCG", dataset_label(ds))
         if i == 0:
-            labels = [f"{PAIR_LABELS[p]} – {r}" for r, p in rows]
+            ax.set_yticklabels([PAIR_LABELS[p] for p in rows], fontsize=7.2)
+        else:
+            ax.set_yticklabels([])
+        ax.set_ylim(-1, len(rows))
+    fig.suptitle("Repaired − unrepaired ΔnDCG, one-vote regime, 95% bootstrap CI (primary normalized protocol)", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.06)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    savefig(fig, str(HERE / "fig7_bootstrap_forest"))
+
+
+def fig7_bootstrap_forest_full15():
+    """Supplementary artifact: complete 15-row grid (3 regimes x 5 pairs),
+    not included in the main paper. Kept for readers who want the full
+    zero-effect regimes visualized rather than summarized in prose."""
+    df = pd.read_csv(TABLES / "full_statistical_tests.csv")
+    sub = df[df["protocol"] == PRIMARY].copy()
+    sub["_row_key"] = list(zip(sub["regime"], sub["pair_name"]))
+    rows = [(r, p) for r in REGIME_ORDER for p in PAIR_ORDER]
+    ys = np.arange(len(rows))[::-1]
+    fig, axes = plt.subplots(1, 4, figsize=(7.0, 3.3), sharex=True)
+    for i, ds in enumerate(DATASET_ORDER):
+        ax = axes[i]
+        _fig7_panel(ax, sub[sub.dataset == ds], rows, ys, None, "Δ nDCG", dataset_label(ds))
+        if i == 0:
+            labels = [f"{PAIR_LABELS[p]} – {regime_label(r, inline=True)}" for r, p in rows]
             ax.set_yticklabels(labels, fontsize=5.6)
         else:
             ax.set_yticklabels([])
         ax.set_ylim(-1, len(rows))
-        style_axes(ax, title=dataset_label(ds), xlabel="Δ nDCG")
-        ax.tick_params(axis="x", labelsize=6.3)
-        ax.set_xticks([-0.05, 0, 0.05])
-        ax.set_xlim(-0.065, 0.065)
-    fig.suptitle("Repaired − unrepaired ΔnDCG, 95% bootstrap CI (primary normalized protocol)", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.02)
+    fig.suptitle("Repaired − unrepaired ΔnDCG, all regimes, 95% bootstrap CI (primary normalized protocol) — supplementary, full 15-row grid", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.02)
     fig.tight_layout()
-    savefig(fig, str(HERE / "fig7_bootstrap_forest"))
+    savefig(fig, str(HERE / "fig7_bootstrap_forest_full15"))
 
 
 # ---------------------------------------------------------------------------
@@ -221,20 +252,16 @@ def fig7_bootstrap_forest():
 def fig8_influence():
     df = pd.read_csv(TABLES / "full_influence_removal_summary.csv")
     sub = df[(df["protocol"] == PRIMARY) & (df["regime"] == "ms1") & (df["pair_name"] == "copeland_hybrid")]
-    fig, axes = plt.subplots(1, 2, figsize=(4.6, 1.9), sharey=False)
+    stats = pd.read_csv(TABLES / "full_statistical_tests.csv")
+    stats = stats[(stats["protocol"] == PRIMARY) & (stats["regime"] == "ms1") & (stats["pair_name"] == "copeland_hybrid")]
+    fig, axes = plt.subplots(1, 2, figsize=(4.8, 2.1), sharey=False)
     for ax, ds, letter in zip(axes, ["hotpotqa", "scidocs"], "AB"):
-        row0_mean = {
-            "hotpotqa": 0.012267,
-            "scidocs": 0.008526,
-        }[ds]
+        row0_mean = float(stats[stats.dataset == ds]["mean_delta_ndcg"].iloc[0])
         ks = [0] + sub[sub.dataset == ds].sort_values("remove_top_k")["remove_top_k"].tolist()
         means = [row0_mean] + sub[sub.dataset == ds].sort_values("remove_top_k")["remaining_mean_delta_ndcg"].tolist()
         color = dataset_color(ds)
         ax.plot(ks, means, color=color, lw=1.6, zorder=2)
         ax.scatter(ks, means, color=color, s=28, zorder=3)
-        for k, m in zip(ks, means):
-            ax.annotate(f"{m:+.4f}", (k, m), xytext=(0, 6), textcoords="offset points",
-                        ha="center", fontsize=ANNOT_SIZE - 0.5, color=MUTED_INK)
         ax.axhline(0, color=ZERO_LINE, lw=0.9, zorder=1)
         ax.set_xticks(ks)
         ax.set_xlabel("Top-$k$ influential\nqueries removed")
@@ -242,8 +269,10 @@ def fig8_influence():
             ax.set_ylabel("Remaining mean $\\Delta$nDCG")
         style_axes(ax, title=f"({letter}) {dataset_label(ds)}")
         ax.set_ylim(-0.002, 0.019)
-    fig.suptitle("Copeland-hybrid ms1 influence sensitivity", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.14)
-    fig.tight_layout(rect=(0, 0, 1, 0.98))
+        # Exact per-k values are reported in the caption and body text rather
+        # than printed on the plot, to avoid label/curve overlap.
+    fig.suptitle("Copeland-hybrid, one-vote regime, influence sensitivity", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.14)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
     savefig(fig, str(HERE / "fig8_influence"))
 
 
@@ -251,6 +280,9 @@ def fig8_influence():
 # Figure 9: Raw-vs-calibrated sign-change heatmap (dataset x method-regime)
 # ---------------------------------------------------------------------------
 def fig9_sign_change_heatmap():
+    """Four panels (one per dataset), y = 5 method pairs, x = repaired-minus-
+    unrepaired Delta nDCG. One marker for raw, one for normalized, joined by
+    a line; named sign flips (Table 8) emphasized in the accent color."""
     raw = pd.read_csv(TABLES / "full_paired_deltas.csv")
     raw = raw[(raw["protocol"] == RAW) & (raw["regime"] == "ms1")]
     raw_agg = raw.groupby(["dataset", "pair_name"])["delta_ndcg"].mean().reset_index()
@@ -269,48 +301,36 @@ def fig9_sign_change_heatmap():
         ("hotpotqa", "markov_graph"),
     }
 
-    rows = [(ds, p) for ds in DATASET_ORDER for p in PAIR_ORDER]
-    raw_vals, cal_vals, changed = [], [], []
-    for ds, p in rows:
-        r = raw_agg[(raw_agg.dataset == ds) & (raw_agg.pair_name == p)]
-        c = cal[(cal.dataset == ds) & (cal.pair_name == p)]
-        rv = float(r["delta_ndcg"].iloc[0]) if not r.empty else np.nan
-        cv = float(c["mean_delta_ndcg"].iloc[0]) if not c.empty else np.nan
-        raw_vals.append(rv)
-        cal_vals.append(cv)
-        changed.append((ds, p) in TABLE8_FLIPS)
-
-    mat = np.array([raw_vals, cal_vals]).T  # rows x 2
-    vmax = np.nanmax(np.abs(mat))
-    fig, ax = plt.subplots(figsize=(3.35, 4.6))
-    from matplotlib.colors import LinearSegmentedColormap
-    cmap = LinearSegmentedColormap.from_list("puor", [DIVERGING_NEG, DIVERGING_NEUTRAL, DIVERGING_POS])
-    im = ax.imshow(mat, cmap=cmap, vmin=-vmax, vmax=vmax, aspect="auto")
-
-    for i, (ds, p) in enumerate(rows):
-        for j in range(2):
-            val = mat[i, j]
-            txt_color = "white" if abs(val) > vmax * 0.55 else INK
-            ax.text(j, i, f"{val:+.3f}", ha="center", va="center", fontsize=6.4, color=txt_color)
-        if changed[i]:
-            rect = mpatches.Rectangle((-0.5, i - 0.5), 2, 1, fill=False, edgecolor=ZERO_LINE, linewidth=1.8, zorder=5)
-            ax.add_patch(rect)
-
-    ax.set_xticks([0, 1])
-    ax.set_xticklabels(["Raw", "Normalized"])
-    ylabels = [f"{dataset_label(ds)} – {PAIR_LABELS[p]}" for ds, p in rows]
-    ax.set_yticks(range(len(rows)))
-    ax.set_yticklabels(ylabels, fontsize=6.6)
-    for ds_i in range(1, len(DATASET_ORDER)):
-        ax.axhline(ds_i * len(PAIR_ORDER) - 0.5, color="white", lw=2)
-    ax.set_title("Raw → normalized: 5 most consequential sign flips outlined", loc="left", fontsize=9.5, fontweight="bold", pad=8)
-    ax.tick_params(length=0)
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    cbar = fig.colorbar(im, ax=ax, fraction=0.05, pad=0.03)
-    cbar.set_label("Repaired − unrepaired $\\Delta$nDCG", fontsize=ANNOT_SIZE)
-    cbar.ax.tick_params(labelsize=6.2)
-    fig.tight_layout()
+    fig, axes = plt.subplots(1, 4, figsize=(7.0, 2.6), sharex=True)
+    ys = np.arange(len(PAIR_ORDER))[::-1]
+    for i, ds in enumerate(DATASET_ORDER):
+        ax = axes[i]
+        for y, p in zip(ys, PAIR_ORDER):
+            r = raw_agg[(raw_agg.dataset == ds) & (raw_agg.pair_name == p)]
+            c = cal[(cal.dataset == ds) & (cal.pair_name == p)]
+            rv = float(r["delta_ndcg"].iloc[0]) if not r.empty else np.nan
+            cv = float(c["mean_delta_ndcg"].iloc[0]) if not c.empty else np.nan
+            flipped = (ds, p) in TABLE8_FLIPS
+            line_color = ZERO_LINE if flipped else GRID
+            ax.plot([rv, cv], [y, y], color=line_color, lw=2.2 if flipped else 1.3, zorder=2)
+            ax.scatter([rv], [y], color=ROLE_RAW, s=24, zorder=3,
+                       label="Raw" if (i == 0 and y == ys[0]) else None)
+            ax.scatter([cv], [y], color=ROLE_CALIBRATED, s=24, zorder=3,
+                       label="Normalized" if (i == 0 and y == ys[0]) else None)
+        ax.axvline(0, color=AXIS, lw=1.0, zorder=1)
+        ax.set_yticks(ys)
+        if i == 0:
+            ax.set_yticklabels([PAIR_LABELS[p] for p in PAIR_ORDER], fontsize=7.4)
+        else:
+            ax.set_yticklabels([])
+        ax.set_ylim(-1, len(PAIR_ORDER))
+        ax.set_xlim(-0.02, 0.035)
+        ax.set_xticks([-0.02, 0, 0.02])
+        style_axes(ax, title=dataset_label(ds), xlabel="Δ nDCG")
+        ax.tick_params(axis="x", labelsize=6.5)
+    fig.legend(loc="upper center", bbox_to_anchor=(0.5, 1.14), ncol=2, frameon=False, fontsize=BASE_SIZE)
+    fig.suptitle("Raw versus normalized repaired − unrepaired ΔnDCG (accent line: named sign flip)", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.22)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
     savefig(fig, str(HERE / "fig9_sign_change_heatmap"))
 
 
@@ -335,32 +355,44 @@ GRAPH_INDEPENDENT = {"combsum", "rrf", "prior_only", "borda_fuse"}
 
 
 def fig10_baseline_comparison():
+    """Horizontal dot plot: method names on the y-axis, mean nDCG@k on the
+    x-axis, methods sorted within each dataset panel, no rotated labels.
+    Graph-independent baselines use a filled circle; graph-dependent methods
+    use an open circle, so the distinction survives grayscale printing."""
     df = pd.read_csv(TABLES / "full_retrieval_results.csv")
     sub = df[(df["protocol"] == PRIMARY) & (df["regime"] == "ms1")]
-    fig, axes = plt.subplots(1, 4, figsize=(6.9, 3.1), sharey=False)
+    fig, axes = plt.subplots(1, 4, figsize=(7.0, 2.7), sharey=False)
     for i, ds in enumerate(DATASET_ORDER):
         ax = axes[i]
         dsub = sub[sub.dataset == ds]
         pairs = [(m, dsub[dsub.method_key == m]["mean_ndcg_at_k"].iloc[0]) for m in METHOD_ORDER_FIG10 if (dsub.method_key == m).any()]
-        pairs.sort(key=lambda t: t[1], reverse=True)
+        pairs.sort(key=lambda t: t[1])  # ascending so the best method ends up at the top
         methods_sorted = [m for m, _ in pairs]
         vals = [v for _, v in pairs]
-        x = np.arange(len(methods_sorted))
+        y = np.arange(len(methods_sorted))
         color = dataset_color(ds)
-        colors = [color] * len(methods_sorted)
-        alphas = [1.0 if m in GRAPH_INDEPENDENT else 0.55 for m in methods_sorted]
-        bars = ax.bar(x, vals, color=colors)
-        for b, a in zip(bars, alphas):
-            b.set_alpha(a)
-        ax.set_xticks(x)
-        ax.set_xticklabels([METHOD_LABELS_FIG10[m] for m in methods_sorted], rotation=60, ha="right", fontsize=6.0)
-        style_axes(ax, title=dataset_label(ds))
-        if i == 0:
-            ax.set_ylabel("Mean nDCG@$k$")
-        ymin = np.nanmin(vals) - 0.015
-        ax.set_ylim(max(0, ymin), np.nanmax(vals) + 0.02)
-    fig.suptitle("Per-dataset method comparison, ms1, sorted by mean nDCG@$k$ (solid = graph-independent baseline)", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.06)
-    fig.tight_layout(rect=(0, 0, 1, 0.97))
+        for yi, m, v in zip(y, methods_sorted, vals):
+            ax.plot([0, v], [yi, yi], color=GRID, lw=1.0, zorder=1)
+            if m in GRAPH_INDEPENDENT:
+                ax.scatter([v], [yi], color=color, s=32, zorder=3, marker="o")
+            else:
+                ax.scatter([v], [yi], facecolors="white", edgecolors=color, linewidths=1.5, s=32, zorder=3, marker="o")
+        ax.set_yticks(y)
+        ax.set_yticklabels([METHOD_LABELS_FIG10[m] for m in methods_sorted], fontsize=6.8)
+        vmin = np.nanmin(vals)
+        vmax = np.nanmax(vals)
+        pad = max(0.01, (vmax - vmin) * 0.15)
+        ax.set_xlim(max(0, vmin - pad), vmax + pad)
+        style_axes(ax, title=dataset_label(ds), xlabel="Mean nDCG@$k$")
+        ax.tick_params(axis="x", labelsize=6.5)
+        ax.xaxis.set_major_locator(plt.MaxNLocator(3))
+    handles = [
+        plt.Line2D([0], [0], marker="o", color="none", markerfacecolor=MUTED_INK, markersize=6, label="Graph-independent baseline"),
+        plt.Line2D([0], [0], marker="o", color="none", markerfacecolor="white", markeredgecolor=MUTED_INK, markersize=6, label="Graph-dependent method"),
+    ]
+    fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, 1.16), ncol=2, frameon=False, fontsize=BASE_SIZE)
+    fig.suptitle("Per-dataset method comparison, one-vote regime, sorted by mean nDCG@$k$", x=0.02, ha="left", fontsize=BASE_SIZE, y=1.24)
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     savefig(fig, str(HERE / "fig10_baseline_comparison"))
 
 
@@ -409,8 +441,9 @@ if __name__ == "__main__":
     fig5_cycle_decomposition()
     fig6_normalized_fas_removed()
     fig7_bootstrap_forest()
+    fig7_bootstrap_forest_full15()  # supplementary artifact, not used in main.tex
     fig8_influence()
     fig9_sign_change_heatmap()
     fig10_baseline_comparison()
-    fig11_alpha_heatmap()
+    fig11_alpha_heatmap()  # kept for reference; not included in main.tex (duplicates Table 10)
     print("All figures written to", HERE)

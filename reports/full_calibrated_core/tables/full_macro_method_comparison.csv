@@ -1,0 +1,253 @@
+protocol,regime,method_key,method,dataset_macro_mean_ndcg,dataset_macro_median_ndcg,datasets_count,average_method_rank
+ablation_minmax_fixed,ms1,balance_graph,Balance unrepaired,0.5385194646236378,0.5241665944429883,4,8.5
+ablation_minmax_fixed,ms1,balance_graph_repaired,Balance repaired,0.5371219949951254,0.5198301875968271,4,8.75
+ablation_minmax_fixed,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.0
+ablation_minmax_fixed,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.5
+ablation_minmax_fixed,ms1,copeland_graph,Copeland unrepaired,0.5228817102152312,0.49626660478039286,4,12.25
+ablation_minmax_fixed,ms1,copeland_graph_repaired,Copeland repaired,0.5315177176406313,0.48999115291885076,4,10.25
+ablation_minmax_fixed,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5467632674042896,0.534013731727376,4,5.75
+ablation_minmax_fixed,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5451857717406472,0.5270743236369644,4,6.0
+ablation_minmax_fixed,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5462412085212668,0.5255592162808836,4,5.75
+ablation_minmax_fixed,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5428656093299491,0.52380509127975,4,6.75
+ablation_minmax_fixed,ms1,markov_graph,Markov unrepaired,0.5341198527995006,0.5008787438486985,4,10.5
+ablation_minmax_fixed,ms1,markov_graph_repaired,Markov repaired,0.5343904526864226,0.49466331059867896,4,9.25
+ablation_minmax_fixed,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.0
+ablation_minmax_fixed,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.75
+ablation_minmax_fixed,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5329483731135889,0.5200699644523956,4,10.0
+ablation_minmax_fixed,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.5329422144086513,0.5200699644523956,4,9.5
+ablation_minmax_fixed,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+ablation_minmax_fixed,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+ablation_minmax_fixed,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5228817102152312,0.49626660478039286,4,12.0
+ablation_minmax_fixed,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5231452805234063,0.4909534205541256,4,12.0
+ablation_minmax_fixed,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.545288800405607,0.5264762675303236,4,5.25
+ablation_minmax_fixed,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5428418245689391,0.52380509127975,4,6.5
+ablation_minmax_fixed,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5450546293322523,0.5264762675303236,4,6.25
+ablation_minmax_fixed,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5428656093299491,0.52380509127975,4,6.5
+ablation_minmax_fixed,ms1_drop_mutual,markov_graph,Markov unrepaired,0.533969217481774,0.49270357691968575,4,9.0
+ablation_minmax_fixed,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.5342176336176481,0.49890146499021776,4,8.5
+ablation_minmax_fixed,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,5.0
+ablation_minmax_fixed,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.75
+ablation_minmax_fixed,ms2,balance_graph,Balance unrepaired,0.5332650261843109,0.5220597991656221,4,9.25
+ablation_minmax_fixed,ms2,balance_graph_repaired,Balance repaired,0.5333949142682978,0.5220597991656221,4,8.5
+ablation_minmax_fixed,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.25
+ablation_minmax_fixed,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+ablation_minmax_fixed,ms2,copeland_graph,Copeland unrepaired,0.5286763588604426,0.505805444495427,4,12.5
+ablation_minmax_fixed,ms2,copeland_graph_repaired,Copeland repaired,0.528761545000493,0.505805444495427,4,11.5
+ablation_minmax_fixed,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5443996148295865,0.523500284940629,4,4.75
+ablation_minmax_fixed,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5429452504358336,0.5227584049649086,4,6.75
+ablation_minmax_fixed,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.544112903863339,0.523500284940629,4,6.0
+ablation_minmax_fixed,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5427650119882828,0.5227584049649086,4,7.5
+ablation_minmax_fixed,ms2,markov_graph,Markov unrepaired,0.5336502600002042,0.5313983005944728,4,10.0
+ablation_minmax_fixed,ms2,markov_graph_repaired,Markov repaired,0.5339421604689968,0.5313983005944728,4,9.25
+ablation_minmax_fixed,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,5.0
+ablation_minmax_fixed,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.75
+ablation_raw_fixed,ms1,balance_graph,Balance unrepaired,0.5240757621496575,0.5035995065728125,4,10.75
+ablation_raw_fixed,ms1,balance_graph_repaired,Balance repaired,0.5241837834928622,0.5035995065728125,4,10.5
+ablation_raw_fixed,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.25
+ablation_raw_fixed,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,4.25
+ablation_raw_fixed,ms1,copeland_graph,Copeland unrepaired,0.5315697314906636,0.5311053942377619,4,8.75
+ablation_raw_fixed,ms1,copeland_graph_repaired,Copeland repaired,0.5345752733364901,0.5238046013583337,4,8.5
+ablation_raw_fixed,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5429317876658653,0.531098760747257,4,7.25
+ablation_raw_fixed,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5442915914548689,0.5324533784137231,4,6.75
+ablation_raw_fixed,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5436369833152273,0.5360221280480554,4,7.75
+ablation_raw_fixed,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5444869474186758,0.5262901507146532,4,5.75
+ablation_raw_fixed,ms1,markov_graph,Markov unrepaired,0.5244598246687394,0.5049724807960172,4,10.5
+ablation_raw_fixed,ms1,markov_graph_repaired,Markov repaired,0.5269713108633219,0.5049068375685326,4,8.5
+ablation_raw_fixed,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,5.75
+ablation_raw_fixed,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+ablation_raw_fixed,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5269763059128778,0.514552547888673,4,11.0
+ablation_raw_fixed,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.5269763059128778,0.514552547888673,4,10.0
+ablation_raw_fixed,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+ablation_raw_fixed,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.5
+ablation_raw_fixed,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5315697314906636,0.5311053942377619,4,9.75
+ablation_raw_fixed,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5314405736728538,0.5311053942377619,4,9.75
+ablation_raw_fixed,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5452881812616446,0.5380981265533806,4,5.75
+ablation_raw_fixed,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.544356978883471,0.5262901507146532,4,6.25
+ablation_raw_fixed,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5452881812616446,0.5380981265533806,4,6.75
+ablation_raw_fixed,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5444869474186758,0.5262901507146532,4,6.25
+ablation_raw_fixed,ms1_drop_mutual,markov_graph,Markov unrepaired,0.5302109271749049,0.5166111657655021,4,10.0
+ablation_raw_fixed,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.5304004080404092,0.5166111657655021,4,9.0
+ablation_raw_fixed,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.5
+ablation_raw_fixed,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+ablation_raw_fixed,ms2,balance_graph,Balance unrepaired,0.5356152329432504,0.5262615196892922,4,8.0
+ablation_raw_fixed,ms2,balance_graph_repaired,Balance repaired,0.5356152329432504,0.5262615196892922,4,7.0
+ablation_raw_fixed,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,4.75
+ablation_raw_fixed,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.5
+ablation_raw_fixed,ms2,copeland_graph,Copeland unrepaired,0.5282878739276483,0.5073642126010485,4,12.5
+ablation_raw_fixed,ms2,copeland_graph_repaired,Copeland repaired,0.5282878739276483,0.5073642126010485,4,11.5
+ablation_raw_fixed,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5431574408140629,0.5255304589977621,4,6.5
+ablation_raw_fixed,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5426044094038915,0.5264815839479936,4,5.5
+ablation_raw_fixed,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5431574408140629,0.5255304589977621,4,7.5
+ablation_raw_fixed,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5426044094038915,0.5264815839479936,4,6.5
+ablation_raw_fixed,ms2,markov_graph,Markov unrepaired,0.5288994705969439,0.5222808757927369,4,12.0
+ablation_raw_fixed,ms2,markov_graph_repaired,Markov repaired,0.5288994705969439,0.5222808757927369,4,11.0
+ablation_raw_fixed,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,4.5
+ablation_raw_fixed,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.25
+ablation_unit_vote_retention,ms1,balance_graph,Balance unrepaired,0.5359166443084092,0.5336055942780586,4,8.5
+ablation_unit_vote_retention,ms1,balance_graph_repaired,Balance repaired,0.5348117883200105,0.5177345735332366,4,9.0
+ablation_unit_vote_retention,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.5
+ablation_unit_vote_retention,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.25
+ablation_unit_vote_retention,ms1,copeland_graph,Copeland unrepaired,0.5315697314906636,0.5311053942377619,4,11.25
+ablation_unit_vote_retention,ms1,copeland_graph_repaired,Copeland repaired,0.5284971796342487,0.4831838965760023,4,10.25
+ablation_unit_vote_retention,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5437014513301487,0.523756442751727,4,6.0
+ablation_unit_vote_retention,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5426076981117639,0.5237450787048019,4,6.25
+ablation_unit_vote_retention,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5439928599854458,0.5321116851058113,4,7.0
+ablation_unit_vote_retention,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5444869474186758,0.5262901507146532,4,6.0
+ablation_unit_vote_retention,ms1,markov_graph,Markov unrepaired,0.5326153934116199,0.5324253455176017,4,9.25
+ablation_unit_vote_retention,ms1,markov_graph_repaired,Markov repaired,0.5261718302801968,0.49236756383267066,4,11.5
+ablation_unit_vote_retention,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.25
+ablation_unit_vote_retention,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.0
+ablation_unit_vote_retention,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5347031989408699,0.5344666861140299,4,11.0
+ablation_unit_vote_retention,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.5349358775168376,0.5346476255330748,4,9.5
+ablation_unit_vote_retention,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,4.75
+ablation_unit_vote_retention,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+ablation_unit_vote_retention,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5315697314906636,0.5311053942377619,4,11.25
+ablation_unit_vote_retention,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5317681947670224,0.5311053942377619,4,10.25
+ablation_unit_vote_retention,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5445660524051278,0.5259113344347695,4,5.5
+ablation_unit_vote_retention,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5445333953798979,0.526803010803563,4,5.75
+ablation_unit_vote_retention,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5445147556162756,0.5253984743458597,4,6.0
+ablation_unit_vote_retention,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5444869474186758,0.5262901507146532,4,6.75
+ablation_unit_vote_retention,ms1_drop_mutual,markov_graph,Markov unrepaired,0.5287799255893841,0.526001345786,4,10.75
+ablation_unit_vote_retention,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.5289916247494411,0.526001345786,4,9.75
+ablation_unit_vote_retention,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.0
+ablation_unit_vote_retention,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+ablation_unit_vote_retention,ms2,balance_graph,Balance unrepaired,0.5321730963319812,0.5073642126010485,4,11.0
+ablation_unit_vote_retention,ms2,balance_graph_repaired,Balance repaired,0.5321730963319812,0.5073642126010485,4,10.0
+ablation_unit_vote_retention,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,4.75
+ablation_unit_vote_retention,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+ablation_unit_vote_retention,ms2,copeland_graph,Copeland unrepaired,0.5282878739276483,0.5073642126010485,4,12.5
+ablation_unit_vote_retention,ms2,copeland_graph_repaired,Copeland repaired,0.5282878739276483,0.5073642126010485,4,11.5
+ablation_unit_vote_retention,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5441173754081967,0.5258629866305033,4,3.5
+ablation_unit_vote_retention,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5426044094038915,0.5264815839479936,4,6.0
+ablation_unit_vote_retention,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5441173754081967,0.5258629866305033,4,4.5
+ablation_unit_vote_retention,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5426044094038915,0.5264815839479936,4,7.0
+ablation_unit_vote_retention,ms2,markov_graph,Markov unrepaired,0.530178025622154,0.5107887120907482,4,11.5
+ablation_unit_vote_retention,ms2,markov_graph_repaired,Markov repaired,0.530178025622154,0.5107887120907482,4,10.5
+ablation_unit_vote_retention,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,4.5
+ablation_unit_vote_retention,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+primary_minmax_retention_matched,ms1,balance_graph,Balance unrepaired,0.5391505021892283,0.511170106792759,4,8.25
+primary_minmax_retention_matched,ms1,balance_graph_repaired,Balance repaired,0.5393650791402174,0.5132138394264804,4,8.25
+primary_minmax_retention_matched,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.0
+primary_minmax_retention_matched,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.25
+primary_minmax_retention_matched,ms1,copeland_graph,Copeland unrepaired,0.5303080468913566,0.5298684599979425,4,11.0
+primary_minmax_retention_matched,ms1,copeland_graph_repaired,Copeland repaired,0.5343435013016692,0.5041054711244604,4,11.0
+primary_minmax_retention_matched,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5470247223537742,0.5346117878340167,4,6.0
+primary_minmax_retention_matched,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5458391796805884,0.5289107668807799,4,6.5
+primary_minmax_retention_matched,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5482309116529156,0.5333235521449666,4,4.75
+primary_minmax_retention_matched,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.541632879364486,0.5238421692325316,4,9.0
+primary_minmax_retention_matched,ms1,markov_graph,Markov unrepaired,0.5371464031940141,0.4933500067697377,4,9.5
+primary_minmax_retention_matched,ms1,markov_graph_repaired,Markov repaired,0.5370703848336947,0.49345144338862884,4,9.25
+primary_minmax_retention_matched,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.75
+primary_minmax_retention_matched,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.5
+primary_minmax_retention_matched,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5382780233727019,0.5235352851004479,4,7.25
+primary_minmax_retention_matched,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.5382908789267024,0.5235352851004479,4,6.75
+primary_minmax_retention_matched,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.75
+primary_minmax_retention_matched,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+primary_minmax_retention_matched,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5305300192754129,0.529726553309798,4,11.25
+primary_minmax_retention_matched,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5306762145960113,0.529726553309798,4,10.75
+primary_minmax_retention_matched,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5462026654470157,0.5322071612916592,4,4.25
+primary_minmax_retention_matched,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5412053684857423,0.5238421692325316,4,9.0
+primary_minmax_retention_matched,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5461835265478563,0.5317286888126727,4,5.25
+primary_minmax_retention_matched,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5411632480737492,0.5238421692325316,4,10.0
+primary_minmax_retention_matched,ms1_drop_mutual,markov_graph,Markov unrepaired,0.5359241162336307,0.5013767500113837,4,10.0
+primary_minmax_retention_matched,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.5360823675590947,0.5013767500113837,4,9.5
+primary_minmax_retention_matched,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.5
+primary_minmax_retention_matched,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+primary_minmax_retention_matched,ms2,balance_graph,Balance unrepaired,0.536071413904117,0.5288613212920706,4,10.25
+primary_minmax_retention_matched,ms2,balance_graph_repaired,Balance repaired,0.536071413904117,0.5288613212920706,4,9.25
+primary_minmax_retention_matched,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.25
+primary_minmax_retention_matched,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+primary_minmax_retention_matched,ms2,copeland_graph,Copeland unrepaired,0.5305629544725776,0.5185755117070263,4,12.0
+primary_minmax_retention_matched,ms2,copeland_graph_repaired,Copeland repaired,0.5305629544725776,0.5185755117070263,4,11.0
+primary_minmax_retention_matched,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5470569138428639,0.5324681613009304,4,3.5
+primary_minmax_retention_matched,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.546702868947673,0.5330867586184207,4,4.25
+primary_minmax_retention_matched,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5470569138428639,0.5324681613009304,4,4.5
+primary_minmax_retention_matched,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.546702868947673,0.5330867586184207,4,5.25
+primary_minmax_retention_matched,ms2,markov_graph,Markov unrepaired,0.5296814803415902,0.5224470418238717,4,12.75
+primary_minmax_retention_matched,ms2,markov_graph_repaired,Markov repaired,0.5296814803415902,0.5224470418238717,4,11.75
+primary_minmax_retention_matched,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.5
+primary_minmax_retention_matched,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+robustness_rank_percentile_retention,ms1,balance_graph,Balance unrepaired,0.5338616952133776,0.5165647317751342,4,10.0
+robustness_rank_percentile_retention,ms1,balance_graph_repaired,Balance repaired,0.533480546795144,0.5177603107144454,4,10.25
+robustness_rank_percentile_retention,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+robustness_rank_percentile_retention,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+robustness_rank_percentile_retention,ms1,copeland_graph,Copeland unrepaired,0.5326093541400474,0.5277703864212343,4,10.25
+robustness_rank_percentile_retention,ms1,copeland_graph_repaired,Copeland repaired,0.5322320643920022,0.5279157275046179,4,10.75
+robustness_rank_percentile_retention,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5438101654483626,0.5264212628238804,4,7.25
+robustness_rank_percentile_retention,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5484274763363253,0.5383568845436194,4,4.5
+robustness_rank_percentile_retention,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5435391144375583,0.5253984743458597,4,7.25
+robustness_rank_percentile_retention,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.546908899466067,0.5369847453181341,4,5.5
+robustness_rank_percentile_retention,ms1,markov_graph,Markov unrepaired,0.5334832445003588,0.5284613143142962,4,11.25
+robustness_rank_percentile_retention,ms1,markov_graph_repaired,Markov repaired,0.5390353132155661,0.530292229419159,4,8.25
+robustness_rank_percentile_retention,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.25
+robustness_rank_percentile_retention,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+robustness_rank_percentile_retention,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5307170397302772,0.5208360927459372,4,10.5
+robustness_rank_percentile_retention,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.530667215667673,0.5184761013691449,4,10.5
+robustness_rank_percentile_retention,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+robustness_rank_percentile_retention,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+robustness_rank_percentile_retention,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5313004759982718,0.5275459481816669,4,10.5
+robustness_rank_percentile_retention,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5313061703735972,0.5223702555805534,4,10.5
+robustness_rank_percentile_retention,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5435432149869551,0.5259526474291921,4,6.25
+robustness_rank_percentile_retention,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5468323537564242,0.5369847453181341,4,5.5
+robustness_rank_percentile_retention,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5436165531052721,0.5262901507146532,4,6.25
+robustness_rank_percentile_retention,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.546864077068774,0.5369847453181341,4,6.0
+robustness_rank_percentile_retention,ms1_drop_mutual,markov_graph,Markov unrepaired,0.532447819520515,0.5259999790111575,4,9.75
+robustness_rank_percentile_retention,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.5324429323536675,0.5242383365499339,4,9.75
+robustness_rank_percentile_retention,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,5.5
+robustness_rank_percentile_retention,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.25
+robustness_rank_percentile_retention,ms2,balance_graph,Balance unrepaired,0.5323007574122014,0.5203675768811369,4,12.5
+robustness_rank_percentile_retention,ms2,balance_graph_repaired,Balance repaired,0.5323007574122014,0.5203675768811369,4,11.5
+robustness_rank_percentile_retention,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+robustness_rank_percentile_retention,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+robustness_rank_percentile_retention,ms2,copeland_graph,Copeland unrepaired,0.5244760606627945,0.5407316389148498,4,11.0
+robustness_rank_percentile_retention,ms2,copeland_graph_repaired,Copeland repaired,0.5244760606627945,0.5407316389148498,4,10.0
+robustness_rank_percentile_retention,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5419418180429005,0.5237546839390088,4,8.0
+robustness_rank_percentile_retention,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5453472313411857,0.5267800378799434,4,4.0
+robustness_rank_percentile_retention,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5419418180429005,0.5237546839390088,4,9.0
+robustness_rank_percentile_retention,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5453472313411857,0.5267800378799434,4,5.0
+robustness_rank_percentile_retention,ms2,markov_graph,Markov unrepaired,0.536587261138068,0.5287086473352078,4,8.25
+robustness_rank_percentile_retention,ms2,markov_graph_repaired,Markov repaired,0.536587261138068,0.5287086473352078,4,7.25
+robustness_rank_percentile_retention,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,4.5
+robustness_rank_percentile_retention,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.25
+robustness_zscore_retention,ms1,balance_graph,Balance unrepaired,0.5369414972864273,0.5026908607492212,4,9.75
+robustness_zscore_retention,ms1,balance_graph_repaired,Balance repaired,0.5366805421704623,0.4988389085005104,4,9.0
+robustness_zscore_retention,ms1,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.25
+robustness_zscore_retention,ms1,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.75
+robustness_zscore_retention,ms1,copeland_graph,Copeland unrepaired,0.5305965788076977,0.5288519675753399,4,11.0
+robustness_zscore_retention,ms1,copeland_graph_repaired,Copeland repaired,0.5302221140321549,0.49039505658674937,4,11.25
+robustness_zscore_retention,ms1,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.547792074500369,0.5353215395004319,4,5.5
+robustness_zscore_retention,ms1,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5461390438339098,0.5279415517589771,4,6.25
+robustness_zscore_retention,ms1,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5482710266021672,0.5339216082516074,4,5.75
+robustness_zscore_retention,ms1,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5412809954218312,0.5236756035041887,4,8.25
+robustness_zscore_retention,ms1,markov_graph,Markov unrepaired,0.537452029735333,0.4910657717261977,4,8.75
+robustness_zscore_retention,ms1,markov_graph_repaired,Markov repaired,0.5387257068328278,0.5132892410309936,4,8.0
+robustness_zscore_retention,ms1,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.25
+robustness_zscore_retention,ms1,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.25
+robustness_zscore_retention,ms1_drop_mutual,balance_graph,Balance unrepaired,0.5360108944880004,0.5046053651723279,4,10.0
+robustness_zscore_retention,ms1_drop_mutual,balance_graph_repaired,Balance repaired,0.5363955035305864,0.5046053651723279,4,8.5
+robustness_zscore_retention,ms1_drop_mutual,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,6.25
+robustness_zscore_retention,ms1_drop_mutual,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.5
+robustness_zscore_retention,ms1_drop_mutual,copeland_graph,Copeland unrepaired,0.5313404277570005,0.5287100608871954,4,11.5
+robustness_zscore_retention,ms1_drop_mutual,copeland_graph_repaired,Copeland repaired,0.5317462796517715,0.528714262032498,4,10.5
+robustness_zscore_retention,ms1_drop_mutual,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5471793882754266,0.5342466986490217,4,4.25
+robustness_zscore_retention,ms1_drop_mutual,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5414904345485223,0.5236756035041887,4,8.75
+robustness_zscore_retention,ms1_drop_mutual,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5469477220072164,0.5337682261700352,4,5.25
+robustness_zscore_retention,ms1_drop_mutual,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5413409972778969,0.5236756035041887,4,9.75
+robustness_zscore_retention,ms1_drop_mutual,markov_graph,Markov unrepaired,0.5382121215116473,0.4945819618279069,4,8.5
+robustness_zscore_retention,ms1_drop_mutual,markov_graph_repaired,Markov repaired,0.538689343400869,0.49681551889635744,4,7.25
+robustness_zscore_retention,ms1_drop_mutual,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.25
+robustness_zscore_retention,ms1_drop_mutual,rrf,RRF,0.5462225172671649,0.5335868375788562,4,4.75
+robustness_zscore_retention,ms2,balance_graph,Balance unrepaired,0.5341474519502286,0.5283746442448902,4,9.75
+robustness_zscore_retention,ms2,balance_graph_repaired,Balance repaired,0.5341474519502286,0.5283746442448902,4,8.75
+robustness_zscore_retention,ms2,borda_fuse,Borda fusion,0.5445691844672302,0.5337784457819688,4,5.75
+robustness_zscore_retention,ms2,combsum,CombSUM,0.5541194773697556,0.5365269434608769,4,3.0
+robustness_zscore_retention,ms2,copeland_graph,Copeland unrepaired,0.5273526562089822,0.5189855123424046,4,12.0
+robustness_zscore_retention,ms2,copeland_graph_repaired,Copeland repaired,0.5273526562089822,0.5189855123424046,4,11.0
+robustness_zscore_retention,ms2,hybrid_repaired_balance_a0p3_minmax,Balance hybrid repaired,0.5456774793667739,0.5315511100514904,4,4.75
+robustness_zscore_retention,ms2,hybrid_repaired_copeland_a0p3_minmax,Copeland hybrid repaired,0.5458108276885161,0.5330867586184207,4,4.25
+robustness_zscore_retention,ms2,hybrid_unrepaired_balance_a0p3_minmax,Balance hybrid unrepaired,0.5456774793667739,0.5315511100514904,4,5.75
+robustness_zscore_retention,ms2,hybrid_unrepaired_copeland_a0p3_minmax,Copeland hybrid unrepaired,0.5458108276885161,0.5330867586184207,4,5.25
+robustness_zscore_retention,ms2,markov_graph,Markov unrepaired,0.5314180265157139,0.5226117942084818,4,12.0
+robustness_zscore_retention,ms2,markov_graph_repaired,Markov repaired,0.5314180265157139,0.5226117942084818,4,11.0
+robustness_zscore_retention,ms2,prior_only,Prior,0.5449063611405328,0.5259608548477609,4,6.5
+robustness_zscore_retention,ms2,rrf,RRF,0.5462225172671649,0.5335868375788562,4,5.25
