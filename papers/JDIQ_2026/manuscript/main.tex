@@ -316,29 +316,33 @@ the end-to-end pipeline these subsections define, stage by stage.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures_v2/fig1_pipeline.pdf}
-  \caption{The eight-stage evaluation pipeline, color-coded by role: blue
-    stages are data artifacts, green stages are processing steps, and amber
-    stages are diagnostic or evaluation steps. Stored ranker scores are
-    normalized per query and per ranker (Eq.~\eqref{eq:minmax-calibration}),
+  \includegraphics[width=\linewidth]{figures_v2/74556F5F-D495-41DF-9EDE-203C4CD1008A.png}
+  \caption{The eight-stage evaluation pipeline (numbered 1--8), color-coded by
+    role: blue stages are data artifacts, green stages are processing steps,
+    and amber stages are diagnostic or evaluation steps. Stored ranker scores
+    are normalized per query and per ranker (Eq.~\eqref{eq:minmax-calibration}),
     converted to pairwise votes and thresholded into a preference graph
     $G_q$ under regime $r$, diagnosed structurally, optionally repaired, and
     finally converted to a ranking and scored by nDCG under paired
     statistical tests. The dashed arrow marks the raw-margin ablation, which
     reuses every downstream stage unchanged but skips normalization and keeps
-    fixed raw-margin thresholds. The reader should take away that
+    fixed raw-margin thresholds. A notation-highlight key below the diagram
+    repeats the symbols most relevant to this pipeline from
+    Table~\ref{tab:notation}. The reader should take away that
     normalization and repair are two distinct, separated stages, not one
     combined step.}
-  \Description{An eight-stage horizontal pipeline diagram, color-coded by
-    role (data artifacts in blue, processing steps in green, diagnostic or
-    evaluation steps in amber): stored ranker scores, per-query per-ranker
-    normalization, pairwise vote extraction and thresholding, preference
-    graph construction under a vote regime, mutual-pair and SCC/FAS
-    diagnostics, optional greedy repair, ranking extraction and hybrid
-    fusion, and final nDCG evaluation with paired statistical analysis. A
-    dashed arrow indicates that the raw-margin ablation skips the
-    normalization stage and reuses fixed raw-margin thresholds while keeping
-    every other stage identical.}
+  \Description{An eight-stage horizontal pipeline diagram with numbered
+    badges 1 through 8, color-coded by role (data artifacts in blue,
+    processing steps in green, diagnostic or evaluation steps in amber):
+    stored ranker scores, per-query per-ranker normalization, pairwise vote
+    extraction and thresholding, preference graph construction under a vote
+    regime, mutual-pair and SCC/FAS diagnostics, optional greedy repair,
+    ranking extraction and hybrid fusion, and final nDCG evaluation with
+    paired statistical analysis. A dashed arrow indicates that the
+    raw-margin ablation skips the normalization stage and reuses fixed
+    raw-margin thresholds while keeping every other stage identical. Below
+    the diagram, a notation-highlight legend repeats key symbols and their
+    meanings.}
   \label{fig:pipeline}
 \end{figure}
 
@@ -1052,7 +1056,7 @@ before/after decomposition directly.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures_v2/fig5_cycle_decomposition.pdf}
+  \includegraphics[width=\linewidth]{figures_v2/IMG_5312.png}
   \caption{Cyclic-query percentage under \texttt{ms1} before (filled dot) and
     after (open dot) deleting direct mutual pairs, one row per dataset. The
     drop is largest for HotpotQA ($63\%\to2\%$) and smallest for FiQA
@@ -1060,8 +1064,8 @@ before/after decomposition directly.
     cyclicity is direct bidirectional contradiction, not longer-cycle
     nontransitivity, and that the remaining share after deletion varies
     substantially by dataset.}
-  \Description{A dumbbell plot with one row per dataset (SciDocs, FiQA,
-    HotpotQA, BRIGHT), each showing a filled dot for cyclic-query percentage
+  \Description{A dumbbell plot with one row per dataset (BRIGHT, HotpotQA,
+    FiQA, SciDocs), each showing a filled dot for cyclic-query percentage
     before mutual-pair deletion and an open dot for the percentage after
     deletion, connected by a line. All four datasets drop sharply from before
     to after, with HotpotQA showing the largest drop (63 to 2 percent) and
@@ -1219,27 +1223,25 @@ exactly zero rather than strictly positive.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{figures_v2/fig8_influence.pdf}
-  \caption{Remaining mean $\Delta$nDCG for the Copeland-hybrid \texttt{ms1}
-    cell as the top-$k$ most influential queries are removed ($k=0,\dots,4$),
-    for the two main positive-point-estimate cases. (A) HotpotQA: the mean
-    falls from $+0.0123$ to exactly $0$ after removing the top 3 queries --
-    the positive estimate is concentrated in a handful of queries. (B)
-    SciDocs: the mean stays positive ($+0.0036$ to $+0.0055$) after removing
-    the top 1--4 queries -- less concentrated, but Section~\ref{sec:downstream-results}
-    shows this nominal positive still does not survive multiplicity
-    correction. Values are exact per-query recomputations, not interpolated.}
-  \Description{Two compact line-and-marker panels side by side. Panel A,
-    HotpotQA, shows the remaining mean delta nDCG dropping from 0.0123 at k
-    equals 0 to exactly 0 by k equals 3 influential queries removed. Panel B,
-    SciDocs, shows the remaining mean staying between 0.0036 and 0.0085
-    across the same range, indicating a less concentrated but still
-    non-robust positive effect.}
+  \includegraphics[width=0.55\linewidth]{figures_v2/IMG_5313.png}
+  \caption{Remaining mean $\Delta$nDCG for the calibrated \texttt{ms1}
+    Copeland-hybrid cell as the top-$k$ most influential HotpotQA queries are
+    removed ($k=0,\dots,4$), the more concentrated of the two main
+    positive-point-estimate cases. The mean falls from $+0.0123$ to exactly
+    $0$ after removing the top 3 queries, so the positive estimate is
+    concentrated in a handful of queries. The companion SciDocs cell is less
+    concentrated and is reported numerically in the text below rather than
+    plotted here. Values are exact per-query recomputations, not
+    interpolated.}
+  \Description{A single line-and-marker panel titled HotpotQA, showing the
+    remaining mean delta nDCG dropping from 0.0123 at k equals 0 to exactly 0
+    by k equals 3 influential queries removed, with exact values for
+    k=0 through k=4 annotated below the plot.}
   \label{fig:influence-robustness}
 \end{figure}
 
 Figure~\ref{fig:influence-robustness} plots this influence pattern directly
-for both cells. HotpotQA's positive mean is concentrated in a handful of queries. Removing the
+for the more concentrated HotpotQA cell. HotpotQA's positive mean is concentrated in a handful of queries. Removing the
 top one influential query reduces the calibrated \texttt{ms1} Copeland-hybrid
 mean delta from $+0.0123$ to $+0.0053$; removing the top two reduces it to
 $+0.0009$; removing the top three or top four drives the mean to exactly zero.
