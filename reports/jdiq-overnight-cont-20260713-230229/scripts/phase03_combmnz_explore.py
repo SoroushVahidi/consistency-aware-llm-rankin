@@ -107,29 +107,30 @@ def main() -> None:
             if not eligible(rel_map):
                 n_skip_ineligible += 1
                 continue
-            per_system = {r: score_idx[r].get(qid, {}) for r in RANKERS}
+            # API expects list[dict[str, float]] (one map per ranker), not a dict.
+            per_system_maps = [score_idx[r].get(qid, {}) for r in RANKERS]
             cand = set()
-            for m in per_system.values():
+            for m in per_system_maps:
                 cand.update(m.keys())
             if not cand:
                 continue
             if len(cand) > pool_k:
                 scoresum = {}
                 for d in cand:
-                    xs = [per_system[r][d] for r in RANKERS if d in per_system[r]]
+                    xs = [m[d] for m in per_system_maps if d in m]
                     scoresum[d] = float(np.mean(xs)) if xs else -1e18
                 cand_list = sorted(cand, key=lambda d: (-scoresum[d], d))[:pool_k]
             else:
                 cand_list = sorted(cand)
 
             cs_rank = combsum_ranking(
-                per_system, cand_list, normalization=COMBSUM_NORM_MINMAX
+                per_system_maps, cand_list, normalization=COMBSUM_NORM_MINMAX
             )
 
             fused = {d: 0.0 for d in cand_list}
             nz = {d: 0 for d in cand_list}
-            for r in RANKERS:
-                best = {d: per_system[r][d] for d in cand_list if d in per_system[r]}
+            for best_full in per_system_maps:
+                best = {d: best_full[d] for d in cand_list if d in best_full}
                 contrib = _minmax_normalize_query_ranker(best)
                 for d in cand_list:
                     c = float(contrib.get(d, 0.0))
@@ -140,11 +141,11 @@ def main() -> None:
             best_rank: dict[str, int] = {}
             for d in cand_list:
                 ranks = []
-                for r in RANKERS:
-                    if d in per_system[r]:
+                for best_full in per_system_maps:
+                    if d in best_full:
                         ordered = sorted(
-                            [x for x in cand_list if x in per_system[r]],
-                            key=lambda x: (-per_system[r][x], x),
+                            [x for x in cand_list if x in best_full],
+                            key=lambda x: (-best_full[x], x),
                         )
                         ranks.append(ordered.index(d) + 1)
                 best_rank[d] = min(ranks) if ranks else 10**9

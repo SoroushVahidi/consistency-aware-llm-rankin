@@ -47,3 +47,14 @@ NO IDENTITY LEAKS FOUND
 1. Upload scrubbed zip to anonymous.4open.science (or equivalent).
 2. Insert verified anonymous URL into Data Availability only after URL exists.
 3. Do not include author GitHub URL in the anonymous PDF.
+
+## CombMNZ addendum (hard-fail rerun)
+
+**Decision:** DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add volume without strengthening the repair thesis.
+
+- scidocs: CombSUM=0.1866, CombMNZ=0.1884, Δ=+0.0018 (n=120)
+- fiqa: CombSUM=0.0492, CombMNZ=0.0462, Δ=-0.0031 (n=120)
+- hotpotqa: CombSUM=0.3320, CombMNZ=0.3320, Δ=+0.0000 (n=52)
+- bright: CombSUM=0.1606, CombMNZ=0.1606, Δ=+0.0000 (n=50)
+
+Numbers exploratory only; no baseline table added.

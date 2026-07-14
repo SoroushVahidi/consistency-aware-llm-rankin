@@ -1,0 +1,77 @@
+{
+  "definition": "CombMNZ(d) = CombSUM(d) * nz(d), where CombSUM sums per-ranker min-max normalized scores over the candidate pool and nz(d) counts rankers with a nonzero contribution after that normalization (missing -> 0).",
+  "ambiguities": [
+    "nonzero after min-max vs native nonzero",
+    "tie-breaking relative to CombSUM/Prior/RRF",
+    "candidate-pool restriction already applied before fusion"
+  ],
+  "datasets": {
+    "scidocs": {
+      "dataset": "scidocs",
+      "n": 120,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.18661166896426823,
+      "combmnz_mean_ndcg": 0.18837443869089135,
+      "delta_mnz_minus_sum": 0.0017627697266231201
+    },
+    "fiqa": {
+      "dataset": "fiqa",
+      "n": 120,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.04924893916018823,
+      "combmnz_mean_ndcg": 0.04617335377328371,
+      "delta_mnz_minus_sum": -0.003075585386904521
+    },
+    "hotpotqa": {
+      "dataset": "hotpotqa",
+      "n": 52,
+      "n_skip_ineligible": 18,
+      "combsum_mean_ndcg": 0.3319588366758253,
+      "combmnz_mean_ndcg": 0.3319588366758253,
+      "delta_mnz_minus_sum": 0.0
+    },
+    "bright": {
+      "dataset": "bright",
+      "n": 50,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.16055940188475737,
+      "combmnz_mean_ndcg": 0.16055940188475737,
+      "delta_mnz_minus_sum": 0.0
+    }
+  },
+  "decision": "DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add volume without strengthening the repair thesis.",
+  "results": [
+    {
+      "dataset": "scidocs",
+      "n": 120,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.18661166896426823,
+      "combmnz_mean_ndcg": 0.18837443869089135,
+      "delta_mnz_minus_sum": 0.0017627697266231201
+    },
+    {
+      "dataset": "fiqa",
+      "n": 120,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.04924893916018823,
+      "combmnz_mean_ndcg": 0.04617335377328371,
+      "delta_mnz_minus_sum": -0.003075585386904521
+    },
+    {
+      "dataset": "hotpotqa",
+      "n": 52,
+      "n_skip_ineligible": 18,
+      "combsum_mean_ndcg": 0.3319588366758253,
+      "combmnz_mean_ndcg": 0.3319588366758253,
+      "delta_mnz_minus_sum": 0.0
+    },
+    {
+      "dataset": "bright",
+      "n": 50,
+      "n_skip_ineligible": 0,
+      "combsum_mean_ndcg": 0.16055940188475737,
+      "combmnz_mean_ndcg": 0.16055940188475737,
+      "delta_mnz_minus_sum": 0.0
+    }
+  ]
+}

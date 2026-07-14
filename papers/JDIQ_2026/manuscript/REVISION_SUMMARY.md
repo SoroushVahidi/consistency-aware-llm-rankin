@@ -126,6 +126,6 @@ tectonic -X compile main.tex --keep-logs
 ## Overnight integration (auto)
 
 - Retention-sensitivity Limitations claim corrected using `reports/retention_matching_investigation/`.
-- CombMNZ exploratory: see continuation overnight report (computed).
+- CombMNZ exploratory: DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add vo
 - Local anonymous artifact package prepared under `/home/soroush/consistency-aware-llm-rankin/reports/jdiq-overnight-20260713-225928/artifact_prep/` (hosted anonymous URL still unresolved).
 - Validation pages=28; fail=[]

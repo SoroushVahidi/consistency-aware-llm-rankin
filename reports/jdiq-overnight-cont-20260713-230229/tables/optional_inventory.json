@@ -1,0 +1,10 @@
+{
+  "minmax_hyphen_plain": 0,
+  "minmax_endash": 12,
+  "tfidf_plain": 9,
+  "tfidf_endash": 0,
+  "original_study": false,
+  "not_yet_performed": false,
+  "github_author": false,
+  "home_path": false
+}
