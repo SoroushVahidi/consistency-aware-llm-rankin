@@ -802,10 +802,11 @@ construction, not changes in upstream evidence.
 \label{sec:baselines}
 
 The normalized-protocol package evaluates four graph-independent baselines and ten
-graph-dependent methods. The graph-independent baselines are Prior, RRF,
-CombSUM, and Borda fusion. The graph-dependent methods are unrepaired and
-repaired variants of Copeland, balance, and Markov extraction, plus unrepaired
-and repaired Copeland and balance hybrids at $\alpha=0.3$.
+graph-dependent methods, summarized in Table~\ref{tab:baselines}. The
+graph-independent baselines are Prior, RRF, CombSUM, and Borda fusion. The
+graph-dependent methods are unrepaired and repaired variants of Copeland,
+balance, and Markov extraction, plus unrepaired and repaired Copeland and
+balance hybrids at $\alpha=0.3$.
 
 CombSUM uses per-query, per-ranker min--max normalization before summation, so
 missing documents contribute $0$ for that ranker. Borda fusion operates on the
@@ -1763,20 +1764,6 @@ conclusion than a retention-matched policy on the same data.
 
 This study's limitations fall into several categories, detailed below.
 
-\textbf{An earlier rule-based outcome taxonomy is excluded as evidence.} A
-separate raw-margin failure-mining corpus was previously labeled with a
-six-way rule-based outcome taxonomy whose counts were never regenerated under
-the primary normalized protocol; because normalization and vote construction
-change retained edges, removed edges, and repaired-versus-unrepaired signs,
-those raw-margin counts are not appropriate as evidence here and are not part
-of the main empirical narrative.
-
-\textbf{Implementation cost is not benchmarked.} The normalized-protocol
-pipeline is CPU-only and practical on the graph sizes studied here, but the
-available runtime and memory evidence comes from a single unbenchmarked local
-machine, so we do not present efficiency as a substantive contribution or make
-cross-system scaling claims.
-
 \textbf{Normalization remains a design choice, not a proven optimum.} The
 primary protocol uses per-query, per-ranker min--max normalization with
 retention-matched thresholds because that combination substantially reduced
@@ -1882,6 +1869,20 @@ same upstream retrieval runs can produce different graphs, and therefore
 different conclusions, if their construction choices differ. This paper
 audits one such pipeline in detail; it does not establish that preference
 graphs in general are reliable independent of how they are built.
+
+\textbf{An earlier rule-based outcome taxonomy is excluded as evidence.} A
+separate raw-margin failure-mining corpus was previously labeled with a
+six-way rule-based outcome taxonomy whose counts were never regenerated under
+the primary normalized protocol; because normalization and vote construction
+change retained edges, removed edges, and repaired-versus-unrepaired signs,
+those raw-margin counts are not appropriate as evidence here and are not part
+of the main empirical narrative.
+
+\textbf{Implementation cost is not benchmarked.} The normalized-protocol
+pipeline is CPU-only and practical on the graph sizes studied here, but the
+available runtime and memory evidence comes from a single unbenchmarked local
+machine, so we do not present efficiency as a substantive contribution or make
+cross-system scaling claims.
 
 % =============================================================================
 \section{Conclusion}
