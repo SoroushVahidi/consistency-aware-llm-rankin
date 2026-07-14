@@ -1,0 +1,120 @@
+{
+  "checks": [
+    {
+      "ok": true,
+      "name": "seeds_in_tex",
+      "detail": "bootstrap seed 13 / perm seed 17 / B=10000 present in TeX"
+    },
+    {
+      "ok": true,
+      "name": "seeds_in_pdf_proxy",
+      "detail": "seed values reachable from compiled sources"
+    },
+    {
+      "ok": true,
+      "name": "hotpotqa_exclusion_count",
+      "detail": "18/70 exclusion stated"
+    },
+    {
+      "ok": true,
+      "name": "hotpotqa_n52",
+      "detail": "HotpotQA n=52 present"
+    },
+    {
+      "ok": true,
+      "name": "holm_narrative_present",
+      "detail": "Holm zero-survivor narrative present"
+    },
+    {
+      "ok": true,
+      "name": "scidocs_ms1_cycle_literals",
+      "detail": "99.2 and 10.8 present"
+    },
+    {
+      "ok": true,
+      "name": "delta_scidocs_ms1_copeland_hybrid",
+      "detail": "expected~0.009, got=0.008526038099271938"
+    },
+    {
+      "ok": true,
+      "name": "delta_hotpotqa_ms1_copeland_hybrid",
+      "detail": "expected~0.012, got=0.01226673280326149"
+    },
+    {
+      "ok": true,
+      "name": "delta_fiqa_ms1_copeland_hybrid",
+      "detail": "expected~-0.005, got=-0.004569149185585735"
+    },
+    {
+      "ok": true,
+      "name": "retention_exec_holm0",
+      "detail": "executive conclusion mentions Holm survivors 0"
+    },
+    {
+      "ok": true,
+      "name": "no_identity_SoroushVahidi",
+      "detail": "absent from main.tex"
+    },
+    {
+      "ok": true,
+      "name": "no_identity_/home/soroush/",
+      "detail": "absent from main.tex"
+    },
+    {
+      "ok": true,
+      "name": "no_identity_sv96@",
+      "detail": "absent from main.tex"
+    },
+    {
+      "ok": true,
+      "name": "combmnz_do_not_add",
+      "detail": "DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add vo"
+    },
+    {
+      "ok": true,
+      "name": "combmnz_max_abs_delta",
+      "detail": "max_abs=0.0031"
+    }
+  ],
+  "mismatches": [],
+  "notes": [
+    {
+      "hotpotqa_ms1_graph_rows": 1
+    },
+    {
+      "graph_columns": [
+        "dataset",
+        "protocol",
+        "protocol_label",
+        "protocol_kind",
+        "calibration",
+        "threshold_mode",
+        "regime",
+        "usable_query_count",
+        "mean_candidate_count",
+        "mean_edge_count",
+        "graph_density",
+        "mutual_pair_count",
+        "pct_queries_with_mutual_pair",
+        "cyclic_query_pct",
+        "cyclic_query_pct_after_mutual_deletion",
+        "mean_largest_scc",
+        "mean_largest_scc_after_mutual_deletion",
+        "mean_total_graph_weight",
+        "mean_normalized_graph_weight",
+        "mean_fas_edges_removed",
+        "mean_fas_weight_removed",
+        "mean_normalized_fas_weight_removed",
+        "mutual_pair_weight_share",
+        "scc_count_gt1",
+        "directed_triangle_count",
+        "removed_edge_overlap_with_raw",
+        "removed_edge_overlap_with_primary",
+        "three_regime_intersection_query_count"
+      ]
+    },
+    {
+      "baseline_rows": 120
+    }
+  ]
+}

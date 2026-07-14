@@ -129,3 +129,14 @@ tectonic -X compile main.tex --keep-logs
 - CombMNZ exploratory: DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add vo
 - Local anonymous artifact package prepared under `/home/soroush/consistency-aware-llm-rankin/reports/jdiq-overnight-20260713-225928/artifact_prep/` (hosted anonymous URL still unresolved).
 - Validation pages=28; fail=[]
+
+## Overnight CombMNZ computation (verified)
+
+**Decision:** DO_NOT_ADD: CombMNZ vs CombSUM macro deltas are tiny under this unambiguous definition; expanding baselines would add volume without strengthening the repair thesis.
+
+- scidocs: CombSUM=0.1866, CombMNZ=0.1884, Δ=+0.0018 (n=120)
+- fiqa: CombSUM=0.0492, CombMNZ=0.0462, Δ=-0.0031 (n=120)
+- hotpotqa: CombSUM=0.3320, CombMNZ=0.3320, Δ=+0.0000 (n=52)
+- bright: CombSUM=0.1606, CombMNZ=0.1606, Δ=+0.0000 (n=50)
+
+Numbers stay out of main PDF tables; scoping sentence only.
