@@ -39,9 +39,9 @@ GAP = 0.30
 X0 = 0.2
 Y0 = 1.55
 
-fig, ax = plt.subplots(figsize=(7.0, 2.55))
+fig, ax = plt.subplots(figsize=(7.0, 2.05))
 ax.set_xlim(0, X0 * 2 + N * BOX_W + (N - 1) * GAP)
-ax.set_ylim(0, 3.35)
+ax.set_ylim(0.55, 3.35)
 ax.axis("off")
 
 xs = []

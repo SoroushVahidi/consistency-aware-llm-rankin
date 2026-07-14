@@ -158,10 +158,10 @@ preference-graph repair outcomes are not invariant to score normalization and
 vote construction, and structural consistency should not be assumed to
 translate into retrieval improvement without direct evaluation.
 
-The remainder of the paper is organized as follows. Section~2 positions the
+The remainder of the paper is organized as follows. Section~\ref{sec:background} positions the
 study relative to data-quality frameworks, rank aggregation, and rank fusion.
-Section~3 formalizes preference graphs, calibrated vote construction,
-structural metrics, and feedback-arc-set repair. Section~4 describes the
+Section~\ref{sec:methodology} formalizes preference graphs, calibrated vote construction,
+structural metrics, and feedback-arc-set repair. Section~\ref{sec:experimental-setup} describes the
 four-dataset protocol, vote-extraction regimes, baselines, and statistical
 evaluation policy. The results sections then report calibrated structural
 behavior, repaired-versus-unrepaired retrieval effects, raw-versus-calibrated
@@ -1697,7 +1697,7 @@ part of the primary multiplicity-corrected nDCG family; pool-truncated
 Recall@$k$ is not used as a confirmatory metric. The qrels themselves are
 incomplete and dataset-dependent, and BEW/PIC are computed from the same
 relevance evidence rather than from an independent source of graph truth. The
-paper therefore does not claim that improved graph consistency implies a
+paper therefore does not claim that improved structural consistency implies a
 general improvement in user utility beyond the measured retrieval setting.
 
 \textbf{The stored LLM records are limited as evidence.} As Section~\ref{sec:real-llm}
