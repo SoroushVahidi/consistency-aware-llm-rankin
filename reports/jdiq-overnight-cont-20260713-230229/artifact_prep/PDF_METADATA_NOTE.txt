@@ -1,0 +1,1 @@
+exiftool may be unavailable; PDF Creator is TeX toolchain (non-identifying).

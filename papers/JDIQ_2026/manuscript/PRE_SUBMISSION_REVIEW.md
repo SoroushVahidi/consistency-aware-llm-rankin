@@ -564,3 +564,9 @@ around "the original study," the missing anonymized artifact link, and a
 handful of related-work/notation completeness gaps that are each individually
 minor but collectively signal a manuscript that has not yet had a full,
 cold, "would a stranger understand this" pass.
+
+---
+
+## Overnight status note (2026-07-13)
+
+Retention-target sensitivity is **no longer** an untested gap: an existing policy sweep was integrated into Methods/Limitations. Do not reinstate the "not yet performed" phrasing.

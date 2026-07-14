@@ -1,0 +1,19 @@
+Title:           Score Normalization and Vote Construction Govern Preference-Graph Repair Outcomes in Multi-Ranker Retrieval
+Subject:         -  Information systems  ->  Data cleaning.Data quality.Retrieval models and ranking.
+Creator:         LaTeX with acmart 2022/02/19 v1.83 Typesetting articles for the Association for Computing Machinery and hyperref 2022-02-21 v7.00n Hypertext links for LaTeX
+Producer:        XeTeX version 0.999994
+CreationDate:    Mon Jul 13 23:04:08 2026 EDT
+Custom Metadata: no
+Metadata Stream: yes
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           28
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       528170 bytes
+Optimized:       no
+PDF version:     1.5
