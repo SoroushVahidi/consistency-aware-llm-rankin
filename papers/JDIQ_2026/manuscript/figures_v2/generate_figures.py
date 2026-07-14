@@ -50,7 +50,7 @@ def fig2_bm25_share():
         raw_vals = [sub[(sub.protocol == RAW) & (sub.regime == r)]["bm25_weight_share_conditional"].iloc[0] for r in REGIME_ORDER]
         cal_vals = [sub[(sub.protocol == PRIMARY) & (sub.regime == r)]["bm25_weight_share_conditional"].iloc[0] for r in REGIME_ORDER]
         ax.bar(x - width / 2, raw_vals, width, color=ROLE_RAW, label="Raw" if i == 0 else None)
-        ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Calibrated" if i == 0 else None)
+        ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Normalized" if i == 0 else None)
         ax.set_xticks(x)
         ax.set_xticklabels(REGIME_ORDER, rotation=30, ha="right", fontsize=TICK_SIZE)
         ax.set_ylim(0, 1.05)
@@ -98,7 +98,7 @@ def fig4_raw_vs_calibrated_structure():
         raw_vals = [sub[(sub.protocol == RAW) & (sub.regime == r)]["cyclic_query_pct"].iloc[0] * 100 for r in REGIME_ORDER]
         cal_vals = [sub[(sub.protocol == PRIMARY) & (sub.regime == r)]["cyclic_query_pct"].iloc[0] * 100 for r in REGIME_ORDER]
         ax.bar(x - width / 2, raw_vals, width, color=ROLE_RAW, label="Raw" if i == 0 else None)
-        ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Calibrated" if i == 0 else None)
+        ax.bar(x + width / 2, cal_vals, width, color=ROLE_CALIBRATED, label="Normalized" if i == 0 else None)
         ax.set_xticks(x)
         ax.set_xticklabels(REGIME_ORDER, rotation=30, ha="right", fontsize=TICK_SIZE)
         ax.set_ylim(0, 105)
@@ -297,13 +297,13 @@ def fig9_sign_change_heatmap():
             ax.add_patch(rect)
 
     ax.set_xticks([0, 1])
-    ax.set_xticklabels(["Raw", "Calibrated"])
+    ax.set_xticklabels(["Raw", "Normalized"])
     ylabels = [f"{dataset_label(ds)} – {PAIR_LABELS[p]}" for ds, p in rows]
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels(ylabels, fontsize=6.6)
     for ds_i in range(1, len(DATASET_ORDER)):
         ax.axhline(ds_i * len(PAIR_ORDER) - 0.5, color="white", lw=2)
-    ax.set_title("Raw → calibrated: 5 most consequential sign flips outlined", loc="left", fontsize=9.5, fontweight="bold", pad=8)
+    ax.set_title("Raw → normalized: 5 most consequential sign flips outlined", loc="left", fontsize=9.5, fontweight="bold", pad=8)
     ax.tick_params(length=0)
     for spine in ax.spines.values():
         spine.set_visible(False)
