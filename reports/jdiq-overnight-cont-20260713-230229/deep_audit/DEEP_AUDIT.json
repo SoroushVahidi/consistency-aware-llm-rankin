@@ -1,0 +1,117 @@
+{
+  "tabular_blocks": 10,
+  "numeric_literals": 151,
+  "csv_row_checks": [
+    {
+      "dataset": "scidocs",
+      "regime": "ms1",
+      "pair": "copeland_hybrid",
+      "csv_mean": 0.008526038099271938,
+      "tex_display": 0.009,
+      "ok": true,
+      "p": 0.011998800119988001,
+      "ci": [
+        0.0018086563430457683,
+        0.017274600486808924
+      ]
+    },
+    {
+      "dataset": "fiqa",
+      "regime": "ms1",
+      "pair": "copeland_hybrid",
+      "csv_mean": -0.004569149185585735,
+      "tex_display": -0.005,
+      "ok": true,
+      "p": 0.30086991300869914,
+      "ci": [
+        -0.013271197026379595,
+        0.0017783080447936904
+      ]
+    },
+    {
+      "dataset": "hotpotqa",
+      "regime": "ms1",
+      "pair": "copeland_hybrid",
+      "csv_mean": 0.01226673280326149,
+      "tex_display": 0.012,
+      "ok": true,
+      "p": 0.25317468253174685,
+      "ci": [
+        0.0,
+        0.030813557387646136
+      ]
+    },
+    {
+      "dataset": "hotpotqa",
+      "regime": "ms1",
+      "pair": "copeland_graph",
+      "csv_mean": 0.01550607117753817,
+      "tex_display": 0.016,
+      "ok": true,
+      "p": 0.3143685631436856,
+      "ci": [
+        -0.01013825814585691,
+        0.044450754997660796
+      ]
+    },
+    {
+      "dataset": "bright",
+      "regime": "ms1",
+      "pair": "copeland_graph",
+      "csv_mean": -0.014041497577935986,
+      "tex_display": -0.014,
+      "ok": true,
+      "p": 0.26687331266873315,
+      "ci": [
+        -0.040018839398353656,
+        0.006119613848628893
+      ]
+    },
+    {
+      "dataset": "scidocs",
+      "regime": "ms1",
+      "col": "cyclic_query_pct",
+      "csv": 99.16666666666667,
+      "tex": 99.2,
+      "ok": true
+    },
+    {
+      "dataset": "scidocs",
+      "regime": "ms1",
+      "col": "cyclic_query_pct_after_mutual_deletion",
+      "csv": 10.833333333333334,
+      "tex": 10.8,
+      "ok": true
+    },
+    {
+      "dataset": "hotpotqa",
+      "regime": "ms1",
+      "col": "cyclic_query_pct",
+      "csv": 63.46153846153846,
+      "tex": 63.5,
+      "ok": true
+    },
+    {
+      "dataset": "hotpotqa",
+      "regime": "ms1",
+      "col": "cyclic_query_pct_after_mutual_deletion",
+      "csv": 1.9230769230769231,
+      "tex": 1.9,
+      "ok": true
+    }
+  ],
+  "mismatches": [],
+  "auto_fixes": [],
+  "unpublished_nonzero_boot_means": [
+    {
+      "dataset": "bright",
+      "regime": "ms1",
+      "pair": "markov_graph",
+      "mean": -0.007513713663229774,
+      "rounded": -0.008
+    }
+  ],
+  "unpublished_nonzero_boot_means_count": 1,
+  "retention_robust_sum": 0,
+  "elapsed_sec": 0.004416704177856445
+}

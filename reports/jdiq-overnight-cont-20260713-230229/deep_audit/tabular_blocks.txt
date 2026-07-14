@@ -1,0 +1,172 @@
+\begin{tabular}{cl}
+    \toprule
+    Symbol & Meaning \\
+    \midrule
+    $q$, $D_q$ & Query and its candidate document set \\
+    $s$ & Upstream ranker in $\{\mathrm{BM25},\mathrm{TF\mbox{-}IDF},\mathrm{MiniLM}\}$ \\
+    $x_{q,s}(d)$ & Native score assigned by ranker $s$ to document $d$ for query $q$ \\
+    $\bar{x}_{q,s}(d)$ & Calibrated per-query, per-ranker score \\
+    $m_{q,s}(u,v)$ & Absolute pairwise margin for pair $\{u,v\}$ under ranker $s$ \\
+    $G_q=(V_q,E_q,w_q)$ & Preference graph for query $q$ ($V_q = D_q$) \\
+    $\widetilde G_q$ & Repaired (acyclic) preference graph \\
+    $r$ & Vote-extraction regime, $r\in\{\texttt{ms2},\texttt{ms1},\texttt{ms1\_drop\_mutual}\}$ \\
+    $\kappa_r$ & Regime-specific minimum support threshold \\
+    $\lambda_s$ & Per-ranker vote-retention threshold within one dataset/protocol/regime cell \\
+    $\gamma_r$ & Aggregate edge-retention threshold within one dataset/protocol/regime cell \\
+    $c_q(u,v)$ & Support count for direction $u \rightarrow v$ \\
+    $a_q(u,v)$ & Aggregate retained weight for direction $u \rightarrow v$ \\
+    $F_{\mathrm{opt}}$ & Exact minimum-weight feedback arc set (optimization target) \\
+    $F_{\mathrm{greedy}}$ & Greedy removed-edge set computed in the experiments \\
+    $\deg^+(u),\deg^-(u)$ & Out-degree, in-degree of node $u$ in a graph \\
+    $s_{\mathrm{cop}}, s_{\mathrm{bal}}, s_{\mathrm{mc}}$ & Copeland, weighted balance, and Markov graph scores \\
+    $\hat{s}(\cdot)$ & Min--max normalization of a score vector to $[0,1]$ \\
+    $\alpha$ & Hybrid mixing weight for the graph-derived component \\
+    $\pi$ & A ranking (permutation) of $V_q$ \\
+    $\mathrm{BEW}(\pi,G)$ & Backward-edge weight of $\pi$ relative to graph $G$ \\
+    $\mathrm{PIC}(\pi,G)$ & Pairwise inconsistency count (unweighted analogue) \\
+    $k$ & nDCG cutoff \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{lrrrrr}
+    \toprule
+    Dataset & Stored IDs & Usable queries & Top-$n$ & $|D_q|$ & nDCG@$k$ \\
+    \midrule
+    SciDocs  & 120 & 120 & 50 & 20 & 20 \\
+    FiQA     & 120 & 120 & 50 & 20 & 20 \\
+    HotpotQA & 70  & 52  & 35 & 10 & 10 \\
+    BRIGHT   & 50  & 50  & 50 & 20 & 20 \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{lcc}
+    \toprule
+    Method family & Uses graph? & Repaired and unrepaired? \\
+    \midrule
+    Prior & No & --- \\
+    Reciprocal rank fusion (RRF) & No & --- \\
+    CombSUM & No & --- \\
+    Borda-count fusion & No & --- \\
+    Copeland graph & Yes & Yes \\
+    Balance graph & Yes & Yes \\
+    Markov graph & Yes & Yes \\
+    Copeland hybrid (Eq.~\eqref{eq:hybrid}) & Yes & Yes \\
+    Balance hybrid (Eq.~\eqref{eq:hybrid}) & Yes & Yes \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{p{4.2cm}p{9.5cm}}
+    \toprule
+    Configuration & Role \\
+    \midrule
+    Greedy cycle peeling & Primary repair for normalized and raw-ablation runs, all 1{,}025 queries \\
+    Exact MWFAS (SCIP / PySCIPOpt~6.2.1) & Robustness check only, same 1{,}025 queries; confirms greedy's structural sub-optimality but no change to the retrieval conclusion \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{llrrrr}
+    \toprule
+    Dataset & Regime & Cyclic\% & Post-mutual Cyclic\% & Largest SCC & Norm. FAS \\
+    \midrule
+    SciDocs  & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    SciDocs  & \texttt{ms1}               & 99.2 & 10.8 & 16.17 & 0.074 \\
+    SciDocs  & \texttt{ms1\_drop\_mutual} & 11.7 & 11.7 & 1.93  & 0.002 \\
+    FiQA     & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    FiQA     & \texttt{ms1}               & 98.3 & 30.8 & 16.12 & 0.080 \\
+    FiQA     & \texttt{ms1\_drop\_mutual} & 30.8 & 30.8 & 3.38  & 0.004 \\
+    HotpotQA & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    HotpotQA & \texttt{ms1}               & 63.5 & 1.9  & 4.06  & 0.029 \\
+    HotpotQA & \texttt{ms1\_drop\_mutual} & 1.9  & 1.9  & 1.13  & 0.000 \\
+    BRIGHT   & \texttt{ms2}               & 0.0  & 0.0  & 1.00  & 0.000 \\
+    BRIGHT   & \texttt{ms1}               & 92.0 & 22.0 & 10.82 & 0.055 \\
+    BRIGHT   & \texttt{ms1\_drop\_mutual} & 22.0 & 22.0 & 3.08  & 0.003 \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{lrrr}
+    \toprule
+    Dataset & $\Delta$BEW & $\Delta$PIC & Weight removed \\
+    \midrule
+    SciDocs  & 4.250 & 19.49 & 8.934 \\
+    FiQA     & 3.919 & 18.24 & 7.974 \\
+    HotpotQA & 0.563 & 2.25  & 1.173 \\
+    BRIGHT   & 2.108 & 9.36  & 4.370 \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{llrcrc}
+    \toprule
+    Dataset & Pair & Mean $\Delta$ & 95\% CI & $p_{\mathrm{perm}}$ & $+/-/=$ \\
+    \midrule
+    SciDocs  & Copeland graph  & $+0.011$ & $[0.002, 0.022]$  & 0.020 & 36/22/62 \\
+    SciDocs  & Copeland hybrid & $+0.009$ & $[0.002, 0.017]$  & 0.012 & 30/10/80 \\
+    FiQA     & Copeland graph  & $+0.004$ & $[-0.005, 0.011]$ & 0.441 & 21/10/89 \\
+    FiQA     & Copeland hybrid & $-0.005$ & $[-0.013, 0.002]$ & 0.301 & 16/8/96 \\
+    HotpotQA & Copeland graph  & $+0.016$ & $[-0.010, 0.044]$ & 0.314 & 5/3/44 \\
+    HotpotQA & Copeland hybrid & $+0.012$ & $[0.000, 0.031]$  & 0.253 & 3/0/49 \\
+    BRIGHT   & Copeland graph  & $-0.014$ & $[-0.040, 0.006]$ & 0.267 & 19/13/18 \\
+    BRIGHT   & Copeland hybrid & $+0.001$ & $[-0.016, 0.020]$ & 0.910 & 10/10/30 \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{llrr}
+    \toprule
+    Dataset & Cell & Raw & Calibrated \\
+    \midrule
+    SciDocs  & \texttt{ms1} Copeland graph  & $-0.0079$ & $+0.0110$ \\
+    SciDocs  & \texttt{ms1} Copeland hybrid & $-0.0018$ & $+0.0085$ \\
+    FiQA     & \texttt{ms1} Copeland graph  & $-0.0029$ & $+0.0036$ \\
+    BRIGHT   & \texttt{ms1} Copeland hybrid & $-0.0045$ & $+0.0006$ \\
+    HotpotQA & \texttt{ms1} Markov graph    & $+0.0087$ & $-0.0023$ \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{lrr}
+    \toprule
+    Method & Macro mean nDCG & Avg. rank \\
+    \midrule
+    CombSUM                  & \textbf{0.554} & 3.25 \\
+    Balance hybrid unrepaired& 0.548 & 4.75 \\
+    Balance hybrid repaired  & 0.547 & 6.00 \\
+    RRF                      & 0.546 & 5.50 \\
+    Copeland hybrid repaired & 0.546 & 6.50 \\
+    Prior                    & 0.545 & 6.75 \\
+    Borda fusion             & 0.545 & 6.00 \\
+    Copeland hybrid unrepaired& 0.542 & 9.00 \\
+    Balance repaired         & 0.539 & 8.25 \\
+    Balance unrepaired       & 0.539 & 8.25 \\
+    Markov unrepaired        & 0.537 & 9.50 \\
+    Markov repaired          & 0.537 & 9.25 \\
+    Copeland repaired        & 0.534 & 11.00 \\
+    Copeland unrepaired      & 0.530 & 11.00 \\
+    \bottomrule
+  \end{tabular}
+
+=====
+
+\begin{tabular}{lrrrr}
+    \toprule
+    Dataset & $\alpha=0.1$ & $\alpha=0.3$ & $\alpha=0.5$ & $\alpha=1.0$ \\
+    \midrule
+    SciDocs  & $-0.0022$ & $+0.0085$ & $+0.0097$ & $+0.0083$ \\
+    FiQA     & $+0.0006$ & $-0.0046$ & $+0.0010$ & $+0.0038$ \\
+    HotpotQA & $-0.0008$ & $+0.0123$ & $+0.0120$ & $+0.0101$ \\
+    BRIGHT   & $-0.0013$ & $+0.0006$ & $-0.0074$ & $-0.0071$ \\
+    \bottomrule
+  \end{tabular}

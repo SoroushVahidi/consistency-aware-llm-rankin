@@ -1,0 +1,9 @@
+[
+  {
+    "dataset": "bright",
+    "regime": "ms1",
+    "pair": "markov_graph",
+    "mean": -0.007513713663229774,
+    "rounded": -0.008
+  }
+]
