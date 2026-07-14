@@ -1,0 +1,10 @@
+{
+  "anonymous_review_artifact.tar.gz": {
+    "bytes": 6438853,
+    "sha256": "2248b54c4c3015a9656f6e65e02d8104db02d86adbf443669bf4eb14a73265a1"
+  },
+  "anonymous_review_artifact.zip": {
+    "bytes": 6477779,
+    "sha256": "bc61ceb53ce6aa7b9df55e6426b573b9dae481f33c9bae53a388102518ab7082"
+  }
+}

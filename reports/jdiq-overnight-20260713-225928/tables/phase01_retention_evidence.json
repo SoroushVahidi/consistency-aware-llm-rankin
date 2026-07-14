@@ -1,0 +1,18 @@
+{
+  "source": "/home/soroush/consistency-aware-llm-rankin/reports/retention_matching_investigation/EXECUTIVE_CONCLUSION.md",
+  "classification": "B. Structural sensitivity, retrieval conclusion robust",
+  "holm_survivors_claim": "0",
+  "tables_present": [
+    "retention_policy_help_harm.csv",
+    "retention_policy_structural.csv",
+    "retention_policy_retrieval.csv",
+    "retention_policy_statistics.csv",
+    "retention_matching_code_inventory.csv",
+    "retention_policy_removed_edge_overlap.csv",
+    "retention_policy_sign_stability.csv",
+    "retention_policy_thresholds.csv",
+    "current_retention_matched_thresholds.csv",
+    "retention_policy_cross_policy_summary.csv"
+  ],
+  "manuscript_old_claim": "Retention-target sensitivity is untested"
+}

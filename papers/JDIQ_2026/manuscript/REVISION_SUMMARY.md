@@ -119,3 +119,13 @@ tectonic -X compile main.tex --keep-logs
 3. HotpotQA $n{=}52$ remains thin.  
 4. CombMNZ / broader fusion ablations out of scope.  
 5. Retention-target sensitivity still untested.
+
+
+---
+
+## Overnight integration (auto)
+
+- Retention-sensitivity Limitations claim corrected using `reports/retention_matching_investigation/`.
+- CombMNZ exploratory: n/a
+- Local anonymous artifact package prepared under `/home/soroush/consistency-aware-llm-rankin/reports/jdiq-overnight-20260713-225928/artifact_prep/` (hosted anonymous URL still unresolved).
+- Validation pages=28; fail=[]

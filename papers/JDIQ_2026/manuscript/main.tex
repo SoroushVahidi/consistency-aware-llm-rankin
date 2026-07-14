@@ -1596,10 +1596,7 @@ depending on how much signal survives calibration and how strongly the prior
 ranking dominates the final score. Positive point estimates therefore require
 more than a favorable mean: in this study, none remains robust once paired
 testing, influence analysis, and multiplicity correction are applied together.
-HotpotQA is the clearest example. Its calibrated \texttt{ms1} Copeland-hybrid
-mean is positive, but the effect is concentrated in a few influential queries,
-the paired permutation test is not compelling, and the cell does not survive
-Holm or Benjamini--Hochberg adjustment.
+HotpotQA is the clearest example of a positive-looking but non-robust cell: its calibrated \texttt{ms1} Copeland-hybrid mean is positive, yet the effect is concentrated in a few influential queries, the paired permutation test is not compelling, and the cell does not survive Holm or Benjamini--Hochberg adjustment.
 
 \textbf{Simple baselines remain important under calibrated graphs.} The present
 study also does not support graph repair as a superior default retrieval
@@ -1655,13 +1652,18 @@ opportunity for repair to act on longer-cycle structure, and the paper does not
 establish how the same methods would behave on corpora with naturally high
 nontrivial cyclicity.
 
-\textbf{Retention-target sensitivity is untested.} The retention-matching
-procedure (Section~\ref{sec:vote-extraction}) is an experimental control for
-comparing raw and calibrated graph construction at approximately matched
-retention, not a universally optimal threshold-selection method. We have not
-evaluated how sensitive the reported structural or retrieval conclusions are
-to matching against a nearby but not exactly raw-ablation-rate-matched retention
-target; this is a recommended additional analysis, not one we have performed.
+\textbf{Retention-target sensitivity changes structure more than retrieval
+robustness.} The retention-matching procedure (Section~\ref{sec:vote-extraction})
+is an experimental control for comparing raw and normalized graph construction
+at approximately matched retention, not a universally optimal threshold-selection
+method. A sensitivity sweep of alternative retention/threshold policies shows that
+graph density, cyclicity, and removed-edge patterns change materially across
+policies, and some repaired-versus-unrepaired cell signs flip. Across those
+policies, however, no positive repaired-versus-unrepaired nDCG cell survives Holm
+correction. We therefore retain raw-reference retention matching as the primary
+protocol and interpret structural diagnostics as policy-sensitive, while the main
+multiplicity-corrected retrieval conclusion remains robust under the tested
+alternatives.
 
 \textbf{The repair algorithm is heuristic and order-sensitive.} Our main repair
 procedure is greedy cycle peeling with no approximation guarantee, and this is
