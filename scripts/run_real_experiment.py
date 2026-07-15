@@ -33,11 +33,11 @@ Quick start
 
 
 Outputs (under ``--output-dir``, default ``outputs/real_full``):
-- ``<dataset>/<preference_source>/<dataset>_per_query.csv``      per-query × per-method results
-- ``<dataset>/<preference_source>/<dataset>_summary.csv``        aggregate statistics per method
-- ``<dataset>/<preference_source>/timings/<dataset>_timings.csv``  timing data (CSV)
+- ``<dataset>/<preference_source>/<dataset>_per_query.csv`` per-query × per-method results
+- ``<dataset>/<preference_source>/<dataset>_summary.csv`` aggregate statistics per method
+- ``<dataset>/<preference_source>/timings/<dataset>_timings.csv`` timing data (CSV)
 - ``<dataset>/<preference_source>/timings/<dataset>_timings.json`` timing data (JSON)
-- ``<dataset>/<preference_source>/plots/``                       timing plots (if matplotlib available)
+- ``<dataset>/<preference_source>/plots/`` timing plots (if matplotlib available)
 
 """
 
@@ -50,9 +50,8 @@ import logging
 import math
 import random
 import sys
-from dataclasses import replace
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Iterable
 
@@ -77,12 +76,12 @@ from consistency_ranker.combsum_ranking import (
     per_query_combsum_ranking_from_score_maps,
 )
 from consistency_ranker.cycle_detection import has_cycle
+from consistency_ranker.data.dataset_registry import DATASET_NAMES, get_config
 from consistency_ranker.data.query_ids import (
     eligible_query_ids,
     has_usable_eval_labels,
     load_query_ids_file,
 )
-from consistency_ranker.data.dataset_registry import DATASET_NAMES, get_config
 from consistency_ranker.data.unified_loader import (
     load_dataset_splits,
     load_multi_scorer_rankings,
@@ -91,15 +90,21 @@ from consistency_ranker.data.unified_loader import (
 )
 from consistency_ranker.graph_construction import build_graph, graph_summary
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
-from consistency_ranker.metric_aware_repair import (
-    mean_edge_weight,
-    reweight_graph_for_metric_aware_fas,
-)
 from consistency_ranker.markov_graph_ranking import (
     DEFAULT_MARKOV_DAMPING,
     markov_graph_ranking,
 )
+from consistency_ranker.metric_aware_repair import (
+    mean_edge_weight,
+    reweight_graph_for_metric_aware_fas,
+)
 from consistency_ranker.pairwise_prefs import Preference
+from consistency_ranker.qrels_reference import (
+    build_candidate_qrels_reference,
+    pairwise_accuracy_for_judged_pairs,
+    qrels_backward_edge_weight,
+    qrels_pairwise_inconsistency,
+)
 from consistency_ranker.rrf_ranking import (
     DEFAULT_RRF_K,
     per_query_rrf_ranking_from_score_maps,
@@ -266,11 +271,7 @@ def _uses_repaired_dag_ranking(
     if method_name in METHODS_USING_REPAIRED_DAG or method_name.endswith("_ma"):
         return True
     spec = hybrid_specs.get(method_name)
-    return bool(
-        spec is not None
-        and spec.use_repaired_graph
-        and spec.mode != "prior_only"
-    )
+    return bool(spec is not None and spec.use_repaired_graph and spec.mode != "prior_only")
 
 
 def _fas_variant_for_method(
@@ -309,9 +310,7 @@ def _reference_ranking(qrels_for_query: list) -> list[str]:
     list[str]
         Document ids ordered from most to least relevant.
     """
-    sorted_entries = sorted(
-        qrels_for_query, key=lambda e: e.relevance, reverse=True
-    )
+    sorted_entries = sorted(qrels_for_query, key=lambda e: e.relevance, reverse=True)
     # Deduplicate while preserving order (should not be needed in practice)
     seen: set[str] = set()
     ranking: list[str] = []
@@ -326,22 +325,35 @@ def _reference_ranking_for_candidates(
     qrels_for_query: list,
     candidates: set[str] | list[str],
 ) -> tuple[list[str], dict[str, int]]:
-    """Build candidate-aligned qrels reference ranking.
+    """Build candidate-aligned metric reference.
 
     Returns
     -------
     tuple[list[str], dict[str, int]]
-        (reference ranking over all candidate docs, relevance map)
+        (deterministic candidate order, eval relevance map)
+
+    Notes
+    -----
+    The returned relevance map includes every candidate document and assigns
+    zero gain to unjudged candidates so standard ranking metrics continue to
+    evaluate over the full candidate pool. Qrels-pair diagnostics such as
+    BEW, PIC, and pairwise relevance accuracy use explicit judged labels only
+    via the helpers in ``consistency_ranker.qrels_reference``.
     """
-    rel_map: dict[str, int] = {}
-    for e in qrels_for_query:
-        # Keep the highest grade if duplicates exist
-        rel_map[e.doc_id] = max(rel_map.get(e.doc_id, e.relevance), e.relevance)
-    candidate_list = sorted(set(candidates))
-    for doc_id in candidate_list:
-        rel_map.setdefault(doc_id, 0)
-    candidate_list.sort(key=lambda d: (-rel_map[d], d))
-    return candidate_list, rel_map
+    reference = build_candidate_qrels_reference(qrels_for_query, candidates)
+    return reference.candidate_ranking, reference.eval_rel_map
+
+
+def _judged_relevance_map_for_candidates(
+    qrels_for_query: list,
+    candidates: set[str] | list[str],
+) -> dict[str, int]:
+    """Explicit judged labels for candidate-aligned pairwise diagnostics."""
+
+    return build_candidate_qrels_reference(
+        qrels_for_query=qrels_for_query,
+        candidates=candidates,
+    ).judged_rel_map
 
 
 def _backward_edge_weight(graph: nx.DiGraph, ranking: list[str]) -> float:
@@ -477,7 +489,7 @@ def _ndcg_at_k(
         total = 0.0
         for i, doc_id in enumerate(items[:k_eff]):
             rel = rel_map.get(doc_id, 0)
-            gain = (2.0 ** rel - 1.0) / math.log2(i + 2.0)
+            gain = (2.0**rel - 1.0) / math.log2(i + 2.0)
             total += gain
         return total
 
@@ -537,23 +549,25 @@ def _pairwise_accuracy_from_relevance(
     rel_map: dict[str, int],
 ) -> float | None:
     """Pairwise accuracy on judged candidate pairs with different grades."""
-    if len(ranking) < 2:
-        return None
-    pos = {d: i for i, d in enumerate(ranking)}
-    docs = list(ranking)
-    correct = 0
-    total = 0
-    for i in range(len(docs)):
-        for j in range(i + 1, len(docs)):
-            a, b = docs[i], docs[j]
-            ra = rel_map.get(a)
-            rb = rel_map.get(b)
-            if ra is None or rb is None or ra == rb:
-                continue
-            total += 1
-            if (ra > rb and pos[a] < pos[b]) or (rb > ra and pos[b] < pos[a]):
-                correct += 1
-    return (correct / total) if total > 0 else None
+    return pairwise_accuracy_for_judged_pairs(ranking, rel_map)
+
+
+def _backward_edge_weight_from_relevance(
+    graph: nx.DiGraph,
+    rel_map: dict[str, int],
+) -> float:
+    """Graph-vs-qrels BEW using only explicit judged pairs."""
+
+    return qrels_backward_edge_weight(graph, rel_map)
+
+
+def _pairwise_inconsistency_from_relevance(
+    graph: nx.DiGraph,
+    rel_map: dict[str, int],
+) -> int:
+    """Graph-vs-qrels PIC using only explicit judged pairs."""
+
+    return qrels_pairwise_inconsistency(graph, rel_map)
 
 
 def _weighted_out_minus_in_ranking(graph: nx.DiGraph) -> list[str]:
@@ -618,10 +632,7 @@ def _hybrid_rrf_fas_regularized_ranking(
         balance[v] -= w
     prior_n = _normalize_scores({n: prior_scores.get(n, 0.0) for n in dag.nodes()})
     bal_n = _normalize_scores(balance)
-    combo = {
-        n: prior_n.get(n, 0.0) + fas_regularization * bal_n.get(n, 0.0)
-        for n in dag.nodes()
-    }
+    combo = {n: prior_n.get(n, 0.0) + fas_regularization * bal_n.get(n, 0.0) for n in dag.nodes()}
     return sorted(combo, key=lambda n: (-combo[n], n))
 
 
@@ -834,7 +845,9 @@ def _filter_methods(
         )
 
     filtered_methods = [m for m in methods if m in selected_methods]
-    filtered_hybrid_specs = {name: spec for name, spec in hybrid_specs.items() if name in filtered_methods}
+    filtered_hybrid_specs = {
+        name: spec for name, spec in hybrid_specs.items() if name in filtered_methods
+    }
     return filtered_methods, filtered_hybrid_specs
 
 
@@ -887,9 +900,7 @@ def _validate_run_configuration(
 
     if preference_source in {"llm_pairwise_file", "votes_file"}:
         if pairwise_file is None:
-            raise ValueError(
-                "--pairwise-file is required for llm_pairwise_file/votes_file modes."
-            )
+            raise ValueError("--pairwise-file is required for llm_pairwise_file/votes_file modes.")
         if not pairwise_file.exists():
             raise FileNotFoundError(f"Pairwise preference file not found: {pairwise_file}")
     if preference_source == "score_file":
@@ -1057,9 +1068,7 @@ def _load_score_file(path: Path) -> dict[str, list[tuple[str, float]]]:
                 raise ValueError(
                     f"{path}:{lineno} missing required keys (query_id, doc_id, score)."
                 )
-            by_query[str(row["query_id"])].append(
-                (str(row["doc_id"]), float(row["score"]))
-            )
+            by_query[str(row["query_id"])].append((str(row["doc_id"]), float(row["score"])))
     return by_query
 
 
@@ -1219,9 +1228,7 @@ def _build_query_preferences(
             Preference(winner=p.winner_doc_id, loser=p.loser_doc_id, weight=p.weight)
             for p in schema_prefs
         ]
-        return prefs, (
-            f"multi-scorer aggregated preferences (mode={multi_score_weight_mode!r})"
-        )
+        return prefs, (f"multi-scorer aggregated preferences (mode={multi_score_weight_mode!r})")
 
     raise ValueError(f"Unknown preference_source: {preference_source!r}")
 
@@ -1262,7 +1269,11 @@ def _maybe_plot(
     # 1. Average runtime by method
     avg_rt = {}
     for m in methods_seen:
-        rts = [r["runtime_total_s"] for r in per_query_rows if r["method"] == m and r["runtime_total_s"] is not None]
+        rts = [
+            r["runtime_total_s"]
+            for r in per_query_rows
+            if r["method"] == m and r["runtime_total_s"] is not None
+        ]
         avg_rt[m] = sum(rts) / len(rts) if rts else 0.0
 
     fig, ax = plt.subplots(figsize=(8, 4))
@@ -1276,7 +1287,9 @@ def _maybe_plot(
 
     # 2. Runtime vs number of nodes
     for m in methods_seen:
-        subset = [r for r in per_query_rows if r["method"] == m and r["runtime_total_s"] is not None]
+        subset = [
+            r for r in per_query_rows if r["method"] == m and r["runtime_total_s"] is not None
+        ]
         if not subset:
             continue
         xs = [r["n_nodes"] for r in subset]
@@ -1292,7 +1305,9 @@ def _maybe_plot(
 
     # 3. Runtime vs number of edges
     for m in methods_seen:
-        subset = [r for r in per_query_rows if r["method"] == m and r["runtime_total_s"] is not None]
+        subset = [
+            r for r in per_query_rows if r["method"] == m and r["runtime_total_s"] is not None
+        ]
         if not subset:
             continue
         xs = [r["n_edges"] for r in subset]
@@ -1379,7 +1394,10 @@ def run_query(
     if not _has_usable_eval_labels(qrels_for_query):
         return [], {
             "query_id": qid,
-            "reason": f"only {len(unique_docs)} judged docs with {n_distinct_grades} distinct grade(s)",
+            "reason": (
+                f"only {len(unique_docs)} judged docs with "
+                f"{n_distinct_grades} distinct grade(s)"
+            ),
         }
 
     if preference_source == "multi_scores":
@@ -1457,11 +1475,15 @@ def run_query(
         qrels_for_query=qrels_for_query,
         candidates=candidate_nodes,
     )
+    judged_rel_map = _judged_relevance_map_for_candidates(
+        qrels_for_query=qrels_for_query,
+        candidates=candidate_nodes,
+    )
     candidate_set = set(ref_ranking)
 
     # Graph-vs-qrels inconsistency before repair
-    graph_bew_pre = _backward_edge_weight(graph, ref_ranking)
-    graph_pic_pre = _pairwise_inconsistency(graph, ref_ranking)
+    graph_bew_pre = _backward_edge_weight_from_relevance(graph, judged_rel_map)
+    graph_pic_pre = _pairwise_inconsistency_from_relevance(graph, judged_rel_map)
 
     _score_sum_prior: dict[str, float] = score_sum_scores(graph)
     prior_scores = _rrf_prior_scores_for_query(
@@ -1501,22 +1523,32 @@ def run_query(
         with Timer(fas_ma_stage, accumulator=query_acc):
             dag_ma, removed_ma = greedy_fas(graph_ma_for_stats)
 
-    fas_weight_plain = (
-        greedy_fas_total_weight(removed_plain) if dag_plain is not None else None
-    )
+    fas_weight_plain = greedy_fas_total_weight(removed_plain) if dag_plain is not None else None
     fas_n_plain = len(removed_plain) if dag_plain is not None else None
     fas_weight_ma = greedy_fas_total_weight(removed_ma) if dag_ma is not None else None
     fas_n_ma = len(removed_ma) if dag_ma is not None else None
 
     if dag_plain is not None:
-        graph_bew_post_plain = _backward_edge_weight(dag_plain, ref_ranking)
-        graph_pic_post_plain = _pairwise_inconsistency(dag_plain, ref_ranking)
+        graph_bew_post_plain = _backward_edge_weight_from_relevance(
+            dag_plain,
+            judged_rel_map,
+        )
+        graph_pic_post_plain = _pairwise_inconsistency_from_relevance(
+            dag_plain,
+            judged_rel_map,
+        )
     else:
         graph_bew_post_plain = None
         graph_pic_post_plain = None
     if dag_ma is not None:
-        graph_bew_post_ma = _backward_edge_weight(dag_ma, ref_ranking)
-        graph_pic_post_ma = _pairwise_inconsistency(dag_ma, ref_ranking)
+        graph_bew_post_ma = _backward_edge_weight_from_relevance(
+            dag_ma,
+            judged_rel_map,
+        )
+        graph_pic_post_ma = _pairwise_inconsistency_from_relevance(
+            dag_ma,
+            judged_rel_map,
+        )
     else:
         graph_bew_post_ma = None
         graph_pic_post_ma = None
@@ -1526,20 +1558,14 @@ def run_query(
         if graph_ma_for_stats is not None
         else None
     )
-    mean_removed_ma_w = (
-        sum(w for _, _, w in removed_ma) / len(removed_ma) if removed_ma else None
-    )
+    mean_removed_ma_w = sum(w for _, _, w in removed_ma) / len(removed_ma) if removed_ma else None
 
     if repair_weighting == "metric_aware":
         graph_bew_post = graph_bew_post_ma if graph_bew_post_ma is not None else 0.0
         graph_pic_post = graph_pic_post_ma if graph_pic_post_ma is not None else 0
     else:
-        graph_bew_post = (
-            graph_bew_post_plain if graph_bew_post_plain is not None else 0.0
-        )
-        graph_pic_post = (
-            graph_pic_post_plain if graph_pic_post_plain is not None else 0
-        )
+        graph_bew_post = graph_bew_post_plain if graph_bew_post_plain is not None else 0.0
+        graph_pic_post = graph_pic_post_plain if graph_pic_post_plain is not None else 0
 
     def _dag_for_repaired(method_name: str) -> nx.DiGraph:
         d = _repaired_dag_choice(
@@ -1688,22 +1714,18 @@ def run_query(
 
     if "greedy_fas_score_augmented_topological" in methods:
         with Timer("ranking_fas_score_augmented_topological", accumulator=query_acc):
-            rankings["greedy_fas_score_augmented_topological"] = (
-                _priority_topological_ranking(
-                    _dag_for_repaired("greedy_fas_score_augmented_topological"),
-                    priority_scores=prior_scores,
-                )
+            rankings["greedy_fas_score_augmented_topological"] = _priority_topological_ranking(
+                _dag_for_repaired("greedy_fas_score_augmented_topological"),
+                priority_scores=prior_scores,
             )
         ranking_stage_by_method["greedy_fas_score_augmented_topological"] = (
             "ranking_fas_score_augmented_topological"
         )
     if "greedy_fas_score_augmented_topological_ma" in methods:
         with Timer("ranking_fas_score_augmented_topological_ma", accumulator=query_acc):
-            rankings["greedy_fas_score_augmented_topological_ma"] = (
-                _priority_topological_ranking(
-                    _dag_for_repaired("greedy_fas_score_augmented_topological_ma"),
-                    priority_scores=prior_scores,
-                )
+            rankings["greedy_fas_score_augmented_topological_ma"] = _priority_topological_ranking(
+                _dag_for_repaired("greedy_fas_score_augmented_topological_ma"),
+                priority_scores=prior_scores,
             )
         ranking_stage_by_method["greedy_fas_score_augmented_topological_ma"] = (
             "ranking_fas_score_augmented_topological_ma"
@@ -1754,7 +1776,10 @@ def run_query(
             ndcg = _ndcg_at_k(ranking_aligned, rel_map, k=top_k)
             map_k = _average_precision_at_k(ranking_aligned, rel_map, k=top_k)
             precision_k, recall_k = _precision_recall_at_k(ranking_aligned, rel_map, k=top_k)
-            pair_acc = _pairwise_accuracy_from_relevance(ranking_aligned, rel_map)
+            pair_acc = _pairwise_accuracy_from_relevance(
+                ranking_aligned,
+                judged_rel_map,
+            )
             method_metrics[method_name] = {
                 "backward_edge_weight": bew,
                 "pairwise_inconsistency": pic,
@@ -1795,9 +1820,7 @@ def run_query(
     rows = []
     for method_name in methods:
         m_metrics = method_metrics[method_name]
-        fas_var = _fas_variant_for_method(
-            method_name, hybrid_specs, repair_weighting
-        )
+        fas_var = _fas_variant_for_method(method_name, hybrid_specs, repair_weighting)
         if fas_var == "ma":
             fw = fas_weight_ma
             fn = fas_n_ma
@@ -1806,113 +1829,107 @@ def run_query(
             fn = fas_n_plain
         else:
             fw, fn = None, None
-        rows.append({
-            # Identity
-            "dataset": dataset,
-            "query_id": qid,
-            "method": method_name,
-            "preference_source": preference_source,
-            "preference_source_note": pref_note,
-            "repair_weighting": repair_weighting,
-            "fas_repair_variant": fas_var,
-            "metric_aware_beta": metric_aware_beta,
-            "metric_aware_gain_source": metric_aware_gain_source,
-            "metric_aware_focus_top_k": focus_k,
-            # Graph stats
-            "n_nodes": n_nodes,
-            "n_edges": n_edges,
-            "graph_density": round(density, 6),
-            "n_sccs": n_sccs,
-            "largest_scc": largest_scc,
-            "is_cyclic": is_cyclic,
-            "n_non_trivial_sccs": n_non_trivial_sccs,
-            "scc_cycle_burden": scc_cycle_burden,
-            # FAS stats (per method variant)
-            "fas_weight_removed": round(fw, 6) if fw is not None else None,
-            "fas_n_edges_removed": fn,
-            "fas_weight_removed_plain": (
-                round(fas_weight_plain, 6) if fas_weight_plain is not None else None
-            ),
-            "fas_n_edges_removed_plain": fas_n_plain,
-            "fas_weight_removed_ma": (
-                round(fas_weight_ma, 6) if fas_weight_ma is not None else None
-            ),
-            "fas_n_edges_removed_ma": fas_n_ma,
-            "mean_ma_edge_weight": (
-                round(mean_ma_edge_w, 6) if mean_ma_edge_w is not None else None
-            ),
-            "mean_ma_removed_edge_weight": (
-                round(mean_removed_ma_w, 6) if mean_removed_ma_w is not None else None
-            ),
-            # Graph-vs-qrels inconsistency (pre/post FAS)
-            "graph_ref_bew_pre": round(graph_bew_pre, 6),
-            "graph_ref_bew_post": round(graph_bew_post, 6),
-            "graph_ref_bew_post_plain": (
-                round(graph_bew_post_plain, 6)
-                if graph_bew_post_plain is not None
-                else None
-            ),
-            "graph_ref_bew_post_ma": (
-                round(graph_bew_post_ma, 6)
-                if graph_bew_post_ma is not None
-                else None
-            ),
-            "graph_ref_pic_pre": graph_pic_pre,
-            "graph_ref_pic_post": graph_pic_post,
-            "graph_ref_pic_post_plain": graph_pic_post_plain,
-            "graph_ref_pic_post_ma": graph_pic_post_ma,
-            # Evaluation context
-            "n_eval_candidates": len(ref_ranking),
-            "primary_metric": PRIMARY_QUALITY_METRIC,
-            # Evaluation
-            "backward_edge_weight": round(m_metrics["backward_edge_weight"], 6),
-            "pairwise_inconsistency": m_metrics["pairwise_inconsistency"],
-            "kendall_tau": (
-                round(m_metrics["kendall_tau"], 6)
-                if m_metrics["kendall_tau"] is not None
-                else None
-            ),
-            "kendall_tau_legacy": (
-                round(m_metrics["kendall_tau_legacy"], 6)
-                if m_metrics["kendall_tau_legacy"] is not None
-                else None
-            ),
-            "ndcg_at_k": (
-                round(m_metrics["ndcg_at_k"], 6)
-                if m_metrics["ndcg_at_k"] is not None
-                else None
-            ),
-            "map_at_k": (
-                round(m_metrics["map_at_k"], 6)
-                if m_metrics["map_at_k"] is not None
-                else None
-            ),
-            "precision_at_k": (
-                round(m_metrics["precision_at_k"], 6)
-                if m_metrics["precision_at_k"] is not None
-                else None
-            ),
-            "recall_at_k": (
-                round(m_metrics["recall_at_k"], 6)
-                if m_metrics["recall_at_k"] is not None
-                else None
-            ),
-            "pairwise_accuracy": (
-                round(m_metrics["pairwise_accuracy"], 6)
-                if m_metrics["pairwise_accuracy"] is not None
-                else None
-            ),
-            # Timings
-            "runtime_pref_gen_s": round(t_pref, 6),
-            "runtime_graph_build_s": round(t_graph, 6),
-            "runtime_cycle_detect_s": round(t_cycle, 6),
-            "runtime_fas_solver_s": round(t_fas, 6),
-            "runtime_fas_solver_ma_s": round(t_fas_ma, 6),
-            "runtime_metric_aware_reweight_s": round(t_ma_reweight, 6),
-            "runtime_ranking_s": round(ranking_stage_times.get(method_name, 0.0), 6),
-            "runtime_evaluation_s": round(t_eval, 6),
-            "runtime_total_s": round(t_total, 6),
-        })
+        rows.append(
+            {
+                # Identity
+                "dataset": dataset,
+                "query_id": qid,
+                "method": method_name,
+                "preference_source": preference_source,
+                "preference_source_note": pref_note,
+                "repair_weighting": repair_weighting,
+                "fas_repair_variant": fas_var,
+                "metric_aware_beta": metric_aware_beta,
+                "metric_aware_gain_source": metric_aware_gain_source,
+                "metric_aware_focus_top_k": focus_k,
+                # Graph stats
+                "n_nodes": n_nodes,
+                "n_edges": n_edges,
+                "graph_density": round(density, 6),
+                "n_sccs": n_sccs,
+                "largest_scc": largest_scc,
+                "is_cyclic": is_cyclic,
+                "n_non_trivial_sccs": n_non_trivial_sccs,
+                "scc_cycle_burden": scc_cycle_burden,
+                # FAS stats (per method variant)
+                "fas_weight_removed": round(fw, 6) if fw is not None else None,
+                "fas_n_edges_removed": fn,
+                "fas_weight_removed_plain": (
+                    round(fas_weight_plain, 6) if fas_weight_plain is not None else None
+                ),
+                "fas_n_edges_removed_plain": fas_n_plain,
+                "fas_weight_removed_ma": (
+                    round(fas_weight_ma, 6) if fas_weight_ma is not None else None
+                ),
+                "fas_n_edges_removed_ma": fas_n_ma,
+                "mean_ma_edge_weight": (
+                    round(mean_ma_edge_w, 6) if mean_ma_edge_w is not None else None
+                ),
+                "mean_ma_removed_edge_weight": (
+                    round(mean_removed_ma_w, 6) if mean_removed_ma_w is not None else None
+                ),
+                # Graph-vs-qrels inconsistency (pre/post FAS)
+                "graph_ref_bew_pre": round(graph_bew_pre, 6),
+                "graph_ref_bew_post": round(graph_bew_post, 6),
+                "graph_ref_bew_post_plain": (
+                    round(graph_bew_post_plain, 6) if graph_bew_post_plain is not None else None
+                ),
+                "graph_ref_bew_post_ma": (
+                    round(graph_bew_post_ma, 6) if graph_bew_post_ma is not None else None
+                ),
+                "graph_ref_pic_pre": graph_pic_pre,
+                "graph_ref_pic_post": graph_pic_post,
+                "graph_ref_pic_post_plain": graph_pic_post_plain,
+                "graph_ref_pic_post_ma": graph_pic_post_ma,
+                # Evaluation context
+                "n_eval_candidates": len(ref_ranking),
+                "primary_metric": PRIMARY_QUALITY_METRIC,
+                # Evaluation
+                "backward_edge_weight": round(m_metrics["backward_edge_weight"], 6),
+                "pairwise_inconsistency": m_metrics["pairwise_inconsistency"],
+                "kendall_tau": (
+                    round(m_metrics["kendall_tau"], 6)
+                    if m_metrics["kendall_tau"] is not None
+                    else None
+                ),
+                "kendall_tau_legacy": (
+                    round(m_metrics["kendall_tau_legacy"], 6)
+                    if m_metrics["kendall_tau_legacy"] is not None
+                    else None
+                ),
+                "ndcg_at_k": (
+                    round(m_metrics["ndcg_at_k"], 6) if m_metrics["ndcg_at_k"] is not None else None
+                ),
+                "map_at_k": (
+                    round(m_metrics["map_at_k"], 6) if m_metrics["map_at_k"] is not None else None
+                ),
+                "precision_at_k": (
+                    round(m_metrics["precision_at_k"], 6)
+                    if m_metrics["precision_at_k"] is not None
+                    else None
+                ),
+                "recall_at_k": (
+                    round(m_metrics["recall_at_k"], 6)
+                    if m_metrics["recall_at_k"] is not None
+                    else None
+                ),
+                "pairwise_accuracy": (
+                    round(m_metrics["pairwise_accuracy"], 6)
+                    if m_metrics["pairwise_accuracy"] is not None
+                    else None
+                ),
+                # Timings
+                "runtime_pref_gen_s": round(t_pref, 6),
+                "runtime_graph_build_s": round(t_graph, 6),
+                "runtime_cycle_detect_s": round(t_cycle, 6),
+                "runtime_fas_solver_s": round(t_fas, 6),
+                "runtime_fas_solver_ma_s": round(t_fas_ma, 6),
+                "runtime_metric_aware_reweight_s": round(t_ma_reweight, 6),
+                "runtime_ranking_s": round(ranking_stage_times.get(method_name, 0.0), 6),
+                "runtime_evaluation_s": round(t_eval, 6),
+                "runtime_total_s": round(t_total, 6),
+            }
+        )
 
     return rows, None
 
@@ -1932,7 +1949,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=str,
         choices=sorted(DATASET_NAMES),
         default="scidocs",
-        help=f"Dataset short name (registered in dataset_registry). Choices: {', '.join(sorted(DATASET_NAMES))}.",
+        help=(
+            "Dataset short name (registered in dataset_registry). Choices: "
+            f"{', '.join(sorted(DATASET_NAMES))}."
+        ),
     )
     parser.add_argument(
         "--max-queries",
@@ -2066,10 +2086,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         nargs="*",
         default=None,
         choices=["balance", "copeland"],
-        help=(
-            "Optional repaired-hybrid component(s) to sweep over "
-            "--hybrid-alpha-values."
-        ),
+        help=("Optional repaired-hybrid component(s) to sweep over --hybrid-alpha-values."),
     )
     parser.add_argument(
         "--hybrid-alpha-values",
@@ -2228,7 +2245,9 @@ def run_experiment(
         Experiment summary.
     """
 
-    output_dir = _resolve_output_dir(Path(output_dir), dataset=dataset, preference_source=preference_source)
+    output_dir = _resolve_output_dir(
+        Path(output_dir), dataset=dataset, preference_source=preference_source
+    )
     _validate_run_configuration(
         max_queries=max_queries,
         top_k=top_k,
@@ -2251,9 +2270,9 @@ def run_experiment(
         score_prior_files
     )
 
-    print(f"\n{'='*65}")
+    print(f"\n{'=' * 65}")
     print(f"  Real-Data Ranking Experiment — {dataset.upper()}")
-    print(f"{'='*65}")
+    print(f"{'=' * 65}")
     print(f"  dataset      : {dataset}")
     print(f"  max_queries  : {max_queries}")
     print(f"  top_k        : {top_k}")
@@ -2272,10 +2291,7 @@ def run_experiment(
         print(f"  multi_wmode  : {multi_score_weight_mode}")
     print(f"  markov_damp  : {markov_damping} (Rank Centrality–style graph chain)")
     if score_prior_sets:
-        print(
-            f"  rrf_k        : {rrf_k} "
-            "(RRF + CombSUM + borda_fuse list-fusion baselines active)"
-        )
+        print(f"  rrf_k        : {rrf_k} (RRF + CombSUM + borda_fuse list-fusion baselines active)")
         print(f"  combsum_norm : {combsum_normalization}")
     if query_id_file is not None:
         print(f"  query_id_file: {query_id_file}")
@@ -2345,8 +2361,7 @@ def run_experiment(
                 )
                 sys.exit(1)
             scorer_paths = {
-                name: cfg.processed_path / "scores" / f"{name}.jsonl"
-                for name in scorer_names
+                name: cfg.processed_path / "scores" / f"{name}.jsonl" for name in scorer_names
             }
             missing = [str(p) for p in scorer_paths.values() if not p.exists()]
             if missing:
@@ -2366,9 +2381,7 @@ def run_experiment(
             multi_scores_by_query = {}
             for qid in all_qids:
                 per_scorer = {
-                    name: rankings[qid]
-                    for name, rankings in loaded.items()
-                    if qid in rankings
+                    name: rankings[qid] for name, rankings in loaded.items() if qid in rankings
                 }
                 if len(per_scorer) >= 2:
                     multi_scores_by_query[qid] = per_scorer
@@ -2393,8 +2406,7 @@ def run_experiment(
             queries, _documents, qrels = load_dataset_splits(dataset)
         except FileNotFoundError as exc:
             log.error(
-                "%s\n"
-                "Run first: python scripts/prepare_datasets.py --dataset %s",
+                "%s\nRun first: python scripts/prepare_datasets.py --dataset %s",
                 exc,
                 dataset,
             )
@@ -2492,16 +2504,26 @@ def run_experiment(
     if not all_rows:
         log.warning("No query results to save.")
         source_note = {
-            "qrels": "Real preference edges derived directly from qrels (label-order DAG baseline).",
-            "qrels_flip": (
-                "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts."
+            "qrels": (
+                "Real preference edges derived directly from qrels "
+                "(label-order DAG baseline)."
             ),
-            "score_file": "Real preference edges induced from external score file (reranker-style).",
+            "qrels_flip": (
+                "Synthetic corruption: qrels-derived edges with random "
+                "direction flips to induce conflicts."
+            ),
+            "score_file": (
+                "Real preference edges induced from external score file "
+                "(reranker-style)."
+            ),
             "multi_scores": (
                 "Real preference edges aggregated from multiple scorer JSONL rankings "
                 "(processed/scores/<scorer>.jsonl)."
             ),
-            "llm_pairwise_file": "Real preference edges loaded from external LLM pairwise judgments.",
+            "llm_pairwise_file": (
+                "Real preference edges loaded from external "
+                "LLM pairwise judgments."
+            ),
             "votes_file": "Real preference edges loaded from external multi-ranker vote pairs.",
         }.get(preference_source, "Unknown preference source.")
         return {
@@ -2568,7 +2590,7 @@ def run_experiment(
     with summary_json_path.open("w") as fh:
         json.dump(summary, fh, indent=2)
     print(f"\n[8] Experiment summary JSON → {summary_json_path}")
-    print(f"{'='*65}\n")
+    print(f"{'=' * 65}\n")
 
     return summary
 
@@ -2607,8 +2629,11 @@ def _build_summary(rows: list[dict], methods: list[str]) -> list[dict]:
                 return {"mean": None, "median": None, "max": None, "min": None}
             vals_sorted = sorted(vals)
             n = len(vals_sorted)
-            med = (vals_sorted[n // 2] if n % 2 else
-                   (vals_sorted[n // 2 - 1] + vals_sorted[n // 2]) / 2)
+            med = (
+                vals_sorted[n // 2]
+                if n % 2
+                else (vals_sorted[n // 2 - 1] + vals_sorted[n // 2]) / 2
+            )
             return {
                 "mean": sum(vals) / n,
                 "median": med,
@@ -2635,44 +2660,46 @@ def _build_summary(rows: list[dict], methods: list[str]) -> list[dict]:
         pre_pic = _stats("graph_ref_pic_pre")
         post_pic = _stats("graph_ref_pic_post")
 
-        summary_rows.append({
-            "method": method,
-            "n_queries": len(method_rows),
-            # Backward edge weight
-            "bew_mean": bew["mean"],
-            "bew_median": bew["median"],
-            "bew_max": bew["max"],
-            "bew_min": bew["min"],
-            # Pairwise inconsistency
-            "pic_mean": pic["mean"],
-            "pic_median": pic["median"],
-            "pic_max": pic["max"],
-            # Kendall tau
-            "tau_mean": tau["mean"],
-            "tau_median": tau["median"],
-            "tau_max": tau["max"],
-            "tau_legacy_mean": tau_legacy["mean"],
-            # Primary ranking quality metrics (candidate-aligned)
-            "ndcg_mean": ndcg["mean"],
-            "map_mean": map_k["mean"],
-            "precision_at_k_mean": p_k["mean"],
-            "recall_at_k_mean": r_k["mean"],
-            "pairwise_accuracy_mean": pair_acc["mean"],
-            # Runtime
-            "runtime_mean_s": rt["mean"],
-            "runtime_median_s": rt["median"],
-            "runtime_max_s": rt["max"],
-            # Graph size
-            "n_nodes_mean": n_nodes["mean"],
-            "n_edges_mean": n_edges["mean"],
-            # Cycle / FAS / pre-post consistency
-            "cyclic_pct": cyc["mean"] * 100 if cyc["mean"] is not None else None,
-            "fas_removed_weight_mean": fas_w["mean"],
-            "graph_ref_bew_pre_mean": pre_bew["mean"],
-            "graph_ref_bew_post_mean": post_bew["mean"],
-            "graph_ref_pic_pre_mean": pre_pic["mean"],
-            "graph_ref_pic_post_mean": post_pic["mean"],
-        })
+        summary_rows.append(
+            {
+                "method": method,
+                "n_queries": len(method_rows),
+                # Backward edge weight
+                "bew_mean": bew["mean"],
+                "bew_median": bew["median"],
+                "bew_max": bew["max"],
+                "bew_min": bew["min"],
+                # Pairwise inconsistency
+                "pic_mean": pic["mean"],
+                "pic_median": pic["median"],
+                "pic_max": pic["max"],
+                # Kendall tau
+                "tau_mean": tau["mean"],
+                "tau_median": tau["median"],
+                "tau_max": tau["max"],
+                "tau_legacy_mean": tau_legacy["mean"],
+                # Primary ranking quality metrics (candidate-aligned)
+                "ndcg_mean": ndcg["mean"],
+                "map_mean": map_k["mean"],
+                "precision_at_k_mean": p_k["mean"],
+                "recall_at_k_mean": r_k["mean"],
+                "pairwise_accuracy_mean": pair_acc["mean"],
+                # Runtime
+                "runtime_mean_s": rt["mean"],
+                "runtime_median_s": rt["median"],
+                "runtime_max_s": rt["max"],
+                # Graph size
+                "n_nodes_mean": n_nodes["mean"],
+                "n_edges_mean": n_edges["mean"],
+                # Cycle / FAS / pre-post consistency
+                "cyclic_pct": cyc["mean"] * 100 if cyc["mean"] is not None else None,
+                "fas_removed_weight_mean": fas_w["mean"],
+                "graph_ref_bew_pre_mean": pre_bew["mean"],
+                "graph_ref_bew_post_mean": post_bew["mean"],
+                "graph_ref_pic_pre_mean": pre_pic["mean"],
+                "graph_ref_pic_post_mean": post_pic["mean"],
+            }
+        )
 
     return summary_rows
 
@@ -2724,19 +2751,14 @@ def _build_experiment_summary(
     avg_n_nodes = sum(r["n_nodes"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
     avg_n_edges = sum(r["n_edges"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
     avg_scc = sum(r["largest_scc"] for r in ss_rows) / len(ss_rows) if ss_rows else 0
-    pct_cyclic = (
-        sum(1 for r in ss_rows if r["is_cyclic"]) / len(ss_rows) * 100
-        if ss_rows else 0
-    )
+    pct_cyclic = sum(1 for r in ss_rows if r["is_cyclic"]) / len(ss_rows) * 100 if ss_rows else 0
 
     # Average runtime by method
     by_method: dict[str, list[float]] = defaultdict(list)
     for r in all_rows:
         if r.get("runtime_total_s") is not None:
             by_method[r["method"]].append(r["runtime_total_s"])
-    avg_rt_by_method = {
-        m: sum(vs) / len(vs) for m, vs in by_method.items() if vs
-    }
+    avg_rt_by_method = {m: sum(vs) / len(vs) for m, vs in by_method.items() if vs}
 
     # Best method by backward-edge-weight (lower is better)
     bew_by_method: dict[str, list[float]] = defaultdict(list)
@@ -2765,11 +2787,18 @@ def _build_experiment_summary(
     timing_summary = {row["stage"]: row for row in global_acc.summary_rows()}
 
     source_note = {
-        "qrels": "Real preference edges derived directly from qrels (label-order DAG baseline).",
-        "qrels_flip": (
-            "Synthetic corruption: qrels-derived edges with random direction flips to induce conflicts."
+        "qrels": (
+            "Real preference edges derived directly from qrels "
+            "(label-order DAG baseline)."
         ),
-        "score_file": "Real preference edges induced from external score file (reranker-style).",
+        "qrels_flip": (
+            "Synthetic corruption: qrels-derived edges with random "
+            "direction flips to induce conflicts."
+        ),
+        "score_file": (
+            "Real preference edges induced from external score file "
+            "(reranker-style)."
+        ),
         "llm_pairwise_file": "Real preference edges loaded from external LLM pairwise judgments.",
         "votes_file": "Real preference edges loaded from external multi-ranker vote pairs.",
     }.get(preference_source, "Unknown preference source.")
@@ -2806,9 +2835,9 @@ def _build_experiment_summary(
 
 
 def _print_experiment_summary(summary: dict, dataset: str) -> None:
-    print(f"\n{'='*65}")
+    print(f"\n{'=' * 65}")
     print(f"  Experiment Summary — {dataset.upper()}")
-    print(f"{'='*65}")
+    print(f"{'=' * 65}")
     print(f"  Queries processed : {summary['n_processed']}")
     print(f"  Queries skipped   : {summary['n_skipped']}")
     print(f"  Preference source : {summary['preference_source']}")

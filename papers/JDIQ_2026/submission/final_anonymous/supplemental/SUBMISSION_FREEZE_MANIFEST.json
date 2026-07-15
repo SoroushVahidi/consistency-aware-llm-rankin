@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-14T22:27:43-0400",
+  "generated_at": "2026-07-15T19:31:41-0400",
   "git": {
-    "head": "c8f6f41e656ecc552736f3f6154cf1c34a416043",
-    "head_commit_datetime": "2026-07-14 18:36:16 -0400",
+    "head": "b0d48520b72dfa05f6cfe07309cb39ef980be032",
+    "head_commit_datetime": "2026-07-14 22:49:57 -0400",
     "branch": "main",
-    "dirty_path_count": 174,
+    "dirty_path_count": 50,
     "note": "dirty_path_count > 0 is expected: this manifest freezes the *content* of canonical outputs by checksum, independent of whether the working tree is committed. See Task 6 final report for the proposed commit covering this exact state."
   },
   "manuscript_source": {
     "main_tex": "papers/JDIQ_2026/manuscript/main.tex",
-    "main_tex_sha256": "54dda84d67b72fafb5cbf751dcc4b84847128081f7b0e1fc73ce9f14f0778d6b",
-    "references_bib_sha256": "51198478d9f0a31549dd2d98f811826e4334af444f5d46483b5192247d41f152"
+    "main_tex_sha256": "9b109461da0dc2286a15425897110d3d2663b381c707dc6edbf3493900c18870",
+    "references_bib_sha256": "d0d4d2830311ac72dcccc07cebab9e46f4bffdfb63470ca0fe334a0265a2461f"
   },
   "canonical_table_checksums": {
     "reports/full_calibrated_core/tables": {
@@ -378,5 +378,5 @@
       "legacy_optional_backend": "method=\"gurobi\" exists in src/consistency_ranker/mwfas_solver.py but is never used to produce any committed result table"
     }
   },
-  "_build_seconds": 0.47
+  "_build_seconds": 0.46
 }

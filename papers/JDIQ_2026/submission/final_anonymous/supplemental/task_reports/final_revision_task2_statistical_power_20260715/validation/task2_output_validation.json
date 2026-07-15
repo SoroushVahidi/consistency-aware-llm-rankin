@@ -1,0 +1,11 @@
+{
+  "active_equivalence_margin_0p005": 13,
+  "active_equivalence_margin_0p010": 32,
+  "canonical_ndcg_rows": 60,
+  "exact_ndcg_rows": 20,
+  "final_ndcg_rows": 330,
+  "status": "ok",
+  "task1_p_gt_k_membership_change_rate": 0.10577552856500223,
+  "task2_active_ms1_holm_significant": 0,
+  "task2_full_family_holm_significant": 0
+}

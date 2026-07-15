@@ -21,10 +21,17 @@ def _eval_record(
     repaired_pw: float,
     unrepaired_ndcg: float,
     repaired_ndcg: float,
+    relevance_changed_flag: bool | None = None,
 ) -> dict:
+    pairwise_comparisons = {}
+    if relevance_changed_flag is not None:
+        pairwise_comparisons["unrepaired__vs__repaired"] = {
+            "differently_graded_judged_pairs_changed": relevance_changed_flag,
+        }
     return {
         "graph_stats": {"is_cyclic": is_cyclic},
         "removed_edges": removed_edges,
+        "pairwise_comparisons": pairwise_comparisons,
         "method_outputs": {
             "unrepaired": {
                 "ranking": unrepaired_ranking,
@@ -133,6 +140,23 @@ class TestClassifyQueryPair:
         )
         assert flags["relevance_order_changed"] is True
         assert flags["metric_changed"] is False
+
+    def test_relevance_order_changed_prefers_direct_pair_flag(self):
+        rec = _eval_record(
+            is_cyclic=True,
+            removed_edges=[("x", "y")],
+            unrepaired_ranking=["a", "b", "c"],
+            repaired_ranking=["b", "a", "c"],
+            unrepaired_pw=0.5,
+            repaired_pw=0.5,
+            unrepaired_ndcg=0.7,
+            repaired_ndcg=0.7,
+            relevance_changed_flag=True,
+        )
+        flags = classify_query_pair(
+            rec, unrepaired_key="unrepaired", repaired_key="repaired", top_k=2
+        )
+        assert flags["relevance_order_changed"] is True
 
     def test_metric_changed_requires_more_than_float_noise(self):
         rec = _eval_record(

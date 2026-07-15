@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
+# ruff: noqa: E501
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import shutil
 import statistics
 import subprocess
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
 from typing import Any
@@ -21,16 +21,17 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import pandas as pd
-
+from candidate_pool_policies import PoolSpec
 from full_calibration_utils import (
-    CALIBRATIONS,
-    REGIMES,
     RANKERS,
+    REGIMES,
     CalibrationEvaluator,
     ProtocolSpec,
     ThresholdConfig,
     _align_ranking,
     _average_precision_at_k,
+    _judged_relevance_map_for_candidates,
+    _mrr_at_k,
     _ndcg_at_k,
     _norm_minmax,
     _pairwise_accuracy_from_relevance,
@@ -52,13 +53,8 @@ from full_calibration_utils import (
     summarize_structural_records,
     write_csv,
 )
-from candidate_pool_policies import PoolSpec, POOL_SPECS
-from consistency_ranker.data.query_ids import has_usable_eval_labels
-from consistency_ranker.markov_graph_ranking import DEFAULT_MARKOV_DAMPING, markov_graph_scores
-from consistency_ranker.combsum_ranking import COMBSUM_NORM_MINMAX, per_query_combsum_ranking_from_score_maps
-from consistency_ranker.borda_fuse_ranking import per_query_borda_fuse_ranking_from_score_maps
-from consistency_ranker.rrf_ranking import DEFAULT_RRF_K, per_query_rrf_ranking_from_score_maps
 
+from consistency_ranker.data.query_ids import has_usable_eval_labels
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPORT_ROOT = SCRIPT_DIR.parent
@@ -183,7 +179,8 @@ CANONICAL_NAME_ALIASES = {
 # existing call sites iterate it directly); this registry is a derived,
 # read-only, typed convenience view, not a replacement.
 PROTOCOL_REGISTRY: dict[str, ProtocolSpec] = {
-    protocol_id: ProtocolSpec(protocol_id=protocol_id, **spec_cfg) for protocol_id, spec_cfg in PROTOCOL_SPECS.items()
+    protocol_id: ProtocolSpec(protocol_id=protocol_id, **spec_cfg)
+    for protocol_id, spec_cfg in PROTOCOL_SPECS.items()
 }
 
 METHOD_LABELS = {
@@ -342,7 +339,9 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             fh.write(json.dumps(row, sort_keys=True) + "\n")
 
 
-def _score_maps_as_tuples(raw_scores_by_ranker: dict[str, dict[str, float]]) -> dict[str, list[tuple[str, float]]]:
+def _score_maps_as_tuples(
+    raw_scores_by_ranker: dict[str, dict[str, float]],
+) -> dict[str, list[tuple[str, float]]]:
     return {ranker: list(scores.items()) for ranker, scores in raw_scores_by_ranker.items()}
 
 
@@ -393,8 +392,15 @@ def _normalize_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [{key: row.get(key) for key in fieldnames} for row in rows]
 
 
-def _analysis_dataset_inputs(dataset: str, pool_policy: "PoolSpec | None" = None) -> dict[str, Any]:
-    raw = prepare_dataset_inputs(dataset, pool_policy=pool_policy)
+def _analysis_dataset_inputs(
+    dataset: str,
+    pool_policy: "PoolSpec | None" = None,
+    *,
+    pool_size_override: int | None = None,
+) -> dict[str, Any]:
+    raw = prepare_dataset_inputs(
+        dataset, pool_policy=pool_policy, pool_size_override=pool_size_override
+    )
     usable = []
     excluded = []
     for item in raw["per_query_inputs"]:
@@ -410,7 +416,9 @@ def _analysis_dataset_inputs(dataset: str, pool_policy: "PoolSpec | None" = None
     return filtered
 
 
-def _pair_margin_summary(dataset_inputs: dict[str, Any], calibration: str) -> tuple[dict[str, list[float]], dict[str, int]]:
+def _pair_margin_summary(
+    dataset_inputs: dict[str, Any], calibration: str
+) -> tuple[dict[str, list[float]], dict[str, int]]:
     pair_margins = {ranker: [] for ranker in RANKERS}
     zero_variance = {ranker: 0 for ranker in RANKERS}
     probe = ThresholdConfig(
@@ -442,7 +450,9 @@ def _config_dir(protocol: str, dataset: str, regime: str) -> Path:
     return RUN_OUTPUT_ROOT / protocol / dataset / regime
 
 
-def _support_map_from_rows(rows: list[dict[str, Any]]) -> dict[tuple[str, str], list[tuple[str, float]]]:
+def _support_map_from_rows(
+    rows: list[dict[str, Any]],
+) -> dict[tuple[str, str], list[tuple[str, float]]]:
     support: dict[tuple[str, str], list[tuple[str, float]]] = defaultdict(list)
     for row in rows:
         support[(str(row["winner_doc_id"]), str(row["loser_doc_id"]))].append(
@@ -451,7 +461,9 @@ def _support_map_from_rows(rows: list[dict[str, Any]]) -> dict[tuple[str, str], 
     return dict(support)
 
 
-def _ranker_weight_summary(edge_support: dict[tuple[str, str], list[tuple[str, float]]]) -> dict[str, float | None]:
+def _ranker_weight_summary(
+    edge_support: dict[tuple[str, str], list[tuple[str, float]]],
+) -> dict[str, float | None]:
     totals = {ranker: 0.0 for ranker in RANKERS}
     cond_num = 0.0
     cond_den = 0.0
@@ -471,7 +483,9 @@ def _ranker_weight_summary(edge_support: dict[tuple[str, str], list[tuple[str, f
     return out
 
 
-def _candidate_pool_scores(query_id: str, raw_scores_by_ranker: dict[str, dict[str, float]]) -> list[dict[str, list[tuple[str, float]]]]:
+def _candidate_pool_scores(
+    query_id: str, raw_scores_by_ranker: dict[str, dict[str, float]]
+) -> list[dict[str, list[tuple[str, float]]]]:
     return [
         {query_id: list(raw_scores_by_ranker[ranker].items())}
         for ranker in RANKERS
@@ -479,20 +493,42 @@ def _candidate_pool_scores(query_id: str, raw_scores_by_ranker: dict[str, dict[s
     ]
 
 
-def _reference_for_query(candidate_pool: list[str], qrels_for_query: list[Any]) -> tuple[list[str], dict[str, int]]:
-    return _reference_ranking_for_candidates(qrels_for_query, candidate_pool)
+def _reference_for_query(
+    candidate_pool: list[str],
+    qrels_for_query: list[Any],
+) -> tuple[list[str], dict[str, int], dict[str, int]]:
+    ref_ranking, rel_map = _reference_ranking_for_candidates(
+        qrels_for_query,
+        candidate_pool,
+    )
+    judged_rel_map = _judged_relevance_map_for_candidates(
+        qrels_for_query,
+        candidate_pool,
+    )
+    return ref_ranking, rel_map, judged_rel_map
 
 
-def _method_metric(ranking: list[str], rel_map: dict[str, int], top_k: int, ref_ranking: list[str]) -> dict[str, Any]:
+def _method_metric(
+    ranking: list[str],
+    rel_map: dict[str, int],
+    judged_rel_map: dict[str, int],
+    top_k: int,
+    ref_ranking: list[str],
+) -> dict[str, Any]:
     aligned = _align_ranking(ranking, rel_map)
     precision, recall = _precision_recall_at_k(aligned, rel_map, k=top_k)
     return {
         "ranking": ranking,
+        "top_k_prefix": list(ranking[:top_k]),
         "ndcg_at_k": _ndcg_at_k(aligned, rel_map, k=top_k),
         "map_at_k": _average_precision_at_k(aligned, rel_map, k=top_k),
+        "mrr_at_k": _mrr_at_k(aligned, rel_map, k=top_k),
         "precision_at_k": precision,
         "recall_at_k": recall,
-        "pairwise_accuracy": _pairwise_accuracy_from_relevance(aligned, rel_map),
+        "pairwise_accuracy": _pairwise_accuracy_from_relevance(
+            aligned,
+            judged_rel_map,
+        ),
         "kendall_tau": None if not ref_ranking else None,
     }
 
@@ -606,7 +642,6 @@ def _clustered_bootstrap(
     if not clusters:
         return None, None, None
     cluster_arrays = [np.asarray(by_cluster[c], dtype=float) for c in clusters]
-    observed = float(np.mean(np.concatenate(cluster_arrays)))
     rng = np.random.default_rng(seed)
     means = []
     for _ in range(reps):
@@ -656,7 +691,10 @@ def _compute_alpha_metric(
     component: str,
     alpha: float,
 ) -> dict[str, Any]:
-    ref_ranking, rel_map = _reference_for_query(candidate_pool, qrels_for_query)
+    ref_ranking, rel_map, judged_rel_map = _reference_for_query(
+        candidate_pool,
+        qrels_for_query,
+    )
     tuple_maps = _score_maps_as_tuples(raw_score_maps_by_ranker)
     score_prior_sets = _candidate_pool_scores(query_id, raw_score_maps_by_ranker)
     prior_scores = _rrf_prior_scores_for_query(
@@ -685,8 +723,8 @@ def _compute_alpha_metric(
         confidence_weight=confidence_weight,
     )
     del tuple_maps
-    raw_metric = _method_metric(raw_ranking, rel_map, top_k, ref_ranking)
-    rep_metric = _method_metric(rep_ranking, rel_map, top_k, ref_ranking)
+    raw_metric = _method_metric(raw_ranking, rel_map, judged_rel_map, top_k, ref_ranking)
+    rep_metric = _method_metric(rep_ranking, rel_map, judged_rel_map, top_k, ref_ranking)
     return {
         "raw": raw_metric,
         "repaired": rep_metric,
@@ -708,7 +746,10 @@ def _balance_audit_rows(
 ) -> dict[str, Any]:
     graph = eval_record["graph"]
     repaired_graph = eval_record["repaired_graph"]
-    ref_ranking, rel_map = _reference_for_query(candidate_pool, qrels_for_query)
+    ref_ranking, rel_map, _judged_rel_map = _reference_for_query(
+        candidate_pool,
+        qrels_for_query,
+    )
     score_prior_sets = _candidate_pool_scores(query_id, raw_score_maps_by_ranker)
     prior_scores = _rrf_prior_scores_for_query(
         query_id=query_id,
@@ -730,8 +771,12 @@ def _balance_audit_rows(
     }
     raw_balance_ranking = eval_record["method_outputs"]["balance_graph"]["ranking"]
     rep_balance_ranking = eval_record["method_outputs"]["balance_graph_repaired"]["ranking"]
-    raw_hybrid_ranking = eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"]["ranking"]
-    rep_hybrid_ranking = eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"]["ranking"]
+    raw_hybrid_ranking = eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"][
+        "ranking"
+    ]
+    rep_hybrid_ranking = eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"][
+        "ranking"
+    ]
     raw_rel = [rel_map.get(doc_id, 0) for doc_id in raw_hybrid_ranking[:top_k]]
     rep_rel = [rel_map.get(doc_id, 0) for doc_id in rep_hybrid_ranking[:top_k]]
     return {
@@ -749,18 +794,41 @@ def _balance_audit_rows(
         "top_k_order_changed": raw_hybrid_ranking[:top_k] != rep_hybrid_ranking[:top_k],
         "relevance_sequence_changed": raw_rel != rep_rel,
         "ndcg_changed": abs(
-            float(eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"]["ndcg_at_k"] or 0.0)
-            - float(eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"]["ndcg_at_k"] or 0.0)
+            float(
+                eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"]["ndcg_at_k"]
+                or 0.0
+            )
+            - float(
+                eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"]["ndcg_at_k"]
+                or 0.0
+            )
         )
         > 1.0e-12,
         "hybrid_delta_ndcg": (
-            float(eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"]["ndcg_at_k"] or 0.0)
-            - float(eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"]["ndcg_at_k"] or 0.0)
+            float(
+                eval_record["method_outputs"]["hybrid_repaired_balance_a0p3_minmax"]["ndcg_at_k"]
+                or 0.0
+            )
+            - float(
+                eval_record["method_outputs"]["hybrid_unrepaired_balance_a0p3_minmax"]["ndcg_at_k"]
+                or 0.0
+            )
         ),
     }
 
 
-def _render_errorbar(df: pd.DataFrame, *, out_base: Path, title: str, x_col: str, y_col: str, lo_col: str, hi_col: str, facet_col: str, hue_col: str) -> None:
+def _render_errorbar(
+    df: pd.DataFrame,
+    *,
+    out_base: Path,
+    title: str,
+    x_col: str,
+    y_col: str,
+    lo_col: str,
+    hi_col: str,
+    facet_col: str,
+    hue_col: str,
+) -> None:
     if df.empty:
         return
     facets = list(dict.fromkeys(df[facet_col]))
@@ -800,7 +868,9 @@ def _render_errorbar(df: pd.DataFrame, *, out_base: Path, title: str, x_col: str
     plt.close(fig)
 
 
-def _render_scatter(df: pd.DataFrame, *, out_base: Path, title: str, x_col: str, y_col: str, facet_col: str) -> None:
+def _render_scatter(
+    df: pd.DataFrame, *, out_base: Path, title: str, x_col: str, y_col: str, facet_col: str
+) -> None:
     if df.empty:
         return
     facets = list(dict.fromkeys(df[facet_col]))
@@ -883,7 +953,9 @@ def run_full_core() -> dict[str, Any]:
     rrf_note_rows: list[dict[str, Any]] = []
 
     dataset_inputs_map: dict[str, dict[str, Any]] = {}
-    pair_margin_cache: dict[str, dict[str, tuple[dict[str, list[float]], dict[str, int]]]] = defaultdict(dict)
+    pair_margin_cache: dict[str, dict[str, tuple[dict[str, list[float]], dict[str, int]]]] = (
+        defaultdict(dict)
+    )
     threshold_cache: dict[tuple[str, str, str], ThresholdConfig] = {}
     config_cache: dict[tuple[str, str, str], dict[str, Any]] = {}
     dataset_score_hashes: dict[str, dict[str, str]] = {}
@@ -1044,13 +1116,19 @@ def run_full_core() -> dict[str, Any]:
                                 "query_id": query_id,
                                 "method_key": method_key,
                                 "method": METHOD_LABELS[method_key],
-                                "ndcg_at_k": _maybe_float(eval_record["method_outputs"][method_key]["ndcg_at_k"]),
+                                "ndcg_at_k": _maybe_float(
+                                    eval_record["method_outputs"][method_key]["ndcg_at_k"]
+                                ),
                             }
                         )
 
                     for pair_name, unrepaired_key, repaired_key, pair_family in PAIR_SPECS:
-                        unrepaired = float(eval_record["method_outputs"][unrepaired_key]["ndcg_at_k"] or 0.0)
-                        repaired = float(eval_record["method_outputs"][repaired_key]["ndcg_at_k"] or 0.0)
+                        unrepaired = float(
+                            eval_record["method_outputs"][unrepaired_key]["ndcg_at_k"] or 0.0
+                        )
+                        repaired = float(
+                            eval_record["method_outputs"][repaired_key]["ndcg_at_k"] or 0.0
+                        )
                         paired_rows.append(
                             {
                                 "dataset": dataset,
@@ -1107,7 +1185,9 @@ def run_full_core() -> dict[str, Any]:
                                         "alpha": alpha,
                                         "unrepaired_ndcg": alpha_metrics["raw"]["ndcg_at_k"],
                                         "repaired_ndcg": alpha_metrics["repaired"]["ndcg_at_k"],
-                                        "delta_ndcg": float(alpha_metrics["repaired"]["ndcg_at_k"] or 0.0)
+                                        "delta_ndcg": float(
+                                            alpha_metrics["repaired"]["ndcg_at_k"] or 0.0
+                                        )
                                         - float(alpha_metrics["raw"]["ndcg_at_k"] or 0.0),
                                     }
                                 )
@@ -1216,8 +1296,12 @@ def run_full_core() -> dict[str, Any]:
                         "protocol": protocol,
                         "protocol_label": spec_cfg["label"],
                         "regime": regime,
-                        "bm25_weight_share_total": (bm25_total / total_weight) if total_weight > 0 else None,
-                        "bm25_weight_share_conditional": (cond_num / cond_den) if cond_den > 0 else None,
+                        "bm25_weight_share_total": (bm25_total / total_weight)
+                        if total_weight > 0
+                        else None,
+                        "bm25_weight_share_conditional": (cond_num / cond_den)
+                        if cond_den > 0
+                        else None,
                         "calibration": spec_cfg["calibration"],
                         "threshold_mode": spec_cfg["threshold_mode"],
                     }
@@ -1243,7 +1327,9 @@ def run_full_core() -> dict[str, Any]:
     three_regime_intersections = {}
     for dataset in DATASETS:
         for protocol in PROTOCOL_SPECS:
-            sets = [set(config_cache[(dataset, protocol, regime)]["query_ids"]) for regime in REGIMES]
+            sets = [
+                set(config_cache[(dataset, protocol, regime)]["query_ids"]) for regime in REGIMES
+            ]
             three_regime_intersections[(dataset, protocol)] = len(set.intersection(*sets))
 
     structural_lookup = {
@@ -1280,13 +1366,15 @@ def run_full_core() -> dict[str, Any]:
                     "regime": regime,
                     "removed_edge_overlap_with_raw": _safe_mean(raw_jaccards),
                     "removed_edge_overlap_with_primary": _safe_mean(primary_jaccards),
-                    "exact_removed_edge_match_fraction_with_raw": raw_exact / max(1, len(current["query_ids"])),
-                    "exact_removed_edge_match_fraction_with_primary": primary_exact / max(1, len(current["query_ids"])),
+                    "exact_removed_edge_match_fraction_with_raw": raw_exact
+                    / max(1, len(current["query_ids"])),
+                    "exact_removed_edge_match_fraction_with_primary": primary_exact
+                    / max(1, len(current["query_ids"])),
                 }
                 removed_overlap_rows.append(overlap_row)
-                structural_lookup[(dataset, protocol, regime)]["removed_edge_overlap_with_raw"] = overlap_row[
-                    "removed_edge_overlap_with_raw"
-                ]
+                structural_lookup[(dataset, protocol, regime)]["removed_edge_overlap_with_raw"] = (
+                    overlap_row["removed_edge_overlap_with_raw"]
+                )
                 structural_lookup[(dataset, protocol, regime)][
                     "removed_edge_overlap_with_primary"
                 ] = overlap_row["removed_edge_overlap_with_primary"]
@@ -1294,7 +1382,9 @@ def run_full_core() -> dict[str, Any]:
                     "three_regime_intersection_query_count"
                 ] = three_regime_intersections[(dataset, protocol)]
 
-    metrics_by_cfg: dict[tuple[str, str, str], dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    metrics_by_cfg: dict[tuple[str, str, str], dict[str, list[float]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
     for (dataset, protocol, regime), payload in config_cache.items():
         for rec in payload["eval_records"]:
             for method_key in METHOD_KEYS:
@@ -1304,7 +1394,9 @@ def run_full_core() -> dict[str, Any]:
 
     paired_by_cfg: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in paired_rows:
-        paired_by_cfg[(row["dataset"], row["protocol"], row["regime"], row["pair_name"])].append(row)
+        paired_by_cfg[(row["dataset"], row["protocol"], row["regime"], row["pair_name"])].append(
+            row
+        )
 
     for dataset in DATASETS:
         for protocol in PROTOCOL_SPECS:
@@ -1413,13 +1505,27 @@ def run_full_core() -> dict[str, Any]:
                             "std_ndcg_at_k": _safe_std(values),
                             "median_ndcg_at_k": _safe_quantile(values, 0.5),
                             "common_query_count": len(values),
-                            "three_regime_intersection_query_count": three_regime_intersections[(dataset, protocol)],
-                            "repaired_minus_unrepaired_mean_delta_ndcg": pair_summary.get("mean_delta_ndcg"),
-                            "repaired_minus_unrepaired_median_delta_ndcg": pair_summary.get("median_delta_ndcg"),
-                            "repaired_minus_unrepaired_q05_delta_ndcg": pair_summary.get("q05_delta_ndcg"),
-                            "repaired_minus_unrepaired_q25_delta_ndcg": pair_summary.get("q25_delta_ndcg"),
-                            "repaired_minus_unrepaired_q75_delta_ndcg": pair_summary.get("q75_delta_ndcg"),
-                            "repaired_minus_unrepaired_q95_delta_ndcg": pair_summary.get("q95_delta_ndcg"),
+                            "three_regime_intersection_query_count": three_regime_intersections[
+                                (dataset, protocol)
+                            ],
+                            "repaired_minus_unrepaired_mean_delta_ndcg": pair_summary.get(
+                                "mean_delta_ndcg"
+                            ),
+                            "repaired_minus_unrepaired_median_delta_ndcg": pair_summary.get(
+                                "median_delta_ndcg"
+                            ),
+                            "repaired_minus_unrepaired_q05_delta_ndcg": pair_summary.get(
+                                "q05_delta_ndcg"
+                            ),
+                            "repaired_minus_unrepaired_q25_delta_ndcg": pair_summary.get(
+                                "q25_delta_ndcg"
+                            ),
+                            "repaired_minus_unrepaired_q75_delta_ndcg": pair_summary.get(
+                                "q75_delta_ndcg"
+                            ),
+                            "repaired_minus_unrepaired_q95_delta_ndcg": pair_summary.get(
+                                "q95_delta_ndcg"
+                            ),
                             "helped_query_count": pair_summary.get("helped_query_count"),
                             "harmed_query_count": pair_summary.get("harmed_query_count"),
                             "unchanged_query_count": pair_summary.get("unchanged_query_count"),
@@ -1429,8 +1535,12 @@ def run_full_core() -> dict[str, Any]:
     retrieval_df = pd.DataFrame(retrieval_rows)
     if not retrieval_df.empty:
         dataset_ranks = []
-        for (protocol, regime, dataset), sub in retrieval_df.groupby(["protocol", "regime", "dataset"]):
-            ranked = sub.sort_values(["mean_ndcg_at_k", "method"], ascending=[False, True]).reset_index(drop=True)
+        for (protocol, regime, dataset), sub in retrieval_df.groupby(
+            ["protocol", "regime", "dataset"]
+        ):
+            ranked = sub.sort_values(
+                ["mean_ndcg_at_k", "method"], ascending=[False, True]
+            ).reset_index(drop=True)
             for idx, row in ranked.iterrows():
                 dataset_ranks.append(
                     {
@@ -1443,16 +1553,20 @@ def run_full_core() -> dict[str, Any]:
                     }
                 )
         rank_df = pd.DataFrame(dataset_ranks)
-        macro_df = retrieval_df.groupby(["protocol", "regime", "method_key", "method"], as_index=False).agg(
+        macro_df = retrieval_df.groupby(
+            ["protocol", "regime", "method_key", "method"], as_index=False
+        ).agg(
             dataset_macro_mean_ndcg=("mean_ndcg_at_k", "mean"),
             dataset_macro_median_ndcg=("median_ndcg_at_k", "mean"),
             datasets_count=("dataset", "nunique"),
         )
         if not rank_df.empty:
-            avg_ranks = rank_df.groupby(["protocol", "regime", "method_key", "method"], as_index=False).agg(
-                average_method_rank=("rank_within_dataset", "mean")
+            avg_ranks = rank_df.groupby(
+                ["protocol", "regime", "method_key", "method"], as_index=False
+            ).agg(average_method_rank=("rank_within_dataset", "mean"))
+            macro_df = macro_df.merge(
+                avg_ranks, on=["protocol", "regime", "method_key", "method"], how="left"
             )
-            macro_df = macro_df.merge(avg_ranks, on=["protocol", "regime", "method_key", "method"], how="left")
         macro_rows.extend(macro_df.to_dict("records"))
 
     # Baseline paired deltas versus RRF and CombSUM.
@@ -1585,7 +1699,10 @@ def run_full_core() -> dict[str, Any]:
     for payload in config_cache.values():
         for rec in payload["eval_records"]:
             total_match_count += 1
-            if rec["method_outputs"]["prior_only"]["ranking"] == rec["method_outputs"]["rrf"]["ranking"]:
+            if (
+                rec["method_outputs"]["prior_only"]["ranking"]
+                == rec["method_outputs"]["rrf"]["ranking"]
+            ):
                 exact_match_count += 1
     rrf_note_rows.extend(
         [
@@ -1637,7 +1754,8 @@ def run_full_core() -> dict[str, Any]:
                 (
                     query_id,
                     delta,
-                    mean_delta - _safe_mean([value for other, value in deltas.items() if other != query_id]),
+                    mean_delta
+                    - _safe_mean([value for other, value in deltas.items() if other != query_id]),
                 )
                 for query_id, delta in deltas.items()
             ),
@@ -1679,7 +1797,9 @@ def run_full_core() -> dict[str, Any]:
     alpha_df = pd.DataFrame(alpha_rows)
     if not alpha_df.empty:
         alpha_summary_rows = (
-            alpha_df.groupby(["dataset", "protocol", "regime", "component", "alpha"], as_index=False)
+            alpha_df.groupby(
+                ["dataset", "protocol", "regime", "component", "alpha"], as_index=False
+            )
             .agg(
                 mean_unrepaired_ndcg=("unrepaired_ndcg", "mean"),
                 mean_repaired_ndcg=("repaired_ndcg", "mean"),
@@ -1717,11 +1837,26 @@ def run_full_core() -> dict[str, Any]:
     help_df = pd.DataFrame(help_harm_rows)
     macro_df = pd.DataFrame(macro_rows)
     if not structural_df.empty:
-        write_csv(PAPER_TABLES / "table_primary_graph_structure.csv", structural_df[structural_df["protocol"] == PRIMARY_PROTOCOL].to_dict("records"))
-        write_csv(PAPER_TABLES / "table_primary_cycle_decomposition.csv", cycle_df[cycle_df["protocol"] == PRIMARY_PROTOCOL].to_dict("records"))
+        write_csv(
+            PAPER_TABLES / "table_primary_graph_structure.csv",
+            structural_df[structural_df["protocol"] == PRIMARY_PROTOCOL].to_dict("records"),
+        )
+        write_csv(
+            PAPER_TABLES / "table_primary_cycle_decomposition.csv",
+            cycle_df[cycle_df["protocol"] == PRIMARY_PROTOCOL].to_dict("records"),
+        )
         write_csv(
             PAPER_TABLES / "table_raw_vs_calibrated_ablation.csv",
-            structural_df[structural_df["protocol"].isin([RAW_PROTOCOL, PRIMARY_PROTOCOL, "ablation_minmax_fixed", "ablation_unit_vote_retention"])].to_dict("records"),
+            structural_df[
+                structural_df["protocol"].isin(
+                    [
+                        RAW_PROTOCOL,
+                        PRIMARY_PROTOCOL,
+                        "ablation_minmax_fixed",
+                        "ablation_unit_vote_retention",
+                    ]
+                )
+            ].to_dict("records"),
         )
     if not retrieval_df.empty:
         primary_effects = retrieval_df[
@@ -1736,7 +1871,9 @@ def run_full_core() -> dict[str, Any]:
                 ]
             )
         ]
-        write_csv(PAPER_TABLES / "table_primary_repair_effects.csv", primary_effects.to_dict("records"))
+        write_csv(
+            PAPER_TABLES / "table_primary_repair_effects.csv", primary_effects.to_dict("records")
+        )
         baseline_primary = pd.DataFrame(baseline_rows)
         write_csv(
             PAPER_TABLES / "table_primary_baseline_comparison_by_dataset.csv",
@@ -1755,7 +1892,9 @@ def run_full_core() -> dict[str, Any]:
             help_df[help_df["protocol"] == PRIMARY_PROTOCOL].to_dict("records"),
         )
     if not stats_df.empty:
-        write_csv(PAPER_TABLES / "table_primary_bootstrap_permutation.csv", stats_df.to_dict("records"))
+        write_csv(
+            PAPER_TABLES / "table_primary_bootstrap_permutation.csv", stats_df.to_dict("records")
+        )
     write_csv(PAPER_TABLES / "table_alpha_sensitivity.csv", alpha_summary_rows)
 
     # Figures.
@@ -1986,15 +2125,18 @@ def run_full_core() -> dict[str, Any]:
 
     # Reports.
     bm25_df = pd.DataFrame(bm25_rows)
-    raw_bm25 = bm25_df[bm25_df["protocol"] == RAW_PROTOCOL]["bm25_weight_share_conditional"].dropna()
-    calibrated_bm25 = bm25_df[bm25_df["protocol"] == PRIMARY_PROTOCOL]["bm25_weight_share_conditional"].dropna()
+    raw_bm25 = bm25_df[bm25_df["protocol"] == RAW_PROTOCOL][
+        "bm25_weight_share_conditional"
+    ].dropna()
+    calibrated_bm25 = bm25_df[bm25_df["protocol"] == PRIMARY_PROTOCOL][
+        "bm25_weight_share_conditional"
+    ].dropna()
     primary_cycle = structural_df[structural_df["protocol"] == PRIMARY_PROTOCOL]
     robust_positive = pd.DataFrame(multiplicity_rows)
     if not robust_positive.empty:
         robust_positive = robust_positive[
             (robust_positive["reject_holm_0p05"]) | (robust_positive["reject_bh_0p05"])
         ]
-    sign_flip_rows = []
     pair_summary_df = pd.DataFrame(stats_rows)
     for dataset in DATASETS:
         for regime in REGIMES:
@@ -2020,9 +2162,11 @@ def run_full_core() -> dict[str, Any]:
         f"- Primary mean cyclicity: `{_safe_mean(primary_cycle['cyclic_query_pct'].dropna().tolist())}`",
         f"- Primary mean cyclicity after mutual-pair deletion: `{_safe_mean(primary_cycle['cyclic_query_pct_after_mutual_deletion'].dropna().tolist())}`",
         f"- Robust positive repaired-vs-unrepaired cells after multiplicity correction: `{len(robust_positive)}`",
-        f"- Canonical package decision: `calibrated_all4 should replace raw-margin evidence`",
+        "- Canonical package decision: `calibrated_all4 should replace raw-margin evidence`",
     ]
-    (REPORT_ROOT / "EXECUTIVE_SUMMARY.md").write_text("\n".join(executive_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "EXECUTIVE_SUMMARY.md").write_text(
+        "\n".join(executive_lines) + "\n", encoding="utf-8"
+    )
 
     methods_lines = [
         "# Methods And Protocol",
@@ -2050,7 +2194,9 @@ def run_full_core() -> dict[str, Any]:
         "- Graph-dependent: Copeland, Balance, Markov; each evaluated unrepaired and repaired.",
         "- Hybrids: Copeland and Balance unrepaired/repaired hybrids at alpha=0.3, plus a primary-protocol alpha sweep over {0.1, 0.3, 0.5, 1.0}.",
     ]
-    (REPORT_ROOT / "METHODS_AND_PROTOCOL.md").write_text("\n".join(methods_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "METHODS_AND_PROTOCOL.md").write_text(
+        "\n".join(methods_lines) + "\n", encoding="utf-8"
+    )
 
     full_results_lines = [
         "# Full Results",
@@ -2061,7 +2207,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Statistical tests: `{TABLES_DIR / 'full_statistical_tests.csv'}`",
         f"- Macro comparison: `{TABLES_DIR / 'full_macro_method_comparison.csv'}`",
     ]
-    (REPORT_ROOT / "FULL_RESULTS.md").write_text("\n".join(full_results_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "FULL_RESULTS.md").write_text(
+        "\n".join(full_results_lines) + "\n", encoding="utf-8"
+    )
 
     stats_lines = [
         "# Statistical Conclusions",
@@ -2071,7 +2219,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Robust positive cells after correction: `{len(robust_positive)}`",
         "- Interpret repaired-vs-unrepaired claims using permutation p-values, bootstrap intervals, influence removal, and Holm/BH adjustment together.",
     ]
-    (REPORT_ROOT / "STATISTICAL_CONCLUSIONS.md").write_text("\n".join(stats_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "STATISTICAL_CONCLUSIONS.md").write_text(
+        "\n".join(stats_lines) + "\n", encoding="utf-8"
+    )
 
     raw_vs_lines = [
         "# Raw Vs Calibrated Interpretation",
@@ -2081,7 +2231,9 @@ def run_full_core() -> dict[str, Any]:
         "- Raw-margin results remain an ablation only.",
         "- Calibrated construction materially changes edge weights, cyclicity, removed edges, and some retrieval signs.",
     ]
-    (REPORT_ROOT / "RAW_VS_CALIBRATED_INTERPRETATION.md").write_text("\n".join(raw_vs_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "RAW_VS_CALIBRATED_INTERPRETATION.md").write_text(
+        "\n".join(raw_vs_lines) + "\n", encoding="utf-8"
+    )
 
     nontrivial_lines = [
         "# Nontrivial Cycle Analysis",
@@ -2089,7 +2241,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Cycle decomposition table: `{TABLES_DIR / 'full_cycle_decomposition.csv'}`",
         "- Nontrivial cyclicity is assessed both before and after deleting direct mutual pairs.",
     ]
-    (REPORT_ROOT / "NONTRIVIAL_CYCLE_ANALYSIS.md").write_text("\n".join(nontrivial_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "NONTRIVIAL_CYCLE_ANALYSIS.md").write_text(
+        "\n".join(nontrivial_lines) + "\n", encoding="utf-8"
+    )
 
     hotpot_lines = [
         "# HotpotQA Influence Analysis",
@@ -2097,7 +2251,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Influence-removal table: `{TABLES_DIR / 'full_influence_removal_summary.csv'}` filtered to `dataset=hotpotqa`.",
         "- The primary target cell is `ms1` Copeland hybrid under the primary calibrated protocol.",
     ]
-    (REPORT_ROOT / "HOTPOTQA_INFLUENCE_ANALYSIS.md").write_text("\n".join(hotpot_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "HOTPOTQA_INFLUENCE_ANALYSIS.md").write_text(
+        "\n".join(hotpot_lines) + "\n", encoding="utf-8"
+    )
 
     scidocs_lines = [
         "# SciDocs Influence Analysis",
@@ -2105,7 +2261,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Influence-removal table: `{TABLES_DIR / 'full_influence_removal_summary.csv'}` filtered to `dataset=scidocs`.",
         "- The primary target cell is `ms1` Copeland hybrid under the primary calibrated protocol.",
     ]
-    (REPORT_ROOT / "SCIDOCS_INFLUENCE_ANALYSIS.md").write_text("\n".join(scidocs_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "SCIDOCS_INFLUENCE_ANALYSIS.md").write_text(
+        "\n".join(scidocs_lines) + "\n", encoding="utf-8"
+    )
 
     balance_lines = [
         "# Balance Degeneracy Explanation",
@@ -2113,7 +2271,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Audit table: `{TABLES_DIR / 'balance_change_pipeline_audit.csv'}`.",
         "- Trace graph change, raw/normalized balance-score change, balance ranking change, hybrid-score change, top-k change, and nDCG change before concluding that balance repair is inactive or degenerate.",
     ]
-    (REPORT_ROOT / "BALANCE_DEGENERACY_EXPLANATION.md").write_text("\n".join(balance_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "BALANCE_DEGENERACY_EXPLANATION.md").write_text(
+        "\n".join(balance_lines) + "\n", encoding="utf-8"
+    )
 
     rrf_lines = [
         "# RRF Implementation Note",
@@ -2122,7 +2282,9 @@ def run_full_core() -> dict[str, Any]:
         f"- Prior vs RRF exact ranking match count: `{exact_match_count}/{total_match_count}`.",
         "- Candidate pooling uses the same reciprocal-rank formula family but serves a different role and does not imply that Prior and RRF baseline rows should be merged without documentation.",
     ]
-    (REPORT_ROOT / "RRF_IMPLEMENTATION_NOTE.md").write_text("\n".join(rrf_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "RRF_IMPLEMENTATION_NOTE.md").write_text(
+        "\n".join(rrf_lines) + "\n", encoding="utf-8"
+    )
 
     impact_lines = [
         "# Manuscript Impact Map",
@@ -2139,7 +2301,9 @@ def run_full_core() -> dict[str, Any]:
         "- Tables: replace manuscript-facing raw tables with the primary calibrated tables in the paper package.",
         "- Figures: replace manuscript-facing raw figures with the primary calibrated figures in the paper package.",
     ]
-    (REPORT_ROOT / "MANUSCRIPT_IMPACT_MAP.md").write_text("\n".join(impact_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "MANUSCRIPT_IMPACT_MAP.md").write_text(
+        "\n".join(impact_lines) + "\n", encoding="utf-8"
+    )
 
     package_lines = [
         "# Canonical Package Decision",
@@ -2149,7 +2313,9 @@ def run_full_core() -> dict[str, Any]:
         "- Historical raw-margin packages remain ablations only.",
         "- `calibrated_all4` should replace the manuscript's unstable raw-margin evidence unless a separate technical audit disproves the calibration protocol itself.",
     ]
-    (REPORT_ROOT / "CANONICAL_PACKAGE_DECISION.md").write_text("\n".join(package_lines) + "\n", encoding="utf-8")
+    (REPORT_ROOT / "CANONICAL_PACKAGE_DECISION.md").write_text(
+        "\n".join(package_lines) + "\n", encoding="utf-8"
+    )
 
     audit_manifest = {
         "generated_at": now_iso(),
@@ -2189,7 +2355,9 @@ def run_full_core() -> dict[str, Any]:
         )
         if not primary_cycle.empty
         else None,
-        "robust_positive_cells": robust_positive.to_dict("records") if isinstance(robust_positive, pd.DataFrame) else [],
+        "robust_positive_cells": robust_positive.to_dict("records")
+        if isinstance(robust_positive, pd.DataFrame)
+        else [],
         "paper_conclusion_survives": False,
         "calibrated_all4_should_be_canonical": True,
     }
@@ -2197,7 +2365,9 @@ def run_full_core() -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the full four-dataset calibrated core study.")
-    parser.add_argument("--estimate-only", action="store_true", help="Print runtime and output-size estimate only.")
+    parser.add_argument(
+        "--estimate-only", action="store_true", help="Print runtime and output-size estimate only."
+    )
     args = parser.parse_args()
 
     if args.estimate_only:

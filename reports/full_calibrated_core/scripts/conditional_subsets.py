@@ -32,12 +32,12 @@ independent boolean flags, not a partition):
   topk_changed        -- the *set* of the top-k doc ids differs between
                          repaired and unrepaired, for the given pair and
                          the query's own top_k.
-  relevance_order_changed -- pairwise_accuracy (agreement with the qrels-
-                         derived reference ordering, already computed by
-                         evaluate_query) differs between repaired and
-                         unrepaired -- i.e. repair changed the ordering of
-                         at least one pair of documents with different
-                         relevance labels, not just unlabeled documents.
+  relevance_order_changed -- repair changed the ordering of at least one
+                         pair of documents with explicit qrels and
+                         different relevance grades. When the per-query
+                         artifact contains the direct boolean comparison it
+                         is used; otherwise we fall back to a change in
+                         pairwise_accuracy.
   metric_changed      -- ndcg_at_k differs (repaired != unrepaired) beyond
                          floating-point tolerance.
 """
@@ -68,12 +68,19 @@ def classify_query_pair(
     ranking_changed = unrepaired_ranking != repaired_ranking
     topk_changed = set(unrepaired_ranking[:top_k]) != set(repaired_ranking[:top_k])
 
-    unrepaired_pw = unrepaired.get("pairwise_accuracy")
-    repaired_pw = repaired.get("pairwise_accuracy")
-    if unrepaired_pw is None or repaired_pw is None:
-        relevance_order_changed = False
+    pair_key = f"{unrepaired_key}__vs__{repaired_key}"
+    pairwise_comparisons = eval_record.get("pairwise_comparisons", {})
+    pairwise_comparison = pairwise_comparisons.get(pair_key, {})
+    direct_relevance_change = pairwise_comparison.get("differently_graded_judged_pairs_changed")
+    if direct_relevance_change is not None:
+        relevance_order_changed = bool(direct_relevance_change)
     else:
-        relevance_order_changed = abs(float(unrepaired_pw) - float(repaired_pw)) > _FLOAT_TOL
+        unrepaired_pw = unrepaired.get("pairwise_accuracy")
+        repaired_pw = repaired.get("pairwise_accuracy")
+        if unrepaired_pw is None or repaired_pw is None:
+            relevance_order_changed = False
+        else:
+            relevance_order_changed = abs(float(unrepaired_pw) - float(repaired_pw)) > _FLOAT_TOL
 
     unrepaired_ndcg = unrepaired.get("ndcg_at_k")
     repaired_ndcg = repaired.get("ndcg_at_k")

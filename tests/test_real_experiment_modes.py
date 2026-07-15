@@ -16,6 +16,7 @@ from consistency_ranker.pairwise_prefs import Preference
 from scripts.run_real_experiment import (
     NON_HYBRID_METHODS,
     _average_precision_at_k,
+    _backward_edge_weight_from_relevance,
     _build_hybrid_specs,
     _build_query_preferences,
     _copeland_ranking,
@@ -25,11 +26,13 @@ from scripts.run_real_experiment import (
     _hybrid_rrf_component_ranking,
     _hybrid_rrf_fas_regularized_ranking,
     _hybrid_rrf_priority_topological_ranking,
+    _judged_relevance_map_for_candidates,
     _load_pairwise_preference_file,
     _load_score_file,
     _method_plan,
     _ndcg_at_k,
     _pairwise_accuracy_from_relevance,
+    _pairwise_inconsistency_from_relevance,
     _parse_alpha_values,
     _precision_recall_at_k,
     _prior_only_ranking,
@@ -99,7 +102,9 @@ def test_load_pairwise_preference_file(tmp_path: Path):
     f.write_text(
         "\n".join(
             [
-                json.dumps({"query_id": "q1", "winner_doc_id": "d1", "loser_doc_id": "d2", "weight": 2}),
+                json.dumps(
+                    {"query_id": "q1", "winner_doc_id": "d1", "loser_doc_id": "d2", "weight": 2}
+                ),
                 json.dumps({"query_id": "q1", "winner": "d2", "loser": "d3"}),
             ]
         )
@@ -168,20 +173,45 @@ def test_build_query_preferences_score_file():
 def test_candidate_aligned_reference_and_quality_metrics():
     qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 1), ("q1", "d3", 0))
     ref, rel_map = _reference_ranking_for_candidates(qrels, {"d1", "d2", "dX"})
+    judged_rel_map = _judged_relevance_map_for_candidates(qrels, {"d1", "d2", "dX"})
     assert ref == ["d1", "d2", "dX"]
     assert rel_map["d1"] == 2
     assert rel_map["dX"] == 0
+    assert "dX" not in judged_rel_map
 
     ranking = ["d2", "dX", "d1"]
     ndcg = _ndcg_at_k(ranking, rel_map, k=2)
     ap = _average_precision_at_k(ranking, rel_map, k=2)
     p_at_k, r_at_k = _precision_recall_at_k(ranking, rel_map, k=2)
-    pair_acc = _pairwise_accuracy_from_relevance(ranking, rel_map)
+    pair_acc = _pairwise_accuracy_from_relevance(ranking, judged_rel_map)
     assert ndcg is not None and 0.0 <= ndcg <= 1.0
     assert ap is not None and 0.0 <= ap <= 1.0
     assert p_at_k is not None and 0.0 <= p_at_k <= 1.0
     assert r_at_k is not None and 0.0 <= r_at_k <= 1.0
     assert pair_acc is not None and 0.0 <= pair_acc <= 1.0
+
+
+def test_pairwise_accuracy_excludes_equal_grade_and_unjudged_pairs():
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 2), ("q1", "d3", 0))
+    judged_rel_map = _judged_relevance_map_for_candidates(qrels, {"d1", "d2", "d3", "dX"})
+    ranking = ["d2", "dX", "d1", "d3"]
+    pair_acc = _pairwise_accuracy_from_relevance(ranking, judged_rel_map)
+    assert pair_acc == pytest.approx(1.0)
+
+
+def test_qrels_graph_diagnostics_require_explicit_different_grade_pairs():
+    qrels = _qrels(("q1", "d1", 2), ("q1", "d2", 0), ("q1", "d3", 0))
+    judged_rel_map = _judged_relevance_map_for_candidates(qrels, {"d1", "d2", "d3", "dX"})
+    graph = build_graph(
+        [
+            Preference("d2", "d1", 3.0),
+            Preference("d1", "d3", 2.0),
+            Preference("dX", "d1", 7.0),
+            Preference("d3", "d2", 5.0),
+        ]
+    )
+    assert _pairwise_inconsistency_from_relevance(graph, judged_rel_map) == 1
+    assert _backward_edge_weight_from_relevance(graph, judged_rel_map) == pytest.approx(3.0)
 
 
 def test_weighted_out_minus_in_ranking_runs():
@@ -250,15 +280,9 @@ def test_hybrid_component_variants():
         ]
     )
     pri = {"a": 0.7, "b": 0.1, "c": 0.4}
-    r_balance = _hybrid_rrf_component_ranking(
-        graph, pri, component="balance", alpha=0.5
-    )
-    r_copeland = _hybrid_rrf_component_ranking(
-        graph, pri, component="copeland", alpha=0.3
-    )
-    r_prio = _hybrid_rrf_priority_topological_ranking(
-        graph, pri, component="balance", alpha=0.3
-    )
+    r_balance = _hybrid_rrf_component_ranking(graph, pri, component="balance", alpha=0.5)
+    r_copeland = _hybrid_rrf_component_ranking(graph, pri, component="copeland", alpha=0.3)
+    r_prio = _hybrid_rrf_priority_topological_ranking(graph, pri, component="balance", alpha=0.3)
     assert r_balance[0] in {"a", "c"}
     assert r_copeland[0] in {"a", "c"}
     assert r_prio.index("b") == len(r_prio) - 1
@@ -662,9 +686,7 @@ def test_markov_graph_repaired_method_in_run_query():
         alpha_values=[0.2],
         include_score_fusion_baselines=False,
     )
-    methods, hybrid_specs = _filter_methods(
-        methods, hybrid_specs, ["markov_graph_repaired"]
-    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["markov_graph_repaired"])
     acc = TimingAccumulator()
     rows, skip = run_query(
         query=_FakeQuery(),
@@ -750,9 +772,7 @@ def test_run_query_metric_aware_enables_ma_variant_for_repaired_method():
         alpha_values=[0.2],
         repair_weighting="metric_aware",
     )
-    methods, hybrid_specs = _filter_methods(
-        methods, hybrid_specs, ["greedy_fas_copeland"]
-    )
+    methods, hybrid_specs = _filter_methods(methods, hybrid_specs, ["greedy_fas_copeland"])
     acc = TimingAccumulator()
     rows, skip = run_query(
         query=_FakeQuery(),

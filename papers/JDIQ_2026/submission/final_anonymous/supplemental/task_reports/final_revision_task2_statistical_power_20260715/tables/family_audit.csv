@@ -1,0 +1,8 @@
+family_id,n_tests,n_structural_inactive,dependence_note,primary_correction,secondary_correction
+task1_final_full_ndcg,330,114,"Shared queries across datasets/regimes/pairs, shared methods, shared pool/cutoff grids.",Holm,BH; BY sensitivity
+task1_final_active_ms1_ndcg,110,0,Shared ms1 queries across methods and cutoffs only; activity defined structurally by regime.,Holm,BH; BY sensitivity
+task1_exact_ndcg,20,0,Shared queries within the targeted exact-repair larger-pool cells.,Holm,BH; BY sensitivity
+canonical_primary_protocol_ndcg,60,0,"Shared query sets across datasets, regimes, and repaired-vs-unrepaired method pairs.",Holm,BH; BY sensitivity
+canonical_cross_protocol_ndcg,360,0,"Strong dependence from shared queries, methods, and protocol variants.",Holm,BH; BY sensitivity
+task1_final_map,330,114,Same query-level dependence structure as the nDCG family.,Holm,BH; BY sensitivity
+task1_final_mrr,330,114,Same query-level dependence structure as the nDCG family.,Holm,BH; BY sensitivity

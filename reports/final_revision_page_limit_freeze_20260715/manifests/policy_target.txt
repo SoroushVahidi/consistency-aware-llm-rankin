@@ -1,0 +1,2 @@
+target_body_pages_excluding_references=23
+source_policy_snippets=JDIQ call-for-papers + JDIQ author-guidelines

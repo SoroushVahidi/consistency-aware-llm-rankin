@@ -21,18 +21,25 @@ from consistency_ranker.combsum_ranking import (
     COMBSUM_NORM_MINMAX,
     per_query_combsum_ranking_from_score_maps,
 )
-from consistency_ranker.failure_mining.analysis import OUR_REPAIRED_METHOD, OUR_UNREPAIRED_METHOD, compute_failure_labels
+from consistency_ranker.failure_mining.analysis import (
+    OUR_REPAIRED_METHOD,
+    OUR_UNREPAIRED_METHOD,
+    compute_failure_labels,
+)
 from consistency_ranker.failure_mining.data_setup import DEFAULT_RANKERS
-from consistency_ranker.failure_mining.graph_features import backward_edge_weight, extended_graph_stats
+from consistency_ranker.failure_mining.graph_features import (
+    backward_edge_weight,
+    extended_graph_stats,
+)
 from consistency_ranker.graph_construction import build_graph
 from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight
 from consistency_ranker.markov_graph_ranking import DEFAULT_MARKOV_DAMPING, markov_graph_ranking
 from consistency_ranker.pairwise_prefs import Preference
 from consistency_ranker.rrf_ranking import DEFAULT_RRF_K, per_query_rrf_ranking_from_score_maps
 from rerankers.tournament_agg import bradley_terry_ranking
-
 from scripts.run_real_experiment import (
     _average_precision_at_k,
+    _judged_relevance_map_for_candidates,
     _kendall_tau,
     _ndcg_at_k,
     _pairwise_accuracy_from_relevance,
@@ -67,6 +74,7 @@ def _evaluate_ranking(
     *,
     ref_ranking: list[str],
     rel_map: dict[str, int],
+    judged_rel_map: dict[str, int],
     top_k: int,
     graph: nx.DiGraph,
     prior_ndcg: float | None,
@@ -81,10 +89,12 @@ def _evaluate_ranking(
         "ndcg_at_k": ndcg,
         "map_at_k": _average_precision_at_k(aligned, rel_map, k=top_k),
         "mrr_at_k": _mrr_at_k(aligned, rel_map, k=top_k),
-        "pairwise_accuracy": _pairwise_accuracy_from_relevance(aligned, rel_map),
+        "pairwise_accuracy": _pairwise_accuracy_from_relevance(aligned, judged_rel_map),
         "kendall_tau": _kendall_tau(aligned, ref_ranking),
         "backward_edge_weight": backward_edge_weight(graph, ranking),
-        "delta_vs_prior": (ndcg - prior_ndcg) if ndcg is not None and prior_ndcg is not None else None,
+        "delta_vs_prior": (ndcg - prior_ndcg)
+        if ndcg is not None and prior_ndcg is not None
+        else None,
         "delta_vs_unrepaired": (
             (ndcg - unrepaired_ndcg) if ndcg is not None and unrepaired_ndcg is not None else None
         ),
@@ -122,6 +132,10 @@ def process_query_record(
         qrels_for_query=qrels_for_query,
         candidates=graph.nodes(),
     )
+    judged_rel_map = _judged_relevance_map_for_candidates(
+        qrels_for_query=qrels_for_query,
+        candidates=graph.nodes(),
+    )
     candidate_ids = sorted(graph.nodes())
     score_sum_prior = score_sum_scores(graph)
     prior_scores = _rrf_prior_scores_for_query(
@@ -131,15 +145,23 @@ def process_query_record(
         fallback_scores=_score_sum_prior_scores(graph),
     )
 
-    graph_stats = extended_graph_stats(graph, prior_scores=prior_scores, ref_ranking=ref_ranking)
+    graph_stats = extended_graph_stats(
+        graph,
+        prior_scores=prior_scores,
+        ref_ranking=ref_ranking,
+        reference_judged_rel_map=judged_rel_map,
+    )
 
     dag, removed = greedy_fas(graph)
     fas_removed_weight = greedy_fas_total_weight(removed)
-    repaired_stats = extended_graph_stats(dag, prior_scores=prior_scores, ref_ranking=ref_ranking)
+    repaired_stats = extended_graph_stats(
+        dag,
+        prior_scores=prior_scores,
+        ref_ranking=ref_ranking,
+        reference_judged_rel_map=judged_rel_map,
+    )
 
-    removed_edges = [
-        {"source": u, "target": v, "weight": float(w)} for u, v, w in removed
-    ]
+    removed_edges = [{"source": u, "target": v, "weight": float(w)} for u, v, w in removed]
     repaired_edges = [
         {"source": u, "target": v, "weight": float(d.get("weight", 1.0))}
         for u, v, d in dag.edges(data=True)
@@ -174,7 +196,9 @@ def process_query_record(
     rankings["bradley_terry"] = bt.ranked_doc_ids
 
     base_rank = rankings.get("rrf") or rankings.get("prior_only") or rankings[OUR_UNREPAIRED_METHOD]
-    rankings["local_kemenization"] = local_adjacent_swap_refinement(base_rank, graph, objective="bew")
+    rankings["local_kemenization"] = local_adjacent_swap_refinement(
+        base_rank, graph, objective="bew"
+    )
 
     # Pre-compute reference ndcgs for deltas
     prior_rank = rankings["prior_only"]
@@ -195,6 +219,7 @@ def process_query_record(
             ranking,
             ref_ranking=ref_ranking,
             rel_map=rel_map,
+            judged_rel_map=judged_rel_map,
             top_k=top_k,
             graph=graph,
             prior_ndcg=prior_ndcg,
@@ -214,9 +239,7 @@ def process_query_record(
     ranker_scores: dict[str, dict[str, float]] = {}
     for ranker_name, score_set in zip(DEFAULT_RANKERS, score_prior_sets):
         per_query = dict(score_set.get(query_id, []))
-        ranker_scores[ranker_name] = {
-            d: s for d, s in per_query.items() if d in candidate_id_set
-        }
+        ranker_scores[ranker_name] = {d: s for d, s in per_query.items() if d in candidate_id_set}
 
     return {
         "query_metadata": {

@@ -1,0 +1,24 @@
+{
+  "claims": {
+    "exact_all_proven_optimal": true,
+    "exact_max_gap": 0.0,
+    "n_holm_significant_active_ms1_family": 0,
+    "n_holm_significant_full_family": 0,
+    "p_eq_k_membership_change_rate": 0.0,
+    "p_eq_k_ndcg_change_rate": 0.10085185185185185,
+    "p_gt_k_membership_change_rate": 0.10577552856500223,
+    "p_gt_k_ndcg_change_rate": 0.061125506072874494
+  },
+  "exact_checks": {
+    "metric_checks": 60,
+    "solver_rows_checked": 342
+  },
+  "file_counts": {
+    "exact_files_checked": 12,
+    "greedy_files_checked": 264
+  },
+  "greedy_checks": {
+    "metric_checks": 990,
+    "structural_checks": 330
+  }
+}

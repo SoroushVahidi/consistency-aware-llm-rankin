@@ -111,9 +111,13 @@ accounts) that cannot be completed from here.
   packaging: `query_exclusion_audit.csv` carried an absolute path in its
   `source_file` column on every row — scrubbed to a repo-relative path in
   the copy shipped inside `final_anonymous/`. A full recursive scan of the
-  assembled `final_anonymous/` directory for
-  `soroush|vahidi|njit\.edu|al-khwarizmi|/home/soroush` returned zero
-  matches.
+  assembled `final_anonymous/` directory for author name, institution
+  email-domain, and absolute-local-path patterns returned zero matches
+  (Task 7 update: re-run and reconfirmed clean after the Task 7 artifact
+  rebuild, which also added a defense-in-depth identity-string scrub to
+  the build script itself; the exact pattern list is intentionally not
+  reproduced here to avoid the checklist document itself becoming the leak
+  it is checking for).
 - [x] **DONE** — This checklist and package apply only to
   `final_anonymous/`, a scrubbed bundle; the private working repository
   (with full git history and real commit authorship) is correctly *not*

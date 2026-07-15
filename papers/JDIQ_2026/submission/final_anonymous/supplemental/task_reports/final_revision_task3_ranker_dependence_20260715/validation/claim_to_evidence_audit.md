@@ -1,0 +1,56 @@
+# Task 3 Claim-to-Evidence Audit
+
+- [PASS] tau_b(scidocs,bm25,tfidf): claimed=0.452 actual=0.451818
+- [PASS] tau_b(scidocs,bm25,minilm): claimed=0.214 actual=0.213617
+- [PASS] tau_b(scidocs,tfidf,minilm): claimed=0.175 actual=0.175285
+- [PASS] tau_b(fiqa,bm25,tfidf): claimed=0.312 actual=0.312115
+- [PASS] tau_b(fiqa,bm25,minilm): claimed=0.175 actual=0.174746
+- [PASS] tau_b(fiqa,tfidf,minilm): claimed=0.187 actual=0.186739
+- [PASS] tau_b(hotpotqa,bm25,tfidf): claimed=0.562 actual=0.562099
+- [PASS] tau_b(hotpotqa,bm25,minilm): claimed=0.436 actual=0.436392
+- [PASS] tau_b(hotpotqa,tfidf,minilm): claimed=0.434 actual=0.433682
+- [PASS] tau_b(bright,bm25,tfidf): claimed=0.142 actual=0.141624
+- [PASS] tau_b(bright,bm25,minilm): claimed=0.182 actual=0.182397
+- [PASS] tau_b(bright,tfidf,minilm): claimed=0.171 actual=0.171007
+- [PASS] directional_agreement(scidocs,bm25,tfidf): claimed=0.72 actual=0.719918
+- [PASS] directional_agreement(fiqa,bm25,tfidf): claimed=0.627 actual=0.627040
+- [PASS] directional_agreement(hotpotqa,bm25,tfidf): claimed=0.817 actual=0.817387
+- [PASS] directional_agreement(bright,bm25,tfidf): claimed=0.573 actual=0.572826
+- [PASS] directional_agreement(bright,bm25,minilm): claimed=0.604 actual=0.604408
+- [PASS] mutual_lexical_vs_minilm_pct(scidocs): claimed=14.8 actual=14.809783
+- [PASS] mutual_single_vs_single_pct(scidocs): claimed=78.9 actual=78.872283
+- [PASS] mutual_lexical_vs_minilm_pct(fiqa): claimed=5.9 actual=5.923345
+- [PASS] mutual_single_vs_single_pct(fiqa): claimed=89.8 actual=89.764808
+- [PASS] mutual_lexical_vs_minilm_pct(hotpotqa): claimed=26.8 actual=26.804124
+- [PASS] mutual_single_vs_single_pct(hotpotqa): claimed=66.5 actual=66.494845
+- [PASS] mutual_lexical_vs_minilm_pct(bright): claimed=3.8 actual=3.802281
+- [PASS] mutual_single_vs_single_pct(bright): claimed=91.1 actual=91.064639
+- [PASS] leave_one_out_active_family_size: claimed=64 actual=64.000000
+- [PASS] leave_one_out_active_family_n_significant: claimed=0 actual=0.000000
+- [PASS] loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_bm25_tfidf', 'pair_any'): claimed=41.1 actual=41.066667
+- [PASS] loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_bm25_minilm', 'pair_any'): claimed=11.9 actual=11.883333
+- [PASS] loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_tfidf_minilm', 'pair_any'): claimed=12.6 actual=12.641667
+- [PASS] loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_bm25_tfidf', 'pair_any'): claimed=3.4 actual=3.423077
+- [PASS] loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_bm25_minilm', 'pair_any'): claimed=5.3 actual=5.307692
+- [PASS] loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_tfidf_minilm', 'pair_any'): claimed=6.0 actual=6.019231
+- [PASS] pre_post_normalization_active_family_size: claimed=32 actual=32.000000
+- [PASS] pre_post_normalization_active_family_n_significant: claimed=0 actual=0.000000
+- [PASS] scidocs_ms1_post_pool_mean_edges: claimed=153.9 actual=153.925000
+- [PASS] scidocs_ms1_pre_pool_mean_edges: claimed=154.1 actual=154.083333
+- [PASS] removed_edge_jaccard_cell_mean_min: claimed=0.748 actual=0.747925
+- [PASS] removed_edge_jaccard_cell_mean_max: claimed=1.0 actual=1.000000
+- [PASS] ms2_density_min: claimed=0.013 actual=0.012604
+- [PASS] ms2_density_max: claimed=0.27 actual=0.268376
+- [PASS] ms2_edges_min: claimed=21 actual=21.180000
+- [PASS] ms2_edges_max: claimed=191 actual=190.908333
+- [PASS] ms2_total_dataset_query_pool_cells: claimed=684 actual=684.000000
+- [PASS] ms2_max_observed_scc: claimed=1 actual=1.000000
+- [PASS] tfidf_validation_jaccard_min: claimed=1.0 actual=1.000000
+- [PASS] tfidf_validation_pearson_min: claimed=0.9999 actual=1.000000
+- [PASS] tfidf_validation_agreement_min: claimed=1.0 actual=1.000000
+- [PASS] minilm_coverage_min_pct: claimed=44 actual=44.291667
+- [PASS] minilm_coverage_max_pct: claimed=71 actual=71.153846
+- [PASS] lexical_coverage_min_pct: claimed=75 actual=74.800000
+- [PASS] lexical_coverage_max_pct: claimed=100 actual=99.615385
+
+Overall: ALL CLAIMS VERIFIED (52 checks)

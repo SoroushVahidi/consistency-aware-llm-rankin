@@ -7,6 +7,11 @@ from collections import defaultdict
 
 import networkx as nx
 
+from consistency_ranker.qrels_reference import (
+    qrels_backward_edge_weight,
+    qrels_pairwise_inconsistency,
+)
+
 
 def _edge_list(graph: nx.DiGraph) -> list[dict]:
     edges: list[dict] = []
@@ -100,6 +105,7 @@ def extended_graph_stats(
     *,
     prior_scores: dict[str, float] | None = None,
     ref_ranking: list[str] | None = None,
+    reference_judged_rel_map: dict[str, int] | None = None,
 ) -> dict:
     """Collect graph features used for failure correlation analysis."""
     summary_base = {
@@ -117,7 +123,10 @@ def extended_graph_stats(
 
     pic_pre = None
     bew_pre = None
-    if ref_ranking:
+    if reference_judged_rel_map is not None:
+        pic_pre = qrels_pairwise_inconsistency(graph, reference_judged_rel_map)
+        bew_pre = qrels_backward_edge_weight(graph, reference_judged_rel_map)
+    elif ref_ranking:
         pos = {node: i for i, node in enumerate(ref_ranking)}
         pic_pre = 0
         bew_pre = 0.0

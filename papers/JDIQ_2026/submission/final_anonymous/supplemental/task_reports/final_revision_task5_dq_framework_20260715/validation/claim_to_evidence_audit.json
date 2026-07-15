@@ -1,0 +1,253 @@
+{
+  "n_checks": 33,
+  "n_failed": 0,
+  "results": [
+    {
+      "claim": "trimmed_number_still_present::canonical_exact_solve_mean_18ms",
+      "claimed": ">=1",
+      "actual": 1,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "trimmed_number_still_present::canonical_exact_solve_max_61ms",
+      "claimed": ">=1",
+      "actual": 1,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::bm25_conditional_share_raw_0.988",
+      "claimed": ">=2",
+      "actual": 5,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::bm25_conditional_share_normalized_0.512",
+      "claimed": ">=2",
+      "actual": 4,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::minilm_coverage_low_44",
+      "claimed": ">=2",
+      "actual": 7,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::minilm_coverage_high_71",
+      "claimed": ">=2",
+      "actual": 5,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::lexical_coverage_low_75",
+      "claimed": ">=2",
+      "actual": 10,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::lexical_coverage_high_100",
+      "claimed": ">=2",
+      "actual": 23,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::mutual_single_vs_single_low_66.5",
+      "claimed": ">=2",
+      "actual": 3,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::mutual_single_vs_single_high_91.1",
+      "claimed": ">=2",
+      "actual": 3,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::mutual_lexical_bloc_low_3.8",
+      "claimed": ">=2",
+      "actual": 7,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::mutual_lexical_bloc_high_26.8",
+      "claimed": ">=2",
+      "actual": 4,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::llm_cyclicity_pre_range",
+      "claimed": ">=2",
+      "actual": 2,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::llm_cyclicity_post_range",
+      "claimed": ">=2",
+      "actual": 142,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::topk_membership_change_Pgtk_10.6",
+      "claimed": ">=2",
+      "actual": 2,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::tau_b_upper_bound_0.562",
+      "claimed": ">=2",
+      "actual": 4,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::canonical_exact_cells_36",
+      "claimed": ">=2",
+      "actual": 5,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::larger_pool_exact_cells_56",
+      "claimed": ">=2",
+      "actual": 4,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "reused_number_appears_multiple_times::exact_solves_total_684",
+      "claimed": ">=2",
+      "actual": 3,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "topk_membership_change_rate_P_gt_k_pct",
+      "claimed": 10.6,
+      "actual": 10.5776,
+      "match": true,
+      "tol": 0.05
+    },
+    {
+      "claim": "mde_nominal_80pct_approx",
+      "claimed": 0.013,
+      "actual": 0.013323432010854265,
+      "match": true,
+      "tol": 0.001
+    },
+    {
+      "claim": "mde_holm_80pct_approx",
+      "claimed": 0.021,
+      "actual": 0.02067685223390709,
+      "match": true,
+      "tol": 0.001
+    },
+    {
+      "claim": "observed_median_abs_delta_approx",
+      "claimed": 0.0036,
+      "actual": 0.0035754186474477004,
+      "match": true,
+      "tol": 0.0001
+    },
+    {
+      "claim": "task3_mutual_pair_attribution_table_present",
+      "claimed": true,
+      "actual": true,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "exact_canonical_family_size",
+      "claimed": 36,
+      "actual": 36,
+      "match": true,
+      "tol": 0
+    },
+    {
+      "claim": "exact_larger_pool_family_size",
+      "claimed": 56,
+      "actual": 56,
+      "match": true,
+      "tol": 0
+    },
+    {
+      "claim": "exact_canonical_family_n_significant",
+      "claimed": 0,
+      "actual": 0,
+      "match": true,
+      "tol": 0
+    },
+    {
+      "claim": "exact_larger_pool_family_n_significant",
+      "claimed": 0,
+      "actual": 0,
+      "match": true,
+      "tol": 0
+    },
+    {
+      "claim": "result_to_dq_mapping_row_count",
+      "claimed": 13,
+      "actual": 13,
+      "match": true,
+      "tol": 0
+    },
+    {
+      "claim": "result_to_dq_mapping_section_labels_resolve",
+      "claimed": [],
+      "actual": [],
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "taxonomy_has_seven_lettered_dimensions",
+      "claimed": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ],
+      "actual": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ],
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "new_reference_cited::sambasivan2021datacascades",
+      "claimed": true,
+      "actual": true,
+      "match": true,
+      "tol": null
+    },
+    {
+      "claim": "new_reference_cited::northcutt2021labelerrors",
+      "claimed": true,
+      "actual": true,
+      "match": true,
+      "tol": null
+    }
+  ]
+}

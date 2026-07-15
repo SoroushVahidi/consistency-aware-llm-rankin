@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
+# ruff: noqa: E402,E501
 from __future__ import annotations
 
 import csv
 import hashlib
 import importlib.util
 import json
-import math
 import statistics
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import defaultdict
 from dataclasses import dataclass
 from itertools import combinations
 from pathlib import Path
@@ -23,7 +23,6 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
-
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPORT_ROOT = SCRIPT_DIR.parent
 REPO_ROOT = REPORT_ROOT.parents[1]
@@ -35,8 +34,14 @@ if str(SRC_ROOT) not in sys.path:
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from run_phase0_phase1 import _dataset_specs, _load_manifest, _load_score_file, _select_candidates  # noqa: E402
-from candidate_pool_policies import PoolSpec, POOL_SPECS  # noqa: E402
+from candidate_pool_policies import PoolSpec  # noqa: E402
+from run_phase0_phase1 import (  # noqa: E402
+    _dataset_specs,
+    _load_manifest,
+    _load_score_file,
+    _select_candidates,
+)
+
 from consistency_ranker.baseline_ranking import (  # noqa: E402
     borda_ranking,
     borda_scores,
@@ -44,44 +49,48 @@ from consistency_ranker.baseline_ranking import (  # noqa: E402
     pagerank_ranking,
     priority_topological_ranking,
     rank_centrality_ranking,
-    rank_centrality_scores,
     score_sum_ranking,
     score_sum_scores,
     topological_ranking,
     weighted_out_minus_in_ranking,
-    weighted_out_minus_in_scores,
+)
+from consistency_ranker.borda_fuse_ranking import (
+    per_query_borda_fuse_ranking_from_score_maps,  # noqa: E402
+)
+from consistency_ranker.combsum_ranking import (  # noqa: E402
+    COMBSUM_NORM_MINMAX,
+    per_query_combsum_ranking_from_score_maps,
 )
 from consistency_ranker.data.dataset_registry import get_config  # noqa: E402
 from consistency_ranker.data.unified_loader import load_dataset_splits  # noqa: E402
 from consistency_ranker.failure_mining.graph_features import extended_graph_stats  # noqa: E402
 from consistency_ranker.graph_construction import build_graph  # noqa: E402
-from consistency_ranker.greedy_fas import greedy_fas, greedy_fas_total_weight  # noqa: E402
 from consistency_ranker.markov_graph_ranking import (  # noqa: E402
     DEFAULT_MARKOV_DAMPING,
     markov_graph_ranking,
     markov_graph_scores,
 )
-from consistency_ranker.metric_aware_repair import reweight_graph_for_metric_aware_fas  # noqa: E402
 from consistency_ranker.pairwise_prefs import Preference  # noqa: E402
-from consistency_ranker.rrf_ranking import DEFAULT_RRF_K, per_query_rrf_ranking_from_score_maps  # noqa: E402
-from consistency_ranker.combsum_ranking import COMBSUM_NORM_MINMAX, per_query_combsum_ranking_from_score_maps  # noqa: E402
-from consistency_ranker.borda_fuse_ranking import per_query_borda_fuse_ranking_from_score_maps  # noqa: E402
+from consistency_ranker.qrels_reference import judged_pair_order_changed  # noqa: E402
+from consistency_ranker.rrf_ranking import (  # noqa: E402
+    DEFAULT_RRF_K,
+    per_query_rrf_ranking_from_score_maps,
+)
 from rerankers.tournament_agg import bradley_terry_ranking  # noqa: E402
 from scripts.run_real_experiment import (  # noqa: E402
-    _alpha_token,
     _average_precision_at_k,
-    _backward_edge_weight,
+    _backward_edge_weight_from_relevance,
+    _judged_relevance_map_for_candidates,
     _kendall_tau,
     _ndcg_at_k,
     _pairwise_accuracy_from_relevance,
-    _pairwise_inconsistency,
+    _pairwise_inconsistency_from_relevance,
     _precision_recall_at_k,
     _prior_only_ranking,
     _reference_ranking_for_candidates,
     _rrf_prior_scores_for_query,
     _score_sum_prior_scores,
 )
-
 
 CALIBRATIONS = (
     "raw",
@@ -141,7 +150,12 @@ PLOT_COLORS = {
 
 
 def _load_method_audit_module():
-    path = REPO_ROOT / "experiments" / "method_improvement_audit_20260711_205733" / "run_method_improvement_audit.py"
+    path = (
+        REPO_ROOT
+        / "experiments"
+        / "method_improvement_audit_20260711_205733"
+        / "run_method_improvement_audit.py"
+    )
     spec = importlib.util.spec_from_file_location("b3_method_audit_module", path)
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
@@ -192,14 +206,21 @@ class ProtocolSpec:
 
     def __post_init__(self) -> None:
         if self.calibration not in CALIBRATIONS:
-            raise ValueError(f"Unknown calibration {self.calibration!r} for protocol {self.protocol_id!r}. Valid: {CALIBRATIONS}")
-        if self.threshold_mode not in ("fixed_numeric", "retention_matched") and _parse_quantile_independent_mode(self.threshold_mode) is None:
+            raise ValueError(
+                f"Unknown calibration {self.calibration!r} for protocol {self.protocol_id!r}. Valid: {CALIBRATIONS}"
+            )
+        if (
+            self.threshold_mode not in ("fixed_numeric", "retention_matched")
+            and _parse_quantile_independent_mode(self.threshold_mode) is None
+        ):
             raise ValueError(
                 f"Unknown threshold_mode {self.threshold_mode!r} for protocol {self.protocol_id!r}. "
                 "Valid: 'fixed_numeric', 'retention_matched', or 'quantile_independent_q<Q>'."
             )
         if self.kind not in self._VALID_KINDS:
-            raise ValueError(f"Unknown protocol kind {self.kind!r} for protocol {self.protocol_id!r}. Valid: {self._VALID_KINDS}")
+            raise ValueError(
+                f"Unknown protocol kind {self.kind!r} for protocol {self.protocol_id!r}. Valid: {self._VALID_KINDS}"
+            )
         if not self.protocol_id or not self.label:
             raise ValueError("protocol_id and label must be non-empty")
 
@@ -242,7 +263,10 @@ def _json_default(obj: Any) -> Any:
 
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True, default=_json_default) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, default=_json_default) + "\n",
+        encoding="utf-8",
+    )
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -285,7 +309,64 @@ def _align_ranking(ranking: list[str], rel_map: dict[str, int]) -> list[str]:
     return METHOD_AUDIT_MOD._align_ranking(ranking, rel_map)
 
 
-def bootstrap_ci(values: list[float], reps: int = 10_000, seed: int = 13) -> tuple[float | None, float | None, float | None]:
+def _mrr_at_k(ranking: list[str], rel_map: dict[str, int], k: int) -> float:
+    if k <= 0:
+        return 0.0
+    for idx, doc_id in enumerate(ranking[:k], start=1):
+        if rel_map.get(doc_id, 0) > 0:
+            return 1.0 / float(idx)
+    return 0.0
+
+
+def summarize_prefix_change(
+    unrepaired_ranking: list[str],
+    repaired_ranking: list[str],
+    *,
+    rel_map: dict[str, int],
+    judged_rel_map: dict[str, int] | None = None,
+    k: int,
+) -> dict[str, Any]:
+    if k <= 0:
+        raise ValueError(f"k must be positive. Got {k}.")
+    if len(unrepaired_ranking) < k or len(repaired_ranking) < k:
+        raise ValueError(
+            "Requested cutoff exceeds available ranking length: "
+            f"len(unrepaired)={len(unrepaired_ranking)} len(repaired)={len(repaired_ranking)} k={k}."
+        )
+
+    unrepaired_prefix = list(unrepaired_ranking[:k])
+    repaired_prefix = list(repaired_ranking[:k])
+    unrepaired_set = set(unrepaired_prefix)
+    repaired_set = set(repaired_prefix)
+    unrepaired_rel = [int(rel_map.get(doc_id, 0)) for doc_id in unrepaired_prefix]
+    repaired_rel = [int(rel_map.get(doc_id, 0)) for doc_id in repaired_prefix]
+
+    judged_map = judged_rel_map if judged_rel_map is not None else rel_map
+    differently_graded_judged_pairs_changed = False
+    shared_docs = [doc_id for doc_id in unrepaired_prefix if doc_id in repaired_set]
+    if shared_docs:
+        differently_graded_judged_pairs_changed = judged_pair_order_changed(
+            unrepaired_ranking,
+            repaired_ranking,
+            judged_map,
+            docs=shared_docs,
+        )
+
+    return {
+        "top_k_prefix_unrepaired": unrepaired_prefix,
+        "top_k_prefix_repaired": repaired_prefix,
+        "top_k_membership_changed": unrepaired_set != repaired_set,
+        "top_k_order_changed": unrepaired_prefix != repaired_prefix,
+        "differently_graded_judged_pairs_changed": differently_graded_judged_pairs_changed,
+        "relevance_sequence_unrepaired": unrepaired_rel,
+        "relevance_sequence_repaired": repaired_rel,
+        "relevance_sequence_changed": unrepaired_rel != repaired_rel,
+    }
+
+
+def bootstrap_ci(
+    values: list[float], reps: int = 10_000, seed: int = 13
+) -> tuple[float | None, float | None, float | None]:
     if not values:
         return None, None, None
     rng = np.random.default_rng(seed)
@@ -296,7 +377,9 @@ def bootstrap_ci(values: list[float], reps: int = 10_000, seed: int = 13) -> tup
     return float(lo), float(hi), frac_gt_zero
 
 
-def paired_permutation_pvalue(deltas: list[float], reps: int = 10_000, seed: int = 17) -> float | None:
+def paired_permutation_pvalue(
+    deltas: list[float], reps: int = 10_000, seed: int = 17
+) -> float | None:
     if not deltas:
         return None
     arr = np.asarray(deltas, dtype=float)
@@ -521,7 +604,9 @@ def build_query_vote_artifacts(
         calibration=calibration,
     )
     pair_margins_by_ranker: dict[str, list[float]] = {ranker: [] for ranker in RANKERS}
-    direction_maps: dict[tuple[str, str], dict[tuple[str, str], list[tuple[str, float]]]] = defaultdict(lambda: defaultdict(list))
+    direction_maps: dict[tuple[str, str], dict[tuple[str, str], list[tuple[str, float]]]] = (
+        defaultdict(lambda: defaultdict(list))
+    )
     retained_vote_counts: dict[str, int] = defaultdict(int)
     retained_weight_sums: dict[str, float] = defaultdict(float)
 
@@ -594,7 +679,9 @@ def direction_maps_for_query(
     calibrated_scores, _meta = apply_calibration_to_score_maps(
         raw_scores_by_ranker, candidate_pool, calibration=calibration
     )
-    direction_maps: dict[tuple[str, str], dict[tuple[str, str], list[tuple[str, float]]]] = defaultdict(lambda: defaultdict(list))
+    direction_maps: dict[tuple[str, str], dict[tuple[str, str], list[tuple[str, float]]]] = (
+        defaultdict(lambda: defaultdict(list))
+    )
     for ranker in RANKERS:
         direction_map, margin_map = _direction_and_margin_maps(
             ranker,
@@ -716,10 +803,12 @@ def _parse_quantile_independent_mode(threshold_mode: str) -> float | None:
     prefix = "quantile_independent_q"
     if not threshold_mode.startswith(prefix):
         return None
-    digits = threshold_mode[len(prefix):].replace("p", ".")
+    digits = threshold_mode[len(prefix) :].replace("p", ".")
     q = float(digits)
     if not (0.0 < q < 1.0):
-        raise ValueError(f"quantile_independent target quantile must be in (0, 1), got {q} from {threshold_mode!r}")
+        raise ValueError(
+            f"quantile_independent target quantile must be in (0, 1), got {q} from {threshold_mode!r}"
+        )
     return q
 
 
@@ -762,7 +851,9 @@ def choose_threshold_config(
             if not vals:
                 vote_thresholds[ranker] = 0.0
                 continue
-            vote_thresholds[ranker] = float(np.quantile(np.asarray(vals, dtype=float), independent_q))
+            vote_thresholds[ranker] = float(
+                np.quantile(np.asarray(vals, dtype=float), independent_q)
+            )
         return ThresholdConfig(
             vote_thresholds=vote_thresholds,
             aggregate_threshold=0.0,
@@ -855,7 +946,11 @@ def choose_threshold_config(
                 aggregate_threshold=float(agg_threshold),
             )
         gap = abs(total_edges - baseline_edge_count)
-        if best_gap is None or gap < best_gap or (gap == best_gap and agg_threshold < best_threshold):
+        if (
+            best_gap is None
+            or gap < best_gap
+            or (gap == best_gap and agg_threshold < best_threshold)
+        ):
             best_gap = gap
             best_threshold = float(agg_threshold)
 
@@ -920,6 +1015,11 @@ class CalibrationEvaluator:
         vote_rows: list[dict[str, Any]],
         raw_score_maps_by_ranker: dict[str, list[tuple[str, float]]],
     ) -> dict[str, Any] | None:
+        if len(candidate_pool) < top_k:
+            raise ValueError(
+                f"Requested evaluation cutoff top_k={top_k} exceeds candidate pool size {len(candidate_pool)} "
+                f"for dataset={dataset} query_id={query_id}."
+            )
         prefs = [
             Preference(
                 winner=str(row["winner_doc_id"]),
@@ -935,7 +1035,12 @@ class CalibrationEvaluator:
 
         candidate_nodes = list(candidate_pool)
         ref_ranking, rel_map = _reference_ranking_for_candidates(qrels_for_query, candidate_nodes)
-        score_prior_sets = [{query_id: raw_score_maps_by_ranker[r]} for r in RANKERS if raw_score_maps_by_ranker.get(r)]
+        judged_rel_map = _judged_relevance_map_for_candidates(qrels_for_query, candidate_nodes)
+        score_prior_sets = [
+            {query_id: raw_score_maps_by_ranker[r]}
+            for r in RANKERS
+            if raw_score_maps_by_ranker.get(r)
+        ]
         prior_scores = _rrf_prior_scores_for_query(
             query_id=query_id,
             candidate_nodes=set(candidate_nodes),
@@ -945,9 +1050,24 @@ class CalibrationEvaluator:
         repaired_graph, repair_info = self._apply_repair(graph, prior_scores, top_k=top_k)
         repaired_graph.add_nodes_from(candidate_pool)
 
-        graph_stats = extended_graph_stats(graph, prior_scores=prior_scores, ref_ranking=ref_ranking)
-        repaired_stats = extended_graph_stats(repaired_graph, prior_scores=prior_scores, ref_ranking=ref_ranking)
-        confidence_weight = min(1.0, float(graph_stats.get("edge_weight_mean", 0.0)) / 5.0 if graph.number_of_edges() else 0.0)
+        graph_stats = extended_graph_stats(
+            graph,
+            prior_scores=prior_scores,
+            ref_ranking=ref_ranking,
+            reference_judged_rel_map=judged_rel_map,
+        )
+        repaired_stats = extended_graph_stats(
+            repaired_graph,
+            prior_scores=prior_scores,
+            ref_ranking=ref_ranking,
+            reference_judged_rel_map=judged_rel_map,
+        )
+        confidence_weight = min(
+            1.0,
+            float(graph_stats.get("edge_weight_mean", 0.0)) / 5.0
+            if graph.number_of_edges()
+            else 0.0,
+        )
         raw_edges = {(u, v) for u, v in graph.edges()}
         repaired_edges = {(u, v) for u, v in repaired_graph.edges()}
         removed_edges = raw_edges - repaired_edges
@@ -955,28 +1075,38 @@ class CalibrationEvaluator:
         for u, v in list(graph.edges()):
             if graph.has_edge(v, u):
                 mutual_removed_graph.remove_edge(u, v)
-        mutual_removed_stats = extended_graph_stats(mutual_removed_graph, prior_scores=prior_scores, ref_ranking=ref_ranking)
+        mutual_removed_stats = extended_graph_stats(
+            mutual_removed_graph,
+            prior_scores=prior_scores,
+            ref_ranking=ref_ranking,
+            reference_judged_rel_map=judged_rel_map,
+        )
 
         method_outputs: dict[str, dict[str, Any]] = {}
 
-        def add_method(name: str, ranking: list[str], scores: dict[str, float] | None = None) -> None:
+        def add_method(
+            name: str, ranking: list[str], scores: dict[str, float] | None = None
+        ) -> None:
             aligned = _align_ranking(ranking, rel_map)
             ndcg = _ndcg_at_k(aligned, rel_map, k=top_k)
             mapk = _average_precision_at_k(aligned, rel_map, k=top_k)
+            mrrk = _mrr_at_k(aligned, rel_map, k=top_k)
             pk, rk = _precision_recall_at_k(aligned, rel_map, k=top_k)
             method_outputs[name] = {
                 "ranking": ranking,
-                "scores": scores or _rank_scores({d: float(len(ranking) - i) for i, d in enumerate(ranking)}),
+                "top_k_prefix": list(ranking[:top_k]),
+                "scores": scores
+                or _rank_scores({d: float(len(ranking) - i) for i, d in enumerate(ranking)}),
                 "ndcg_at_k": ndcg,
                 "map_at_k": mapk,
+                "mrr_at_k": mrrk,
                 "precision_at_k": pk,
                 "recall_at_k": rk,
-                "pairwise_accuracy": _pairwise_accuracy_from_relevance(aligned, rel_map),
+                "pairwise_accuracy": _pairwise_accuracy_from_relevance(aligned, judged_rel_map),
                 "kendall_tau": _kendall_tau(aligned, ref_ranking),
             }
 
         score_sum_raw = score_sum_scores(graph)
-        score_sum_rep = score_sum_scores(repaired_graph)
         copeland_raw = self._graph_component_scores(graph, "copeland")
         copeland_rep = self._graph_component_scores(repaired_graph, "copeland")
         balance_raw = self._graph_component_scores(graph, "balance")
@@ -985,23 +1115,83 @@ class CalibrationEvaluator:
         markov_rep = markov_graph_scores(repaired_graph, damping=DEFAULT_MARKOV_DAMPING)
 
         add_method("prior_only", _prior_only_ranking(candidate_nodes, prior_scores), prior_scores)
-        add_method("rrf", per_query_rrf_ranking_from_score_maps(query_id, score_prior_sets, candidate_nodes, k=DEFAULT_RRF_K))
-        add_method("combsum", per_query_combsum_ranking_from_score_maps(query_id, score_prior_sets, candidate_nodes, normalization=COMBSUM_NORM_MINMAX))
-        add_method("borda_fuse", per_query_borda_fuse_ranking_from_score_maps(query_id, score_prior_sets, candidate_nodes))
+        add_method(
+            "rrf",
+            per_query_rrf_ranking_from_score_maps(
+                query_id, score_prior_sets, candidate_nodes, k=DEFAULT_RRF_K
+            ),
+        )
+        add_method(
+            "combsum",
+            per_query_combsum_ranking_from_score_maps(
+                query_id, score_prior_sets, candidate_nodes, normalization=COMBSUM_NORM_MINMAX
+            ),
+        )
+        add_method(
+            "borda_fuse",
+            per_query_borda_fuse_ranking_from_score_maps(
+                query_id, score_prior_sets, candidate_nodes
+            ),
+        )
         add_method("score_sum", score_sum_ranking(graph), score_sum_raw)
         add_method("borda", borda_ranking(graph), borda_scores(graph))
         add_method("copeland_graph", copeland_ranking(graph), copeland_raw)
         add_method("copeland_graph_repaired", copeland_ranking(repaired_graph), copeland_rep)
         add_method("balance_graph", weighted_out_minus_in_ranking(graph), balance_raw)
-        add_method("balance_graph_repaired", weighted_out_minus_in_ranking(repaired_graph), balance_rep)
+        add_method(
+            "balance_graph_repaired", weighted_out_minus_in_ranking(repaired_graph), balance_rep
+        )
         add_method("markov_graph", markov_graph_ranking(graph), markov_raw)
         add_method("markov_graph_repaired", markov_graph_ranking(repaired_graph), markov_rep)
         add_method("topological_repaired", topological_ranking(repaired_graph))
-        add_method("priority_topological_repaired", priority_topological_ranking(repaired_graph, prior_scores))
-        add_method("hybrid_unrepaired_copeland_a0p3_minmax", self._hybrid_ranking(prior_scores, copeland_raw, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
-        add_method("hybrid_repaired_copeland_a0p3_minmax", self._hybrid_ranking(prior_scores, copeland_rep, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
-        add_method("hybrid_unrepaired_balance_a0p3_minmax", self._hybrid_ranking(prior_scores, balance_raw, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
-        add_method("hybrid_repaired_balance_a0p3_minmax", self._hybrid_ranking(prior_scores, balance_rep, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
+        add_method(
+            "priority_topological_repaired",
+            priority_topological_ranking(repaired_graph, prior_scores),
+        )
+        add_method(
+            "hybrid_unrepaired_copeland_a0p3_minmax",
+            self._hybrid_ranking(
+                prior_scores,
+                copeland_raw,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
+        add_method(
+            "hybrid_repaired_copeland_a0p3_minmax",
+            self._hybrid_ranking(
+                prior_scores,
+                copeland_rep,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
+        add_method(
+            "hybrid_unrepaired_balance_a0p3_minmax",
+            self._hybrid_ranking(
+                prior_scores,
+                balance_raw,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
+        add_method(
+            "hybrid_repaired_balance_a0p3_minmax",
+            self._hybrid_ranking(
+                prior_scores,
+                balance_rep,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
 
         # Existing-but-previously-excluded graph-ranking baselines, wired in
         # per reports/candidate_pool_conditional_audit_20260714/AUDIT.md
@@ -1018,24 +1208,74 @@ class CalibrationEvaluator:
         add_method("pagerank_graph", pagerank_ranking(graph), pagerank_raw)
         add_method("pagerank_graph_repaired", pagerank_ranking(repaired_graph), pagerank_rep)
         add_method("rank_centrality_graph", rank_centrality_ranking(graph), rank_centrality_raw)
-        add_method("rank_centrality_graph_repaired", rank_centrality_ranking(repaired_graph), rank_centrality_rep)
-        add_method("markov_hybrid_unrepaired", self._hybrid_ranking(prior_scores, markov_raw, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
-        add_method("markov_hybrid_repaired", self._hybrid_ranking(prior_scores, markov_rep, candidate_nodes, alpha=0.3, mode="minmax", confidence_weight=confidence_weight))
+        add_method(
+            "rank_centrality_graph_repaired",
+            rank_centrality_ranking(repaired_graph),
+            rank_centrality_rep,
+        )
+        add_method(
+            "markov_hybrid_unrepaired",
+            self._hybrid_ranking(
+                prior_scores,
+                markov_raw,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
+        add_method(
+            "markov_hybrid_repaired",
+            self._hybrid_ranking(
+                prior_scores,
+                markov_rep,
+                candidate_nodes,
+                alpha=0.3,
+                mode="minmax",
+                confidence_weight=confidence_weight,
+            ),
+        )
         bt_raw = bradley_terry_ranking(
             [(u, v, float(data.get("weight", 1.0))) for u, v, data in graph.edges(data=True)],
             all_doc_ids=candidate_nodes,
         )
         bt_rep = bradley_terry_ranking(
-            [(u, v, float(data.get("weight", 1.0))) for u, v, data in repaired_graph.edges(data=True)],
+            [
+                (u, v, float(data.get("weight", 1.0)))
+                for u, v, data in repaired_graph.edges(data=True)
+            ],
             all_doc_ids=candidate_nodes,
         )
         add_method("bradley_terry_graph", bt_raw.ranked_doc_ids, bt_raw.scores)
         add_method("bradley_terry_graph_repaired", bt_rep.ranked_doc_ids, bt_rep.scores)
 
+        pairwise_comparisons: dict[str, dict[str, Any]] = {}
+        pair_specs = (
+            ("copeland_graph", "copeland_graph_repaired"),
+            ("balance_graph", "balance_graph_repaired"),
+            ("markov_graph", "markov_graph_repaired"),
+            ("hybrid_unrepaired_copeland_a0p3_minmax", "hybrid_repaired_copeland_a0p3_minmax"),
+            ("hybrid_unrepaired_balance_a0p3_minmax", "hybrid_repaired_balance_a0p3_minmax"),
+            ("pagerank_graph", "pagerank_graph_repaired"),
+            ("rank_centrality_graph", "rank_centrality_graph_repaired"),
+            ("markov_hybrid_unrepaired", "markov_hybrid_repaired"),
+            ("bradley_terry_graph", "bradley_terry_graph_repaired"),
+        )
+        for unrepaired_key, repaired_key in pair_specs:
+            pairwise_comparisons[f"{unrepaired_key}__vs__{repaired_key}"] = summarize_prefix_change(
+                method_outputs[unrepaired_key]["ranking"],
+                method_outputs[repaired_key]["ranking"],
+                rel_map=rel_map,
+                judged_rel_map=judged_rel_map,
+                k=top_k,
+            )
+
         return {
             "dataset": dataset,
             "query_id": query_id,
             "vote_regime": vote_regime,
+            "candidate_pool_size": len(candidate_pool),
+            "metric_cutoff": top_k,
             "candidate_pool": candidate_pool,
             "graph": graph,
             "repaired_graph": repaired_graph,
@@ -1045,18 +1285,27 @@ class CalibrationEvaluator:
             "prior_scores": prior_scores,
             "ref_ranking": ref_ranking,
             "rel_map": rel_map,
+            "judged_rel_map": judged_rel_map,
             "method_outputs": method_outputs,
+            "pairwise_comparisons": pairwise_comparisons,
             "repair_info": repair_info,
             "raw_edges": raw_edges,
             "removed_edges": removed_edges,
-            "graph_bew_pre": _backward_edge_weight(graph, ref_ranking),
-            "graph_bew_post": _backward_edge_weight(repaired_graph, ref_ranking),
-            "graph_pic_pre": _pairwise_inconsistency(graph, ref_ranking),
-            "graph_pic_post": _pairwise_inconsistency(repaired_graph, ref_ranking),
+            "graph_bew_pre": _backward_edge_weight_from_relevance(graph, judged_rel_map),
+            "graph_bew_post": _backward_edge_weight_from_relevance(repaired_graph, judged_rel_map),
+            "graph_pic_pre": _pairwise_inconsistency_from_relevance(graph, judged_rel_map),
+            "graph_pic_post": _pairwise_inconsistency_from_relevance(
+                repaired_graph, judged_rel_map
+            ),
         }
 
 
-def prepare_dataset_inputs(dataset: str, pool_policy: "PoolSpec | None" = None) -> dict[str, Any]:
+def prepare_dataset_inputs(
+    dataset: str,
+    pool_policy: "PoolSpec | None" = None,
+    *,
+    pool_size_override: int | None = None,
+) -> dict[str, Any]:
     """Build per-query inputs for one dataset.
 
     ``pool_policy=None`` (the default) reproduces the canonical protocol
@@ -1066,24 +1315,46 @@ def prepare_dataset_inputs(dataset: str, pool_policy: "PoolSpec | None" = None) 
     work in reports/candidate_pool_conditional_audit_20260714/. Passing a
     ``PoolSpec`` (see candidate_pool_policies.py) swaps in an alternative,
     independently-defined pool construction for sensitivity analysis; the
-    query set, qrels, and every other input are unchanged.
+    query set, qrels, and every other input are unchanged. ``pool_size_override``
+    decouples candidate-pool size from the dataset manifest's default cutoff so
+    genuine ``P > k`` evaluations can reuse the same stored score files without
+    silently changing any other pipeline component.
     """
-    manifest_path = REPO_ROOT / "experiments" / "method_improvement_audit_20260711_205733" / "phase_reports" / "canonical_rerun_manifest.json"
+    manifest_path = (
+        REPO_ROOT
+        / "experiments"
+        / "method_improvement_audit_20260711_205733"
+        / "phase_reports"
+        / "canonical_rerun_manifest.json"
+    )
     manifest = _load_manifest(manifest_path)
     specs = _dataset_specs(manifest)
     spec = specs[dataset]
-    query_ids = [line.strip() for line in spec.query_ids_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-    raw_score_maps_by_ranker = {ranker: _load_score_file(spec.score_files[ranker]) for ranker in RANKERS}
+    query_ids = [
+        line.strip()
+        for line in spec.query_ids_file.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    raw_score_maps_by_ranker = {
+        ranker: _load_score_file(spec.score_files[ranker]) for ranker in RANKERS
+    }
     queries, documents, qrels = load_dataset_splits(dataset)
     qrels_by_query: dict[str, list[Any]] = defaultdict(list)
     for entry in qrels:
         qrels_by_query[entry.query_id].append(entry)
     select_candidates_fn = pool_policy.policy_fn if pool_policy is not None else _select_candidates
+    requested_pool_size = (
+        int(pool_size_override) if pool_size_override is not None else int(spec.top_k)
+    )
+    if requested_pool_size <= 0:
+        raise ValueError(f"pool_size_override must be positive. Got {requested_pool_size}.")
     candidate_pools: dict[str, list[str]] = {}
     per_query_inputs: list[dict[str, Any]] = []
     for qid in query_ids:
-        ranker_scores = {ranker: raw_score_maps_by_ranker[ranker].get(qid, {}) for ranker in RANKERS}
-        candidate_pool = select_candidates_fn(ranker_scores, spec.top_k)
+        ranker_scores = {
+            ranker: raw_score_maps_by_ranker[ranker].get(qid, {}) for ranker in RANKERS
+        }
+        candidate_pool = select_candidates_fn(ranker_scores, requested_pool_size)
         candidate_pools[qid] = candidate_pool
         per_query_inputs.append(
             {
@@ -1103,13 +1374,13 @@ def prepare_dataset_inputs(dataset: str, pool_policy: "PoolSpec | None" = None) 
         "per_query_inputs": per_query_inputs,
         "qrels_hash": sha256_file(get_config(dataset).processed_path / "qrels.jsonl"),
         "pool_policy_id": pool_policy.pool_id if pool_policy is not None else "rrf_union_topk",
+        "requested_pool_size": requested_pool_size,
     }
 
 
 def raw_baseline_statistics(dataset_inputs: dict[str, Any]) -> dict[str, Any]:
     results: dict[str, Any] = {}
     per_query_inputs = dataset_inputs["per_query_inputs"]
-    dataset = dataset_inputs["dataset"]
     for regime in REGIMES:
         min_support, agg_threshold, drop_mutual = base_variant_parameters(regime)
         total_edges = 0
@@ -1132,7 +1403,9 @@ def raw_baseline_statistics(dataset_inputs: dict[str, Any]) -> dict[str, Any]:
                     notes="raw baseline",
                 ),
             )
-            total_edges += len({(row["winner_doc_id"], row["loser_doc_id"]) for row in artifacts["rows"]})
+            total_edges += len(
+                {(row["winner_doc_id"], row["loser_doc_id"]) for row in artifacts["rows"]}
+            )
             for ranker in RANKERS:
                 possible = 0
                 score_map = item["raw_scores_by_ranker"].get(ranker, {})
@@ -1140,13 +1413,16 @@ def raw_baseline_statistics(dataset_inputs: dict[str, Any]) -> dict[str, Any]:
                     if a in score_map and b in score_map and score_map[a] != score_map[b]:
                         possible += 1
                 vote_rate_counts[ranker]["possible"] += possible
-                vote_rate_counts[ranker]["retained"] += int(artifacts["retained_vote_counts"].get(ranker, 0))
+                vote_rate_counts[ranker]["retained"] += int(
+                    artifacts["retained_vote_counts"].get(ranker, 0)
+                )
         results[regime] = {
             "edge_count": total_edges,
             "vote_rates": {
                 ranker: (
                     vote_rate_counts[ranker]["retained"] / vote_rate_counts[ranker]["possible"]
-                    if vote_rate_counts[ranker]["possible"] else 0.0
+                    if vote_rate_counts[ranker]["possible"]
+                    else 0.0
                 )
                 for ranker in RANKERS
             },
@@ -1174,27 +1450,37 @@ def summarize_structural_records(records: list[dict[str, Any]]) -> dict[str, Any
             "mean_fas_weight_removed": None,
             "mean_normalized_fas_weight_removed": None,
         }
+
     def _mean(xs: list[float]) -> float:
         return float(sum(xs) / len(xs)) if xs else 0.0
 
     candidate_counts = [len(rec["candidate_pool"]) for rec in records]
     edge_counts = [rec["graph"].number_of_edges() for rec in records]
-    densities = [nx.density(rec["graph"]) if rec["graph"].number_of_nodes() > 1 else 0.0 for rec in records]
+    densities = [
+        nx.density(rec["graph"]) if rec["graph"].number_of_nodes() > 1 else 0.0 for rec in records
+    ]
     mutual_pairs = [int(rec["graph_stats"].get("n_mutual_pairs", 0)) for rec in records]
     cyclic = [bool(rec["graph_stats"].get("is_cyclic")) for rec in records]
     cyclic_after_mutual = [bool(rec["mutual_removed_stats"].get("is_cyclic")) for rec in records]
     largest_scc = [int(rec["graph_stats"].get("largest_scc_size", 0)) for rec in records]
-    largest_scc_after = [int(rec["mutual_removed_stats"].get("largest_scc_size", 0)) for rec in records]
+    largest_scc_after = [
+        int(rec["mutual_removed_stats"].get("largest_scc_size", 0)) for rec in records
+    ]
     total_weight = [float(rec["graph_stats"].get("total_edge_weight", 0.0)) for rec in records]
     normalized_weight = [
-        float(rec["graph_stats"].get("total_edge_weight", 0.0)) / max(1, rec["graph"].number_of_edges())
+        float(rec["graph_stats"].get("total_edge_weight", 0.0))
+        / max(1, rec["graph"].number_of_edges())
         for rec in records
     ]
     fas_edges_removed = [int(rec["repair_info"].get("n_edges_removed", 0)) for rec in records]
     fas_weight_removed = [float(rec["repair_info"].get("removed_weight", 0.0)) for rec in records]
     normalized_fas = [
-        (float(rec["repair_info"].get("removed_weight", 0.0)) / float(rec["graph_stats"].get("total_edge_weight", 0.0)))
-        if float(rec["graph_stats"].get("total_edge_weight", 0.0)) > 0 else 0.0
+        (
+            float(rec["repair_info"].get("removed_weight", 0.0))
+            / float(rec["graph_stats"].get("total_edge_weight", 0.0))
+        )
+        if float(rec["graph_stats"].get("total_edge_weight", 0.0)) > 0
+        else 0.0
         for rec in records
     ]
     return {
@@ -1205,7 +1491,9 @@ def summarize_structural_records(records: list[dict[str, Any]]) -> dict[str, Any
         "mutual_pair_count": _mean(mutual_pairs),
         "pct_queries_with_mutual_pair": float(sum(1 for x in mutual_pairs if x > 0) / usable),
         "cyclic_query_pct": float(sum(1 for x in cyclic if x) / usable),
-        "cyclic_query_pct_after_mutual_deletion": float(sum(1 for x in cyclic_after_mutual if x) / usable),
+        "cyclic_query_pct_after_mutual_deletion": float(
+            sum(1 for x in cyclic_after_mutual if x) / usable
+        ),
         "mean_largest_scc": _mean(largest_scc),
         "mean_largest_scc_after_mutual_deletion": _mean(largest_scc_after),
         "mean_total_graph_weight": _mean(total_weight),
@@ -1276,11 +1564,21 @@ def render_stacked_counts(
     labels = [" | ".join(str(row[col]) for col in category_cols) for _, row in df.iterrows()]
     x = np.arange(len(labels))
     bottom = np.zeros(len(labels))
-    colors = {"helped_query_count": "#0f766e", "harmed_query_count": "#b91c1c", "unchanged_query_count": "#64748b"}
+    colors = {
+        "helped_query_count": "#0f766e",
+        "harmed_query_count": "#b91c1c",
+        "unchanged_query_count": "#64748b",
+    }
     fig, ax = plt.subplots(figsize=(max(10, len(labels) * 0.55), 5))
     for col in count_cols:
         vals = df[col].to_numpy(dtype=float)
-        ax.bar(x, vals, bottom=bottom, label=col.replace("_query_count", ""), color=colors.get(col, "#334155"))
+        ax.bar(
+            x,
+            vals,
+            bottom=bottom,
+            label=col.replace("_query_count", ""),
+            color=colors.get(col, "#334155"),
+        )
         bottom += vals
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=25, ha="right")
