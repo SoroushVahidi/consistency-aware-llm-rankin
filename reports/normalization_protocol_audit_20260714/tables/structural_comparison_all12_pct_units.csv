@@ -1,0 +1,145 @@
+protocol,protocol_label,protocol_kind,dataset,regime,mutual_pair_query_prevalence_pct,cyclic_query_pct,cyclic_query_pct_after_mutual_deletion,source_table
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,100.0,100.0,68.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,0.0,68.0,68.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,0.0,10.0,10.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,100.0,100.0,29.166666666666668,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,0.0,29.166666666666668,29.166666666666668,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,0.0,13.333333333333334,13.333333333333334,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,96.15384615384616,96.15384615384616,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,0.0,3.8461538461538463,3.8461538461538463,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,100.0,100.0,9.166666666666666,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,0.0,9.166666666666666,9.166666666666666,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,0.0,37.5,37.5,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,88.0,88.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,0.0,24.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,97.5,98.33333333333333,22.5,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,0.0,22.5,22.5,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,71.15384615384616,71.15384615384616,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,97.5,97.5,10.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,0.0,10.0,10.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,88.0,88.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,0.0,24.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,97.5,98.33333333333333,22.5,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,0.0,22.5,22.5,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,71.15384615384616,71.15384615384616,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,97.5,97.5,10.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,0.0,10.0,10.0,"full_structural_results.csv (fraction units, converted to pct)"
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,100.0,100.0,54.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,0.0,54.0,54.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,99.16666666666667,99.16666666666667,34.166666666666664,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,0.0,34.166666666666664,34.166666666666664,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,0.0,2.5,2.5,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,73.07692307692308,73.07692307692308,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,100.0,100.0,10.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,0.0,10.0,10.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,0.0,5.833333333333333,5.833333333333333,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,92.0,92.0,34.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,0.0,34.0,34.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,95.83333333333333,96.66666666666667,27.5,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,0.0,27.5,27.5,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,0.0,0.8333333333333334,0.8333333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,42.30769230769231,42.30769230769231,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,96.66666666666667,96.66666666666667,16.666666666666668,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,0.0,16.666666666666668,16.666666666666668,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,0.0,0.8333333333333334,0.8333333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,62.0,62.0,16.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,0.0,16.0,16.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,81.66666666666667,81.66666666666667,10.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,0.0,10.833333333333334,10.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,9.615384615384615,11.538461538461538,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,79.16666666666667,80.0,5.833333333333333,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,0.0,5.833333333333333,5.833333333333333,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,96.0,96.0,58.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,0.0,58.0,58.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,100.0,100.0,35.833333333333336,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,0.0,35.833333333333336,35.833333333333336,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,0.0,0.8333333333333334,0.8333333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,96.15384615384616,96.15384615384616,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,100.0,100.0,15.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,0.0,15.833333333333334,15.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,0.0,3.3333333333333335,3.3333333333333335,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,94.0,94.0,48.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,0.0,48.0,48.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,100.0,100.0,35.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,0.0,35.0,35.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,71.15384615384616,71.15384615384616,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,100.0,100.0,18.333333333333332,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,0.0,18.333333333333332,18.333333333333332,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,86.0,86.0,28.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,0.0,28.0,28.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,93.33333333333333,95.0,22.5,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,0.0,22.5,22.5,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,36.53846153846154,36.53846153846154,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,91.66666666666667,91.66666666666667,15.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,0.0,15.833333333333334,15.833333333333334,independent_protocol_diagnostics_summary.csv (already pct units)
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,0.0,0.0,0.0,independent_protocol_diagnostics_summary.csv (already pct units)
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,92.0,92.0,22.0,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,0.0,22.0,22.0,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,98.33333333333333,98.33333333333333,30.833333333333336,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,0.0,30.833333333333336,30.833333333333336,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,63.46153846153846,63.46153846153846,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,99.16666666666667,99.16666666666667,10.833333333333334,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,0.0,11.666666666666666,11.666666666666666,"full_structural_results.csv (fraction units, converted to pct)"
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,96.0,96.0,42.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,0.0,42.0,42.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,100.0,100.0,38.333333333333336,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,0.0,40.0,40.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,86.53846153846155,86.53846153846155,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,100.0,100.0,15.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,0.0,15.0,15.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,92.0,92.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,0.0,24.0,24.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,98.33333333333333,98.33333333333333,27.500000000000004,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,0.0,27.500000000000004,27.500000000000004,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,67.3076923076923,67.3076923076923,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,0.0,1.9230769230769231,1.9230769230769231,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,99.16666666666667,99.16666666666667,11.666666666666666,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,0.0,11.666666666666666,11.666666666666666,"full_structural_results.csv (fraction units, converted to pct)"
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,0.0,0.0,0.0,"full_structural_results.csv (fraction units, converted to pct)"

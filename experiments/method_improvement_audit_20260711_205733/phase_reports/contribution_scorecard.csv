@@ -1,0 +1,5 @@
+candidate_contribution,novelty_relative_to_repo,evidence_strength,datasets_evaluated,baselines_beaten,effect_size,confidence_intervals,runtime_cost,failure_cases,result_type,manuscript_suitability
+candidate_frontier_diagnostic_framework,medium,strong,"scidocs,fiqa,hotpotqa,bright",diagnostic_only,n/a,n/a,low,depends on rerun completeness,positive,high
+markov_based_extraction_audit,medium,medium,"scidocs,fiqa,hotpotqa,bright",canonical copeland hybrid in sensitivity diagnostics,see extraction_fusion_results.csv,paired bootstrap,moderate,fusion suppression remains common,inconclusive,medium
+correlation_discounted_preference_construction,medium,pending graph_construction_results.csv,"scidocs,fiqa,hotpotqa,bright",pending,pending,not yet computed,low,may reduce useful disagreement together with noise,inconclusive,medium
+exact_on_small_scc_hybrid_repair,medium,pending repair_method_results.csv,cyclic canonical queries only,pending,pending,pending,high on SCC-heavy queries,better structural optimum may still yield no retrieval gain,inconclusive,medium

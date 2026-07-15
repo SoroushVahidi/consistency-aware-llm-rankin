@@ -70,18 +70,37 @@ def check_openai(probe: bool = False) -> ProviderProbeResult:
 
 
 def check_gemini(probe: bool = False) -> ProviderProbeResult:
-    """Check Google Gemini availability without leaking secrets."""
+    """Check Google Gemini availability without leaking secrets.
+
+    Recognizes two independent auth modes: a direct Gemini API key
+    (GEMINI_API_KEY/GOOGLE_API_KEY), or Vertex AI via Application Default
+    Credentials (GOOGLE_GENAI_USE_VERTEXAI + a resolvable project). See
+    ``failure_mining.llm_runner._gemini_vertex_config`` for the canonical
+    Vertex-detection logic this mirrors.
+    """
     env_present = _bool_env("GEMINI_API_KEY", "GOOGLE_API_KEY")
+    vertex_cfg: dict[str, str] | None = None
+    if not env_present:
+        try:
+            from consistency_ranker.failure_mining.llm_runner import _gemini_vertex_config
+
+            vertex_cfg = _gemini_vertex_config()
+        except Exception:
+            vertex_cfg = None
+    mode = "api_key" if env_present else ("vertex" if vertex_cfg else None)
     import_ok = False
     probe_ok = False
     details: dict[str, Any] = {}
-    message = "GEMINI_API_KEY/GOOGLE_API_KEY missing"
+    if mode:
+        message = f"credentials present ({mode})"
+    else:
+        message = "GEMINI_API_KEY/GOOGLE_API_KEY missing and no usable Vertex AI config"
 
     try:
         from google import genai  # type: ignore
 
         import_ok = True
-        if probe and env_present:
+        if probe and mode == "api_key":
             try:
                 api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
                 client = genai.Client(api_key=api_key)
@@ -89,17 +108,34 @@ def check_gemini(probe: bool = False) -> ProviderProbeResult:
                 sample = [getattr(m, "name", "") for m in getattr(resp, "models", [])][:3]
                 details["models_sample"] = sample
                 probe_ok = True
-                message = "probe succeeded"
+                message = "probe succeeded (api_key)"
             except Exception as exc:  # pragma: no cover - network/cred dependent
                 message = f"probe failed: {exc}"
-        elif env_present:
-            message = "env present, import ok (probe skipped)"
+        elif probe and mode == "vertex" and vertex_cfg:
+            try:
+                from google.genai import types  # type: ignore
+
+                client = genai.Client(vertexai=True, project=vertex_cfg["project"], location=vertex_cfg["location"])
+                resp = client.models.generate_content(
+                    model=os.environ.get("GEMINI_VERTEX_MODEL", "gemini-2.5-flash"),
+                    contents="Return exactly the word OK.",
+                    config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=8),
+                )
+                details["vertex_project"] = vertex_cfg["project"]
+                details["vertex_location"] = vertex_cfg["location"]
+                details["response_text"] = getattr(resp, "text", None)
+                probe_ok = True
+                message = "probe succeeded (vertex)"
+            except Exception as exc:  # pragma: no cover - network/cred dependent
+                message = f"probe failed: {exc}"
+        elif mode:
+            message = f"env present, import ok (probe skipped) [{mode}]"
     except Exception as exc:
         message = f"import failed: {exc}"
 
     return ProviderProbeResult(
         provider="gemini",
-        env_present=env_present,
+        env_present=env_present or bool(vertex_cfg),
         import_ok=import_ok,
         probe_ok=probe_ok,
         message=message,

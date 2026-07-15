@@ -1,0 +1,382 @@
+{
+  "generated_at": "2026-07-14T22:27:43-0400",
+  "git": {
+    "head": "c8f6f41e656ecc552736f3f6154cf1c34a416043",
+    "head_commit_datetime": "2026-07-14 18:36:16 -0400",
+    "branch": "main",
+    "dirty_path_count": 174,
+    "note": "dirty_path_count > 0 is expected: this manifest freezes the *content* of canonical outputs by checksum, independent of whether the working tree is committed. See Task 6 final report for the proposed commit covering this exact state."
+  },
+  "manuscript_source": {
+    "main_tex": "papers/JDIQ_2026/manuscript/main.tex",
+    "main_tex_sha256": "54dda84d67b72fafb5cbf751dcc4b84847128081f7b0e1fc73ce9f14f0778d6b",
+    "references_bib_sha256": "51198478d9f0a31549dd2d98f811826e4334af444f5d46483b5192247d41f152"
+  },
+  "canonical_table_checksums": {
+    "reports/full_calibrated_core/tables": {
+      "balance_change_pipeline_audit.csv": "337b5ee2f53c8d975587ecb179444a370e7e95a572b4946bf333d555db5cb788",
+      "full_alpha_sensitivity.csv": "21cbd3d35e9459e030a0149efc865abdfa28ef6b991335d037b1bf186b70af4e",
+      "full_bm25_weight_share.csv": "caaf3bcb60c3029ff1dda9cf5a6068fe30297f934f7c10a0b7cf6f479f1f66bd",
+      "full_cycle_decomposition.csv": "2560ea1e64efa5459c6596ab3d9c463fff97d859e6675e76e14c123ca7bbdc45",
+      "full_help_harm_counts.csv": "b7ddbc9c729725d7137fde86c373d1f98d1cdfe326a20585b99ed1e553e7f9bd",
+      "full_influence_removal_summary.csv": "a6125a7c388d757d9ed7af98728de741ee666b4816353f93b5fae3677eeb0fa5",
+      "full_leave_one_out.csv": "c311ade8c3e81fc004a0995dc6da400ec62623cc46815c1710a43c89926e2962",
+      "full_macro_method_comparison.csv": "653604762128bcf30ff355d9f2372cc36e087031d0bca51c1d86eca6b029ba49",
+      "full_multiplicity_adjusted.csv": "0bd21d7212b4fab5d7c7b8cf814f2432bc0296f83f2e4525f668db5ef659dff9",
+      "full_paired_deltas.csv": "8905e41d4def5e6ef759636e60df3e09bceff8847f56f79b558442e7f1cb67b9",
+      "full_paired_vs_baselines.csv": "9d3474dfff7e798b8446a60cd476ee18a4787c40cd577d963a0c24443b467b73",
+      "full_removed_edge_overlap.csv": "41aeec8744d3d820ef80ac6be40f3f448352d195679139dced8f06eb274325fc",
+      "full_retrieval_results.csv": "f897f0735b50d349e3c5c3524b66cfefc07f55f17c0e7a65adbc312011498560",
+      "full_statistical_tests.csv": "69a6c1d9ad24c10b171d16b0e086a9f6459f0e3a477df999ea15f20597cfbe8c",
+      "full_structural_results.csv": "46e0210217b883b45b2a320efc6ad814e295404e959b76b85e2f7cfd35fa8ded",
+      "full_thresholds.csv": "b54acecb9754cda3793fe2965f26eaf87fd92a9aa9e412aeaf3ace71cb2f7777",
+      "query_exclusion_audit.csv": "130dfe55297ee92e84a5092492323d7397fd12535c972ab3cd401f012b3a389c",
+      "rrf_implementation_used_in_full_run.csv": "03823ec055efd080463b2d4eb3bcb697c25d0c2fbf738ba3e42512c52c4b1519"
+    },
+    "reports/normalization_protocol_audit_20260714/tables": {
+      "independent_protocol_diagnostics_summary.csv": "386f5527b79b5d52ead6f1203c51a07836ec0f3532eb8b6d7bc0c97d73110673",
+      "independent_protocol_exclusions.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "independent_protocol_paired_deltas.csv": "8152400910590e6e78b7ad8c6cb127d14406e9721d73c8be0c4ff2bc05f8c611",
+      "independent_protocol_ranker_diagnostics_per_query.csv": "327c9e693562452074ac9628851f6c5cbc3729ef09cf5de7bf4aaafa4e3310e6",
+      "independent_protocol_removed_edge_overlap.csv": "339813a92f90a2672f3a3d3e92ba4adc74bedac8b003b94bba1fa70a1307ef64",
+      "independent_protocol_statistics.csv": "edce1ad4b1028b2a08c48d9af61c4ecb4d62338ed5c26ab6421abbb10ade91a2",
+      "independent_protocol_structural_per_query.csv": "d6bf606b936ee28e353ad4162f0d6d012c7032137a34fc94c9370c82f534156d",
+      "joint_multiplicity_by_family.csv": "3c389c544dcc28a6a8a83bc7bfc4b4a02b654cb86377562c0bcb77c155fe145a",
+      "joint_multiplicity_family_summary.csv": "baf5612fd21fab66d69b7e4fbb6b8ad0fb676dc4ce485372864e0cb67e94bc43",
+      "joint_protocol_statistics_all12.csv": "810e909afb1a344acb74c998c525000a445789784ddf93b04aab72e5c9de60f5",
+      "sign_stability_canonical_protocols.csv": "bf83e2abb27f0d1dadf5dff629dd546975ffc4d2f01bc7e62006fb011a72df32",
+      "structural_comparison_all12_pct_units.csv": "57a2bcc0f5aae00d8a0060e44881768c12abc310e63dec5b1ad6eaf02f189a44",
+      "structural_comparison_all12_pct_units_summary.csv": "bcafa19631884c0072c861d0f93b13b1c79f88f119043fb9d1e9bdea8019d23d"
+    },
+    "reports/candidate_pool_conditional_audit_20260714/tables": {
+      "baseline_fairness_verification.csv": "b51aca4d8c00ffe76dc29a84f9ceba408bc3c362cd11d7676d622dcc632641a5",
+      "conditional_analysis_primary_protocol.csv": "b376d3eca8a610d8f828eb3a366691f672f2f9142327dd64a2963e603633aade",
+      "failure_decomposition_by_pool.csv": "d528e4b708806554812b7716d967930d0621b53d428c532a60336f92aefb27b4",
+      "failure_decomposition_by_protocol.csv": "a08dbbda20f7a9735668ed7f96d9337570aa2e576ff48ebfd7e2274d51b05940",
+      "new_baseline_multiplicity_adjusted.csv": "9f542e665d82bf1a865f6403dcb8c71094119c68d5b6e7db7826818e8f9ca11c",
+      "new_baseline_paired_deltas.csv": "a40900e88af6ad92865c545eb007ef3516da24cc84a78b8ef4ab8d04cf7d9453",
+      "new_baseline_statistics.csv": "1030b63b6d5f46dc43ce49156593c5706f6b2576454d9e870a889cf8390e15f2",
+      "pool_overlap_vs_canonical.csv": "0c05c454d27245cf1822609d5b6f4e70c89c5acbc8948802205d50d8119167d5",
+      "pool_removed_edge_overlap_vs_canonical.csv": "0640cb7a1f28090efe23a0410358d04a6852ca06cb75009cf91f609ae2223fa6",
+      "pool_repaired_ranking_overlap_vs_canonical.csv": "56873e0d48c73d8a198cb04c21accfc04d227d1038ed50ad16c85ce7d46a97a2",
+      "pool_robustness_exclusions.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pool_robustness_multiplicity_adjusted.csv": "750592417c3e69098d754e54f9c5d158ec2ee2075ad8a168bc33a781fb4e5638",
+      "pool_robustness_paired_deltas.csv": "bfe1c7cd5fa24ed8638e7c8a6a33e755b6786c92c21440c7e511963773dd0c94",
+      "pool_robustness_statistics.csv": "c2e27396f6d8e24ea2ab0088c31b911d32163f00e037730cf7a6a0ddc285d055",
+      "pool_robustness_structural_per_query.csv": "4c635b795d1da4e565bfed21014fa750e5b93d5964e57cbec6380178813ca3bf"
+    },
+    "reports/exact_open_source_ilp_repair_investigation/tables": {
+      "ilp_solver_status_per_query.csv": "0dc93ca78f21f62508f4598ffa919794c07d2d94e50308fa7166df4b30b189e3",
+      "repair_implementation_inventory.csv": "8fd76009b6f8e5adcf35a2e1d72df1c13d1abbb5f88b1168349dd1f1a22b9be1",
+      "retrieval_metric_paired_per_query.csv": "6d990dc0d7682f35e56eebce7676c9e4f71f00af410be851cb973108f6f6e24f",
+      "retrieval_metric_paired_summary.csv": "efe25c11b70edadd56ef7a5278dcc1f57d4312de4248d40b43961a9d29a29f14",
+      "retrieval_metric_paired_summary_pooled.csv": "2a7d2b546c4a7bd863bb82088eaefacc521c5270734e854438fa0fbe71848da2",
+      "structural_per_query.csv": "fb0df7ce526772f76ef58156d7deab2d21b04320f219fc24a812c9ab47ead29d",
+      "structural_summary_by_dataset_regime.csv": "7dd8b932d51de211edb151250c7d9bd092250114ec4c1543b66e9d6bfc891608",
+      "structural_summary_greedy_vs_ilp.csv": "d158b7edfb7232066118e4fcbc5f6978438206d55f6139c539242b44a47fe81c"
+    }
+  },
+  "canonical_per_query_output_provenance": {
+    "n_manifests_read": 204,
+    "distinct_git_heads_recorded_in_manifests": [
+      "c8f6f41e656ecc552736f3f6154cf1c34a416043"
+    ],
+    "by_dataset": {
+      "bright": {
+        "qrels_hash": "3bd1961f79baa3212f9d275862344b67be21c73fd1066d3962f5544bab0237e7",
+        "source_score_hashes": {
+          "bm25": "977ab5f51c6761dbfbda37158117ec5d1d90c1186a3d893c58a0c498140e2131",
+          "minilm": "5121d652d75afa72f28c991170ea59fba8e38e8964967d22cbecb2ee2227d0ca",
+          "tfidf": "ead7e75af22c38fba0055bf8072c20feed2e30fd62b3d38192068a26a2437850"
+        }
+      },
+      "fiqa": {
+        "qrels_hash": "1fa546a24a7e720952e690e11e29e0b71efc00225517527ebd2e8bb523673474",
+        "source_score_hashes": {
+          "bm25": "1f229e60307f0c0b8142eb6dd275c46885e8368b42e9260fde66d23d6539e59d",
+          "minilm": "e552b1858d546cfd0ff0442379caf81e2b6b60dc26a851a1abd8d9b9224a738d",
+          "tfidf": "b92d0f33ff346b0097b05b087a37a0edb84d785cc4ab3bf86912c5a0d9c31a12"
+        }
+      },
+      "hotpotqa": {
+        "qrels_hash": "666299b0bdbcc1f965267aa020bd8c5d001e4855ab3af5aa1e2f875d3ace2ef4",
+        "source_score_hashes": {
+          "bm25": "4dfa3719cce160381a74af1c24e96f1785f1832596577c32e065b97bed086e0a",
+          "minilm": "bd8ffdc28802bea0502206a8bffb0c9635a2da3495323cdba5a5e4b20eaa1fde",
+          "tfidf": "5b6cd90ea87be82f7f8a3c769e7b1bc2bd7d668f0b4544804288784c7b6a33f8"
+        }
+      },
+      "scidocs": {
+        "qrels_hash": "a29baca79a3af24010bdd6e69301d6c3d6887bc3bccf036b05c495f203af234e",
+        "source_score_hashes": {
+          "bm25": "64406bf9bbc4a04717dbeb6b7cc98690147af11c20d2ae7929214a7df6a77c29",
+          "minilm": "85bfadc600cbaecc6e3cce96c61d516f6bb51d5a74457496c2e926fb12b55273",
+          "tfidf": "be609f3eee82f096cbc2cff44f7fa7075592f857c1b8b04505131ec6b6aafbaa"
+        }
+      }
+    }
+  },
+  "registries": {
+    "datasets": [
+      "scidocs",
+      "fiqa",
+      "hotpotqa",
+      "bright"
+    ],
+    "regimes": [
+      "ms2",
+      "ms1",
+      "ms1_drop_mutual"
+    ],
+    "protocols": {
+      "primary_minmax_retention_matched": {
+        "calibration": "minmax_query_ranker",
+        "threshold_mode": "retention_matched",
+        "label": "minmax + retention-matched",
+        "kind": "primary"
+      },
+      "ablation_raw_fixed": {
+        "calibration": "raw",
+        "threshold_mode": "fixed_numeric",
+        "label": "raw + fixed",
+        "kind": "ablation"
+      },
+      "ablation_minmax_fixed": {
+        "calibration": "minmax_query_ranker",
+        "threshold_mode": "fixed_numeric",
+        "label": "minmax + fixed",
+        "kind": "ablation"
+      },
+      "ablation_unit_vote_retention": {
+        "calibration": "unit_vote",
+        "threshold_mode": "retention_matched",
+        "label": "unit vote + retention-matched",
+        "kind": "ablation"
+      },
+      "robustness_zscore_retention": {
+        "calibration": "zscore_query_ranker",
+        "threshold_mode": "retention_matched",
+        "label": "z-score + retention-matched",
+        "kind": "robustness"
+      },
+      "robustness_rank_percentile_retention": {
+        "calibration": "rank_percentile",
+        "threshold_mode": "retention_matched",
+        "label": "rank-percentile + retention-matched",
+        "kind": "robustness"
+      },
+      "independent_minmax_quantile_q0p5": {
+        "calibration": "minmax_query_ranker",
+        "threshold_mode": "quantile_independent_q0p5",
+        "label": "minmax + independent quantile (q=0.5)",
+        "kind": "independent"
+      },
+      "independent_minmax_quantile_q0p3": {
+        "calibration": "minmax_query_ranker",
+        "threshold_mode": "quantile_independent_q0p3",
+        "label": "minmax + independent quantile (q=0.3, low selectivity)",
+        "kind": "independent_grid"
+      },
+      "independent_minmax_quantile_q0p7": {
+        "calibration": "minmax_query_ranker",
+        "threshold_mode": "quantile_independent_q0p7",
+        "label": "minmax + independent quantile (q=0.7, high selectivity)",
+        "kind": "independent_grid"
+      },
+      "independent_rank_percentile_q0p5": {
+        "calibration": "rank_percentile_independent",
+        "threshold_mode": "quantile_independent_q0p5",
+        "label": "rank-percentile (tie-abstain) + independent quantile (q=0.5)",
+        "kind": "independent"
+      },
+      "independent_rank_percentile_q0p3": {
+        "calibration": "rank_percentile_independent",
+        "threshold_mode": "quantile_independent_q0p3",
+        "label": "rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",
+        "kind": "independent_grid"
+      },
+      "independent_rank_percentile_q0p7": {
+        "calibration": "rank_percentile_independent",
+        "threshold_mode": "quantile_independent_q0p7",
+        "label": "rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",
+        "kind": "independent_grid"
+      }
+    },
+    "canonical_name_aliases": {
+      "raw_fixed": "ablation_raw_fixed",
+      "minmax_raw_matched": "primary_minmax_retention_matched",
+      "minmax_quantile": "independent_minmax_quantile_q0p5",
+      "rank_percentile": "independent_rank_percentile_q0p5"
+    },
+    "candidate_pools": {
+      "rrf_union_topk": {
+        "pool_id": "rrf_union_topk",
+        "policy_fn_name": "select_candidates_rrf_union",
+        "label": "RRF-fused top-k union (canonical)",
+        "kind": "canonical"
+      },
+      "equal_depth_union": {
+        "pool_id": "equal_depth_union",
+        "policy_fn_name": "select_candidates_equal_depth_union",
+        "label": "Equal-depth top-k union across all three rankers",
+        "kind": "alternative"
+      },
+      "neutral_round_robin_union": {
+        "pool_id": "neutral_round_robin_union",
+        "policy_fn_name": "select_candidates_round_robin_union",
+        "label": "Neutral round-robin depth-k union (RRF-independent)",
+        "kind": "alternative"
+      },
+      "bm25_only": {
+        "pool_id": "bm25_only",
+        "policy_fn_name": "select_candidates_bm25_only",
+        "label": "BM25-only top-k pool",
+        "kind": "alternative"
+      },
+      "combsum_union_topk": {
+        "pool_id": "combsum_union_topk",
+        "policy_fn_name": "select_candidates_combsum_union",
+        "label": "CombSUM-fused top-k union",
+        "kind": "alternative"
+      }
+    },
+    "methods": {
+      "prior_only": "Prior",
+      "rrf": "RRF",
+      "combsum": "CombSUM",
+      "borda_fuse": "Borda fusion",
+      "copeland_graph": "Copeland unrepaired",
+      "copeland_graph_repaired": "Copeland repaired",
+      "balance_graph": "Balance unrepaired",
+      "balance_graph_repaired": "Balance repaired",
+      "markov_graph": "Markov unrepaired",
+      "markov_graph_repaired": "Markov repaired",
+      "hybrid_unrepaired_copeland_a0p3_minmax": "Copeland hybrid unrepaired",
+      "hybrid_repaired_copeland_a0p3_minmax": "Copeland hybrid repaired",
+      "hybrid_unrepaired_balance_a0p3_minmax": "Balance hybrid unrepaired",
+      "hybrid_repaired_balance_a0p3_minmax": "Balance hybrid repaired",
+      "pagerank_graph": "PageRank unrepaired",
+      "pagerank_graph_repaired": "PageRank repaired",
+      "rank_centrality_graph": "RankCentrality unrepaired",
+      "rank_centrality_graph_repaired": "RankCentrality repaired",
+      "markov_hybrid_unrepaired": "Markov hybrid unrepaired",
+      "markov_hybrid_repaired": "Markov hybrid repaired",
+      "bradley_terry_graph": "Bradley-Terry unrepaired",
+      "bradley_terry_graph_repaired": "Bradley-Terry repaired"
+    },
+    "pair_specs": [
+      {
+        "pair_name": "copeland_graph",
+        "unrepaired_key": "copeland_graph",
+        "repaired_key": "copeland_graph_repaired",
+        "pair_family": "graph"
+      },
+      {
+        "pair_name": "balance_graph",
+        "unrepaired_key": "balance_graph",
+        "repaired_key": "balance_graph_repaired",
+        "pair_family": "graph"
+      },
+      {
+        "pair_name": "markov_graph",
+        "unrepaired_key": "markov_graph",
+        "repaired_key": "markov_graph_repaired",
+        "pair_family": "graph"
+      },
+      {
+        "pair_name": "copeland_hybrid",
+        "unrepaired_key": "hybrid_unrepaired_copeland_a0p3_minmax",
+        "repaired_key": "hybrid_repaired_copeland_a0p3_minmax",
+        "pair_family": "hybrid"
+      },
+      {
+        "pair_name": "balance_hybrid",
+        "unrepaired_key": "hybrid_unrepaired_balance_a0p3_minmax",
+        "repaired_key": "hybrid_repaired_balance_a0p3_minmax",
+        "pair_family": "hybrid"
+      },
+      {
+        "pair_name": "pagerank_graph",
+        "unrepaired_key": "pagerank_graph",
+        "repaired_key": "pagerank_graph_repaired",
+        "pair_family": "graph"
+      },
+      {
+        "pair_name": "rank_centrality_graph",
+        "unrepaired_key": "rank_centrality_graph",
+        "repaired_key": "rank_centrality_graph_repaired",
+        "pair_family": "graph"
+      },
+      {
+        "pair_name": "markov_hybrid",
+        "unrepaired_key": "markov_hybrid_unrepaired",
+        "repaired_key": "markov_hybrid_repaired",
+        "pair_family": "hybrid"
+      },
+      {
+        "pair_name": "bradley_terry_graph",
+        "unrepaired_key": "bradley_terry_graph",
+        "repaired_key": "bradley_terry_graph_repaired",
+        "pair_family": "graph"
+      }
+    ]
+  },
+  "statistical_families": {
+    "bootstrap": {
+      "resamples": 10000,
+      "seed": 13
+    },
+    "paired_permutation": {
+      "permutations": 10000,
+      "seed": 17
+    },
+    "multiplicity_families": {
+      "primary_protocol_only": {
+        "n_tests": 60,
+        "definition": "1 protocol x 4 datasets x 3 regimes x 5 pairs"
+      },
+      "F1_headline": {
+        "n_tests": 180,
+        "definition": "3 headline protocols (primary_minmax_retention_matched, independent_minmax_quantile_q0p5, independent_rank_percentile_q0p5) x 4 x 3 x 5"
+      },
+      "F2_all_legitimate": {
+        "n_tests": 240,
+        "definition": "F1_headline + robustness_zscore_retention, x 4 x 3 x 5"
+      },
+      "F3_everything": {
+        "n_tests": 720,
+        "definition": "all 12 registered protocols x 4 x 3 x 5"
+      },
+      "pool_alternatives": {
+        "n_tests": 240,
+        "definition": "4 alternative candidate pools x 4 x 3 x 5"
+      },
+      "pool_all_five": {
+        "n_tests": 300,
+        "definition": "5 candidate pools (incl. canonical) x 4 x 3 x 5"
+      },
+      "new_baselines": {
+        "n_tests": 48,
+        "definition": "4 new baseline pairs x 4 datasets x 3 regimes"
+      },
+      "scidocs_ms1_scoped": {
+        "n_tests": 5,
+        "definition": "5 method pairs, SciDocs ms1 only, primary protocol"
+      }
+    },
+    "correction_methods": [
+      "Holm",
+      "Benjamini-Hochberg"
+    ],
+    "alpha": 0.05
+  },
+  "solver_configuration": {
+    "primary_repair": "greedy cycle peeling (deterministic, no external solver)",
+    "exact_repair_robustness_check": {
+      "solver": "SCIP via PySCIPOpt",
+      "commercial_dependency": false,
+      "legacy_optional_backend": "method=\"gurobi\" exists in src/consistency_ranker/mwfas_solver.py but is never used to produce any committed result table"
+    }
+  },
+  "_build_seconds": 0.47
+}

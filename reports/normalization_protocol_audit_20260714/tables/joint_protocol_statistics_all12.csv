@@ -1,0 +1,721 @@
+protocol,protocol_label,protocol_kind,dataset,regime,pair_name,n_queries,mean_delta_ndcg,bootstrap_ci_low,bootstrap_ci_high,bootstrap_fraction_means_gt_zero,paired_permutation_pvalue
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,balance_graph,50,-0.004932882037029534,-0.010505135755053806,-1.2257848866105833e-06,0.025,0.07589241075892411
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,balance_hybrid,50,0.0037120753857328077,-0.0011566735763774028,0.009981814170363427,0.9204,0.22567743225677434
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,copeland_graph,50,0.006859035570446188,-0.018490489984655127,0.031351776221283836,0.7172,0.6055394460553944
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,copeland_hybrid,50,0.001045715333416336,-0.00364884724451303,0.005443822737473022,0.6834,0.6735326467353264
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1,markov_graph,50,-0.004997492032621837,-0.019738200333512763,0.008650616136765106,0.2458,0.5083491650834917
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,balance_graph,50,0.00019536560081498844,-0.000296968593790734,0.0007351577834741951,0.7728,0.43125687431256876
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,balance_hybrid,50,0.000936684293418667,0.0,0.0027487947698778413,0.8719,0.49235076492350766
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,copeland_graph,50,0.0015780921560332461,-0.0024708519365317285,0.007308519576121683,0.7032,0.7064293570642936
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,copeland_hybrid,50,-2.259911717450547e-05,-0.001732421821901706,0.0018896864831219836,0.4719,0.9701029897010299
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms1_drop_mutual,markov_graph,50,0.0011139552195108926,-0.00733647445499045,0.010709528822140105,0.5937,0.7122287771222878
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,copeland_graph,50,0.00013867926747483273,-0.0003202390981493175,0.0007362769005738157,0.5995,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,copeland_hybrid,50,-0.00014406233239570688,-0.0004321869971871206,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,bright,ms2,markov_graph,50,-0.0002928346713352004,-0.0013435991729731623,0.0004650951589675611,0.2682,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,balance_graph,120,0.0004190400886858526,-0.003305793197058494,0.004281828784097973,0.5831,0.8294170582941706
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,balance_hybrid,120,-0.0015340627819919966,-0.005517984092328193,0.0006648950299511777,0.3577,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,copeland_graph,120,0.008711935620910145,-0.0006155604552193643,0.01960113350639964,0.9653,0.10128987101289871
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,copeland_hybrid,120,-0.004238475336566876,-0.012368052724249784,0.0017705040169701419,0.1093,0.3254674532546745
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1,markov_graph,120,0.004084820608497216,-0.00408626128249635,0.013517504197589476,0.8153,0.36776322367763226
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,balance_graph,120,-0.0002200004205653407,-0.0006600012616960222,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,copeland_graph,120,-0.0003909085584302627,-0.001136029398611678,0.0,0.0,0.5108489151084892
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,copeland_hybrid,120,-7.253992686508439e-05,-0.00021761978059525315,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms1_drop_mutual,markov_graph,120,-0.00012029067601456306,-0.00036087202804368915,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,balance_graph,120,-0.0007347179963713752,-0.0022041539891141256,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,copeland_graph,120,-0.0003396054557548262,-0.0013758196077020847,0.00035700324043760613,0.2368,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,fiqa,ms2,markov_graph,120,8.090177596458137e-05,-0.00042905491718862323,0.0006717602450823674,0.5384,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,balance_graph,52,-0.006161210579371266,-0.016987601007423456,4.048629102908742e-05,0.0253,0.1845815418458154
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,copeland_graph,52,0.021287094531053336,-0.010346933765603772,0.05716075033098394,0.8995,0.22427757224277572
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,copeland_hybrid,52,0.013599875917234699,0.0008174129578872741,0.03163097034553341,0.9824,0.12968703129687031
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1,markov_graph,52,0.001163945707225581,-0.0005106177021751573,0.004002454823851901,0.6328,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,balance_graph,120,0.005085174013665503,0.00034644725926109545,0.012728245150625742,0.9867,0.054394560543945605
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,balance_hybrid,120,-8.977707164935349e-05,-0.0019733293354256875,0.001510251314553788,0.4664,0.8732126787321268
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,copeland_graph,120,-0.0023140360208089997,-0.011595429358218669,0.00552438941653332,0.3022,0.6344365563443656
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,copeland_hybrid,120,-0.0011264662712912542,-0.010996166715751338,0.00872940298284187,0.4116,0.8463153684631537
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1,markov_graph,120,0.0008311252645873797,-0.002206839136334436,0.004340718639216944,0.6925,0.6482351764823517
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,copeland_graph,120,-0.00013290236490271176,-0.00034905688795967285,0.0,0.0,0.5016498350164984
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms1_drop_mutual,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,balance_graph,120,0.0012542703323186932,2.733337569188939e-05,0.0035692567972413903,0.984,0.12198780121987801
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,balance_hybrid,120,0.0011468438649902967,0.0,0.0033847690097427393,0.8686,0.5026497350264973
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,copeland_graph,120,0.0005416707484810441,7.554059508360957e-05,0.0011119510617152108,0.9914,0.04229577042295771
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,copeland_hybrid,120,0.0008650161225989795,7.296517822749649e-05,0.0022018342473529946,0.9936,0.060993900609939006
+ablation_minmax_fixed,minmax + fixed,ablation,scidocs,ms2,markov_graph,120,0.0013795347705412829,0.00012527418277176553,0.0031925934052827554,0.9993,0.013998600139986002
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,balance_hybrid,50,-0.0028815532250274336,-0.0086446596750823,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,copeland_graph,50,-0.006831670331906145,-0.01992556735788106,0.004454004168420124,0.1344,0.3103689631036896
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,copeland_hybrid,50,-0.004542226229143809,-0.014310772557158376,0.0036430761483784687,0.153,0.38616138386161386
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1,markov_graph,50,0.00020191401648123275,-0.0001961258759579251,0.0007122698788223025,0.8034,0.4674532546745325
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,copeland_graph,50,-0.00032601582311616694,-0.0013502047348411417,0.00037650872740200273,0.2512,0.6276372362763724
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,copeland_hybrid,50,-4.889184919830703e-05,-0.0003244222846082323,0.00017774673701331122,0.3358,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms1_drop_mutual,markov_graph,50,0.0005025432942961094,0.0,0.001368120103681616,0.8762,0.4978502149785021
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,balance_graph,120,-0.00010053096444070976,-0.00024249901978505526,0.0,0.0,0.25107489251074894
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,copeland_graph,120,-0.002899898531634251,-0.013672435135431461,0.007669773487065779,0.2863,0.6095390460953904
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,copeland_hybrid,120,-0.006963137078907182,-0.013335584100443063,-0.0025299933053480037,0.0,0.00019998000199980003
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1,markov_graph,120,0.000600689154017892,-0.00021461382839339874,0.0019783299497887303,0.8169,0.48995100489951005
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,copeland_graph,120,-0.00019061544812240723,-0.0005718463443672217,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,copeland_hybrid,120,-0.00047098229162067146,-0.0013934013800980282,8.623887319959001e-05,0.0857,0.5033496650334967
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms1_drop_mutual,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,copeland_graph,52,0.029631188543518767,0.0034971210341445064,0.06103561296555139,0.9889,0.05419458054194581
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,copeland_hybrid,52,0.012483229844456541,-0.00031569410716173,0.031129121831841165,0.9658,0.1436856314368563
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1,markov_graph,52,0.008703630212727567,0.0,0.021759075531818918,0.8703,0.4968503149685031
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,balance_graph,120,0.0005326163372601186,0.0,0.0015772539074742965,0.8654,0.49935006499350065
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,balance_hybrid,120,6.0770627579480783e-05,-0.00011677408518729754,0.00029908596792573987,0.606,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,copeland_graph,120,-0.007877452296671639,-0.015938268128814517,-0.0007653276788568144,0.0147,0.042495750424957505
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,copeland_hybrid,120,-0.0017592903916325829,-0.005519114642856004,0.002096539659682108,0.171,0.37336266373362664
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1,markov_graph,120,0.0005397113951032488,-0.0005277164863986506,0.0023091705625842038,0.6578,0.8838116188381162
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms1_drop_mutual,markov_graph,120,0.0002553801677209954,0.0,0.0007661405031629861,0.6392,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_raw_fixed,raw + fixed,ablation,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,balance_graph,50,-0.012796015579566875,-0.02831223559700417,0.0006567223105848928,0.0334,0.09479052094790522
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,balance_hybrid,50,-0.008690584178529295,-0.028078518172064013,0.005468363511036109,0.151,0.3902609739026097
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,copeland_graph,50,-0.03440619692630968,-0.06459179126632769,-0.008697328564338814,0.0022,0.0105989401059894
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,copeland_hybrid,50,-0.012948162688828986,-0.03304719682905907,0.0030174282742261136,0.0631,0.14728527147285272
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1,markov_graph,50,-0.03534101092093198,-0.06343570088663075,-0.012057605686553325,0.0002,0.0021997800219978004
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,balance_graph,50,0.0009116969142805565,-7.112221697269364e-05,0.0022447636467326235,0.9568,0.1847815218478152
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,balance_hybrid,50,0.00023721563305800997,0.0,0.0006295892849484641,0.8725,0.5093490650934906
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,copeland_graph,50,0.0004584571011600602,-0.0002596231298233165,0.0013621133184598894,0.8738,0.35206479352064796
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,copeland_hybrid,50,6.891651797449994e-05,-0.00024236467038266652,0.00037999866114004634,0.6085,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms1_drop_mutual,markov_graph,50,0.0002121908033768405,-0.000613383113149455,0.001270760498428486,0.6509,0.7512248775122488
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,balance_graph,120,-0.002095892531321412,-0.009441095385090281,0.004124955043529324,0.2852,0.599040095990401
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,balance_hybrid,120,0.00012816487238432987,-0.006334847606864306,0.00475425909239343,0.5525,0.9941005899410059
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,copeland_graph,120,0.0024074343069212744,-0.008338477400976112,0.013573586682216794,0.6644,0.6805319468053195
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,copeland_hybrid,120,-0.0004891433602034622,-0.002804921212613686,0.0013968637701430478,0.3365,0.667033296670333
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1,markov_graph,120,-0.005733164035837063,-0.017063369534653802,0.0038933986323162256,0.1439,0.3213678632136786
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,balance_graph,120,1.9017389590228474e-05,-0.00021082558395322618,0.00029912923365233297,0.5151,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,balance_hybrid,120,-3.202847764938732e-05,-0.00044671141369011377,0.00035062598074195176,0.338,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,copeland_graph,120,0.0003353960042756473,-0.0001115251704563012,0.0010376973467285911,0.8577,0.50994900509949
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.00011687532691398393,0.0,0.00035062598074195176,0.6302,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms1_drop_mutual,markov_graph,120,0.0004439903887284417,-0.0002132817232756735,0.001376810935283002,0.8526,0.36346365363463656
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,balance_graph,52,0.00406681317096278,-0.007216021681954971,0.020230872876267472,0.6768,0.788021197880212
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,balance_hybrid,52,0.0008674737101547566,-0.0006225814166624249,0.0030084218754853663,0.8121,0.5002499750024998
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,copeland_graph,52,0.02057228040046919,-0.011835917952539717,0.055171681779240624,0.8923,0.24737526247375263
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,copeland_hybrid,52,0.004857937355919845,-0.0009338721249936374,0.014835042023823266,0.8762,0.37366263373662634
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1,markov_graph,52,0.012233716747175123,-0.012470661656274761,0.04130073400588087,0.8093,0.4146585341465853
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,balance_graph,120,0.006405670986330516,-0.0018714600022205763,0.015618416813152302,0.933,0.16628337166283372
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,balance_hybrid,120,0.006529310974801877,0.0004863583654573973,0.014974558567217945,0.993,0.0446955304469553
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,copeland_graph,120,-0.0008637252067397534,-0.013504123835802614,0.01057707104971091,0.4616,0.8981101889811018
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,copeland_hybrid,120,0.0010623714654651624,-0.010890812664134539,0.012956539647723316,0.5778,0.823917608239176
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1,markov_graph,120,0.0030662056839012753,-0.01137287304568317,0.019042338011255672,0.6552,0.7008299170082992
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms1_drop_mutual,markov_graph,120,0.00019061544812240723,0.0,0.0005718463443672217,0.6392,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+ablation_unit_vote_retention,unit vote + retention-matched,ablation,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,balance_graph,50,-0.004750484947418631,-0.010458291981894019,0.000345524819406635,0.0343,0.09829017098290171
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,balance_hybrid,50,0.0004428181871458253,-0.0022983320792598796,0.0033120431775663277,0.6228,0.7952204779522047
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,copeland_graph,50,0.0036251254425338675,-0.019633613948359926,0.024949761146712303,0.648,0.7701229877012299
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,copeland_hybrid,50,-0.0033524163796295903,-0.0152274539631045,0.005292874043880496,0.2865,0.6648335166483351
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,markov_graph,50,-0.002274474686834842,-0.015723361841839787,0.010363531083028718,0.3718,0.7569243075692431
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,balance_graph,50,0.0006347522810611505,-0.00047535214796610824,0.0022389183940426925,0.7995,0.531946805319468
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,balance_hybrid,50,0.0010275785856281045,-0.0003029452749478756,0.0031906506794542474,0.8783,0.36866313368663134
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_graph,50,0.004120464395664183,-0.006830472762261258,0.01950421428645093,0.7004,0.6904309569043096
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_hybrid,50,0.00017411143511207095,-0.0009389670494772596,0.0013213441841490945,0.6112,0.7802219778022198
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,markov_graph,50,0.0014345881890225386,-0.006886999202465219,0.010737562513889541,0.6436,0.6173382661733826
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,balance_graph,120,0.0014660612317372197,-0.002507192856601769,0.006146067643790636,0.7482,0.5608439156084392
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,balance_hybrid,120,0.001194064521037102,0.0,0.003470668392655005,0.9548,0.2518748125187481
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,copeland_graph,120,0.010208800052328196,-0.0006759207726711115,0.02205084307884087,0.9669,0.07529247075292471
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,copeland_hybrid,120,0.0022008234207976382,-0.005142662258899705,0.010948070621078412,0.6934,0.6394360563943605
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,markov_graph,120,0.005636037632115509,-0.0021738343282297094,0.014811848778550279,0.9079,0.204979502049795
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_graph,120,-0.00011687532691398347,-0.0003506259807419504,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_graph,120,2.8788747456524876e-05,-0.0005187840168164282,0.0006473670744566927,0.5213,0.9673032696730327
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_hybrid,120,5.57625852281506e-05,0.0,0.00016728775568445182,0.6319,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,markov_graph,120,-0.00014305514301170345,-0.0003396023769382072,0.0,0.0,0.24717528247175283
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,balance_graph,52,-0.005855159793254166,-0.016483519076380397,0.00025117848278322725,0.0689,0.36696330366963303
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,copeland_graph,52,0.017426413125698686,-0.018152107088598105,0.05508893112278227,0.8295,0.36506349365063495
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,copeland_hybrid,52,0.015282134728786562,-0.0051405276221936445,0.03983984941048607,0.9193,0.18898110188981102
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,markov_graph,52,0.0006298251396159998,-0.00400166779414241,0.005220831782345323,0.6198,0.7484251574842515
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,balance_graph,120,0.005150116336068844,0.0004821973548285509,0.012715949887314686,0.9917,0.039896010398960104
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,balance_hybrid,120,-0.00026627518719664274,-0.001957430451032122,0.0009255714469719589,0.404,0.8733126687331267
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,copeland_graph,120,0.0034824692674678063,-0.006545401416469834,0.013105804223046278,0.7647,0.5176482351764824
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,copeland_hybrid,120,0.006537934557603887,-0.004205677606353816,0.018348515260256253,0.8825,0.24487551244875513
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,markov_graph,120,0.0017994920636940396,-0.0014684769519287837,0.005402302472465908,0.8518,0.33086691330866913
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_graph,120,6.11367499626698e-05,0.0,0.0001834102498880094,0.6349,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_graph,120,4.447765252073854e-05,0.0,0.00013343295756221562,0.6349,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,markov_graph,120,6.11367499626698e-05,0.0,0.0001834102498880094,0.6349,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,copeland_graph,120,0.0005776953493883912,0.0,0.0017330860481651737,0.644,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p3,"minmax + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,balance_graph,50,0.0002809807257418517,-0.003688323654531893,0.004981941450772146,0.545,0.9142085791420858
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,balance_hybrid,50,-0.0004609350266490736,-0.004776321462670271,0.00286042041485848,0.4384,0.849015098490151
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,copeland_graph,50,-0.013847112859148627,-0.03310211049875942,0.00010794179284521262,0.0262,0.09429057094290572
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,copeland_hybrid,50,-0.003171535172715648,-0.008406848903200318,0.0012621094338424183,0.0906,0.2268773122687731
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1,markov_graph,50,-0.003697484493705947,-0.011162756813693133,0.002861104113554226,0.1413,0.3320667933206679
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,balance_graph,50,0.0005617193131090637,-0.000496236308211806,0.0023286709746728686,0.6777,0.873012698730127
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,balance_hybrid,50,-3.281765393398528e-05,-9.845296180195584e-05,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,copeland_graph,50,6.965412330330877e-05,-0.00052013056838404,0.000660479151792357,0.5961,0.8742125787421258
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,copeland_hybrid,50,-6.235845779463011e-05,-0.0014285308949554233,0.0010789323665925741,0.49,0.9031096890310969
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,markov_graph,50,0.000129005625764812,-0.0003052900019184968,0.0006307070240774538,0.6991,0.6281371862813718
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,balance_graph,120,0.005051335542141465,0.0007664013507309762,0.011780613096772998,0.998,0.010298970102989701
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,balance_hybrid,120,-5.923531614582071e-05,-0.000332715806385514,0.0001776483422738978,0.3384,0.7537246275372462
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,copeland_graph,120,0.006003733390070901,0.0020062386799785544,0.010483103696320975,0.9983,0.0038996100389961006
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,copeland_hybrid,120,0.0015481018217363175,-0.0002710227640185353,0.0037864539627689036,0.9459,0.15578442155784422
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1,markov_graph,120,0.004690540329269353,-0.0008421293670050631,0.011859138182702669,0.9459,0.14208579142085792
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,balance_graph,120,0.00017605326124271365,0.0,0.00047239719849999037,0.8736,0.49665033496650335
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,copeland_graph,120,0.00010342839314665721,-0.0007000922035056908,0.0008740693819880468,0.5502,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,markov_graph,120,-9.129994976012635e-05,-0.000273899849280379,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,balance_graph,52,-0.00017020590072505242,-0.0005106177021751573,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,balance_hybrid,52,0.0008174129578872741,0.0,0.002452238873661822,0.6328,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,copeland_graph,52,0.000341160598853002,-0.020815647364356257,0.021543692699814522,0.529,0.8753124687531247
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,copeland_hybrid,52,0.00045606149728857903,-0.001084054381796085,0.002452238873661822,0.6037,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1,markov_graph,52,4.048196322120719e-05,-0.0141779005691183,0.016394277102097756,0.4672,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,balance_graph,120,0.0021091307735370884,-5.545606970789614e-05,0.004951856490238828,0.9706,0.1065893410658934
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,balance_hybrid,120,0.0008253358468516482,-4.078093844407105e-05,0.002144881152677894,0.9483,0.17998200179982002
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,copeland_graph,120,0.011664360719058933,0.003264077958364046,0.022229009220656275,0.9989,0.006299370062993701
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,copeland_hybrid,120,0.009763443585018978,0.0016259240980458234,0.02049517852681723,0.9968,0.0193980601939806
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1,markov_graph,120,0.0002677641783037768,-0.0019617664328479122,0.0026049032025930808,0.592,0.8228177182281772
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,balance_graph,120,-0.00012029067601456306,-0.00036087202804368915,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,copeland_graph,120,-8.445473277415341e-05,-0.00039491347250871964,0.00015921887480719736,0.2722,0.75002499750025
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,copeland_hybrid,120,-0.00014890380456337126,-0.00044671141369011377,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,markov_graph,120,-7.34990141197193e-05,-0.00036087202804368915,0.00014037498568453128,0.2533,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,copeland_graph,120,-6.32384949177181e-05,-0.0001897154847531543,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p5,minmax + independent quantile (q=0.5),independent,scidocs,ms2,markov_graph,120,-8.434900555631675e-05,-0.00025304701666895024,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,balance_graph,50,-0.0009219754882196151,-0.006681932506056786,0.0031523698546321414,0.4069,0.8719128087191281
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,balance_hybrid,50,0.004101505752758682,0.00037176215196419127,0.008590108344941077,0.9902,0.04459554044595541
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,copeland_graph,50,0.00723522538203884,-0.002329856718954507,0.019006061265325957,0.9215,0.21707829217078292
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,copeland_hybrid,50,0.0030223620833689036,-0.0002759143717104351,0.007431179623268096,0.9573,0.138986101389861
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,markov_graph,50,-0.00682802025136116,-0.022551834740068628,0.007894563788558786,0.182,0.39246075392460755
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,balance_graph,50,-3.191665934207166e-05,-0.0004159890761755258,0.00032023909814931083,0.3503,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,balance_hybrid,50,-0.0003182883166415862,-0.0016122245881976783,0.0006573596382729197,0.2682,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_graph,50,-0.0004994921876768821,-0.001404742607851609,8.619990953100176e-05,0.0858,0.37146285371462856
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_hybrid,50,-0.0005280997898048956,-0.0019383276429227913,0.0003540282735081046,0.2,0.7524247575242475
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,markov_graph,50,-0.00019974989013134435,-0.0006349292539159357,0.00018585995145145917,0.1667,0.5018498150184981
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,balance_graph,120,0.0028967016445679,-0.0002047140396718605,0.007630143517693023,0.9575,0.13108689131086892
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,balance_hybrid,120,0.00012269825982741538,-0.0001120422533598786,0.0004953872342802677,0.7032,0.8788121187881212
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,copeland_graph,120,0.004131312951823404,-0.0010611461538562392,0.009887847861953762,0.9392,0.14538546145385461
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,copeland_hybrid,120,0.0033672545922010465,-0.0005336413589907237,0.010183740992123245,0.8897,0.3077692230776922
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,markov_graph,120,0.007953551849894167,-5.465363715589786e-05,0.018082679522539936,0.974,0.0801919808019198
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_graph,120,-6.32384949177181e-05,-0.0001897154847531543,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_hybrid,120,-3.358916839065913e-05,-0.00010076750517197739,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,markov_graph,120,-8.434900555631675e-05,-0.00025304701666895024,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,balance_graph,120,0.0020132578082977305,-4.995385814582514e-05,0.004718357943061697,0.9713,0.1141885811418858
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,balance_hybrid,120,-8.77140213870103e-05,-0.000556658939018835,0.0004549710174532378,0.3337,0.8636136386361364
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,copeland_graph,120,0.0030281334054743526,-0.002602704354549234,0.010983553444828823,0.801,0.5126487351264873
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,copeland_hybrid,120,0.0006275248930463189,-0.0003145388494503296,0.0019763923297905737,0.8576,0.3514648535146485
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,markov_graph,120,0.0001983839426764493,-0.004138645479227208,0.005012400218288347,0.5188,0.9395060493950604
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_graph,120,5.57625852281506e-05,0.0,0.00016728775568445182,0.6288,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,markov_graph,120,3.980156790667766e-05,-0.00014895062024538746,0.0002683553239654204,0.5358,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_minmax_quantile_q0p7,"minmax + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,balance_graph,50,4.536715906996558e-05,-0.005808690203572179,0.006176112465357109,0.5001,0.9891010898910109
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,balance_hybrid,50,0.0006499069311650263,-4.651788046220018e-05,0.0014863320726400556,0.9649,0.12398760123987601
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,copeland_graph,50,-0.008156590100011575,-0.02651673244658973,0.005443708232377916,0.1632,0.42795720427957207
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,copeland_hybrid,50,0.0027097319794875214,0.0005469932818364743,0.005458326504035209,0.9962,0.025197480251974803
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1,markov_graph,50,-0.01124509748270865,-0.02961932184734197,0.0016162587417859794,0.0558,0.1708829117088291
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,balance_graph,50,0.0002976723662773673,-0.00027693524020762193,0.0010454514552022533,0.7984,0.5047495250474953
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,balance_hybrid,50,3.5202923481791883e-06,-0.0007227667155079831,0.000805444100037963,0.4859,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_graph,50,-0.000612830505835088,-0.00304907058703747,0.001589015418927557,0.3004,0.5704429557044296
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_hybrid,50,8.649139372096104e-05,-0.0006262140909445568,0.0010151165685202924,0.5232,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms1_drop_mutual,markov_graph,50,-0.00807474004985592,-0.024461547852556324,0.0011328310119431038,0.1108,0.3274672532746725
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,balance_graph,120,0.003522559683072618,-0.0005411909387704879,0.009738795796267774,0.9367,0.1815818418158184
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,balance_hybrid,120,0.0003908259321952959,-0.005108641669866824,0.005897723779782228,0.5994,0.7168283171682832
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,copeland_graph,120,0.005026361506632565,-0.0005608558282779061,0.012791010944975114,0.9551,0.12668733126687332
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,copeland_hybrid,120,0.001581260490130681,-0.004375403669514299,0.008445061059458374,0.6883,0.5367463253674633
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1,markov_graph,120,0.0013727545038904414,-0.0016062283124190341,0.004705119949081926,0.8011,0.41405859414058593
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_graph,120,0.0005719044169922402,-4.1839779661188384e-05,0.0015336329489437867,0.866,0.49625037496250374
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_hybrid,120,-6.32384949177181e-05,-0.0001897154847531543,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms1_drop_mutual,markov_graph,120,-6.32384949177181e-05,-0.0001897154847531543,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,balance_hybrid,52,-0.0009717916533745155,-0.003999429341919631,0.001084054381796085,0.2361,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,copeland_graph,52,-0.010523192317697268,-0.03789583501704965,0.014490073252220691,0.2166,0.5578442155784421
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,copeland_hybrid,52,0.0014738281926857998,0.0,0.003790420824580281,0.8683,0.5074492550744926
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1,markov_graph,52,0.0004608578527520681,-0.02083165636427923,0.021292514217031298,0.5446,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,balance_graph,120,-0.0027223327913452155,-0.010311825335026361,0.002372080133251455,0.2301,0.5992400759924008
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,balance_hybrid,120,-0.0035048639717950958,-0.009923477343199885,-7.644582122137074e-05,0.0108,0.051994800519948
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,copeland_graph,120,-0.002038387316344216,-0.011332318579710302,0.006104993739071369,0.3368,0.6764323567643236
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,copeland_hybrid,120,-0.0026200257549645082,-0.010020814334008359,0.0020141067406904355,0.247,0.6467353264673532
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1,markov_graph,120,0.00022286432844756746,-0.002617573736814253,0.0033984186026528216,0.5492,0.8971102889711029
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_graph,120,-7.375589031418846e-05,-0.00022126767094256538,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.00013260511072644559,-0.00011632351690053499,0.0005141388490798718,0.6431,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms1_drop_mutual,markov_graph,120,6.987738770544011e-05,0.0,0.00020963216311632032,0.6444,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p3,"rank-percentile (tie-abstain) + independent quantile (q=0.3, low selectivity)",independent_grid,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,balance_graph,50,0.0029640093128671208,-0.0014807990498312243,0.007630143881031429,0.9059,0.21987801219878012
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,balance_hybrid,50,0.0012450897305415177,4.285803028481916e-05,0.00288427485859659,0.9805,0.08029197080291971
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,copeland_graph,50,0.005148137120052993,-0.005674425693448418,0.018312599078341728,0.7998,0.4657534246575342
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,copeland_hybrid,50,0.0050401843737823485,9.655121856279902e-05,0.013427280979238024,0.9806,0.08449155084491551
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1,markov_graph,50,-0.00412049564846674,-0.01199339256005246,0.002800028669561751,0.128,0.3043695630436956
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,balance_graph,50,8.737567980337757e-05,0.0,0.00023067084545399852,0.8746,0.5003499650034996
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,copeland_graph,50,-0.00017963424766451408,-0.00252270931314435,0.001784332424944949,0.4694,0.8523147685231477
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,copeland_hybrid,50,0.0003095564958679997,-0.0002392444123590509,0.00116791389996305,0.7265,0.7373262673732627
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms1_drop_mutual,markov_graph,50,0.00032899760714977797,-6.048925220272582e-05,0.000789007969391337,0.9433,0.1546845315468453
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,balance_graph,120,0.001432916133643874,-1.878234888385989e-05,0.0032863442330241964,0.9733,0.09659034096590341
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,balance_hybrid,120,-0.0002140880561598927,-0.0007488955266538325,0.00019489294774110018,0.1791,0.43115688431156884
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,copeland_graph,120,0.003356632906034009,0.0009456001502742487,0.006019312476960145,0.9979,0.0100989901009899
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,copeland_hybrid,120,0.0001879278757661515,-0.0014795907823904268,0.0014622658399440214,0.6245,0.8666133386661334
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1,markov_graph,120,0.006212324512703706,0.0005728269755954992,0.013878211919855214,0.988,0.047795220477952205
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,copeland_graph,120,0.00036527436205687305,0.0,0.000984297915714318,0.9535,0.2526747325267473
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,copeland_hybrid,120,-0.00013577842178280248,-0.00040733526534840746,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms1_drop_mutual,markov_graph,120,0.00011900108014586871,0.0,0.0003012406552094555,0.8736,0.49665033496650335
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,balance_hybrid,52,0.000361351460598695,0.0,0.001084054381796085,0.6322,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,copeland_graph,52,0.0011354034738542162,-0.013200564987200097,0.019127616127466815,0.5123,0.9355064493550644
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,copeland_hybrid,52,-0.006736153278411737,-0.021292514217031298,0.001084054381796085,0.2318,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1,markov_graph,52,0.00522807634309337,-0.00431057418863047,0.020873690831842675,0.6677,0.9021097890210978
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,balance_graph,120,-0.003816198526380224,-0.010724392049018823,0.00021530347652169027,0.0488,0.15278472152784722
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,balance_hybrid,120,-0.00013916483791145314,-0.0007060176483537219,0.0002987903771285806,0.325,0.7182281771822818
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,copeland_graph,120,-0.0036541601544384764,-0.009078569443316866,0.0006459924364950443,0.0608,0.18808119188081193
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,copeland_hybrid,120,-0.006848738091575952,-0.016552030402722337,1.2451556168322875e-06,0.0251,0.10638936106389361
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1,markov_graph,120,0.002168234721748556,-0.004070601017606721,0.010026020569126865,0.7086,0.6571342865713429
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,balance_graph,120,0.0001292522572342104,-8.200012707566817e-05,0.00046975689877829934,0.6296,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,balance_hybrid,120,-2.05951043060588e-05,-6.17853129181764e-05,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,copeland_graph,120,-0.00040595133326087884,-0.001002518114644165,0.0,0.0,0.25147485251474855
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,copeland_hybrid,120,-3.9541170983089605e-05,-0.00011862351294926881,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms1_drop_mutual,markov_graph,120,-0.00033823949982886016,-0.0008517103563872379,0.0,0.0,0.25147485251474855
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p5,rank-percentile (tie-abstain) + independent quantile (q=0.5),independent,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,balance_graph,50,0.003704208875306121,-0.0008064782060928871,0.009391639360041908,0.9378,0.17648235176482352
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,balance_hybrid,50,0.004349571216320961,-0.00042232339948483963,0.012537989287697025,0.9292,0.24667533246675333
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,copeland_graph,50,0.0018123856004436856,-0.003562431829135587,0.008082967503455987,0.7195,0.5998400159984002
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,copeland_hybrid,50,0.004887003505786135,-0.00038204556849027733,0.013834892519438258,0.9461,0.19168083191680832
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1,markov_graph,50,0.005884651533246494,0.0001273858979183099,0.012637495055118322,0.9775,0.0705929407059294
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,balance_graph,50,-0.0004323366203911827,-0.0013528735587506047,0.0003042495565308523,0.1463,0.33726627337266274
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,balance_hybrid,50,-0.00010814076153607743,-0.0003244222846082323,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_graph,50,-0.0002672631224117905,-0.0012496591898855914,0.0006373898470234084,0.3037,0.6594340565943405
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,copeland_hybrid,50,-0.0049890538269611595,-0.014705079688922923,0.0,0.0,0.25007499250074994
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms1_drop_mutual,markov_graph,50,-0.0003725952393422949,-0.0015042131714061123,0.0006056013594677817,0.2417,0.5162483751624838
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,balance_graph,120,0.0005818342086615784,-0.0005470610928037473,0.0018820398096378655,0.8248,0.38616138386161386
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,balance_hybrid,120,-4.297722357368093e-05,-0.000523917864369273,0.00032646260934422234,0.4614,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,copeland_graph,120,0.0013657387376393433,0.0001419183725003122,0.0028948157896022,0.9885,0.05599440055994401
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,copeland_hybrid,120,0.0005677622427280028,-0.0005589702128937279,0.0021333392356443345,0.7876,0.5146485351464853
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1,markov_graph,120,0.0017359033775035178,-0.0005258601379990822,0.004763172636374551,0.9,0.32426757324267574
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_graph,120,-7.253992686508439e-05,-0.00021761978059525315,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,balance_hybrid,120,9.970974455077766e-05,0.0,0.00029912923365233297,0.6234,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_graph,120,0.00018418228025204804,0.0,0.0005183561681621589,0.8666,0.5108489151084892
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms1_drop_mutual,markov_graph,120,-0.00013577842178280248,-0.0005706860772179379,0.00019941948910155531,0.1741,0.7511248875112488
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,balance_graph,52,-0.00017020590072505242,-0.0005106177021751573,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,balance_hybrid,52,-0.00031129070833121246,-0.0009338721249936374,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,copeland_graph,52,-0.0001702059007250503,-0.0005106177021751509,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1,markov_graph,52,0.009304093907053402,-0.0009338721249936374,0.028846153846153848,0.6386,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,balance_graph,120,-4.618254376655094e-05,-0.0015295558976615477,0.0013439714236407072,0.4792,0.9518048195180482
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,balance_hybrid,120,0.0005625162706466666,0.0,0.0014389628990412358,0.9509,0.2506749325067493
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,copeland_graph,120,-0.00039234272764553866,-0.0018298940264780854,0.0010594753909654105,0.2976,0.6059394060593941
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,copeland_hybrid,120,-0.00137595417763924,-0.0032721982442702213,0.00011030715640011249,0.037,0.11078892110788921
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1,markov_graph,120,0.0011865308228995466,-0.0012471455345337205,0.004358986914393205,0.7848,0.46955304469553044
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_graph,120,-3.877450563351166e-05,-0.00011632351690053499,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,balance_hybrid,120,-4.965020674846249e-05,-0.00014895062024538746,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_graph,120,-4.774542896681897e-05,-0.0003055190596908998,0.00017588171487196205,0.3475,0.7436256374362564
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,copeland_hybrid,120,-8.935690083431794e-06,-8.49544208280456e-05,5.8147350577750224e-05,0.341,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms1_drop_mutual,markov_graph,120,-0.00034296530443825627,-0.0009885691649396539,6.6372244491066e-05,0.0903,0.37276272372762725
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+independent_rank_percentile_q0p7,"rank-percentile (tie-abstain) + independent quantile (q=0.7, high selectivity)",independent_grid,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,balance_graph,50,0.0004451165495483156,-0.002586214253343677,0.0032692455123735278,0.6227,0.77002299770023
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,balance_hybrid,50,-0.007220815414619868,-0.018984980557721364,0.0001468271678924582,0.0393,0.1625837416258374
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,copeland_graph,50,-0.014041497577935986,-0.040018839398353656,0.006119613848628893,0.1121,0.26687331266873315
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,copeland_hybrid,50,0.000601579547462045,-0.015555849095897457,0.020020489843170744,0.4852,0.9096090390960904
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1,markov_graph,50,-0.007513713663229774,-0.02050010327858588,0.002478694021963378,0.0883,0.22917708229177083
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,balance_graph,50,0.00010718480122968055,0.0,0.00032155440368904166,0.6353,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,balance_hybrid,50,7.65555966378506e-05,0.0,0.00022966678991355184,0.6353,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,copeland_graph,50,0.00017972384514734928,-0.00032684593349282756,0.0008524817262996853,0.6904,0.6825317468253175
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,copeland_hybrid,50,0.00016848164797221842,0.0,0.0004233873296910895,0.8692,0.49375062493750627
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms1_drop_mutual,markov_graph,50,0.0006887678870840718,-0.000118658097677109,0.001964865832363516,0.864,0.49545045495450457
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,balance_graph,120,0.0035159966086473946,-0.0013419574922689406,0.009926860348391362,0.9064,0.27577242275772423
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,balance_hybrid,120,-0.0016912410670576554,-0.0057342702774028234,0.0005258041683676689,0.3244,0.8718128187181282
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,copeland_graph,120,0.003634275353696659,-0.005367346805124414,0.011278381663289217,0.813,0.44145585441455854
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,copeland_hybrid,120,-0.004569149185585735,-0.013271197026379595,0.0017783080447936904,0.107,0.30086991300869914
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1,markov_graph,120,0.003568757606997486,-0.0019421517960850842,0.009913035830864895,0.8865,0.2502749725027497
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,balance_graph,120,-5.57625852281506e-05,-0.00016728775568445182,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,copeland_graph,120,-0.00017263791214213408,-0.00046750130765593387,0.0,0.0,0.5046495350464953
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms1_drop_mutual,markov_graph,120,-5.57625852281506e-05,-0.00016728775568445182,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,balance_graph,52,-0.0013331431139732104,-0.003999429341919631,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,balance_hybrid,52,0.004351815106363783,0.0,0.013055445319091351,0.6338,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,copeland_graph,52,0.01550607117753817,-0.01013825814585691,0.044450754997660796,0.8745,0.3143685631436856
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,copeland_hybrid,52,0.01226673280326149,0.0,0.030813557387646136,0.956,0.25317468253174685
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1,markov_graph,52,-0.002287635243305768,-0.0070870912977585715,0.001178677697173825,0.1118,0.49745025497450257
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,balance_graph,120,-0.0017696622402660644,-0.005391005208895687,0.0013095295533694865,0.1431,0.31916808319168083
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,balance_hybrid,120,-0.0002645158212515708,-0.0009636399735797987,0.0003347085220359808,0.2113,0.4864513548645136
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,copeland_graph,120,0.011042968687951583,0.001938604806440187,0.022288801991384118,0.992,0.0201979802019798
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,copeland_hybrid,120,0.008526038099271938,0.0018086563430457683,0.017274600486808924,0.9953,0.011998800119988001
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1,markov_graph,120,0.005928517858260695,0.00010750312542651138,0.014231080196290284,0.9793,0.09449055094490551
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,copeland_graph,120,0.0005776953493883912,0.0,0.0017330860481651737,0.6287,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms1_drop_mutual,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+primary_minmax_retention_matched,minmax + retention-matched,primary,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,balance_graph,50,-0.003446700339630695,-0.009225720919664,0.0012849627854479683,0.0904,0.23017698230176983
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,balance_hybrid,50,0.0002000104557965282,-0.0010648160178319275,0.001496677929153659,0.6173,0.7692230776922308
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,copeland_graph,50,-0.0003240964782478023,-0.010972591136679628,0.00992230023877904,0.4783,0.956904309569043
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,copeland_hybrid,50,-0.0015954961269643415,-0.006085830554806194,0.0018381097246948361,0.2151,0.5132486751324867
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1,markov_graph,50,-0.0013076242929832172,-0.008506738639543208,0.00467669667588775,0.3717,0.75002499750025
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,balance_graph,50,-0.0001548185978960337,-0.0011750624087454064,0.0006232460177371202,0.3952,0.8122187781221878
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,balance_hybrid,50,-0.0002708522542370007,-0.000812556762711002,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,copeland_graph,50,0.001200455076715643,-0.0012454432058622105,0.0041023667319101415,0.8028,0.3875612438756124
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,copeland_hybrid,50,-0.00047065743380720005,-0.0014119723014216002,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms1_drop_mutual,markov_graph,50,-0.00012967796632006867,-0.0010539791999016534,0.0008669230893798774,0.3579,0.8776122387761224
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,balance_graph,120,0.002226071229777297,0.0005317450894930465,0.004447749489593162,0.9991,0.011198880111988802
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,balance_hybrid,120,0.0003107687768266233,-0.00017780724103210014,0.0009602741317285967,0.8511,0.38166183381661833
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,copeland_graph,120,0.0025214532169750225,-0.0038537473335855006,0.008157853770874206,0.8044,0.44145585441455854
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,copeland_hybrid,120,0.000997168976666545,-0.000159324357283124,0.002358223193379881,0.9508,0.14108589141085892
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1,markov_graph,120,0.007600862437489971,0.001554869651545586,0.01659579626627087,0.9991,0.008899110088991101
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,copeland_graph,120,-0.0006430126366480427,-0.0032063260685897383,0.0010143842128313458,0.3567,0.9121087891210878
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.000274964453678724,0.0,0.0007405443554798552,0.8556,0.4988501149885011
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms1_drop_mutual,markov_graph,120,0.00014890380456337126,0.0,0.00044671141369011377,0.6232,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,balance_graph,52,0.00019114555987364472,-0.0005106177021751509,0.001084054381796085,0.603,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,balance_hybrid,52,-0.0011419975540995658,-0.004169635242644682,0.0007436425803459845,0.2219,0.7525247475252475
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,copeland_graph,52,-0.009821924681540464,-0.030814585237231205,0.001817695396396191,0.1665,0.47125287471252875
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,copeland_hybrid,52,0.005059699316300788,-0.0001702059007250503,0.01464141963969041,0.9493,0.24797520247975202
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1,markov_graph,52,0.01386941638783115,-0.0010893580974380103,0.03554596800115463,0.917,0.35096490350964904
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,balance_graph,120,-0.0004951101229545521,-0.008587389566851856,0.006232496158186731,0.4835,0.8932106789321068
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,balance_hybrid,120,0.001715422364693585,-0.000427398793914331,0.00569513922406833,0.6903,0.841015898410159
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,copeland_graph,120,0.006115408950632334,-0.0006291999374966683,0.014987709987818268,0.9583,0.11648835116488351
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,copeland_hybrid,120,0.0016129353150298854,-0.0074793636832638745,0.009659579151677663,0.6667,0.6503349665033497
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1,markov_graph,120,0.0020456203284911077,-0.0002919940182925302,0.004832964719260752,0.9523,0.1257874212578742
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,balance_graph,120,-4.447765252073854e-05,-0.00013343295756221562,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,balance_hybrid,120,-2.25002190307406e-05,-6.750065709222181e-05,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,copeland_graph,120,-0.0005346649387661223,-0.001565220310664855,0.0,0.0,0.5005499450054994
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,copeland_hybrid,120,6.879973072938667e-05,0.0,0.00020639919218815999,0.6349,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms1_drop_mutual,markov_graph,120,-3.87745056335112e-05,-0.00011632351690053361,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_rank_percentile_retention,rank-percentile + retention-matched,robustness,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,balance_graph,50,-0.005900329748674343,-0.018553636429026972,0.004389774860575544,0.1588,0.36866313368663134
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,balance_hybrid,50,-0.0037522010969439886,-0.009871795018670755,8.835090457236643e-05,0.0327,0.15798420157984203
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,copeland_graph,50,-0.029687700139681594,-0.06000140492232064,-0.0038424379233810094,0.0102,0.042195780421957804
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,copeland_hybrid,50,0.0030863203948990198,-0.013674657357283806,0.022276714367327904,0.6063,0.7382261773822618
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1,markov_graph,50,-3.4022890858124154e-05,-0.01786984728639586,0.01948286551946996,0.4802,0.998000199980002
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,balance_graph,50,0.0014751976754262053,0.0,0.004318408225048937,0.8727,0.48485151484851513
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,balance_hybrid,50,0.0009266650728406178,0.0,0.002703439621884003,0.8727,0.48485151484851513
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,copeland_graph,50,0.0016159316693942437,0.0,0.004599876212985014,0.9561,0.24957504249575044
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,copeland_hybrid,50,0.0005977490825020315,-4.343345557885403e-05,0.0017763398166488098,0.8692,0.503949605039496
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms1_drop_mutual,markov_graph,50,0.0017545030302028187,0.00013801388410153326,0.00405938646634663,0.9939,0.0608939106089391
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,balance_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,balance_hybrid,50,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,copeland_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,copeland_hybrid,50,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,bright,ms2,markov_graph,50,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,balance_graph,120,0.0017223979155774327,-0.0010184253126608567,0.005084906988779396,0.8738,0.3107689231076892
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,balance_hybrid,120,-0.0022232033830276014,-0.007603877090884644,0.00077828893297637,0.3221,0.8731126887311269
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,copeland_graph,120,0.005124021449330241,-0.005803533349752904,0.015090647241697957,0.838,0.37536246375362464
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,copeland_hybrid,120,-0.0051769684028811335,-0.01400581150637941,0.001101211305096005,0.0682,0.22827717228277172
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1,markov_graph,120,0.0040918914915601835,-0.0014513906861334928,0.010928806977744183,0.9136,0.207979202079792
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,balance_graph,120,6.32384949177181e-05,0.0,0.0001897154847531543,0.6234,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,copeland_graph,120,7.475909689567498e-06,-0.00016728775568445182,0.0001897154847531543,0.5184,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms1_drop_mutual,markov_graph,120,5.480722120865487e-06,-0.0002826870672897365,0.00029912923365233297,0.5187,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,fiqa,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,balance_graph,52,0.0017545231696736098,0.0,0.00505287731726669,0.8684,0.5018498150184981
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,balance_hybrid,52,0.0008174129578872741,0.0,0.002452238873661822,0.6328,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,copeland_graph,52,0.01634883561674685,-0.009295493706648228,0.04520672686028027,0.89,0.24267573242675733
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,copeland_hybrid,52,0.01226673280326149,0.0,0.030813557387646136,0.956,0.25317468253174685
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1,markov_graph,52,0.0002832923902776928,-0.0013395237584359386,0.0019787087375148773,0.623,0.7548245175482452
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms1_drop_mutual,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,balance_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,balance_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,copeland_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,copeland_hybrid,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,hotpotqa,ms2,markov_graph,52,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,balance_graph,120,0.0013795881995632268,-0.0011705190035792396,0.0040957171500408274,0.8527,0.3190680931906809
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,balance_hybrid,120,0.0032421831148915898,-0.00029748928845294145,0.00976668488748094,0.88,0.3498650134986501
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,copeland_graph,120,0.0067169839714332664,-0.005688651989631691,0.01983869257067135,0.8548,0.31316868313168683
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,copeland_hybrid,120,0.009256108853034822,-0.001686174368091402,0.021127361276598925,0.953,0.12268773122687732
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1,markov_graph,120,0.0007535473989994657,-0.0029502252294471747,0.004532692713292731,0.6519,0.7061293870612939
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms1_drop_mutual,markov_graph,120,0.00014890380456337126,0.0,0.00044671141369011377,0.6287,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,balance_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,balance_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,copeland_graph,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,copeland_hybrid,120,0.0,0.0,0.0,0.0,1.0
+robustness_zscore_retention,z-score + retention-matched,robustness,scidocs,ms2,markov_graph,120,0.0,0.0,0.0,0.0,1.0

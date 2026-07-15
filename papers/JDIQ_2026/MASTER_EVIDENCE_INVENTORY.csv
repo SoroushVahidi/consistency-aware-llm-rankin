@@ -1,0 +1,70 @@
+artifact,location,description,publication_quality,recommended_usage,manuscript_section,confidence,canonical,historical,stale
+final_method_gap_audit_20260711_221113,experiments/final_method_gap_audit_20260711_221113,Auto-discovered audit_workspace,high,authoring_blueprint,n/a,high,conditional,no,no
+openai_hotpotqa_real_listwise_q10_k15,outputs/openai_hotpotqa_real_listwise_q10_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_hotpotqa_real_pointwise_q10_k15,outputs/openai_hotpotqa_real_pointwise_q10_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_hotpotqa_real_run_q10_k15,outputs/openai_hotpotqa_real_run_q10_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_robustness_checks,outputs/openai_robustness_checks,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_scidocs_real_listwise_q20_k15,outputs/openai_scidocs_real_listwise_q20_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_scidocs_real_pairwise_q30_k15,outputs/openai_scidocs_real_pairwise_q30_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_scidocs_real_pointwise_q20_k15,outputs/openai_scidocs_real_pointwise_q20_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+openai_scidocs_real_run_q20_k15,outputs/openai_scidocs_real_run_q20_k15,Auto-discovered real_llm_run,medium,appendix,Results,medium,conditional,no,no
+failure_mining_llm,reports/failure_mining_llm,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,conditional,no,no
+failure_mining_llm_v3_driver.log,reports/failure_mining_llm_v3_driver.log,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,conditional,no,no
+failure_mining_tmux.log,reports/failure_mining_tmux.log,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,conditional,no,no
+failure_mining_tmux_driver.log,reports/failure_mining_tmux_driver.log,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,conditional,no,no
+ijcs_manuscript_zip,Consistency_Aware_Reranking_via_Preference_Graph_Repair__Structural_Gains_and_Conditional_Retrieval_Effects_IJCS.zip,Rejected IJCS submission archive,low,historical_reference_only,n/a,low,no,yes,yes
+MANUSCRIPT_SUMMARY_root,MANUSCRIPT_SUMMARY.md,Root manuscript summary (may predate all4),low,historical_reference_only,n/a,low,no,yes,yes
+PAPER_DRAFT_WORDING,PAPER_DRAFT_WORDING.md,Draft wording snippets,low,historical_reference_only,n/a,low,no,yes,yes
+docs_tables_legacy,docs/tables/,Legacy aggregated tables (mixed dates),low-medium,verify_before_use,Supplement,low,no,partial,partial
+exact_vs_greedy_docs,docs/tables/exact_vs_greedy_summary.csv,Exact vs greedy FAS structural comparison (synthetic),medium,supplementary,Methods;Supplement,medium,no,no,no
+manuscript_figures_readme,figures/manuscript/README.md,Curated figure list from build_manuscript_assets.py,medium,figure_plan,Results,medium,no,no,partial
+adaptive_repair_policy,outputs/adaptive_repair_policy/,Adaptive when-to-repair policy experiments,medium,discussion,Discussion;Implications,medium,no,no,no
+final_modern_baselines,outputs/final_modern_baselines/,Modern baseline comparison (different protocol),medium,supplementary,Related Work;Supplement,medium,no,no,no
+manuscript_artifacts_stale,outputs/manuscript_artifacts/,Pre-all4 generated LaTeX/CSV tables,low,regenerate,n/a,low,no,yes,yes
+noise_sweep_synthetic,outputs/noise_sweep_n0.20/,Synthetic noise sensitivity experiments,medium,supplementary,Supplement,medium,no,no,no
+openai_smoke_scidocs_q1_k5,outputs/openai_smoke_scidocs_q1_k5,Auto-discovered real_llm_run,medium,appendix,Results,medium,no,yes,yes
+pub_vote_cmp_v2,outputs/pub_vote_cmp_v2/paper_package/,Two-dataset publication suite (conflicts with all4),low,do_not_use,n/a,low,no,yes,yes
+q1_journal_package,outputs/q1_journal_package/,Q1 tables built from v2 by default,low,do_not_use,n/a,low,no,yes,yes
+real_full,outputs/real_full/,qrels-derived preference experiments (different protocol),low-medium,do_not_mix,Supplement (labeled),low,no,no,no
+scale_sweep_outputs,outputs/scale_sweep_n20/,Synthetic scalability timing (n=20),medium,supplementary,Results;Supplement,medium,no,no,no
+failure_mining_llm_smoke_v2,reports/failure_mining_llm_smoke_v2,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,no,yes,yes
+failure_mining_llm_v2,reports/failure_mining_llm_v2/,Superseded failure-mining LLM run,low,do_not_use,n/a,low,no,yes,yes
+failure_mining_smoke,reports/failure_mining_smoke,Auto-discovered failure_mining,medium-high,supplementary_data,Methods,medium,no,yes,yes
+selector_llm_extension,reports/selector_llm_extension/,Selector training extension with LLM features,medium,supplementary,Discussion;Supplement,medium,no,no,no
+REPRODUCTION_Q1,docs/REPRODUCTION_Q1.md,Reproduction instructions,high,artifact_package,Reproducibility,high,yes,no,no
+SAFE_CLAIMS_FOR_PAPER,docs/SAFE_CLAIMS_FOR_PAPER.md,Documented safe claim boundaries,high,authoring_blueprint,All sections,high,yes,no,no
+THREATS_TO_VALIDITY,docs/THREATS_TO_VALIDITY.md,Threats to validity documentation,high,limitations_section,Threats to Validity,high,yes,no,no
+counterfactual_feasibility,experiments/counterfactual_generation_feasibility_/,"Counterfactual repair impact feasibility (40 attempts, 7 invalid)",medium,supplementary,Methods;Supplement,medium,yes,no,no
+created_data_audit,experiments/created_data_audit_20260711_232004/,Repository-wide data provenance and CARB assessment,high,data_availability,Data Availability,high,yes,no,no
+carb_schema_proposal,experiments/created_data_audit_20260711_232004/phase10/PROPOSED_DATASET_SCHEMA.md,"CARB v0.1 unified schema (1020 query×regime, 366 methods)",high,supplementary_resource,Data Availability;Supplement,high,yes,no,no
+carb_release_structure,experiments/created_data_audit_20260711_232004/phase10/PROPOSED_RELEASE_STRUCTURE.md,Proposed public release layout for CARB,medium-high,supplementary_resource,Data Availability,medium,yes,no,no
+global_feature_dictionary,experiments/created_data_audit_20260711_232004/phase6/global_feature_dictionary.csv,14+ documented feature groups for CARB records,high,supplementary_table,Supplement,high,yes,no,no
+dataset_contribution_scorecard,experiments/created_data_audit_20260711_232004/phase9/dataset_contribution_scorecard.csv,Dataset publication potential scoring,medium,internal_planning,n/a,high,yes,no,no
+failure_class_audit,experiments/failure_class_audit_20260711_212157/,"Failure taxonomy, counterfactuals, regret decomposition",high,main_results,Results;Discussion,high,yes,no,no
+efficiency_evidence_audit,experiments/failure_class_audit_20260711_212157/phase_reports/EFFICIENCY_EVIDENCE_AUDIT.md,Runtime/memory evidence synthesis,medium,supplementary,Results;Limitations,medium,yes,no,no
+manual_failure_summary,experiments/failure_class_audit_20260711_212157/phase_reports/manual_failure_summary.csv,"Manual failure taxonomy frequencies (repair_inactive 64%, tail_only 21%)",high,main_figure;main_table,Results;Discussion,high,yes,no,no
+runtime_per_query,experiments/failure_class_audit_20260711_212157/phase_reports/runtime_per_query.csv,Per-query runtime measurements,medium,supplementary_table,Results,medium,yes,no,no
+extraction_fusion_complete,experiments/final_method_gap_audit_20260711_221113/task1/extraction_fusion_complete.csv,Extraction and fusion sensitivity analysis,medium-high,supplementary_table,Results;Discussion,medium,yes,no,no
+repair_comparison_real,experiments/final_method_gap_audit_20260711_221113/task2/repair_comparison_real.csv,Exact vs greedy vs stronger repair on real pooled records,high,supplementary_table,Results,high,yes,no,no
+final_baseline_comparison,experiments/final_method_gap_audit_20260711_221113/task3/final_baseline_comparison.csv,"Pooled 1020 query×regime baseline grid (prior, CombSUM, RRF, proposed, etc.)",high,main_table,Results;Discussion,high,yes,no,no
+method_improvement_audit,experiments/method_improvement_audit_20260711_205733/,"Regime policy, repair method, baseline scope analysis",medium-high,discussion,Discussion,medium,yes,no,no
+publication_readiness_audit,experiments/publication_readiness_audit_20260711_233629/,Full publication readiness synthesis (11 phases),high,authoring_blueprint,n/a,high,yes,no,no
+final_claim_support_matrix,experiments/publication_readiness_audit_20260711_233629/final_claim_support_matrix.csv,Definitive claim classification (safe/contradicted/etc.),high,claims_discipline,All sections,high,yes,no,no
+reviewer_response_audit,experiments/reviewer_response_state_audit_20260711_214959/,Reviewer criticism status and claim discipline,high,authoring_blueprint,Introduction;Limitations,high,yes,no,no
+final_jis_package,outputs/final_jis_package/,Packaged JIS-oriented tables aligned with all4,high,reference,Results,high,yes,no,no
+openai_fiqa_q20,outputs/openai_fiqa_real_run_q20_k15/,Real OpenAI FiQA run (10 usable queries),low-medium,appendix,Results;Limitations,low,yes,no,no
+openai_hotpotqa_q20,outputs/openai_hotpotqa_real_run_q20_k15/,Real OpenAI HotpotQA 20-query run,medium,appendix,Results,medium,yes,no,no
+openai_cross_dataset_summary,outputs/openai_real_llm_cross_dataset_summary.md,"Consolidated real OpenAI pairwise runs (SciDocs 50q, HotpotQA 20q, FiQA 10q)",medium,appendix_table,Results;Limitations,medium,yes,no,no
+openai_scidocs_pairwise_q50,outputs/openai_scidocs_real_pairwise_q50_k15/,Real OpenAI pairwise SciDocs 50-query pilot,medium,appendix,Results,medium,yes,no,no
+pub_vote_analysis_jsons,outputs/pub_vote_cmp_all4/analysis/,Per-dataset bootstrap delta JSONs for figure regeneration,high,figure_source,Results,high,yes,no,no
+pub_vote_cmp_all4_package,outputs/pub_vote_cmp_all4/paper_package/,Canonical four-dataset publication evidence package,high,canonical_source,Methods;Results,high,yes,no,no
+table_bootstrap_delta_ndcg,outputs/pub_vote_cmp_all4/paper_package/tables/table_bootstrap_delta_ndcg.csv,Bootstrap repair deltas (2000 reps) per dataset×variant×pair,high,main_table,Results,high,yes,no,no
+table_consistency_qrels_bew,outputs/pub_vote_cmp_all4/paper_package/tables/table_consistency_qrels_bew.csv,BEW/PIC consistency metrics pre/post repair vs qrels,high,main_table,Results,high,yes,no,no
+table_graph_ndcg_and_consistency,outputs/pub_vote_cmp_all4/paper_package/tables/table_graph_ndcg_and_consistency.csv,Four-dataset graph consistency and nDCG summary by vote regime,high,main_table,Results,high,yes,no,no
+claim_support_matrix,reports/claim_support_matrix.csv,Original claim-evidence matrix,high,claims_discipline,Introduction;Limitations,high,yes,no,no
+failure_mining_canonical,reports/failure_mining/,Mechanical-vote failure mining (no LLM cost),high,supplementary_data,Methods;Supplement,high,yes,no,no
+failure_mining_v3_package,reports/failure_mining_llm_v3/,"Full failure-mining with multi-provider LLM judgments (Cohere, Azure)",high,supplementary_data,Methods;Supplement,high,yes,no,no
+repo_publication_audit,reports/repo_publication_audit.md,Conservative publication audit (2026-03-22),high,authoring_blueprint,n/a,high,yes,no,no
+build_manuscript_assets,scripts/build_manuscript_assets.py,Generate manuscript figures from paper_package,high,figure_generation,Figures,high,yes,no,no
+build_paper_evidence_package,scripts/build_paper_evidence_package.py,Build paper_package tables from vote suite outputs,high,artifact_package,Reproducibility,high,yes,no,no
+run_publication_vote_suite,scripts/run_publication_vote_suite.py,Reproduce canonical four-dataset vote suite,high,artifact_package,Reproducibility,high,yes,no,no

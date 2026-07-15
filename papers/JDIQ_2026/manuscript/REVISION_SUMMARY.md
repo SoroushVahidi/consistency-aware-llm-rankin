@@ -1,5 +1,15 @@
 # Revision Summary — Visual Finalization Pass (Pass 4 of 5)
 
+> **UPDATE (2026-07-14, later same day):** Figures 1, 3, and 5 were replaced
+> again after this pass, with manually-prepared `figure1.png`/
+> `figure3.png`/`figure5.png` uploaded directly into
+> `papers/JDIQ_2026/manuscript/` and referenced directly from `main.tex`
+> (no `figures_v2/` prefix). The vector `fig1_pipeline.pdf`/
+> `fig3_cyclicity_primary.pdf`/`fig5_cycle_decomposition.pdf` switch
+> described below is what those three PNGs superseded; the generation
+> scripts (`generate_figure1.py`, `generate_figures.py`) are annotated with
+> a `SUPERSEDED` note and left intact as a fallback.
+
 **Date:** 2026-07-14
 **Branch target:** `main` (from `origin/main` @ `97d34ed`)
 **Primary files:** `main.tex`, `main.pdf`, `figures_v2/generate_figures.py`, `figures_v2/generate_figure1.py`,

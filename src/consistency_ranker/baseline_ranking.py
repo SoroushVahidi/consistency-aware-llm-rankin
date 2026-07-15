@@ -424,3 +424,75 @@ def borda_ranking(graph: nx.DiGraph) -> list[str]:
     """
     wins = borda_scores(graph)
     return sorted(wins, key=lambda n: (-wins[n], n))
+
+
+def rank_centrality_scores(
+    graph: nx.DiGraph,
+    max_iter: int = 200,
+    tol: float = 1.0e-8,
+) -> dict[str, float]:
+    """RankCentrality (Negahban, Oh & Shah, 2012).
+
+    Builds a Markov chain over pairwise comparisons where a walker sitting at
+    a "loser" state moves to whichever competitor beat it, with transition
+    probability proportional to comparison strength. Unlike
+    :func:`pagerank_ranking`, there is no damping/teleportation term; ergodicity
+    is instead guaranteed by explicit self-loops, so the stationary
+    distribution ranks items purely by how the comparison graph resolves
+    itself — including on the cyclic / disconnected preference graphs this
+    project studies.
+
+    Returns
+    -------
+    dict[str, float]
+        Node id -> stationary probability (higher = more preferred).
+    """
+    nodes = list(graph.nodes())
+    n = len(nodes)
+    if n == 0:
+        return {}
+    if n == 1:
+        return {nodes[0]: 1.0}
+    idx = {node: i for i, node in enumerate(nodes)}
+
+    row_mass = [0.0] * n
+    off_diag: dict[tuple[int, int], float] = {}
+    for u, v, data in graph.edges(data=True):  # edge u -> v means "u beats v"
+        w = float(data.get("weight", 1.0))
+        if w <= 0:
+            continue
+        i, j = idx[v], idx[u]  # walker transitions loser (v) -> winner (u)
+        off_diag[(i, j)] = off_diag.get((i, j), 0.0) + w
+        row_mass[i] += w
+
+    d_max = max(row_mass) if row_mass else 0.0
+    if d_max <= 0:
+        uniform = 1.0 / n
+        return {node: uniform for node in nodes}
+
+    pi = [1.0 / n] * n
+    for _ in range(max_iter):
+        new_pi = [0.0] * n
+        # off-diagonal transitions
+        for (i, j), w in off_diag.items():
+            new_pi[j] += pi[i] * (w / d_max)
+        # self-loop mass keeps the walker in place with the remaining probability
+        for i in range(n):
+            self_loop = 1.0 - (row_mass[i] / d_max)
+            new_pi[i] += pi[i] * self_loop
+        diff = sum(abs(a - b) for a, b in zip(new_pi, pi))
+        pi = new_pi
+        if diff < tol:
+            break
+    total = sum(pi) or 1.0
+    return {nodes[i]: pi[i] / total for i in range(n)}
+
+
+def rank_centrality_ranking(
+    graph: nx.DiGraph,
+    max_iter: int = 200,
+    tol: float = 1.0e-8,
+) -> list[str]:
+    """Rank items by RankCentrality stationary probability, best first."""
+    scores = rank_centrality_scores(graph, max_iter=max_iter, tol=tol)
+    return sorted(scores, key=lambda n: (-scores[n], n))

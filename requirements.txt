@@ -29,3 +29,7 @@ ruff>=0.3
 
 # BM25 score generation (optional):
 # pip install 'consistency-ranker[bm25]'
+
+# Exact MWFAS solver (optional, free and open-source, no license required):
+# pip install 'consistency-ranker[exact]'
+# or directly: pip install PySCIPOpt>=6.2.1

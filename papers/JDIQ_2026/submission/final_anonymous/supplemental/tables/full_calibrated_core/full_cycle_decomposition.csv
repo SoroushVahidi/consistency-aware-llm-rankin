@@ -1,0 +1,73 @@
+dataset,protocol,protocol_label,regime,usable_query_count,cyclic_query_pct,cyclic_query_pct_after_mutual_deletion,mean_largest_scc,mean_largest_scc_after_mutual_deletion,scc_count_gt1,directed_triangle_count
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,120,0.9916666666666667,0.10833333333333334,16.166666666666668,1.9083333333333334,1.1083333333333334,128.03333333333333
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,120,0.11666666666666667,0.11666666666666667,1.9333333333333333,1.9333333333333333,0.125,0.4
+scidocs,ablation_raw_fixed,raw + fixed,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,ablation_raw_fixed,raw + fixed,ms1,120,0.975,0.1,15.941666666666666,1.775,1.0833333333333333,123.25833333333334
+scidocs,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,120,0.1,0.1,1.775,1.775,0.10833333333333334,0.25833333333333336
+scidocs,ablation_minmax_fixed,minmax + fixed,ms2,120,0.375,0.375,2.775,2.775,0.4,1.3916666666666666
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1,120,1.0,0.09166666666666666,19.108333333333334,1.7083333333333333,1.1,375.25
+scidocs,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,120,0.09166666666666666,0.09166666666666666,1.7083333333333333,1.7083333333333333,0.09166666666666666,0.5416666666666666
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1,120,0.975,0.1,15.941666666666666,1.775,1.0833333333333333,123.25833333333334
+scidocs,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,120,0.1,0.1,1.775,1.775,0.10833333333333334,0.25833333333333336
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1,120,0.9916666666666667,0.11666666666666667,15.975,1.8833333333333333,1.1583333333333334,126.4
+scidocs,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,120,0.11666666666666667,0.11666666666666667,1.9,1.9,0.125,0.35
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,120,1.0,0.15,16.858333333333334,2.2916666666666665,1.075,134.15
+scidocs,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,120,0.15,0.15,2.2916666666666665,2.2916666666666665,0.15833333333333333,0.36666666666666664
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,120,0.9833333333333333,0.30833333333333335,16.125,3.325,1.1416666666666666,98.39166666666667
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,120,0.30833333333333335,0.30833333333333335,3.3833333333333333,3.3833333333333333,0.31666666666666665,0.7166666666666667
+fiqa,ablation_raw_fixed,raw + fixed,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,ablation_raw_fixed,raw + fixed,ms1,120,0.9833333333333333,0.225,15.616666666666667,2.816666666666667,1.1083333333333334,92.70833333333333
+fiqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,120,0.225,0.225,2.816666666666667,2.816666666666667,0.225,0.5166666666666667
+fiqa,ablation_minmax_fixed,minmax + fixed,ms2,120,0.13333333333333333,0.13333333333333333,1.575,1.575,0.14166666666666666,0.30833333333333335
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1,120,1.0,0.2916666666666667,19.258333333333333,3.183333333333333,1.0583333333333333,342.8
+fiqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,120,0.2916666666666667,0.2916666666666667,3.183333333333333,3.183333333333333,0.30833333333333335,1.6083333333333334
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,120,0.9833333333333333,0.225,15.616666666666667,2.816666666666667,1.1083333333333334,92.70833333333333
+fiqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,120,0.225,0.225,2.816666666666667,2.816666666666667,0.225,0.5166666666666667
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1,120,0.9833333333333333,0.275,15.958333333333334,3.158333333333333,1.125,97.14166666666667
+fiqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,120,0.275,0.275,3.216666666666667,3.216666666666667,0.275,0.6666666666666666
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,120,1.0,0.38333333333333336,16.658333333333335,4.383333333333334,1.0833333333333333,106.775
+fiqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,120,0.4,0.4,4.533333333333333,4.533333333333333,0.4083333333333333,1.425
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,52,0.6346153846153846,0.019230769230769232,4.0576923076923075,1.1346153846153846,0.7884615384615384,7.634615384615385
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,52,0.019230769230769232,0.019230769230769232,1.1346153846153846,1.1346153846153846,0.019230769230769232,0.0
+hotpotqa,ablation_raw_fixed,raw + fixed,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1,52,0.7115384615384616,0.019230769230769232,4.230769230769231,1.1346153846153846,0.7692307692307693,6.865384615384615
+hotpotqa,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,52,0.019230769230769232,0.019230769230769232,1.1346153846153846,1.1346153846153846,0.019230769230769232,0.0
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms2,52,0.038461538461538464,0.038461538461538464,1.0769230769230769,1.0769230769230769,0.038461538461538464,0.038461538461538464
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1,52,0.9615384615384616,0.0,6.576923076923077,1.0,1.2115384615384615,20.51923076923077
+hotpotqa,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1,52,0.7115384615384616,0.019230769230769232,4.230769230769231,1.1346153846153846,0.7692307692307693,6.865384615384615
+hotpotqa,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,52,0.019230769230769232,0.019230769230769232,1.1346153846153846,1.1346153846153846,0.019230769230769232,0.0
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1,52,0.6730769230769231,0.019230769230769232,4.288461538461538,1.1346153846153846,0.7692307692307693,7.576923076923077
+hotpotqa,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,52,0.019230769230769232,0.019230769230769232,1.1346153846153846,1.1346153846153846,0.019230769230769232,0.0
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,52,0.8653846153846154,0.019230769230769232,5.269230769230769,1.0384615384615385,1.0192307692307692,8.884615384615385
+hotpotqa,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,52,0.0,0.0,1.0,1.0,0.0,0.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,50,0.92,0.22,10.82,3.1,1.04,48.44
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,50,0.22,0.22,3.08,3.08,0.22,0.36
+bright,ablation_raw_fixed,raw + fixed,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,ablation_raw_fixed,raw + fixed,ms1,50,0.88,0.24,10.54,2.8,1.1,49.42
+bright,ablation_raw_fixed,raw + fixed,ms1_drop_mutual,50,0.24,0.24,2.8,2.8,0.24,0.34
+bright,ablation_minmax_fixed,minmax + fixed,ms2,50,0.1,0.1,1.36,1.36,0.12,0.18
+bright,ablation_minmax_fixed,minmax + fixed,ms1,50,1.0,0.68,16.56,7.24,1.16,199.42
+bright,ablation_minmax_fixed,minmax + fixed,ms1_drop_mutual,50,0.68,0.68,7.24,7.24,0.74,4.66
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1,50,0.88,0.24,10.54,2.8,1.1,49.42
+bright,ablation_unit_vote_retention,unit vote + retention-matched,ms1_drop_mutual,50,0.24,0.24,2.8,2.8,0.24,0.34
+bright,robustness_zscore_retention,z-score + retention-matched,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,robustness_zscore_retention,z-score + retention-matched,ms1,50,0.92,0.24,11.16,3.12,1.0,49.22
+bright,robustness_zscore_retention,z-score + retention-matched,ms1_drop_mutual,50,0.24,0.24,3.12,3.12,0.24,0.56
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1,50,0.96,0.42,12.24,4.22,1.02,44.38
+bright,robustness_rank_percentile_retention,rank-percentile + retention-matched,ms1_drop_mutual,50,0.42,0.42,4.34,4.34,0.46,1.46

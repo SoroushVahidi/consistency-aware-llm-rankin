@@ -1,5 +1,10 @@
 """
 Tests for the unified MWFAS solver interface.
+
+The exact "ilp"/"exact"/"scip" methods are backed by the free, open-source
+PySCIPOpt/SCIP solver by default (see `consistency_ranker.mwfas_solver`);
+Gurobi is an explicitly optional legacy backend selected only via
+`method="gurobi"` and is not required for any test here.
 """
 
 from __future__ import annotations
@@ -9,18 +14,15 @@ import pytest
 
 from consistency_ranker.exact_fas import exact_fas
 from consistency_ranker.metric_aware_repair import reweight_graph_for_metric_aware_fas
-from consistency_ranker.mwfas_solver import available_methods, solve
+from consistency_ranker.mwfas_solver import (
+    available_methods,
+    is_gurobi_available,
+    is_scip_available,
+    solve,
+)
 
 
-def _has_gurobi() -> bool:
-    try:
-        import gurobipy  # noqa: F401
-    except ImportError:
-        return False
-    return True
-
-
-@pytest.mark.skipif(not _has_gurobi(), reason="gurobipy not installed")
+@pytest.mark.skipif(not is_scip_available(), reason="PySCIPOpt not installed")
 class TestMwfasIlp:
     def test_triangle_removes_weakest_edge(self):
         g = nx.DiGraph()
@@ -50,11 +52,30 @@ class TestMwfasIlp:
         assert len(ilp_removed) == len(brute_removed)
 
 
-def test_available_methods_reports_ilp_when_gurobi_present():
+@pytest.mark.skipif(
+    not is_gurobi_available(), reason="gurobipy not installed (optional legacy backend)"
+)
+def test_legacy_gurobi_backend_matches_scip_objective():
+    """The optional, never-required Gurobi backend must solve the identical
+    MIP and therefore reach the same objective as the canonical SCIP backend."""
+    g = nx.DiGraph()
+    g.add_edge("a", "b", weight=5.0)
+    g.add_edge("b", "c", weight=4.0)
+    g.add_edge("c", "a", weight=0.25)
+    dag, removed = solve(g, method="gurobi")
+    assert nx.is_directed_acyclic_graph(dag)
+    assert removed == [("c", "a", 0.25)]
+
+
+def test_available_methods_reports_scip_family_when_pyscipopt_present():
     methods = available_methods()
     assert "greedy" in methods
-    if _has_gurobi():
+    if is_scip_available():
+        assert "scip" in methods
+        assert "exact" in methods
         assert "ilp" in methods
+    if is_gurobi_available():
+        assert "gurobi" in methods
 
 
 def test_solve_greedy_on_metric_reweighted_graph():

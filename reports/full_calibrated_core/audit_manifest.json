@@ -1,0 +1,117 @@
+{
+  "branch": "failure-mining-full-records",
+  "datasets": [
+    "scidocs",
+    "fiqa",
+    "hotpotqa",
+    "bright"
+  ],
+  "estimated_output_mb": 459.2376,
+  "estimated_runtime_seconds": 51.0948,
+  "figures": [
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/alpha_sensitivity.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/alpha_sensitivity.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/alpha_sensitivity.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/bm25_weight_share_raw_vs_calibrated.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/bm25_weight_share_raw_vs_calibrated.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/bm25_weight_share_raw_vs_calibrated.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_before_after_mutual_deletion.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_before_after_mutual_deletion.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_before_after_mutual_deletion.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_primary_by_dataset_regime.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_primary_by_dataset_regime.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/cyclicity_primary_by_dataset_regime.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/helped_harmed_unchanged_counts.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/helped_harmed_unchanged_counts.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/helped_harmed_unchanged_counts.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/hotpotqa_query_level_influence.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/hotpotqa_query_level_influence.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/hotpotqa_query_level_influence.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/normalized_fas_weight_removed.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/normalized_fas_weight_removed.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/normalized_fas_weight_removed.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/per_dataset_baseline_comparison.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/per_dataset_baseline_comparison.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/per_dataset_baseline_comparison.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_retrieval_deltas.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_retrieval_deltas.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_retrieval_deltas.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_structural_results.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_structural_results.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/raw_vs_calibrated_structural_results.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/repair_deltas_primary_with_intervals.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/repair_deltas_primary_with_intervals.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/repair_deltas_primary_with_intervals.svg",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/scidocs_query_level_influence.pdf",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/scidocs_query_level_influence.png",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/figures/scidocs_query_level_influence.svg"
+  ],
+  "generated_at": "2026-07-13T11:57:56-0400",
+  "head": "3644801ec4148c70eb018a5a8ea15274685a79ea",
+  "paper_package": "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/outputs/calibrated_all4/paper_package",
+  "protocols": {
+    "ablation_minmax_fixed": {
+      "calibration": "minmax_query_ranker",
+      "kind": "ablation",
+      "label": "minmax + fixed",
+      "threshold_mode": "fixed_numeric"
+    },
+    "ablation_raw_fixed": {
+      "calibration": "raw",
+      "kind": "ablation",
+      "label": "raw + fixed",
+      "threshold_mode": "fixed_numeric"
+    },
+    "ablation_unit_vote_retention": {
+      "calibration": "unit_vote",
+      "kind": "ablation",
+      "label": "unit vote + retention-matched",
+      "threshold_mode": "retention_matched"
+    },
+    "primary_minmax_retention_matched": {
+      "calibration": "minmax_query_ranker",
+      "kind": "primary",
+      "label": "minmax + retention-matched",
+      "threshold_mode": "retention_matched"
+    },
+    "robustness_rank_percentile_retention": {
+      "calibration": "rank_percentile",
+      "kind": "robustness",
+      "label": "rank-percentile + retention-matched",
+      "threshold_mode": "retention_matched"
+    },
+    "robustness_zscore_retention": {
+      "calibration": "zscore_query_ranker",
+      "kind": "robustness",
+      "label": "z-score + retention-matched",
+      "threshold_mode": "retention_matched"
+    }
+  },
+  "runtime_seconds": 73.10507369041443,
+  "scripts": [
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/scripts/full_calibration_utils.py",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/scripts/run_full_calibrated_core.py",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/scripts/run_phase0_phase1.py"
+  ],
+  "seed": 13,
+  "tables": [
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/balance_change_pipeline_audit.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_alpha_sensitivity.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_bm25_weight_share.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_cycle_decomposition.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_help_harm_counts.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_influence_removal_summary.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_leave_one_out.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_macro_method_comparison.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_multiplicity_adjusted.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_paired_deltas.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_paired_vs_baselines.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_removed_edge_overlap.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_retrieval_results.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_statistical_tests.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_structural_results.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/full_thresholds.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/query_exclusion_audit.csv",
+    "/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core/tables/rrf_implementation_used_in_full_run.csv"
+  ]
+}

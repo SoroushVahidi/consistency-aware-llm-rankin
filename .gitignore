@@ -280,3 +280,53 @@ data/cache/
 # Processed dataset files (large; regenerate with prepare_datasets.py)
 data/processed/**/*.jsonl
 data/interim/
+
+# ---------------------------------------------------------------------------
+# JDIQ 2026 canonical pipeline: large per-query outputs (regenerate with
+# reports/full_calibrated_core/scripts/run_full_calibrated_core.py and
+# reports/normalization_protocol_audit_20260714 / candidate_pool_conditional_audit_20260714
+# drivers; see docs/REPRODUCTION_CANONICAL.md). The aggregate tables these
+# outputs summarize are tracked normally under reports/*/tables/.
+# ---------------------------------------------------------------------------
+reports/full_calibrated_core/outputs/calibrated_all4/protocol_runs/
+reports/full_calibrated_core/outputs/calibrated_all4/pool_runs/
+
+# LaTeX build intermediates (papers/JDIQ_2026/manuscript/ builds with latexmk)
+papers/JDIQ_2026/manuscript/*.aux
+papers/JDIQ_2026/manuscript/*.log
+papers/JDIQ_2026/manuscript/*.fls
+papers/JDIQ_2026/manuscript/*.fdb_latexmk
+papers/JDIQ_2026/manuscript/*.blg
+papers/JDIQ_2026/manuscript/*.out
+papers/JDIQ_2026/manuscript/*.synctex.gz
+papers/JDIQ_2026/manuscript/*.xdv
+
+# Pre-JDIQ-manuscript research trees: large, historical, or reference-only
+# investigations that the JDIQ 2026 canonical pipeline (docs/REPRODUCTION_CANONICAL.md)
+# does not import or depend on at runtime (verified by dependency check before
+# adding this rule; narrative-only mentions exist in a few docstrings/comments
+# but nothing here is required to reproduce the manuscript's results).
+experiments/failure_class_audit_20260711_212157/
+experiments/final_method_gap_audit_20260711_221113/
+experiments/counterfactual_generation_feasibility_/
+experiments/created_data_audit_20260711_232004/
+experiments/publication_readiness_audit_20260711_233629/
+experiments/reviewer_response_state_audit_20260711_214959/
+reports/b3_margin_calibration_investigation/
+reports/failure_mining/
+reports/failure_mining_llm/
+reports/failure_mining_llm_v2/
+reports/failure_mining_llm_v3/
+reports/failure_mining_smoke/
+reports/failure_mining_llm_smoke_v2/
+reports/blocking_issues_investigation/
+reports/rrf_pool_investigation/
+reports/retention_matching_investigation/
+reports/two_directory_investigation/
+reports/selector_llm_extension/
+reports/additional_metrics_investigation/
+reports/jdiq-overnight-20260713-225928/
+reports/manuscript_rewrite_plan/
+reports/manuscript_improvement_audit/
+reports/exact_ilp_repair_investigation/
+reports/manuscript_final_audit/

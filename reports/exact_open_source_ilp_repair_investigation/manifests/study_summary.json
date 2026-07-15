@@ -1,0 +1,8 @@
+{
+  "n_queries_total": 1025,
+  "n_queries_same_removed_edge_set": 692,
+  "n_queries_different_removed_edge_set": 333,
+  "n_queries_ilp_strictly_lower_weight_removed": 333,
+  "n_queries_ilp_not_proven_optimal": 0,
+  "elapsed_seconds": 27.088953733444214
+}

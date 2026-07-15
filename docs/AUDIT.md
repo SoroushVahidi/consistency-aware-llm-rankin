@@ -82,7 +82,7 @@ consistency-aware-llm-rankin/
 │           ├── __init__.py
 │           └── timing.py             # Timer context manager, timed() decorator,
 │                                     #   TimingAccumulator with CSV/JSON export
-├── tests/                            # pytest test suite (149 tests, all passing)
+├── tests/                            # pytest test suite (550 tests, all passing)
 │   ├── __init__.py
 │   ├── test_baseline_ranking.py
 │   ├── test_bootstrap_method_deltas.py
@@ -1017,12 +1017,12 @@ One row per (method_a, method_b) pair.  Fields: `method_a`, `method_b`,
 
 ### Suggested Improvements
 
-1. **Implement the ILP MWFAS solver** using `pulp` or `gurobipy` for exact solutions on small graphs (n ≤ 30).
+1. ~~**Implement the ILP MWFAS solver** using `pulp` or `gurobipy` for exact solutions on small graphs (n ≤ 30).~~ **Done** — implemented with the free, open-source SCIP solver via PySCIPOpt (`mwfas_solver.solve(..., method="scip")`), not a commercial dependency; see `tests/test_exact_mwfas_scip.py`.
 2. **Replace pure-Python Kendall τ** with `scipy.stats.kendalltau` for 10–100× speedup at n > 100.
 3. **Cache graph copies** in `greedy_fas`: use `graph.copy()` (shallow) instead of `copy.deepcopy`.
 4. **Add a Jupyter notebook** demonstrating the synthetic experiment end-to-end with plots.
 5. **Add SCC-based cycle count as a fast proxy** in `cycle_detection.py` for large graphs, guarded by size check.
-6. **Fix `available_methods()`** to not advertise `"ilp"` until the ILP backend is implemented.
+6. ~~**Fix `available_methods()`** to not advertise `"ilp"` until the ILP backend is implemented.~~ **Done** — `"ilp"`/`"exact"`/`"scip"` are now advertised only when PySCIPOpt is actually importable (`is_scip_available()`).
 7. **Add integration test** that runs `run_synthetic.py` end-to-end with n=10 in a temp directory.
 
 ---

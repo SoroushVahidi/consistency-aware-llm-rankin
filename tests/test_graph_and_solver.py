@@ -85,7 +85,7 @@ def test_mwfas_solver_dispatch_and_errors():
     try:
         dag_ilp, removed_ilp = solve(g, method="ilp")
     except ImportError:
-        pass  # gurobipy / Gurobi not installed
+        pass  # PySCIPOpt not installed (method="ilp" is an alias for the open-source SCIP backend)
     else:
         assert not has_cycle(dag_ilp)
         assert removed_ilp

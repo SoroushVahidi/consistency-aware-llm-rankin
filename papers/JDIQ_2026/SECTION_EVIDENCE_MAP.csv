@@ -1,0 +1,59 @@
+evidence_id,evidence_type,artifact_location,manuscript_section,subsection,role,priority,canonical,notes
+E001,table,outputs/pub_vote_cmp_all4/paper_package/tables/table_graph_ndcg_and_consistency.csv,§5,Structural DQ Results,Table 4,main,yes,Core structural metrics
+E002,table,outputs/pub_vote_cmp_all4/paper_package/tables/table_bootstrap_delta_ndcg.csv,§6,Downstream Results,Table 5,main,yes,Bootstrap repair deltas
+E003,table,outputs/pub_vote_cmp_all4/paper_package/tables/table_consistency_qrels_bew.csv,§5,Structural DQ Results,Table 4 supplement,main,yes,BEW/PIC pre/post
+E004,table,experiments/final_method_gap_audit_20260711_221113/task3/final_baseline_comparison.csv,§6,Downstream Results,Table 6,main,yes,Pooled baseline grid
+E005,table,experiments/failure_class_audit_20260711_212157/phase_reports/manual_failure_summary.csv,§7,Failure Taxonomy,Table 7,main,yes,Failure class frequencies
+E006,table,outputs/openai_real_llm_cross_dataset_summary.md,§8,Real-LLM Validation,Table 9,main,yes,Cross-dataset LLM summary
+E007,table,experiments/created_data_audit_20260711_232004/phase10/PROPOSED_DATASET_SCHEMA.md,§9,CARB Benchmark,Table 10,main,yes,CARB statistics
+E008,table,experiments/final_method_gap_audit_20260711_221113/task2/repair_comparison_real.csv,Appendix C,Exact vs Greedy,Supp Table,supplement,yes,Repair variant comparison
+E009,table,experiments/final_method_gap_audit_20260711_221113/task1/extraction_fusion_complete.csv,Appendix B,Extraction/Fusion,Supp Table,supplement,yes,Fusion sensitivity
+E010,table,experiments/failure_class_audit_20260711_212157/phase_reports/minimal_intervention_summary.csv,§7,Failure Taxonomy,Table 8,optional,yes,Counterfactual minimal fix
+E011,table,experiments/created_data_audit_20260711_232004/phase6/global_feature_dictionary.csv,Appendix F,CARB Features,Supp Table,supplement,yes,Feature dictionary
+E012,table,experiments/publication_readiness_audit_20260711_233629/final_claim_support_matrix.csv,Appendix G,Claims,Supp Table,supplement,yes,Claim discipline
+E013,table,reports/canonical_results_inventory.csv,§4,Protocol,Internal reference,internal,yes,Protocol inventory
+E014,table,outputs/manuscript_artifacts/tables/table_1_main_performance.csv,none,none,DO NOT USE,deprecated,no,Stale pre-all4
+E015,table,outputs/q1_journal_package/,none,none,DO NOT USE,deprecated,no,Built from v2
+F001,figure,figures/manuscript/fig_cyclicity_and_scc.png,§5,Structural DQ,Fig 2,main,regenerate,From build_manuscript_assets.py
+F002,figure,figures/manuscript/fig_graph_qrels_bew_pre_post.png,§5,Structural DQ,Fig 3,main,regenerate,BEW/PIC plot
+F003,figure,figures/manuscript/fig_delta_ndcg_bootstrap.png,§6,Downstream Results,Fig 4,main,regenerate,Bootstrap forest
+F004,figure,figures/manuscript/fig_mean_ndcg_hybrids.png,§6,Downstream Results,Fig 5,main,regenerate,Method comparison
+F005,figure,figures/manuscript/fig_ndcg_copeland_ms1_four_datasets.png,§6,Downstream Results,Fig 5 alt,optional,regenerate,Four-dataset Copeland
+F006,figure,NEW: failure_class_distribution.png,§7,Failure Taxonomy,Fig 6,main,new,From manual_failure_summary.csv
+F007,figure,NEW: scc_vs_delta_scatter.png,§7,Failure Taxonomy,Fig 7,optional,new,From failure_class per-query data
+F008,figure,NEW: carb_schema_diagram.png,§9,CARB,Fig 8,optional,new,Schema illustration
+F009,figure,NEW: pipeline_schematic.png,§3,Problem Formulation,Fig 1,main,new,Preference graph + repair pipeline
+D001,dataset,outputs/pub_vote_cmp_all4/,§4,Protocol,Canonical vote suite,main,yes,Four datasets three regimes
+D002,dataset,reports/failure_mining/,§4;§7,Protocol;Failure,Per-query records,main,yes,1123 query records mechanical
+D003,dataset,reports/failure_mining_llm_v3/,§8,Real-LLM,Multi-provider LLM judgments,supplement,yes,Cohere+Azure
+D004,dataset,experiments/created_data_audit_20260711_232004/phase10/,§9,CARB,CARB v0.1 benchmark,supplement,yes,1020 query×regime
+D005,dataset,outputs/openai_scidocs_real_pairwise_q50_k15/,§8,Real-LLM,SciDocs LLM pilot,main,yes,50 queries
+D006,dataset,outputs/openai_hotpotqa_real_run_q20_k15/,§8,Real-LLM,HotpotQA LLM pilot,main,yes,20 queries
+D007,dataset,outputs/openai_fiqa_real_run_q20_k15/,§8,Real-LLM,FiQA LLM pilot,main,yes,10 usable queries
+D008,dataset,outputs/pub_vote_cmp_v2/,none,none,DO NOT USE,deprecated,no,Superseded two-dataset
+D009,dataset,outputs/real_full/,Appendix,Protocol,Exploratory qrels protocol,supplement,no,Different family
+X001,experiment,outputs/pub_vote_cmp_all4/paper_package/,§5;§6,Results,Canonical vote suite,main,yes,Primary experiment family
+X002,experiment,experiments/final_method_gap_audit_20260711_221113/,§6,Downstream Results,Pooled baseline audit,main,yes,1020 records
+X003,experiment,experiments/failure_class_audit_20260711_212157/,§7,Failure Taxonomy,Failure class audit,main,yes,Taxonomy+counterfactual
+X004,experiment,outputs/openai_*/,§8,Real-LLM,Bounded API pilots,main,yes,~80 queries total
+X005,experiment,experiments/counterfactual_generation_feasibility_/,Appendix,Counterfactual,40 attempts,supplement,yes,7 invalid qrels
+X006,experiment,outputs/noise_sweep_n0.20/,Appendix,Synthetic,Synthetic noise sweep,supplement,no,Exploratory
+X007,experiment,outputs/scale_sweep_n20/,Appendix E,Runtime,Synthetic timing,supplement,no,Scalability
+X008,experiment,reports/selector_llm_extension/,Appendix D,Selector,Selector extension,supplement,no,Exploratory
+X009,experiment,outputs/adaptive_repair_policy/,§10,Discussion,Adaptive policy,optional,no,Discussion only
+A001,audit,experiments/publication_readiness_audit_20260711_233629/,Planning,All,Publication readiness,internal,yes,Blueprint source
+A002,audit,experiments/reviewer_response_state_audit_20260711_214959/,§1;§11,Intro;Threats,Reviewer mapping,internal,yes,Claim discipline
+A003,audit,experiments/created_data_audit_20260711_232004/,§9;§13,CARB;Repro,Data provenance,internal,yes,CARB release
+A004,audit,experiments/method_improvement_audit_20260711_205733/,§10,Discussion,Regime policy,internal,yes,Discussion support
+A005,audit,reports/repo_publication_audit.md,Planning,All,Original publication audit,internal,yes,Historical reference
+A006,audit,docs/THREATS_TO_VALIDITY.md,§11,Threats,Validity threats,main,yes,Direct source
+A007,audit,docs/SAFE_CLAIMS_FOR_PAPER.md,§1,Introduction,Safe claims,main,yes,Claim boundaries
+A008,audit,docs/LLM_MANUSCRIPT_CONSISTENCY_AUDIT.md,§8,Real-LLM,LLM consistency check,internal,yes,Cross-check LLM claims
+S001,script,scripts/run_publication_vote_suite.py,§13,Reproducibility,Reproduce vote suite,main,yes,Primary reproduction
+S002,script,scripts/build_paper_evidence_package.py,§13,Reproducibility,Build tables,main,yes,Table generation
+S003,script,scripts/build_manuscript_assets.py,§5;§6,Figures,Generate figures,main,yes,Figure generation
+S004,script,scripts/build_manuscript_artifacts.py,none,none,Legacy table builder,deprecated,no,May be stale
+M001,manuscript,Consistency_Aware_Reranking*_IJCS.zip,none,none,Rejected IJCS,do_not_use,yes,Historical only
+M002,manuscript,MANUSCRIPT_SUMMARY.md,none,none,Stale summary,do_not_use,yes,Pre-all4 narrative
+M003,manuscript,PAPER_DRAFT_WORDING.md,none,none,Draft snippets,do_not_use,yes,Recycle with caution
+M004,manuscript,outputs/manuscript_artifacts/,none,none,Stale tables,do_not_use,yes,Regenerate from all4

@@ -43,10 +43,12 @@ def greedy_fas(graph: nx.DiGraph) -> tuple[nx.DiGraph, list[tuple[str, str, floa
     cost is O(C · (n + e)) where C is the number of removal iterations
     (at most e).  In the worst case this is O(e · (n + e)).  For dense
     pairwise graphs (e ≈ n²) this can be O(n⁴).  Use a small graph
-    (n ≤ 50–100) for interactive experiments; for larger graphs the ILP
-    back-end (once implemented) or a more efficient heuristic should be
-    preferred.  This stage is typically the **dominant bottleneck** in the
-    pipeline for moderately large inputs.
+    (n ≤ 50–100) for interactive experiments; for larger graphs the exact
+    ILP back-end (:func:`consistency_ranker.mwfas_solver.solve` with
+    ``method="scip"``) does not scale as well as this heuristic, since MWFAS
+    is NP-hard — prefer greedy for large graphs and reserve the exact solver
+    for small ones where optimality matters.  This stage is typically the
+    **dominant bottleneck** in the pipeline for moderately large inputs.
 
     # TODO: Cache graph copy and incrementally remove edges to avoid
     #       deep-copying the full graph each call.

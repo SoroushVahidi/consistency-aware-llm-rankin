@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any
 
 import networkx as nx
 
 from consistency_ranker.baseline_ranking import (
-    borda_scores,
     copeland_ranking,
     topological_ranking,
     weighted_out_minus_in_ranking,
@@ -17,13 +15,16 @@ from consistency_ranker.failure_mining.query_processor import process_query_reco
 from consistency_ranker.greedy_fas import greedy_fas
 from consistency_ranker.markov_graph_ranking import DEFAULT_MARKOV_DAMPING, markov_graph_ranking
 from consistency_ranker.metric_aware_repair import metric_aware_edge_weights
+from consistency_ranker.mwfas_solver import is_scip_available, solve
 from consistency_ranker.pairwise_prefs import Preference
 from consistency_ranker.repair_selector_mining.repair_pairs import REPAIR_PAIRS
-
 from scripts.run_real_experiment import _ndcg_at_k, _reference_ranking_for_candidates
 
-ILP_MAX_NODES = 20
-EXACT_DP_MAX_NODES = 16
+# Exact solving is exponential in the worst case; keep this small enough that
+# a full repair-mining run stays fast. The open-source SCIP backend (see
+# `consistency_ranker.mwfas_solver`) requires no license, so this cap is a
+# pure runtime/scale choice, not a solver-availability workaround.
+SCIP_MAX_NODES = 20
 
 
 def _ranking_scores(ranking: list[str]) -> dict[str, float]:
@@ -48,36 +49,9 @@ def _build_repair_dags(graph: nx.DiGraph) -> dict[str, nx.DiGraph]:
     dag_greedy, _ = greedy_fas(graph)
     dags["greedy_fas"] = dag_greedy
     n = graph.number_of_nodes()
-    if n <= ILP_MAX_NODES:
-        try:
-            from consistency_ranker.mwfas_solver import solve
-
-            dag_ilp, _ = solve(graph, method="ilp")
-            dags["ilp"] = dag_ilp
-        except Exception:
-            pass
-    if n <= EXACT_DP_MAX_NODES:
-        try:
-            import importlib.util
-
-            # Optional sibling checkout; avoid hardcoded home-directory identity leaks.
-            repo_root = Path(__file__).resolve().parents[3]
-            caar_solver = (
-                repo_root.parent
-                / "consistency-aware-llm-rankin-caar"
-                / "src"
-                / "consistency_ranker"
-                / "mwfas_solver.py"
-            )
-            if caar_solver.exists():
-                spec = importlib.util.spec_from_file_location("caar_mwfas", caar_solver)
-                mod = importlib.util.module_from_spec(spec)
-                assert spec.loader is not None
-                spec.loader.exec_module(mod)
-                dag_dp, _ = mod.solve(graph, method="exact_dp")
-                dags["exact_dp"] = dag_dp
-        except Exception:
-            pass
+    if n <= SCIP_MAX_NODES and is_scip_available():
+        dag_scip, _ = solve(graph, method="scip")
+        dags["scip"] = dag_scip
     return dags
 
 
@@ -105,10 +79,8 @@ def _extra_rankings(
     out["copeland_repaired"] = copeland_ranking(dag)
     out["balance_repaired"] = weighted_out_minus_in_ranking(dag)
     out["greedy_fas_topological"] = topological_ranking(dag)
-    if "ilp" in dags:
-        out["markov_graph_ilp_repaired"] = markov_graph_ranking(dags["ilp"], damping=damping)
-    if "exact_dp" in dags:
-        out["markov_graph_exact_dp_repaired"] = markov_graph_ranking(dags["exact_dp"], damping=damping)
+    if "scip" in dags:
+        out["markov_graph_scip_repaired"] = markov_graph_ranking(dags["scip"], damping=damping)
     return out
 
 

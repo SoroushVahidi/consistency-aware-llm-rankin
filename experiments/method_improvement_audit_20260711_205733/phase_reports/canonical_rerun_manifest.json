@@ -1,0 +1,72 @@
+{
+  "canonical_query_subset": {
+    "scidocs": {
+      "dataset": "scidocs",
+      "n_queries": 120,
+      "top_n": 50,
+      "top_k": 20
+    },
+    "fiqa": {
+      "dataset": "fiqa",
+      "n_queries": 120,
+      "top_n": 50,
+      "top_k": 20
+    },
+    "hotpotqa": {
+      "dataset": "hotpotqa",
+      "n_queries": 70,
+      "top_n": 35,
+      "top_k": 10
+    },
+    "bright": {
+      "dataset": "bright",
+      "n_queries": 50,
+      "top_n": 50,
+      "top_k": 20
+    }
+  },
+  "score_files": {
+    "scidocs": {
+      "bm25": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/scores_bm25.jsonl",
+      "tfidf": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/scores_tfidf.jsonl",
+      "minilm": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/scores_minilm.jsonl"
+    },
+    "fiqa": {
+      "bm25": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/scores_bm25.jsonl",
+      "tfidf": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/scores_tfidf.jsonl",
+      "minilm": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/scores_minilm.jsonl"
+    },
+    "hotpotqa": {
+      "bm25": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/scores_bm25.jsonl",
+      "tfidf": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/scores_tfidf.jsonl",
+      "minilm": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/scores_minilm.jsonl"
+    },
+    "bright": {
+      "bm25": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/scores_bm25.jsonl",
+      "tfidf": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/scores_tfidf.jsonl",
+      "minilm": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/scores_minilm.jsonl"
+    }
+  },
+  "vote_files": {
+    "scidocs": {
+      "ms2": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/votes_ms2.jsonl",
+      "ms1": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/votes_ms1.jsonl",
+      "ms1_drop_mutual": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/scidocs/votes_ms1_drop_mutual.jsonl"
+    },
+    "fiqa": {
+      "ms2": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/votes_ms2.jsonl",
+      "ms1": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/votes_ms1.jsonl",
+      "ms1_drop_mutual": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/fiqa/votes_ms1_drop_mutual.jsonl"
+    },
+    "hotpotqa": {
+      "ms2": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/votes_ms2.jsonl",
+      "ms1": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/votes_ms1.jsonl",
+      "ms1_drop_mutual": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/hotpotqa/votes_ms1_drop_mutual.jsonl"
+    },
+    "bright": {
+      "ms2": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/votes_ms2.jsonl",
+      "ms1": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/votes_ms1.jsonl",
+      "ms1_drop_mutual": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/inputs/bright/votes_ms1_drop_mutual.jsonl"
+    }
+  }
+}

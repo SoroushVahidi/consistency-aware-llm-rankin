@@ -1,0 +1,4 @@
+usage,file,formula,candidate_restriction,tie_breaking,matches_rrf_baseline,notes
+candidate_pooling,reports/b3_margin_calibration_investigation/scripts/run_phase0_phase1.py:_select_candidates,RRF over full per-ranker native rankings with k=60.0; top-k candidates kept.,top-k from union docs,doc_id ascending after equal fused score,False,"Used only to form candidate pool, not final ranking."
+prior,scripts/run_real_experiment.py:_rrf_prior_scores_for_query,RRF with k=60.0 restricted to candidate nodes.,candidate nodes only,inherited by prior_only ranking helper,True,Empirical exact ranking match versus RRF baseline computed across full run.
+rrf_baseline,src/consistency_ranker/rrf_ranking.py:per_query_rrf_ranking_from_score_maps,RRF with k=60.0 restricted to candidate_doc_ids.,candidate_doc_ids only,"best rank, then doc_id",True,Prior-vs-RRF exact match rate in this run: 216/6156.

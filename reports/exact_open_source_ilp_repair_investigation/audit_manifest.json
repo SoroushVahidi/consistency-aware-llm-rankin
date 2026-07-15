@@ -1,0 +1,49 @@
+{
+  "investigation": "exact_open_source_ilp_repair_investigation",
+  "question": "Does exact open-source ILP repair change the structural or retrieval conclusions relative to the canonical greedy cycle-peeling repair?",
+  "branch": "main",
+  "head": "873fa3199432ab27c738fb1ffccb86385adfaa25",
+  "python_executable": ".venv/bin/python",
+  "python_version": "3.12.3",
+  "solver": {
+    "name": "PySCIPOpt",
+    "backend": "SCIP",
+    "version": "6.2.1",
+    "preference_rank_used": "A (top preference, PySCIPOpt)",
+    "install_method": "pip install pyscipopt (local .venv only, no global/system changes)",
+    "gap_setting": 0.0,
+    "time_limit_s": 300.0,
+    "commercial_solver_used": false
+  },
+  "canonical_paths_read_only": [
+    "papers/JDIQ_2026/manuscript/main.tex (not edited)",
+    "reports/full_calibrated_core/outputs/calibrated_all4/ (not overwritten)",
+    "reports/full_calibrated_core/scripts/full_calibration_utils.py (imported, unmodified)",
+    "src/consistency_ranker/mwfas_solver.py (read only, unmodified)",
+    "src/consistency_ranker/greedy_fas.py (read only, unmodified)",
+    "src/consistency_ranker/exact_fas.py (read only, used for Phase 3 cross-check only)"
+  ],
+  "new_files_written": [
+    "reports/exact_open_source_ilp_repair_investigation/scripts/exact_ilp_scip.py",
+    "reports/exact_open_source_ilp_repair_investigation/scripts/validate_scip_vs_bruteforce.py",
+    "reports/exact_open_source_ilp_repair_investigation/scripts/run_exact_open_ilp_study.py"
+  ],
+  "protocol": "primary_minmax_retention_matched",
+  "datasets": ["bright", "fiqa", "hotpotqa", "scidocs"],
+  "regimes": ["ms1", "ms1_drop_mutual", "ms2"],
+  "n_queries_total": 1025,
+  "n_queries_proven_optimal": 1025,
+  "n_queries_not_proven_optimal": 0,
+  "n_queries_cyclic_pre_repair": 379,
+  "n_queries_different_removed_edge_set_among_cyclic": 333,
+  "pct_different_removed_edge_set_among_cyclic": 87.9,
+  "mean_pct_less_weight_removed_by_exact_ilp_among_cyclic": 26.3,
+  "n_retrieval_metric_cells_pooled": 35,
+  "n_retrieval_metric_cells_holm_significant_pooled": 0,
+  "n_retrieval_metric_cells_per_dataset_regime": 399,
+  "n_retrieval_metric_cells_holm_significant_per_dataset_regime": 0,
+  "classification": "B: structural conclusion changes materially, retrieval conclusion (nDCG/MRR/MAP) robust",
+  "git_actions_taken": "none (no add/commit/push)",
+  "commercial_apis_used": "none",
+  "status": "complete"
+}

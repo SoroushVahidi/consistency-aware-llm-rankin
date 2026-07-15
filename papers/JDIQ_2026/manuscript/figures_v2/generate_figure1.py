@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Figure 1: a professionally designed pipeline diagram (vector), replacing
-the old boxed-text figure. Purely schematic -- no underlying data table."""
+the old boxed-text figure. Purely schematic -- no underlying data table.
+
+SUPERSEDED as of 2026-07-14: main.tex now includes a manually-prepared
+figure1.png (uploaded directly to the manuscript directory) instead of this
+script's fig1_pipeline.pdf output. Not deleted/disabled so it remains
+available as a fallback vector source, but running this script no longer
+affects the compiled manuscript unless main.tex's \\includegraphics path for
+Figure 1 is changed back."""
 from __future__ import annotations
 
 import sys

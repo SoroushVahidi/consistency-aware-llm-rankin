@@ -110,7 +110,21 @@ def _select_candidates(
     ranker_scores: dict[str, dict[str, float]],
     top_k: int,
 ) -> list[str]:
-    """Select top-k candidate docs using reciprocal-rank fusion."""
+    """Select top-k candidate docs using reciprocal-rank fusion.
+
+    DUPLICATE IMPLEMENTATION, confirmed byte-for-byte identical to
+    reports/full_calibrated_core/scripts/run_phase0_phase1._select_candidates
+    (see reports/candidate_pool_conditional_audit_20260714/AUDIT.md
+    section 1). Kept here unmodified because this script's own output
+    (pre-built vote files under experiments/.../inputs/<dataset>/) is a
+    committed artifact other diagnostic phases already depend on, and the
+    canonical full_calibrated_core pipeline does not read those files back
+    for its own pool computation -- it always recomputes fresh. Any new
+    candidate-pool policy work should extend
+    reports/full_calibrated_core/scripts/candidate_pool_policies.py
+    (the reusable, typed policy registry) rather than adding a third copy
+    of this function.
+    """
     union_docs = sorted({doc_id for scores in ranker_scores.values() for doc_id in scores})
     if len(union_docs) <= top_k:
         return union_docs

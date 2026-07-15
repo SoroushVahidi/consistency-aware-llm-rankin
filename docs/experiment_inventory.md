@@ -228,9 +228,9 @@
 
 | Field | Value |
 |---|---|
-| Name | Implement pulp/gurobipy ILP-based exact MWFAS |
-| Status | **planned** — stub in `src/consistency_ranker/mwfas_solver.py` |
-| Blocking factor | Solver dependency choice |
+| Name | Implement ILP-based exact MWFAS |
+| Status | **done** — `src/consistency_ranker/mwfas_solver.py`, `method="scip"`/`"exact"`/`"ilp"`, backed by the free, open-source SCIP solver via PySCIPOpt. Optional legacy `method="gurobi"` backend also available. See `tests/test_exact_mwfas_scip.py` and `reports/exact_open_source_ilp_repair_investigation/`. |
+| Blocking factor | Resolved — solver dependency is PySCIPOpt (`pip install "consistency-ranker[exact]"`), no license required |
 
 ### PLAN-3: Additional Rankers
 

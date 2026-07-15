@@ -1,5 +1,17 @@
 # JDIQ Manuscript Workspace
 
+> **Status line below is stale (as of 2026-07-14).** The manuscript has
+> since progressed well past "first draft": all figures are final (no
+> placeholders remain), Figures 1/3/5 were replaced with independently-
+> prepared final versions, and the normalization-protocol, candidate-pool,
+> and baseline sections described in this file's "TODO" lists have since
+> been completed. There is no Figure 6 "failure-class distribution" in the
+> current manuscript. Read `main.tex` directly for current status; the
+> per-section evidence-map files listed below may still be useful as
+> historical claim-to-evidence records for the sections they cover, but
+> should be cross-checked against the current manuscript text rather than
+> trusted as-is.
+
 **Status: complete first draft.** All 13 main sections, the Abstract, CCS concepts, keywords, and the Data Availability/Reproducibility section are now drafted prose. Two figures (Figure 5, pooled baseline bar chart; Figure 6, failure-class distribution) remain clearly marked placeholders pending regeneration from canonical data already present in the corresponding tables — see "Remaining figure/table TODOs" below. This is a first-draft pass prioritizing completeness and factual accuracy over prose polish, per this task's explicit instructions; a further consistency/style revision pass is expected before submission.
 
 ---

@@ -1,0 +1,25 @@
+order,label,dataset,regime,pair,rationale
+1,fiqa / ms2 / copeland,fiqa,ms2,copeland,"Dataset block order follows the same descending ms1-cyclicity convention already established for Figure 2 (FiQA 95% > SciDocs 87.5% > BRIGHT 60% > HotpotQA 51.92%), so readers see the same dataset ordering across figures."
+2,fiqa / ms2 / balance,fiqa,ms2,balance,"Within a dataset, regimes appear in natural order (ms2, ms1, ms1_drop_mutual); within a regime, Copeland (the pair with a real, non-null effect anywhere in the table) is shown before Balance (uniformly null)."
+3,fiqa / ms1 / copeland,fiqa,ms1,copeland,"FiQA ms1 Copeland is the second-largest positive point estimate (+0.00146) though its CI straddles zero."
+4,fiqa / ms1 / balance,fiqa,ms1,balance,"Balance is exactly null even in the most cyclic regime of the most cyclic dataset -- establishes early that repair-inactivity is method-dependent, not only regime-dependent."
+5,fiqa / ms1_drop_mutual / copeland,fiqa,ms1_drop_mutual,copeland,Near-acyclic regime; exactly null by construction (no cycles to repair).
+6,fiqa / ms1_drop_mutual / balance,fiqa,ms1_drop_mutual,balance,Near-acyclic regime; exactly null by construction.
+7,scidocs / ms2 / copeland,scidocs,ms2,copeland,Second dataset block (87.5% ms1 cyclicity).
+8,scidocs / ms2 / balance,scidocs,ms2,balance,Near-acyclic regime; exactly null by construction.
+9,scidocs / ms1 / copeland,scidocs,ms1,copeland,"SciDocs ms1 Copeland is the one row with a directionally NEGATIVE point estimate (-0.000127); CI straddles zero. Included to show repair can trend either direction, not just null or positive."
+10,scidocs / ms1 / balance,scidocs,ms1,balance,Balance is exactly null in SciDocs ms1 as well.
+11,scidocs / ms1_drop_mutual / copeland,scidocs,ms1_drop_mutual,copeland,Near-acyclic regime; exactly null by construction.
+12,scidocs / ms1_drop_mutual / balance,scidocs,ms1_drop_mutual,balance,Near-acyclic regime; exactly null by construction.
+13,bright / ms2 / copeland,bright,ms2,copeland,Third dataset block (60% ms1 cyclicity).
+14,bright / ms2 / balance,bright,ms2,balance,Near-acyclic regime; exactly null by construction.
+15,bright / ms1 / copeland,bright,ms1,copeland,"BRIGHT ms1 Copeland point estimate is essentially zero (+0.0000219); CI straddles zero. BRIGHT ms1_drop_mutual is also the one dataset with non-zero residual cyclicity (6%), giving it a small non-zero FAS weight removed even in that regime."
+16,bright / ms1 / balance,bright,ms1,balance,Balance is exactly null in BRIGHT ms1.
+17,bright / ms1_drop_mutual / copeland,bright,ms1_drop_mutual,copeland,"Only ms1_drop_mutual row in the table with nonzero mean_fas_weight_removed (0.0088) that is still retrieval-null -- reinforces the decoupling message."
+18,bright / ms1_drop_mutual / balance,bright,ms1_drop_mutual,balance,Near-acyclic regime; exactly null by construction.
+19,hotpotqa / ms2 / copeland,hotpotqa,ms2,copeland,"Fourth and final dataset block, placed last deliberately: HotpotQA has the LOWEST ms1 cyclicity (51.92%) of the four datasets, yet its ms1/Copeland row (below) is the ONLY statistically distinguishable effect in the entire table. Ending the plot here delivers the paper's central irony -- structural severity does not predict retrieval benefit -- as the final visual takeaway."
+20,hotpotqa / ms2 / balance,hotpotqa,ms2,balance,Near-acyclic regime; exactly null by construction.
+21,hotpotqa / ms1 / copeland,hotpotqa,ms1,copeland,"THE headline row: mean Delta = +0.0167, 95% CI [0, 0.0405] -- the only CI in the full 24-row table that excludes zero. Should be visually highlighted (bold / star / distinct color) in the rendered figure."
+22,hotpotqa / ms1 / balance,hotpotqa,ms1,balance,"Balance is exactly null even in the one regime/dataset where Copeland shows a real effect -- underscores that the effect is method-specific, not just regime-specific."
+23,hotpotqa / ms1_drop_mutual / copeland,hotpotqa,ms1_drop_mutual,copeland,Near-acyclic regime; exactly null by construction.
+24,hotpotqa / ms1_drop_mutual / balance,hotpotqa,ms1_drop_mutual,balance,Near-acyclic regime; exactly null by construction.

@@ -59,8 +59,11 @@ make smoke-test    # quick single synthetic run
 make q1-tables     # regenerate Q1 tables
 ```
 
-See [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) for the full
-reproduction guide including real-data experiments.
+See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for
+the current reproduction guide covering every table cited in the JDIQ 2026
+manuscript (`papers/JDIQ_2026/manuscript/main.tex`).
+[`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) documents an earlier,
+different results package and is kept for historical reference only.
 
 ---
 
@@ -137,7 +140,7 @@ consistency-aware-llm-rankin/
 │       ├── baseline_ranking.py     # Score-sum & topological-sort baselines
 │       ├── greedy_fas.py           # Greedy feedback arc removal heuristic
 │       ├── metric_aware_repair.py  # Optional LambdaRank-style edge reweighting before FAS
-│       ├── mwfas_solver.py         # MWFAS solver interface (greedy + exact Gurobi ILP)
+│       ├── mwfas_solver.py         # MWFAS solver interface (greedy + exact open-source SCIP ILP; optional legacy Gurobi backend)
 │       ├── rrf_ranking.py          # Reciprocal Rank Fusion (multi-ranker list baseline)
 │       ├── combsum_ranking.py      # CombSUM score fusion (min-max per ranker by default)
 │       ├── borda_fuse_ranking.py   # Borda count over score-prior lists (partial-list safe)
@@ -619,7 +622,7 @@ outputs/
 | Real-data pipeline — four benchmarks | ✅ Publication-facing tables/plots in `outputs/pub_vote_cmp_all4/paper_package/` |
 | Bootstrap significance analysis | ✅ Executed (2000 reps; tables in paper packages where applicable) |
 | Real-data pipeline — per-dataset full trees | ⚙️ Additional runs may live under `outputs/real_full/` (not all committed) |
-| Exact ILP MWFAS solver (Gurobi) | ✅ Implemented in `mwfas_solver.py` (optional dependency) |
+| Exact ILP MWFAS solver (open-source SCIP) | ✅ Implemented in `mwfas_solver.py` (`method="scip"`/`"exact"`/`"ilp"`; optional dependency, no license required — `pip install "consistency-ranker[exact]"`); see `tests/test_exact_mwfas_scip.py` |
 | LLM pairwise preferences | ⏳ Planned; current publication experiments use score-derived votes |
 
 **Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
@@ -642,9 +645,13 @@ These limitations must be understood before drawing conclusions from this reposi
 
 4. **Structural metrics are not independent:** BEW and PIC measure graph–label alignment against the same qrels used to compute nDCG. A decrease in BEW/PIC is expected by construction and does not imply an improvement in retrieval quality.
 
-5. **Exact solver availability:** The Gurobi-backed ILP path in `mwfas_solver.py` requires a
-   licensed Gurobi install. Greedy FAS remains the default in many scripts; older CSV notes in
-   `docs/tables/` may pre-date the exact path.
+5. **Exact solver availability:** The canonical exact ILP path in `mwfas_solver.py`
+   (`method="scip"`/`"exact"`/`"ilp"`) uses the free, open-source SCIP solver via
+   PySCIPOpt — install with `pip install "consistency-ranker[exact]"`; no commercial
+   license is required. A `method="gurobi"` legacy backend also exists for users who
+   already have a Gurobi license, but it is never required. Greedy FAS remains the
+   default in most scripts for speed on larger graphs; older CSV notes in `docs/tables/`
+   may pre-date the exact path.
 
 6. **Scale:** Only n ≤ 100 items tested in synthetic experiments. Real-world graph densities and sizes may differ substantially.
 

@@ -1,5 +1,16 @@
 # Visual Finalization Audit — Pass 4 of 5
 
+> **UPDATE (2026-07-14):** Figures 1, 3, and 5 were subsequently replaced
+> again with manually-prepared `figure1.png`/`figure3.png`/`figure5.png`
+> (uploaded directly into `papers/JDIQ_2026/manuscript/`), superseding the
+> vector `fig1_pipeline.pdf`/`fig3_cyclicity_primary.pdf`/
+> `fig5_cycle_decomposition.pdf` switch recommended below. The findings below
+> (axis range, raw regime-code labels, embedded-title duplication) were
+> re-checked visually against the new PNGs and do not appear to recur, but
+> this file's recommendations table itself was not rewritten — read the
+> Fig. 1/3/5 rows below as historical context for *why* a vector switch was
+> made previously, not as the current state of `main.tex`.
+
 Baseline commit: `97d34ed` ("Compress manuscript by ~2 pages via evidence-preserving trims").
 Baseline compile: `tectonic -X compile main.tex` → **31 pages**, 0 unresolved `??`, 0 undefined
 references/citations in the final resolved PDF (natbib/LaTeX "undefined" warnings appear only on

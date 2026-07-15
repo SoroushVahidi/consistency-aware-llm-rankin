@@ -1,0 +1,361 @@
+dataset,regime,pair_name,pair_family,subset,subset_definition,n_queries,n_queries_total_in_cell,mean_delta_ndcg
+scidocs,ms2,copeland_graph,graph,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms2,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+scidocs,ms2,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+scidocs,ms2,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+scidocs,ms2,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms2,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms2,balance_graph,graph,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms2,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+scidocs,ms2,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+scidocs,ms2,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+scidocs,ms2,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms2,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms2,markov_graph,graph,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms2,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+scidocs,ms2,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+scidocs,ms2,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+scidocs,ms2,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms2,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms2,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms2,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+scidocs,ms2,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,120,
+scidocs,ms2,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+scidocs,ms2,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms2,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms2,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms2,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+scidocs,ms2,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,120,
+scidocs,ms2,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+scidocs,ms2,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms2,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms1,copeland_graph,graph,all,every evaluated query (no filter),120,120,0.011042968687951583
+scidocs,ms1,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,119,120,0.011135766744152857
+scidocs,ms1,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,119,120,0.011135766744152857
+scidocs,ms1,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,119,120,0.011135766744152857
+scidocs,ms1,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,56,120,0.022364051858743277
+scidocs,ms1,balance_graph,graph,all,every evaluated query (no filter),120,120,-0.0017696622402660644
+scidocs,ms1,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,119,120,-0.0017845333515288044
+scidocs,ms1,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,119,120,-0.0017845333515288044
+scidocs,ms1,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,102,120,-0.002081955576783605
+scidocs,ms1,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,30,120,-0.007078648961064258
+scidocs,ms1,markov_graph,graph,all,every evaluated query (no filter),120,120,0.005928517858260695
+scidocs,ms1,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,119,120,0.005978337336061205
+scidocs,ms1,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,119,120,0.005978337336061205
+scidocs,ms1,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,117,120,0.0060805311366776355
+scidocs,ms1,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,34,120,0.02118002027330419
+scidocs,ms1,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.008526038099271938
+scidocs,ms1,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,119,120,0.008597685478257415
+scidocs,ms1,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,119,120,0.008597685478257415
+scidocs,ms1,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,114,120,0.00897477694660204
+scidocs,ms1,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,39,120,0.02585493712544693
+scidocs,ms1,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,-0.0002645158212515708
+scidocs,ms1,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,119,120,-0.0002667386432788949
+scidocs,ms1,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,119,120,-0.0002667386432788949
+scidocs,ms1,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,68,120,-0.0004667926257380661
+scidocs,ms1,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,8,120,-0.003967737318773562
+scidocs,ms1_drop_mutual,copeland_graph,graph,all,every evaluated query (no filter),120,120,0.0005776953493883912
+scidocs,ms1_drop_mutual,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,14,120,0.004951674423329068
+scidocs,ms1_drop_mutual,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,14,120,0.004951674423329068
+scidocs,ms1_drop_mutual,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,14,120,0.004951674423329068
+scidocs,ms1_drop_mutual,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,120,0.06932344192660694
+scidocs,ms1_drop_mutual,balance_graph,graph,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms1_drop_mutual,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,14,120,0.0
+scidocs,ms1_drop_mutual,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,14,120,0.0
+scidocs,ms1_drop_mutual,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,5,120,0.0
+scidocs,ms1_drop_mutual,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,markov_graph,graph,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms1_drop_mutual,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,14,120,0.0
+scidocs,ms1_drop_mutual,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,14,120,0.0
+scidocs,ms1_drop_mutual,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,9,120,0.0
+scidocs,ms1_drop_mutual,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,14,120,0.0
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,14,120,0.0
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,10,120,0.0
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,14,120,0.0
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,14,120,0.0
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,4,120,0.0
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+scidocs,ms1_drop_mutual,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms2,copeland_graph,graph,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms2,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+fiqa,ms2,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+fiqa,ms2,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+fiqa,ms2,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms2,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms2,balance_graph,graph,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms2,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+fiqa,ms2,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+fiqa,ms2,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+fiqa,ms2,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms2,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms2,markov_graph,graph,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms2,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+fiqa,ms2,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,0,120,
+fiqa,ms2,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+fiqa,ms2,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms2,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms2,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms2,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+fiqa,ms2,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,120,
+fiqa,ms2,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+fiqa,ms2,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms2,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms2,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms2,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,120,
+fiqa,ms2,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,120,
+fiqa,ms2,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,120,
+fiqa,ms2,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms2,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms1,copeland_graph,graph,all,every evaluated query (no filter),120,120,0.003634275353696659
+fiqa,ms1,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,118,120,0.0036958732410474495
+fiqa,ms1,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,118,120,0.0036958732410474495
+fiqa,ms1,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,116,120,0.003759595193479302
+fiqa,ms1,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,31,120,0.014068162659470937
+fiqa,ms1,balance_graph,graph,all,every evaluated query (no filter),120,120,0.0035159966086473946
+fiqa,ms1,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,118,120,0.003575589771505825
+fiqa,ms1,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,118,120,0.003575589771505825
+fiqa,ms1,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,109,120,0.003870821954474196
+fiqa,ms1,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,21,120,0.020091409192270825
+fiqa,ms1,markov_graph,graph,all,every evaluated query (no filter),120,120,0.003568757606997486
+fiqa,ms1,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,118,120,0.00362924502406524
+fiqa,ms1,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,118,120,0.00362924502406524
+fiqa,ms1,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,109,120,0.003928907457244939
+fiqa,ms1,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,23,120,0.020941726690792
+fiqa,ms1,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,-0.004569149185585735
+fiqa,ms1,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,118,120,-0.004646592392121086
+fiqa,ms1,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,118,120,-0.004646592392121086
+fiqa,ms1,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,113,120,-0.00485219382540078
+fiqa,ms1,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,24,120,-0.022845745927928676
+fiqa,ms1,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,-0.0016912410670576554
+fiqa,ms1,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,118,120,-0.0017199061698891412
+fiqa,ms1,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,118,120,-0.0017199061698891412
+fiqa,ms1,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,68,120,-0.0029845430595135097
+fiqa,ms1,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,5,120,-0.040589785609383734
+fiqa,ms1_drop_mutual,copeland_graph,graph,all,every evaluated query (no filter),120,120,-0.00017263791214213408
+fiqa,ms1_drop_mutual,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,37,120,-0.000559906742082597
+fiqa,ms1_drop_mutual,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,37,120,-0.000559906742082597
+fiqa,ms1_drop_mutual,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,32,120,-0.0006473921705330028
+fiqa,ms1_drop_mutual,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,2,120,-0.010358274728528044
+fiqa,ms1_drop_mutual,balance_graph,graph,all,every evaluated query (no filter),120,120,-5.57625852281506e-05
+fiqa,ms1_drop_mutual,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,37,120,-0.00018085162776697493
+fiqa,ms1_drop_mutual,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,37,120,-0.00018085162776697493
+fiqa,ms1_drop_mutual,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,25,120,-0.00026766040909512287
+fiqa,ms1_drop_mutual,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,120,-0.0066915102273780724
+fiqa,ms1_drop_mutual,markov_graph,graph,all,every evaluated query (no filter),120,120,-5.57625852281506e-05
+fiqa,ms1_drop_mutual,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,37,120,-0.00018085162776697493
+fiqa,ms1_drop_mutual,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,37,120,-0.00018085162776697493
+fiqa,ms1_drop_mutual,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,25,120,-0.00026766040909512287
+fiqa,ms1_drop_mutual,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,120,-0.0066915102273780724
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,37,120,0.0
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,37,120,0.0
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,23,120,0.0
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,all,every evaluated query (no filter),120,120,0.0
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,37,120,0.0
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,37,120,0.0
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,10,120,0.0
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,120,
+fiqa,ms1_drop_mutual,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,120,
+hotpotqa,ms2,copeland_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms2,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,52,
+hotpotqa,ms2,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,0,52,
+hotpotqa,ms2,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms2,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms2,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms2,balance_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms2,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,52,
+hotpotqa,ms2,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,0,52,
+hotpotqa,ms2,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms2,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms2,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms2,markov_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms2,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,52,
+hotpotqa,ms2,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,0,52,
+hotpotqa,ms2,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms2,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms2,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms2,copeland_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms2,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,52,
+hotpotqa,ms2,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,52,
+hotpotqa,ms2,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms2,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms2,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms2,balance_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms2,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,52,
+hotpotqa,ms2,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,52,
+hotpotqa,ms2,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms2,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms2,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms1,copeland_graph,graph,all,every evaluated query (no filter),52,52,0.01550607117753817
+hotpotqa,ms1,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,33,52,0.024433809128241963
+hotpotqa,ms1,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,33,52,0.024433809128241963
+hotpotqa,ms1,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,32,52,0.025197365663499526
+hotpotqa,ms1,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,8,52,0.1007894626539981
+hotpotqa,ms1,balance_graph,graph,all,every evaluated query (no filter),52,52,-0.0013331431139732104
+hotpotqa,ms1,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,33,52,-0.0021007103614123315
+hotpotqa,ms1,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,33,52,-0.0021007103614123315
+hotpotqa,ms1,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,14,52,-0.004951674423329068
+hotpotqa,ms1,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,52,-0.06932344192660694
+hotpotqa,ms1,markov_graph,graph,all,every evaluated query (no filter),52,52,-0.002287635243305768
+hotpotqa,ms1,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,33,52,-0.003604758565209089
+hotpotqa,ms1,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,33,52,-0.003604758565209089
+hotpotqa,ms1,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,18,52,-0.006608724036216663
+hotpotqa,ms1,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,3,52,-0.03965234421729998
+hotpotqa,ms1,copeland_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.01226673280326149
+hotpotqa,ms1,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,33,52,0.019329397144533255
+hotpotqa,ms1,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,33,52,0.019329397144533255
+hotpotqa,ms1,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,22,52,0.028994095716799884
+hotpotqa,ms1,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,3,52,0.21262336858986583
+hotpotqa,ms1,balance_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.004351815106363783
+hotpotqa,ms1,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,33,52,0.0068574056221489925
+hotpotqa,ms1,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,33,52,0.0068574056221489925
+hotpotqa,ms1,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,7,52,0.03232776936155953
+hotpotqa,ms1,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,52,0.22629438553091674
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,1,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,1,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,1,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms1_drop_mutual,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,1,52,0.0
+hotpotqa,ms1_drop_mutual,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,1,52,0.0
+hotpotqa,ms1_drop_mutual,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,markov_graph,graph,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms1_drop_mutual,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,1,52,0.0
+hotpotqa,ms1_drop_mutual,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,1,52,0.0
+hotpotqa,ms1_drop_mutual,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,1,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,1,52,0.0
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,all,every evaluated query (no filter),52,52,0.0
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,1,52,0.0
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,1,52,0.0
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,52,
+hotpotqa,ms1_drop_mutual,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,52,
+bright,ms2,copeland_graph,graph,all,every evaluated query (no filter),50,50,0.0
+bright,ms2,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,50,
+bright,ms2,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,0,50,
+bright,ms2,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,50,
+bright,ms2,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms2,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,50,
+bright,ms2,balance_graph,graph,all,every evaluated query (no filter),50,50,0.0
+bright,ms2,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,50,
+bright,ms2,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,0,50,
+bright,ms2,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,50,
+bright,ms2,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms2,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,50,
+bright,ms2,markov_graph,graph,all,every evaluated query (no filter),50,50,0.0
+bright,ms2,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,50,
+bright,ms2,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,0,50,
+bright,ms2,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,50,
+bright,ms2,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms2,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,50,
+bright,ms2,copeland_hybrid,hybrid,all,every evaluated query (no filter),50,50,0.0
+bright,ms2,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,50,
+bright,ms2,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,50,
+bright,ms2,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,50,
+bright,ms2,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms2,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,50,
+bright,ms2,balance_hybrid,hybrid,all,every evaluated query (no filter),50,50,0.0
+bright,ms2,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,0,50,
+bright,ms2,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,0,50,
+bright,ms2,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,0,50,
+bright,ms2,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms2,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,0,50,
+bright,ms1,copeland_graph,graph,all,every evaluated query (no filter),50,50,-0.014041497577935986
+bright,ms1,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,46,50,-0.015262497367321725
+bright,ms1,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,46,50,-0.015262497367321725
+bright,ms1,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,45,50,-0.01560166397548443
+bright,ms1,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,30,50,-0.02361186329454693
+bright,ms1,balance_graph,graph,all,every evaluated query (no filter),50,50,0.0004451165495483156
+bright,ms1,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,46,50,0.0004838223364655604
+bright,ms1,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,46,50,0.0004838223364655604
+bright,ms1,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,37,50,0.000601508850740967
+bright,ms1,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,18,50,0.0012364348598564322
+bright,ms1,markov_graph,graph,all,every evaluated query (no filter),50,50,-0.007513713663229774
+bright,ms1,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,46,50,-0.008167080068728015
+bright,ms1,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,46,50,-0.008167080068728015
+bright,ms1,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,40,50,-0.009392142079037217
+bright,ms1,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,17,50,-0.024354314906210678
+bright,ms1,copeland_hybrid,hybrid,all,every evaluated query (no filter),50,50,0.000601579547462045
+bright,ms1,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,46,50,0.0006538908124587446
+bright,ms1,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,46,50,0.0006538908124587446
+bright,ms1,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,38,50,0.0007915520361342698
+bright,ms1,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,17,50,0.014647735983641596
+bright,ms1,balance_hybrid,hybrid,all,every evaluated query (no filter),50,50,-0.007220815414619868
+bright,ms1,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,46,50,-0.007848712407195509
+bright,ms1,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,46,50,-0.007848712407195509
+bright,ms1,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,20,50,-0.01805203853654967
+bright,ms1,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,8,50,-0.045130096341374173
+bright,ms1_drop_mutual,copeland_graph,graph,all,every evaluated query (no filter),50,50,0.00017972384514734928
+bright,ms1_drop_mutual,copeland_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,11,50,0.0008169265688515877
+bright,ms1_drop_mutual,copeland_graph,graph,repair_active,queries where repair actually removed at least one edge,11,50,0.0008169265688515877
+bright,ms1_drop_mutual,copeland_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,10,50,0.0008986192257367465
+bright,ms1_drop_mutual,copeland_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1_drop_mutual,copeland_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,5,50,0.001797238451473493
+bright,ms1_drop_mutual,balance_graph,graph,all,every evaluated query (no filter),50,50,0.00010718480122968055
+bright,ms1_drop_mutual,balance_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,11,50,0.0004872036419530934
+bright,ms1_drop_mutual,balance_graph,graph,repair_active,queries where repair actually removed at least one edge,11,50,0.0004872036419530934
+bright,ms1_drop_mutual,balance_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,6,50,0.0008932066769140046
+bright,ms1_drop_mutual,balance_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1_drop_mutual,balance_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,50,0.005359240061484027
+bright,ms1_drop_mutual,markov_graph,graph,all,every evaluated query (no filter),50,50,0.0006887678870840718
+bright,ms1_drop_mutual,markov_graph,graph,has_cycle,queries whose unrepaired graph contains at least one directed cycle,11,50,0.0031307631231094176
+bright,ms1_drop_mutual,markov_graph,graph,repair_active,queries where repair actually removed at least one edge,11,50,0.0031307631231094176
+bright,ms1_drop_mutual,markov_graph,graph,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,7,50,0.004919770622029085
+bright,ms1_drop_mutual,markov_graph,graph,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1_drop_mutual,markov_graph,graph,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,3,50,0.01147946478473453
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,all,every evaluated query (no filter),50,50,0.00016848164797221842
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,11,50,0.0007658256726009928
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,11,50,0.0007658256726009928
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,10,50,0.0008424082398610921
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1_drop_mutual,copeland_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,2,50,0.004212041199305461
+bright,ms1_drop_mutual,balance_hybrid,hybrid,all,every evaluated query (no filter),50,50,7.65555966378506e-05
+bright,ms1_drop_mutual,balance_hybrid,hybrid,has_cycle,queries whose unrepaired graph contains at least one directed cycle,11,50,0.0003479799847175028
+bright,ms1_drop_mutual,balance_hybrid,hybrid,repair_active,queries where repair actually removed at least one edge,11,50,0.0003479799847175028
+bright,ms1_drop_mutual,balance_hybrid,hybrid,ranking_changed,queries where the repaired method's full ranking differs from unrepaired,2,50,0.0019138899159462652
+bright,ms1_drop_mutual,balance_hybrid,hybrid,topk_changed,queries where the top-k document set differs between repaired and unrepaired,0,50,
+bright,ms1_drop_mutual,balance_hybrid,hybrid,relevance_order_changed,queries where pairwise agreement with the qrels-derived reference ordering changed between repaired and unrepaired,1,50,0.0038277798318925305

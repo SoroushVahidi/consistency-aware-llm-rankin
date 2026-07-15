@@ -1,0 +1,13 @@
+dataset,regime,n_queries_evaluated,n_queries_fairness_checked,n_fairness_violations,all_methods_share_identical_candidate_pool
+scidocs,ms2,120,120,0,True
+scidocs,ms1,120,120,0,True
+scidocs,ms1_drop_mutual,120,120,0,True
+fiqa,ms2,120,120,0,True
+fiqa,ms1,120,120,0,True
+fiqa,ms1_drop_mutual,120,120,0,True
+hotpotqa,ms2,52,52,0,True
+hotpotqa,ms1,52,52,0,True
+hotpotqa,ms1_drop_mutual,52,52,0,True
+bright,ms2,50,50,0,True
+bright,ms1,50,50,0,True
+bright,ms1_drop_mutual,50,50,0,True

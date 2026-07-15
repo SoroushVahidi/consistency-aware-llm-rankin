@@ -1,5 +1,13 @@
 # Reproduction Guide (Q1 Journal Package)
 
+> **SUPERSEDED for the current JDIQ 2026 manuscript.** This guide
+> reproduces an older results package (`outputs/pub_vote_cmp_all4/`,
+> `outputs/pub_vote_cmp_v2/`) that predates the `reports/full_calibrated_core/`
+> pipeline the current `papers/JDIQ_2026/manuscript/main.tex` actually
+> cites. For the current manuscript, use
+> `docs/REPRODUCTION_CANONICAL.md` instead. Kept here unmodified for
+> historical reference to the earlier Q1 package it documents.
+
 > **Purpose:** Exact commands to reproduce every result referenced in the
 > journal manuscript, from environment setup through final tables and figures.
 > The guide is self-contained and uses only standard shell commands.

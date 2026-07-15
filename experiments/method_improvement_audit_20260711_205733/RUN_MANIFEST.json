@@ -1,0 +1,86 @@
+{
+  "session_name": "method_improvement_audit",
+  "workspace": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733",
+  "repo": "/home/soroush/consistency-aware-llm-rankin",
+  "started_at": "2026-07-11 21:11:50",
+  "python": "/home/soroush/modal-venv/bin/python",
+  "phases": {
+    "phase0": {
+      "title": "Canonical baseline identification",
+      "started_at": "2026-07-11 21:11:50",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:11:50"
+    },
+    "phase1_inputs": {
+      "title": "Canonical logged rerun input generation",
+      "started_at": "2026-07-11 21:11:50",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:26"
+    },
+    "phase1_failure": {
+      "title": "Failure-path decomposition",
+      "started_at": "2026-07-11 21:16:26",
+      "status": "failed",
+      "finished_at": "2026-07-11 21:16:27",
+      "failures": [
+        {
+          "phase": "phase1_failure",
+          "task": "Failure-path decomposition",
+          "error_type": "KeyError",
+          "error": "'ranked_doc_ids'",
+          "traceback": "Traceback (most recent call last):\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 393, in _run_phase\n    fn()\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 1137, in phase1_failure_paths\n    records = self._canonical_records()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 1108, in _canonical_records\n    score_maps = self._load_score_maps(spec.dataset)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 627, in _load_score_maps\n    return load_multi_scorer_rankings(self.score_file_map[dataset])\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/unified_loader.py\", line 392, in load_multi_scorer_rankings\n    result[name] = load_score_rankings(path)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/unified_loader.py\", line 369, in load_score_rankings\n    rec = CandidateRanking.from_dict(json.loads(line))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/schema.py\", line 106, in from_dict\n    ranked_doc_ids=[str(x) for x in d[\"ranked_doc_ids\"]],\n                                    ~^^^^^^^^^^^^^^^^^^\nKeyError: 'ranked_doc_ids'\n",
+          "time": "2026-07-11 21:16:27"
+        }
+      ]
+    },
+    "phase2_frontier": {
+      "title": "Candidate frontier and oracle analysis",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:27"
+    },
+    "phase3_fusion": {
+      "title": "Extraction and fusion audit",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:27"
+    },
+    "phase4_repair": {
+      "title": "Repair-method comparison",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:27"
+    },
+    "phase5_graph": {
+      "title": "Pre-repair graph construction audit",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "failed",
+      "finished_at": "2026-07-11 21:16:27",
+      "failures": [
+        {
+          "phase": "phase5_graph",
+          "task": "Pre-repair graph construction audit",
+          "error_type": "KeyError",
+          "error": "'ranked_doc_ids'",
+          "traceback": "Traceback (most recent call last):\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 393, in _run_phase\n    fn()\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 1649, in phase5_graph_construction\n    score_maps = self._load_score_maps(spec.dataset)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py\", line 627, in _load_score_maps\n    return load_multi_scorer_rankings(self.score_file_map[dataset])\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/unified_loader.py\", line 392, in load_multi_scorer_rankings\n    result[name] = load_score_rankings(path)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/unified_loader.py\", line 369, in load_score_rankings\n    rec = CandidateRanking.from_dict(json.loads(line))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/soroush/consistency-aware-llm-rankin/src/consistency_ranker/data/schema.py\", line 106, in from_dict\n    ranked_doc_ids=[str(x) for x in d[\"ranked_doc_ids\"]],\n                                    ~^^^^^^^^^^^^^^^^^^\nKeyError: 'ranked_doc_ids'\n",
+          "time": "2026-07-11 21:16:27"
+        }
+      ]
+    },
+    "phase6_policy": {
+      "title": "Regime-aware transparent policy feasibility",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:27"
+    },
+    "phase7_contrib": {
+      "title": "Contribution analysis",
+      "started_at": "2026-07-11 21:16:27",
+      "status": "completed",
+      "finished_at": "2026-07-11 21:16:27"
+    }
+  },
+  "status": "completed_with_failures",
+  "outputs": {},
+  "finished_at": "2026-07-11 21:16:27"
+}

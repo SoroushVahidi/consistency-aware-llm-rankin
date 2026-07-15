@@ -23,7 +23,11 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
 
 5. **Code map**  
    - Core library: `src/consistency_ranker/`  
-   - MWFAS: `greedy_fas.py`, `mwfas_solver.py` (exact **Gurobi** ILP + greedy); optional **metric-aware** reweighting before FAS: `metric_aware_repair.py`, `scripts/run_real_experiment.py --repair-weighting …`  
+   - MWFAS: `greedy_fas.py`, `mwfas_solver.py` (greedy + exact ILP via the free, open-source
+     **SCIP**/PySCIPOpt solver — `method="scip"`/`"exact"`/`"ilp"`, no license required; a
+     `method="gurobi"` legacy backend also exists but is never required); optional
+     **metric-aware** reweighting before FAS: `metric_aware_repair.py`,
+     `scripts/run_real_experiment.py --repair-weighting …`  
    - Datasets: `data/dataset_registry.py`, loaders under `data/`  
    - Publication pipeline: `scripts/run_publication_vote_suite.py` → `build_paper_evidence_package.py`
 
@@ -31,12 +35,17 @@ This repository is a **research codebase** for *consistency-aware ranking* from 
    - [`../reports/repo_publication_audit.md`](../reports/repo_publication_audit.md) — canonical package, v2 vs all4, safe framing  
    - [`../reports/README.md`](../reports/README.md) — index of CSV/claim matrices
 
-7. **Environment notes (Gurobi / exact solver)**
-   - Use a conda env with `gurobipy` installed when running the Gurobi-backed exact solver.
-   - Do **not** point `GRB_LICENSE_FILE` at an expired license file if the default works.
+7. **Environment notes (exact solver)**
+   - The canonical exact MWFAS solver is free and open-source: `pip install
+     "consistency-ranker[exact]"` (installs PySCIPOpt/SCIP). No license or environment
+     variables needed.
+   - A `method="gurobi"` legacy backend exists only for users who already have a licensed
+     Gurobi install; it is never required and no test or reproduction step depends on it.
+     If you do use it, do **not** point `GRB_LICENSE_FILE` at an expired license file if
+     the default works.
 
 ## What not to confuse
 
 - **Code support for a dataset** ≠ **local raw/processed files present** — data must be downloaded/prepared (see `README.md`).
 - **Registry ids** include `nfcorpus`, `msmarco_passage`, `trec_dl_passage`, `robust04` (see `src/consistency_ranker/data/dataset_registry.py`). `trec_dl_passage` and `robust04` need optional **ir-datasets** for automated download; MS MARCO passage uses a **streamed** cap via `--max-docs`.
-- **Stub vs exact:** `mwfas_solver.solve(..., method="ilp")` is a **real Gurobi** formulation (not a stub), subject to solver availability.
+- **Stub vs exact:** `mwfas_solver.solve(..., method="ilp")` (aliases: `"exact"`, `"scip"`) is a **real** linear-ordering MIP solved by the free, open-source SCIP solver (not a stub, and not tied to Gurobi — `method="gurobi"` is a separate, optional legacy backend).

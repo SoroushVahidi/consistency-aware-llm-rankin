@@ -1,0 +1,13 @@
+dataset,protocol,protocol_label,regime,usable_query_count,cyclic_query_pct,cyclic_query_pct_after_mutual_deletion,mean_largest_scc,mean_largest_scc_after_mutual_deletion,scc_count_gt1,directed_triangle_count
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1,120,0.9916666666666667,0.10833333333333334,16.166666666666668,1.9083333333333334,1.1083333333333334,128.03333333333333
+scidocs,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,120,0.11666666666666667,0.11666666666666667,1.9333333333333333,1.9333333333333333,0.125,0.4
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,120,0.0,0.0,1.0,1.0,0.0,0.0
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,120,0.9833333333333333,0.30833333333333335,16.125,3.325,1.1416666666666666,98.39166666666667
+fiqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,120,0.30833333333333335,0.30833333333333335,3.3833333333333333,3.3833333333333333,0.31666666666666665,0.7166666666666667
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms2,52,0.0,0.0,1.0,1.0,0.0,0.0
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1,52,0.6346153846153846,0.019230769230769232,4.0576923076923075,1.1346153846153846,0.7884615384615384,7.634615384615385
+hotpotqa,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,52,0.019230769230769232,0.019230769230769232,1.1346153846153846,1.1346153846153846,0.019230769230769232,0.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms2,50,0.0,0.0,1.0,1.0,0.0,0.0
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1,50,0.92,0.22,10.82,3.1,1.04,48.44
+bright,primary_minmax_retention_matched,minmax + retention-matched,ms1_drop_mutual,50,0.22,0.22,3.08,3.08,0.22,0.36
