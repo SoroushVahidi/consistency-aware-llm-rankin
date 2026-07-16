@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={JDIQ Submission Highlights},
+  pdfauthor={},
+  pdfsubject={Anonymous submission highlights},
+  pdfcreator={LaTeX},
+  pdfproducer={LaTeX},
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\Large Submission Highlights}\\[0.75em]
+{\normalsize Data Quality for Derived Preference Graphs: Construction Sensitivity and Repair Outcomes in Multi-Ranker Retrieval}
+\end{center}
+
+\vspace{0.75em}
+
+\begin{itemize}
+  \item Preference graphs built from heterogeneous retrieval scores are treated as derived data artifacts, not as trusted raw inputs to graph repair.
+  \item A compact seven-dimension data-quality audit framework separates provenance, calibration, vote semantics, conflict structure, repair quality, downstream utility, and reproducibility.
+  \item Raw score margins are strongly scale dominated: BM25's conditional mean edge-weight share is 0.988 under raw construction but 0.512 after per-query, per-ranker normalization.
+  \item Repair changes graph structure and, under genuine $P > k$ evaluation, can change top-$k$ membership, but no repaired-versus-unrepaired nDCG family in this study survives the primary Holm corrections.
+  \item Exact SCIP repair improves the structural objective without revealing a reliable retrieval gain, yielding a practitioner-facing conclusion: normalization, vote construction, pooling, and evaluation cutoffs must be reported as first-class data-quality choices.
+\end{itemize}
+
+\end{document}

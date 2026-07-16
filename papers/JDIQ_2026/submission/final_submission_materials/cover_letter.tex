@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Anonymous JDIQ Cover Letter},
+  pdfauthor={},
+  pdfsubject={Anonymous cover letter for JDIQ submission},
+  pdfcreator={LaTeX},
+  pdfproducer={LaTeX},
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{flushright}
+July 15, 2026
+\end{flushright}
+
+Editor-in-Chief\\
+ACM Journal of Data and Information Quality (JDIQ)
+
+\vspace{1em}
+
+Dear Editor,
+
+We submit the anonymous manuscript ``Data Quality for Derived Preference
+Graphs: Construction Sensitivity and Repair Outcomes in Multi-Ranker
+Retrieval'' for consideration at the ACM Journal of Data and Information
+Quality.
+
+The paper's central contribution is methodological rather than algorithmic.
+It treats query-specific preference graphs as derived data artifacts whose
+properties depend on score normalization, vote construction, candidate
+pooling, conflict handling, and evaluation design before any repair method
+is applied. It then organizes that problem into a compact operational audit
+framework and evaluates the resulting construction sensitivity across four
+retrieval benchmarks.
+
+The main empirical finding is that raw heterogeneous score margins create a
+scale-dominated graph, while normalized construction materially changes the
+graph being repaired. Repair remains structurally active, and under genuine
+$P > k$ evaluation it can change top-$k$ membership, but no repaired-versus-
+unrepaired nDCG family in this study survives the primary Holm-corrected
+inference. Exact SCIP repair improves the structural objective without
+revealing a reliable retrieval gain that greedy repair missed.
+
+We believe this framing fits JDIQ because it centers data quality in a
+derived analytical artifact, separates intrinsic graph quality from
+task-context utility, and converts that distinction into a reproducible
+audit procedure with practical guidance.
+
+An anonymous supplementary ZIP accompanies the submission and includes the
+final supplement, canonical source code, aggregate intermediate tables,
+figure- and table-generation scripts, validation outputs, and frozen
+reproduction metadata.
+
+Thank you for your consideration.
+
+\vspace{1em}
+
+Sincerely,\\
+Anonymous Author(s)
+
+\end{document}
