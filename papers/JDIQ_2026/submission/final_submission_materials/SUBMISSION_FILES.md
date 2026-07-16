@@ -2,6 +2,6 @@
 
 Title Page
 - file path: `papers/JDIQ_2026/submission/final_submission_materials/title_page.pdf`
-- SHA-256: `ed85c61848760fbdbecbbf8e3078d60bbaa9de271bed77920da166545023e25f`
+- SHA-256: `e4e8bb92b14483b7957a58f52eed831fb371f1acdebab3a9e0f376864d125b2b`
 - anonymous: `NO`
 - intended upload designation: `Title Page`
