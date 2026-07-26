@@ -7,7 +7,7 @@ Primary analysis: unrepaired vs greedy (and exact where available) Copeland rank
 - Review-boundary commits:
   - `361433358b756965ab8ae2459892019f3ba9f4f9` — Enforce Outcome F production operating point
   - `51fec8908918ef5ba79c6fc91dc049d223c34a2b` — Add Outcome F audit and reviewer concern gap reports
-- Scientific replay commit: recorded after this report is committed (see git log)
+- Scientific replay commit:  — offline real-query repair/policy-utility replay
 - Output dir: `reports/real_query_policy_replay_20260726T042025Z`
 - Network calls: **0**
 - Local cache dependencies: see `canonical_evidence_manifest.json`
