@@ -130,6 +130,16 @@ def topological_ranking(graph: nx.DiGraph) -> list[str]:
     ------
     networkx.NetworkXUnfeasible
         If *graph* contains a cycle.
+
+    Notes
+    -----
+    NetworkX's default topological sort is **not** guaranteed to be the
+    lexicographic (min-id) Kahn order.  For an explicit lexicographic baseline
+    use
+    :func:`consistency_ranker.dag_linear_extensions.lexicographic_topological_ranking`.
+    For prior-guided source selection use :func:`priority_topological_ranking`
+    or the hard-constraint family in
+    :mod:`consistency_ranker.dag_linear_extensions`.
     """
     if not nx.is_directed_acyclic_graph(graph):
         raise nx.NetworkXUnfeasible(
