@@ -81,5 +81,8 @@ select = ["E", "F", "W", "I"]
 [tool.ruff.lint.per-file-ignores]
 # Experiment orchestration scripts are tabular and intentionally dense.
 "scripts/run_policy_selection_experiment.py" = ["E501"]
+"scripts/run_real_query_policy_replay.py" = ["E501"]
 "tests/test_policy_selection.py" = ["E501"]
+"tests/test_real_query_policy_replay.py" = ["E501"]
 "src/consistency_ranker/policy_selection/*.py" = ["E501"]
+"src/consistency_ranker/real_query_replay/*.py" = ["E501"]

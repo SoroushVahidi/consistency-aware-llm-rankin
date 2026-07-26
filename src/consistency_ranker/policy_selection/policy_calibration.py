@@ -13,7 +13,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
-from consistency_ranker.policy_selection.gate_features import FEATURE_SCHEMA_VERSION
+from consistency_ranker.policy_selection.gate_features import (
+    FEATURE_SCHEMA_VERSION,
+    assert_schemas_compatible,
+    resolve_feature_schema,
+)
 
 ModelKind = Literal[
     "logistic",
@@ -93,15 +97,48 @@ class CalibratedModel:
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> "CalibratedModel":
-        if d.get("schema_version") != FEATURE_SCHEMA_VERSION:
-            raise ValueError(
-                f"Incompatible feature schema {d.get('schema_version')!r}; "
-                f"expected {FEATURE_SCHEMA_VERSION!r}"
-            )
+        raw_schema = d.get("schema_version", FEATURE_SCHEMA_VERSION)
+        schema = resolve_feature_schema(raw_schema)
+        # Default loaders still expect the legacy Outcome F schema unless the
+        # caller passes an explicit expected_schema via load(..., expected_schema=...).
+        assert_schemas_compatible(schema, FEATURE_SCHEMA_VERSION)
         return cls(
             kind=d["kind"],
             feature_names=list(d["feature_names"]),
-            schema_version=d["schema_version"],
+            schema_version=schema,
+            weights=list(d.get("weights") or []),
+            bias=float(d.get("bias") or 0.0),
+            class_weights={k: list(v) for k, v in (d.get("class_weights") or {}).items()},
+            class_biases=dict(d.get("class_biases") or {}),
+            classes=list(d.get("classes") or []),
+            iso_x=list(d.get("iso_x") or []),
+            iso_y=list(d.get("iso_y") or []),
+            beta_a=float(d.get("beta_a", 1.0)),
+            beta_b=float(d.get("beta_b", 0.0)),
+            beta_c=float(d.get("beta_c", 0.0)),
+            tree_feat=int(d.get("tree_feat", 0)),
+            tree_threshold=float(d.get("tree_threshold", 0.5)),
+            tree_left=float(d.get("tree_left", 0.3)),
+            tree_right=float(d.get("tree_right", 0.7)),
+            training_regimes=list(d.get("training_regimes") or []),
+            target_name=str(d.get("target_name", "uht_optimal")),
+            n_train=int(d.get("n_train") or 0),
+            metadata=dict(d.get("metadata") or {}),
+        )
+
+    @classmethod
+    def from_dict_for_schema(
+        cls, d: dict[str, Any], *, expected_schema: str
+    ) -> "CalibratedModel":
+        """Load a model only when its schema matches ``expected_schema``."""
+        raw_schema = d.get("schema_version", FEATURE_SCHEMA_VERSION)
+        schema = resolve_feature_schema(raw_schema)
+        assert_schemas_compatible(schema, expected_schema)
+        # Bypass the default legacy-only from_dict check by constructing directly.
+        return cls(
+            kind=d["kind"],
+            feature_names=list(d["feature_names"]),
+            schema_version=schema,
             weights=list(d.get("weights") or []),
             bias=float(d.get("bias") or 0.0),
             class_weights={k: list(v) for k, v in (d.get("class_weights") or {}).items()},

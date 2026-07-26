@@ -1,0 +1,128 @@
+{
+  "adverse_safeguard_cells": [
+    {
+      "n_items": 8,
+      "budget": 8,
+      "seed": 1,
+      "top_k": 3,
+      "prior_regime": "outsider_buried",
+      "judge_regime": "clean",
+      "reserved_safety_calls": 2,
+      "plain_uht_calls": 8,
+      "production_uht_calls": 8,
+      "call_delta": 0,
+      "plain_uht_topk_jaccard": 0.5,
+      "production_uht_topk_jaccard": 0.2,
+      "jaccard_delta": -0.3,
+      "executed_policy": "UHT",
+      "outsider_probe_executed": true,
+      "final_challenger_executed": true,
+      "cell_id": "n8_b8_s1"
+    },
+    {
+      "n_items": 16,
+      "budget": 8,
+      "seed": 1,
+      "top_k": 3,
+      "prior_regime": "outsider_buried",
+      "judge_regime": "clean",
+      "reserved_safety_calls": 2,
+      "plain_uht_calls": 8,
+      "production_uht_calls": 8,
+      "call_delta": 0,
+      "plain_uht_topk_jaccard": 0.5,
+      "production_uht_topk_jaccard": 0.2,
+      "jaccard_delta": -0.3,
+      "executed_policy": "UHT",
+      "outsider_probe_executed": true,
+      "final_challenger_executed": true,
+      "cell_id": "n16_b8_s1"
+    },
+    {
+      "n_items": 20,
+      "budget": 8,
+      "seed": 1,
+      "top_k": 3,
+      "prior_regime": "outsider_buried",
+      "judge_regime": "clean",
+      "reserved_safety_calls": 2,
+      "plain_uht_calls": 8,
+      "production_uht_calls": 8,
+      "call_delta": 0,
+      "plain_uht_topk_jaccard": 0.5,
+      "production_uht_topk_jaccard": 0.2,
+      "jaccard_delta": -0.3,
+      "executed_policy": "UHT",
+      "outsider_probe_executed": true,
+      "final_challenger_executed": true,
+      "cell_id": "n20_b8_s1"
+    }
+  ],
+  "queries_where_repair_hurts": [
+    {
+      "dataset": "scidocs",
+      "query_id": "4ec90b7da43e6438cbdc756624b1083f30288064",
+      "repair_gain": -0.09880002404771682
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "1a66df57f88e689438d505474eff73e3a9180c5b",
+      "repair_gain": -0.07244655218021367
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "28f3343d2419147213e7580934cfc4e0cb88b088",
+      "repair_gain": -0.0722410091564275
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "b8397b4418bb1d576210d9a39d44725d6ffb2a44",
+      "repair_gain": -0.039075217475442514
+    },
+    {
+      "dataset": "hotpotqa",
+      "query_id": "5ac560235542993e66e82396",
+      "repair_gain": -0.030645620126519446
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "29373c5bb0d60320844905916aec09d64c24cd79",
+      "repair_gain": -0.02910768238943018
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "a829c1093eb4d78a198ebb9b4a33a8137b0359df",
+      "repair_gain": -0.02910768238943018
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "8bb3a478db8951f42198a885d7245d58036ba55c",
+      "repair_gain": -0.018151675754469743
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "6f54a7933235ced5684e3bff18f7e5dc40510018",
+      "repair_gain": -0.015014115926515026
+    },
+    {
+      "dataset": "hotpotqa",
+      "query_id": "5ae504a855429908b63264df",
+      "repair_gain": -0.008850706837702726
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "e5adfc2f23602a5256e89b84615e1434e5375f0e",
+      "repair_gain": -0.007757900941622098
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "b47402a9a68f23b548ae6e0349700ea651b7a373",
+      "repair_gain": -0.0060602693906082195
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "dc344ea8e993584b924522d95febaeb74de2ad30",
+      "repair_gain": -0.004895737244352216
+    }
+  ]
+}

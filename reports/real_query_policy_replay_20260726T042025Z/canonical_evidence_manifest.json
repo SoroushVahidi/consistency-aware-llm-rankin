@@ -1,0 +1,4021 @@
+{
+  "duplicates": [
+    {
+      "action": "prefer_canonical_q50",
+      "canonical_source": "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15",
+      "kind": "nested_subset",
+      "subset_n": 3150,
+      "subset_path": "outputs/openai_scidocs_real_pairwise_q30_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "subset_sha256": "67aa3cb1b9a9b8d62c03a755c7991aba98884825c5f7ba8373bbc7a0df848a05"
+    },
+    {
+      "action": "prefer_canonical_q50",
+      "canonical_source": "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15",
+      "kind": "nested_subset",
+      "subset_n": 2100,
+      "subset_path": "outputs/openai_scidocs_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "subset_sha256": "188dd3a89ff7d1c04145ecf43a4222794c41ac284d3c2863d78c4eb76a2fb868"
+    }
+  ],
+  "missing_cells": [
+    {
+      "dataset": "scidocs",
+      "detail": "multi-provider pilot has only 2 queries; not 30\u201340\u00d72\u00d72\u00d7orient",
+      "n_queries": 2,
+      "reason": "matched_factorial_incomplete"
+    }
+  ],
+  "queries": [
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 25,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:0",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 26,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:1",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 44,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:10",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 50,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:11",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 64,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:12",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 46,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:13",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 24,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:14",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 17,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:15",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 16,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:16",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 55,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:17",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 18,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:18",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 29,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:19",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 43,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:2",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 29,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:20",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 43,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:21",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 43,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:22",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 12,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:23",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 38,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:24",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 34,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:3",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 46,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:4",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 46,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:5",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 48,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:6",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 48,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:7",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 55,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:8",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "bright",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 52,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "biology:9",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 41,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "0",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 1,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "105",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 1,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "107",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 51,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "11",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 58,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "12",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 32,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "13",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 56,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "14",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 38,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "16",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 40,
+      "orientations": [
+        "ab",
+        "ba",
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "azure",
+        "cohere",
+        "openai"
+      ],
+      "query_id": "19",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 47,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "20",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "21",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 48,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "23",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 51,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "25",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "27",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 44,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "28",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 49,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "30",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "31",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 54,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "32",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 53,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "33",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 52,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "35",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 47,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "36",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 49,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "37",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 49,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "4",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 1,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "456",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 1,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "457",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 6,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "48",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 21,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "481",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 1,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "493",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 41,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 10,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "524",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 48,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "6",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 3,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "608",
+      "sources": [
+        "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 35,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "7",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "fiqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 62,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "9",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a7166395542994082a3e814",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a7283355542991f9a20c4b1",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a72b8de5542994cef4bc3df",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 50,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a75e05c55429976ec32bc5f",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a7a1b845542990783324e5f",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 46,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a7bbb64554299042af8f7cc",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a7cb9b95542990527d55515",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 55,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a8133725542995ce29dcbdb",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 44,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a85b2d95542997b5ce40028",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 44,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a85ea095542994775f606a8",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a866b5b554299211dda2b23",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 44,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a877e5d5542993e715abf7d",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 39,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a87ab905542996e4f3088c1",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a88a42f554299206df2b317",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 41,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a8c7595554299585d9e36b6",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a8cec13554299441c6b9f7d",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 47,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5a8e3ea95542995a26add48d",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a8f2ba155429918e830d1b9",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5a90c8165542995651fb51ee",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 56,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ab3b0bf5542992ade7c6e39",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ab3e45655429976abd1bcd4",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 40,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ab56e32554299637185c594",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ab64285554299637185c67c",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ab6993f554299110f219a2b",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 50,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ab6d09255429954757d337d",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ab7948b5542995dae37e969",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ab925fd554299131ca42281",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ac560235542993e66e82396",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5adbf0a255429947ff17385a",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5adbf43655429947ff173864",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 50,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5adddccd5542997dc7907069",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5adf8fe55542993344016d0f",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 52,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ae0d4c9554299603e418468",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ae18d615542997283cd2229",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ae1dadf5542997f29b3c14f",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 47,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ae22b8d554299234fd0440f",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ae504a855429908b63264df",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": null,
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [],
+      "n_judgments": 45,
+      "orientations": [
+        "ab",
+        "ba"
+      ],
+      "prompts": [],
+      "providers": [
+        "azure",
+        "cohere"
+      ],
+      "query_id": "5ae6050f55429929b0807a5e",
+      "sources": [
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges",
+        "failure_mining_llm_v3_edges"
+      ],
+      "top_k": null
+    },
+    {
+      "canonical_cache": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "hotpotqa",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 45,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5ae663b05542992ae0d16316",
+      "sources": [
+        "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "09109a5375d8e2ca752bedde17ba5acad1df61cb",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "0c3ffd5f1b577e38604f361ee71feb312b5b0cab",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "0ce7927d613e66a2062516e9e85e1b9a36d54029",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "0daf48d0ce4e4200a753c28519f5761b160944fb",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "accounts/fireworks/models/gpt-oss-120b",
+        "command-r-plus-08-2024",
+        "gemini-2.5-flash",
+        "gpt-4.1-mini",
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 152,
+      "orientations": [
+        "ab",
+        "ba",
+        "none"
+      ],
+      "prompts": [
+        "concise_v1",
+        "json_ab_v1",
+        "json_tie_v1",
+        "legacy_pairwise",
+        "legacy_v1"
+      ],
+      "providers": [
+        "azure",
+        "cohere",
+        "fireworks",
+        "gemini",
+        "openai"
+      ],
+      "query_id": "1312b0d0a957fc2bbfc2612dd89ba9003c57a08c",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15",
+        "multi_provider_scidocs_pilot"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "1a66df57f88e689438d505474eff73e3a9180c5b",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "21b1180af3087c1333708a9873f6d473eabe6751",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "2747421989619d293c05b0b82a547009128ebadb",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "28f3343d2419147213e7580934cfc4e0cb88b088",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "29373c5bb0d60320844905916aec09d64c24cd79",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "3ad8328b066bedca77c858a399a77521563d5c99",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "4a343313042b654c7d85313de3d88486a1d0e9de",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "4d4dc6568e24f283f3c5bcb88f280908a35da0e3",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "4ec90b7da43e6438cbdc756624b1083f30288064",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5137d6a245dffe321df34999fa77e190c19b4c37",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "51ee97313309157219412b6f5dfb314682b33992",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "5f1f12015d55c51764be27df92de175d2de8ee0d",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "6079719b677d0abda12abcd5cd46582ca91585ad",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "661a03482f0532b7355188059b2263091ade1bae",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "6ae4d0b388aa9262e80c3eedc1cb3e5f06842368",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "6affd37b83d4fca0d0e54e5d75433a74cb142671",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "6cdbbced12bff53bcbdde3cdb6d20b4bd02a9d6c",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "6f54a7933235ced5684e3bff18f7e5dc40510018",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "7323c2d32d6cdc3604dcedc574508d042ce3821e",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "7445178858159988f2b17aa21376e13767fce5a6",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "7526f88d4ee7a380fecd05c1f92208ad94605cec",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "78495383450e02c5fe817e408726134b3084905d",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "7dcb308b9292a8bc87d6f7793d2ca5e0e19dfa40",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "866b1a9819f662ac2499be231965ded8e0323c7f",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "8bb3a478db8951f42198a885d7245d58036ba55c",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "8bb49c0658d7b7cff42c655a6d7e005372ad32ea",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "8d37da5a9f05ee71d06cc6afcc1b14f8ff83147f",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "9003fb79e7848ced3be975c3d87a9348a4b8d377",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "9e76a700f03ef476b964b27e23c071163e44c232",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "a829c1093eb4d78a198ebb9b4a33a8137b0359df",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "ac24b99a5db633ce45f053287ca806157fff9663",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "b045f045e331700cdef309e0d40b15a64cdf5b8a",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "b37225fc67e1aeeb7877c4691f9036ed5cc01efa",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "b47402a9a68f23b548ae6e0349700ea651b7a373",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "b8397b4418bb1d576210d9a39d44725d6ffb2a44",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "b8eea99bb5345329ea058072133f568f7bdd27bd",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "ba69c46c62b525941e91d0788d20b6ef91847cc4",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "bfebba8356c5d20dc6a9b2f72ff66adaf63321b7",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "c05ae45c262b270df1e99a32efa35036aae8d950",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "c20b4068be640ebaffbc56382c3e4e0bcf62664e",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "c4e76b318149a106563d53892dde801a37a637cc",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "dc344ea8e993584b924522d95febaeb74de2ad30",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "e5adfc2f23602a5256e89b84615e1434e5375f0e",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise"
+      ],
+      "providers": [
+        "openai"
+      ],
+      "query_id": "e642d6014a5762128a28f85dae2228826e682974",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+      ],
+      "top_k": 15
+    },
+    {
+      "canonical_cache": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "dataset": "scidocs",
+      "has_qrels": true,
+      "judgment_modes": [
+        "pairwise"
+      ],
+      "models": [
+        "accounts/fireworks/models/gpt-oss-120b",
+        "command-r-plus-08-2024",
+        "gemini-2.5-flash",
+        "gpt-4.1-mini",
+        "gpt-4o-mini"
+      ],
+      "n_judgments": 105,
+      "orientations": [
+        "ab",
+        "ba",
+        "none"
+      ],
+      "prompts": [
+        "legacy_pairwise",
+        "legacy_v1"
+      ],
+      "providers": [
+        "azure",
+        "cohere",
+        "fireworks",
+        "gemini",
+        "openai"
+      ],
+      "query_id": "eb3d1b885bfa800badfd79c6921a07d01491aedb",
+      "sources": [
+        "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15",
+        "multi_provider_scidocs_pilot"
+      ],
+      "top_k": 15
+    }
+  ],
+  "sources": [
+    {
+      "dataset": "scidocs",
+      "has_orientation": false,
+      "judgment_mode": "pairwise",
+      "model": "gpt-4o-mini",
+      "n_records": 5250,
+      "notes": "canonical SciDocs pairwise cache",
+      "path": "outputs/openai_scidocs_real_pairwise_q50_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "provider": "openai",
+      "sha256": "61c7f5219161276b8115cbdef69a2db748add82e5ee44511a9fee88697da79de",
+      "source_id": "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15"
+    },
+    {
+      "dataset": "scidocs",
+      "has_orientation": false,
+      "judgment_mode": "pairwise",
+      "model": "gpt-4o-mini",
+      "n_records": 3150,
+      "notes": "nested subset of SciDocs q50 \u2014 do not count as independent",
+      "path": "outputs/openai_scidocs_real_pairwise_q30_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "provider": "openai",
+      "sha256": "67aa3cb1b9a9b8d62c03a755c7991aba98884825c5f7ba8373bbc7a0df848a05",
+      "source_id": "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q30_k15"
+    },
+    {
+      "dataset": "scidocs",
+      "has_orientation": false,
+      "judgment_mode": "pairwise",
+      "model": "gpt-4o-mini",
+      "n_records": 2100,
+      "notes": "nested subset of SciDocs q50 \u2014 do not count as independent",
+      "path": "outputs/openai_scidocs_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "provider": "openai",
+      "sha256": "188dd3a89ff7d1c04145ecf43a4222794c41ac284d3c2863d78c4eb76a2fb868",
+      "source_id": "openai_scidocs_pairwise_openai_scidocs_real_run_q20_k15"
+    },
+    {
+      "dataset": "hotpotqa",
+      "has_orientation": false,
+      "judgment_mode": "pairwise",
+      "model": "gpt-4o-mini",
+      "n_records": 900,
+      "notes": "canonical SciDocs pairwise cache",
+      "path": "outputs/openai_hotpotqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "provider": "openai",
+      "sha256": "0e6986d3a5e989c4e77d2c824e65403f7cd3684d46df9b6e6f6937864dce8e41",
+      "source_id": "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15"
+    },
+    {
+      "dataset": "fiqa",
+      "has_orientation": false,
+      "judgment_mode": "pairwise",
+      "model": "gpt-4o-mini",
+      "n_records": 46,
+      "notes": "canonical SciDocs pairwise cache",
+      "path": "outputs/openai_fiqa_real_run_q20_k15/judgment_cache/llm_pairwise_judgments.jsonl",
+      "provider": "openai",
+      "sha256": "52ddf2dc755b15bda054dbcfa7c72b8b7f60e100657a7558ad5e7358ffcd269a",
+      "source_id": "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15"
+    },
+    {
+      "dataset": "scidocs",
+      "has_orientation": true,
+      "judgment_mode": "pairwise",
+      "model": "mixed",
+      "n_records": 200,
+      "notes": "2-query Stage1+partial Stage3 pilot; within-query factors only",
+      "path": "reports/multi_provider_llm_robustness_20260725T200000Z/judgment_records.jsonl",
+      "provider": "multi",
+      "sha256": "e4fd509daa5eed32d3ee561aa5a1867061085a4b546bfb5be9eea20e0e05d49f",
+      "source_id": "multi_provider_scidocs_pilot"
+    },
+    {
+      "dataset": "mixed",
+      "has_orientation": true,
+      "judgment_mode": "pairwise",
+      "model": "mixed",
+      "n_records": 200,
+      "notes": "failure-mining graphs; use with query_level_metrics for repair deltas",
+      "path": "reports/failure_mining_llm_v3/preference_edges_by_query.jsonl",
+      "provider": "azure+cohere",
+      "sha256": "918f191d2086cf33701fa19470cca84d63326b744672cf35191e3cd6166b9cb1",
+      "source_id": "failure_mining_llm_v3_edges"
+    },
+    {
+      "dataset": "mixed",
+      "has_orientation": true,
+      "judgment_mode": "pairwise",
+      "model": "mixed",
+      "n_records": 3000,
+      "notes": "precomputed repair deltas; reconstructible cross-check target",
+      "path": "reports/failure_mining_llm_v3/query_level_metrics.csv",
+      "provider": "azure+cohere",
+      "sha256": "11e725ef32b6c3e142d446a48758b06a6120aac8f413e0451bc8186e0f75c8cd",
+      "source_id": "failure_mining_llm_v3_metrics"
+    }
+  ],
+  "summary": {
+    "datasets": [
+      "bright",
+      "fiqa",
+      "hotpotqa",
+      "scidocs"
+    ],
+    "n_independent_queries": 148,
+    "n_queries_with_qrels": 148,
+    "n_sources": 8,
+    "providers": [
+      "azure",
+      "cohere",
+      "fireworks",
+      "gemini",
+      "openai"
+    ]
+  }
+}

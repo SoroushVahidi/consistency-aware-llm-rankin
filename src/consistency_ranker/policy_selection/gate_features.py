@@ -15,7 +15,10 @@ import math
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal
 
-from consistency_ranker.prior_robust.prior_dependence import evidence_fraction_summary
+from consistency_ranker.prior_robust.prior_dependence import (
+    evidence_fraction_summary,
+    topk_evidence_coverage,
+)
 from consistency_ranker.prior_robust.prior_quality import (
     cross_prior_kendall,
     judgment_prior_agreement,
@@ -26,9 +29,22 @@ from consistency_ranker.prior_robust.prior_quality import (
 if TYPE_CHECKING:
     from consistency_ranker.adaptive_acquisition.acquisition_state import AcquisitionState
 
-FEATURE_SCHEMA_VERSION = "policy_gate_features_v1"
+# Historical Outcome F schema string — must never change meaning or value.
+SCHEMA_LEGACY_V1 = "policy_gate_features_v1"
+SCHEMA_COVERAGE_V2 = "policy_gate_features_coverage_v2"
+# Aliases accepted when requesting a schema; serialized form is the canonical string.
+SCHEMA_ALIASES: dict[str, str] = {
+    "legacy_v1": SCHEMA_LEGACY_V1,
+    "policy_gate_features_v1": SCHEMA_LEGACY_V1,
+    "coverage_v2": SCHEMA_COVERAGE_V2,
+    "policy_gate_features_coverage_v2": SCHEMA_COVERAGE_V2,
+}
+KNOWN_FEATURE_SCHEMAS: frozenset[str] = frozenset({SCHEMA_LEGACY_V1, SCHEMA_COVERAGE_V2})
+# Default remains legacy so frozen Outcome F / CalibratedModel loaders stay unchanged.
+FEATURE_SCHEMA_VERSION = SCHEMA_LEGACY_V1
 
 FeatureStage = Literal["pre", "probe", "online"]
+FeatureSchemaVersion = str
 
 # Ordered feature names used by calibrated models. Changing this bumps the schema.
 PRE_FEATURE_NAMES: tuple[str, ...] = (
@@ -57,6 +73,21 @@ PROBE_FEATURE_NAMES: tuple[str, ...] = (
     "ambiguity_bucket_ord",
     "n_probe_acquired",
 )
+# coverage_v2 replaces the two historically-constant probe slots with unambiguous names.
+PROBE_FEATURE_NAMES_V2: tuple[str, ...] = (
+    "weighted_agreement",
+    "reliable_contradiction_rate",
+    "agreement_rate",
+    "topk_vs_outsider_win_rate",
+    "orientation_consistency",
+    "invalid_abstention_rate",
+    "preliminary_g_prior_from_coverage",
+    "evidence_coverage_fraction",
+    "n_outsiders_defeating_insiders",
+    "n_cycles_proxy",
+    "ambiguity_bucket_ord",
+    "n_probe_acquired",
+)
 ONLINE_FEATURE_NAMES: tuple[str, ...] = (
     "current_prior_credibility",
     "challenger_success_rate",
@@ -66,6 +97,42 @@ ONLINE_FEATURE_NAMES: tuple[str, ...] = (
     "stability_correctness_warn",
     "shared_bias_score",
 )
+ONLINE_FEATURE_NAMES_V2: tuple[str, ...] = (
+    "current_prior_credibility",
+    "challenger_success_rate",
+    "acquisition_gain_proxy",
+    "evidence_topk_support",
+    "remaining_budget_frac",
+    "stability_correctness_warn_v2",
+    "shared_bias_score",
+)
+
+
+def resolve_feature_schema(schema: str | None) -> str:
+    """Map aliases to canonical schema strings; reject unknowns."""
+    if schema is None:
+        return FEATURE_SCHEMA_VERSION
+    key = str(schema).strip()
+    if key in SCHEMA_ALIASES:
+        return SCHEMA_ALIASES[key]
+    if key in KNOWN_FEATURE_SCHEMAS:
+        return key
+    raise ValueError(
+        f"Unknown feature schema {schema!r}; known={sorted(KNOWN_FEATURE_SCHEMAS)} "
+        f"aliases={sorted(SCHEMA_ALIASES)}"
+    )
+
+
+def assert_schemas_compatible(left: str, right: str) -> None:
+    """Raise unless both sides resolve to the same canonical schema."""
+    a = resolve_feature_schema(left)
+    b = resolve_feature_schema(right)
+    if a != b:
+        raise ValueError(
+            f"Incompatible feature schemas: {left!r} → {a!r} vs {right!r} → {b!r}. "
+            "legacy_v1 models cannot consume coverage_v2 vectors (and vice versa) "
+            "without an explicit adapter."
+        )
 
 
 @dataclass
@@ -87,13 +154,18 @@ class FeatureBundle:
 
     @classmethod
     def from_dict(cls, d: dict[str, Any]) -> "FeatureBundle":
-        if d.get("schema_version") != FEATURE_SCHEMA_VERSION:
-            raise ValueError(
-                f"Incompatible feature schema {d.get('schema_version')!r}; "
-                f"expected {FEATURE_SCHEMA_VERSION!r}"
+        raw = d.get("schema_version")
+        try:
+            schema = resolve_feature_schema(
+                raw if raw is not None else FEATURE_SCHEMA_VERSION
             )
+        except ValueError as exc:
+            raise ValueError(
+                f"Incompatible feature schema {raw!r}; "
+                f"known={sorted(KNOWN_FEATURE_SCHEMAS)}"
+            ) from exc
         return cls(
-            schema_version=d["schema_version"],
+            schema_version=schema,
             stage=d["stage"],
             values=dict(d["values"]),
             availability=dict(d.get("availability") or {}),
@@ -188,6 +260,7 @@ def extract_probe_features(
     state: "AcquisitionState",
     *,
     alt_priors: list[dict[str, float]] | None = None,
+    schema_version: str | None = None,
 ) -> dict[str, float]:
     agr = judgment_prior_agreement(state)
     summary = evidence_fraction_summary(state)
@@ -205,9 +278,7 @@ def extract_probe_features(
         zj = ranking.index(dj) if dj in ranking else 99
         if (zi < k) == (zj < k):
             continue
-        # one insider, one outsider
         topk_vs_out_n += 1
-        # z>0 / p_hat>0.5 ⇒ canonical doc_i preferred.
         p_hat = float(getattr(agg, "p_hat", 0.5) or 0.5)
         if abs(p_hat - 0.5) < 1e-9:
             votes = sum(1 if e.z > 0 else -1 if e.z < 0 else 0 for e in agg.evidence)
@@ -237,12 +308,9 @@ def extract_probe_features(
     view = state.view()
     amb = (view.ambiguity or {}).get("ambiguity_bucket", "low")
     amb_ord = {"low": 0.0, "medium": 0.5, "high": 1.0}.get(str(amb), 0.25)
-    # Cheap prior-dependence proxy without full Monte Carlo: 1 - evidence fraction.
-    ev_frac = float(summary.get("evidence_fraction") or 0.0)
-    g_proxy = float(max(0.0, min(1.0, 1.0 - ev_frac)))
-    sev_proxy = float(max(0.0, min(1.0, ev_frac)))
+    schema = resolve_feature_schema(schema_version)
 
-    return {
+    base = {
         "weighted_agreement": float(agr["weighted_agreement"] or 0.5),
         "reliable_contradiction_rate": float(agr["high_conf_contradiction_rate"] or 0.0),
         "agreement_rate": float(agr["agreement_rate"] or 0.5),
@@ -253,13 +321,25 @@ def extract_probe_features(
             sum(orient) / len(orient) if orient else 1.0
         ),
         "invalid_abstention_rate": (invalid / total_ev) if total_ev else 0.0,
-        "preliminary_g_prior": g_proxy,
-        "evidence_only_stability_proxy": sev_proxy,
         "n_outsiders_defeating_insiders": float(outsiders_beat) / max(k, 1),
         "n_cycles_proxy": float(min(1.0, view.max_scc_size / max(len(state.candidate_ids), 1))),
         "ambiguity_bucket_ord": float(amb_ord),
         "n_probe_acquired": float(summary.get("n_acquired") or 0) / 16.0,
     }
+
+    if schema == SCHEMA_LEGACY_V1:
+        ev_frac = float(summary.get("evidence_fraction") or 0.0)
+        g_proxy = float(max(0.0, min(1.0, 1.0 - ev_frac)))
+        sev_proxy = float(max(0.0, min(1.0, ev_frac)))
+        base["preliminary_g_prior"] = g_proxy
+        base["evidence_only_stability_proxy"] = sev_proxy
+        return base
+
+    cov = topk_evidence_coverage(state)
+    frac = float(cov.get("fraction_acquired") or 0.0)
+    base["preliminary_g_prior_from_coverage"] = float(max(0.0, min(1.0, 1.0 - frac)))
+    base["evidence_coverage_fraction"] = float(max(0.0, min(1.0, frac)))
+    return base
 
 
 def extract_online_features(
@@ -270,14 +350,18 @@ def extract_online_features(
     acquisition_gain_proxy: float = 0.0,
     shared_bias_score: float = 0.0,
     initial_budget: int | None = None,
+    schema_version: str | None = None,
 ) -> dict[str, float]:
     summary = evidence_fraction_summary(state)
-    ev_frac = float(summary.get("evidence_fraction") or 0.0)
+    schema = resolve_feature_schema(schema_version)
+    if schema == SCHEMA_LEGACY_V1:
+        # Frozen defective read (always 0.0).
+        ev_frac = float(summary.get("evidence_fraction") or 0.0)
+    else:
+        ev_frac = float(topk_evidence_coverage(state).get("fraction_acquired") or 0.0)
     init_b = float(initial_budget or max(state.remaining_budget, 1))
     rem = float(state.remaining_budget) / max(init_b, 1.0)
-    # Warning: high ordinary stability proxy but thin evidence.
     warn = 1.0 if (ev_frac < 0.25 and q_hat >= 0.55) else 0.0
-    # Evidence support for current top-k: fraction of top-k pairs with evidence.
     ranking = state.ranking
     k = state.top_k
     support = 0
@@ -289,15 +373,19 @@ def extract_online_features(
             agg = state.aggregates.get(pid)
             if agg and agg.evidence:
                 support += 1
-    return {
+    out = {
         "current_prior_credibility": float(max(0.0, min(1.0, q_hat))),
         "challenger_success_rate": float(max(0.0, min(1.0, challenger_success_rate))),
         "acquisition_gain_proxy": float(max(0.0, min(1.0, acquisition_gain_proxy))),
         "evidence_topk_support": (support / need) if need else 0.0,
         "remaining_budget_frac": float(max(0.0, min(1.0, rem))),
-        "stability_correctness_warn": warn,
         "shared_bias_score": float(max(0.0, min(1.0, shared_bias_score))),
     }
+    if schema == SCHEMA_LEGACY_V1:
+        out["stability_correctness_warn"] = warn
+    else:
+        out["stability_correctness_warn_v2"] = warn
+    return out
 
 
 def extract_features(
@@ -307,8 +395,10 @@ def extract_features(
     alt_priors: list[dict[str, float]] | None = None,
     query_text: str | None = None,
     online_kwargs: dict[str, Any] | None = None,
+    schema_version: str | None = None,
 ) -> FeatureBundle:
     """Extract features available at ``stage`` (and earlier stages)."""
+    schema = resolve_feature_schema(schema_version)
     values: dict[str, float] = {}
     availability: dict[str, FeatureStage] = {}
     pre = extract_pre_features(state, alt_priors=alt_priors, query_text=query_text)
@@ -316,17 +406,21 @@ def extract_features(
         values[name] = float(v)
         availability[name] = "pre"
     if stage in ("probe", "online"):
-        probe = extract_probe_features(state, alt_priors=alt_priors)
+        probe = extract_probe_features(
+            state, alt_priors=alt_priors, schema_version=schema
+        )
         for name, v in probe.items():
             values[name] = float(v)
             availability[name] = "probe"
     if stage == "online":
-        online = extract_online_features(state, **(online_kwargs or {}))
+        okw = dict(online_kwargs or {})
+        okw["schema_version"] = schema
+        online = extract_online_features(state, **okw)
         for name, v in online.items():
             values[name] = float(v)
             availability[name] = "online"
     return FeatureBundle(
-        schema_version=FEATURE_SCHEMA_VERSION,
+        schema_version=schema,
         stage=stage,
         values=values,
         availability=availability,
@@ -334,12 +428,21 @@ def extract_features(
     )
 
 
-def feature_names_for_stage(stage: FeatureStage) -> list[str]:
+def feature_names_for_stage(
+    stage: FeatureStage,
+    *,
+    schema_version: str | None = None,
+) -> list[str]:
+    schema = resolve_feature_schema(schema_version)
     names = list(PRE_FEATURE_NAMES)
     if stage in ("probe", "online"):
-        names.extend(PROBE_FEATURE_NAMES)
+        names.extend(
+            PROBE_FEATURE_NAMES if schema == SCHEMA_LEGACY_V1 else PROBE_FEATURE_NAMES_V2
+        )
     if stage == "online":
-        names.extend(ONLINE_FEATURE_NAMES)
+        names.extend(
+            ONLINE_FEATURE_NAMES if schema == SCHEMA_LEGACY_V1 else ONLINE_FEATURE_NAMES_V2
+        )
     return names
 
 
@@ -348,14 +451,12 @@ def features_to_vector(
     *,
     stage: FeatureStage | None = None,
     names: list[str] | None = None,
+    expected_schema: str | None = None,
 ) -> list[float]:
-    if bundle.schema_version != FEATURE_SCHEMA_VERSION:
-        raise ValueError(
-            f"Incompatible feature schema {bundle.schema_version!r}; "
-            f"expected {FEATURE_SCHEMA_VERSION!r}"
-        )
+    expected = resolve_feature_schema(expected_schema or bundle.schema_version)
+    assert_schemas_compatible(bundle.schema_version, expected)
     st = stage or bundle.stage
-    use = names or feature_names_for_stage(st)
+    use = names or feature_names_for_stage(st, schema_version=expected)
     return [float(bundle.values.get(n, 0.0)) for n in use]
 
 
@@ -369,11 +470,19 @@ def assert_no_qrel_keys(bundle: FeatureBundle) -> None:
 
 __all__ = [
     "FEATURE_SCHEMA_VERSION",
+    "SCHEMA_LEGACY_V1",
+    "SCHEMA_COVERAGE_V2",
+    "SCHEMA_ALIASES",
+    "KNOWN_FEATURE_SCHEMAS",
     "FeatureStage",
     "FeatureBundle",
     "PRE_FEATURE_NAMES",
     "PROBE_FEATURE_NAMES",
+    "PROBE_FEATURE_NAMES_V2",
     "ONLINE_FEATURE_NAMES",
+    "ONLINE_FEATURE_NAMES_V2",
+    "resolve_feature_schema",
+    "assert_schemas_compatible",
     "extract_features",
     "extract_pre_features",
     "extract_probe_features",

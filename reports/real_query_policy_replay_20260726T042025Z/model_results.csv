@@ -1,0 +1,14 @@
+name,n_queries,mean_utility_delta,n_escalated,escalation_rate,catastrophic_false_trust_rate,notes
+always_unrepaired,80,0.0,0,0.0,0.0,baseline; gain defined as repaired - unrepaired
+always_repair,80,-0.005401927423255629,80,1.0,0.1625,"sign_flip_mean_ci95=[-0.003875,0.003884]"
+oracle_repair_if_positive,80,0.0,0,0.0,0.0,"sign_flip_mean_ci95=[0.000000,0.000000]; uses outcome labels (not deployable)"
+cycle_presence,80,-0.005401927423255629,63,0.7875,0.20634920634920634,"sign_flip_mean_ci95=[-0.003875,0.003884]; feature=is_cyclic ge 0.5"
+largest_scc_frac_ge_0.25,80,-0.005401927423255629,69,0.8625,0.18840579710144928,"sign_flip_mean_ci95=[-0.003875,0.003884]; feature=largest_scc_frac ge 0.25"
+largest_scc_frac_ge_0.5,80,-0.0025516522641325042,33,0.4125,0.21212121212121213,"sign_flip_mean_ci95=[-0.002330,0.002330]; feature=largest_scc_frac ge 0.5"
+random_matched_rate_0.79,80,-0.004420592153620355,63,0.7875,0.1746031746031746,"sign_flip_mean_ci95=[-0.003239,0.003275]"
+lodo_fiqa_largest_scc_frac,10,0.0,0,0.0,0.0,"w=-1.6441,b=-4.0549; sign_flip_mean_ci95=[0.000000,0.000000]"
+lodo_hotpotqa_largest_scc_frac,20,0.0,0,0.0,0.0,"w=-1.6277,b=-4.0715; sign_flip_mean_ci95=[0.000000,0.000000]"
+lodo_scidocs_largest_scc_frac,50,0.0,0,0.0,0.0,"w=-1.7002,b=-4.0084; sign_flip_mean_ci95=[0.000000,0.000000]"
+lodo_fiqa_is_cyclic,10,0.0,0,0.0,0.0,"w=-2.2617,b=-3.2601; sign_flip_mean_ci95=[0.000000,0.000000]"
+lodo_hotpotqa_is_cyclic,20,0.0,0,0.0,0.0,"w=-1.9975,b=-3.6015; sign_flip_mean_ci95=[0.000000,0.000000]"
+lodo_scidocs_is_cyclic,50,0.0,0,0.0,0.0,"w=-1.5211,b=-4.0639; sign_flip_mean_ci95=[0.000000,0.000000]"

@@ -1,0 +1,2 @@
+dataset,detail,n_queries,reason
+scidocs,multi-provider pilot has only 2 queries; not 30–40×2×2×orient,2,matched_factorial_incomplete

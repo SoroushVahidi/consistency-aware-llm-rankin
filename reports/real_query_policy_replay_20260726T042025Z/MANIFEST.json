@@ -1,0 +1,87 @@
+{
+  "timestamp_utc": "20260726T042025Z",
+  "output_dir": "reports/real_query_policy_replay_20260726T042025Z",
+  "runtime_s": 6.3879917580634356,
+  "verdict": "NO CURRENT CRITERION BEATS ALWAYS-UHT",
+  "success_rule": {
+    "label": "exploratory_conservative",
+    "requirements": [
+      "mean utility delta vs always_unrepaired > 0",
+      "query-clustered sign-flip 95% CI reported",
+      "catastrophic_false_trust_rate does not exceed always_repair",
+      "stable sign across >1 dataset when LODO is feasible",
+      "no dependence on a single anomalous query (max |gain| share < 0.5 of total positive mass)"
+    ],
+    "note": "Not a formal risk certificate; Outcome F risk-control remains empirical-only."
+  },
+  "n_independent_queries_primary": 80,
+  "datasets": [
+    "fiqa",
+    "hotpotqa",
+    "scidocs"
+  ],
+  "providers": [
+    "openai"
+  ],
+  "evidence_summary": {
+    "n_sources": 8,
+    "n_independent_queries": 148,
+    "n_queries_with_qrels": 148,
+    "datasets": [
+      "bright",
+      "fiqa",
+      "hotpotqa",
+      "scidocs"
+    ],
+    "providers": [
+      "azure",
+      "cohere",
+      "fireworks",
+      "gemini",
+      "openai"
+    ]
+  },
+  "safeguard_summary": {
+    "n_cells": 36,
+    "mean_jaccard_delta": 0.01111111111111111,
+    "mean_call_delta": -0.16666666666666666,
+    "n_adverse_delta_lt_m0_2": 3,
+    "budget8_mean_jaccard_delta": -0.075,
+    "recommendation": "minimum-budget-constrained; diagnostically recommended but not yet empirically validated on real queries"
+  },
+  "best_deployable": {
+    "name": "always_unrepaired",
+    "n_queries": 80,
+    "mean_utility_delta": 0.0,
+    "n_escalated": 0,
+    "escalation_rate": 0.0,
+    "catastrophic_false_trust_rate": 0.0,
+    "notes": "baseline; gain defined as repaired - unrepaired"
+  },
+  "always_repair": {
+    "name": "always_repair",
+    "n_queries": 80,
+    "mean_utility_delta": -0.005401927423255629,
+    "n_escalated": 80,
+    "escalation_rate": 1.0,
+    "catastrophic_false_trust_rate": 0.1625,
+    "notes": "sign_flip_mean_ci95=[-0.003875,0.003884]"
+  },
+  "calibration": {
+    "n": 80,
+    "positive_rate_repair_helps": 0.0,
+    "mean_repair_gain": -0.005401927423255629,
+    "mean_exact_minus_greedy_ndcg": 0.011799381919800395
+  },
+  "schema_versions": {
+    "legacy_v1": "policy_gate_features_v1",
+    "coverage_v2": "policy_gate_features_coverage_v2"
+  },
+  "cache_hashes": {
+    "openai_scidocs_pairwise_openai_scidocs_real_pairwise_q50_k15": "61c7f5219161276b8115cbdef69a2db748add82e5ee44511a9fee88697da79de",
+    "openai_hotpotqa_pairwise_openai_hotpotqa_real_run_q20_k15": "0e6986d3a5e989c4e77d2c824e65403f7cd3684d46df9b6e6f6937864dce8e41",
+    "openai_fiqa_pairwise_openai_fiqa_real_run_q20_k15": "52ddf2dc755b15bda054dbcfa7c72b8b7f60e100657a7558ad5e7358ffcd269a"
+  },
+  "git_head": "51fec8908918ef5ba79c6fc91dc049d223c34a2b",
+  "network_calls": 0
+}
