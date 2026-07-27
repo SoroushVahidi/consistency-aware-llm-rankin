@@ -80,12 +80,30 @@ def provider_credential_audit() -> list[dict[str, Any]]:
 
 def smoke_test_providers(
     providers: list[str] | None = None,
+    *,
+    dry_run: bool = False,
 ) -> list[dict[str, Any]]:
-    """One cheap live call per provider. Records failure categories."""
+    """One cheap call per provider. Records failure categories.
+
+    When ``dry_run=True``, no network call is issued; each provider is marked
+    skipped so offline experiment drivers stay fail-closed by default.
+    """
     providers = providers or list(TARGET_PROVIDERS)
     results = []
     for p in providers:
         t0 = time.perf_counter()
+        if dry_run:
+            results.append(
+                {
+                    "provider": p,
+                    "ok": True,
+                    "category": "dry_run_skipped",
+                    "message": "Smoke skipped (dry_run=True); no network call.",
+                    "model": None,
+                    "latency_seconds": time.perf_counter() - t0,
+                }
+            )
+            continue
         result = health_check_provider(p)
         result["latency_seconds"] = time.perf_counter() - t0
         results.append(result)

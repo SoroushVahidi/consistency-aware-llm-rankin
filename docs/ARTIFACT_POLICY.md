@@ -52,7 +52,7 @@ If any answer is no, keep the artifact local (or archive outside Git) and docume
 | `reports/adaptive_acquisition_*`, `prior_robust_*`, `reliability_aware_repair_*`, `linear_extension_extraction_*`, `multi_provider_llm_robustness_*` | Keep local until explicitly frozen |
 | `reports/final_revision_*`, `reports/final_revision_page_limit_freeze_*`, visual audits | Keep local (large / rendering scratch) |
 | `papers/**/anonymous_supplementary/` | Outside Git (hundreds of MB) |
-| Untracked Outcome B–D driver scripts under `scripts/run_*_experiment.py` | Source commit candidates for a **later** scoped commit; not part of evidence hygiene alone |
+| Untracked Outcome B–D driver scripts under `scripts/run_*_experiment.py` | **Resolved:** canonical drivers live under `scripts/`; see `docs/experiments/OUTCOME_BCD_DRIVERS.md`. Report trees stay local until frozen. |
 
 ## `.gitignore` posture
 
