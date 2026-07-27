@@ -3,10 +3,37 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
 JUDGMENT_SCHEMA_VERSION = "counterfactual_pairwise_judgment_v1"
+
+# Matches a response that is *entirely* one markdown code fence (optionally
+# tagged ```json), e.g. "```json\n{...}\n```". Gemini's native google-genai
+# SDK path (unlike this collector's other providers, which go through an
+# OpenAI-compatible chat-completions endpoint) is not configured with
+# response_mime_type/response_schema, and is documented to wrap structured
+# output in a fence like this by default. Anchored on both ends against the
+# *stripped* full response, so it only ever unwraps a single, complete fence
+# around the whole payload -- it never scans for a JSON substring inside
+# surrounding prose, and a malformed/partial/multi-block fence simply fails
+# to match and falls through to the caller's unchanged strict json.loads.
+_FULL_FENCE_RE = re.compile(r"^```(?:json)?\s*(?P<body>.*?)\s*```$", re.DOTALL | re.IGNORECASE)
+
+
+def extract_json_payload(raw_response: str) -> tuple[str, bool]:
+    """Return (text_to_parse, wrapper_extraction_used).
+
+    Only unwraps a full-response markdown code fence; every other input is
+    returned unchanged so strict json.loads/validate_judgment still reject
+    it exactly as before this function existed.
+    """
+    stripped = raw_response.strip()
+    match = _FULL_FENCE_RE.match(stripped)
+    if match:
+        return match.group("body"), True
+    return raw_response, False
 ALLOWED_PREFERENCES = frozenset({"A", "B", "TIE", "ABSTAIN"})
 ALLOWED_EVIDENCE = frozenset({"weak", "moderate", "strong"})
 ALLOWED_REASON_CODES = frozenset(

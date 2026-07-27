@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Callable, Literal, cast
 
 from consistency_ranker.counterfactual_benchmark import config as config_mod
+from consistency_ranker.counterfactual_benchmark import pool_builder
 from consistency_ranker.counterfactual_benchmark.cache_store import JudgmentCacheStore
 from consistency_ranker.counterfactual_benchmark.dispatch import (
     call_provider,
@@ -31,8 +32,10 @@ from consistency_ranker.counterfactual_benchmark.models import (
     PairRecord,
     PlannedRequest,
 )
-from consistency_ranker.counterfactual_benchmark.pair_selection import select_shared_pairs
-from consistency_ranker.counterfactual_benchmark.pool_builder import build_candidate_pool
+from consistency_ranker.counterfactual_benchmark.pair_selection import (
+    select_shared_pairs,
+    select_shared_pairs_v2,
+)
 from consistency_ranker.counterfactual_benchmark.prompt_renderer import render_request_prompt
 from consistency_ranker.counterfactual_benchmark.query_selection import load_frozen_queries
 from consistency_ranker.counterfactual_benchmark.report import (
@@ -49,7 +52,7 @@ from consistency_ranker.counterfactual_benchmark.validation import assert_no_qre
 from consistency_ranker.counterfactual_pilot.presentation import (
     map_displayed_preference_to_document,
 )
-from consistency_ranker.counterfactual_pilot.schema import validate_judgment
+from consistency_ranker.counterfactual_pilot.schema import extract_json_payload, validate_judgment
 from consistency_ranker.counterfactual_pilot.trajectory import validate_step_record
 from consistency_ranker.experiment_cli import (
     ensure_output_dir,
@@ -66,16 +69,26 @@ class CollectorInputError(ValueError):
     pass
 
 
+_POOL_BUILDERS = {
+    pool_builder.POOL_PROTOCOL_VERSION: pool_builder.build_candidate_pool,
+    pool_builder.POOL_PROTOCOL_VERSION_V2: pool_builder.build_candidate_pool_v2,
+}
+
+
 def _build_pools(
     config: dict[str, Any], *, repo_root: Path
 ) -> tuple[list, dict[tuple[str, str], CandidatePoolRecord]]:
     frozen_queries = load_frozen_queries(config, repo_root=repo_root)
     pool_size = int(config["candidate_pool"]["pool_size"])
     max_chars = int(config["candidate_pool"]["max_candidate_chars"])
+    protocol = config["candidate_pool"]["pool_protocol_version"]
+    builder_fn = _POOL_BUILDERS.get(protocol)
+    if builder_fn is None:
+        raise CollectorInputError(f"unsupported pool_protocol_version: {protocol!r}")
     pools: dict[tuple[str, str], CandidatePoolRecord] = {}
     for fq in frozen_queries:
         documents_path = repo_root / config["datasets"][fq.dataset]["documents_path"]
-        pool = build_candidate_pool(
+        pool = builder_fn(
             dataset=fq.dataset,
             query_id=fq.query_id,
             query_text=fq.query_text,
@@ -236,15 +249,18 @@ def _resolve_live(
     preference = confidence = evidence_strength = reason_code = None
     normalized_pref = None
     parse_failed = False
+    wrapper_extraction_used = False
     success = result.error_category is None
     if success:
+        candidate_text, unwrapped = extract_json_payload(result.raw_response)
         try:
-            obj = json.loads(result.raw_response)
+            obj = json.loads(candidate_text)
             validated = validate_judgment(obj)
         except (json.JSONDecodeError, ValueError, TypeError):
             parse_failed = True
             success = False
         else:
+            wrapper_extraction_used = unwrapped
             preference = validated["preference"]
             confidence = validated["confidence"]
             evidence_strength = validated["evidence_strength"]
@@ -293,6 +309,7 @@ def _resolve_live(
         latency_seconds=result.latency_seconds,
         from_cache=False,
         parse_failed=parse_failed,
+        wrapper_extraction_used=wrapper_extraction_used,
         inference_attempted=result.error_category != "missing_credentials",
         error_category=result.error_category if not success and not parse_failed else (
             "parse_failure" if parse_failed else None
@@ -341,7 +358,10 @@ def run_collection(
     seed = int(config["generation_defaults"]["seed"])
     pairs: dict[tuple[str, str], list[PairRecord]] = {}
     for key, pool in pools.items():
-        pairs[key] = select_shared_pairs(pool, eval_k=eval_k, n_pairs=n_pairs, seed=seed)
+        if pool.pool_protocol_version == pool_builder.POOL_PROTOCOL_VERSION_V2:
+            pairs[key] = select_shared_pairs_v2(pool, eval_k=eval_k, n_pairs=n_pairs, seed=seed)
+        else:
+            pairs[key] = select_shared_pairs(pool, eval_k=eval_k, n_pairs=n_pairs, seed=seed)
 
     from consistency_ranker.counterfactual_benchmark.request_plan import build_initial_requests
 

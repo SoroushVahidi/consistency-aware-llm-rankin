@@ -316,3 +316,104 @@ superiority, oracle gap, noninferiority, production readiness.
 - Trajectory: `consistency_ranker.counterfactual_pilot.trajectory`
 - Prompt: `consistency_ranker.counterfactual_pilot.prompt`
 - Query selection: `consistency_ranker.counterfactual_pilot.query_selection`
+
+## v2 addendum: pool-quality and Gemini normalization fix (2026-07-27)
+
+`counterfactual_collector_canary_v1_20260727T145126Z` (the first bounded
+4-call canary) surfaced two defects, diagnosed and fixed without touching
+the frozen v1 artifacts above:
+
+**1. Content-sufficiency defect in `lexical_prior_pool_v1`.** The primary
+prior (`token_overlap / sqrt(doc_token_count)`) has no lower bound on
+`doc_token_count`, so a near-empty document can outscore substantive ones
+purely through the denominator. Measured directly: the canary's SciDocs
+query (`01273bd34dacfe9ef887b320f36934d2f9fa9b34`) had a pool that was
+10/10 title-only documents (empty `text` field, only a title survives
+composition), and a second frozen SciDocs query was 7/10 title-only —
+versus 0/10 for every frozen fiqa/hotpotqa/bright query. Only 1.34% of the
+SciDocs corpus has an empty `text` field; the formula, not the corpus, is
+what concentrates the pool. All three providers that parsed successfully
+in the canary returned `ABSTAIN`/`reason_code=unsupported` — a correct
+response to genuinely insufficient content, not a bug in those providers.
+
+Tested (qrels-blind, operational properties only, across all 8 frozen
+queries / 80 candidates) against raw token-overlap, plain Jaccard, an RRF
+fusion of the two v1 priors, an approximate BM25, and a bounded-denominator
+variant of the v1 formula. Raw overlap swings to the opposite failure
+(selects a document exceeding 1.8M characters in one BRIGHT query).
+Jaccard and RRF-of-the-two-v1-priors are equally or more biased toward
+short/empty documents (23.8% and 22.5% title-only, vs. v1's 21.2%) — fusing
+two similarly-biased signals does not fix the bias. The bounded-denominator
+variant (`overlap / sqrt(max(doc_token_count, 25))`) dropped title-only
+share to 1.2% and candidates below 100 rendered characters to 1.2%, with no
+new dependency and no rendering-policy change.
+
+**Fix — `lexical_prior_pool_v2`** (`pool_builder.build_candidate_pool_v2`):
+a bounded-denominator primary prior plus an explicit, pre-scoring
+document-validity gate (`document_validity_v2`): nonempty body text,
+≥15 alphabetic tokens, ≥100 substantive characters (thresholds are the
+1st-percentile nonempty-body length across all four frozen datasets,
+rounded down slightly — hotpotqa was the tightest corpus at 15
+tokens/103 chars). Excluded documents are recorded with the valid
+candidate that replaced their slot (`CandidatePoolRecord.exclusion_records`).
+`pair_selection.select_shared_pairs_v2` re-checks every pool candidate
+against the same rule before selecting pairs (defense in depth; a v2 pool
+should never contain an invalid candidate by construction). Rendering
+(`title_plus_prefix_truncate_v1`, 1,200-char cap) is unchanged — the audit
+found no independent rendering defect.
+
+`counterfactual_micro_pilot_v2` / `counterfactual_collector_canary_v2`
+change only `candidate_pool.pool_protocol_version`; frozen queries, prompt,
+judgment schema, and provider panel are identical to v1.
+`config.verify_frozen_contract` maps each `benchmark_version` to its
+required `pool_protocol_version` (`BENCHMARK_VERSION_POOL_PROTOCOL`) and
+refuses any config that combines them incorrectly.
+
+**2. Vertex AI (`gemini-2.5-flash`) `parse_failure`.** `collector.py` parsed
+every provider's raw response with a bare `json.loads(...)`. Azure and
+Fireworks are both reached through an OpenAI-compatible chat-completions
+endpoint and returned bare JSON for this prompt in both canaries. Cohere is
+also reached through an OpenAI-compatible endpoint (Cohere's own
+"compatibility" API, `https://api.cohere.ai/compatibility/v1`) and returned
+bare JSON in canary v1 -- but see finding 3 below: its reliability is **not**
+established, and canary v2 shows it can fail. `provider: vertex`
+(`model_family: gemini`, `model_id: gemini-2.5-flash`, `access_path: Google
+Vertex AI`) is reached through the native `google-genai` SDK path with no
+`response_mime_type`/`response_schema` set, and is documented to wrap
+structured output in a markdown code fence by default. The canary retains
+only a sha256 of each raw response (never the bytes, by design), so the
+exact captured text could not be recovered for direct inspection -- the
+diagnosis rests on the code-path asymmetry above, not a captured payload.
+
+**Fix** — `counterfactual_pilot.schema.extract_json_payload`: unwraps a
+response *only* when the entire stripped response is a single well-formed
+` ```json ... ``` ` (or unlabeled ` ``` ... ``` `) fence; any other shape
+(prose around the fence, an unclosed fence, multiple blocks) is returned
+unchanged, so the caller's existing strict `json.loads` +
+`validate_judgment` still reject it exactly as before. `NormalizedJudgment`
+records `wrapper_extraction_used` so it's always visible whether a cell
+needed unwrapping. Confirmed live in `counterfactual_collector_canary_v2`
+(see that report's `normalized_judgments.jsonl`): Vertex AI's real response
+required unwrapping (`wrapper_extraction_used: true`) and then validated
+successfully. Azure and Fireworks succeeded without wrapper extraction
+(`wrapper_extraction_used: false`).
+
+**3. Cohere normalization failure in canary v2 (unresolved).** In that same
+`counterfactual_collector_canary_v2` run, Cohere (`command-r-plus-08-2024`,
+reached through Cohere's OpenAI-compatible "compatibility" endpoint)
+completed inference but failed normalization (`parse_status: parse_failed`,
+`error_category: parse_failure`; see `normalized_judgments.jsonl` and
+`request_ledger.jsonl` in that report). This is new -- the same provider,
+same access path, and an equivalent short-content pair succeeded in canary
+v1. Only a sha256 of the raw response was retained by design, so the exact
+returned text was not available for inspection at the time this addendum
+was first written, and the cause was not yet established.
+
+**Canary v2 does not yet validate all four providers end-to-end.** It
+validates: (a) the `lexical_prior_pool_v2` content-sufficiency fix on the
+exact previously-failing query, and (b) the Vertex AI/Gemini fenced-JSON
+fix. It does **not** validate Cohere normalization, which failed in this
+same run for an as-yet-undiagnosed reason.
+
+**Status: CANARY V2 — CONDITIONAL PASS.** Micro-pilot blocked pending
+Cohere normalization diagnosis.

@@ -14,6 +14,7 @@ import random
 from typing import Iterable
 
 from consistency_ranker.counterfactual_benchmark.models import CandidatePoolRecord, PairRecord
+from consistency_ranker.counterfactual_benchmark.pool_builder import document_validity_v2
 from consistency_ranker.multi_provider_eval.cache import canonical_pair_id
 
 
@@ -131,3 +132,34 @@ def select_shared_pairs(
         )
     records.sort(key=lambda r: r.pair_id)
     return records
+
+
+def select_shared_pairs_v2(
+    pool: CandidatePoolRecord,
+    *,
+    eval_k: int,
+    n_pairs: int,
+    seed: int,
+) -> list[PairRecord]:
+    """Same shared-pair algorithm as ``select_shared_pairs``, wrapped with an
+    explicit refusal if any pool candidate fails the frozen v2
+    document-validity rule.
+
+    A v2 pool should never contain an invalid candidate (``build_candidate_pool_v2``
+    filters before scoring), so this is a defense-in-depth check, not the
+    primary guarantee -- it exists so a future pool-construction bug fails
+    loudly here instead of silently reaching a live provider call.
+    """
+    invalid: list[tuple[str, str | None]] = []
+    for doc_id in pool.candidate_ids:
+        excerpt = pool.truncated_texts[doc_id]
+        title_included = pool.rendering_metadata[doc_id].title_included
+        is_valid, reason = document_validity_v2(excerpt, title_included=title_included)
+        if not is_valid:
+            invalid.append((doc_id, reason))
+    if invalid:
+        raise ValueError(
+            f"{pool.dataset}/{pool.query_id}: refusing to select v2 pairs -- "
+            f"{len(invalid)} pool candidate(s) fail the document-validity rule: {invalid}"
+        )
+    return select_shared_pairs(pool, eval_k=eval_k, n_pairs=n_pairs, seed=seed)

@@ -42,10 +42,12 @@ class CandidatePoolRecord:
     prior_scores_secondary: dict[str, float]
     truncated_texts: dict[str, str]
     rendering_metadata: dict[str, RenderedDocumentRecord]
+    exclusion_records: tuple[dict[str, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         d = asdict(self)
         d["candidate_ids"] = list(self.candidate_ids)
+        d["exclusion_records"] = list(self.exclusion_records)
         return d
 
 
@@ -111,6 +113,7 @@ class NormalizedJudgment:
     latency_seconds: float | None = None
     from_cache: bool = False
     parse_failed: bool = False
+    wrapper_extraction_used: bool = False
     inference_attempted: bool = True
     error_category: str | None = None
     error_message: str | None = None

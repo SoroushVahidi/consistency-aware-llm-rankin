@@ -29,6 +29,18 @@ class FreezeMismatchError(RuntimeError):
     """Raised when the on-disk config disagrees with the frozen contracts."""
 
 
+# Every supported benchmark_version must declare exactly the pool protocol it
+# was designed for -- this is the collector's cross-version guard. A v2
+# config accidentally combined with a v1 pool_protocol_version (or vice
+# versa) is refused here, before any pool is built.
+BENCHMARK_VERSION_POOL_PROTOCOL: dict[str, str] = {
+    "counterfactual_micro_pilot_v1": pool_builder.POOL_PROTOCOL_VERSION,
+    "counterfactual_collector_canary_v1": pool_builder.POOL_PROTOCOL_VERSION,
+    "counterfactual_micro_pilot_v2": pool_builder.POOL_PROTOCOL_VERSION_V2,
+    "counterfactual_collector_canary_v2": pool_builder.POOL_PROTOCOL_VERSION_V2,
+}
+
+
 def load_config(path: Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -101,12 +113,25 @@ def verify_frozen_contract(config: dict[str, Any], *, repo_root: Path) -> None:
             f"candidate_pool.pool_size ({pool_cfg['pool_size']}) must exceed "
             f"eval_k ({pool_cfg['eval_k']})"
         )
-    if pool_cfg.get("pool_protocol_version") != pool_builder.POOL_PROTOCOL_VERSION:
+    bench_version = str(config.get("benchmark_version"))
+    expected_pool_protocol = BENCHMARK_VERSION_POOL_PROTOCOL.get(bench_version)
+    declared_pool_protocol = pool_cfg.get("pool_protocol_version")
+    if expected_pool_protocol is None:
         problems.append(
-            "candidate_pool.pool_protocol_version mismatch: "
-            f"config={pool_cfg.get('pool_protocol_version')!r} "
-            f"implemented={pool_builder.POOL_PROTOCOL_VERSION!r}"
+            f"unknown benchmark_version {bench_version!r}: no pool protocol is "
+            "registered for it in BENCHMARK_VERSION_POOL_PROTOCOL"
         )
+    elif declared_pool_protocol != expected_pool_protocol:
+        problems.append(
+            "candidate_pool.pool_protocol_version does not match its declared "
+            f"benchmark_version ({bench_version!r}): "
+            f"config={declared_pool_protocol!r} expected={expected_pool_protocol!r}"
+        )
+    elif declared_pool_protocol not in (
+        pool_builder.POOL_PROTOCOL_VERSION,
+        pool_builder.POOL_PROTOCOL_VERSION_V2,
+    ):
+        problems.append(f"unimplemented pool_protocol_version: {declared_pool_protocol!r}")
     if pool_cfg.get("rendering_policy_version") != pool_builder.RENDERING_POLICY_VERSION:
         problems.append(
             "candidate_pool.rendering_policy_version mismatch: "
