@@ -26,8 +26,7 @@ from typing import Any, Literal
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-# fix missing import used in verdict block
-from collections import defaultdict  # noqa: E402
+# collections import no longer required after verdict rewrite
 
 from consistency_ranker.adaptive_acquisition import synthetic_roster  # noqa: E402
 from consistency_ranker.multi_provider_eval.prompts import PROMPT_FAMILY  # noqa: E402
@@ -38,10 +37,12 @@ from consistency_ranker.multi_provider_eval.providers import (  # noqa: E402
 )
 from consistency_ranker.multifactor_acquisition.analyze import (  # noqa: E402
     analyze_cell_summaries,
+    build_policy_comparison_table,
     eval_ranking,
     load_qrels,
     ranking_from_evidence,
     ranking_from_prior,
+    render_verdict,
     write_final_report,
 )
 from consistency_ranker.multifactor_acquisition.azure_request import (  # noqa: E402
@@ -304,7 +305,7 @@ def run_policy_on_state(
     budget: int,
     top_k: int,
     seed: int,
-    true_ranking: list[str],
+    true_ranking: list[str] | None,
     alt_priors: list[dict[str, float]] | None,
 ):
     mapping = policy_to_engine_kwargs(policy)  # type: ignore[arg-type]
@@ -384,9 +385,11 @@ def process_cell(
     # Force profile ids unused — LiveCellJudge remaps.
     candidates = list(sample.doc_ids)
     prior = dict(sample.prior_scores)
-    true_ranking = ranking_from_prior(prior)  # unknown truth; used only as soft target for metrics internals
+    # Prior ranking is a baseline/diagnostic only — never relevance ground truth.
+    prior_ranking = ranking_from_prior(prior)
     qrels = qrels_map.get(sample.dataset, {}).get(sample.query_id, {})
-    top_k_eff = min(TOP_K, int(getattr(sample, "effective_depth", len(candidates))), len(candidates))
+    depth = int(getattr(sample, "effective_depth", len(candidates)))
+    top_k_eff = min(TOP_K, depth, len(candidates))
 
     rows: list[dict[str, Any]] = []
 
@@ -417,8 +420,15 @@ def process_cell(
     )
 
     # always unrepaired
-    r_prior = ranking_from_prior(prior)
-    oc, u = eval_ranking(r_prior, qrels, k=top_k_eff, n_calls=0, policy="always_unrepaired")
+    oc, u = eval_ranking(
+        prior_ranking,
+        qrels,
+        k=top_k_eff,
+        n_calls=0,
+        policy="always_unrepaired",
+        prior_ranking=prior_ranking,
+        candidate_pool=candidates,
+    )
     rows.append(
         _row(
             cell_id,
@@ -474,7 +484,8 @@ def process_cell(
                     budget=remaining,
                     top_k=top_k_eff,
                     seed=SEED,
-                    true_ranking=true_ranking,
+                    # Engine may use a ranking for internal diagnostics only; never qrels.
+                    true_ranking=None,
                     alt_priors=None,
                 )
                 ranking = _state_ranking(result.state)
@@ -486,8 +497,11 @@ def process_cell(
                 )
                 buried = None
                 if rel:
-                    buried = bool(set(ranking[:top_k_eff]) & rel) and any(
-                        candidates.index(d) >= max(1, top_k_eff // 2) for d in (set(ranking[:top_k_eff]) & rel)
+                    hit_rel = set(ranking[:top_k_eff]) & rel
+                    mid = max(1, top_k_eff // 2)
+                    buried = bool(hit_rel) and any(
+                        candidates.index(d) >= mid
+                        for d in hit_rel
                         if d in candidates
                     )
                 oc, u = eval_ranking(
@@ -498,6 +512,8 @@ def process_cell(
                     policy=policy,
                     catastrophic=cat,
                     buried_recovered=buried,
+                    prior_ranking=prior_ranking,
+                    candidate_pool=candidates,
                 )
                 status = "complete"
                 if judge.stopped_reason:
@@ -561,11 +577,17 @@ def process_cell(
                 )
 
     # always-repair from shared parsed evidence for this cell
-    evidence = [
-        json.loads(line)
-        for line in (output_dir / "PARSED_JUDGMENTS.jsonl").read_text().splitlines()
-        if line.strip() and sample.query_id in line and provider in line and prompt_version in line and f'"displayed_orientation": "{orientation}"' in line
-    ]
+    evidence = []
+    for line in (output_dir / "PARSED_JUDGMENTS.jsonl").read_text().splitlines():
+        if not line.strip():
+            continue
+        if sample.query_id not in line or provider not in line:
+            continue
+        if prompt_version not in line:
+            continue
+        if f'"displayed_orientation": "{orientation}"' not in line:
+            continue
+        evidence.append(json.loads(line))
     # fallback: from judge cache
     if not evidence:
         evidence = [ev.to_dict() for ev in judge._cache.values()]
@@ -575,7 +597,15 @@ def process_cell(
         ("always_repair", rep_rank, judge.n_unique_calls),
         ("graph_unrepaired", unrepaired_rank, judge.n_unique_calls),
     ):
-        oc, u = eval_ranking(ranking, qrels, k=top_k_eff, n_calls=calls, policy=name)
+        oc, u = eval_ranking(
+            ranking,
+            qrels,
+            k=top_k_eff,
+            n_calls=calls,
+            policy=name,
+            prior_ranking=prior_ranking,
+            candidate_pool=candidates,
+        )
         rows.append(
             _row(
                 cell_id,
@@ -597,11 +627,6 @@ def process_cell(
     for budget in BUDGETS:
         if _STOP["flag"] or circuits[provider].broken:
             break
-        world = {
-            "true_ranking": true_ranking,
-            "prior_scores": prior,
-            "judge": TaggedJudge(judge, f"safeguard_plain_uht@b{budget}"),
-        }
         try:
             # plain named UHT
             st = make_initial_robust_state(
@@ -618,17 +643,23 @@ def process_cell(
                 policy="UHT",
                 state=st,
                 profiles=profiles,
-                judge=world["judge"],
+                judge=TaggedJudge(judge, f"safeguard_plain_uht@b{budget}"),
                 budget=budget,
                 top_k=top_k_eff,
                 seed=SEED,
-                true_ranking=true_ranking,
+                true_ranking=None,
                 alt_priors=None,
             )
             plain_calls = max(0, judge.n_unique_calls - before)
             plain_rank = _state_ranking(plain.state)
             oc_p, u_p = eval_ranking(
-                plain_rank, qrels, k=top_k_eff, n_calls=plain_calls, policy="plain_uht"
+                plain_rank,
+                qrels,
+                k=top_k_eff,
+                n_calls=plain_calls,
+                policy="plain_uht",
+                prior_ranking=prior_ranking,
+                candidate_pool=candidates,
             )
             rows.append(
                 _row(
@@ -646,8 +677,9 @@ def process_cell(
                     status="complete",
                 )
             )
+            # Production path: candidate pool only — never prior-as-truth.
             world_prod = {
-                "true_ranking": true_ranking,
+                "candidate_ids": candidates,
                 "prior_scores": prior,
                 "judge": TaggedJudge(judge, f"safeguard_production_uht@b{budget}"),
             }
@@ -660,11 +692,15 @@ def process_cell(
                 query_id=sample.query_id,
             )
             prod_calls = int(getattr(prod, "n_calls", max(0, judge.n_unique_calls - before)))
-            prod_rank = list(getattr(prod, "ranking", None) or plain_rank)
-            oc_r = prod.outcome
-            oc_r.n_calls = prod_calls
-            _, u_r = eval_ranking(
-                prod_rank, qrels, k=top_k_eff, n_calls=prod_calls, policy="production_uht"
+            prod_rank = list(getattr(prod, "ranking", None) or prior_ranking)
+            oc_r, u_r = eval_ranking(
+                prod_rank,
+                qrels,
+                k=top_k_eff,
+                n_calls=prod_calls,
+                policy="production_uht",
+                prior_ranking=prior_ranking,
+                candidate_pool=candidates,
             )
             sg = getattr(prod, "safeguards", None)
             sg_extra = sg.to_dict() if hasattr(sg, "to_dict") else {"repr": str(sg)}
@@ -682,7 +718,14 @@ def process_cell(
                     u_r,
                     judge,
                     status="complete",
-                    extra={"safeguards": sg_extra},
+                    extra={
+                        "safeguards": sg_extra,
+                        "execution_mode": getattr(
+                            getattr(prod, "execution_mode", None), "value", None
+                        ),
+                        "executed_policy": getattr(prod, "executed_policy", None),
+                        "experimental_escalation_disabled": True,
+                    },
                 )
             )
         except Exception as exc:  # noqa: BLE001
@@ -698,12 +741,27 @@ def process_cell(
             )
 
     # per-query oracle among acquisition policies at budget 8
-    b8 = [r for r in rows if r.get("budget") == 8 and r.get("policy") in POLICIES and r.get("utility") is not None]
+    b8 = [
+        r
+        for r in rows
+        if r.get("budget") == 8
+        and r.get("policy") in POLICIES
+        and r.get("utility") is not None
+    ]
     if b8:
         best = max(b8, key=lambda r: float(r["utility"]))
+        meta_keys = (
+            "cell_id",
+            "dataset",
+            "query_id",
+            "provider",
+            "model",
+            "prompt_version",
+            "orientation",
+        )
         rows.append(
             {
-                **{k: best[k] for k in ("cell_id", "dataset", "query_id", "provider", "model", "prompt_version", "orientation")},
+                **{k: best[k] for k in meta_keys},
                 "policy": "oracle",
                 "budget": 8,
                 "utility": best["utility"],
@@ -714,7 +772,17 @@ def process_cell(
             }
         )
 
-    _append_jsonl(output_dir / "CELL_SUMMARY.jsonl", {"cell_id": cell_id, "rows": len(rows), "unique_calls": judge.n_unique_calls, "cache_hits": judge.n_cache_hits, "effective_depth": top_k_eff, "ts": _utc()})
+    _append_jsonl(
+        output_dir / "CELL_SUMMARY.jsonl",
+        {
+            "cell_id": cell_id,
+            "rows": len(rows),
+            "unique_calls": judge.n_unique_calls,
+            "cache_hits": judge.n_cache_hits,
+            "effective_depth": top_k_eff,
+            "ts": _utc(),
+        },
+    )
     from consistency_ranker.multifactor_acquisition.completion import is_cell_complete_from_rows
 
     ok, reason = is_cell_complete_from_rows(rows, effective_depth=top_k_eff)
@@ -754,6 +822,7 @@ def _row(
     status: str,
     extra: dict | None = None,
 ) -> dict[str, Any]:
+    extra_oc = None if oc is None else (oc.extra or {})
     return {
         "cell_id": cell_id,
         "dataset": sample.dataset,
@@ -765,11 +834,23 @@ def _row(
         "policy": policy,
         "budget": budget,
         "utility": u,
-        "ndcg_at_k": None if oc is None else (oc.extra or {}).get("ndcg_at_k"),
+        "ndcg_at_k": None if oc is None else extra_oc.get("ndcg_at_k"),
+        "mrr_at_k": None if oc is None else extra_oc.get("mrr_at_k"),
+        "recall_at_k": None if oc is None else extra_oc.get("recall_at_k"),
+        "prior_topk_jaccard": None if oc is None else extra_oc.get("prior_topk_jaccard"),
+        "prior_kendall_tau": None if oc is None else extra_oc.get("prior_kendall_tau"),
+        "prior_topk_jaccard_informative": (
+            None if oc is None else extra_oc.get("prior_topk_jaccard_informative")
+        ),
+        "agreement_metric_informative": (
+            None if oc is None else extra_oc.get("agreement_metric_informative")
+        ),
         "topk_jaccard": None if oc is None else oc.topk_jaccard,
         "n_calls": None if oc is None else oc.n_calls,
         "catastrophic": None if oc is None else oc.catastrophic,
         "buried_recovered": None if oc is None else oc.buried_recovered,
+        "has_qrels": None if oc is None else extra_oc.get("has_qrels"),
+        "missing_qrels_reason": None if oc is None else extra_oc.get("missing_qrels_reason"),
         "status": status,
         "unique_calls_cell": judge.n_unique_calls,
         "cache_hits_cell": judge.n_cache_hits,
@@ -908,7 +989,10 @@ def main() -> int:
                 output_dir / "FINAL_REPORT.md",
                 {
                     "verdict": "BLOCKED — INCOMPLETE MATCHED ACQUISITION",
-                    "coverage": {"reason": "fewer than 2 healthy non-OpenAI providers", "smoke": smoke_results},
+                    "coverage": {
+                        "reason": "fewer than 2 healthy non-OpenAI providers",
+                        "smoke": smoke_results,
+                    },
                 },
             )
             (output_dir / "INCOMPLETE.md").write_text(
@@ -1039,8 +1123,10 @@ def main() -> int:
         "# Offline-only analysis replay (no network).\n"
         f'cd "{REPO}"\nsource .venv/bin/activate\nexport PYTHONPATH=src\n'
         'OUT="${1:?new output dir}"\n'
-        f'python scripts/run_real_query_multifactor_acquisition.py --output-dir "$OUT" --resume --skip-smoke --dry-run\n'
-        'echo "NOTE: dry-run reproduce validates wiring; full offline metric rebuild uses persisted PARSED_JUDGMENTS.jsonl."\n',
+        "python scripts/run_real_query_multifactor_acquisition.py "
+        '--output-dir "$OUT" --resume --skip-smoke --dry-run\n'
+        "echo \"NOTE: dry-run reproduce validates wiring; full offline "
+        'metric rebuild uses persisted PARSED_JUDGMENTS.jsonl."\n',
         encoding="utf-8",
     )
     os.chmod(output_dir / "REPRODUCE.sh", 0o755)
@@ -1209,7 +1295,10 @@ def main() -> int:
                 api_failures=_count_api_failures(output_dir / "FAILURES.jsonl"),
                 data_skips=_count_skips(output_dir / "SKIPS.jsonl", output_dir / "FAILURES.jsonl"),
                 failures=_count_api_failures(output_dir / "FAILURES.jsonl"),
-                circuits={p: {"broken": circuits[p].broken, "reason": circuits[p].reason} for p in providers},
+                circuits={
+                    p: {"broken": circuits[p].broken, "reason": circuits[p].reason}
+                    for p in providers
+                },
                 elapsed_s=time.time() - t0,
                 providers=providers,
             )
@@ -1220,7 +1309,11 @@ def main() -> int:
     final_path = output_dir / "FINAL_REPORT.md"
     if final_path.exists() and not (output_dir / "FINAL_REPORT.partial_pre_repair.md").exists():
         final_path.replace(output_dir / "FINAL_REPORT.partial_pre_repair.md")
-    policy_rows = [r for r in all_rows if r.get("policy") in POLICIES and r.get("utility") not in (None, "")]
+    policy_rows = [
+        r
+        for r in all_rows
+        if r.get("policy") in POLICIES and r.get("utility") not in (None, "")
+    ]
     # coerce
     for r in policy_rows:
         try:
@@ -1229,7 +1322,51 @@ def main() -> int:
         except Exception:  # noqa: BLE001
             pass
     analysis = analyze_cell_summaries(policy_rows) if policy_rows else {"policy_summaries": []}
-    _write_json(output_dir / "ANALYSIS.json", analysis)
+    comparison_rows = [
+        r
+        for r in all_rows
+        if r.get("policy")
+        in (
+            "UHT",
+            "CHALLENGER",
+            "HYBRID",
+            "ROBUST_COMBINED",
+            "plain_uht",
+            "production_uht",
+            "always_unrepaired",
+        )
+        and r.get("budget") not in (None, "")
+    ]
+    for r in comparison_rows:
+        try:
+            if r.get("utility") not in (None, ""):
+                r["utility"] = float(r["utility"])
+            r["budget"] = int(float(r["budget"]))
+        except Exception:  # noqa: BLE001
+            pass
+    comparison_table = build_policy_comparison_table(
+        comparison_rows,
+        baseline_policy="production_uht",
+        policies=(
+            "production_uht",
+            "plain_uht",
+            "UHT",
+            "CHALLENGER",
+            "HYBRID",
+            "ROBUST_COMBINED",
+            "always_unrepaired",
+        ),
+        budgets=tuple(BUDGETS),
+    )
+    verdict_detail = render_verdict(comparison_table)
+    _write_json(
+        output_dir / "ANALYSIS.json",
+        {
+            **analysis,
+            "comparison_table": comparison_table,
+            "verdict_detail": verdict_detail,
+        },
+    )
 
     n_complete_cells = len(completed)
     planned = len(factor_cells)
@@ -1243,35 +1380,22 @@ def main() -> int:
         except Exception:  # noqa: BLE001
             planned = max(planned, 240)
     if n_complete_cells >= planned and not _STOP["flag"]:
-        # evaluate deployable criterion placeholder
-        verdict = "NO CURRENT CRITERION BEATS ALWAYS-UHT"
-        # if any policy summary beats UHT with CI>0 across both providers — upgrade later
-        by_prov = defaultdict(list)
-        for s in analysis.get("policy_summaries", []):
-            if s["policy"] == "UHT":
-                continue
-            by_prov[s.get("provider")].append(s)
-        # simple check: challenger mean_delta > 0 with ci_low>0 on both providers at budget 8
-        ok_providers = 0
-        for p in providers:
-            hits = [
-                s
-                for s in analysis.get("policy_summaries", [])
-                if s.get("provider") == p and s.get("budget") == 8 and s.get("policy") == "CHALLENGER"
-            ]
-            if hits and hits[0]["mean_delta_vs_uht"] > 0 and hits[0]["ci95_low"] > 0:
-                ok_providers += 1
-        if ok_providers == len(providers):
-            verdict = "ACTIONABLE CRITERION FOUND"
-        elif n_complete_cells < 30:
-            verdict = "PROMISING BUT UNDERPOWERED"
+        verdict = str(verdict_detail.get("verdict") or "INCONCLUSIVE")
     else:
         verdict = "BLOCKED — INCOMPLETE MATCHED ACQUISITION"
+        verdict_detail = {
+            **verdict_detail,
+            "verdict": verdict,
+            "reason": "Incomplete matched acquisition coverage.",
+        }
 
     write_final_report(
         output_dir / "FINAL_REPORT.md",
         {
             "verdict": verdict,
+            "verdict_detail": verdict_detail,
+            "comparison_table": comparison_table,
+            "evaluation_contract": analysis.get("evaluation_contract"),
             "coverage": {
                 "planned_cells": planned,
                 "completed_cells": n_complete_cells,
@@ -1296,10 +1420,19 @@ def main() -> int:
                 "elapsed_s": time.time() - t0,
             },
             "policy_results": analysis,
-            "criteria": {"note": "Simple criteria evaluated post-hoc in ANALYSIS.json; neural router forbidden."},
+            "criteria": {
+                "note": (
+                    "Prespecified comparison covers CHALLENGER, HYBRID, and "
+                    "ROBUST_COMBINED against production_uht on matched nDCG; "
+                    "neural router forbidden."
+                )
+            },
             "transfer": {"providers": providers, "prompts": list(PROMPTS)},
             "safeguards": {
-                "note": "plain_uht vs production_uht rows in CELL_SUMMARY.csv at budgets 3/5/8"
+                "note": (
+                    "plain_uht vs production_uht rows in CELL_SUMMARY.csv; "
+                    "safeguard metadata distinguishes required/attempted/executed/skipped."
+                )
             },
         },
     )

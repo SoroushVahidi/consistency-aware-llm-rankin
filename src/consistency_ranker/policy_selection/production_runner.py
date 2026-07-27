@@ -74,20 +74,33 @@ __all__ = [
 
 @dataclass
 class SafeguardLog:
-    """Evidence that each safeguard ran and what it did."""
+    """Evidence that each safeguard ran and what it did.
+
+    Configuration fields (``*_required``) are distinct from execution fields
+    (``*_attempted`` / ``*_executed``). A required-but-unexecuted safeguard is
+    never reported as a successful safety-floor validation unless a documented
+    skip reason shows the action was unnecessary.
+    """
 
     reserved_calls: int = 0
     requested_actions: list[str] = field(default_factory=list)
     outsider_probe_required: bool = False
+    outsider_probe_eligible: bool = False
+    outsider_probe_attempted: bool = False
     outsider_probe_executed: bool = False
     outsider_probe_pair: str | None = None
+    outsider_probe_skip_reason: str | None = None
     weak_evidence_stop_checked: bool = False
     weak_evidence_stop_blocked: bool = False
     evidence_fraction_at_stop: float = 0.0
     extra_evidence_calls: int = 0
     final_challenger_required: bool = False
+    final_challenger_eligible: bool = False
+    final_challenger_attempted: bool = False
     final_challenger_executed: bool = False
     final_challenger_pair: str | None = None
+    final_challenger_skip_reason: str | None = None
+    production_safeguards_complete: bool = False
     safeguard_calls: int = 0
     errors: list[str] = field(default_factory=list)
 
@@ -96,15 +109,22 @@ class SafeguardLog:
             "reserved_calls": self.reserved_calls,
             "requested_actions": list(self.requested_actions),
             "outsider_probe_required": self.outsider_probe_required,
+            "outsider_probe_eligible": self.outsider_probe_eligible,
+            "outsider_probe_attempted": self.outsider_probe_attempted,
             "outsider_probe_executed": self.outsider_probe_executed,
             "outsider_probe_pair": self.outsider_probe_pair,
+            "outsider_probe_skip_reason": self.outsider_probe_skip_reason,
             "weak_evidence_stop_checked": self.weak_evidence_stop_checked,
             "weak_evidence_stop_blocked": self.weak_evidence_stop_blocked,
             "evidence_fraction_at_stop": self.evidence_fraction_at_stop,
             "extra_evidence_calls": self.extra_evidence_calls,
             "final_challenger_required": self.final_challenger_required,
+            "final_challenger_eligible": self.final_challenger_eligible,
+            "final_challenger_attempted": self.final_challenger_attempted,
             "final_challenger_executed": self.final_challenger_executed,
             "final_challenger_pair": self.final_challenger_pair,
+            "final_challenger_skip_reason": self.final_challenger_skip_reason,
+            "production_safeguards_complete": self.production_safeguards_complete,
             "safeguard_calls": self.safeguard_calls,
             "errors": list(self.errors),
         }
@@ -125,22 +145,25 @@ class ProductionSafeguards:
         pair_id: str,
         *,
         reason: str,
-    ) -> bool:
-        """Execute one judgment on ``pair_id``; return True when it happened."""
+    ) -> tuple[bool, str | None]:
+        """Execute one judgment on ``pair_id``.
+
+        Returns ``(executed, skip_reason)``. ``skip_reason`` is None on success.
+        """
         if state.remaining_budget <= 0:
-            return False
+            return False, "budget_exhausted"
         action = _action_for_pair(state, pair_id, profiles, 0)
         if action is None:
-            return False
+            return False, "action_ineligible"
         if hasattr(judge, "available") and not judge.available(action):
-            return False
+            return False, "judge_unavailable"
         rec = judge.judge(action)
         if rec is None:
-            return False
+            return False, "judgment_returned_none"
         state.add_evidence([rec])
         state.remaining_budget -= 1
         state.record_action({**action.to_dict(), "exploration_reason": reason})
-        return True
+        return True, None
 
     @staticmethod
     def _insider_outsider_pairs(state: "AcquisitionState") -> list[str]:
@@ -168,21 +191,37 @@ class ProductionSafeguards:
         *,
         alt_priors: list[dict[str, float]] | None = None,
         seed: int = 0,
-    ) -> bool:
-        """Mandatory insider-vs-outsider probe. Returns True if it executed."""
-        candidates = select_probe_pairs(
+    ) -> tuple[bool, str | None]:
+        """Mandatory insider-vs-outsider probe.
+
+        Returns ``(executed, skip_reason)``. Prefers ``topk_vs_outsider`` design
+        pairs, then falls back to the full insider–outsider frontier so a single
+        unavailable designed pair cannot silently disable the safety floor.
+        """
+        designed = select_probe_pairs(
             state,
             design="topk_vs_outsider",
-            max_budget=max(1, self.cfg.require_outsider_probe),
+            max_budget=max(1, int(bool(self.cfg.require_outsider_probe))),
             alt_priors=alt_priors,
             seed=seed,
-        ) or self._insider_outsider_pairs(state)
-        for pid in candidates:
-            if self._judge_pair(
+        )
+        ordered: list[str] = []
+        seen: set[str] = set()
+        for pid in list(designed) + self._insider_outsider_pairs(state):
+            if pid not in seen:
+                seen.add(pid)
+                ordered.append(pid)
+        if not ordered:
+            return False, "no_insider_outsider_pairs"
+        last_skip: str | None = "no_candidate_executed"
+        for pid in ordered:
+            ok, skip = self._judge_pair(
                 state, profiles, judge, pid, reason="safety_floor:mandatory_outsider_probe"
-            ):
-                return True
-        return False
+            )
+            if ok:
+                return True, None
+            last_skip = skip or last_skip
+        return False, last_skip
 
     def evidence_fraction(self, state: "AcquisitionState") -> float:
         """Fraction of top-k-relevant pairs with reliable *acquired* support.
@@ -240,9 +279,10 @@ class ProductionSafeguards:
         for pid in self.unsupported_topk_pairs(state):
             if executed >= max_calls or state.remaining_budget <= 0:
                 break
-            if self._judge_pair(
+            ok, _skip = self._judge_pair(
                 state, profiles, judge, pid, reason="safety_floor:weak_evidence_stop_blocked"
-            ):
+            )
+            if ok:
                 executed += 1
         return executed
 
@@ -253,14 +293,23 @@ class ProductionSafeguards:
         judge: Any,
         *,
         seed: int = 0,
-    ) -> bool:
-        """Final adversarial comparison of the weakest insider vs the best outsider."""
-        for pid in self._insider_outsider_pairs(state):
-            if self._judge_pair(
+    ) -> tuple[bool, str | None]:
+        """Final adversarial comparison of the weakest insider vs the best outsider.
+
+        Returns ``(executed, skip_reason)``.
+        """
+        pairs = self._insider_outsider_pairs(state)
+        if not pairs:
+            return False, "no_insider_outsider_pairs"
+        last_skip: str | None = "no_candidate_executed"
+        for pid in pairs:
+            ok, skip = self._judge_pair(
                 state, profiles, judge, pid, reason="safety_floor:final_challenger"
-            ):
-                return True
-        return False
+            )
+            if ok:
+                return True, None
+            last_skip = skip or last_skip
+        return False, last_skip
 
 
 @dataclass
@@ -362,16 +411,29 @@ def run_production_uht(
     log = SafeguardLog()
 
     profiles = synthetic_roster(n_models=2, n_prompts=2)
+    candidate_ids = list(
+        world.get("candidate_ids")
+        or world.get("true_ranking")
+        or sorted(world.get("prior_scores") or {})
+    )
+    if not candidate_ids:
+        raise ValueError(
+            "run_production_uht requires world['candidate_ids'] or world['true_ranking'] "
+            "or prior_scores keys."
+        )
+    # Synthetic worlds may still pass true_ranking for agreement diagnostics.
+    # Real-query callers should omit it and evaluate with qrels offline.
+    true_ranking = world.get("true_ranking")
+    true_ranking_list = list(true_ranking) if true_ranking is not None else None
     state = make_initial_robust_state(
         query_id=query_id,
-        candidate_ids=list(world["true_ranking"]),
+        candidate_ids=candidate_ids,
         prior_scores=world["prior_scores"],
         budget=budget,
         top_k=top_k,
         seed=seed,
     )
     alt_priors = world.get("alt_priors") or []
-    true_ranking = list(world["true_ranking"])
 
     # 1. Optional diagnostic probe. Observational: it feeds features only.
     probe_res = None
@@ -404,19 +466,32 @@ def run_production_uht(
     log.outsider_probe_required = cfg.require_outsider_probe and (
         "mandatory_outsider_probe" in log.requested_actions
     )
+    # Eligibility: an insider–outsider frontier must exist (requires n > top_k).
+    io_pairs = guards._insider_outsider_pairs(state)
+    log.outsider_probe_eligible = bool(io_pairs)
     if log.outsider_probe_required:
-        before = state.remaining_budget
-        try:
-            log.outsider_probe_executed = guards.run_outsider_probe(
-                state, profiles, world["judge"], alt_priors=alt_priors, seed=seed
-            )
-            log.safeguard_calls += before - state.remaining_budget
-        except Exception as exc:
-            # Fail closed: log and continue on the plain UHT path.
-            log.errors.append(f"outsider_probe: {type(exc).__name__}: {exc}")
-        if log.outsider_probe_executed:
-            log.outsider_probe_pair = _last_action_pair(state)
-            reserve = max(0, reserve - 1)
+        if not log.outsider_probe_eligible:
+            log.outsider_probe_skip_reason = "not_eligible:no_insider_outsider_pairs"
+        else:
+            before = state.remaining_budget
+            log.outsider_probe_attempted = True
+            try:
+                executed, skip = guards.run_outsider_probe(
+                    state, profiles, world["judge"], alt_priors=alt_priors, seed=seed
+                )
+                log.outsider_probe_executed = bool(executed)
+                log.outsider_probe_skip_reason = None if executed else skip
+                log.safeguard_calls += before - state.remaining_budget
+            except Exception as exc:
+                log.errors.append(f"outsider_probe: {type(exc).__name__}: {exc}")
+                log.outsider_probe_skip_reason = f"exception:{type(exc).__name__}"
+            if log.outsider_probe_executed:
+                log.outsider_probe_pair = _last_action_pair(state)
+                reserve = max(0, reserve - 1)
+    elif cfg.require_outsider_probe:
+        log.outsider_probe_skip_reason = "not_requested_by_safeguard_policy"
+    else:
+        log.outsider_probe_skip_reason = "not_configured"
 
     # 4. Policy selection. Structurally UHT; recorded for auditability.
     feats = extract_features(
@@ -447,7 +522,7 @@ def run_production_uht(
         profiles,
         world["judge"],
         seed=seed,
-        true_ranking=true_ranking,
+        true_ranking=true_ranking_list,
         alt_priors=alt_priors,
     )
     runtime = time.perf_counter() - t0
@@ -473,7 +548,7 @@ def run_production_uht(
                 world["judge"],
                 max_calls=allow_extra,
                 seed=seed + 1,
-                true_ranking=true_ranking,
+                true_ranking=true_ranking_list,
                 alt_priors=alt_priors,
             )
         except Exception as exc:
@@ -485,20 +560,80 @@ def run_production_uht(
 
     # 7. Final adversarial challenger check before the ranking is returned.
     log.final_challenger_required = bool(cfg.require_final_challenger)
+    log.final_challenger_eligible = bool(guards._insider_outsider_pairs(state))
     if log.final_challenger_required:
-        before = state.remaining_budget
-        try:
-            log.final_challenger_executed = guards.run_final_challenger(
-                state, profiles, world["judge"], seed=seed + 2
-            )
-            log.safeguard_calls += before - state.remaining_budget
-        except Exception as exc:
-            log.errors.append(f"final_challenger: {type(exc).__name__}: {exc}")
-        if log.final_challenger_executed:
-            log.final_challenger_pair = _last_action_pair(state)
+        if not log.final_challenger_eligible:
+            log.final_challenger_skip_reason = "not_eligible:no_insider_outsider_pairs"
+        else:
+            before = state.remaining_budget
+            log.final_challenger_attempted = True
+            try:
+                executed, skip = guards.run_final_challenger(
+                    state, profiles, world["judge"], seed=seed + 2
+                )
+                log.final_challenger_executed = bool(executed)
+                log.final_challenger_skip_reason = None if executed else skip
+                log.safeguard_calls += before - state.remaining_budget
+            except Exception as exc:
+                log.errors.append(f"final_challenger: {type(exc).__name__}: {exc}")
+                log.final_challenger_skip_reason = f"exception:{type(exc).__name__}"
+            if log.final_challenger_executed:
+                log.final_challenger_pair = _last_action_pair(state)
+    else:
+        log.final_challenger_skip_reason = "not_configured"
+
+    def _safeguard_ok(*, required: bool, eligible: bool, executed: bool, skip: str | None) -> bool:
+        if not required:
+            return True
+        if not eligible:
+            # Inapplicable safeguards are neither success nor failure.
+            return True
+        if executed:
+            return True
+        # Applicable but not executed requires an explicit terminal skip reason.
+        return bool(skip)
+
+    outsider_ok = _safeguard_ok(
+        required=log.outsider_probe_required,
+        eligible=log.outsider_probe_eligible,
+        executed=log.outsider_probe_executed,
+        skip=log.outsider_probe_skip_reason,
+    )
+    final_ok = _safeguard_ok(
+        required=log.final_challenger_required,
+        eligible=log.final_challenger_eligible,
+        executed=log.final_challenger_executed,
+        skip=log.final_challenger_skip_reason,
+    )
+    # Silent failure: applicable, attempted, not executed, empty skip reason.
+    silent_fail = any(
+        [
+            log.outsider_probe_eligible
+            and log.outsider_probe_attempted
+            and not log.outsider_probe_executed
+            and not log.outsider_probe_skip_reason,
+            log.final_challenger_eligible
+            and log.final_challenger_attempted
+            and not log.final_challenger_executed
+            and not log.final_challenger_skip_reason,
+        ]
+    )
+    log.production_safeguards_complete = bool(
+        outsider_ok
+        and final_ok
+        and log.weak_evidence_stop_checked
+        and not log.errors
+        and not silent_fail
+    )
 
     ranking = list(state.ranking)
-    topk_j = _topk_jaccard(ranking, true_ranking, top_k)
+    # Agreement vs synthetic true_ranking is a diagnostic only; real-query
+    # relevance must be computed from qrels outside this runner.
+    topk_j = (
+        _topk_jaccard(ranking, true_ranking_list, top_k)
+        if true_ranking_list is not None
+        else None
+    )
     n_calls = (
         main_calls
         + (probe_res.n_executed if probe_res else 0)
@@ -512,14 +647,20 @@ def run_production_uht(
         probe_calls=probe_res.n_executed if probe_res else 0,
         total_cost=res.total_cost,
         runtime_s=runtime,
-        catastrophic=topk_j <= 0.0,
-        buried_recovered=true_ranking[0] in ranking[:top_k],
+        catastrophic=(topk_j is not None and topk_j <= 0.0),
+        buried_recovered=(
+            true_ranking_list[0] in ranking[:top_k] if true_ranking_list else None
+        ),
         stopping_reason=res.stopping_reason,
         exploration_calls=res.report.n_exploration_probes + log.safeguard_calls,
         extra={
             "decision": decision.to_dict(),
             "safeguards": log.to_dict(),
             "executed_policy": PRODUCTION_PRIMARY_POLICY,
+            "experimental_escalation_disabled": True,
+            "execution_mode": mode.value,
+            "true_ranking_used_for_outcome_jaccard": true_ranking_list is not None,
+            "agreement_vs_true_ranking_is_diagnostic_only": True,
         },
     )
     return ProductionRunResult(
@@ -529,7 +670,7 @@ def run_production_uht(
         execution_mode=mode,
         decision=decision,
         outcome=outcome,
-        utility=compute_utility(outcome, sel.weights),
+        utility=compute_utility(outcome, sel.weights) if topk_j is not None else float("nan"),
         safeguards=log,
         ranking=ranking,
         n_calls=n_calls,

@@ -47,7 +47,8 @@ If any answer is no, keep the artifact local (or archive outside Git) and docume
 | `reports/policy_selection_20260726T030500Z/` | **Track minimal set** (see package README: `gate_rows.json`, population, decision/summary, prose, `REPRODUCE.sh`). Calibrators/plots/replays stay local/gitignored. |
 | `reports/policy_selection_20260726T025426Z/` | Keep local / ignore (superseded smoke) |
 | `reports/real_query_policy_replay_20260726T042025Z/` | **Track** (already committed; offline replay) |
-| `reports/real_query_multifactor_acquisition_20260726T044254Z/` | Keep local (broken `production_uht` metrics; absolute paths; large) |
+| `reports/real_query_multifactor_acquisition_20260726T044254Z/` | Keep local (broken `production_uht` metrics; absolute paths; large). See `docs/MULTIFACTOR_PRODUCTION_UHT_EVAL_INVALIDATION.md`. |
+| `reports/real_query_multifactor_acquisition_corrected_*/` | Keep local full trees; may track a compact `CORRECTED_SUMMARY.json` / hashes only if frozen |
 | `reports/adaptive_acquisition_*`, `prior_robust_*`, `reliability_aware_repair_*`, `linear_extension_extraction_*`, `multi_provider_llm_robustness_*` | Keep local until explicitly frozen |
 | `reports/final_revision_*`, `reports/final_revision_page_limit_freeze_*`, visual audits | Keep local (large / rendering scratch) |
 | `papers/**/anonymous_supplementary/` | Outside Git (hundreds of MB) |
