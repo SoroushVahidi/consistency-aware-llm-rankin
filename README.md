@@ -5,6 +5,16 @@
 
 ---
 
+## Current development status
+
+For the current scientific status, branch handoff, validated claims,
+known blockers, and safe continuation instructions, see:
+- [Project status](PROJECT_STATUS.md)
+- [Current branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md)
+- [Machine-readable state snapshot](docs/handoff/state_snapshot.json)
+
+---
+
 ## Key Finding
 
 > *Repairing cyclic preference graphs improves structural consistency, but does
@@ -623,11 +633,11 @@ outputs/
 | Bootstrap significance analysis | ✅ Executed (2000 reps; tables in paper packages where applicable) |
 | Real-data pipeline — per-dataset full trees | ⚙️ Additional runs may live under `outputs/real_full/` (not all committed) |
 | Exact ILP MWFAS solver (open-source SCIP) | ✅ Implemented in `mwfas_solver.py` (`method="scip"`/`"exact"`/`"ilp"`; optional dependency, no license required — `pip install "consistency-ranker[exact]"`); see `tests/test_exact_mwfas_scip.py` |
-| LLM pairwise preferences | ⏳ Planned; current publication experiments use score-derived votes |
+| LLM pairwise preferences | ⏳ Publication experiments use score-derived votes, not LLM judgments. A separate, active multi-provider LLM-judge counterfactual benchmark exists in engineering/canary form (not yet run at benchmark scale) — see [Project status](PROJECT_STATUS.md) |
 
 **Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
 
-**What is not yet implemented:** Real LLM pairwise comparator; cross-encoder ranker.
+**What is not yet implemented for the publication-facing pipeline:** LLM pairwise judgments in the committed vote-comparison manuscript results; cross-encoder ranker. (A separate real LLM pairwise comparator exists for the active counterfactual-benchmark effort — see [Project status](PROJECT_STATUS.md).)
 
 ---
 

@@ -1,5 +1,36 @@
 # AGENTS.md
 
+## Start here
+
+Before doing anything else in this repository:
+
+1. Read [`PROJECT_STATUS.md`](PROJECT_STATUS.md) — canonical scientific and
+   engineering status.
+2. Read [`docs/handoff/CURRENT_BRANCH_HANDOFF.md`](docs/handoff/CURRENT_BRANCH_HANDOFF.md)
+   — current branch's commit history, staged work, and exact next task.
+3. Inspect [`docs/handoff/state_snapshot.json`](docs/handoff/state_snapshot.json)
+   — machine-readable snapshot of the same.
+4. Reconfirm Git state before editing anything (`git fetch origin &&
+   git status --short --branch && git rev-parse HEAD`) — the documents above
+   are a point-in-time snapshot, not a live source of truth.
+5. Never assume a report under `reports/` is citable evidence just because
+   it exists on disk — check its classification in `PROJECT_STATUS.md` /
+   `docs/ARTIFACT_POLICY.md` first.
+6. Never run a provider (LLM API) call without explicit, scoped
+   authorization from the user (exact query/pair/provider and a stated call
+   ceiling).
+7. Never expose secrets, API keys, endpoints, project IDs, or raw provider
+   responses in output, commits, or documentation.
+8. Never change a frozen protocol artifact (a prompt, schema, or pool
+   protocol already marked "frozen") in place — add a new version and a
+   migration note instead.
+9. Never treat a cost-only utility signal (fewer calls, lower latency) as a
+   retrieval-quality gain — they are tracked as separate metrics throughout
+   this repository.
+10. Never treat an LLM provider's judgment as ground truth — qrels are the
+    only evaluation truth; every provider (including Azure) is a noisy
+    judge.
+
 ## Cursor Cloud specific instructions
 
 This is a pure Python research library (no web servers, databases, or Docker).
