@@ -83,7 +83,11 @@
     "qrels_must_not_influence_pool_or_acquisition": true,
     "record_pool_hash": true,
     "max_candidate_chars": 1200,
-    "max_candidate_chars_note": "Truncate rendered candidate text at this length before prompting. Derived from rendered-fixture token estimation (see docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md token-cap section); without a truncation cap, at least one real BRIGHT document exceeds 9,000,000 characters."
+    "max_candidate_chars_note": "Truncate rendered candidate text at this length before prompting. Derived from rendered-fixture token estimation (see docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md token-cap section); without a truncation cap, at least one real BRIGHT document exceeds 9,000,000 characters.",
+    "pool_protocol_version": "lexical_prior_pool_v1",
+    "pool_protocol_note": "Qrels-blind lexical-prior fallback pool (no canonical multi-ranker/RRF fusion pool exists in this repo for these four datasets). Valid for this operational micro-pilot only; NOT automatically identical to a canonical multi-ranker/RRF pool a later scientific benchmark might use. Scientific conclusions from this pilot apply to this specific pool protocol. Changing the pool protocol requires a new benchmark version or an explicit pool-robustness audit.",
+    "rendering_policy_version": "title_plus_prefix_truncate_v1",
+    "rendering_policy_note": "Deterministic title+text composition (title then blank line then body, when a non-empty title exists) followed by a plain prefix truncation to max_candidate_chars. Rendering policy is itself an experimental factor; a later benchmark should compare at least one alternative rendering policy before broad scientific claims."
   },
   "provider_panel": [
     {

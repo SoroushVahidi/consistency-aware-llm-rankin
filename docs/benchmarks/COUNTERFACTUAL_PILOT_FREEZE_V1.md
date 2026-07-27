@@ -172,6 +172,89 @@ eligibility filter only**, not a sampling design:
 - Record candidate-pool hashes.
 - Prefer the existing canonical multi-ranker pool when available.
 
+## Candidate-pool protocol (implementation)
+
+`candidate_pool.pool_protocol_version = lexical_prior_pool_v1`
+(`consistency_ranker.counterfactual_benchmark.pool_builder.POOL_PROTOCOL_VERSION`).
+
+No canonical multi-ranker/RRF fusion pool exists anywhere in this repository
+for SciDocs, FiQA, HotpotQA, or BRIGHT (verified by search before this
+protocol was implemented). `lexical_prior_pool_v1` is a deterministic
+fallback:
+
+- **Retrieval/scoring method**: two independent, qrels-blind lexical priors
+  over the full document corpus -- a primary token-overlap-count prior
+  (`|query ∩ doc| / sqrt(|doc|)`) and a secondary plain-Jaccard prior
+  (`|query ∩ doc| / |query ∪ doc|`). Both are scored over the same
+  title+text composition that gets rendered (see rendering policy below).
+- **Tie-breaking rule**: ties in the primary prior break by ascending doc id
+  (`sorted(primary, key=lambda d: (-primary[d], d))`), so pool construction
+  is fully deterministic for fixed corpus content.
+- **Ordered candidate IDs, pool size, source data, hash**: recorded per
+  query in `candidate_pools.jsonl` as `candidate_ids` (ordered),
+  `len(candidate_ids)`, the dataset's `documents_path`, and `pool_hash`
+  (sha256 of the ordered candidate-id list).
+- **Implementation version**: `pool_protocol_version` on every
+  `CandidatePoolRecord`; the collector's freeze verification refuses to run
+  if a config's declared `pool_protocol_version` disagrees with the
+  implemented one.
+
+**This pool protocol is valid for the operational micro-pilot only.** It is
+**not** automatically identical to a canonical multi-ranker/RRF pool a later
+scientific benchmark might use, and scientific conclusions drawn from this
+micro-pilot apply specifically to results collected under this pool
+protocol. Changing the pool protocol requires either a new benchmark version
+or an explicit pool-robustness audit comparing outcomes under both
+protocols. This task does not implement a new multi-ranker retrieval
+pipeline.
+
+## Document rendering and truncation protocol
+
+`candidate_pool.rendering_policy_version = title_plus_prefix_truncate_v1`
+(`consistency_ranker.counterfactual_benchmark.pool_builder.RENDERING_POLICY_VERSION`).
+
+Rendering is deterministic and byte-for-byte identical across providers and
+across AB/BA orientation swaps (the same excerpt string is reused; only its
+position in the prompt changes):
+
+1. Compose the full document as `f"{title}\n\n{text}"` when a non-empty
+   `title` field is present, else just `text`.
+2. Truncate the composed text to `candidate_pool.max_candidate_chars`
+   (currently 1200) via a plain Python string prefix slice. String slicing
+   operates on Unicode code points, so a multi-byte UTF-8 character is never
+   split mid-sequence.
+
+`max_candidate_chars = 1200` exists because at least one real BRIGHT
+document exceeds 9,000,000 characters; without a truncation cap a single
+candidate could blow any per-request token budget. Titles are present (and
+non-empty) for SciDocs and HotpotQA documents in this corpus, and absent
+(empty string) for FiQA and BRIGHT documents -- both cases are exercised by
+real data, not just synthetic fixtures.
+
+For every rendered candidate, `candidate_pools.jsonl` records a
+`RenderedDocumentRecord` under `rendering_metadata[doc_id]`:
+
+- `document_id`
+- `full_document_sha256` -- hash of the complete composed (title+text)
+  document, so a truncated excerpt can always be traced back to, without
+  ever storing, the full original content;
+- `rendered_excerpt_sha256` -- hash of exactly what was (or would be) sent
+  to a provider;
+- `original_character_count`, `rendered_character_count`;
+- `truncated` (bool);
+- `truncation_policy` (`rendering_policy_version`, above);
+- `title_included` (bool).
+
+The full, untruncated document text is never written to any manifest,
+ledger, or trajectory record -- only the bounded excerpt (`truncated_texts`)
+and the two hashes above.
+
+**Rendering policy is itself an experimental factor.** A later benchmark
+should compare at least one alternative rendering policy (for example, a
+different truncation length, a summary-based excerpt, or a different
+title-handling rule) before broad scientific claims are made about
+judgment quality.
+
 ## Token and character caps (derived from rendered fixtures)
 
 The call-count cap (256 initial / 128 reserve / 384 hard max) is authoritative
