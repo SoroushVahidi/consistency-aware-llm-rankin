@@ -1,0 +1,23 @@
+{
+  "UHT_vs_CHALLENGER": {
+    "mean_delta": 0.033499999999999995,
+    "frac_positive": 0.3333333333333333,
+    "n_pred": 12,
+    "mean_pred_delta": -0.037441584791045535,
+    "mean_p_worse": 0.5097554887088389
+  },
+  "UHT_vs_HYBRID": {
+    "mean_delta": 0.19899999999999998,
+    "frac_positive": 0.4166666666666667,
+    "n_pred": 12,
+    "mean_pred_delta": -0.0174516233045196,
+    "mean_p_worse": 0.49838360132332543
+  },
+  "ROBUST_vs_BROAD": {
+    "mean_delta": -0.03099999999999999,
+    "frac_positive": 0.3333333333333333,
+    "n_pred": 12,
+    "mean_pred_delta": -0.11907779509446924,
+    "mean_p_worse": 0.5481381365114709
+  }
+}

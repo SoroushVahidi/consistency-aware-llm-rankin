@@ -91,11 +91,11 @@ OpenAI SciDocs/HotpotQA/FiQA caches were collected with `debias_position=false` 
 ```
 Recommendation: **diagnostically recommended but not yet empirically validated** on real queries; treat as **minimum-budget-constrained** (2–3 reserved calls dominate at budget 8).
 ## 14. Reviewer Concerns Addressed
-- **C2/C11 (actionable criterion):** no deployable criterion beat always-unrepaired with stable multi-dataset support under the prespecified rule; oracle still shows heterogeneity when repair helps.
+- **C2/C11 (actionable criterion):** no deployable criterion beat always-unrepaired with stable multi-dataset support under the prespecified rule. On the **primary greedy table** (80 queries) repair never helped (`positive_rate_repair_helps=0.0`, so `oracle_repair_if_positive` is also 0.0 and shows **no** primary-table heterogeneity). A separate **exact-SCIP subset** (63 rows) shows limited sign variation (8 positive / 4 negative exact−unrepaired gains; mean ≈ +0.00494) but does **not** overturn the always-unrepaired headline.
 - **C4 (limited real LLM):** reused existing caches; did not expand paid calls.
-- **C7/C8 (exact vs greedy):** exact SCIP reconstructed where solvable; compare `exact_repair_gain_rows.csv`.
+- **C7/C8 (exact vs greedy):** exact SCIP reconstructed where solvable; compare `exact_repair_gain_rows.csv` (exploratory subset, not the primary success criterion).
 - **C12 (statistical uncertainty):** query-clustered sign-flip CIs in criterion notes.
-- **C1 (obviousness):** oracle gap + negative mean repair gain show the conditional effect is empirical, not a tautology on these real caches.
+- **C1 (obviousness):** negative mean greedy repair gain on the primary table shows the conditional effect is empirical, not a tautology on these real caches; the primary oracle-if-positive rule is vacuous here because no greedy gain is positive.
 ## 15. Remaining Gaps
 - UHT/challenger/hybrid/robust acquisition replay requires provenance-rich budgeted judgment pools; SciDocs OpenAI q50 is full all-pairs (no acquisition trace). Multi-provider pilot has only 2 queries. Policy-routing conclusions are therefore limited to repair-vs-unrepaired on complete graphs plus synthetic safeguard-cost cells.
 ## 16. Next Experiment

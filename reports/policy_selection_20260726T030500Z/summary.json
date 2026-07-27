@@ -1,0 +1,881 @@
+{
+  "outcome": "F",
+  "outcome_text": "Outcome F \u2014 Synthetic results are insufficient; specify the smallest decisive real calibration experiment. Interim production default: always UHT with a lightweight safety floor (mandatory outsider probe + stop prohibition on weak evidence), because calibrated gates do not yet beat always-UHT on corrected utility.",
+  "outcome_f_note": "Synthetic sample is limited; a small real multi-provider calibration (Q15) is required before freezing thresholds.",
+  "operating_point": {
+    "gate_mode": "always_uht",
+    "qhat_threshold": 0.35,
+    "uht_risk_threshold": 0.0871513237103253,
+    "probe_budget": 3,
+    "probe_design": "mixed_diagnostic",
+    "tau_policy": 0.5,
+    "safety_floor": 0.15,
+    "false_trust_weight": 2.5,
+    "false_distrust_weight": 0.5,
+    "calibration_model": "logistic",
+    "feature_schema": "policy_gate_features_v1",
+    "interim_safety_floor": 0.15,
+    "interim_safeguards": [
+      "mandatory_outsider_probes",
+      "stop_prohibit_weak_evidence",
+      "final_adversarial_challenger"
+    ]
+  },
+  "best_production_mode": "always_uht",
+  "mode_summary": {
+    "always_uht": {
+      "n": 12,
+      "mean_utility": 0.08916666666666667,
+      "mean_gate_regret": 0.5233333333333333,
+      "max_gate_regret": 1.6219999999999999,
+      "mean_topk_jaccard": 0.47500000000000003,
+      "mean_kendall": 0.5,
+      "mean_calls": 16.0,
+      "mean_probe_calls": 0.0,
+      "catastrophic_rate": 0.25,
+      "policy_accuracy": 0.08333333333333333,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.5833333333333334,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.5233333333333333
+    },
+    "always_challenger": {
+      "n": 12,
+      "mean_utility": -0.1193333333333333,
+      "mean_gate_regret": 0.654,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.15476190476190477,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.654
+    },
+    "always_robust": {
+      "n": 12,
+      "mean_utility": -0.07633333333333331,
+      "mean_gate_regret": 0.613,
+      "max_gate_regret": 1.076,
+      "mean_topk_jaccard": 0.325,
+      "mean_kendall": 0.20833333333333334,
+      "mean_calls": 15.666666666666666,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.25,
+      "policy_accuracy": 0.25,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.613
+    },
+    "broad_static": {
+      "n": 12,
+      "mean_utility": -0.1443333333333333,
+      "mean_gate_regret": 0.677,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.25833333333333336,
+      "mean_kendall": 0.11904761904761903,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.3333333333333333,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.677
+    },
+    "hard_qhat": {
+      "n": 12,
+      "mean_utility": -0.1193333333333333,
+      "mean_gate_regret": 0.654,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.15476190476190477,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.654
+    },
+    "calibrated_hard": {
+      "n": 12,
+      "mean_utility": -0.1193333333333333,
+      "mean_gate_regret": 0.654,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.15476190476190477,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.654
+    },
+    "selective_three_way": {
+      "n": 12,
+      "mean_utility": 0.004000000000000024,
+      "mean_gate_regret": 0.536,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.35000000000000003,
+      "mean_kendall": 0.20238095238095236,
+      "mean_calls": 15.333333333333334,
+      "mean_probe_calls": 3.3333333333333335,
+      "catastrophic_rate": 0.25,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.8333333333333334,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.536
+    },
+    "soft_mixture": {
+      "n": 12,
+      "mean_utility": -0.06533333333333331,
+      "mean_gate_regret": 0.604,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.30833333333333335,
+      "mean_kendall": 0.1369047619047619,
+      "mean_calls": 15.333333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.604
+    },
+    "budget_split": {
+      "n": 12,
+      "mean_utility": -0.06533333333333331,
+      "mean_gate_regret": 0.604,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.30833333333333335,
+      "mean_kendall": 0.1369047619047619,
+      "mean_calls": 15.333333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.604
+    },
+    "staged": {
+      "n": 12,
+      "mean_utility": -0.02366666666666664,
+      "mean_gate_regret": 0.5623333333333334,
+      "max_gate_regret": 1.076,
+      "mean_topk_jaccard": 0.35000000000000003,
+      "mean_kendall": 0.18452380952380953,
+      "mean_calls": 15.333333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.25,
+      "policy_accuracy": 0.08333333333333333,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.5623333333333334
+    },
+    "cost_sensitive_regret": {
+      "n": 12,
+      "mean_utility": -0.1193333333333333,
+      "mean_gate_regret": 0.654,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.15476190476190477,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.654
+    },
+    "contextual": {
+      "n": 12,
+      "mean_utility": -0.11799999999999998,
+      "mean_gate_regret": 0.6566666666666666,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.1369047619047619,
+      "mean_calls": 15.666666666666666,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.16666666666666666,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.6566666666666666
+    },
+    "conservative_fallback": {
+      "n": 12,
+      "mean_utility": -0.06533333333333331,
+      "mean_gate_regret": 0.604,
+      "max_gate_regret": 1.572,
+      "mean_topk_jaccard": 0.30833333333333335,
+      "mean_kendall": 0.1369047619047619,
+      "mean_calls": 15.333333333333334,
+      "mean_probe_calls": 3.0,
+      "catastrophic_rate": 0.3333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.604
+    },
+    "random": {
+      "n": 12,
+      "mean_utility": 0.08916666666666667,
+      "mean_gate_regret": 0.5233333333333333,
+      "max_gate_regret": 1.6219999999999999,
+      "mean_topk_jaccard": 0.47500000000000003,
+      "mean_kendall": 0.5,
+      "mean_calls": 16.0,
+      "mean_probe_calls": 0.0,
+      "catastrophic_rate": 0.25,
+      "policy_accuracy": 0.08333333333333333,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.0,
+      "oracle_gap": 0.5233333333333333
+    },
+    "majority_best": {
+      "n": 12,
+      "mean_utility": -0.018333333333333323,
+      "mean_gate_regret": 0.549,
+      "max_gate_regret": 1.596,
+      "mean_topk_jaccard": 0.2833333333333333,
+      "mean_kendall": 0.20238095238095236,
+      "mean_calls": 15.833333333333334,
+      "mean_probe_calls": 0.0,
+      "catastrophic_rate": 0.08333333333333333,
+      "policy_accuracy": 0.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.4166666666666667,
+      "oracle_gap": 0.549
+    },
+    "oracle": {
+      "n": 12,
+      "mean_utility": 0.2285,
+      "mean_gate_regret": 0.3685,
+      "max_gate_regret": 1.596,
+      "mean_topk_jaccard": 0.43333333333333335,
+      "mean_kendall": 0.30357142857142855,
+      "mean_calls": 16.0,
+      "mean_probe_calls": 0.0,
+      "catastrophic_rate": 0.08333333333333333,
+      "policy_accuracy": 1.0,
+      "abstain_rate": 0.0,
+      "false_trust_rate": 0.0,
+      "false_distrust_rate": 0.3333333333333333,
+      "oracle_gap": 0.3685
+    }
+  },
+  "calibration_val": {
+    "logistic": {
+      "brier": 0.40243444511815435,
+      "log_loss": 1.1637565796322864,
+      "ece": 0.4038092017393563,
+      "accuracy": 0.5,
+      "n": 4,
+      "reliability_bins": [
+        {
+          "lo": 0.0,
+          "hi": 0.125,
+          "conf": 0.09619079826064367,
+          "acc": 0.5,
+          "n": 4.0
+        },
+        {
+          "lo": 0.125,
+          "hi": 0.25,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.25,
+          "hi": 0.375,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.375,
+          "hi": 0.5,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.5,
+          "hi": 0.625,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.625,
+          "hi": 0.75,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.75,
+          "hi": 0.875,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.875,
+          "hi": 1.0,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        }
+      ],
+      "decision_utility": null,
+      "subgroup": {}
+    },
+    "isotonic": {
+      "brier": 0.5,
+      "log_loss": 10.361632918973203,
+      "ece": 0.5,
+      "accuracy": 0.5,
+      "n": 4,
+      "reliability_bins": [
+        {
+          "lo": 0.0,
+          "hi": 0.125,
+          "conf": 0.0,
+          "acc": 0.5,
+          "n": 4.0
+        },
+        {
+          "lo": 0.125,
+          "hi": 0.25,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.25,
+          "hi": 0.375,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.375,
+          "hi": 0.5,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.5,
+          "hi": 0.625,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.625,
+          "hi": 0.75,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.75,
+          "hi": 0.875,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.875,
+          "hi": 1.0,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        }
+      ],
+      "decision_utility": null,
+      "subgroup": {}
+    },
+    "beta": {
+      "brier": 0.4083992605330379,
+      "log_loss": 1.1954479553696022,
+      "ece": 0.41091263575258796,
+      "accuracy": 0.5,
+      "n": 4,
+      "reliability_bins": [
+        {
+          "lo": 0.0,
+          "hi": 0.125,
+          "conf": 0.08908736424741201,
+          "acc": 0.5,
+          "n": 4.0
+        },
+        {
+          "lo": 0.125,
+          "hi": 0.25,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.25,
+          "hi": 0.375,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.375,
+          "hi": 0.5,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.5,
+          "hi": 0.625,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.625,
+          "hi": 0.75,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.75,
+          "hi": 0.875,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.875,
+          "hi": 1.0,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        }
+      ],
+      "decision_utility": null,
+      "subgroup": {}
+    },
+    "shallow_tree": {
+      "brier": 0.505625,
+      "log_loss": 10.402262651097647,
+      "ece": 0.5375,
+      "accuracy": 0.5,
+      "n": 4,
+      "reliability_bins": [
+        {
+          "lo": 0.0,
+          "hi": 0.125,
+          "conf": 0.0,
+          "acc": 0.6666666666666666,
+          "n": 3.0
+        },
+        {
+          "lo": 0.125,
+          "hi": 0.25,
+          "conf": 0.15,
+          "acc": 0.0,
+          "n": 1.0
+        },
+        {
+          "lo": 0.25,
+          "hi": 0.375,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.375,
+          "hi": 0.5,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.5,
+          "hi": 0.625,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.625,
+          "hi": 0.75,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.75,
+          "hi": 0.875,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.875,
+          "hi": 1.0,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        }
+      ],
+      "decision_utility": null,
+      "subgroup": {}
+    },
+    "heuristic": {
+      "brier": 0.4434916850648135,
+      "log_loss": 1.1755356629260687,
+      "ece": 0.649941969440486,
+      "accuracy": 0.25,
+      "n": 4,
+      "reliability_bins": [
+        {
+          "lo": 0.0,
+          "hi": 0.125,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.125,
+          "hi": 0.25,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.25,
+          "hi": 0.375,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.375,
+          "hi": 0.5,
+          "conf": 0.40476190476190477,
+          "acc": 1.0,
+          "n": 1.0
+        },
+        {
+          "lo": 0.5,
+          "hi": 0.625,
+          "conf": 0.5214285714285715,
+          "acc": 1.0,
+          "n": 1.0
+        },
+        {
+          "lo": 0.625,
+          "hi": 0.75,
+          "conf": 0.6481896108277783,
+          "acc": 0.0,
+          "n": 1.0
+        },
+        {
+          "lo": 0.75,
+          "hi": 0.875,
+          "conf": 0.0,
+          "acc": 0.0,
+          "n": 0.0
+        },
+        {
+          "lo": 0.875,
+          "hi": 1.0,
+          "conf": 0.877768743124642,
+          "acc": 0.0,
+          "n": 1.0
+        }
+      ],
+      "decision_utility": null,
+      "subgroup": {}
+    }
+  },
+  "calibration_test": {
+    "brier": 0.07964908930617277,
+    "log_loss": 0.3052258224542463,
+    "ece": 0.047712818668742066,
+    "accuracy": 0.9166666666666666,
+    "n": 12,
+    "reliability_bins": [
+      {
+        "lo": 0.0,
+        "hi": 0.125,
+        "conf": 0.08925686328609443,
+        "acc": 0.1111111111111111,
+        "n": 9.0
+      },
+      {
+        "lo": 0.125,
+        "hi": 0.25,
+        "conf": 0.12528853119991826,
+        "acc": 0.0,
+        "n": 3.0
+      },
+      {
+        "lo": 0.25,
+        "hi": 0.375,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      },
+      {
+        "lo": 0.375,
+        "hi": 0.5,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      },
+      {
+        "lo": 0.5,
+        "hi": 0.625,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      },
+      {
+        "lo": 0.625,
+        "hi": 0.75,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      },
+      {
+        "lo": 0.75,
+        "hi": 0.875,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      },
+      {
+        "lo": 0.875,
+        "hi": 1.0,
+        "conf": 0.0,
+        "acc": 0.0,
+        "n": 0.0
+      }
+    ],
+    "decision_utility": null,
+    "subgroup": {}
+  },
+  "threshold_utils_val": {
+    "0.35": -0.002999999999999989,
+    "0.45": -0.002999999999999989,
+    "0.55": -0.002999999999999989,
+    "0.65": -0.002999999999999989,
+    "0.75": -0.002999999999999989
+  },
+  "best_threshold": 0.35,
+  "uht_risk_threshold": 0.0871513237103253,
+  "leave_one_regime_out": [
+    {
+      "held_out": "accurate",
+      "brier": 0.018506544442895005,
+      "ece": 0.1337747178265533,
+      "accuracy": 1.0,
+      "n": 8
+    },
+    {
+      "held_out": "noisy",
+      "brier": 0.013049944786735598,
+      "ece": 0.11401723523763921,
+      "accuracy": 1.0,
+      "n": 8
+    },
+    {
+      "held_out": "reversed_topk",
+      "brier": 0.11119782664244232,
+      "ece": 0.03675959090464606,
+      "accuracy": 0.875,
+      "n": 8
+    },
+    {
+      "held_out": "block_permute_topk",
+      "brier": 0.23505451792371604,
+      "ece": 0.20392781352377698,
+      "accuracy": 0.75,
+      "n": 8
+    }
+  ],
+  "shift_rows": [
+    {
+      "n_items": 6,
+      "utility": 0.09600000000000003,
+      "topk_jaccard": 0.5,
+      "policy": "HYBRID",
+      "g_q": 0.2928614835822261
+    },
+    {
+      "n_items": 6,
+      "utility": 0.09400000000000003,
+      "topk_jaccard": 0.5,
+      "policy": "HYBRID",
+      "g_q": 0.2944608899797784
+    },
+    {
+      "n_items": 10,
+      "utility": 0.096,
+      "topk_jaccard": 0.2,
+      "policy": "HYBRID",
+      "g_q": 0.29199680520664595
+    },
+    {
+      "n_items": 10,
+      "utility": 0.096,
+      "topk_jaccard": 0.2,
+      "policy": "HYBRID",
+      "g_q": 0.29356702060159795
+    }
+  ],
+  "probe_informativeness": {
+    "random_pairs": {
+      "trustworthy": 0.3,
+      "local_topk_wrong": 0.3,
+      "buried_outsider": 0.2,
+      "globally_noisy": 0.5,
+      "shared_bias": 0.2,
+      "weak_not_misleading": 0.3
+    },
+    "prior_adjacent": {
+      "trustworthy": 0.6,
+      "local_topk_wrong": 0.7,
+      "buried_outsider": 0.2,
+      "globally_noisy": 0.4,
+      "shared_bias": 0.3,
+      "weak_not_misleading": 0.5
+    },
+    "boundary_pairs": {
+      "trustworthy": 0.5,
+      "local_topk_wrong": 0.8,
+      "buried_outsider": 0.6,
+      "globally_noisy": 0.4,
+      "shared_bias": 0.3,
+      "weak_not_misleading": 0.5
+    },
+    "topk_vs_outsider": {
+      "trustworthy": 0.4,
+      "local_topk_wrong": 0.6,
+      "buried_outsider": 0.9,
+      "globally_noisy": 0.4,
+      "shared_bias": 0.3,
+      "weak_not_misleading": 0.4
+    },
+    "cross_prior_disagreement": {
+      "trustworthy": 0.5,
+      "local_topk_wrong": 0.6,
+      "buried_outsider": 0.5,
+      "globally_noisy": 0.5,
+      "shared_bias": 0.4,
+      "weak_not_misleading": 0.6
+    },
+    "rank_distance_stratified": {
+      "trustworthy": 0.5,
+      "local_topk_wrong": 0.5,
+      "buried_outsider": 0.7,
+      "globally_noisy": 0.6,
+      "shared_bias": 0.3,
+      "weak_not_misleading": 0.5
+    },
+    "mixed_diagnostic": {
+      "trustworthy": 0.7,
+      "local_topk_wrong": 0.8,
+      "buried_outsider": 0.85,
+      "globally_noisy": 0.6,
+      "shared_bias": 0.4,
+      "weak_not_misleading": 0.6
+    },
+    "adaptive_diagnostic": {
+      "trustworthy": 0.7,
+      "local_topk_wrong": 0.8,
+      "buried_outsider": 0.85,
+      "globally_noisy": 0.55,
+      "shared_bias": 0.45,
+      "weak_not_misleading": 0.55
+    }
+  },
+  "probe_empirical": {
+    "random_pairs": {
+      "mean_boundary_fraction": 0.611111111111111
+    },
+    "boundary_pairs": {
+      "mean_boundary_fraction": 1.0
+    },
+    "topk_vs_outsider": {
+      "mean_boundary_fraction": 1.0
+    },
+    "mixed_diagnostic": {
+      "mean_boundary_fraction": 0.6666666666666666
+    }
+  },
+  "risk_coverage": [
+    {
+      "tau": 0.35,
+      "coverage": 0.0,
+      "regret": NaN
+    },
+    {
+      "tau": 0.45,
+      "coverage": 0.0,
+      "regret": NaN
+    },
+    {
+      "tau": 0.55,
+      "coverage": 0.0,
+      "regret": NaN
+    },
+    {
+      "tau": 0.65,
+      "coverage": 0.0,
+      "regret": NaN
+    },
+    {
+      "tau": 0.75,
+      "coverage": 0.0,
+      "regret": NaN
+    },
+    {
+      "tau": 0.85,
+      "coverage": 0.0,
+      "regret": NaN
+    }
+  ],
+  "risk_assumptions": "Split-conformal / risk-control thresholds assume exchangeability between calibration and deployment queries. Nested synthetic regime shifts and real distribution shift violate this; treat results as empirical bounds on the calibration distribution only, not as deployment guarantees.",
+  "majority_best_train": "CHALLENGER",
+  "n_records": 48,
+  "oracle_gap": 0.13933333333333334,
+  "runtime_s": 30.750686295796186,
+  "quick": false,
+  "decision_rationale": {
+    "always_uht_corrected": -0.025666666666666664,
+    "best_gate_corrected": -0.025666666666666664,
+    "oracle_corrected": 0.17081666666666667,
+    "oracle_minus_always": 0.19648333333333334,
+    "note": "Oracle gap shows query-level selection is valuable; current gates unrealized."
+  }
+}

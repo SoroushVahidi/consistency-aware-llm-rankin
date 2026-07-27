@@ -330,3 +330,36 @@ reports/manuscript_rewrite_plan/
 reports/manuscript_improvement_audit/
 reports/exact_ilp_repair_investigation/
 reports/manuscript_final_audit/
+
+# ---------------------------------------------------------------------------
+# Post-JDIQ local experiment trees (Outcome B–D / exploratory). Keep on disk;
+# do not hide the canonical Outcome F package
+# reports/policy_selection_20260726T030500Z/ (tracked intentionally).
+# See docs/ARTIFACT_POLICY.md.
+# ---------------------------------------------------------------------------
+reports/policy_selection_20260726T025426Z/
+reports/adaptive_acquisition_*/
+reports/prior_robust_*/
+reports/reliability_aware_repair_*/
+reports/linear_extension_extraction_*/
+reports/multi_provider_llm_robustness_*/
+reports/real_query_multifactor_acquisition_*/
+
+# Final-revision / page-limit freeze / submission scratch (large renders)
+reports/final_revision_*/
+reports/final_revision_page_limit_freeze_*/
+reports/final_submission_materials_*/
+
+# Large anonymous supplementary bundles (regenerate / ship outside Git)
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/
+
+# Within the canonical Outcome F dir: keep only the minimal tracked evidence
+# set (see reports/policy_selection_20260726T030500Z/README.md). Regenerated
+# calibrators/plots/replays stay local.
+reports/policy_selection_20260726T030500Z/model_*.json
+reports/policy_selection_20260726T030500Z/regret_model_*.json
+reports/policy_selection_20260726T030500Z/*.png
+reports/policy_selection_20260726T030500Z/decision_curves.json
+reports/policy_selection_20260726T030500Z/failure_traces.json
+reports/policy_selection_20260726T030500Z/replay_*.json
+reports/policy_selection_20260726T030500Z/AUDIT_POLICY_GATE.md

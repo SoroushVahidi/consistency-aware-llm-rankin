@@ -5,6 +5,17 @@
 **Scope:** entire working tree at `fix/outcome-f-production-operating-point` @ `3e02b73`, audited against the two Iran Journal of Computer Science reviewer reports (decision 2026-07-05)
 **Files created by this audit:** this file only.
 
+> **Currency note (2026-07-26 evening polish):** Sections §2 / §12 / §14 below
+> describe the repository **as audited that evening**, when Outcome F work was
+> still largely untracked and pytest reported 781 tests. As of HEAD `89b9406…`
+> the behavioural stack is **committed** (6 ahead of `origin/main`), root
+> `AUDIT_LOCAL_BRANCH.md` is the current audit (pre-remediation text archived
+> under `docs/historical/`), and the full suite reports **818** passed.
+> Production defaults remain `always_uht` / `production_uht` (confirmed). Do
+> **not** treat multifactor untracked `production_uht` metrics as validated.
+> Prefer `docs/ARTIFACT_POLICY.md` and the canonical Outcome F README for
+> current artifact guidance.
+
 ---
 
 ## 1. Executive Summary
@@ -23,7 +34,7 @@ All values below were re-derived directly from git during this audit (not copied
 
 | Item | Value |
 |---|---|
-| Repository root | `/home/soroush/consistency-aware-llm-rankin` |
+| Repository root | this clone (path omitted; local machine-specific) |
 | Current branch | `fix/outcome-f-production-operating-point` |
 | Current commit | `3e02b73666506f3eb894f5df2c531284ea31a60e` ("Update JDIQ title page with verified support and acknowledgments", 2026-07-15) |
 | Upstream | **None configured** for this branch (`git rev-parse @{upstream}` fails); remote `origin` = `github.com/SoroushVahidi/consistency-aware-llm-rankin.git`; `main` tracks `origin/main` and is at the same commit |
@@ -31,7 +42,7 @@ All values below were re-derived directly from git during this audit (not copied
 | Staged changes | none |
 | Unstaged modified (tracked) | `pyproject.toml` (+6: ruff E501 per-file-ignores for policy_selection), `src/consistency_ranker/__init__.py` (+3: exports `dag_linear_extensions`, `dag_ambiguity`, `soft_score_ranking`), `src/consistency_ranker/baseline_ranking.py` (+10: docstring note) — 19 insertions total |
 | Untracked files | **1,163** (716 under `reports/`, 353 under `papers/`, 75 under `src/`, 9 `scripts/`, 8 `tests/`, plus `AUDIT_LOCAL_BRANCH.md`, `REMEDIATION_REPORT.md`) |
-| Reviewable commit for the remediation? | **No.** Every line of the Outcome D/F, remediation, and 2026-07-25 experiment work is uncommitted (untracked or unstaged). There is no commit range to review; audit finding F-004 remains open. |
+| Reviewable commit for the remediation? | **At audit time: No** (F-004 open). **Current (2026-07-26 evening): Yes** — commits `3614333`…`89b9406` on this branch vs `origin/main`. Remaining work is evidence/docs polish, not absence of commits. |
 
 ### Claims independently re-verified this session
 
@@ -130,7 +141,7 @@ Status vocabulary: FULLY IMPLEMENTED AND VALIDATED (FIV) / IMPLEMENTED BUT NOT V
 | No repair (unrepaired) | FIV | `reports/full_calibrated_core/scripts/full_calibration_utils.py:123-141`; `scripts/run_real_experiment.py:2076-2080`; artifact `reports/final_revision_task4_exact_baseline_fairness_20260715/tables/three_way_unrepaired_greedy_exact.csv` (unrepaired Copeland 0.325 vs greedy 0.336) |
 | Greedy cycle peeling (current) | FIV | `src/consistency_ranker/greedy_fas.py:25-78`; `tests/test_greedy_fas.py`; canonical driver `full_calibration_utils.py:997-1004` |
 | Alternative greedy repair | PI | Metric-aware reweight + same peeling: `src/consistency_ranker/metric_aware_repair.py:1-19`; cost-attr greedy: `src/consistency_ranker/reliability_repair/reliability_weighted_repair.py:17-40` (+ `reports/reliability_aware_repair_20260725T210000Z/`). No alternate peeling strategy (max-weight, Eades) in-package |
-| Local-ratio / MWFAS-inspired repair | PI (external only) | LRTA reached only via `sys.path.insert(0, "/home/soroush/minimum-weighted-fas-heuristics/src")` in `experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py:1042-1057`; not vendored into `src/` |
+| Local-ratio / MWFAS-inspired repair | PI (external only) | LRTA reached only via `sys.path.insert` to a sibling local checkout of `minimum-weighted-fas-heuristics/src` in `experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py:1042-1057`; not vendored into `src/` |
 | Exact min-weight FAS (ILP) | FIV | SCIP MIP `src/consistency_ranker/mwfas_solver.py:178-312` (aliases `scip`/`exact`/`ilp` at `:420-426`); `tests/test_exact_mwfas_scip.py`; **1,025/1,025 queries proven optimal** (`reports/exact_open_source_ilp_repair_investigation/FINDINGS.md`; mean FAS weight greedy 2.31 vs exact 1.70) |
 | Exact Kemeny optimization | PI / IUAN | Local adjacent-swap Kemenization `src/consistency_ranker/baseline_ranking.py:358-419`; the MWFAS linear-ordering MIP is Kemeny-equivalent for weighted tournaments but never named Kemeny; closest-extension Kendall ILP (HiGHS) `dag_linear_extensions.py:517-538` is prior-distance on a DAG, not Kemeny aggregation |
 | CP-SAT / ILP formulation | IUAN (SCIP primary, Gurobi legacy, HiGHS for closest extension); CP-SAT AB | `mwfas_solver.py:26-38, 233-255, 315-417`; `dag_linear_extensions.py:562-588` |
@@ -354,7 +365,7 @@ FIV: nDCG, MRR, recall, feedback-arc objective, cycle weight, top-k Jaccard, cal
 6. **Hodge cyclic energy / personalized PageRank / Plackett–Luce / RankZephyr** still absent — low priority given C9/C10/C3 coverage.
 7. **FiQA real OpenAI run incomplete** (10/20 queries); TREC DL not downloaded.
 8. **Legacy JudgmentCache provenance hazard** still in production paths outside the new multi-provider store.
-9. **Process gap:** entire post-JDIQ stack uncommitted (F-004).
+9. **Process gap (updated):** post-JDIQ behavioural stack is now committed on this branch; remaining gap is tracking canonical Outcome F evidence and excluding broken/large local reports (see `docs/ARTIFACT_POLICY.md`).
 
 ---
 
@@ -386,8 +397,8 @@ FIV: nDCG, MRR, recall, feedback-arc objective, cycle weight, top-k Jaccard, cal
 
 | Need | Assessment |
 |---|---|
-| Commit / review-boundary pass | **Yes — urgent.** Branch has 0 unique commits; remediation is unreviewable (F-004). |
-| Report cleanup | **Yes.** Superseded linear-extension `T15*`, policy `T025426Z`; label `AUDIT_LOCAL_BRANCH.md` historical. |
+| Commit / review-boundary pass | **Done for behavioural stack** (6 commits). Still do a polish commit for canonical Outcome F evidence + doc hygiene before PR. |
+| Report cleanup | **Yes.** Superseded linear-extension `T15*`, policy `T025426Z` (ignore/local); pre-remediation audit archived under `docs/historical/`. |
 | Generated-artifact cleanup | **Yes.** Root `IMG_*.png` / UUID PNGs; consider not tracking bulky `reports/` binaries. |
 | Duplicate-script consolidation | **Useful later** (`run_openai_real_*.py`, `_ndcg_at_k` copies) — not blocking science. |
 | Feature-schema versioning | **Yes before any gate retrain** (§10). |

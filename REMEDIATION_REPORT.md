@@ -1,8 +1,16 @@
 # Outcome F Production Remediation
 
 **Date:** 2026-07-26 (local)
-**Branch:** `fix/outcome-f-production-operating-point` (created from dirty `main`; no work discarded, nothing committed or pushed)
-**Scope:** the Critical and High findings in `AUDIT_LOCAL_BRANCH.md`, plus the mypy debt (F-012)
+**Branch:** `fix/outcome-f-production-operating-point`
+**Currency note (2026-07-26 evening):** The behavioural remediation described here
+is committed on this branch (six commits ahead of `origin/main`, HEAD
+`89b9406…`). The pre-remediation audit is archived at
+`docs/historical/AUDIT_LOCAL_BRANCH_20260726_pre_remediation.md`. Current status:
+root `AUDIT_LOCAL_BRANCH.md`. Full pytest on this machine now reports **818**
+passed (historical “781 / 750” counts below are session snapshots, not current).
+**Multifactor `production_uht` quality metrics in the untracked multifactor
+report are not validated** and must not be read as confirming the safety floor.
+**Scope (original):** Critical and High findings in the then-current audit, plus mypy debt (F-012)
 **Billed API calls:** none. Every command below uses synthetic judges or local files.
 
 ---
@@ -18,10 +26,10 @@ inside the UHT path and cannot rewrite the executed policy, and the mandatory
 outsider probe / weak-evidence stop ban / final challenger check are invoked and
 observable in the returned result.
 
-One caveat, stated plainly because it is a process item rather than a behaviour
-item: **F-004 (the stack is uncommitted) is not resolved**, because the task
-forbids committing. A dedicated branch exists and all work is on it; a reviewer
-still needs a commit to review a diff. See §9.
+**F-004 (process):** Originally “stack uncommitted.” As of the commits on this
+branch (`3614333`…`89b9406`), there **is** a reviewable commit range vs
+`origin/main`. Remaining process work is polish/PR hygiene (canonical Outcome F
+package tracking, stale-doc cleanup), not absence of commits. See §9.
 
 The Outcome F empirical record is untouched and was reproduced bit-for-bit after
 the remediation (§7).
@@ -35,7 +43,7 @@ the remediation (§7).
 | F-001 | Critical | `PolicySelector.mode` defaulted to `selective_three_way`; no typed notion of "production" existed, so defaults were per-call-site opinions | New `ExecutionMode` enum and frozen `ProductionPolicyConfig`; `PolicySelector` defaults to `always_uht` + `PRODUCTION_UHT`; a learned gate mode or attached calibration model raises in production mode; unknown modes raise instead of resolving | `test_default_selector_is_production_uht`, `test_default_select_policy_executes_uht`, `test_no_omitted_argument_enables_selective_three_way`, `test_attaching_calibration_model_in_production_is_rejected`, `test_unknown_modes_are_rejected_not_mapped`, `test_environment_variables_cannot_enable_learned_routing`, `test_production_config_is_frozen_and_locked_to_uht` | **Resolved** |
 | F-002 | Critical | `apply_fallback_constraints` answered a safeguard *request* by renaming the policy (UHT → HYBRID/CHALLENGER), so the floor was a hidden gate | Renamed to `apply_experimental_escalation` and confined to experimental mode; added `NON_ROUTING_ACTIONS` + `production_safety_actions`; production executes the requests as actions inside UHT via `ProductionSafeguards` | `test_safety_floor_does_not_rewrite_uht_in_production`, `test_same_condition_may_reroute_only_under_experimental_mode`, `test_threshold_equality_at_safety_floor_boundary`, `test_weak_evidence_stop_is_rejected_and_adds_evidence` | **Resolved** |
 | F-003 | Critical | The gated runner called `evaluate_safeguards` once with `intending_stop=False`, so the stop ban and final challenger branches were unreachable | New `production_runner.run_production_uht` executes the outsider probe, evaluates the stop decision, acquires the missing top-k evidence when the stop is blocked, and runs the final challenger check, each exactly once | `test_all_safeguards_actually_execute`, `test_final_challenger_runs_even_when_stop_is_not_blocked`, `test_safeguards_are_not_executed_twice`, `test_safeguard_exception_still_returns_uht_ranking`, `test_end_to_end_production_operating_point` | **Resolved** |
-| F-004 | Critical (process) | All Outcome F work is untracked on `main`; there is no commit range to review | Dedicated branch `fix/outcome-f-production-operating-point` created without discarding work. Committing is explicitly out of scope for this task | n/a | **Not resolved** (deliberately; see §9) |
+| F-004 | Critical (process) | All Outcome F work is untracked on `main`; there is no commit range to review | Dedicated branch created; stack later committed as `3614333`…`89b9406` (6 commits ahead of `origin/main`) | n/a | **Mostly resolved** (reviewable range exists; polish/PR still open — see §9) |
 | F-005 | High | `mkdir(..., exist_ok=False)` plus a hard-coded output path made `REPRODUCE.sh` fail on any second run | Added `--overwrite-existing`; generated `REPRODUCE.sh` now adds the flag automatically when the target directory exists and accepts an alternative path as `$1`; a dated note in the report directory gives both commands for the historical script | `test_research_cli_help_labels_itself_as_research` (flag present); verified by re-running the experiment twice into `/tmp/ps_verify` | **Resolved** |
 | F-006 | High | Oracle "gap" mixes live gated utilities with offline population utilities | Not fixed. It is an experiment-analysis issue, changing it would alter the frozen Outcome F numbers, and the direction of the oracle advantage is unaffected | n/a | **Deferred** (documented in §9) |
 | F-007 | High | Calibration accuracy ≈ majority-class rate was reported as if it showed discrimination | `IMPLEMENTATION_STATUS_20260726.md` and the updated `scripts/AUDIT_POLICY_GATE.md` lead with the decision-relevant result (no learned gate beat always-UHT) instead of accuracy. The stored metrics are unchanged | n/a | **Documented** |
@@ -251,7 +259,7 @@ work appears as untracked additions.
 
 Each item below is backed by an observation from this session.
 
-1. **The stack is still uncommitted (F-004).** `git status` shows `policy_selection/`, `production_runner.py`, both CLIs and both test files as untracked. Committing was out of scope, so there is still no reviewable diff. A reviewer should run `git add -A src/consistency_ranker/policy_selection scripts/run_production_uht.py scripts/run_policy_selection_experiment.py tests/test_production_operating_point.py tests/test_policy_selection.py` on this branch before review, and decide separately whether the ~660 KB of generated report artifacts belong in Git.
+1. **F-004 process gap (updated).** The library/tests/scripts for Outcome F **are committed** on this branch (reviewable vs `origin/main`). Remaining hygiene: track the canonical Outcome F evidence package (`reports/policy_selection_20260726T030500Z/`), keep superseded/broken report trees local per `docs/ARTIFACT_POLICY.md`, and do not cite the untracked multifactor package’s `production_uht` rows as validated.
 2. **The safety floor costs 2–3 calls, which can hurt at small budgets.** Comparing `run_production_uht` against `run_named_policy(policy="UHT")` over 12 synthetic cells, mean top-k Jaccard was 0.225 versus 0.208 — but on one cell (16 items, budget 8, seed 1) the floor scored 0.2 against plain UHT's 0.5, because two of eight calls went to safeguards. The floor is not free on tight budgets. It has not been benchmarked at the scale that produced Outcome F, and I did not re-run the frozen benchmark against it, to avoid perturbing those numbers.
 3. **`gate_features` reads an `evidence_fraction` key that `evidence_fraction_summary` never returns.** `gate_features.py:241` uses `summary.get("evidence_fraction") or 0.0`, but that function returns only counts, so `evidence_only_stability_proxy` is always 0.0 and `preliminary_g_prior` always 1.0 in every recorded feature vector. This weakens the experimental gates' feature set (consistent with Outcome F's finding that the predictors are weak) and does not affect production, which computes its own coverage from `topk_evidence_coverage`. I left it alone because changing it would alter the frozen benchmark inputs.
 4. **Weak-evidence stops are blocked on essentially every synthetic query.** Measured top-k coverage after a UHT run was 0.0–0.08 across all scenarios tried, so the ban fires constantly. That is a real signal (UHT's judged pairs are frequently disjoint from the final top-k boundary) rather than a bug, but the safeguard is closer to "always acquire a little more boundary evidence" than to a selective check, and its threshold has not been tuned on real data.
@@ -270,7 +278,7 @@ Each item below is backed by an observation from this session.
 6. **Does the final challenger check execute?** Yes, on both the blocked-stop and normal-stop paths, outside any early return, exactly once.
 7. **Do diagnostic predictions remain non-routing?** Yes. They are returned in `diagnostic_recommendation`, and a confident CHALLENGER recommendation still executes UHT.
 8. **Do malformed models/configurations fail closed?** Yes. Unknown modes raise, `None` resolves to production, corrupt model files cannot be attached to a production selector, and safeguard exceptions degrade to plain UHT with the error recorded.
-9. **Are all tests passing?** Yes: 781 passed, 0 failed.
-10. **Is mypy clean?** Clean for the Outcome F stack (0 of the original 36, plus the runner's 4). 42 unrelated pre-existing errors remain elsewhere in the repository.
-11. **Is the working branch clean enough for review?** Partly. The behaviour is review-ready and isolated on `fix/outcome-f-production-operating-point`, but nothing is committed, so there is still no diff to review (risk 1).
-12. **Is the repository production-ready for the stated interim operating point?** Yes for the operating point as specified — always-UHT with a non-routing safety floor, enforced and tested. Not yet for a *learned* gate, and the floor's budget cost and thresholds still need validation on real queries.
+9. **Are all tests passing?** Yes at remediation time: 781 passed. **Current suite on this branch (2026-07-26 evening): 818 passed.** Treat “750” / “781” as historical snapshots.
+10. **Is mypy clean?** Clean for the Outcome F stack (0 of the original 36, plus the runner's 4). Unrelated pre-existing errors remain elsewhere in the repository.
+11. **Is the working branch clean enough for review?** Behavioural code is reviewable on `fix/outcome-f-production-operating-point` vs `origin/main`. Evidence/docs polish (canonical Outcome F package + stale-audit cleanup) is the remaining hygiene before PR.
+12. **Is the repository production-ready for the stated interim operating point?** Yes for the **code default** — always-UHT with a non-routing safety floor, enforced and tested. **Not** for a *learned* gate. The floor’s budget cost and real-query quality effect are **not** validated by the broken multifactor `production_uht` metrics; those remain local-only until recomputed correctly.
