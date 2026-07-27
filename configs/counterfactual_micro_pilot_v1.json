@@ -1,0 +1,169 @@
+{
+  "benchmark_version": "counterfactual_micro_pilot_v1",
+  "panel_version": "counterfactual_provider_panel_v1",
+  "prompt_version": "counterfactual_pairwise_judge_v1",
+  "prompt_path": "prompts/counterfactual_pairwise_judge_v1.txt",
+  "prompt_sha256": "6e8038363393bb3e6c70edb61619107a29253fda60b35295c040c3925661fcf0",
+  "judgment_schema_version": "counterfactual_pairwise_judgment_v1",
+  "judgment_schema_path": "schemas/counterfactual_pairwise_judgment_v1.json",
+  "judgment_schema_sha256": "f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7",
+  "status": "frozen_not_executed",
+  "scientific_scope": {
+    "establishes": [
+      "data loading",
+      "candidate pools",
+      "qrels mapping after execution",
+      "prompt rendering",
+      "provider normalization",
+      "presentation-order mapping",
+      "caching and resume",
+      "trajectory records",
+      "cost accounting"
+    ],
+    "does_not_establish": [
+      "provider superiority",
+      "policy superiority",
+      "real oracle gap",
+      "noninferiority",
+      "production readiness",
+      "calibration",
+      "determinism"
+    ]
+  },
+  "datasets": {
+    "scidocs": {
+      "qrels_path": "data/processed/beir/scidocs/qrels.jsonl",
+      "queries_path": "data/processed/beir/scidocs/queries.jsonl",
+      "documents_path": "data/processed/beir/scidocs/documents.jsonl",
+      "query_ids": [
+        "01273bd34dacfe9ef887b320f36934d2f9fa9b34",
+        "012e396b02aa584cb74a65ae14af355e7c897858"
+      ],
+      "selection_rule": "lexicographic_first_two_with_positive_qrel_and_query_text"
+    },
+    "fiqa": {
+      "qrels_path": "data/processed/beir/fiqa/qrels.jsonl",
+      "queries_path": "data/processed/beir/fiqa/queries.jsonl",
+      "documents_path": "data/processed/beir/fiqa/documents.jsonl",
+      "query_ids": [
+        "0",
+        "1"
+      ],
+      "selection_rule": "lexicographic_first_two_with_positive_qrel_and_query_text"
+    },
+    "hotpotqa": {
+      "qrels_path": "data/processed/hotpotqa/qrels.jsonl",
+      "queries_path": "data/processed/hotpotqa/queries.jsonl",
+      "documents_path": "data/processed/hotpotqa/documents.jsonl",
+      "query_ids": [
+        "5a70eee85542994082a3e3f0",
+        "5a70f0a75542994082a3e403"
+      ],
+      "selection_rule": "lexicographic_first_two_with_positive_qrel_and_query_text"
+    },
+    "bright": {
+      "qrels_path": "data/processed/bright/qrels.jsonl",
+      "queries_path": "data/processed/bright/queries.jsonl",
+      "documents_path": "data/processed/bright/documents.jsonl",
+      "query_ids": [
+        "aops:aops_1959_IMO_Problems/Problem_1",
+        "aops:aops_1971_AHSME_Problems/Problem_26"
+      ],
+      "selection_rule": "lexicographic_first_two_with_positive_qrel_and_query_text"
+    }
+  },
+  "n_queries_total": 8,
+  "candidate_pool": {
+    "pool_size": 10,
+    "eval_k": 5,
+    "require_p_gt_k": true,
+    "construction": "canonical_multi_ranker_pool_when_available",
+    "freeze_before_pairwise_calls": true,
+    "identical_ids_across_policies_and_providers": true,
+    "qrels_must_not_influence_pool_or_acquisition": true,
+    "record_pool_hash": true,
+    "max_candidate_chars": 1200,
+    "max_candidate_chars_note": "Truncate rendered candidate text at this length before prompting. Derived from rendered-fixture token estimation (see docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md token-cap section); without a truncation cap, at least one real BRIGHT document exceeds 9,000,000 characters."
+  },
+  "provider_panel": [
+    {
+      "provider": "azure",
+      "model_or_deployment": "gpt-4.1-mini",
+      "family": "openai_compatible_chat",
+      "role": "closed-model production-style judge"
+    },
+    {
+      "provider": "cohere",
+      "model_or_deployment": "command-r-plus-08-2024",
+      "family": "command_r",
+      "role": "independent Command-family judge"
+    },
+    {
+      "provider": "fireworks",
+      "model_or_deployment": "accounts/fireworks/models/gpt-oss-120b",
+      "family": "open_weight_hosted_chat",
+      "role": "open-weight or hosted low-cost judge"
+    },
+    {
+      "provider": "gemini",
+      "model_or_deployment": "gemini-2.5-flash",
+      "family": "gemini",
+      "role": "independent Gemini-family judge"
+    }
+  ],
+  "policies": [
+    "production_uht",
+    "factorial_uht",
+    "HYBRID",
+    "ROBUST_COMBINED",
+    "random_pair",
+    "prior_only"
+  ],
+  "acquisition": {
+    "design": "fixed_policy_logged_shell",
+    "no_full_pair_matrix": true,
+    "initial_selected_pairs_per_query": 8,
+    "initial_presentation": "single_orientation_per_selected_pair",
+    "presentation_orders_available": [
+      "ab",
+      "ba"
+    ],
+    "adaptive_repeat_triggers": [
+      "position_inconsistent",
+      "tie_or_abstain",
+      "low_confidence",
+      "cross_provider_disagreement",
+      "near_eval_cutoff",
+      "changes_topk_membership"
+    ]
+  },
+  "call_budget": {
+    "formula_note": "8 queries \u00d7 4 providers \u00d7 8 pairs = 256 initial calls",
+    "initial_live_calls": 256,
+    "reserved_followup_calls": 128,
+    "hard_max_live_calls": 384,
+    "max_live_calls_per_provider": 96,
+    "max_retries_per_request": 1,
+    "max_input_tokens_per_request": 2000,
+    "max_output_tokens_per_request": 128,
+    "max_total_input_tokens": 800000,
+    "max_total_output_tokens": 60000,
+    "max_estimated_cost_usd": null,
+    "cost_status": "unknown_until_price_config_supplied",
+    "execute_in_this_task": false,
+    "token_cap_derivation_note": "Estimated from rendering the real frozen prompt against actual frozen query text and max_candidate_chars-truncated candidates using a conservative 3 chars/token ratio (see docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md). Per-request estimate ~1468 tokens rounded up to 2000 with margin; cumulative = 384 * 2000 = 768000 rounded up to 800000. Output cumulative = 384 * 128 = 49152 rounded up to 60000. hard_max_live_calls remains the authoritative cap regardless of token estimate accuracy."
+  },
+  "generation_defaults": {
+    "temperature": 0.0,
+    "max_output_tokens": 128,
+    "seed": 42
+  },
+  "validity": {
+    "qrels_only_after_execution": true,
+    "forbid_qrels_in_policy_inputs": true,
+    "identical_candidate_pools_per_cell": true,
+    "normalize_presentation_to_document_ids": true,
+    "missing_cells_require_explicit_failure_reason": true,
+    "resume_must_not_repeat_completed_request_hashes": true
+  }
+}

@@ -51,6 +51,7 @@ If any answer is no, keep the artifact local (or archive outside Git) and docume
 | `reports/real_query_multifactor_acquisition_corrected_*/` | Keep local full trees; may track a compact `CORRECTED_SUMMARY.json` / hashes only if frozen |
 | `reports/adaptive_acquisition_*`, `prior_robust_*`, `reliability_aware_repair_*`, `linear_extension_extraction_*`, `multi_provider_llm_robustness_*` | Keep local until explicitly frozen |
 | `reports/provider_capability_audit_*`, `counterfactual_cost_plan_*` | Keep local (may contain sanitized smoke evidence; do not commit raw responses) |
+| `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md`, `configs/counterfactual_micro_pilot_v1.json` | Track freeze contracts; do not stage micro-pilot live outputs |
 | `reports/final_revision_*`, `reports/final_revision_page_limit_freeze_*`, visual audits | Keep local (large / rendering scratch) |
 | `papers/**/anonymous_supplementary/` | Outside Git (hundreds of MB) |
 | Untracked Outcome B–D driver scripts under `scripts/run_*_experiment.py` | **Resolved:** canonical drivers live under `scripts/`; see `docs/experiments/OUTCOME_BCD_DRIVERS.md`. Report trees stay local until frozen. |
