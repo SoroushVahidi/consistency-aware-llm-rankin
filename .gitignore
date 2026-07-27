@@ -343,6 +343,8 @@ reports/prior_robust_*/
 reports/reliability_aware_repair_*/
 reports/linear_extension_extraction_*/
 reports/multi_provider_llm_robustness_*/
+reports/provider_capability_audit_*/
+reports/counterfactual_cost_plan_*/
 reports/real_query_multifactor_acquisition_*/
 
 # Final-revision / page-limit freeze / submission scratch (large renders)

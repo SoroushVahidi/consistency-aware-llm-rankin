@@ -1,0 +1,110 @@
+{
+  "schema_version": "provider_capability_summary_v1",
+  "source_report": "provider_capability_audit_live_20260727T042703Z",
+  "paid_api_calls": 12,
+  "live_calls_by_provider": {
+    "azure": 3,
+    "cohere": 3,
+    "fireworks": 3,
+    "gemini": 3
+  },
+  "prompt_tokens": 2544,
+  "completion_tokens": 457,
+  "estimated_cost_usd": null,
+  "cost_status": "unknown_prices_not_invented",
+  "batch_jobs_submitted": 0,
+  "fixture": "earth_seasons_v1",
+  "disclaimer": "These calls verify connectivity and instrumentation only on one synthetic fixture. They do not establish ranking quality, calibration, determinism, or provider superiority. Four providers do not imply four fully independent underlying model families; exact backend revisions may be opaque.",
+  "providers": {
+    "azure": {
+      "configured": true,
+      "authentication_verified": true,
+      "model_or_deployment": "gpt-4.1-mini",
+      "structured_output_verified": true,
+      "preference_ab": "doc_a",
+      "preference_ba_mapped": "doc_a",
+      "document_identity_consistent": true,
+      "position_sensitive": false,
+      "repeat_same_preference": true,
+      "token_usage_reported": true,
+      "latency_measured": true,
+      "live_requests_used": 3,
+      "prompt_tokens": 573,
+      "completion_tokens": 78,
+      "errors": [],
+      "limitations": [
+        "Native provider rerank endpoint not exercised (no adapter / Call 4 skipped).",
+        "logprobs not tested in this audit"
+      ]
+    },
+    "cohere": {
+      "configured": true,
+      "authentication_verified": true,
+      "model_or_deployment": "command-r-plus-08-2024",
+      "structured_output_verified": true,
+      "preference_ab": "doc_a",
+      "preference_ba_mapped": "doc_a",
+      "document_identity_consistent": true,
+      "position_sensitive": false,
+      "repeat_same_preference": true,
+      "token_usage_reported": true,
+      "latency_measured": true,
+      "live_requests_used": 3,
+      "prompt_tokens": 606,
+      "completion_tokens": 78,
+      "errors": [],
+      "limitations": [
+        "Native provider rerank endpoint not exercised (no adapter / Call 4 skipped).",
+        "logprobs not tested in this audit"
+      ]
+    },
+    "fireworks": {
+      "configured": true,
+      "authentication_verified": true,
+      "model_or_deployment": "accounts/fireworks/models/gpt-oss-120b",
+      "structured_output_verified": true,
+      "preference_ab": "doc_a",
+      "preference_ba_mapped": "doc_a",
+      "document_identity_consistent": true,
+      "position_sensitive": false,
+      "repeat_same_preference": true,
+      "token_usage_reported": true,
+      "latency_measured": true,
+      "live_requests_used": 3,
+      "prompt_tokens": 768,
+      "completion_tokens": 190,
+      "errors": [],
+      "limitations": [
+        "Native provider rerank endpoint not exercised (no adapter / Call 4 skipped).",
+        "logprobs not tested in this audit"
+      ]
+    },
+    "gemini": {
+      "configured": true,
+      "authentication_verified": true,
+      "model_or_deployment": "gemini-2.5-flash",
+      "structured_output_verified": true,
+      "preference_ab": "doc_a",
+      "preference_ba_mapped": "doc_a",
+      "document_identity_consistent": true,
+      "position_sensitive": false,
+      "repeat_same_preference": true,
+      "token_usage_reported": true,
+      "latency_measured": true,
+      "live_requests_used": 3,
+      "prompt_tokens": 597,
+      "completion_tokens": 111,
+      "errors": [],
+      "limitations": [
+        "Native provider rerank endpoint not exercised (no adapter / Call 4 skipped).",
+        "logprobs not tested in this audit"
+      ]
+    }
+  },
+  "identity_notes": {
+    "azure": "Configured Azure OpenAI deployment identifier gpt-4.1-mini; underlying revision may be opaque.",
+    "cohere": "Configured Cohere model id command-r-plus-08-2024 via compatibility endpoint.",
+    "fireworks": "Configured Fireworks model path accounts/fireworks/models/gpt-oss-120b.",
+    "gemini": "Configured Vertex Gemini model gemini-2.5-flash; project/location redacted."
+  }
+}
