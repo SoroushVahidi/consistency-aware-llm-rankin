@@ -365,3 +365,15 @@ reports/policy_selection_20260726T030500Z/decision_curves.json
 reports/policy_selection_20260726T030500Z/failure_traces.json
 reports/policy_selection_20260726T030500Z/replay_*.json
 reports/policy_selection_20260726T030500Z/AUDIT_POLICY_GATE.md
+
+# Within the offline active-acquisition / regularized-aggregation / stopping-
+# rule pilot trio (consistency-aware pivot): track the reports in full
+# (headline REPORT.md, MANIFEST.json, statistical_analysis.json, and the
+# tabular per-checkpoint CSVs needed for independent recomputation), but keep
+# the two bulky raw per-step/per-decision event logs local -- they are
+# deterministically regenerable from the frozen config + code + the existing
+# local oracle cache (fixed seed, no live calls), and are strictly more
+# granular than the tracked tabular summaries already used for headline
+# recomputation. See docs/ARTIFACT_POLICY.md.
+reports/offline_active_acquisition_pilot_20260728T142414Z/raw_trajectories.jsonl
+reports/stopping_rule_pilot_20260728T190000Z/simulate/raw_stopping_histories.jsonl

@@ -1,0 +1,200 @@
+{
+  "schema_version": 2,
+  "primary_comparisons": [
+    {
+      "label": "proposed_vs_fixed10_ndcg",
+      "n": 35,
+      "mean_delta": 0.05942085710871284,
+      "cohen_d": 0.789663713794313,
+      "ci95_lower": 0.03619564143904576,
+      "ci95_upper": 0.08424000715516039,
+      "sign_flip_pvalue": 9.999000099990002e-05,
+      "holm_pvalue": 0.0004999500049995,
+      "wins": 21,
+      "ties": 11,
+      "losses": 3
+    },
+    {
+      "label": "proposed_vs_fixed20_ndcg",
+      "n": 35,
+      "mean_delta": 0.03101037183359732,
+      "cohen_d": 0.5677152313134177,
+      "ci95_lower": 0.013762951371986883,
+      "ci95_upper": 0.048833452996372026,
+      "sign_flip_pvalue": 0.0016998300169983002,
+      "holm_pvalue": 0.0016998300169983002,
+      "wins": 18,
+      "ties": 10,
+      "losses": 7
+    },
+    {
+      "label": "proposed_vs_fixed10_budget",
+      "n": 35,
+      "mean_delta": 0.27700680272108846,
+      "cohen_d": 1.5743505179369368,
+      "ci95_lower": 0.21823129251700682,
+      "ci95_upper": 0.3327891156462585,
+      "sign_flip_pvalue": 9.999000099990002e-05,
+      "holm_pvalue": 0.0004999500049995,
+      "wins": 32,
+      "ties": 1,
+      "losses": 2
+    },
+    {
+      "label": "proposed_vs_fixed20_budget",
+      "n": 35,
+      "mean_delta": 0.17224489795918366,
+      "cohen_d": 0.9789429055541071,
+      "ci95_lower": 0.11346938775510203,
+      "ci95_upper": 0.22802721088435374,
+      "sign_flip_pvalue": 9.999000099990002e-05,
+      "holm_pvalue": 0.0004999500049995,
+      "wins": 28,
+      "ties": 0,
+      "losses": 7
+    },
+    {
+      "label": "proposed_vs_simple_ndcg",
+      "n": 35,
+      "mean_delta": 0.07574283717673146,
+      "cohen_d": 0.8863806966932903,
+      "ci95_lower": 0.049342602324839266,
+      "ci95_upper": 0.1044372306322719,
+      "sign_flip_pvalue": 9.999000099990002e-05,
+      "holm_pvalue": 0.0004999500049995,
+      "wins": 21,
+      "ties": 12,
+      "losses": 2
+    }
+  ],
+  "severe_harm": {
+    "counterfactual_primary": {
+      "n": 35,
+      "rate": 0.0,
+      "ci_method": "wilson",
+      "ci95_lower": 6.938893903907228e-18,
+      "ci95_upper": 0.09890099232440402
+    },
+    "fixed_0.10": {
+      "n": 35,
+      "rate": 0.05714285714285714,
+      "ci_method": "wilson",
+      "ci95_lower": 0.015813161857108668,
+      "ci95_upper": 0.18607057420164919
+    },
+    "fixed_0.20": {
+      "n": 35,
+      "rate": 0.02857142857142857,
+      "ci_method": "wilson",
+      "ci95_lower": 0.005061491855444203,
+      "ci95_upper": 0.14533087233613673
+    },
+    "simple_recent_stability": {
+      "n": 35,
+      "rate": 0.02857142857142857,
+      "ci_method": "wilson",
+      "ci95_lower": 0.005061491855444203,
+      "ci95_upper": 0.14533087233613673
+    }
+  },
+  "premature_stop": {
+    "counterfactual_primary": {
+      "n": 35,
+      "qrel_label_rate": 0.4857142857142857,
+      "ci_method": "wilson",
+      "ci95_lower": 0.32994236002509725,
+      "ci95_upper": 0.6443119540413141,
+      "qrelfree_instability_rate": 0.8571428571428571
+    },
+    "fixed_0.10": {
+      "n": 35,
+      "qrel_label_rate": 0.7142857142857143,
+      "ci_method": "wilson",
+      "ci95_lower": 0.5494506513681738,
+      "ci95_upper": 0.836734637635653,
+      "qrelfree_instability_rate": 0.9714285714285714
+    },
+    "fixed_0.20": {
+      "n": 35,
+      "qrel_label_rate": 0.6285714285714286,
+      "ci_method": "wilson",
+      "ci95_lower": 0.4633693684359532,
+      "ci95_upper": 0.7683418049663429,
+      "qrelfree_instability_rate": 0.9142857142857143
+    },
+    "simple_recent_stability": {
+      "n": 35,
+      "qrel_label_rate": 0.7428571428571429,
+      "ci_method": "wilson",
+      "ci95_lower": 0.5793069315616083,
+      "ci95_upper": 0.8583697293093956,
+      "qrelfree_instability_rate": 0.9714285714285714
+    }
+  },
+  "run_status": {
+    "counterfactual_primary": {
+      "n_total_runs": 35,
+      "n_stopped": 31,
+      "n_capped": 4,
+      "n_failed": 0,
+      "stopped_rate": 0.8857142857142857,
+      "stopped_rate_ci_method": "wilson",
+      "stopped_rate_ci95_lower": 0.7404853135378618,
+      "stopped_rate_ci95_upper": 0.9546482066690264,
+      "capped_rate": 0.11428571428571428,
+      "capped_rate_ci_method": "wilson",
+      "capped_rate_ci95_lower": 0.04535179333097358,
+      "capped_rate_ci95_upper": 0.25951468646213804,
+      "cap_budget_fraction": 0.6,
+      "capped_runs_included_in_headline_aggregates": true
+    },
+    "fixed_0.10": {
+      "n_total_runs": 35,
+      "n_stopped": 35,
+      "n_capped": 0,
+      "n_failed": 0,
+      "stopped_rate": 1.0,
+      "stopped_rate_ci_method": "wilson",
+      "stopped_rate_ci95_lower": 0.9010990076755959,
+      "stopped_rate_ci95_upper": 0.9999999999999999,
+      "capped_rate": 0.0,
+      "capped_rate_ci_method": "wilson",
+      "capped_rate_ci95_lower": 6.938893903907228e-18,
+      "capped_rate_ci95_upper": 0.09890099232440402,
+      "cap_budget_fraction": 0.6,
+      "capped_runs_included_in_headline_aggregates": true
+    },
+    "fixed_0.20": {
+      "n_total_runs": 35,
+      "n_stopped": 35,
+      "n_capped": 0,
+      "n_failed": 0,
+      "stopped_rate": 1.0,
+      "stopped_rate_ci_method": "wilson",
+      "stopped_rate_ci95_lower": 0.9010990076755959,
+      "stopped_rate_ci95_upper": 0.9999999999999999,
+      "capped_rate": 0.0,
+      "capped_rate_ci_method": "wilson",
+      "capped_rate_ci95_lower": 6.938893903907228e-18,
+      "capped_rate_ci95_upper": 0.09890099232440402,
+      "cap_budget_fraction": 0.6,
+      "capped_runs_included_in_headline_aggregates": true
+    },
+    "simple_recent_stability": {
+      "n_total_runs": 35,
+      "n_stopped": 35,
+      "n_capped": 0,
+      "n_failed": 0,
+      "stopped_rate": 1.0,
+      "stopped_rate_ci_method": "wilson",
+      "stopped_rate_ci95_lower": 0.9010990076755959,
+      "stopped_rate_ci95_upper": 0.9999999999999999,
+      "capped_rate": 0.0,
+      "capped_rate_ci_method": "wilson",
+      "capped_rate_ci95_lower": 6.938893903907228e-18,
+      "capped_rate_ci95_upper": 0.09890099232440402,
+      "cap_budget_fraction": 0.6,
+      "capped_runs_included_in_headline_aggregates": true
+    }
+  }
+}

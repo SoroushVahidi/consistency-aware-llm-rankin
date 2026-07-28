@@ -64,9 +64,24 @@ from consistency_ranker.active_acquisition.stopping import (  # noqa: E402
     worst_case_topk_change,
 )
 from consistency_ranker.statistical_inference import (  # noqa: E402
-    bootstrap_mean_interval,
     holm_adjust,
+    proportion_interval,
 )
+
+STATISTICAL_ANALYSIS_SCHEMA_VERSION = 2
+# v2 (this file): binary-proportion rates (severe_harm, premature_stop,
+# run_status.*_rate) use proportion_interval() (Wilson by default), not a
+# nonparametric bootstrap over a 0/1 indicator -- a bootstrap of an all-zero
+# or all-one sample is degenerate and collapses to a zero-width interval,
+# understating uncertainty. v2 also adds the "run_status" section
+# (n_stopped/n_capped/n_failed) so capped (censored, non-triggering) walks
+# are explicit and machine-readable rather than inferable only from
+# lower-level rows. Continuous paired-mean statistics (primary_comparisons,
+# severe_harm_rate_reduction-style paired differences) are unaffected and
+# remain bootstrap-based. Readers of older (v1, unversioned) files should
+# treat any *_ci95_lower/upper next to a *_rate field for severe_harm or
+# premature_stop as bootstrap-derived and potentially degenerate at 0/n or
+# n/n; readers of v2+ files can rely on schema_version to know which applies.
 
 PREMATURE_STOP_NDCG_MARGIN = 0.02  # qrel-bearing evaluation LABEL only, frozen (Phase 6)
 
@@ -259,6 +274,28 @@ def run_analyze(sim_dir: Path, output_dir: Path, config: dict) -> None:
             rec = json.loads(line)
             records[(rec["order"], rec["query_id"])] = rec["history"]
 
+    all_query_ids = sorted(dev_ids | test_ids)
+    expected_keys = {("random", q) for q in all_query_ids} | {
+        ("static_adjacent", q) for q in test_ids
+    }
+    missing = expected_keys - set(records)
+    if missing:
+        raise RuntimeError(
+            f"Refusing to analyze an incomplete simulate run: {len(missing)} of "
+            f"{len(expected_keys)} expected (order, query_id) walks are missing from "
+            f"{sim_dir / 'raw_stopping_histories.jsonl'} (e.g. {sorted(missing)[:5]}). "
+            "Re-run `simulate` on this --output-dir to resume and complete it before "
+            "analyzing -- analyzing a truncated simulate run would silently produce a "
+            "complete-looking report over incomplete data."
+        )
+    extra = set(records) - expected_keys
+    if extra:
+        raise RuntimeError(
+            f"raw_stopping_histories.jsonl contains {len(extra)} (order, query_id) walks "
+            f"not in the expected work set for this config (e.g. {sorted(extra)[:5]}) -- "
+            "likely a config/data mismatch between simulate and analyze."
+        )
+
     oracles = load_scidocs_pairwise_oracle(_REPO_ROOT / config["judgments_path"])
     seed = config["seed"]
     bm25_ndcg: dict[str, float] = {}
@@ -395,7 +432,13 @@ def _statistical_analysis(rows: list[dict], test_ids: set[str], config: dict) ->
     fixed10 = "fixed_0.10"
     fixed20 = "fixed_0.20"
 
-    result: dict = {"primary_comparisons": [], "severe_harm": {}, "premature_stop": {}}
+    result: dict = {
+        "schema_version": STATISTICAL_ANALYSIS_SCHEMA_VERSION,
+        "primary_comparisons": [],
+        "severe_harm": {},
+        "premature_stop": {},
+        "run_status": {},
+    }
     records = []
     pvals = []
 
@@ -439,19 +482,51 @@ def _statistical_analysis(rows: list[dict], test_ids: set[str], config: dict) ->
         prem_free = list(
             _metric_map(rows, order, method, test_ids, "premature_instability_qrelfree").values()
         )
+        stopped_flags = list(_metric_map(rows, order, method, test_ids, "stopped").values())
         n = len(sev)
-        ci_sev = bootstrap_mean_interval([1.0 if x else 0.0 for x in sev], reps=10_000, seed=13)
-        ci_prem = bootstrap_mean_interval(
-            [1.0 if x else 0.0 for x in prem_qrel], reps=10_000, seed=13
-        )
+        n_sev = sum(1 for x in sev if x)
+        n_prem_qrel = sum(1 for x in prem_qrel if x)
+        n_stopped = sum(1 for x in stopped_flags if x)
+        # "Capped" = the rule never triggered patience within the simulation
+        # budget cap and was evaluated at the cap budget instead (censored,
+        # not a triggered stop). n_failed is reserved for optimizer/solver
+        # failures; no failure-detection instrumentation exists yet in
+        # stopping.py, so it is always 0 here, not a claim that failures are
+        # impossible.
+        n_capped = n - n_stopped
+        n_failed = 0
+
+        ci_sev = proportion_interval(n_sev, n) if n else proportion_interval(0, 0)
+        ci_prem = proportion_interval(n_prem_qrel, n) if n else proportion_interval(0, 0)
+        ci_stopped = proportion_interval(n_stopped, n) if n else proportion_interval(0, 0)
+        ci_capped = proportion_interval(n_capped, n) if n else proportion_interval(0, 0)
+
         result["severe_harm"][method] = dict(
-            n=n, rate=sum(sev) / n if n else None,
+            n=n, rate=n_sev / n if n else None,
+            ci_method=ci_sev.method,
             ci95_lower=ci_sev.lower, ci95_upper=ci_sev.upper,
         )
         result["premature_stop"][method] = dict(
-            n=n, qrel_label_rate=sum(prem_qrel) / n if n else None,
+            n=n, qrel_label_rate=n_prem_qrel / n if n else None,
+            ci_method=ci_prem.method,
             ci95_lower=ci_prem.lower, ci95_upper=ci_prem.upper,
-            qrelfree_instability_rate=sum(prem_free) / n if n else None,
+            qrelfree_instability_rate=sum(1 for x in prem_free if x) / n if n else None,
+        )
+        result["run_status"][method] = dict(
+            n_total_runs=n,
+            n_stopped=n_stopped,
+            n_capped=n_capped,
+            n_failed=n_failed,
+            stopped_rate=n_stopped / n if n else None,
+            stopped_rate_ci_method=ci_stopped.method,
+            stopped_rate_ci95_lower=ci_stopped.lower,
+            stopped_rate_ci95_upper=ci_stopped.upper,
+            capped_rate=n_capped / n if n else None,
+            capped_rate_ci_method=ci_capped.method,
+            capped_rate_ci95_lower=ci_capped.lower,
+            capped_rate_ci95_upper=ci_capped.upper,
+            cap_budget_fraction=config["max_simulated_budget_fraction"],
+            capped_runs_included_in_headline_aggregates=True,
         )
 
     return result
