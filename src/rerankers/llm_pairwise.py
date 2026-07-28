@@ -524,7 +524,9 @@ def compare_pair(
                         "raw_response": response_ab,
                         "parsed_winner_label": winner_label,
                         "parse_error": parse_error_ab,
-                        "prompt_tokens": getattr(usage_ab, "prompt_tokens", None) if usage_ab else None,
+                        "prompt_tokens": (
+                            getattr(usage_ab, "prompt_tokens", None) if usage_ab else None
+                        ),
                         "completion_tokens": (
                             getattr(usage_ab, "completion_tokens", None) if usage_ab else None
                         ),

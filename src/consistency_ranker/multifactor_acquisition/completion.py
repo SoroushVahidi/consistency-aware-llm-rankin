@@ -154,9 +154,11 @@ def recompute_completed_cells(
         "corrections": corrections,
         "code_version": "multifactor_acquisition_v1+completion_recompute_v1",
         "parser_version": "pairwise_parse_v2",
-        "results": [asdict(r) for r in results if r.cell_id.startswith("scidocs|") and "azure" in r.cell_id][
-            :20
-        ],
+        "results": [
+            asdict(r)
+            for r in results
+            if r.cell_id.startswith("scidocs|") and "azure" in r.cell_id
+        ][:20],
     }
     (output_dir / "COMPLETED_CELLS_AUDIT.json").write_text(
         json.dumps(audit, indent=2), encoding="utf-8"

@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-import networkx as nx
-import pytest
-
 from consistency_ranker.adaptive_acquisition import synthetic_roster
+from consistency_ranker.adaptive_acquisition.acquisition_actions import generate_eligible_actions
+from consistency_ranker.adaptive_acquisition.ranking_impact import ImpactContext
 from consistency_ranker.dag_linear_extensions import is_valid_topological_order
 from consistency_ranker.prior_robust import (
     AdversarialScenario,
@@ -21,23 +20,19 @@ from consistency_ranker.prior_robust.adaptive_prior import (
     blend_priorities,
     update_lambda,
 )
+from consistency_ranker.prior_robust.adversarial_judges import corrupt_prior
 from consistency_ranker.prior_robust.challenger_pool import (
     challenger_pairs,
     expand_window,
     init_challenger_pool,
-    outsider_wins,
-    promote_strong_outsiders,
 )
 from consistency_ranker.prior_robust.exploration_guards import (
     ExplorationConfig,
     ExplorationState,
-    exploration_complete,
     select_exploration_action,
 )
 from consistency_ranker.prior_robust.prior_dependence import (
-    evidence_fraction_summary,
     relation_support,
-    topk_evidence_coverage,
 )
 from consistency_ranker.prior_robust.prior_perturbation import (
     generate_perturbed_priors,
@@ -46,7 +41,6 @@ from consistency_ranker.prior_robust.prior_perturbation import (
 )
 from consistency_ranker.prior_robust.prior_quality import (
     PriorQualityEstimate,
-    prior_score_entropy,
 )
 from consistency_ranker.prior_robust.robust_acquisition import RobustScoreConfig, score_action
 from consistency_ranker.prior_robust.robust_extraction import extract_ranking
@@ -55,10 +49,7 @@ from consistency_ranker.prior_robust.robust_stopping import (
     evaluate_robust_stop,
 )
 from consistency_ranker.prior_robust.shared_bias import effective_judge_count
-from consistency_ranker.prior_robust.adversarial_judges import corrupt_prior
 from consistency_ranker.reliability_repair.pair_evidence import preference_from_simple
-from consistency_ranker.adaptive_acquisition.acquisition_actions import generate_eligible_actions
-from consistency_ranker.adaptive_acquisition.ranking_impact import ImpactContext
 
 
 def _world(prior_regime="accurate", judge_regime="clean", seed=0, n=8):
@@ -89,7 +80,9 @@ def test_relation_support_separates_prior_and_acquired():
     s0 = relation_support(st, pid)
     assert not s0.acquired
     st.add_evidence([
-        preference_from_simple(query_id="q0", winner=st.pair_docs(pid)[0], loser=st.pair_docs(pid)[1])
+        preference_from_simple(
+            query_id="q0", winner=st.pair_docs(pid)[0], loser=st.pair_docs(pid)[1]
+        )
     ])
     s1 = relation_support(st, pid)
     assert s1.acquired
@@ -239,7 +232,10 @@ def test_robust_stopping_blocks_prior_only_stability():
     )
     assert decision.stop is False
     assert "evidence_threshold" in decision.checks
-    assert decision.checks["evidence_threshold"] is False or decision.checks["prior_dependence"] is False
+    assert (
+        decision.checks["evidence_threshold"] is False
+        or decision.checks["prior_dependence"] is False
+    )
 
 
 def test_prior_perturbation_and_loso():
