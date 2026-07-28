@@ -1,0 +1,48 @@
+{
+  "billable_tokens": 0,
+  "canonical_schema_sha256": "f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7",
+  "completion_tokens": 0,
+  "content_block_types": [],
+  "error_category": "malformed_request",
+  "error_message": "status_code=400 body={'id': 'f97d8b1b-8ffa-4a3a-82ad-cc18a040d945', 'message': \"invalid request: response_format validation: invalid 'json_schema' provided: error at 'properties.schema_version': missing required field 'type'\"}",
+  "failure_stage": "request_rejected_before_generation",
+  "finish_reason": null,
+  "generation_started": false,
+  "latency_seconds": 0.11519740894436836,
+  "model_id": "command-r-plus-08-2024",
+  "parse_outcome": {
+    "error": null,
+    "parse_failed": false,
+    "validated": false
+  },
+  "prompt_tokens": 0,
+  "provider": "cohere",
+  "provider_call_attempted": true,
+  "provider_schema_sha256": "02870598a56c19838cb8eb8ca8ba5f9b864594cbf54e421e9d8ec8b548904917",
+  "raw_text_length": null,
+  "raw_text_sha256": null,
+  "removed_constraints": [
+    {
+      "json_pointer": "/$id",
+      "keyword": "$id",
+      "reason": "unsupported_schema_identity_metadata_live_evidenced"
+    },
+    {
+      "json_pointer": "/properties/confidence/minimum",
+      "keyword": "minimum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    },
+    {
+      "json_pointer": "/properties/confidence/maximum",
+      "keyword": "maximum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    }
+  ],
+  "request_hash": "be312ecf7ba089348ffa2e0a93d1e0f2155940f6721175d63f9de14e26aa6c78",
+  "response_type": null,
+  "schema_projection_protocol": "cohere_native_v2_schema_projection_v2",
+  "status_label": "COHERE NATIVE SCHEMA-PROJECTION V2 CONFIRMATION -- NOT BENCHMARK DATA",
+  "structured_output_protocol": "cohere_native_v2_json_schema_v1",
+  "success": false,
+  "transport_family": "cohere_native_v2"
+}

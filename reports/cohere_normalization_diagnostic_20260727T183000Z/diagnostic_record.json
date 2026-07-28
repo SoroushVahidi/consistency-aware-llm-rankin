@@ -1,0 +1,44 @@
+{
+  "status_label": "COHERE NORMALIZATION DIAGNOSTIC -- NOT BENCHMARK DATA",
+  "request_hash": "8075b96f1a6c8271d8e4fd56a272a2dcc412656599fc04440fef63447fa6f494",
+  "provider": "cohere",
+  "model_id": "command-r-plus-08-2024",
+  "success": false,
+  "http_error_category": null,
+  "http_error_message": null,
+  "prompt_tokens": 474,
+  "completion_tokens": 25,
+  "latency_seconds": 0.7813646793365479,
+  "raw_response_sha256": "522ca3365b83699fdc83073453c91c3b2ad63ae8d2679a6b2d4fd7c2fc871804",
+  "shape_capture": {
+    "response_type": "ChatCompletion",
+    "top_level_fields": [
+      "choices",
+      "created",
+      "id",
+      "model",
+      "object",
+      "service_tier",
+      "system_fingerprint",
+      "usage"
+    ],
+    "n_choices": 1,
+    "finish_reason": "stop",
+    "message_type": "ChatCompletionMessage",
+    "content_type": "str",
+    "content_is_none": false,
+    "content_length": 97,
+    "content_prefix_kind": "bare_object",
+    "content_sha256": "522ca3365b83699fdc83073453c91c3b2ad63ae8d2679a6b2d4fd7c2fc871804",
+    "usage": {
+      "prompt_tokens": 474,
+      "completion_tokens": 25
+    }
+  },
+  "parse_outcome": {
+    "wrapper_extraction_used": false,
+    "parse_failed": true,
+    "validated": null,
+    "error": "ValueError: invalid evidence_strength: 'unsupported'"
+  }
+}

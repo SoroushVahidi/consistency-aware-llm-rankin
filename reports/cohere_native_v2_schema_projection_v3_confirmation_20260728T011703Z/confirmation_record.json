@@ -1,0 +1,58 @@
+{
+  "added_type_annotations": [
+    {
+      "inferred_value": "string",
+      "json_pointer": "/properties/schema_version/type",
+      "keyword": "type",
+      "reason": "missing_required_type_companion_to_const_live_evidenced"
+    }
+  ],
+  "billable_tokens": 732,
+  "canonical_schema_sha256": "f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7",
+  "completion_tokens": 46,
+  "content_block_types": [
+    "text"
+  ],
+  "error_category": null,
+  "error_message": null,
+  "failure_stage": null,
+  "finish_reason": "COMPLETE",
+  "generation_started": true,
+  "latency_seconds": 2.444907012861222,
+  "model_id": "command-r-plus-08-2024",
+  "parse_outcome": {
+    "error": null,
+    "parse_failed": false,
+    "validated": true
+  },
+  "prompt_tokens": 686,
+  "provider": "cohere",
+  "provider_call_attempted": true,
+  "provider_schema_sha256": "d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26",
+  "raw_text_length": 151,
+  "raw_text_sha256": "b334ce66bd164a81e093219dfc642ce97150d909c9b907bfc3a5a64c417772a3",
+  "removed_constraints": [
+    {
+      "json_pointer": "/$id",
+      "keyword": "$id",
+      "reason": "unsupported_schema_identity_metadata_live_evidenced"
+    },
+    {
+      "json_pointer": "/properties/confidence/minimum",
+      "keyword": "minimum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    },
+    {
+      "json_pointer": "/properties/confidence/maximum",
+      "keyword": "maximum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    }
+  ],
+  "request_hash": "f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829",
+  "response_type": "V2ChatResponse",
+  "schema_projection_protocol": "cohere_native_v2_schema_projection_v3",
+  "status_label": "COHERE NATIVE SCHEMA-PROJECTION V3 CONFIRMATION -- NOT BENCHMARK DATA",
+  "structured_output_protocol": "cohere_native_v2_json_schema_v1",
+  "success": true,
+  "transport_family": "cohere_native_v2"
+}

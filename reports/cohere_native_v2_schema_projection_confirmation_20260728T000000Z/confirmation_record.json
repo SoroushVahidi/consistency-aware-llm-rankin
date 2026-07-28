@@ -1,0 +1,43 @@
+{
+  "status_label": "COHERE NATIVE SCHEMA-PROJECTION CONFIRMATION -- NOT BENCHMARK DATA",
+  "request_hash": "41f1de66736d8bb70410eefe0a59ad378b68fbc87c44bc00078fb71a5d19b302",
+  "provider": "cohere",
+  "model_id": "command-r-plus-08-2024",
+  "transport_family": "cohere_native_v2",
+  "structured_output_protocol": "cohere_native_v2_json_schema_v1",
+  "schema_projection_protocol": "cohere_native_v2_schema_projection_v1",
+  "canonical_schema_sha256": "003f80d2c269f05afd6614bff10027fdeff3c3d17a35350ae0eddde1048c0b29",
+  "provider_schema_sha256": "83a27392af0f10d6c0aa9af003c3e2dc4e81929c473a37b0b9a00bd4c402a1d5",
+  "removed_constraints": [
+    {
+      "json_pointer": "/properties/confidence/minimum",
+      "keyword": "minimum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    },
+    {
+      "json_pointer": "/properties/confidence/maximum",
+      "keyword": "maximum",
+      "reason": "unsupported_by_cohere_structured_outputs"
+    }
+  ],
+  "success": false,
+  "failure_stage": "request_rejected_before_generation",
+  "provider_call_attempted": true,
+  "generation_started": false,
+  "error_category": "malformed_request",
+  "error_message": "status_code=400 body={'id': 'd2e85773-d1a5-4fcf-bf05-12c9a739e23c', 'message': \"invalid request: response_format validation: invalid 'json_schema' provided: unknown field '$id' in `object` type\"}",
+  "response_type": null,
+  "finish_reason": null,
+  "content_block_types": [],
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "billable_tokens": 0,
+  "latency_seconds": 0.3852808475494385,
+  "raw_text_sha256": null,
+  "parse_outcome": {
+    "wrapper_extraction_used": null,
+    "parse_failed": null,
+    "validated": null,
+    "error": null
+  }
+}
