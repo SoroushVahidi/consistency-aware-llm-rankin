@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Iterable, Sequence
 
 import numpy as np
+from scipy.stats import beta as beta_dist
 from scipy.stats import norm
 from scipy.stats import t as student_t
 
@@ -31,6 +32,17 @@ class BootstrapIntervalResult:
     frac_gt_zero: float | None
     reps: int
     seed: int
+
+
+@dataclass(frozen=True)
+class ProportionIntervalResult:
+    method: str
+    successes: int
+    n: int
+    proportion: float | None
+    lower: float | None
+    upper: float | None
+    confidence: float
 
 
 @dataclass(frozen=True)
@@ -301,6 +313,76 @@ def bootstrap_mean_interval(
         frac_gt_zero=frac_gt_zero,
         reps=reps,
         seed=seed,
+    )
+
+
+def proportion_interval(
+    successes: int,
+    n: int,
+    *,
+    method: str = "wilson",
+    confidence: float = 0.95,
+) -> ProportionIntervalResult:
+    """Confidence interval for a single binomial proportion ``successes / n``.
+
+    Centralized replacement for using ``bootstrap_mean_interval`` on a 0/1
+    indicator vector to estimate a rate (e.g. a severe-harm rate or a
+    stopped/capped rate). A nonparametric bootstrap of an all-zero or
+    all-one sample is degenerate -- every resample is identical to the
+    original, so the resulting interval collapses to a single point
+    (``[0, 0]`` or ``[1, 1]``) regardless of the true sample size. That
+    understates uncertainty precisely in the cases (0 events, or all
+    events) where the interval matters most. Wilson and Clopper-Pearson
+    intervals both have nonzero width away from the true 0/1 bounds even
+    when the observed count is exactly 0 or exactly ``n``.
+
+    Use this for a single group's rate (e.g. "35 severe-harm events out of
+    350 walks"). It is not the right tool for the *difference* of two
+    paired/correlated proportions (e.g. a per-query paired reduction in
+    harm rate between two methods) -- that remains a bootstrap or
+    permutation problem over the paired difference vector, handled by
+    :func:`bootstrap_mean_interval` / :func:`sign_flip_pvalue`.
+    """
+    if n < 0 or successes < 0 or successes > n:
+        raise ValueError(f"Invalid proportion inputs: successes={successes}, n={n}")
+    if not 0.0 < confidence < 1.0:
+        raise ValueError(f"confidence must be in (0, 1): got {confidence}")
+    if n == 0:
+        return ProportionIntervalResult(
+            method=method, successes=successes, n=0, proportion=None,
+            lower=None, upper=None, confidence=confidence,
+        )
+
+    p_hat = successes / n
+    alpha = 1.0 - confidence
+
+    if method == "wilson":
+        z = float(norm.ppf(1.0 - alpha / 2.0))
+        denom = 1.0 + z**2 / n
+        center = (p_hat + z**2 / (2 * n)) / denom
+        half_width = (z / denom) * np.sqrt(p_hat * (1.0 - p_hat) / n + z**2 / (4 * n**2))
+        lower = max(0.0, center - half_width)
+        upper = min(1.0, center + half_width)
+    elif method == "clopper_pearson":
+        if successes == 0:
+            lower = 0.0
+        else:
+            lower = float(beta_dist.ppf(alpha / 2.0, successes, n - successes + 1))
+        if successes == n:
+            upper = 1.0
+        else:
+            upper = float(beta_dist.ppf(1.0 - alpha / 2.0, successes + 1, n - successes))
+    else:
+        raise ValueError(f"Unsupported proportion interval method: {method}")
+
+    return ProportionIntervalResult(
+        method=method,
+        successes=int(successes),
+        n=int(n),
+        proportion=float(p_hat),
+        lower=float(lower),
+        upper=float(upper),
+        confidence=confidence,
     )
 
 

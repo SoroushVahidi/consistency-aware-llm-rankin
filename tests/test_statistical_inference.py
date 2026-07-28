@@ -12,6 +12,7 @@ from consistency_ranker.statistical_inference import (
     minimum_detectable_effect_normal,
     monte_carlo_sign_flip_pvalue,
     paired_tost,
+    proportion_interval,
     sign_flip_pvalue,
     simulate_mde,
 )
@@ -130,3 +131,70 @@ def test_paired_tost_detects_equivalence_inside_margin():
 def test_paired_tost_rejects_large_mean_difference():
     result = paired_tost([0.02, 0.02, 0.03, 0.02], margin=0.01, alpha=0.05)
     assert result.equivalent is False
+
+
+@pytest.mark.parametrize("method", ["wilson", "clopper_pearson"])
+def test_proportion_interval_zero_successes_has_nonzero_upper_bound(method):
+    # This is the exact defect this function replaces: a nonparametric
+    # bootstrap of an all-zero 0/35 sample degenerates to [0.0, 0.0],
+    # falsely implying certainty of a zero true rate. A valid binomial
+    # proportion interval must not do that.
+    result = proportion_interval(0, 35, method=method)
+    assert result.proportion == 0.0
+    assert result.lower == pytest.approx(0.0, abs=1e-9)
+    assert result.upper > 0.0
+    assert 0.05 < result.upper < 0.15
+
+
+@pytest.mark.parametrize("method", ["wilson", "clopper_pearson"])
+def test_proportion_interval_all_successes_has_nonone_lower_bound(method):
+    result = proportion_interval(35, 35, method=method)
+    assert result.proportion == 1.0
+    assert result.upper == pytest.approx(1.0, abs=1e-9)
+    assert result.lower < 1.0
+    assert 0.85 < result.lower < 0.95
+
+
+@pytest.mark.parametrize("method", ["wilson", "clopper_pearson"])
+def test_proportion_interval_single_success(method):
+    result = proportion_interval(1, 35, method=method)
+    assert result.proportion == pytest.approx(1.0 / 35.0)
+    assert 0.0 <= result.lower < result.proportion < result.upper <= 1.0
+
+
+@pytest.mark.parametrize("method", ["wilson", "clopper_pearson"])
+def test_proportion_interval_interior_proportion(method):
+    result = proportion_interval(10, 35, method=method)
+    assert result.proportion == pytest.approx(10.0 / 35.0)
+    assert 0.0 < result.lower < result.proportion < result.upper < 1.0
+    assert result.method == method
+    assert result.confidence == 0.95
+
+
+def test_proportion_interval_empty_sample_returns_none_fields():
+    result = proportion_interval(0, 0)
+    assert result.n == 0
+    assert result.proportion is None
+    assert result.lower is None
+    assert result.upper is None
+
+
+def test_proportion_interval_rejects_invalid_counts():
+    with pytest.raises(ValueError):
+        proportion_interval(-1, 10)
+    with pytest.raises(ValueError):
+        proportion_interval(11, 10)
+    with pytest.raises(ValueError):
+        proportion_interval(3, -1)
+
+
+def test_proportion_interval_rejects_invalid_confidence():
+    with pytest.raises(ValueError):
+        proportion_interval(5, 10, confidence=0.0)
+    with pytest.raises(ValueError):
+        proportion_interval(5, 10, confidence=1.0)
+
+
+def test_proportion_interval_rejects_unknown_method():
+    with pytest.raises(ValueError):
+        proportion_interval(5, 10, method="bootstrap")
