@@ -75,7 +75,16 @@ from consistency_ranker.evaluation import ndcg_at_k  # noqa: E402
 from consistency_ranker.statistical_inference import (  # noqa: E402
     bootstrap_mean_interval,
     holm_adjust,
+    proportion_interval,
 )
+
+STATISTICAL_ANALYSIS_SCHEMA_VERSION = 2
+# v2: per-method severe-harm rates (result["severe_harm"][budget][method]) now
+# carry a Wilson binomial-proportion CI, added where none previously existed.
+# The paired severe_harm_rate_reduction_vs_sparse_copeland statistic is a
+# mean of a *paired difference* of two correlated binary indicators, not a
+# single-group proportion -- proportion_interval() does not apply to it, so
+# it intentionally remains bootstrap-based, as before.
 
 SEVERE_HARM_THRESHOLD = -0.05  # frozen before test-set inspection, Phase 7
 
@@ -495,7 +504,12 @@ def _statistical_analysis(
     b10 = round(0.10 * n_pairs)
     b20 = round(0.20 * n_pairs)
 
-    result: dict = {"primary_comparisons": [], "severe_harm": {}, "auc_comparisons": []}
+    result: dict = {
+        "schema_version": STATISTICAL_ANALYSIS_SCHEMA_VERSION,
+        "primary_comparisons": [],
+        "severe_harm": {},
+        "auc_comparisons": [],
+    }
     pvals = []
     records = []
 
@@ -584,10 +598,16 @@ def _statistical_analysis(
             n_severe = sum(1 for d in deltas if d <= SEVERE_HARM_THRESHOLD)
             worst = min(deltas) if deltas else None
             p05 = sorted(deltas)[max(0, int(0.05 * len(deltas)) - 1)] if deltas else None
+            severe_ci = (
+                proportion_interval(n_severe, len(deltas)) if deltas else proportion_interval(0, 0)
+            )
             harm[method] = dict(
                 n=len(deltas),
                 n_severe_harm=n_severe,
                 frac_severe_harm=n_severe / len(deltas) if deltas else None,
+                frac_severe_harm_ci_method=severe_ci.method,
+                frac_severe_harm_ci95_lower=severe_ci.lower,
+                frac_severe_harm_ci95_upper=severe_ci.upper,
                 worst_query_delta=worst,
                 p05_delta=p05,
             )
