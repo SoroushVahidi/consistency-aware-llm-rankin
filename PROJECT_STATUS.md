@@ -8,11 +8,11 @@ rather than trusting either document blindly.*
 
 | Field | Value |
 |---|---|
-| Generated | 2026-07-27T21:33:31Z (code state); documentation committed slightly later — see note below |
+| Generated | 2026-07-28T03:14:55Z (code state); documentation committed slightly later — see note below |
 | Branch | `fix/outcome-f-production-operating-point` |
-| `documented_code_head` | `3a47e9001ccc2ef14ae85e72a15f623cdcff19ad` |
+| `documented_code_head` | `b22bd559f41a6c204555606d3c84ad21f00608a6` |
 | origin/main | `3e02b73666506f3eb894f5df2c531284ea31a60e` |
-| Ahead / behind (of `documented_code_head`) | 13 ahead / 0 behind |
+| Ahead / behind (of `documented_code_head`) | 15 ahead / 0 behind |
 | Working tree | Clean of source/config/test changes. This documentation commit itself is the only pending change at write time. |
 | Current phase | Multi-provider counterfactual-benchmark engineering (pre-micro-pilot) |
 | Current blocker | Native Cohere `ClientV2` transport (`cohere_native.py` + `cohere_schema_projection.py`, schema projection v3) **confirmed working live** — 4th confirmation call (request_hash `f062ea28...`) succeeded: schema accepted, valid judgment generated, passed full canonical local validation. Compatibility path remains confirmed broken (archived) — irrelevant now that native works. The transport is **not yet wired into `dispatch.call_provider`/the frozen collector** (see the wiring plan in the freeze doc) — this, not the schema, is the current blocker for a clean four-provider canary. |
@@ -25,6 +25,28 @@ that contains itself — the actual documentation-commit hash is reported
 separately by whichever agent creates it. **Always re-run the Git-state
 commands below before trusting any hash in this document**; do not assume
 `documented_code_head` remains the branch tip.
+
+## Documentation authority map
+
+The repository accumulates status/evidence documents faster than they can
+all be kept current. This map states which single file is authoritative
+for each concern — consult it before trusting any other document that
+claims to describe the same thing.
+
+| Concern | Authoritative file | Notes |
+|---|---|---|
+| Repository/branch state, current blockers, next action | This file (`PROJECT_STATUS.md`, repo root) | Re-verify against Git directly per the note above |
+| Branch-specific history and exact continuation point | `docs/handoff/CURRENT_BRANCH_HANDOFF.md` | Companion to this file; branch-scoped |
+| Machine-readable snapshot | `docs/handoff/state_snapshot.json` | Same scope as the handoff doc, structured for tooling |
+| Scientific claims actually being made | `papers/JDIQ_2026/manuscript/main.tex` | The submitted manuscript source — not any `docs/*CLAIMS*.md` file |
+| Evidence-to-claim mapping | `papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv`, `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` | Correctly distinguishes canonical (`outputs/pub_vote_cmp_all4/`) from stale/`do_not_use` (`outputs/pub_vote_cmp_v2/`, `outputs/q1_journal_package/`) packages |
+| Manuscript status (readiness, drafting) | `papers/JDIQ_2026/CANONICAL_PAPER_STORY.md`, `papers/JDIQ_2026/CONTRIBUTION_AUDIT.md` | **Not** `papers/JDIQ_2026/PROJECT_STATUS_SUPERSEDED_20260712.md` (renamed 2026-07-28 from `PROJECT_STATUS.md` — it described 22%-readiness pre-writing state and is obsolete now the manuscript is a complete draft) |
+| Protocol freezes (counterfactual benchmark) | `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` | Frozen protocol identifiers and the Cohere investigation narrative |
+| Historical/superseded records | `docs/historical/`, and any file carrying a `SUPERSEDED` banner (e.g. `docs/THREATS_TO_VALIDITY.md`, `docs/RESULTS_AUDIT.md`, `docs/RESULTS_FOR_PAPER.md`, `docs/EVIDENCE_MAP.md`, `docs/SAFE_CLAIMS_FOR_PAPER.md`, `docs/revision_strategy.md`, `docs/Q1_POSITIONING_AND_CLAIMS.md`) | Kept for provenance; banner states the current replacement |
+
+If a document is not listed here and is not explicitly marked historical,
+treat its claims as unverified until cross-checked against the
+authoritative file for that concern.
 
 ## Repository purpose
 

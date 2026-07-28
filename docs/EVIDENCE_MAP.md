@@ -1,5 +1,14 @@
 # Evidence Map
 
+> **SUPERSEDED (as of 2026-07-28).** Written 2026-04-06, before
+> `papers/JDIQ_2026/`. Every "Supporting output files" row below points at
+> `outputs/pub_vote_cmp_v2/`, explicitly marked `do_not_use`/stale in
+> `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` and numerically
+> inconsistent with the current canonical `outputs/pub_vote_cmp_all4/`
+> package for at least one of the claims mapped here. Use
+> `papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv` for current claim-to-evidence
+> mapping instead.
+
 > Maps each major claim to supporting scripts, output files, report files, and
 > an honest assessment of support strength.  All evidence cited is committed to
 > the repository; no projected or invented results are included.

@@ -1,5 +1,16 @@
 # Results for Paper (Evidence-Only)
 
+> **SUPERSEDED (as of 2026-07-28).** Written 2026-04-04, before
+> `papers/JDIQ_2026/`. Its "Canonical real-data package" points at
+> `outputs/pub_vote_cmp_v2/` and `outputs/q1_journal_package/`, both
+> explicitly marked `do_not_use`/stale/"conflicts with all4" in
+> `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` — the same nominal
+> claims (e.g. SciDocs ms1 Copeland ΔnDCG) are numerically different, and
+> in at least one case sign-different, between the two packages. The
+> current canonical vote-suite evidence is `outputs/pub_vote_cmp_all4/`,
+> reported in `papers/JDIQ_2026/manuscript/main.tex`. Do not cite this
+> file's package paths as canonical.
+
 This file summarizes what should be cited from committed outputs without
 overstating support.
 

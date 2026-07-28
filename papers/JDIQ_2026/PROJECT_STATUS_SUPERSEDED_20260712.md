@@ -1,11 +1,15 @@
 # Project Status — JDIQ 2026 Submission
 
-> **SUPERSEDED (as of 2026-07-14).** This is a pre-writing readiness
-> snapshot ("Overall readiness: 22%", "Writing 0%"); the manuscript is now
-> a complete draft. It also lists the six-way failure taxonomy as a
-> "Strong" evidence source, which the finished manuscript explicitly
-> excludes as evidence. Do not use this file's percentages or evidence
-> ratings as current status.
+> **SUPERSEDED (as of 2026-07-14); renamed 2026-07-28** from
+> `PROJECT_STATUS.md` to disambiguate it from the repository-root
+> `PROJECT_STATUS.md` (a different, actively-maintained document about
+> current branch/repository state — see that file, not this one, for
+> current status). This is a pre-writing readiness snapshot ("Overall
+> readiness: 22%", "Writing 0%"); the manuscript is now a complete draft.
+> It also lists the six-way failure taxonomy as a "Strong" evidence
+> source, which the finished manuscript explicitly excludes as evidence.
+> Do not use this file's percentages or evidence ratings as current
+> status.
 
 **Prepared:** 2026-07-12  
 **Workspace:** `papers/JDIQ_2026/`  

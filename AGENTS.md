@@ -47,7 +47,7 @@ source /workspace/.venv/bin/activate
 |------|---------|
 | Install deps | `pip install -r requirements.txt && pip install -e ".[dev]"` |
 | Lint | `ruff check .` |
-| Tests | `pytest` (~421 tests after `pip install -e .`; use `PYTHONPATH=src` if package not installed) |
+| Tests | `pytest` (test count and skip/fail counts are environment-dependent — e.g. exact-repair tests skip without PySCIPOpt, provider tests need `pip install -e ".[llm]"`; run it and read the summary line rather than trusting a cached number; see `PROJECT_STATUS.md`'s "Current validation status" for the last verified count. Use `PYTHONPATH=src` if package not installed) |
 | Synthetic experiment | `python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42` |
 
 ### Notes

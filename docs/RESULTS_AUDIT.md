@@ -1,5 +1,15 @@
 # Research Results Audit — consistency-aware-llm-rankin
 
+> **SUPERSEDED (as of 2026-07-28).** Written 2026-03-21, before the entire
+> real-data experimental program existed. It states real-dataset
+> experiments have "Not run" and `data/raw/` is empty — both false today:
+> the canonical four-dataset `outputs/pub_vote_cmp_all4/` package (SciDocs,
+> FiQA, HotpotQA, BRIGHT) is complete, frozen, and is what
+> `papers/JDIQ_2026/manuscript/main.tex` reports. Do not use this
+> document's "not run" / "not yet generated" claims as current status; see
+> `PROJECT_STATUS.md` and `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv`
+> instead.
+
 > **Rigorous, evidence-based audit of every empirical result currently available
 > in this repository.**  All findings are drawn directly from inspected files;
 > nothing is invented.  Where no file exists, this is stated explicitly.
