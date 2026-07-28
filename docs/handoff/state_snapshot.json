@@ -1,31 +1,27 @@
 {
   "schema_version": "repository_state_snapshot_v1",
   "snapshot_scope": "code state immediately before this session's commit; NOT a self-updating live HEAD",
-  "generated_at_utc": "2026-07-28T00:00:00Z",
+  "generated_at_utc": "2026-07-28T22:30:00Z",
   "repository": "consistency-aware-llm-rankin",
   "branch": "fix/outcome-f-production-operating-point",
-  "documented_code_head": "ab4e06475ed47ed2ae59300cd5e1e796a18378ae",
+  "documented_code_head": "cd678f02cec725496c484757146d44649ac0d034",
   "git_state_must_be_reconfirmed": true,
   "origin_main": "3e02b73666506f3eb894f5df2c531284ea31a60e",
-  "ahead": 14,
+  "ahead": 28,
   "behind": 0,
-  "ahead_behind_note": "ahead/behind counted relative to documented_code_head, not the eventual next-commit tip. Re-run git rev-list --left-right --count origin/main...HEAD before trusting this.",
+  "ahead_behind_note": "ahead/behind counted relative to documented_code_head, not the eventual next-commit tip. Re-run git rev-list --left-right --count origin/main...HEAD before trusting this. A post-pivot polish pass (Wilson proportion intervals, explicit capped-run counts, this documentation update) adds further commits on top of documented_code_head -- see PROJECT_STATUS.md's 'Last verified state' for the true current tip.",
   "working_tree": {
-    "clean_of_source_changes": false,
-    "note": "New native Cohere ClientV2 transport (cohere_native.py) + deterministic schema projection (cohere_schema_projection.py) plus 59 offline tests and a pyproject.toml dependency addition (cohere>=5.0.0) are new/staged on top of documented_code_head, pending commit. The archived compatibility-path attempt remains only on archive/cohere-compat-schema-failed-20260727 (0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2), not on this branch.",
+    "clean_of_source_changes": true,
+    "note": "Clean of tracked-file changes as of documented_code_head. Untracked at that commit: the three consistency-aware-pivot report directories (see visible_untracked_files) -- the post-pivot polish pass tracks these in Git (each in full except one deterministically-regenerable raw log kept local via .gitignore); see canonical_evidence below, which reflects the post-polish state.",
     "visible_untracked_files": [
-      "reports/cohere_json_schema_confirmation_20260727T200000Z/",
-      "reports/cohere_native_v2_confirmation_20260727T210000Z/",
-      "reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/",
-      "reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/",
-      "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/",
-      "reports/cohere_normalization_diagnostic_20260727T183000Z/",
-      "reports/counterfactual_collector_canary_v1_20260727T145126Z/",
-      "reports/counterfactual_collector_canary_v2_20260727T161921Z/"
+      "reports/offline_active_acquisition_pilot_20260728T142414Z/",
+      "reports/regularized_aggregation_pilot_20260728T164943Z/",
+      "reports/stopping_rule_pilot_20260728T190000Z/"
     ]
   },
-  "current_phase": "multi_provider_counterfactual_benchmark_engineering_pre_micro_pilot",
-  "current_goal": "Freeze a provider panel that can pass a clean end-to-end canary, then run the bounded micro-pilot only after that.",
+  "current_phase": "consistency_aware_active_acquisition_regularized_aggregation_stopping_rule_pivot",
+  "current_phase_previous": "multi_provider_counterfactual_benchmark_engineering_pre_micro_pilot (paused, not abandoned, as of commit 756495d)",
+  "current_goal": "Refine the stopping rule's worst-case statistic or the aggregator's regularization schedule to narrow the gap to exhaustive quality at moderate budgets (a small follow-up), not a broader acquisition-policy search (closed out as unsupported). Separately-paused goal: freeze a provider panel that can pass a clean end-to-end counterfactual-benchmark canary, then run the bounded micro-pilot only after that.",
   "validated_contributions": [
     "preference_graphs_are_derived_not_objective_inputs",
     "vote_construction_and_pool_construction_materially_affect_graph_topology_and_repair_activity",
@@ -37,9 +33,21 @@
     "provider_capability_audit_four_of_four_providers_authenticate_live_connectivity_only",
     "lexical_prior_pool_v2_eliminated_measured_title_only_selection_bias",
     "vertex_ai_gemini_fenced_json_normalization_fix_confirmed_live",
-    "cohere_native_clientv2_schema_projection_v3_confirmed_live_valid_judgment"
+    "cohere_native_clientv2_schema_projection_v3_confirmed_live_valid_judgment",
+    "regularized_bt_aggregation_is_safety_dominant_not_universally_superior",
+    "sparse_copeland_aggregation_measurably_unstable_41pct_step_topk_churn"
   ],
   "negative_results": [
+    {
+      "id": "active_pair_selection_proposal_loses_to_random",
+      "summary": "Offline active-acquisition pilot on a real, pre-existing SciDocs q50/k15 oracle: the proposed uncertainty x counterfactual-impact x ambiguity strategy loses to random unrevealed-pair selection at both 10% and 20% budget (Holm-corrected; e.g. budget=10: mean deltaNDCG -0.145, 9 wins / 41 losses vs. random). No leakage into scoring (structurally and behaviorally tested). Closes out this acquisition-policy direction as evidenced-unsupported on this oracle.",
+      "evidence": "reports/offline_active_acquisition_pilot_20260728T142414Z/statistical_analysis.json"
+    },
+    {
+      "id": "stopping_rule_does_not_meet_quality_recovery_bar",
+      "summary": "The qrel-free stopping rule (built on the regularized aggregator) does not meet its own near-exhaustive quality-recovery targets (>=95% of exhaustive improvement recovered; within 0.02 nDCG of exhaustive) -- traced to the aggregator's own slow-converging tail past 60% budget coverage, disclosed as an aggregator property, not a stopping-rule defect. Severe-harm containment (0/35 observed) and cost-effectiveness vs. fixed low budgets are both met.",
+      "evidence": "reports/stopping_rule_pilot_20260728T190000Z/REPORT.md"
+    },
     {
       "id": "outcome_f_no_learned_gate_beats_always_uht",
       "summary": "Oracle query-specific selector beats always-UHT (U_corr 0.1708 vs -0.0257) but no learned/hard/calibrated/selective/soft/staged/contextual gate does; selective_three_way was worse than always-UHT (-0.1121). Production fails closed to always-UHT.",
@@ -65,12 +73,14 @@
     "policy_selection (Outcome F gates, synthetic)",
     "multifactor_acquisition (production UHT + factorial, real queries)",
     "adaptive_acquisition, prior_robust, reliability_repair, dag_linear_extensions (Outcome B-D drivers)",
-    "counterfactual_benchmark collector (active engineering, canary stage)"
+    "counterfactual_benchmark collector (paused, not current focus, canary stage)",
+    "active_acquisition: oracle/scoring/strategies/simulate/evaluate/stats/regularized_aggregation/stopping (CURRENT focus, consistency-aware pivot)"
   ],
   "current_blockers": [
-    "Native Cohere ClientV2 transport (schema projection v3) is live-confirmed working (request_hash f062ea28..., valid judgment, passed canonical local validation) but is NOT YET WIRED into dispatch.call_provider / the frozen collector -- it remains a standalone module invoked only by ad hoc confirmation scripts. This wiring (a deliberate, reviewed implementation task with open design questions -- see the wiring plan in the freeze doc) is now the sole blocker to a clean four-provider canary; the schema/transport question itself is resolved."
+    "None blocking for the consistency-aware pivot itself (current focus) -- all three pilots ran to completion offline.",
+    "Paused thread: native Cohere ClientV2 transport (schema projection v3) is live-confirmed working (request_hash f062ea28..., valid judgment, passed canonical local validation) but is NOT YET WIRED into dispatch.call_provider / the frozen collector -- it remains a standalone module invoked only by ad hoc confirmation scripts. This wiring (a deliberate, reviewed implementation task with open design questions -- see the wiring plan in the freeze doc) is now the sole blocker to a clean four-provider canary; the schema/transport question itself is resolved. Unchanged since the prior snapshot; not being worked on."
   ],
-  "next_action": "Implement the native Cohere transport's wiring into dispatch.call_provider / the frozen collector per the 'Native Cohere collector-wiring plan' in docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md (not yet started). Once implemented and offline-tested, run a clean four-provider canary. Only then consider the bounded micro-pilot v2.",
+  "next_action": "Consistency-aware pivot (current focus): refine the stopping rule's worst-case statistic or the aggregator's regularization schedule to narrow the gap to exhaustive quality at moderate budgets -- a small, separate follow-up, not a broader acquisition-policy search. Paused thread: implement the native Cohere transport's wiring into dispatch.call_provider / the frozen collector per the 'Native Cohere collector-wiring plan' in docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md (not yet started); once implemented and offline-tested, run a clean four-provider canary; only then consider the bounded micro-pilot v2.",
   "do_not_do_yet": [
     "Do not run the 256-384 call bounded micro-pilot v2.",
     "Do not make any provider call without explicit, scoped, up-front authorization.",
@@ -80,7 +90,10 @@
     "Do not run a real oracle-opportunity audit before the panel question is resolved.",
     "Do not claim the Cohere/frozen-panel question is fully resolved: the schema/transport works (live-confirmed), but the native transport is not yet wired into dispatch.call_provider/the collector, and no clean four-provider canary has been run under it.",
     "Do not remove $schema without equivalent live evidence naming it.",
-    "Do not generalize the single ABSTAIN/confidence=0.0 confirmation judgment into any claim about Cohere's judgment quality."
+    "Do not generalize the single ABSTAIN/confidence=0.0 confirmation judgment into any claim about Cohere's judgment quality.",
+    "Do not resume the active pair-selection proposal as-is -- evidenced-worse than random on the one oracle tested.",
+    "Do not cite the stopping pilot's severe-harm rate as '[0.0%, 0.0%]' -- the corrected Wilson interval is [0.0%, 9.9%]; zero observed events at n=35 does not imply a true rate of exactly zero.",
+    "Do not claim regularized aggregation is universally superior to every baseline -- it is safety-dominant, not established as beating the strongest baseline on raw mean nDCG/AUC."
   ],
   "provider_panel": [
     {
@@ -132,15 +145,7 @@
     "outputs/pub_vote_cmp_all4/paper_package/",
     "reports/policy_selection_20260726T030500Z/",
     "reports/real_query_policy_replay_20260726T042025Z/",
-    "docs/multifactor_production_uht_corrected_summary_20260727.json"
-  ],
-  "invalid_or_non_citable_evidence": [
-    "reports/real_query_multifactor_acquisition_20260726T044254Z/",
-    "reports/policy_selection_20260726T025426Z/"
-  ],
-  "local_only_artifacts": [
-    "reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/",
-    "reports/provider_capability_audit_live_20260727T042703Z/",
+    "docs/multifactor_production_uht_corrected_summary_20260727.json",
     "reports/counterfactual_collector_canary_v1_20260727T145126Z/",
     "reports/counterfactual_collector_canary_v2_20260727T161921Z/",
     "reports/cohere_normalization_diagnostic_20260727T183000Z/",
@@ -148,17 +153,38 @@
     "reports/cohere_native_v2_confirmation_20260727T210000Z/",
     "reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/",
     "reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/",
-    "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/"
+    "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/",
+    "reports/offline_active_acquisition_pilot_20260728T142414Z/ (tracked minus raw_trajectories.jsonl)",
+    "reports/regularized_aggregation_pilot_20260728T164943Z/ (tracked in full)",
+    "reports/stopping_rule_pilot_20260728T190000Z/ (tracked minus simulate/raw_stopping_histories.jsonl)"
+  ],
+  "canonical_evidence_note": "The 8 counterfactual/Cohere canary and diagnostic entries above were tracked in commit e8f6006 -- an earlier version of this file incorrectly listed them under local_only_artifacts; each was individually inspected for secrets/raw transcripts before committing (see docs/ARTIFACT_POLICY.md). They remain canary/diagnostic-only in their own status fields regardless of being tracked.",
+  "invalid_or_non_citable_evidence": [
+    "reports/real_query_multifactor_acquisition_20260726T044254Z/",
+    "reports/policy_selection_20260726T025426Z/"
+  ],
+  "local_only_artifacts": [
+    "reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/",
+    "reports/provider_capability_audit_live_20260727T042703Z/"
   ],
   "validation": {
-    "full_test_count": 1038,
+    "full_test_count": 1127,
     "skipped": 0,
-    "last_result": "1038 passed, 0 skipped, 0 failed (pytest -q)",
-    "verified_at_utc": "2026-07-28T03:14:55Z",
-    "verified_with": "pip install -e \".[dev,llm,exact]\" (installs cohere, openai, google-genai, PySCIPOpt in addition to the base+dev deps)",
-    "note": "Skip/fail counts here are environment-dependent, not a fixed repository property: exact-repair tests skip without PySCIPOpt installed, and provider-SDK-dependent tests (e.g. Cohere) fail outright (not skip) if their SDK is absent. Do not treat any single cached count as durable -- re-run `pytest -q` locally against the current HEAD before trusting a number, including this one."
+    "failed": 0,
+    "last_result": "1127 passed, 0 skipped, 0 failed (pytest -q)",
+    "verified_at_utc": "2026-07-28T22:30:00Z",
+    "verified_with": "local .venv, base + dev optional dependency group only (no llm/exact extras in this environment)",
+    "no_type_checker_configured": "No mypy (or other type checker) is configured in this repository -- no [tool.mypy] section in pyproject.toml, not a dev dependency. Any earlier snapshot's mypy claim described a different environment/session's ad hoc use of the tool.",
+    "note": "Skip/fail counts here are environment-dependent, not a fixed repository property: exact-repair tests skip without PySCIPOpt installed, and provider-SDK-dependent tests (e.g. Cohere) fail outright (not skip) if their SDK is absent, and differ further depending on which optional dependency groups are installed. Do not treat any single cached count as durable -- re-run `pytest -q` locally against the current HEAD before trusting a number, including this one."
   },
   "safety_branches": [
+    "backup/pre-final-branch-polish-20260728-174708",
+    "backup/pre-risk-controlled-stopping-pilot-20260728-182920",
+    "backup/pre-regularized-aggregation-pilot-20260728-163011",
+    "backup/pre-active-acquisition-pilot-20260728-141641",
+    "backup/pre-cleanup-polish-20260728-030421",
+    "backup/pre-native-cohere-clientv2-20260727",
+    "backup/pre-cohere-schema-projection-20260727",
     "backup/pre-cohere-schema-enforcement-20260727",
     "backup/pre-cohere-normalization-diagnostic-20260727",
     "backup/pre-counterfactual-canary-v2-20260727",
@@ -168,8 +194,7 @@
     "backup/pre-provider-capability-audit-20260727",
     "backup/pre-driver-organization-20260727",
     "backup/pre-multifactor-eval-fix-20260726",
-    "backup/pre-polish-outcome-f-20260726",
-    "backup/pre-native-cohere-clientv2-20260727"
+    "backup/pre-polish-outcome-f-20260726"
   ],
   "archive_branches": [
     {

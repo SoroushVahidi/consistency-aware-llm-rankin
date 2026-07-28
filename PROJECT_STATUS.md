@@ -8,14 +8,14 @@ rather than trusting either document blindly.*
 
 | Field | Value |
 |---|---|
-| Generated | 2026-07-28T03:14:55Z (code state); documentation committed slightly later — see note below |
+| Generated | 2026-07-28T22:15:00Z (code state); documentation committed slightly later — see note below |
 | Branch | `fix/outcome-f-production-operating-point` |
-| `documented_code_head` | `b22bd559f41a6c204555606d3c84ad21f00608a6` |
+| `documented_code_head` | `cd678f02cec725496c484757146d44649ac0d034` |
 | origin/main | `3e02b73666506f3eb894f5df2c531284ea31a60e` |
-| Ahead / behind (of `documented_code_head`) | 15 ahead / 0 behind |
-| Working tree | Clean of source/config/test changes. This documentation commit itself is the only pending change at write time. |
-| Current phase | Multi-provider counterfactual-benchmark engineering (pre-micro-pilot) |
-| Current blocker | Native Cohere `ClientV2` transport (`cohere_native.py` + `cohere_schema_projection.py`, schema projection v3) **confirmed working live** — 4th confirmation call (request_hash `f062ea28...`) succeeded: schema accepted, valid judgment generated, passed full canonical local validation. Compatibility path remains confirmed broken (archived) — irrelevant now that native works. The transport is **not yet wired into `dispatch.call_provider`/the frozen collector** (see the wiring plan in the freeze doc) — this, not the schema, is the current blocker for a clean four-provider canary. |
+| Ahead / behind (of `documented_code_head`) | 28 ahead / 0 behind |
+| Working tree | Clean of source/config/test changes at write time (see "Last verified state"). |
+| Current phase | **Consistency-aware active-acquisition / regularized-aggregation / stopping-rule pivot — three real-oracle pilots complete.** See "Consistency-aware pivot" section below. The multi-provider counterfactual-benchmark engineering work described later in this document (Cohere transport wiring, provider panel, micro-pilot) is still real and unresolved, but is **not** the branch's current focus; it was paused mid-stream when the branch pivoted, not abandoned or superseded. |
+| Current blocker | None blocking for the pivot itself (all three pilots ran to completion, offline, no live calls). For the still-paused counterfactual-benchmark work: native Cohere `ClientV2` transport (`cohere_native.py` + `cohere_schema_projection.py`, schema projection v3) is confirmed working live but not yet wired into `dispatch.call_provider`/the frozen collector — unchanged since the last update to this section. |
 | Exact next action | See "Exact next action" section at the end of this document. |
 
 **Note on `documented_code_head`:** this snapshot describes the scientific
@@ -190,6 +190,85 @@ see `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` findings 4-5):
   compatibility path's; root cause is unestablished (possibly a fixable
   JSON-Schema-shape issue). See "Current blocker" above.
 
+## Consistency-aware pivot (2026-07-28) — current branch focus
+
+Three sequential, same-day pilots (`756495d`, `91b8973`, `fc866d7`, each
+followed by a `docs: freeze *_pilot_v1 config` commit), all built on **one
+shared, real, pre-existing, frozen oracle**:
+`outputs/openai_scidocs_real_pairwise_q50_k15/judgments.jsonl` — 50 SciDocs
+queries, 15 candidates each, exactly C(15,2)=105 exhaustive real gpt-4o-mini
+pairwise judgments per query (5,250 total), collected weeks earlier, never
+re-collected or modified by any of the three pilots (SHA-256-verified
+unchanged across all three `MANIFEST.json`s). No live provider/API calls
+were made in any of the three pilots.
+
+**1. Offline active-acquisition pilot** (`756495d`/`e4566aa`,
+`reports/offline_active_acquisition_pilot_20260728T142414Z/`, tracked in
+Git minus one regenerable raw log — see `docs/ARTIFACT_POLICY.md`):
+**[NEGATIVE RESULT]** the proposed active pair-selection strategy
+(uncertainty × counterfactual top-k impact × ambiguity) is **not
+supported** — it loses to random unrevealed-pair selection at both the 10%
+and 20% budget checkpoints (Holm-corrected, e.g. budget=10: mean ΔnDCG
+−0.145, 9 wins / 41 losses vs. random). No leakage into the scoring
+functions (structurally and behaviorally tested). This closes out the
+active-pair-selection research direction as evidenced-unsupported on this
+oracle, rather than leaving it as an open, unresolved proposal.
+
+**2. Regularized (prior-regularized Bradley-Terry) aggregation pilot**
+(`91b8973`/`c568b87`, `reports/regularized_aggregation_pilot_20260728T164943Z/`,
+tracked in Git in full): **[SAFETY-DOMINANT, NOT UNIVERSALLY SUPERIOR]** a
+regularized Bradley-Terry aggregator that reduces to the BM25 prior exactly
+at zero pairwise evidence and relaxes its regularization strength as
+evidence accumulates. On the 35-query held-out test split: significantly
+beats BM25 at 10%/20% budget (Holm-corrected); significantly reduces the
+severe-harm rate (per-query ΔnDCG@10 ≤ −0.05 vs. BM25) relative to naive
+sparse Copeland aggregation at 5%/10% budget (95% CI excludes zero); does
+**not** establish significantly higher raw mean nDCG or AUC than the
+strongest non-oracle baseline (`pure_bt_no_prior`) — this is a genuine,
+disclosed limit on the claim, not an oversight. Motivating evidence for
+regularization: naive sparse Copeland aggregation is measurably unstable
+(41.4% of per-step top-k sets churn on a single new revealed edge; 5.7% of
+steps eject a currently-relevant document from the top-k, of which 93.3%
+return once evidence is exhaustive — i.e. largely transient/fragile, not
+durable corrections).
+
+**3. Risk-controlled qrel-free stopping-rule pilot** (`fc866d7`/`b007a13`,
+`reports/stopping_rule_pilot_20260728T190000Z/`, tracked in Git minus one
+regenerable raw log): builds a counterfactual worst-case top-k-change
+stopping statistic on top of pilot 2's aggregator, calibrated
+(`tau=0.20, m=3`) on a 15-query dev split, evaluated on the same 35-query
+held-out test split. The stopping decision itself is qrel-free at
+inference (verified both structurally — no function signature accepts
+qrels/oracle/exhaustive-ranking — and behaviorally — a test flips the
+hidden answer for an unrevealed pair and confirms the decision is
+unchanged). On the test split: median stop budget 34.3% (< 40% target);
+**31/35 walks triggered a genuine stop, 4/35 hit the 60%-budget
+simulation cap without triggering** (censored, not a stop — this
+distinction is preserved end-to-end and, as of this polish pass, is also a
+machine-readable `run_status` field in `statistical_analysis.json`, not
+just inferable from per-row data); **0/35 test queries showed severe harm**
+— the strongest safety result in the pilot, though a post-audit correction
+replaced a degenerate bootstrap `[0.0%, 0.0%]` interval with a valid
+Wilson interval (`[0.0%, 9.9%]`): **zero observed severe-harm events at
+n=35 does not imply a true rate of exactly zero.** The rule does **not**
+meet its own quality-recovery sub-criteria (≥95% of exhaustive improvement
+recovered; within 0.02 nDCG of exhaustive) — traced to the aggregator's own
+slow-converging tail past 60% coverage, disclosed as an aggregator
+property, not a stopping-rule defect. Overall classification in the
+pilot's own report: closest to "useful but incomplete" — a genuine,
+well-powered safety/quality-per-dollar improvement over naive fixed
+low-budget policies, not yet a complete, deployment-ready contribution on
+its own.
+
+**Independent audit:** all three pilots' headline statistics (oracle
+counts/hashes, core negative and positive results, capped-vs-stopped
+bookkeeping) were independently recomputed from raw artifacts during a
+2026-07-28 branch audit and matched exactly; two statistical-methodology
+defects (the degenerate severe-harm CI above, and an unsurfaced
+capped-walk count) were found and corrected in this same polish pass. See
+each pilot's own `REPORT.md` for full detail, and the branch's git history
+for the audit trail.
+
 ## What is not yet established
 
 - A clean four-provider canary pass (currently 3/4: Azure, Fireworks, Vertex
@@ -206,6 +285,18 @@ see `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` findings 4-5):
   counterfactual benchmark.
 - Any claim that Cohere's compatibility endpoint can be made to honor a
   schema-constrained judgment format for this model.
+- A complete, deployment-ready "safe anytime reranking" contribution: the
+  regularized aggregator plus stopping rule is safety-dominant and
+  quality-per-dollar-superior to naive fixed low budgets, but does not meet
+  its own near-exhaustive-quality-recovery bar (§ "Consistency-aware
+  pivot").
+- External validity of the pivot beyond one real oracle: all three pilots
+  use the same single SciDocs q50/k15 (50 query, 15-candidate, 105-pair)
+  oracle. No second dataset, candidate-pool size, or judge model has been
+  tried.
+- Any claim that the active pair-selection proposal (uncertainty ×
+  counterfactual impact × ambiguity) is a viable acquisition strategy — it
+  is evidenced-worse than random on this oracle.
 
 ## Repository architecture
 
@@ -225,6 +316,10 @@ src/consistency_ranker/
 ├── counterfactual_pilot/                                        # frozen v1 prompt/schema/panel/presentation
 ├── counterfactual_benchmark/                                    # active collector: pools, pairs, dispatch,
 │                                                                 # request identity, reserve, cache, report
+├── active_acquisition/                                          # CURRENT: offline pair-selection strategies,
+│   oracle.py, scoring.py, strategies.py, simulate.py,            # regularized Bradley-Terry aggregation, and the
+│   evaluate.py, stats.py, regularized_aggregation.py,            # qrel-free stopping rule (consistency-aware pivot)
+│   stopping.py                                                   #
 └── adaptive_acquisition/, prior_robust/, reliability_repair/,    # Outcome B-D driver subsystems (offline-safe;
     dag_linear_extensions/, ...                                  # see docs/experiments/OUTCOME_BCD_DRIVERS.md)
 ```
@@ -238,7 +333,10 @@ src/consistency_ranker/
 | Multifactor acquisition (real queries) | Negative result, corrected | `scripts/reevaluate_multifactor_offline.py` |
 | Outcome B-D drivers | Offline-safe, experimental | see `docs/experiments/OUTCOME_BCD_DRIVERS.md` |
 | Provider capability audit | Engineering complete (connectivity only) | `scripts/audit_provider_capabilities.py` |
-| Counterfactual benchmark (active) | Engineering, canary stage | `scripts/run_counterfactual_micro_pilot.py` |
+| Counterfactual benchmark | Engineering, canary stage, **paused** (not current focus) | `scripts/run_counterfactual_micro_pilot.py` |
+| Offline active-acquisition (real oracle) | **Negative result, complete** | `scripts/run_offline_active_acquisition_pilot.py` |
+| Regularized Bradley-Terry aggregation (real oracle) | **Safety-dominant result, complete** | `scripts/run_regularized_aggregation_pilot.py` |
+| Risk-controlled stopping rule (real oracle) | **Complete, useful-but-incomplete** | `scripts/run_stopping_rule_pilot.py` |
 
 ## Current multi-provider benchmark direction
 
@@ -303,6 +401,9 @@ See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 - `reports/policy_selection_20260726T030500Z/` — Outcome F canonical synthetic package.
 - `reports/real_query_policy_replay_20260726T042025Z/` — tracked offline replay.
 - `docs/multifactor_production_uht_corrected_summary_20260727.json` — compact corrected-multifactor summary.
+- `reports/offline_active_acquisition_pilot_20260728T142414Z/` — real-oracle negative result (active pair-selection); tracked minus one regenerable raw log (`raw_trajectories.jsonl`, gitignored).
+- `reports/regularized_aggregation_pilot_20260728T164943Z/` — real-oracle safety-dominant result; tracked in full.
+- `reports/stopping_rule_pilot_20260728T190000Z/` — real-oracle stopping-rule pilot; tracked minus one regenerable raw log (`simulate/raw_stopping_histories.jsonl`, gitignored).
 
 **Valid local-only evidence (reproducible, not committed by policy):**
 - `reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/` — full corrected tree (compact summary above is committed).
@@ -321,18 +422,34 @@ See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 
 ## Current validation status
 
-Verified 2026-07-28T03:14:55Z, with the `dev`, `llm`, and `exact` optional
-dependency groups installed (`pip install -e ".[dev,llm,exact]"`):
-`pytest -q` → **1038 passed, 0 skipped, 0 failed**. `ruff check`, `mypy`,
-and `python -m compileall` clean on all changed files.
-`python scripts/check_repo_ready.py` → 56 OK / 5 pre-existing unrelated
-warnings / 0 failures.
+**Most recent (post-pivot polish pass, this local environment, `.venv`,
+base + `dev` deps only — no `llm`/`exact` extras installed here):**
+`pytest -q` → **1127 passed, 0 skipped, 0 failed** in 162.25s.
+`ruff check` on all branch-changed files → clean; full-repository
+`ruff check .` → 1,545 pre-existing findings (unrelated historical debt
+outside this branch's touched files, unchanged by this pass — see
+"Known limitations and blockers"). **No type checker (mypy or otherwise)
+is configured in this repository** (no `[tool.mypy]` section in
+`pyproject.toml`; not a dev dependency); do not expect `mypy` to be
+installed without adding and configuring it first. `python -m compileall`
+clean on `src`/`scripts`. `git diff --check` clean (no whitespace errors).
 
-Test/skip counts are environment-dependent, not a fixed repository
+**Earlier snapshot (previous session, different environment):** verified
+2026-07-28T03:14:55Z with the `dev`, `llm`, and `exact` optional dependency
+groups installed (`pip install -e ".[dev,llm,exact]"`): `pytest -q` →
+1038 passed, 0 skipped, 0 failed; `ruff check` and `python -m compileall`
+clean on all changed files; `python scripts/check_repo_ready.py` → 56 OK /
+5 pre-existing unrelated warnings / 0 failures. That snapshot's "mypy
+clean" claim reflected that session's ad hoc use of the tool in a
+different environment, not a repository-configured check — see the
+correction above.
+
+Test/skip/pass counts are environment-dependent, not a fixed repository
 property (exact-repair tests skip without PySCIPOpt; provider-SDK tests
-fail rather than skip if their SDK is absent) — re-run `pytest -q`
-against the current HEAD rather than trusting any cached number,
-including this one.
+fail rather than skip if their SDK is absent; the two snapshots above
+differ partly because of different installed optional-dependency groups,
+not because the branch regressed) — re-run `pytest -q` against the
+current HEAD rather than trusting any cached number, including these.
 
 ## Known limitations and blockers
 
@@ -353,7 +470,22 @@ including this one.
    win is established.
 5. The counterfactual benchmark has never run past a single-pair,
    single-orientation, 4-call canary; the 256-384 call micro-pilot has never
-   executed.
+   executed. Currently paused, not the branch's active focus.
+6. The active-acquisition proposal is evidenced-worse than random on the
+   one oracle tested; do not resume that specific proposal without new
+   evidence.
+7. The regularized-aggregation + stopping-rule pivot is validated on
+   exactly one real oracle (50 SciDocs queries, 15 candidates each); no
+   cross-dataset or cross-judge-model generalization evidence exists yet.
+8. The stopping rule does not meet its own near-exhaustive quality-recovery
+   bar (traced to the aggregator's slow-converging tail past 60% coverage,
+   not a stopping-rule defect) — see "Consistency-aware pivot" above.
+9. No type checker (mypy or otherwise) is configured in this repository
+   (no `[tool.mypy]` section in `pyproject.toml`; not a dev dependency) —
+   any historical claim in this document of a "clean mypy" run describes a
+   different environment/session's ad hoc use of the tool, not a repository
+   convention; do not expect `mypy` to be installed or runnable without
+   installing it separately.
 
 ## Publication readiness
 
@@ -474,11 +606,39 @@ Steps 1-8 are done; steps 9-12 are planned, not executed.
   — they establish connectivity only.
 - Any claim in the past tense about work that is designed but not executed
   (the micro-pilot, the oracle-opportunity audit, benchmark scale-up).
+- "The active pair-selection proposal works" — it is evidenced-worse than
+  random on the one oracle tested (offline active-acquisition pilot).
+- "Regularized aggregation is universally superior to every baseline" — it
+  is safety-dominant (severe-harm reduction, significant nDCG win over
+  BM25) but is **not** established as beating the strongest non-oracle
+  baseline on raw mean nDCG or AUC; do not drop this qualifier.
+- "Zero observed severe-harm events means the true severe-harm rate is
+  zero" — the correct statement is a Wilson 95% CI of roughly [0.0%, 9.9%]
+  at n=35, not certainty of zero.
+- "A capped stopping walk is a successful stop" — capped (censored, hit the
+  60%-budget simulation cap without triggering) and stopped (patience
+  condition triggered) are tracked as distinct outcomes throughout; do not
+  conflate them.
+- "The stopping rule achieves near-exhaustive quality" — it does not meet
+  its own ≥95%-recovered / within-0.02-of-exhaustive bar.
 
 ## Exact next action
 
-The native Cohere transport is **live-confirmed working** as of the 4th
-confirmation call (request_hash `f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829`,
+**For the consistency-aware pivot (current focus):** per the stopping-rule
+pilot's own stop/go recommendation, the next useful increment is *not* a
+broader acquisition-policy search, but a better-calibrated worst-case
+statistic or regularization schedule that narrows the gap to exhaustive
+quality at moderate budgets — e.g. investigating whether the
+cycle/upset-fraction association found in the stopping pilot's mechanism
+analysis could inform a coverage-and-consistency-aware (not just
+coverage-aware) schedule, tested as a small, separate follow-up. Do not
+expand into further acquisition-policy research (closed out as
+unsupported), and do not yet present the pivot as a complete,
+deployment-ready contribution — see "Known limitations and blockers" above.
+
+**For the paused counterfactual-benchmark thread (not current focus, but
+not abandoned):** the native Cohere transport is **live-confirmed working**
+as of the 4th confirmation call (request_hash `f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829`,
 schema projection v3, projected schema sha256
 `d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26`):
 `finish_reason: COMPLETE`, a valid judgment returned, and it passed full
@@ -497,14 +657,23 @@ before the wiring is implemented and a clean canary passes.**
 
 ## Last verified state
 
-Re-verified directly against Git and the filesystem during this session:
-branch `fix/outcome-f-production-operating-point`, `documented_code_head`
-`3a47e90...`, 13 commits ahead of `origin/main` (`3e02b73...`), 0 behind.
-The Cohere schema-enforcement attempt was archived to
-`archive/cohere-compat-schema-failed-20260727` (`0646fde8...`) and removed
-from this branch's working tree; source/config/test files on this branch
-are byte-identical to `documented_code_head`. This documentation commit is
-the only pending change. All 13 `documented_code_head`-lineage commit
-hashes, the merge-base, and the archive commit were verified with
-`git cat-file -e`. See `docs/handoff/CURRENT_BRANCH_HANDOFF.md` for the
-exact commands used and their output.
+**Post-pivot polish pass (current):** re-verified directly against Git and
+the filesystem: branch `fix/outcome-f-production-operating-point`,
+`documented_code_head` `cd678f02cec725496c484757146d44649ac0d034`, 28
+commits ahead of `origin/main` (`3e02b73...`), 0 behind. Four new commits
+landed in this pass on top of the audited `b007a13`: `a3bc58c`
+(`fix(stats)`: centralized Wilson/Clopper-Pearson proportion interval),
+`7c7bbfd` (`fix(stopping)`: valid severe-harm CI + explicit stopped/
+capped/failed counts), `9dcc80e` (`fix(regularized-aggregation)`: Wilson
+CI on per-method severe-harm rates), `cd678f0` (`chore`: track the third
+pilot's report directory, update `docs/ARTIFACT_POLICY.md`). This
+documentation commit (`docs: update project status and branch handoff for
+the consistency-aware pivot`) lands after `cd678f0`, per the note above.
+A backup branch, `backup/pre-final-branch-polish-20260728-174708`, was
+created at `b007a13` before any of this pass's changes. No history was
+rewritten; all changes are additive commits. See
+`docs/handoff/CURRENT_BRANCH_HANDOFF.md` for the exact commands used.
+
+**Earlier snapshot (previous session):** branch tip at that time
+`3a47e90...`, 13 commits ahead of `origin/main`, 0 behind — superseded by
+the state above; kept for provenance of the doc's own history.
