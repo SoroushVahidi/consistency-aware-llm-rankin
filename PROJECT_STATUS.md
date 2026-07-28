@@ -15,7 +15,7 @@ rather than trusting either document blindly.*
 | Ahead / behind (of `documented_code_head`) | 13 ahead / 0 behind |
 | Working tree | Clean of source/config/test changes. This documentation commit itself is the only pending change at write time. |
 | Current phase | Multi-provider counterfactual-benchmark engineering (pre-micro-pilot) |
-| Current blocker | No validated Cohere access path for the frozen four-provider panel. `command-r-plus-08-2024` via Cohere's OpenAI-compatibility endpoint does not honor either `response_format` mode tried; two bounded live confirmation calls both returned byte-identical malformed output. The failed attempt is archived off this branch — see below. |
+| Current blocker | Native Cohere `ClientV2` transport (`cohere_native.py` + `cohere_schema_projection.py`, schema projection v3) **confirmed working live** — 4th confirmation call (request_hash `f062ea28...`) succeeded: schema accepted, valid judgment generated, passed full canonical local validation. Compatibility path remains confirmed broken (archived) — irrelevant now that native works. The transport is **not yet wired into `dispatch.call_provider`/the frozen collector** (see the wiring plan in the freeze doc) — this, not the schema, is the current blocker for a clean four-provider canary. |
 | Exact next action | See "Exact next action" section at the end of this document. |
 
 **Note on `documented_code_head`:** this snapshot describes the scientific
@@ -153,13 +153,20 @@ see `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` findings 4-5):
   confirmation). This is strong evidence Cohere's compatibility endpoint is
   not enforcing the supplied schema for this model, not merely that the
   model is noisy.
-- **Cohere is currently unsupported for the frozen 4-provider panel under
-  this model/access path.** The implementation is preserved for diagnosis
-  only on the local archive branch
+- **The compatibility-path implementation is unsupported** for the frozen
+  4-provider panel under this model/access path. It is preserved for
+  diagnosis only on the local archive branch
   `archive/cohere-compat-schema-failed-20260727`
   (commit `0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2`) — it is **not** part of
-  this branch's history and must not be presented as a working fix. See
-  "Current blocker" above.
+  this branch's history and must not be presented as a working fix.
+- **A separate native `ClientV2` transport was then implemented and
+  offline-tested (28 tests)** — a genuinely different wire protocol from
+  the compatibility path. Its one authorized live confirmation call
+  (request_hash `d6ba44eb9fc254a2bdd9cbae2c3005f56e4c849f6b35788998031fb88c8338fe`)
+  was **rejected by Cohere's API with a 400 Bad Request before producing
+  any content** — this is not a judgment-validity failure like the
+  compatibility path's; root cause is unestablished (possibly a fixable
+  JSON-Schema-shape issue). See "Current blocker" above.
 
 ## What is not yet established
 
@@ -255,7 +262,11 @@ provider, including Azure, is a noisy judge, never ground truth.
 | `counterfactual_micro_pilot_v2` | Frozen, not executed | `configs/counterfactual_micro_pilot_v2.json`; `execute_in_this_task: false` |
 | `counterfactual_collector_canary_v1` | Executed (local evidence) | Instrumentation only; diagnosed content-poor pool + Vertex parse failure |
 | `counterfactual_collector_canary_v2` | Executed (local evidence) | Conditional pass: 3/4 providers normalized; Cohere failed |
-| `cohere_json_schema_v1` | Implemented, offline-tested, **live-confirmation FAILED** | Archived on `archive/cohere-compat-schema-failed-20260727` (`0646fde8`), **not** in this branch's history; do not present as a working fix |
+| `cohere_json_schema_v1` (compatibility-path) | Implemented, offline-tested, **live-confirmation FAILED** | Archived on `archive/cohere-compat-schema-failed-20260727` (`0646fde8`), **not** in this branch's history; do not present as a working fix |
+| `cohere_native_v2_json_schema_v1` (native ClientV2 transport) | Implemented, offline-tested (59 tests), **4th live confirmation SUCCEEDED** (request_hash `f062ea28...`; valid judgment, passed canonical validation) after 3 prior rejections (400) on 3 different fields in turn | `src/consistency_ranker/counterfactual_benchmark/cohere_native.py`; standalone, still not wired into `dispatch.call_provider` or the frozen panel — see wiring plan in the freeze doc |
+| `cohere_native_v2_schema_projection_v1` (superseded) | Removed `minimum`/`maximum` only — historical identity, one live call persisted under it (`41f1de66...`, rejected) | `src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py` |
+| `cohere_native_v2_schema_projection_v2` (superseded) | Additionally removed `$id` (live-evidenced) — historical identity, one live call persisted under it (`be312ecf...`, rejected) | Same module |
+| `cohere_native_v2_schema_projection_v3` (current) | Additionally adds `type: "string"` to `schema_version` (live-evidenced: `const` alone was rejected as missing `type`); `$schema` untouched (unevidenced). **Live-confirmed working** (request_hash `f062ea28...`). | Same module; fail-closed on any other unreviewed keyword |
 
 v1 protocols remain frozen and byte-reproducible (tested); v2 is additive,
 not a silent edit — see `config.verify_frozen_contract` and
@@ -288,10 +299,18 @@ See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 
 ## Current validation status
 
-Last full run this session (no source changes since): `pytest -q` →
-**969 passed, 22 skipped, 0 failed**. `ruff check`, `mypy`, and
-`python -m compileall` clean on all changed files. `python scripts/check_repo_ready.py`
-→ 56 OK / 5 pre-existing unrelated warnings / 0 failures.
+Verified 2026-07-28T03:14:55Z, with the `dev`, `llm`, and `exact` optional
+dependency groups installed (`pip install -e ".[dev,llm,exact]"`):
+`pytest -q` → **1038 passed, 0 skipped, 0 failed**. `ruff check`, `mypy`,
+and `python -m compileall` clean on all changed files.
+`python scripts/check_repo_ready.py` → 56 OK / 5 pre-existing unrelated
+warnings / 0 failures.
+
+Test/skip counts are environment-dependent, not a fixed repository
+property (exact-repair tests skip without PySCIPOpt; provider-SDK tests
+fail rather than skip if their SDK is absent) — re-run `pytest -q`
+against the current HEAD rather than trusting any cached number,
+including this one.
 
 ## Known limitations and blockers
 
@@ -342,8 +361,9 @@ contingent on resolving the Cohere blocker and completing, at minimum:
 - [x] Fail-closed collector
 - [x] Candidate-pool v2 validity protocol
 - [x] Vertex AI/Gemini wrapper normalization
-- [ ] Valid Cohere transport/access path selected
-- [ ] Cohere schema-valid judgment confirmed — **failed twice (compatibility-API path); blocked**
+- [x] Valid Cohere transport/access path selected — native `ClientV2` transport, schema projection v3
+- [x] Cohere schema-valid judgment confirmed — compatibility-API path **failed twice** (archived); native `ClientV2` path **succeeded on the 4th confirmation** (request_hash `f062ea28...`) after 3 prior rejections on 3 different fields; response passed full canonical local validation
+- [ ] Native Cohere transport wired into `dispatch.call_provider`/the frozen collector — plan documented in the freeze doc, not yet implemented
 - [ ] Clean full-panel canary
 - [ ] Bounded micro-pilot
 - [ ] Micro-pilot integrity audit
@@ -354,23 +374,51 @@ contingent on resolving the Cohere blocker and completing, at minimum:
 
 ## Roadmap
 
-1. Keep the compatibility-shim failure archived and off the active branch
-   (`archive/cohere-compat-schema-failed-20260727`, `0646fde8...`).
-2. Implement a native Cohere Chat API v2 (`ClientV2`) adapter as a separate
-   provider transport, distinct from the OpenAI-compatibility shim.
-3. Run offline request-capture and strict-schema regression tests against
-   the new adapter (no network).
-4. Authorize at most one bounded Cohere-only live confirmation call against
-   the new adapter.
-5. If native Cohere succeeds: run a clean four-provider canary under the
-   existing frozen panel.
-6. If it fails: freeze a new three-provider (Azure, Fireworks, Vertex
-   AI/Gemini) or replacement-provider panel version instead.
-7. Only after a clean canary passes under whichever panel is frozen,
-   consider the bounded micro-pilot v2 under explicit separate
-   authorization.
+1. ✅ Keep the compatibility-shim failure archived and off the active
+   branch (`archive/cohere-compat-schema-failed-20260727`, `0646fde8...`).
+2. ✅ Implement a native Cohere Chat API v2 (`ClientV2`) adapter as a
+   separate provider transport (`cohere_native.py`), distinct from the
+   OpenAI-compatibility shim.
+3. ✅ Run offline request-capture and strict-schema regression tests
+   against the new adapter (28 tests, no network).
+4. ✅ Authorize and execute one bounded Cohere-only live confirmation call
+   against the new adapter — **result: 400 Bad Request before any content,
+   root cause unestablished** (see freeze doc finding 7). Improved the
+   error-message capture (previously lost the rejection reason behind HTTP
+   headers) for the next attempt.
+5. ✅ Authorize and execute one bounded confirmation with `minimum`/
+   `maximum` removed (schema projection v1) — **result: 400 again, but the
+   fixed error capture recovered the real reason for the first time:
+   `$id` unsupported** (freeze doc finding 9).
+6. ✅ Authorize and execute one bounded confirmation with `$id` also
+   removed (schema projection v2) — **result: 400 a third time, on a new
+   field: `schema_version` missing required `type`** (freeze doc finding
+   11).
+7. ✅ Implement the `type` addition for `const`-only properties (schema
+   projection v3, freeze doc finding 12).
+8. ✅ Authorize and execute one fresh bounded confirmation call under
+   schema projection v3 — **result: SUCCESS.** request_hash `f062ea28...`,
+   `finish_reason: COMPLETE`, valid judgment (`preference: "ABSTAIN"`,
+   `confidence: 0.0`) parsed and passed full canonical local validation
+   (freeze doc finding 13). This is the first successful native Cohere
+   structured-output judgment in this investigation.
+9. **Next:** wire the native Cohere transport into `dispatch.call_provider`/
+   the frozen collector — a deliberate, reviewed implementation, not a
+   trivial one; see the "Native Cohere collector-wiring plan" in the
+   freeze doc for the concrete open design questions (adapter shape,
+   request-hash/cache-identity extension, readiness-check routing,
+   collector-test updates). Not yet implemented.
+10. Once wired and offline-tested, run a clean four-provider canary under
+    the existing frozen panel.
+11. If native Cohere is confirmed unworkable after wiring (unexpected,
+    given step 8's success, but not ruled out): freeze a new
+    three-provider (Azure, Fireworks, Vertex AI/Gemini) or
+    replacement-provider panel version instead.
+12. Only after a clean canary passes under whichever panel is frozen,
+    consider the bounded micro-pilot v2 under explicit separate
+    authorization.
 
-This is planned work — none of steps 2-7 have been executed.
+Steps 1-8 are done; steps 9-12 are planned, not executed.
 
 ## How to resume safely
 
@@ -407,11 +455,23 @@ This is planned work — none of steps 2-7 have been executed.
 
 ## Exact next action
 
-Implement and validate a native Cohere `ClientV2` transport (distinct from
-the OpenAI-compatibility shim) in a separate, focused task — offline
-request-capture and schema tests first, then at most one bounded live
-confirmation call under explicit authorization. **Do not run the
-micro-pilot before that decision is resolved and a clean canary passes.**
+The native Cohere transport is **live-confirmed working** as of the 4th
+confirmation call (request_hash `f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829`,
+schema projection v3, projected schema sha256
+`d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26`):
+`finish_reason: COMPLETE`, a valid judgment returned, and it passed full
+canonical local validation unchanged. Evidence at
+`reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/`.
+
+This resolves the schema/transport question but does **not** make Cohere
+ready for a canary yet: the native transport is still standalone, not
+wired into `dispatch.call_provider`/the frozen collector. The next step is
+implementing that wiring — see "Native Cohere collector-wiring plan" in
+`docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` for the concrete open
+design questions (this is a deliberate, reviewed implementation task, not
+a trivial one). Only after that is implemented and offline-tested should a
+clean four-provider canary be attempted. **Do not run the micro-pilot
+before the wiring is implemented and a clean canary passes.**
 
 ## Last verified state
 

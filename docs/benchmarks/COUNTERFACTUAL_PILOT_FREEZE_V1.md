@@ -415,5 +415,342 @@ exact previously-failing query, and (b) the Vertex AI/Gemini fenced-JSON
 fix. It does **not** validate Cohere normalization, which failed in this
 same run for an as-yet-undiagnosed reason.
 
-**Status: CANARY V2 — CONDITIONAL PASS.** Micro-pilot blocked pending
-Cohere normalization diagnosis.
+**4. Cohere normalization diagnosis (bounded live diagnostic, one Cohere
+call).** Reconstructing canary v2's exact failing Cohere request
+byte-for-byte (same query, pool, pair, presentation order, prompt, and
+judgment schema; request_hash
+`8075b96f1a6c8271d8e4fd56a272a2dcc412656599fc04440fef63447fa6f494`) and
+reissuing it with response-shape introspection reproduced the *identical*
+`raw_response_sha256` as the original canary-v2 failure -- fully
+deterministic, not transient. The response was well-formed, unwrapped bare
+JSON (`finish_reason: "stop"`, no markdown fence -- not a Vertex AI/Gemini-
+style wrapping defect): Cohere put a `reason_code` value (`"unsupported"`)
+into the `evidence_strength` field, which `validate_judgment` correctly
+rejected. This is **malformed model output**, not a parser defect. A first
+attempted fix (`response_format: {"type": "json_object"}`, JSON-syntax
+enforcement only) produced the byte-identical response with the fix in
+place, proving JSON-syntax enforcement alone does not address
+schema-semantic errors.
+
+**5. Compatibility-path schema-constrained confirmation also failed.** A
+follow-up attempt sent Cohere's documented schema-constrained
+`response_format` (`{"type": "json_object", "schema": <frozen schema>}`,
+Cohere's compatibility-API convention) through the same OpenAI-compatible
+endpoint. The confirmation call (request_hash
+`a8d368d37bcc918a3684805e0869ce52fe53c39781419b4d44ec19ff57ee3df9`) still
+returned a **byte-identical** `raw_response_sha256` to both prior calls --
+strong evidence the compatibility endpoint was not enforcing the supplied
+schema at all for this model, not merely producing different-but-still-
+invalid output under stricter constraints. This implementation was
+archived, not merged, at `archive/cohere-compat-schema-failed-20260727`
+(commit `0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2`) -- it did not resolve
+the failure and must not be presented as a working fix.
+
+**6. Native Cohere ClientV2 transport (implemented, live confirmation
+pending).** Because two calls through the OpenAI-compatibility endpoint
+failed identically regardless of `response_format`, a genuinely different
+transport was implemented: Cohere's own native Chat API v2
+(`cohere.ClientV2(...).chat(...)`), which uses a different wire protocol
+and a different `response_format` convention (`JsonObjectResponseFormatV2`,
+whose schema field is named `json_schema`, not `schema`). Implementation:
+`consistency_ranker.counterfactual_benchmark.cohere_native` (module
+`cohere_native.py`), protocol identity `cohere_native_v2_json_schema_v1`
+(constant `COHERE_NATIVE_V2_JSON_SCHEMA_PROTOCOL_VERSION`), never imports
+`openai` and never references the compatibility endpoint. It loads the
+frozen schema verbatim via the same `counterfactual_pilot.schema.load_json_schema()`
+every other validation path uses, and fails closed (raises
+`CohereNativeConfigError`) if asked to run against a different model ID or
+a schema that does not match the frozen artifact. Content extraction is
+strict: only `type: "text"` content blocks are ever treated as judgment
+JSON; `thinking`, `citations`, and `tool_calls` blocks are recorded for
+shape visibility but never concatenated into or parsed as judgment content.
+
+**This transport is deliberately not wired into `dispatch.call_provider`
+or the frozen `counterfactual_provider_panel_v1`.** Wiring it into the
+collector's live-call path would silently change two existing collector
+tests that inject a generic fake across all four providers uniformly, and
+would risk an unintended real network call in test runs (the native path's
+own client-construction activates when no fake is injected). It remains a
+standalone, explicitly-invoked experimental path until independently
+validated by a live confirmation call and a deliberate integration
+decision.
+
+**7. Native ClientV2 confirmation result: request rejected before any
+judgment content was produced.** The bounded live confirmation call
+(request_hash `d6ba44eb9fc254a2bdd9cbae2c3005f56e4c849f6b35788998031fb88c8338fe`
+-- same query/pair/orientation/prompt as findings 4-6, distinct identity
+via `transport_family=cohere_native_v2` +
+`structured_output_protocol=cohere_native_v2_json_schema_v1`, confirmed
+different from both archived compatibility-path hashes) returned a 400
+Bad Request from Cohere's native API (`error_category: malformed_request`)
+before generating any content -- unlike the compatibility-path failures,
+this is not a judgment-validity failure at all; the native endpoint
+rejected the request outright. The initial diagnostic capture
+(`str(exc)[:500]`) truncated the exception to HTTP response headers only,
+losing the actual rejection reason (Cohere's `ApiError.__str__` renders
+headers before body); this has been fixed in `cohere_native.py`
+(`_sanitized_error_message`, prioritizing `.body`/`.status_code`,
+regression-tested) for any future attempt, but the fix could not be
+re-verified live within this session's one-call ceiling. **Root cause is
+therefore not established**: it may be an incompatible JSON Schema shape
+(e.g. `$schema`/`$id`/`title`/`description` keys the compatibility
+endpoint accepted but the native `json_schema` validator may not), a
+message-format issue, or something else entirely.
+
+**8. Deterministic Cohere-compatible schema projection implemented.**
+Verified via a direct wire-serialization probe (SDK 6.1.0, `ClientV2.chat`)
+that the native endpoint's `response_format` uses wire key `json_schema`
+(not the compatibility endpoint's `schema`) -- ruling out a field-naming
+mismatch as the cause of finding 7's 400. Enumerating the canonical
+schema's JSON Schema keywords recursively found `minimum`/`maximum` on
+`confidence` as the only keywords matching Cohere's documented list of
+unsupported structured-output constraints (`$schema`/`$id`/`title`/
+`description` are schema-identity metadata, not generation-time
+constraints, and are not documented as unsupported).
+`cohere_schema_projection.py` builds a deterministic, fully-recorded
+projection of the canonical schema: `minimum`/`maximum` removed (recorded
+as `{json_pointer, keyword, reason}` for each), everything else (enums,
+`const`, `required`, `additionalProperties`, descriptions) preserved
+verbatim. It fails closed (`UnclassifiedSchemaKeywordError`) on any
+keyword not explicitly reviewed and classified as supported or
+unsupported. The **canonical schema is never modified** --
+`schemas/counterfactual_pairwise_judgment_v1.json` and its sha256
+`f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7` are
+unchanged and re-verified at projection time; local
+`validate_judgment` continues to enforce the full canonical contract,
+including `confidence` in `[0, 1]`, regardless of what was sent to the
+provider. `cohere_native.py` now sends the *projected* schema on the wire
+while using the *canonical* schema for the fail-closed model/schema
+identity check and for all local validation after the fact. Request
+identity now includes `schema_projection_protocol:
+cohere_native_v2_schema_projection_v1` plus both the canonical and
+provider-schema hashes, so this request cannot collide with any prior
+attempt's cache entry.
+
+**9. Schema-projection confirmation result: `minimum`/`maximum` were not
+the (sole) cause.** The bounded confirmation call (request_hash
+`41f1de66736d8bb70410eefe0a59ad378b68fbc87c44bc00078fb71a5d19b302`; wire
+schema confirmed free of `minimum`/`maximum` before sending) was rejected
+again -- but this time the now-fixed error capture recovered the *actual*
+API rejection reason for the first time:
+
+```text
+status_code=400 body={'id': '...', 'message':
+  "invalid request: response_format validation: invalid 'json_schema'
+   provided: unknown field '$id' in `object` type"}
+```
+
+Cohere's native `json_schema` validator rejects the schema-identity
+keyword `$id` (present in the canonical schema as
+`"$id": "counterfactual_pairwise_judgment_v1"`), which was preserved by
+the projection (it was classified as passthrough metadata, not a
+generation-time constraint, and finding 8 explicitly declined to strip
+undocumented metadata keywords without evidence). **That evidence now
+exists.** `$schema` is architecturally identical (same category of
+schema-identity metadata) and is a reasonable suspect for the same
+rejection, though unconfirmed -- only `$id` was named in the returned
+error. No further call was made to test this, per the one-call ceiling.
+A hash-provenance bug was also found and fixed during this pass: an
+earlier version of `cohere_native.py` recorded a locally re-serialized
+hash for `canonical_schema_sha256` instead of the well-known raw-file-bytes
+value (`f8332b7e...`) used everywhere else in the repo -- fixed and
+regression-tested; the persisted confirmation record for this specific
+call predates the fix and shows the old (inconsistent but harmless)
+value.
+
+**10. `$id` removal implemented (protocol v2); `$schema` deliberately left
+untouched.** `cohere_schema_projection.py`'s removal registry now has two
+distinct categories: `UNSUPPORTED_CONSTRAINT_KEYWORDS`
+(`minimum`/`maximum`, unchanged from v1) and the new
+`UNSUPPORTED_SCHEMA_IDENTITY_METADATA_KEYWORDS` (`$id` only, added because
+of finding 9's recovered evidence). `$schema` stays in the passthrough set
+-- it is the same category of metadata and a reasonable suspect, but no
+live rejection has named it, and stripping it now would be an unreviewed
+guess, exactly what this module's fail-closed design exists to prevent.
+This is a transformation-semantics change (not just a config tweak), and a
+live call was already persisted under the old identity, so the projection
+protocol was incremented:
+`cohere_native_v2_schema_projection_v1` &rarr;
+`cohere_native_v2_schema_projection_v2`
+(`SCHEMA_PROJECTION_PROTOCOL_VERSION_V1` is kept as a named historical
+reference, not deleted). New projection sha256:
+`02870598a56c19838cb8eb8ca8ba5f9b864594cbf54e421e9d8ec8b548904917`.
+Canonical schema sha256 unchanged and re-verified:
+`f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7`. The
+resulting request identity was independently recomputed and confirmed
+distinct from all four prior Cohere request hashes (json-object-only,
+compat-schema, native-unprojected, and native-v1-projection) --
+`be312ecf7ba089348ffa2e0a93d1e0f2155940f6721175d63f9de14e26aa6c78`.
+53 offline tests pass (12 new/updated for this pass), full suite
+1010 passed / 22 skipped / 0 failed, ruff/mypy/compileall clean.
+
+**11. v2 ($id-removed) confirmation result: `$id` removal was necessary
+but not sufficient -- a third, different field is now named.** The
+bounded confirmation call (request_hash
+`be312ecf7ba089348ffa2e0a93d1e0f2155940f6721175d63f9de14e26aa6c78`; wire
+schema confirmed free of `$id`/`minimum`/`maximum` before sending) was
+rejected a third time, but the error moved to a new field entirely:
+
+```text
+status_code=400 body={'id': '...', 'message':
+  "invalid request: response_format validation: invalid 'json_schema'
+   provided: error at 'properties.schema_version': missing required
+   field 'type'"}
+```
+
+The canonical schema's `schema_version` property is
+`{"const": "counterfactual_pairwise_judgment_v1"}` with no `type` key --
+valid JSON Schema (a `const` value unambiguously implies its own type),
+but Cohere's native `json_schema` validator requires `type` to be given
+explicitly alongside `const`. Evidence persisted at
+`reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/`
+(sanitized, no headers/credentials).
+
+**12. Missing `type` companion added (protocol v3).**
+`cohere_schema_projection.py` now has a third, distinct transformation
+category alongside the two removal categories: an *addition*. When a
+property schema declares `const` without `type`, the projection adds
+`type`, mechanically inferred from the Python type of the `const` value
+itself (never a guess about Cohere's requirements -- it is a JSON-Schema-
+faithful completion of information already implied by the existing,
+reviewed `const` keyword). Today this fires only on
+`schema_version` (`type: "string"` added). Recorded via a new
+`AddedTypeAnnotation` provenance type, symmetric to `RemovedConstraint`
+but for additions; `build_cohere_schema_projection` now returns a 4-tuple
+`(projected, hash, removed, added)`. `$schema` remains untouched -- no
+live rejection has named it. Protocol incremented again (a live call was
+already persisted under v2's identity):
+`cohere_native_v2_schema_projection_v2` &rarr;
+`cohere_native_v2_schema_projection_v3`
+(`SCHEMA_PROJECTION_PROTOCOL_VERSION_V1` and `..._V2` both kept as named
+historical references). New projection sha256:
+`d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26`.
+Canonical schema sha256 unchanged and re-verified:
+`f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7`. 59
+offline tests pass for the two Cohere modules (9 new/updated for this
+pass), ruff/mypy clean.
+
+**13. v3 confirmation result: SUCCESS.** The fourth bounded confirmation
+call (request_hash
+`f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829`; wire
+schema confirmed to have `$id`/`minimum`/`maximum` removed and
+`schema_version.type` added before sending) was accepted by Cohere's
+native `json_schema` validator: `finish_reason: "COMPLETE"`, 46 completion
+tokens, 732 billable tokens total, latency 2.44s. The returned content
+(`{"schema_version": "counterfactual_pairwise_judgment_v1", "preference":
+"ABSTAIN", "confidence": 0.0, ...}`) parsed as JSON and **passed the full
+canonical `validate_judgment` unchanged** -- the same strict schema used
+for every other provider, not a relaxed or provider-specific check.
+Evidence persisted at
+`reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/`
+(sanitized, no headers/credentials).
+
+This is the first successful native Cohere structured-output judgment in
+this investigation. It establishes that the *schema/transport* now works
+end-to-end for `command-r-plus-08-2024`; it does **not** establish
+judgment quality (a single ABSTAIN at temperature 0 on one pair is a
+connectivity/schema signal, not a quality signal), and the native
+transport is still **not wired into `dispatch.call_provider`/the frozen
+collector** -- see the wiring plan below, which is a plan only, not yet
+implemented.
+
+**Status: COHERE NATIVE -- SCHEMA/TRANSPORT CONFIRMED WORKING (v3
+projection); NOT YET WIRED INTO THE FROZEN COLLECTOR; NO FOUR-PROVIDER
+CANARY RUN UNDER THIS PATH YET.** Do not claim Cohere is production-ready
+for the frozen panel until the native transport is wired into the
+collector (a deliberate, separate, reviewed change) and a clean
+four-provider canary passes under it. Local schema validation remains
+authoritative and unchanged throughout; nothing was repaired or coerced.
+The bounded micro-pilot remains blocked until a clean canary passes.
+
+## Native Cohere collector-wiring plan (not implemented)
+
+This section is a plan only -- no collector/dispatch code has been
+changed to route Cohere through the native transport. It exists so the
+next authorized implementation pass has a concrete, reviewed starting
+point rather than needing to re-derive one.
+
+**Why this is nontrivial, not a one-line change:**
+
+- `dispatch.call_provider(provider, model_id, prompt, temperature,
+  max_tokens, call_fn=None)` is a single function serving all four
+  providers through one shared code path: it calls
+  `multi_provider_eval.providers._build_pairwise_config(provider, ...)`,
+  which resolves each provider to an OpenAI-compatible `PairwiseConfig`
+  (`family`, `base_url`, `api_key`, etc.) via `_provider_call_config`, then
+  issues the call through the shared `call_fn`/`_call_llm` path. Cohere's
+  entry in that config resolves to the OpenAI-compatibility base URL --
+  the same path already confirmed broken (finding 5-7).
+  `cohere_native.call_cohere_native` has a deliberately different
+  signature (`chat_fn` instead of `call_fn`, a `judgment_schema`
+  parameter, `NativeDispatchResult` instead of `DispatchResult`) and a
+  different fail-closed model/schema identity check, and does not go
+  through `_build_pairwise_config` at all. It returns a dataclass whose
+  fields overlap enough with `DispatchResult` (`raw_text`↔`raw_response`,
+  `prompt_tokens`, `completion_tokens`, `latency_seconds`,
+  `error_category`, `error_message`) to make a thin adapter feasible, but
+  it cannot be dropped into `call_provider`'s existing code path
+  unchanged.
+- `collector._resolve_live` calls `call_provider(...)` uniformly for every
+  provider and reads a `DispatchResult`-shaped return. Routing Cohere to a
+  structurally different function/return type means either (a) a
+  provider-keyed dispatch table inside `_resolve_live` that special-cases
+  `cohere` to call `call_cohere_native` and adapts `NativeDispatchResult`
+  into whatever shape `_resolve_live` expects next (parsing/validation
+  fields), or (b) making `call_cohere_native`'s result shape
+  interface-compatible with `call_provider`'s and routing inside
+  `dispatch.py` itself. Which is preferable is a design decision, not
+  determined by this investigation.
+- Request-hash/cache identity: the collector's existing request hash
+  formula (used for `request.request_hash` / cache keys) was NOT built
+  with `schema_projection_protocol` / `provider_schema_projection_hash` as
+  fields -- those only exist in this investigation's standalone identity
+  dict (`_native_identity_hash` in the test file / the ad hoc confirmation
+  scripts). Wiring Cohere in means either extending the collector's
+  production request-hash formula to include these fields for every
+  provider (a schema/cache-format change affecting all 4 providers'
+  request hashes, i.e. a new benchmark/collector protocol version) or
+  finding another way to keep Cohere's cache entries distinguishable
+  without changing the shared formula. This needs an explicit decision,
+  not a silent default.
+- Existing collector-level tests inject one generic fake `call_fn` across
+  all 4 providers uniformly (see
+  `test_other_providers_dispatch_still_use_openai_compatible_path` and
+  similar collector tests) -- these assume every provider takes the same
+  code path today. Wiring Cohere differently requires either updating
+  those tests' assumptions or adding Cohere-specific test doubles, and
+  re-auditing for any place that assumes uniform provider dispatch.
+- The `native_cohere_ready()` readiness check is narrower than
+  `dispatch.preflight_provider_ready("cohere")` (only checks
+  `COHERE_API_KEY`, not `COHERE_BASE_URL`/`COHERE_MODEL`) -- the collector's
+  pre-flight-all-providers check would need to call the right one for
+  Cohere specifically, not the shared one.
+- Canary/micro-pilot config files (`configs/counterfactual_*.json`)
+  currently describe Cohere under the same `provider_panel` shape as the
+  other three (OpenAI-compatible base URL etc.) -- if Cohere's config
+  entry needs new fields (e.g. `transport: "cohere_native_v2"`), that is a
+  config-schema change requiring `config.verify_frozen_contract` review,
+  not just a code change.
+
+**Recommended order of operations for the next implementation pass** (not
+started):
+
+1. Decide (b) vs (a) above -- most likely: keep `call_cohere_native`
+   standalone and add a thin adapter inside `dispatch.py` that only
+   activates for `provider == "cohere"`, converting `NativeDispatchResult`
+   to whatever `_resolve_live` needs, so `collector.py` itself changes
+   minimally.
+2. Decide the request-hash/cache-identity question above explicitly
+   (new collector protocol version vs. another mechanism) before touching
+   `collector.py`.
+3. Add the Cohere-specific readiness check into whatever pre-flight
+   function the collector calls before a live run.
+4. Update/extend the uniform-dispatch collector tests to reflect Cohere's
+   distinct path, and add new tests specifically for the wired path
+   (offline, fake `chat_fn`/`call_fn`, no network).
+5. Only after 1-4 are implemented and offline-tested: run a `dry_run`
+   collector pass (still zero live calls) to confirm the plan produces the
+   expected requests, then request separate, explicit authorization for a
+   clean four-provider canary.
+
+This plan is deliberately not executed in this pass.

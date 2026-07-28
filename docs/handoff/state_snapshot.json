@@ -1,22 +1,24 @@
 {
   "schema_version": "repository_state_snapshot_v1",
-  "snapshot_scope": "code state immediately before the documentation-only commit; NOT a self-updating live HEAD",
-  "generated_at_utc": "2026-07-27T21:33:31Z",
+  "snapshot_scope": "code state immediately before this session's commit; NOT a self-updating live HEAD",
+  "generated_at_utc": "2026-07-28T00:00:00Z",
   "repository": "consistency-aware-llm-rankin",
   "branch": "fix/outcome-f-production-operating-point",
-  "documented_code_head": "3a47e9001ccc2ef14ae85e72a15f623cdcff19ad",
+  "documented_code_head": "ab4e06475ed47ed2ae59300cd5e1e796a18378ae",
   "git_state_must_be_reconfirmed": true,
   "origin_main": "3e02b73666506f3eb894f5df2c531284ea31a60e",
-  "ahead": 13,
+  "ahead": 14,
   "behind": 0,
-  "ahead_behind_note": "ahead/behind counted relative to documented_code_head, not the eventual documentation-commit tip. Re-run git rev-list --left-right --count origin/main...HEAD before trusting this.",
+  "ahead_behind_note": "ahead/behind counted relative to documented_code_head, not the eventual next-commit tip. Re-run git rev-list --left-right --count origin/main...HEAD before trusting this.",
   "working_tree": {
-    "clean_of_source_changes": true,
-    "note": "The Cohere schema-constrained structured-output attempt (7 files) was previously staged here but has been committed to archive/cohere-compat-schema-failed-20260727 (0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2) and removed from this branch's working tree. Source/config/test files on this branch are byte-identical to documented_code_head.",
-    "staged_files": [],
-    "unstaged_files": [],
+    "clean_of_source_changes": false,
+    "note": "New native Cohere ClientV2 transport (cohere_native.py) + deterministic schema projection (cohere_schema_projection.py) plus 59 offline tests and a pyproject.toml dependency addition (cohere>=5.0.0) are new/staged on top of documented_code_head, pending commit. The archived compatibility-path attempt remains only on archive/cohere-compat-schema-failed-20260727 (0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2), not on this branch.",
     "visible_untracked_files": [
       "reports/cohere_json_schema_confirmation_20260727T200000Z/",
+      "reports/cohere_native_v2_confirmation_20260727T210000Z/",
+      "reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/",
+      "reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/",
+      "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/",
       "reports/cohere_normalization_diagnostic_20260727T183000Z/",
       "reports/counterfactual_collector_canary_v1_20260727T145126Z/",
       "reports/counterfactual_collector_canary_v2_20260727T161921Z/"
@@ -34,7 +36,8 @@
     "repair_effect_can_disappear_at_multiple_pipeline_stages",
     "provider_capability_audit_four_of_four_providers_authenticate_live_connectivity_only",
     "lexical_prior_pool_v2_eliminated_measured_title_only_selection_bias",
-    "vertex_ai_gemini_fenced_json_normalization_fix_confirmed_live"
+    "vertex_ai_gemini_fenced_json_normalization_fix_confirmed_live",
+    "cohere_native_clientv2_schema_projection_v3_confirmed_live_valid_judgment"
   ],
   "negative_results": [
     {
@@ -51,6 +54,11 @@
       "id": "cohere_compat_api_structured_output_not_honored",
       "summary": "Two bounded live calls through Cohere's OpenAI-compatibility endpoint (json_object-only, then full JSON Schema via response_format) both returned byte-identical malformed Cohere output (evidence_strength: 'unsupported'). Cohere is unsupported for the frozen panel under this access path. The implementation attempt is archived, not part of this branch's history.",
       "evidence": "reports/cohere_normalization_diagnostic_20260727T183000Z/diagnostic_record.json, reports/cohere_json_schema_confirmation_20260727T200000Z/confirmation_record.json, archive/cohere-compat-schema-failed-20260727 (0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2)"
+    },
+    {
+      "id": "cohere_native_clientv2_three_confirmations_rejected_each_on_a_different_field_then_resolved",
+      "summary": "The native Cohere ClientV2 transport had three authorized live confirmations rejected with 400 before producing any content, each naming a different field, before a fourth confirmation succeeded. Call 1 (unprojected schema): rejected, error capture truncated to HTTP headers only (fixed afterward: cohere_native._sanitized_error_message). Call 2 (schema projection v1, minimum/maximum removed): rejected again, fixed capture recovered the exact reason for the first time: '$id' schema-identity keyword unsupported. Call 3 (schema projection v2, $id additionally removed; request_hash be312ecf...): rejected a third time, on a new field: schema_version's 'const' declared without a required 'type' companion. Call 4 (schema projection v3, type: 'string' added to schema_version; request_hash f062ea28...): SUCCEEDED -- finish_reason COMPLETE, valid judgment generated and passed full canonical local validation. RESOLVED as of call 4; superseded by the positive result in validated_contributions.",
+      "evidence": "reports/cohere_native_v2_confirmation_20260727T210000Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/confirmation_record.json"
     }
   ],
   "experimental_components": [
@@ -60,9 +68,9 @@
     "counterfactual_benchmark collector (active engineering, canary stage)"
   ],
   "current_blockers": [
-    "No validated Cohere access path for the frozen four-provider panel. command-r-plus-08-2024 via Cohere's OpenAI-compatibility endpoint does not honor response_format (json_object or schema-constrained) on the frozen prompt; frozen counterfactual_provider_panel_v1 cannot currently pass a clean 4-provider canary."
+    "Native Cohere ClientV2 transport (schema projection v3) is live-confirmed working (request_hash f062ea28..., valid judgment, passed canonical local validation) but is NOT YET WIRED into dispatch.call_provider / the frozen collector -- it remains a standalone module invoked only by ad hoc confirmation scripts. This wiring (a deliberate, reviewed implementation task with open design questions -- see the wiring plan in the freeze doc) is now the sole blocker to a clean four-provider canary; the schema/transport question itself is resolved."
   ],
-  "next_action": "Implement and validate a native Cohere ClientV2 transport (distinct from the OpenAI-compatibility shim) in a separate, focused task: offline request-capture and schema tests first, then at most one bounded live confirmation call under explicit authorization. If it succeeds, run a clean four-provider canary. If it fails, freeze a new three-provider or replacement-provider panel version. Only then consider the bounded micro-pilot v2.",
+  "next_action": "Implement the native Cohere transport's wiring into dispatch.call_provider / the frozen collector per the 'Native Cohere collector-wiring plan' in docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md (not yet started). Once implemented and offline-tested, run a clean four-provider canary. Only then consider the bounded micro-pilot v2.",
   "do_not_do_yet": [
     "Do not run the 256-384 call bounded micro-pilot v2.",
     "Do not make any provider call without explicit, scoped, up-front authorization.",
@@ -70,7 +78,9 @@
     "Do not change production_config.py / the always-UHT default.",
     "Do not edit a frozen protocol artifact in place; add a new version instead.",
     "Do not run a real oracle-opportunity audit before the panel question is resolved.",
-    "Do not implement the native Cohere ClientV2 adapter in the same task that only reconciles Git/docs state."
+    "Do not claim the Cohere/frozen-panel question is fully resolved: the schema/transport works (live-confirmed), but the native transport is not yet wired into dispatch.call_provider/the collector, and no clean four-provider canary has been run under it.",
+    "Do not remove $schema without equivalent live evidence naming it.",
+    "Do not generalize the single ABSTAIN/confidence=0.0 confirmation judgment into any claim about Cohere's judgment quality."
   ],
   "provider_panel": [
     {
@@ -83,7 +93,7 @@
       "provider": "cohere",
       "model_id": "command-r-plus-08-2024",
       "role": "independent_command_family_judge",
-      "status": "blocked_schema_not_honored_via_compat_endpoint_fix_attempt_archived"
+      "status": "native_path_confirmed_working_not_yet_wired_into_collector"
     },
     {
       "provider": "fireworks",
@@ -103,7 +113,7 @@
   "protocol_versions": [
     {"name": "counterfactual_pairwise_judge_v1", "status": "frozen"},
     {"name": "counterfactual_pairwise_judgment_v1", "status": "frozen"},
-    {"name": "counterfactual_provider_panel_v1", "status": "frozen_currently_unsatisfiable_end_to_end"},
+    {"name": "counterfactual_provider_panel_v1", "status": "frozen_currently_unsatisfiable_end_to_end_pending_cohere_native_wiring"},
     {"name": "lexical_prior_pool_v1", "status": "frozen_superseded_for_new_work"},
     {"name": "lexical_prior_pool_v2", "status": "frozen_current"},
     {"name": "document_validity_v2", "status": "frozen_current"},
@@ -112,7 +122,11 @@
     {"name": "counterfactual_micro_pilot_v2", "status": "frozen_not_executed"},
     {"name": "counterfactual_collector_canary_v1", "status": "executed_local_evidence_instrumentation_only"},
     {"name": "counterfactual_collector_canary_v2", "status": "executed_local_evidence_conditional_pass"},
-    {"name": "cohere_json_schema_v1", "status": "implemented_offline_tested_live_confirmation_failed_archived_not_in_branch_history", "archive_ref": "archive/cohere-compat-schema-failed-20260727", "archive_commit": "0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2"}
+    {"name": "cohere_json_schema_v1", "status": "implemented_offline_tested_live_confirmation_failed_archived_not_in_branch_history", "archive_ref": "archive/cohere-compat-schema-failed-20260727", "archive_commit": "0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2"},
+    {"name": "cohere_native_v2_json_schema_v1", "status": "implemented_offline_tested_live_confirmed_working_4th_call_standalone_not_yet_wired_into_frozen_panel", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_native.py", "standalone_not_wired_into_frozen_panel": true},
+    {"name": "cohere_native_v2_schema_projection_v1", "status": "superseded_removed_minimum_maximum_only_confirmed_insufficient_alone_one_live_call_persisted_under_this_identity", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "confirmation_request_hash": "41f1de66736d8bb70410eefe0a59ad378b68fbc87c44bc00078fb71a5d19b302"},
+    {"name": "cohere_native_v2_schema_projection_v2", "status": "superseded_additionally_removed_id_confirmed_insufficient_alone_one_live_call_persisted_under_this_identity", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "projected_schema_sha256": "02870598a56c19838cb8eb8ca8ba5f9b864594cbf54e421e9d8ec8b548904917", "confirmation_request_hash": "be312ecf7ba089348ffa2e0a93d1e0f2155940f6721175d63f9de14e26aa6c78"},
+    {"name": "cohere_native_v2_schema_projection_v3", "status": "implemented_offline_tested_live_confirmed_working_current", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "projected_schema_sha256": "d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26", "confirmation_request_hash": "f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829"}
   ],
   "canonical_evidence": [
     "outputs/pub_vote_cmp_all4/paper_package/",
@@ -130,12 +144,19 @@
     "reports/counterfactual_collector_canary_v1_20260727T145126Z/",
     "reports/counterfactual_collector_canary_v2_20260727T161921Z/",
     "reports/cohere_normalization_diagnostic_20260727T183000Z/",
-    "reports/cohere_json_schema_confirmation_20260727T200000Z/"
+    "reports/cohere_json_schema_confirmation_20260727T200000Z/",
+    "reports/cohere_native_v2_confirmation_20260727T210000Z/",
+    "reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/",
+    "reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/",
+    "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/"
   ],
   "validation": {
-    "full_test_count": 969,
-    "skipped": 22,
-    "last_result": "969 passed, 22 skipped, 0 failed (pytest -q, this session, no source changes since documented_code_head)"
+    "full_test_count": 1038,
+    "skipped": 0,
+    "last_result": "1038 passed, 0 skipped, 0 failed (pytest -q)",
+    "verified_at_utc": "2026-07-28T03:14:55Z",
+    "verified_with": "pip install -e \".[dev,llm,exact]\" (installs cohere, openai, google-genai, PySCIPOpt in addition to the base+dev deps)",
+    "note": "Skip/fail counts here are environment-dependent, not a fixed repository property: exact-repair tests skip without PySCIPOpt installed, and provider-SDK-dependent tests (e.g. Cohere) fail outright (not skip) if their SDK is absent. Do not treat any single cached count as durable -- re-run `pytest -q` locally against the current HEAD before trusting a number, including this one."
   },
   "safety_branches": [
     "backup/pre-cohere-schema-enforcement-20260727",
@@ -147,7 +168,8 @@
     "backup/pre-provider-capability-audit-20260727",
     "backup/pre-driver-organization-20260727",
     "backup/pre-multifactor-eval-fix-20260726",
-    "backup/pre-polish-outcome-f-20260726"
+    "backup/pre-polish-outcome-f-20260726",
+    "backup/pre-native-cohere-clientv2-20260727"
   ],
   "archive_branches": [
     {

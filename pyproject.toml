@@ -54,6 +54,7 @@ notebook = [
 llm = [
     "openai>=1.60.0",
     "google-genai>=1.3.0",
+    "cohere>=5.0.0",
 ]
 # Exact MWFAS solver (free, open-source, no license required):
 # pip install "consistency-ranker[exact]"
