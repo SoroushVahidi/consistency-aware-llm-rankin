@@ -82,7 +82,16 @@ def bm25_scores(
             tf[term] += 1
         score = 0.0
         dl = doc_len[d] or 1
-        for term in set(q_terms):
+        # sorted(), not bare set() iteration: dict/set iteration order is not
+        # guaranteed stable across PYTHONHASHSEED values, and `score +=` is a
+        # floating-point accumulation, so an unsorted set iteration here
+        # produced tiny (~1e-15) run-to-run differences in bm25_scores that
+        # the regularized-aggregation optimizer (regularized_aggregation.py)
+        # is sensitive enough to amplify into visibly different rankings.
+        # This was invisible to the Copeland-extraction pilot (ties at that
+        # scale essentially never flip a sort order) but violates the
+        # determinism this module now needs to guarantee.
+        for term in sorted(set(q_terms)):
             if term not in tf:
                 continue
             n_q = df.get(term, 0)
