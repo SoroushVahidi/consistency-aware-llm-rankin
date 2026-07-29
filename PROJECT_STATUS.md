@@ -42,6 +42,7 @@ claims to describe the same thing.
 | Evidence-to-claim mapping | `papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv`, `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` | Correctly distinguishes canonical (`outputs/pub_vote_cmp_all4/`) from stale/`do_not_use` (`outputs/pub_vote_cmp_v2/`, `outputs/q1_journal_package/`) packages |
 | Manuscript status (readiness, drafting) | `papers/JDIQ_2026/CANONICAL_PAPER_STORY.md`, `papers/JDIQ_2026/CONTRIBUTION_AUDIT.md` | **Not** `papers/JDIQ_2026/PROJECT_STATUS_SUPERSEDED_20260712.md` (renamed 2026-07-28 from `PROJECT_STATUS.md` — it described 22%-readiness pre-writing state and is obsolete now the manuscript is a complete draft) |
 | Protocol freezes (counterfactual benchmark) | `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` | Frozen protocol identifiers and the Cohere investigation narrative |
+| Preserve-vs-repair research trajectory (revised direction for the mature graph-repair program) | `docs/research/RESEARCH_TRAJECTORY.md` | Narrative; see also `EXPERIMENT_ROADMAP.md`, `NOVELTY_AND_RELATED_WORK.md`, `DECISION_LOG.md`, `REPRODUCIBILITY_AND_ARTIFACTS.md`, `MANUSCRIPT_SUMMARY.md` in the same `docs/research/` directory, and `configs/preserve_repair_experiment_spec_v1.json` for the machine-readable spec |
 | Historical/superseded records | `docs/historical/`, and any file carrying a `SUPERSEDED` banner (e.g. `docs/THREATS_TO_VALIDITY.md`, `docs/RESULTS_AUDIT.md`, `docs/RESULTS_FOR_PAPER.md`, `docs/EVIDENCE_MAP.md`, `docs/SAFE_CLAIMS_FOR_PAPER.md`, `docs/revision_strategy.md`, `docs/Q1_POSITIONING_AND_CLAIMS.md`) | Kept for provenance; banner states the current replacement |
 
 If a document is not listed here and is not explicitly marked historical,
@@ -50,16 +51,75 @@ authoritative file for that concern.
 
 ## Repository purpose
 
-This repository has two distinct research programs sharing one codebase:
+This repository now spans three research threads sharing one codebase
+(this list itself was stale until 2026-07-28 — it previously said "two,"
+omitting the pivot below; corrected here rather than left inconsistent
+with the rest of this document):
 
-1. **Mature program (publication-ready):** preference-graph construction and
-   repair for retrieval ranking, using Minimum Weighted Feedback Arc Set
-   (MWFAS) optimization to resolve cyclic pairwise preferences. This is the
-   subject of the JDIQ 2026 manuscript (`papers/JDIQ_2026/`) and is
-   independent of the branch's current work.
-2. **Active program (this branch):** a real, qrels-grounded, multi-provider
-   LLM-judge counterfactual benchmark — currently in the engineering/canary
-   stage, not yet executed at benchmark scale.
+1. **Mature program (publication-ready, submitted with a revised research
+   question):** preference-graph construction and repair for retrieval
+   ranking, using Minimum Weighted Feedback Arc Set (MWFAS) optimization to
+   resolve cyclic pairwise preferences. Subject of the JDIQ 2026 manuscript
+   (`papers/JDIQ_2026/`), which reaches a settled negative/conditional
+   result (repair improves structure, not retrieval quality reliably). As
+   of 2026-07-28 this program has an actively-documented **revised
+   direction** — see "Preserve-vs-repair research trajectory" below — that
+   is a continuation of this program, not a separate one.
+2. **Counterfactual benchmark (paused, not abandoned):** a real,
+   qrels-grounded, multi-provider LLM-judge counterfactual benchmark —
+   engineering/canary stage, not yet executed at benchmark scale. See
+   "Consistency-aware pivot" below for why this is currently paused.
+3. **Consistency-aware active-acquisition / regularized-aggregation /
+   stopping-rule pivot (current branch focus):** see "Consistency-aware
+   pivot" section below. Independent of program 1's revised direction —
+   they share only a general theme (sparse/inconsistent LLM preference
+   evidence), not code or data.
+
+## Preserve-vs-repair research trajectory (2026-07-28) — revised direction for the mature program
+
+The JDIQ manuscript's settled null result (program 1 above: repair does
+not reliably move nDCG in aggregate, robustly, including under exact
+repair) motivates a narrower follow-on question, **not yet answered**:
+can a query's pre-repair graph properties predict whether repair will help
+or harm *that specific query*, even though the aggregate effect is null?
+Full narrative, evidence, and staged plan:
+`docs/research/RESEARCH_TRAJECTORY.md` (start here),
+`docs/research/EXPERIMENT_ROADMAP.md` (phased plan),
+`docs/research/NOVELTY_AND_RELATED_WORK.md`,
+`docs/research/DECISION_LOG.md`,
+`docs/research/REPRODUCIBILITY_AND_ARTIFACTS.md`,
+`docs/research/MANUSCRIPT_SUMMARY.md`.
+
+**Status as of this entry: Gate 0 only (diagnostic, not predictive) has
+been run, on already-existing data, with a real, honest, not-yet-passing
+result.** A new, tested, offline module
+(`src/consistency_ranker/repair_selector_mining/oracle_headroom.py` +
+`label_generation.py` + `grouped_splits.py`, 26 tests) computes whether
+enough per-query heterogeneity in the repair effect exists to justify
+predictive-model work at all. Run against four dataset slices of the
+already-committed `reports/candidate_pool_conditional_audit_20260714/tables/pool_robustness_paired_deltas.csv`
+(`reports/oracle_headroom_gate0_20260728T230000Z/`): **no slice cleared
+the pre-registered gate** — SciDocs failed cleanly, FiQA/HotpotQA/BRIGHT
+were ambiguous (small-sample CIs straddling the threshold, not "no
+effect"). The literal next step is widening this same offline analysis
+across the many already-existing but not-yet-checked regime/pool/pair
+slices in the same CSV (roadmap doc Phase 1) before deciding whether to
+proceed to feature/label/model work or to the negative-result fallback
+path. No predictive model has been trained; none should be described as
+working or even attempted yet.
+
+This is important context for **three prior, informal, independent
+attempts** at closely related questions already in this repository,
+surfaced honestly rather than left buried:
+`outputs/learned_selector/LEARNED_SELECTOR_REPORT.md` (fixed threshold
+beat learned models), `experiments/failure_class_audit_20260711_212157/phase_reports/FAILURE_PATTERN_PREDICTION_REPORT.md`
+(high ROC-AUC, low PR-AUC — inconclusive), and
+`src/consistency_ranker/repair_selector_mining/` (a considerably more
+rigorous pipeline, built in the JDIQ era, **never executed** — confirmed
+by `papers/JDIQ_2026/CONTRIBUTION_AUDIT.md` line 40). The revised
+direction's contribution is turning this pattern of ad hoc attempts into
+one pre-registered, properly-gated, negative-control-tested protocol — see
+the trajectory doc §2 for the full accounting.
 
 ## Scientific questions
 
@@ -337,6 +397,7 @@ src/consistency_ranker/
 | Offline active-acquisition (real oracle) | **Negative result, complete** | `scripts/run_offline_active_acquisition_pilot.py` |
 | Regularized Bradley-Terry aggregation (real oracle) | **Safety-dominant result, complete** | `scripts/run_regularized_aggregation_pilot.py` |
 | Risk-controlled stopping rule (real oracle) | **Complete, useful-but-incomplete** | `scripts/run_stopping_rule_pilot.py` |
+| Preserve-vs-repair oracle-headroom gate (real data, mature-program follow-on) | **Gate 0 run, not yet passed** | `scripts/run_oracle_headroom_analysis.py` |
 
 ## Current multi-provider benchmark direction
 
@@ -404,6 +465,7 @@ See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 - `reports/offline_active_acquisition_pilot_20260728T142414Z/` — real-oracle negative result (active pair-selection); tracked minus one regenerable raw log (`raw_trajectories.jsonl`, gitignored).
 - `reports/regularized_aggregation_pilot_20260728T164943Z/` — real-oracle safety-dominant result; tracked in full.
 - `reports/stopping_rule_pilot_20260728T190000Z/` — real-oracle stopping-rule pilot; tracked minus one regenerable raw log (`simulate/raw_stopping_histories.jsonl`, gitignored).
+- `reports/oracle_headroom_gate0_20260728T230000Z/` — preserve-vs-repair Gate-0 analysis on already-existing data; tracked in full (~90KB); no slice cleared the gate as of this run — see `docs/research/RESEARCH_TRAJECTORY.md`.
 
 **Valid local-only evidence (reproducible, not committed by policy):**
 - `reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/` — full corrected tree (compact summary above is committed).
