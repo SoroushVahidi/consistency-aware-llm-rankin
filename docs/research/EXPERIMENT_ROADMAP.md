@@ -58,7 +58,22 @@ Phase 1 happens).
 
 ---
 
-## Phase 1 — Widen the offline oracle-headroom sample (NEXT experiment; still no new judgments)
+> **SUPERSEDED, 2026-07-28.** Phase 1 as described below has effectively
+> been completed and superseded by a repository-scale version of the same
+> idea: `reports/repository_scale_headroom_analysis/` widened the sample
+> far beyond what Phase 1 proposed (122,203 rows / 419 distinct queries
+> across 76 source files, vs. the 4 slices / ~350 rows Phase 0 used) and
+> found the widened result does **not** clear the go/no-go gate — headroom
+> is real but ~8x below the manuscript's own detectability floor. See
+> `reports/repository_scale_headroom_analysis/research_decision.md` for
+> the full analysis and the resulting **NO-GO** recommendation. Phases 2–4
+> below are correspondingly not recommended to proceed for the whole-graph
+> formulation they describe; the roadmap's own Phase-7-D alternative
+> (component/edge-level reformulation) remains open and ungated. This
+> phase's original text is kept below for provenance of how the plan was
+> reasoned about before the wider analysis ran.
+
+## Phase 1 — Widen the offline oracle-headroom sample (SUPERSEDED — see note above)
 
 **Goal:** the Phase 0 result was `AMBIGUOUS` in 3/4 slices mostly because
 of small n (50–120 queries) relative to a small effect. Before concluding

@@ -23,6 +23,32 @@ with this document.*
 
 ---
 
+> **STATUS UPDATE, 2026-07-28 (repository-scale meta-analysis, same day as
+> the rest of this document): the recommendation below has changed to
+> NO-GO.** A comprehensive, offline, repository-scale re-analysis
+> (`reports/repository_scale_headroom_analysis/`, 122,203 rows unified from
+> 76 already-existing per-query source files across all 4 datasets) found
+> that oracle headroom, while statistically real (query-level 95% CI
+> [0.0020, 0.0030], n=419 distinct queries), is **~8x smaller** than the
+> manuscript's own Holm-adjusted 80%-power minimum-detectable-effect
+> (0.0207) — even a perfect oracle's average gain would be below what this
+> project's own methodology considers reliably distinguishable from noise.
+> Available pre-repair covariates (repair cost, SCC size, graph density,
+> cyclicity) show negligible univariate association with the repair effect
+> (all effect sizes far below conventional "small"). Combined with four
+> independent prior attempts (§2 below, plus this one) all landing on the
+> same conclusion, the recommendation is to **stop** the whole-graph,
+> aggregate-metric preserve-vs-repair predictive-model direction — see
+> `reports/repository_scale_headroom_analysis/research_decision.md` for
+> the full reasoning and `docs/research/DECISION_LOG.md` entry D6. The
+> rest of this document (§1–§11 below) is preserved as-written because it
+> accurately narrates how the project arrived at this question and why —
+> read it for that history — but its Phase 0 "next step" framing (§9, §10)
+> is superseded by the update above. Do not read §9/§10 as the current
+> recommendation without also reading the research-decision document.
+
+---
+
 ## 1. What the project originally attempted
 
 The mature research program in this repository (`src/consistency_ranker/`

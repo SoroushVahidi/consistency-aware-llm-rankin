@@ -79,34 +79,35 @@ with the rest of this document):
 
 The JDIQ manuscript's settled null result (program 1 above: repair does
 not reliably move nDCG in aggregate, robustly, including under exact
-repair) motivates a narrower follow-on question, **not yet answered**:
-can a query's pre-repair graph properties predict whether repair will help
-or harm *that specific query*, even though the aggregate effect is null?
-Full narrative, evidence, and staged plan:
-`docs/research/RESEARCH_TRAJECTORY.md` (start here),
-`docs/research/EXPERIMENT_ROADMAP.md` (phased plan),
-`docs/research/NOVELTY_AND_RELATED_WORK.md`,
-`docs/research/DECISION_LOG.md`,
+repair) motivated a narrower follow-on question: can a query's pre-repair
+graph properties predict whether repair will help or harm *that specific
+query*, even though the aggregate effect is null? Full narrative,
+evidence, and staged plan: `docs/research/RESEARCH_TRAJECTORY.md` (start
+here — includes a 2026-07-28 status update pointing at the answer below),
+`docs/research/EXPERIMENT_ROADMAP.md`, `docs/research/NOVELTY_AND_RELATED_WORK.md`,
+`docs/research/DECISION_LOG.md` (see entry D6),
 `docs/research/REPRODUCIBILITY_AND_ARTIFACTS.md`,
 `docs/research/MANUSCRIPT_SUMMARY.md`.
 
-**Status as of this entry: Gate 0 only (diagnostic, not predictive) has
-been run, on already-existing data, with a real, honest, not-yet-passing
-result.** A new, tested, offline module
-(`src/consistency_ranker/repair_selector_mining/oracle_headroom.py` +
-`label_generation.py` + `grouped_splits.py`, 26 tests) computes whether
-enough per-query heterogeneity in the repair effect exists to justify
-predictive-model work at all. Run against four dataset slices of the
-already-committed `reports/candidate_pool_conditional_audit_20260714/tables/pool_robustness_paired_deltas.csv`
-(`reports/oracle_headroom_gate0_20260728T230000Z/`): **no slice cleared
-the pre-registered gate** — SciDocs failed cleanly, FiQA/HotpotQA/BRIGHT
-were ambiguous (small-sample CIs straddling the threshold, not "no
-effect"). The literal next step is widening this same offline analysis
-across the many already-existing but not-yet-checked regime/pool/pair
-slices in the same CSV (roadmap doc Phase 1) before deciding whether to
-proceed to feature/label/model work or to the negative-result fallback
-path. No predictive model has been trained; none should be described as
-working or even attempted yet.
+**Status as of this entry: answered — NO-GO.** A small-scale Gate-0 pass
+(`reports/oracle_headroom_gate0_20260728T230000Z/`, 4 dataset slices) found
+no slice cleared the pre-registered threshold. A follow-up
+**repository-scale meta-analysis**
+(`reports/repository_scale_headroom_analysis/`, 122,203 rows unified from
+76 already-existing per-query source files, 419 distinct queries across
+all 4 datasets) widened this far beyond Phase 1's plan and reached a firm
+conclusion: oracle headroom is real (query-level 95% CI [0.0020, 0.0030])
+but **~8x smaller** than the manuscript's own Holm-adjusted 80%-power
+minimum-detectable-effect (0.0207) — the ceiling on what any predictive
+model could achieve is below this project's own noise floor. Every
+available pre-repair covariate shows negligible univariate association
+with the effect. **Recommendation: stop the whole-graph, aggregate-metric
+preserve-vs-repair predictive-model direction** — see
+`reports/repository_scale_headroom_analysis/research_decision.md` for the
+full reasoning. No predictive model was ever trained in this line of work;
+none should be described as working or planned going forward for this
+formulation. A component/edge-level reformulation remains a distinct,
+ungated, unevaluated question (not a continuation of this one).
 
 This is important context for **three prior, informal, independent
 attempts** at closely related questions already in this repository,
@@ -397,7 +398,7 @@ src/consistency_ranker/
 | Offline active-acquisition (real oracle) | **Negative result, complete** | `scripts/run_offline_active_acquisition_pilot.py` |
 | Regularized Bradley-Terry aggregation (real oracle) | **Safety-dominant result, complete** | `scripts/run_regularized_aggregation_pilot.py` |
 | Risk-controlled stopping rule (real oracle) | **Complete, useful-but-incomplete** | `scripts/run_stopping_rule_pilot.py` |
-| Preserve-vs-repair oracle-headroom gate (real data, mature-program follow-on) | **Gate 0 run, not yet passed** | `scripts/run_oracle_headroom_analysis.py` |
+| Preserve-vs-repair oracle-headroom gate (real data, mature-program follow-on) | **NO-GO — repository-scale analysis complete, direction stopped** | `scripts/run_oracle_headroom_analysis.py`, `scripts/run_repository_scale_headroom_analysis.py` |
 
 ## Current multi-provider benchmark direction
 
@@ -465,7 +466,8 @@ See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 - `reports/offline_active_acquisition_pilot_20260728T142414Z/` — real-oracle negative result (active pair-selection); tracked minus one regenerable raw log (`raw_trajectories.jsonl`, gitignored).
 - `reports/regularized_aggregation_pilot_20260728T164943Z/` — real-oracle safety-dominant result; tracked in full.
 - `reports/stopping_rule_pilot_20260728T190000Z/` — real-oracle stopping-rule pilot; tracked minus one regenerable raw log (`simulate/raw_stopping_histories.jsonl`, gitignored).
-- `reports/oracle_headroom_gate0_20260728T230000Z/` — preserve-vs-repair Gate-0 analysis on already-existing data; tracked in full (~90KB); no slice cleared the gate as of this run — see `docs/research/RESEARCH_TRAJECTORY.md`.
+- `reports/oracle_headroom_gate0_20260728T230000Z/` — preserve-vs-repair Gate-0 analysis on already-existing data (4 slices); tracked in full (~90KB); no slice cleared the gate.
+- `reports/repository_scale_headroom_analysis/` — repository-scale follow-up (122,203 rows, 76 source files, 419 distinct queries); tracked minus one regenerable raw file (`per_query_effects.csv`, ~38MB, gitignored). **Concludes NO-GO** on whole-graph preserve-vs-repair prediction — see `research_decision.md` in that directory.
 
 **Valid local-only evidence (reproducible, not committed by policy):**
 - `reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/` — full corrected tree (compact summary above is committed).

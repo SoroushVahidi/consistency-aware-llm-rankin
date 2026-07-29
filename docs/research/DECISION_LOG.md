@@ -134,3 +134,36 @@ from what these packages provide (e.g. a fundamentally different action
 space or cost model), a new module is justified — but the divergence
 should be stated explicitly in a new decision-log entry, not silently
 assumed.
+
+---
+
+### D6 — 2026-07-28: Stop the whole-graph preserve-vs-repair predictive-model direction (NO-GO)
+
+**Decision:** Following a repository-scale, offline meta-analysis
+(`reports/repository_scale_headroom_analysis/`, 122,203 rows unified from
+76 already-existing source files, 419 distinct queries), stop pursuing
+whole-graph, aggregate-metric preserve-vs-repair prediction. Do not
+proceed to `EXPERIMENT_ROADMAP.md` Phases 1–4 for this formulation.
+
+**Reasoning:** Query-level oracle headroom (0.0025, 95% CI [0.0020,
+0.0030]) is real but ~8x smaller than the manuscript's own Holm-adjusted
+80%-power minimum-detectable-effect (0.0207) — the ceiling on what any
+predictive model could achieve is below what this project's own
+methodology treats as distinguishable from noise. Every available
+pre-repair covariate (repair cost, SCC size, graph density, cyclicity)
+shows negligible univariate association with the effect (Pearson |r| <
+0.04, Cohen's d = 0.034 for cyclicity). Headroom is almost entirely
+explained by one already-known categorical variable (vote-construction
+regime: `ms1` >> `ms1_drop_mutual` > `ms2` ≈ 0), not a pattern requiring a
+learned model to discover. This converges with four independent prior
+attempts (D1's three informal attempts, plus this repository-scale one)
+all reaching the same conclusion by different routes.
+
+**What would change this:** A materially different reformulation — most
+plausibly component/edge-level rather than whole-graph effect prediction
+(§ Phase 7-D of `reports/repository_scale_headroom_analysis/research_decision.md`)
+— was not evaluated by this analysis and remains a genuinely open, separate
+question. It would need its own Gate-0-equivalent pass on new per-component
+outcome data (not currently available in any source table found) before
+any investment, and should not be used to justify resuming the
+now-closed whole-graph direction.
