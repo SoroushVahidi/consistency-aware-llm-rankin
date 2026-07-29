@@ -377,3 +377,12 @@ reports/policy_selection_20260726T030500Z/AUDIT_POLICY_GATE.md
 # recomputation. See docs/ARTIFACT_POLICY.md.
 reports/offline_active_acquisition_pilot_20260728T142414Z/raw_trajectories.jsonl
 reports/stopping_rule_pilot_20260728T190000Z/simulate/raw_stopping_histories.jsonl
+
+# repository_scale_headroom_analysis: per_query_effects.csv is a ~38MB
+# unification of 76 already-committed per-query CSVs -- fully regenerable
+# in ~40s by scripts/run_repository_scale_headroom_analysis.py from those
+# already-tracked inputs (or already-local JDIQ-era working directories
+# per docs/ARTIFACT_POLICY.md); the derived summary/decomposition tables
+# in the same directory are tracked and are what downstream analysis and
+# citations should reference.
+reports/repository_scale_headroom_analysis/per_query_effects.csv

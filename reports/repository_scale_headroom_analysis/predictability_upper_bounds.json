@@ -1,0 +1,52 @@
+[
+  {
+    "covariate": "repair_cost",
+    "n": 39175,
+    "pearson_r": 0.018393281790048146,
+    "pearson_p": 0.00027188264372899083,
+    "spearman_r": 0.013300596018345186,
+    "spearman_p": 0.008474000361334421,
+    "mutual_info": 0.10936001481386448
+  },
+  {
+    "covariate": "largest_scc_size",
+    "n": 31573,
+    "pearson_r": 0.025963037277705388,
+    "pearson_p": 3.951572027781186e-06,
+    "spearman_r": 0.03882381387136421,
+    "spearman_p": 5.169175057676754e-12,
+    "mutual_info": 0.08323247774529552
+  },
+  {
+    "covariate": "graph_density",
+    "n": 29220,
+    "pearson_r": 0.03947399475819166,
+    "pearson_p": 1.4787489976060078e-11,
+    "spearman_r": 0.04545454229722871,
+    "spearman_p": 7.6274026443233e-15,
+    "mutual_info": 0.06705921450138952
+  },
+  {
+    "covariate": "is_cyclic (ANOVA cyclic vs acyclic)",
+    "n": 41149,
+    "n_cyclic": 23070,
+    "n_acyclic": 18079,
+    "mean_delta_cyclic": 0.0012732053564761508,
+    "mean_delta_acyclic": 0.0,
+    "f_stat": 10.647369446307483,
+    "anova_p": 0.0011031740836605233,
+    "cohens_d": 0.03432022283465877
+  },
+  {
+    "covariate": "repair_algorithm (ANOVA across algorithms)",
+    "n": 122203,
+    "f_stat": 4.105618400098646,
+    "anova_p": 0.042743125987157564
+  },
+  {
+    "covariate": "dataset (ANOVA across datasets)",
+    "n": 122203,
+    "f_stat": 13.390857880974556,
+    "anova_p": 9.825152574778066e-09
+  }
+]
