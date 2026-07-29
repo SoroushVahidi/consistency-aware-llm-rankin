@@ -260,7 +260,22 @@ outcome, not a failure to hide.
 
 ---
 
-## Phase 4 — Generalization and the re-query extension (gated on Phase 3)
+## Phase 4 — Generalization and the re-query extension (SUPERSEDED — see note below)
+
+> **SUPERSEDED, 2026-07-28.** Per `docs/research/DECISION_LOG.md` entry
+> D6, re-querying as a third action (`{preserve, repair, requery}`) is
+> **not justified for the current whole-graph formulation**, independent
+> of whether Phases 2-3 would otherwise have been attempted: the repair
+> action's own oracle headroom (0.0025) is already far below this
+> project's minimum-detectable-effect threshold (0.0207), so acquiring
+> additional evidence specifically to sharpen the preserve-vs-repair
+> decision cannot be worth its cost — there is not enough headroom on the
+> table to justify spending anything to recover more of it. Re-query
+> would only become worth designing under a materially different
+> reformulation (e.g. component/edge-level intervention, or a different
+> downstream target) that first clears its own Gate-0-equivalent
+> oracle-headroom check. The text below is kept for provenance of the
+> original design thinking, not as a live plan.
 
 **Generalization:** leave-one-dataset-out, leave-one-regime-out (patterns
 above); leave-one-pool-construction-method-out if Phase 1's slice selection
