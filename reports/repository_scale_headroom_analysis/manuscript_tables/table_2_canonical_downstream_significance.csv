@@ -1,0 +1,6 @@
+family,holm_significant_cells,source
+"canonical, active ms1 only",0/20,papers/JDIQ_2026/manuscript/main.tex (finalized 2026-07-15)
+"canonical, full",0/60,papers/JDIQ_2026/manuscript/main.tex (finalized 2026-07-15)
+larger candidate pool (P>k),0/110,papers/JDIQ_2026/manuscript/main.tex (finalized 2026-07-15)
+"exact ILP repair, canonical",0/36,papers/JDIQ_2026/manuscript/main.tex (finalized 2026-07-15)
+"exact ILP repair, larger pool",0/56,papers/JDIQ_2026/manuscript/main.tex (finalized 2026-07-15)

@@ -1,0 +1,6 @@
+dataset,n_query_regime_rows,n_distinct_queries,n_regimes_present,n_repair_algorithms_present,n_source_families
+bright,18524,100,3,2,8
+fiqa,43430,120,3,2,8
+hotpotqa,17549,79,3,2,8
+scidocs,42700,120,3,2,7
+ALL (pooled),122203,419,3,2,8
