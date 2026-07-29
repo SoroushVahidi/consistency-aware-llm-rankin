@@ -1,0 +1,8 @@
+{
+  "seed": 42,
+  "n_train": 32,
+  "n_validation": 10,
+  "n_test": 10,
+  "n_total": 52,
+  "n_unassigned": 0
+}

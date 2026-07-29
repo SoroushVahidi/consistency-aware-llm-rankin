@@ -1,0 +1,51 @@
+{
+  "decision": {
+    "decision": "AMBIGUOUS_NEED_MORE_DATA",
+    "headroom_threshold": 0.01,
+    "min_heterogeneity_fraction": 0.05,
+    "rationale": "Headroom CI [0.005503308218375989, 0.01672804161891051] straddles the threshold (0.01000) or heterogeneity is one-sided (benefit=38.0%, harm=26.0%, need >= 5.0% each). Do not commit to either path; expand the query sample (e.g. additional regimes/pools/datasets already on disk) before deciding."
+  },
+  "filters": {
+    "dataset": "bright",
+    "pair_name": "copeland_graph",
+    "pool_id": "rrf_union_topk",
+    "regime": "ms1"
+  },
+  "input_csv": "/home/soroush/consistency-aware-llm-rankin/reports/candidate_pool_conditional_audit_20260714/tables/pool_robustness_paired_deltas.csv",
+  "input_csv_sha256": "bfe1c7cd5fa24ed8638e7c8a6a33e755b6786c92c21440c7e511963773dd0c94",
+  "result": {
+    "always_preserve_is_safer_default": true,
+    "delta_summary": {
+      "mean": -0.014041497577935984,
+      "median": 0.0,
+      "n": 50,
+      "nonzero_count": 32,
+      "nonzero_fraction": 0.64,
+      "observed_standardized_effect": -0.16745378202124211,
+      "q05": -0.15310814893061933,
+      "q25": -0.00371062287728699,
+      "q75": 0.015047815391424399,
+      "q95": 0.06090849466252464,
+      "se": 0.011858601263617334,
+      "std": 0.08385297368891179
+    },
+    "frac_benefit_from_repair": 0.38,
+    "frac_harmed_by_repair": 0.26,
+    "frac_neutral_exact": 0.36,
+    "headroom_ci": {
+      "frac_gt_zero": 1.0,
+      "lower": 0.005503308218375989,
+      "method": "percentile",
+      "reps": 10000,
+      "seed": 13,
+      "upper": 0.01672804161891051
+    },
+    "headroom_vs_best_baseline": 0.010633020863398901,
+    "mean_oracle": 0.6568827291038544,
+    "mean_preserve": 0.6462497082404555,
+    "mean_regret_always_preserve": 0.010633020863398776,
+    "mean_regret_always_repair": 0.024674518441334767,
+    "mean_repair": 0.6322082106625195,
+    "n_queries": 50
+  }
+}
