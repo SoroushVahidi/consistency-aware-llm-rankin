@@ -44,11 +44,20 @@ fas_balance_score_sum_borda_hybrid_ranking:
 hybrid_rrf_fas_regularized_ranking:
     Baseline hybrid variant that combines normalized original score prior with
     normalized repaired-graph balance regularizer.
+
+hodge_rank_ranking:
+    Combinatorial HodgeRank (Jiang, Lim, Yao & Ye, 2011): least-squares
+    potential recovered from the pairwise comparison "flow" via the graph
+    Laplacian pseudo-inverse. Works on cyclic graphs directly (no repair
+    needed) -- the residual after removing the gradient component is the
+    curl/harmonic ("locally inconsistent") part, which this function does
+    not need to return since only the ranking is required here.
 """
 
 from __future__ import annotations
 
 import networkx as nx
+import numpy as np
 
 
 def _normalize_scores(scores: dict[str, float]) -> dict[str, float]:
@@ -505,4 +514,51 @@ def rank_centrality_ranking(
 ) -> list[str]:
     """Rank items by RankCentrality stationary probability, best first."""
     scores = rank_centrality_scores(graph, max_iter=max_iter, tol=tol)
+    return sorted(scores, key=lambda n: (-scores[n], n))
+
+
+def hodge_rank_scores(graph: nx.DiGraph) -> dict[str, float]:
+    """Combinatorial HodgeRank potential per node (Jiang, Lim, Yao & Ye, 2011).
+
+    For each edge u -> v (u beats v) with weight w, the pairwise comparison
+    flow is Y[u, v] = +w, Y[v, u] = -w (0 where no edge exists in either
+    direction; summed across both directions for genuine mutual pairs). The
+    potential s is the least-squares gradient of this flow: it minimizes
+    ``sum_{(u,v)} sym_w(u,v) * (s[u] - s[v] - Y[u,v])**2`` over all node
+    pairs with any observed comparison, which reduces to the linear system
+    ``L @ s = b`` where ``L`` is the sym_w-weighted graph Laplacian and
+    ``b[u] = sum_v sym_w(u,v) * Y[u,v]`` (the weighted flow divergence at
+    u). ``L`` is singular (constant-vector null space per connected
+    component), so the minimum-norm solution (Moore-Penrose pseudo-inverse)
+    is used -- this is exactly the gradient/consistent component of the
+    Hodge (Helmholtz) decomposition; the curl/harmonic residual is not
+    computed since only the ranking is needed here.
+
+    Works directly on cyclic graphs (no repair needed): unlike
+    :func:`topological_ranking`, this never raises on a cycle.
+    """
+    nodes = list(graph.nodes())
+    n = len(nodes)
+    if n < 2:
+        return {node: 0.0 for node in nodes}
+    idx = {node: i for i, node in enumerate(nodes)}
+    sym_w = np.zeros((n, n))
+    flow = np.zeros((n, n))
+    for u, v, data in graph.edges(data=True):
+        w = float(data.get("weight", 1.0))
+        i, j = idx[u], idx[v]
+        sym_w[i, j] += w
+        sym_w[j, i] += w
+        flow[i, j] += w
+        flow[j, i] -= w
+    degree = sym_w.sum(axis=1)
+    laplacian = np.diag(degree) - sym_w
+    b = (sym_w * flow).sum(axis=1)
+    potentials = np.linalg.pinv(laplacian) @ b
+    return {nodes[i]: float(potentials[i]) for i in range(n)}
+
+
+def hodge_rank_ranking(graph: nx.DiGraph) -> list[str]:
+    """Rank items by combinatorial HodgeRank potential, best (highest) first."""
+    scores = hodge_rank_scores(graph)
     return sorted(scores, key=lambda n: (-scores[n], n))
