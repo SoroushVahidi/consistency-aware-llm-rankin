@@ -1,0 +1,23 @@
+{
+  "_comment": "Frozen config for the real-LLM multi-provider preference-graph pilot. See docs/research/EXPERIMENT_ROADMAP.md and scripts/run_multi_provider_repair_pilot.py.",
+  "datasets": ["scidocs", "fiqa"],
+  "n_queries_per_dataset": 3,
+  "pool_size": 6,
+  "seed": 42,
+  "providers": ["azure", "gemini", "cohere", "fireworks"],
+  "repair_methods": ["greedy", "exact"],
+  "primary_repair_method": "greedy",
+  "prompt_template_path": "prompts/pairwise_comparison.txt",
+  "ndcg_k": 10,
+  "debias_position": true,
+  "smoke_datasets": ["scidocs"],
+  "smoke_n_queries_per_dataset": 1,
+  "smoke_pool_size": 3,
+  "repo_scale_comparison": {
+    "classical_graph_oracle_headroom": 0.0025078,
+    "classical_graph_oracle_headroom_ci": [0.0020411, 0.0030189],
+    "classical_graph_n_queries": 419,
+    "minimum_meaningful_effect_mde": 0.0207,
+    "source": "reports/repository_scale_headroom_analysis/summary.json and papers/JDIQ_2026/manuscript/main.tex lines 429-430"
+  }
+}
