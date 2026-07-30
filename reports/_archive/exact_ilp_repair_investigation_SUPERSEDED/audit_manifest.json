@@ -1,0 +1,54 @@
+{
+  "investigation": "exact_ilp_repair_investigation",
+  "created_utc": "2026-07-13T23:26:13.764884Z",
+  "repo_root": "/home/soroush/consistency-aware-llm-rankin",
+  "branch": "main",
+  "head_commit": "873fa3199432ab27c738fb1ffccb86385adfaa25",
+  "head_subject": "Release calibrated JDIQ manuscript PDF",
+  "head_date": "2026-07-13 15:02:33 -0400",
+  "remote_origin": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git",
+  "python_executable": "/home/soroush/consistency-aware-llm-rankin/.venv/bin/python",
+  "python_version": "3.12.3",
+  "gurobipy_installed": false,
+  "gurobi_cl_on_path": false,
+  "gurobi_license_file_found": false,
+  "cpu": "Intel i7-12700K, 20 logical CPUs",
+  "ram_total_gib": 62,
+  "disk_free_gb_root": 426,
+  "canonical_manuscript": "papers/JDIQ_2026/manuscript/main.tex",
+  "canonical_outputs_dir": "reports/full_calibrated_core/outputs/calibrated_all4/",
+  "primary_protocol_dir": "reports/full_calibrated_core/outputs/calibrated_all4/protocol_runs/primary_minmax_retention_matched/",
+  "canonical_repair_method": "greedy cycle-peeling (src/consistency_ranker/greedy_fas.py)",
+  "graph_sizes_ms1": {
+    "bright": {
+      "n_nodes": 20,
+      "n_queries": 50
+    },
+    "fiqa": {
+      "n_nodes": 20,
+      "n_queries": 120
+    },
+    "scidocs": {
+      "n_nodes": 20,
+      "n_queries": 120
+    },
+    "hotpotqa": {
+      "n_nodes": 10,
+      "n_queries": 52
+    }
+  },
+  "ilp_formulation": {
+    "source": "src/consistency_ranker/mwfas_solver.py::_solve_ilp",
+    "variables": "n*(n-1) binary 'before' vars",
+    "constraints": "C(n,2) antisymmetry + 2*C(n,3) transitivity",
+    "at_n_20": {
+      "variables": 380,
+      "constraints": 2470
+    },
+    "at_n_10": {
+      "variables": 90,
+      "constraints": 285
+    }
+  },
+  "status": "BLOCKED at Phase 1 - Gurobi not installed/licensed on this machine; awaiting user decision on path forward"
+}
