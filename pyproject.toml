@@ -45,7 +45,12 @@ bm25 = [
     "rank-bm25>=0.2.2",
 ]
 dense = [
-    "sentence-transformers>=2.2.0",
+    # NOTE: sentence-transformers is already an unconditional core dependency
+    # (>=5.3.0 above) as of this repository's current state; this extra's
+    # floor is kept aligned with that (not left at the historical >=2.2.0,
+    # which conflicted with the core requirement and was never actually
+    # installable as a looser version once the core deps were resolved).
+    "sentence-transformers>=5.3.0",
 ]
 notebook = [
     "jupyter>=1.0",
@@ -58,8 +63,15 @@ llm = [
 ]
 # Exact MWFAS solver (free, open-source, no license required):
 # pip install "consistency-ranker[exact]"
+# Pinned to the EXACT version every tracked exact-repair canonical result
+# (reports/exact_open_source_ilp_repair_investigation/,
+# reports/final_revision_task4_exact_baseline_fairness_20260715/) was
+# generated with -- recovered 2026-07-30 (repo Stage 4) from 3 independent
+# ENVIRONMENT_pip_freeze.txt files. See
+# src/consistency_ranker/mwfas_solver.py's verify_canonical_solver_version()
+# for a runtime check with a documented override for exploratory use.
 exact = [
-    "PySCIPOpt>=6.2.1",
+    "PySCIPOpt==6.2.1",
 ]
 
 [project.scripts]

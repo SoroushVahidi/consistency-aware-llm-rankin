@@ -58,6 +58,65 @@ _SCIP_INSTALL_HINT = (
 _ABS_TOL = 1e-6
 _REL_TOL = 1e-6
 
+# The exact PySCIPOpt version every currently-committed exact-repair canonical
+# result (reports/exact_open_source_ilp_repair_investigation/,
+# reports/final_revision_task4_exact_baseline_fairness_20260715/, and the
+# repo's own tracked .venv) was generated with -- recovered 2026-07-30 (repo
+# Stage 4) from 3 independent ENVIRONMENT_pip_freeze.txt files plus
+# COMMANDS_EXECUTED.md, matching docs/REPRODUCTION_CANONICAL.md's own
+# narrative claim exactly. SCIP is a MILP solver; presolve/heuristic/cut
+# selection can change across versions in ways that alter which optimal
+# solution is returned when multiple exist (though not whether it is
+# optimal) -- so canonical reproduction should use exactly this version,
+# not merely "some version >= 6.2.1".
+CANONICAL_PYSCIPOPT_VERSION = "6.2.1"
+
+
+class UnsupportedSolverVersionError(RuntimeError):
+    """Raised by :func:`verify_canonical_solver_version` when PySCIPOpt is
+    missing or does not match :data:`CANONICAL_PYSCIPOPT_VERSION`, and no
+    override was requested."""
+
+
+def verify_canonical_solver_version(*, allow_mismatch: bool = False) -> str:
+    """Fail loudly (by default) if PySCIPOpt is absent or not the exact
+    version every tracked exact-repair result was generated with.
+
+    Call this at the start of any canonical-reproduction workflow that will
+    compare its output against a committed exact-repair report. Pass
+    ``allow_mismatch=True`` (documented override) for exploratory use where
+    an approximate/newer solver is acceptable and the caller understands the
+    result may not byte-match the committed canonical output.
+
+    Returns the installed version string on success.
+    """
+    try:
+        import pyscipopt
+    except ImportError as exc:
+        if allow_mismatch:
+            return "NOT_INSTALLED"
+        raise UnsupportedSolverVersionError(
+            f"PySCIPOpt is not installed. Canonical exact-repair reproduction requires "
+            f"exactly PySCIPOpt=={CANONICAL_PYSCIPOPT_VERSION} (the version every tracked "
+            f"exact-repair result was generated with). {_SCIP_INSTALL_HINT} "
+            "If you understand the risk and want to proceed with a different/no solver "
+            "for exploratory purposes only, pass allow_mismatch=True."
+        ) from exc
+
+    installed = getattr(pyscipopt, "__version__", "unknown")
+    if installed != CANONICAL_PYSCIPOPT_VERSION and not allow_mismatch:
+        raise UnsupportedSolverVersionError(
+            f"PySCIPOpt {installed} is installed, but canonical exact-repair reproduction "
+            f"requires exactly {CANONICAL_PYSCIPOPT_VERSION} (the version every tracked "
+            "exact-repair result was generated with -- a different version may return a "
+            "different (still optimal, but not necessarily identical) solution when ties "
+            "exist, so outputs may not byte-match the committed canonical results). "
+            f"Install the exact version with: "
+            f"pip install PySCIPOpt=={CANONICAL_PYSCIPOPT_VERSION}. "
+            "Pass allow_mismatch=True to proceed anyway for exploratory use."
+        )
+    return installed
+
 
 @dataclass
 class SolveStatus:
