@@ -1,0 +1,25 @@
+{
+  "n_rows": 120,
+  "n_clusters": 6,
+  "cluster_ids": [
+    "0674058618d04def58c79a0b28174301ef591433",
+    "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+    "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+    "11039",
+    "2377",
+    "4002"
+  ],
+  "cluster_means": [
+    -0.0009075837877234871,
+    -0.0006909085166115214,
+    -0.0020885144113247044,
+    -0.0010644473181033675,
+    -0.0005338774412764147,
+    -0.0002688198763849181
+  ],
+  "mean_of_cluster_means": -0.0009256918919040689,
+  "cluster_bootstrap_ci_lower": -0.0014257960849942363,
+  "cluster_bootstrap_ci_upper": -0.0005240404573134692,
+  "cluster_bootstrap_frac_gt_zero": 0.0,
+  "exact_sign_flip_pvalue": 0.03125
+}

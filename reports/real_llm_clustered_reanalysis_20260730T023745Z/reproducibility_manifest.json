@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "generated_utc": "2026-07-30T23:39:38.681247+00:00",
+  "generator_script": "scripts/run_real_llm_clustered_reanalysis.py",
+  "git": {
+    "commit": "8761004cb5749db515a5de9f7fc5fb14c7ee4de3",
+    "dirty": true
+  },
+  "python_version": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+  "dependency_versions": {
+    "numpy": "2.5.1",
+    "scipy": "1.18.0",
+    "pandas": "3.0.3",
+    "scikit-learn": "1.9.0",
+    "networkx": "3.6.1"
+  },
+  "solver_version": "6.2.1",
+  "seeds": {
+    "bootstrap_seed": 13
+  },
+  "independence_cluster_count": 6,
+  "config": {
+    "bootstrap_replicates": 10000,
+    "ci_method": "percentile, cluster (block) bootstrap over query_id clusters",
+    "paired_test_method": "exact sign-flip permutation (2**n_clusters enumeration) for mean deltas; exact permutation (n_clusters! enumeration, n<=8) for correlations",
+    "multiple_comparison_correction": "Holm step-down"
+  },
+  "input_file_hashes": {
+    "reports/repair_frontier_20260729T144742Z/ENVIRONMENT_pip_freeze.txt": "098124f9e790cefb88634383ae6acc4c27be76a61bfafc2364b75574c9a7156f",
+    "reports/repair_frontier_20260729T144742Z/FINAL_REPORT.md": "d65dbf64f40d233405c3487e4e2c172419bd92048c818ac0f739f756479f6aff",
+    "reports/repair_frontier_20260729T144742Z/FINAL_SUMMARY.json": "024858ad51d2d84b9c1d719c3613f720645c7c750f06f3195da4b45a65e77cc6",
+    "reports/repair_frontier_20260729T144742Z/RUN_CONFIG.json": "68dd215b4f41dce0537652fa187f683f4915f3ca5a8b30d57e0c8c417d67e524",
+    "reports/repair_frontier_20260729T144742Z/STATUS.md": "063ed724576c853f64efc75d6807a750014fcf596e6f84abe05dd752a29aee05",
+    "reports/repair_frontier_20260729T144742Z/checkpoint/frontier_results.jsonl": "f92cd1da9d801a7bfbd353845ad3936229e3d77445941d764dcae9ee356d54ea",
+    "reports/repair_frontier_20260729T144742Z/checkpoint/progress.json": "3c9b871c0a65309d03b1b93a6ad3a0c94340417fb9180dadca04222d55bab82d",
+    "reports/repair_frontier_20260729T144742Z/discovery/FRONTIER_ORACLE_HEADROOM.json": "866f5b29beb11a8387e6bfe42f36db86cd35fc12330f552a3a20cc9aa13a705e",
+    "reports/repair_frontier_20260729T144742Z/discovery/oracle_best_method_per_query.jsonl": "ab65411ccf7c6245204f211cd13fa99bac7c6ab6169dfa3b163dee74246e202c",
+    "reports/repair_frontier_20260729T144742Z/failures.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/repair_frontier_20260729T144742Z/feature_rows.jsonl": "c7826b47e2d5336565421cc4c29384cc546e8b224f97589a6e7497c3776acda8",
+    "reports/repair_frontier_20260729T144742Z/logs/run_1785336466.log": "f75f7ff5edff29fc51367062e15f5710a0fa9d9b7f4f61bd42f1fb30b789c415",
+    "reports/repair_frontier_20260729T144742Z/runtime_stats.json": "eeb0cdb252c3874bd523fe287380cbe038bb4d9f146ba86648fa173005df5a74",
+    "reports/repair_frontier_20260729T144742Z/scc_decisions.jsonl": "43121fe8087cdf00f992d18078bafbdc4c269bc55cdb9705641ad565b65069bb",
+    "reports/repair_frontier_20260729T144742Z/selection/STAGE_SELECTION.json": "4b1a119ee2d1f4d4abb44f0651b1bf52b1eb91a2950623e25ce3b47457873182",
+    "reports/repair_frontier_20260729T144742Z/sensitivity/SENSITIVITY_TABLES.csv": "e1989b6b92e2982fb9430145ec4fad67bc95721ddf40dfef9f3a8af5ee028228",
+    "reports/extraction_study_20260729T151610Z/FINAL_REPORT.md": "28a9a2468148705af1d7af9b52b5911307b1dfe3c48a71430aa5f4cd798f9e5d",
+    "reports/extraction_study_20260729T151610Z/FINAL_SUMMARY.json": "938fe69703da91d8e264f4af51d5a9493013fe0de1f0ce12d4a6b4f73c38954f",
+    "reports/extraction_study_20260729T151610Z/RUN_CONFIG.json": "f74d91fdf7ab0583da01ea86a4c5e66ad2a611359b74b6bc592879408598034b",
+    "reports/extraction_study_20260729T151610Z/STATUS.md": "ccba3db4eb13e0948175bda16a0f1af69d9c13f9cbb8489ca3a1b74fa2606b04",
+    "reports/extraction_study_20260729T151610Z/extraction_results.jsonl": "b89c752e9c23c067a0558de12a3bfc5a8ff524ec17898045ba80149f90b20d9b",
+    "reports/extraction_study_20260729T151610Z/failures.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/extraction_study_20260729T151610Z/logs/run_1785338174.log": "cb3da8002a9e39f58fd1eb822e97a62f9cbd99fffa6f93c338e0fdd46ae50c48",
+    "reports/extraction_study_20260729T151610Z/tables/BREAKDOWN_TABLES.csv": "17b020bc1f332305cad023aa93e8089e322bd677b9dd65ad05b2e935759e5a61",
+    "reports/extraction_study_20260729T151610Z/tables/EXTRACTOR_SUMMARY.csv": "6c2fa1438a640cf8930fe6bb2f144b89e6e628f830183f007d1dd8670e48d921",
+    "reports/repair_diagnostic_20260729T162748Z/FINAL_REPORT.md": "2ca403f723a57af1116933a7e19355bc6cbb178a5fa96fcd32c151743e9dc1d6",
+    "reports/repair_diagnostic_20260729T162748Z/FINAL_SUMMARY.json": "77ef18e48741f46874076e25d56dafe0db156791aedfcb43bc460767a3bbff0b",
+    "reports/repair_diagnostic_20260729T162748Z/RUN_CONFIG.json": "79937284a818a6025d817aca57e0bd7760dcf7f659af5da97017b43d8f5b0cf3",
+    "reports/repair_diagnostic_20260729T162748Z/STATUS.md": "ce7edc0edc0294f7d19b0b54761a527581b4d9c4c112bd72606912aaf3fa5b5e",
+    "reports/repair_diagnostic_20260729T162748Z/diagnostic_results.jsonl": "0b86479f17d88a25de6124cc5351ce713e11cb273a41a173320a45b4994422eb",
+    "reports/repair_diagnostic_20260729T162748Z/failures.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reports/repair_diagnostic_20260729T162748Z/logs/run_1785342476.log": "f440d1a7358cdcc73585ff54cab83d48b51aeaac2d5d843d042b25dbafce9b75",
+    "reports/repair_diagnostic_20260729T162748Z/tables/FEATURE_ASSOCIATIONS.csv": "c539a10bf771e2ef0299240ba8263e7150d60c334400e54f3a7349346477d580",
+    "reports/repair_diagnostic_20260729T162748Z/tables/FEATURE_STABILITY.csv": "5d433d5fdb75fdf1c71b0bbd0752b44f9eeb4297a72e6179aae14ce61e1cc3da"
+  },
+  "output_file_hashes": {
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/analysis_population_manifest.csv": "5f596d85c1e43afbc0bd6cd553dd502c8023148444bd57ccd5f0603deb0de3cc",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/query_level_aggregates.csv": "5e758d4a78813359a578556e03d9a9c325ed2aef7c2ad6bd922c54d384503698",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/repair_frontier_clustered_results.csv": "bdb1f01fd00657bff6afb1aba4d1d8dd9c50f6fbb9fd28b520137ba9e3876bdb",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/extraction_clustered_results.csv": "581871b9f4b10d240c5f296cf0fc422cb5b308901431e9b2065d57391cef5523",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/repair_diagnostic_clustered_results.csv": "67dc2cac39fffdf6855f65a097fd8200082faffca2efac545a1d5a016b32ded8",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/multiple_comparison_families.csv": "9d90c4fad392d428cfe67ce63aaa4189cfac86419e19c806c0021e7c0f251991",
+    "/tmp/claude-1000/-home-soroush-consistency-aware-llm-rankin/fa2cfcde-6bc7-4892-a18f-f89c780246fe/scratchpad/manifest_regen_test/per_query_effects.csv": "bdf3dad11b294e9e8f80e60a353c6b7101ea72008dadb4a638f6e04f2eb03a0e"
+  },
+  "extra": {
+    "population_summary": {
+      "by_study": {
+        "extraction_study": {
+          "n_rows": 120,
+          "n_unique_queries": 6,
+          "n_providers": 5,
+          "n_construction_variants": 4,
+          "rows_per_query_min": 20,
+          "rows_per_query_max": 20
+        },
+        "repair_diagnostic": {
+          "n_rows": 120,
+          "n_unique_queries": 6,
+          "n_providers": 5,
+          "n_construction_variants": 4,
+          "rows_per_query_min": 20,
+          "rows_per_query_max": 20
+        },
+        "repair_frontier": {
+          "n_rows": 432,
+          "n_unique_queries": 6,
+          "n_providers": 5,
+          "n_construction_variants": 4,
+          "rows_per_query_min": 55,
+          "rows_per_query_max": 95
+        }
+      },
+      "total_rows": 672,
+      "total_unique_queries_overall": 6,
+      "queries_shared_across_all_three_studies": [
+        "0674058618d04def58c79a0b28174301ef591433",
+        "11039",
+        "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+        "2377",
+        "4002",
+        "9700939818a450d1bff3a3a29d71ef116d3a6a12"
+      ],
+      "n_queries_shared_across_all_three_studies": 6
+    },
+    "no_external_api_calls": true,
+    "no_new_judgments_collected": true,
+    "no_new_providers_queries_repair_methods_or_extractors_added": true
+  }
+}

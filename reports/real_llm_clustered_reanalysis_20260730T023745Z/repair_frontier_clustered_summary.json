@@ -1,0 +1,83 @@
+{
+  "oracle_full_frontier_upper_bound": {
+    "n_rows": 120,
+    "n_clusters": 6,
+    "cluster_ids": [
+      "0674058618d04def58c79a0b28174301ef591433",
+      "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "11039",
+      "2377",
+      "4002"
+    ],
+    "cluster_means": [
+      0.003374233797374104,
+      0.0005196887406423767,
+      0.02348777076814349,
+      0.0015447341784360301,
+      0.0018484917442162518,
+      0.001436444807117837
+    ],
+    "mean_of_cluster_means": 0.0053685606726550155,
+    "cluster_bootstrap_ci_lower": 0.0012356303982484836,
+    "cluster_bootstrap_ci_upper": 0.012700954431110535,
+    "cluster_bootstrap_frac_gt_zero": 1.0,
+    "exact_sign_flip_pvalue": 0.03125,
+    "exact_sign_flip_n_patterns": 64,
+    "is_upper_bound_diagnostic_not_deployable": true
+  },
+  "whole_graph_repair": {
+    "n_rows": 120,
+    "n_clusters": 6,
+    "cluster_ids": [
+      "0674058618d04def58c79a0b28174301ef591433",
+      "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "11039",
+      "2377",
+      "4002"
+    ],
+    "cluster_means": [
+      -0.0009075837877234871,
+      0.0005196887406423767,
+      0.0030301251513551062,
+      -0.0010644473181033675,
+      -0.0001966350081291368,
+      -0.0002688198763849181
+    ],
+    "mean_of_cluster_means": 0.0001853879836094289,
+    "cluster_bootstrap_ci_lower": -0.0007219928764558032,
+    "cluster_bootstrap_ci_upper": 0.001404714260237021,
+    "cluster_bootstrap_frac_gt_zero": 0.6185,
+    "exact_sign_flip_pvalue": 0.875,
+    "exact_sign_flip_n_patterns": 64,
+    "is_upper_bound_diagnostic_not_deployable": false
+  },
+  "best_alt_extraction": {
+    "n_rows": 120,
+    "n_clusters": 6,
+    "cluster_ids": [
+      "0674058618d04def58c79a0b28174301ef591433",
+      "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "11039",
+      "2377",
+      "4002"
+    ],
+    "cluster_means": [
+      0.003374233797374104,
+      -0.0012954788348045975,
+      0.022060498239777626,
+      0.0015447341784360301,
+      0.0018484917442162518,
+      0.001436444807117837
+    ],
+    "mean_of_cluster_means": 0.004828153988686208,
+    "cluster_bootstrap_ci_lower": 0.0004621223073824001,
+    "cluster_bootstrap_ci_upper": 0.01190386873103357,
+    "cluster_bootstrap_frac_gt_zero": 0.9968,
+    "exact_sign_flip_pvalue": 0.0625,
+    "exact_sign_flip_n_patterns": 64,
+    "is_upper_bound_diagnostic_not_deployable": false
+  }
+}
