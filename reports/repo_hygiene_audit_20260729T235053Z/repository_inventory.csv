@@ -1,0 +1,823 @@
+path,file_type,size_bytes,tracked_status,last_git_modification,classification,canonical_status,dependency_notes,recommended_action,confidence
+0706C337-D693-4E53-A51D-87B7D8AD0FA5.png,image,1415539,tracked,2026-07-14,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+74556F5F-D495-41DF-9EDE-203C4CD1008A.png,image,1116727,tracked,2026-07-14,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+CD2E2086-A0D6-46EC-BD96-2B6F2CF1A432.png,image,1046164,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+FC0356B8-3DD3-4014-8903-4368933D867D.png,image,1330215,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5259.png,image,1575108,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5260.png,image,155088,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5261.png,image,118213,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5265.png,image,285903,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5268.png,image,185465,tracked,2026-07-12,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+IMG_5280.png,image,130363,tracked,2026-07-13,unclear and requiring review,no,No reference found in *.py/*.tex/*.md; appears to be an ad hoc screenshot/asset dropped at repo root,move to docs/assets/legacy_screenshots/ or delete after manual confirmation none are cited in a figure/manuscript,medium
+failure_taxonomy_distribution_uniform.pdf,figure(pdf),17286,tracked,2026-07-13,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+fig_mean_ndcg_hybrids_clean.pdf,figure(pdf),21772,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure1_preference_graph_pipeline.pdf,figure(pdf),255470,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure2_graph_inconsistency_by_regime.pdf,figure(pdf),395174,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure3_structural_quality_improvement_ms1.pdf,figure(pdf),210755,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure4_repair_effect_forest_final.pdf,figure(pdf),29848,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure5_dataset_comparison.pdf,figure(pdf),19625,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+figure6_failure_taxonomy.pdf,figure(pdf),18135,tracked,2026-07-12,historical but useful artifact,no,Named like early manuscript figures; current figures live under papers/JDIQ_2026/figures and manuscript/figures_v2 -- these root copies are pre-JDIQ_2026 (multi-scorer era) renders of similarly-named plots,move to figures/legacy/ (verify none is \includegraphics'd from any current .tex first),medium
+Consistency_Aware_Reranking_via_Preference_Graph_Repair__Structural_Gains_and_Conditional_Retrieval_Effects_IJCS.zip,archive,484655,tracked,2026-07-05,historical but useful artifact,no,"Title matches an early (IJCS-targeted) paper draft, predates the JDIQ_2026 / negative_result_2026 tracks",move to papers/_archive/ with a one-line README noting it is a superseded venue target,medium
+AUDIT_LOCAL_BRANCH.md,doc,4428,tracked,2026-07-26,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+EXPANDED_SELECTIVE_REPORT.md,doc,6559,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+FAS_NICHE_REPORT.md,doc,6756,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+MANUSCRIPT_SUMMARY.md,doc,7673,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+MULTI_SCORER_EXPERIMENT_REPORT.md,doc,9227,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+MULTI_SCORER_SUMMARY.md,doc,3383,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+PAPER_DRAFT_WORDING.md,doc,9602,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+PAPER_OUTLINE.md,doc,6824,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+PAPER_READY_REPORT.md,doc,7898,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+REAL_SCORER_EXPERIMENT_REPORT.md,doc,6494,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+REASONING_BENCHMARK_FEASIBILITY.md,doc,4358,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+REMEDIATION_REPORT.md,doc,29867,tracked,2026-07-26,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+REVIEWER_CONCERN_GAP_AUDIT.md,doc,62250,tracked,2026-07-26,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+TODO.md,doc,1982,tracked,2026-07-14,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+VALIDATION_REPORT.md,doc,7006,tracked,2026-04-04,historical but useful artifact,no,Predates PROJECT_STATUS.md's documentation-authority map; not listed there as authoritative for anything current,move to docs/historical/ (repo already has this convention) unless PROJECT_STATUS.md is updated to explicitly supersede it in place,medium
+AGENTS.md,root config/doc,3452,tracked,2026-07-27,reproducibility documentation,yes,,keep,medium
+PROJECT_STATUS.md,root config/doc,49874,tracked,2026-07-28,reproducibility documentation,yes,,keep,medium
+README.md,root config/doc,36073,tracked,2026-07-27,reproducibility documentation,partial,"PROJECT_STATUS.md self-declares as canonical entry point (2026-07-28); README.md (2026-07-27) still names outputs/pub_vote_cmp_all4 as canonical -- CONFLICTS with PROJECT_STATUS.md's own evidence-authority pointer to main.tex, and with the current full_calibrated_core-backed manuscript numbers",update README.md canonical-package pointer,high
+LICENSE,root config/doc,1071,tracked,2026-03-19,canonical experiment configuration,partial,,keep,medium
+Makefile,root config/doc,2853,tracked,2026-04-06,canonical experiment configuration,partial,,keep,medium
+pyproject.toml,root config/doc,2282,tracked,2026-07-27,canonical experiment configuration,partial,,keep,medium
+requirements.txt,root config/doc,827,tracked,2026-07-14,canonical experiment configuration,partial,,keep,medium
+.gitignore,root config/doc,12498,tracked,2026-07-28,canonical experiment configuration,partial,,keep,medium
+src/consistency_ranker/soft_score_ranking.py,source,6750,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/dag_ambiguity.py,source,5739,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/synthetic_data.py,source,2433,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/experiment_cli.py,source,4166,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/pairwise_prefs.py,source,3802,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/markov_graph_ranking.py,source,5032,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/evaluation.py,source,7033,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/combsum_ranking.py,source,4674,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/dag_linear_extensions.py,source,41260,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/rrf_ranking.py,source,3263,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/metric_aware_repair.py,source,8294,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/qrels_reference.py,source,4792,tracked,2026-07-15,canonical source code,yes,,keep,high
+src/consistency_ranker/exact_fas.py,source,3184,tracked,2026-03-21,canonical source code,yes,,keep,high
+src/consistency_ranker/cycle_detection.py,source,3803,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/__init__.py,source,607,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/graph_construction.py,source,3819,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/data_loader.py,source,3449,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/greedy_fas.py,source,3167,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/baseline_ranking.py,source,19688,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/borda_fuse_ranking.py,source,4069,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/mwfas_solver.py,source,18004,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/statistical_inference.py,source,18988,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/data/msmarco_passage_loader.py,source,5233,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/beir_loader.py,source,7783,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/dataset_registry.py,source,8004,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/__init__.py,source,873,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/unified_loader.py,source,16759,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/ir_datasets_export.py,source,7139,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/schema.py,source,3607,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/data/hotpotqa_loader.py,source,4786,tracked,2026-04-04,canonical source code,yes,,keep,high
+src/consistency_ranker/data/query_ids.py,source,3549,tracked,2026-03-22,canonical source code,yes,,keep,high
+src/consistency_ranker/data/bright_loader.py,source,21139,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/selection.py,source,12784,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/discovery.py,source,10512,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/reinsertion.py,source,2120,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/frontier.py,source,9373,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/types.py,source,3550,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/__init__.py,source,1583,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/protection_rules.py,source,6470,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/local_candidates.py,source,12936,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/disposition.py,source,2813,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/edge_confidence.py,source,2550,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_frontier/acceptance.py,source,2866,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/prompt.py,source,784,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/presentation.py,source,1632,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/query_selection.py,source,1834,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/panel.py,source,4161,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/__init__.py,source,772,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/schema.py,source,3656,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_pilot/trajectory.py,source,2524,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/selective_graph.py,source,5567,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/edge_importance.py,source,2623,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/prior_regularized_repair.py,source,4538,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/pair_evidence.py,source,5789,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/reliability_weighted_repair.py,source,4319,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/__init__.py,source,896,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/local_contradiction.py,source,3770,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/evidence_aggregation.py,source,10137,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/pipeline.py,source,8838,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/synthetic_judgment_models.py,source,6163,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/edge_reliability.py,source,3874,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/reliability_repair/stability_diagnostics.py,source,2529,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/cache_only_judge.py,source,3884,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/azure_request.py,source,427,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/live_judge.py,source,17266,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/sampling.py,source,14090,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/reparse.py,source,4454,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/__init__.py,source,183,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/analyze.py,source,26460,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/evaluation_contract.py,source,10995,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/completion.py,source,6520,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/multifactor_acquisition/pricing.py,source,2753,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/utils/__init__.py,source,166,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/utils/timing.py,source,12406,tracked,2026-03-20,canonical source code,yes,,keep,high
+src/consistency_ranker/utils/llm_api_status.py,source,5607,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/prior_perturbation.py,source,6391,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/prior_dependence.py,source,6528,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/exploration_guards.py,source,7054,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/robust_stopping.py,source,4521,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/__init__.py,source,1287,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/engine.py,source,25537,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/shared_bias.py,source,5057,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/bias_diagnostics.py,source,5146,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/prior_quality.py,source,7248,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/adaptive_prior.py,source,4875,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/robustness_report.py,source,3358,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/robust_acquisition.py,source,5456,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/evidence_stability.py,source,8300,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/robust_extraction.py,source,4774,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/adversarial_judges.py,source,7236,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/prior_robust/challenger_pool.py,source,4755,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/data_setup.py,source,5210,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/query_processor.py,source,10403,tracked,2026-07-15,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/graph_features.py,source,5790,tracked,2026-07-15,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/__init__.py,source,372,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/analysis.py,source,18688,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/failure_mining/llm_runner.py,source,24587,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/association.py,source,7560,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/outcomes.py,source,3194,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/decision.py,source,6458,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/__init__.py,source,1678,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/features.py,source,7209,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/repair_diagnostic/prediction.py,source,10595,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/extraction_study/selection.py,source,8137,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/extraction_study/evaluation.py,source,6434,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/extraction_study/extractors.py,source,3694,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/extraction_study/decision.py,source,4243,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/extraction_study/__init__.py,source,1247,untracked,n/a (untracked),canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/audit_engine.py,source,26169,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/__init__.py,source,414,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/cost_estimate.py,source,7920,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/parse_smoke.py,source,3964,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/sanitize.py,source,2948,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/ledger.py,source,8989,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/fixture.py,source,2662,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/provider_capability/schema.py,source,1690,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/audit_inventory.py,source,2164,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/manifest.py,source,3592,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/cache.py,source,2840,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/graph_eval.py,source,3777,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/prompts.py,source,2615,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/__init__.py,source,606,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/providers.py,source,12970,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/orientation.py,source,4016,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/spending.py,source,3554,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/parsing.py,source,10363,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/schema.py,source,1859,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/multi_provider_eval/ensemble.py,source,4683,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/processor.py,source,7423,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/splits.py,source,3143,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/label_generation.py,source,4877,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/checkpoint.py,source,5759,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/selector_training.py,source,12899,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/repair_pairs.py,source,1652,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/oracle_headroom.py,source,17144,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/__init__.py,source,167,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/grouped_splits.py,source,3041,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/candidate_selection.py,source,6455,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/repair_selector_mining/reports.py,source,11435,tracked,2026-07-14,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_regret.py,source,3935,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_calibration.py,source,16891,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_utility.py,source,3831,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/diagnostic_probes.py,source,10108,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/replay_eval.py,source,5143,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_benchmark.py,source,13979,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/risk_control.py,source,4987,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/__init__.py,source,4561,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/production_runner.py,source,27151,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_gate.py,source,21556,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/production_config.py,source,4575,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/gate_features.py,source,17369,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/execution_mode.py,source,3111,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_mixture.py,source,2993,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/safe_fallback.py,source,8076,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_runner.py,source,16248,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/policy_selection/policy_switching.py,source,5194,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/safeguard_cost.py,source,3434,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/evidence_index.py,source,14629,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/reconstruct.py,source,12786,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/feature_rows.py,source,1531,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/__init__.py,source,340,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/predictors.py,source,8509,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/real_query_replay/network_guard.py,source,1251,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/counterfactual.py,source,6050,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/provider_escalation.py,source,8897,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/acquisition_actions.py,source,9314,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/interactive_judges.py,source,8183,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/acquisition_state.py,source,14091,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/transitivity.py,source,3406,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/offline_replay.py,source,4450,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/pair_uncertainty.py,source,5671,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/__init__.py,source,2937,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/engine.py,source,8480,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/structural_signals.py,source,4252,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/adaptive_stopping.py,source,5346,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/ranking_impact.py,source,8590,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/anytime_metrics.py,source,3310,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/adaptive_acquisition/acquisition_policies.py,source,14379,tracked,2026-07-26,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/stopping.py,source,13231,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/simulate.py,source,5027,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/evaluate.py,source,3630,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/__init__.py,source,1691,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/scoring.py,source,6910,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/strategies.py,source,5524,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/stats.py,source,2093,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/oracle.py,source,6651,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/active_acquisition/regularized_aggregation.py,source,11876,tracked,2026-07-28,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/models.py,source,4256,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/reserve.py,source,6589,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/evaluation.py,source,4555,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/config.py,source,7887,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/pool_builder.py,source,15288,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/dispatch.py,source,3705,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/query_selection.py,source,1474,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/__init__.py,source,570,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/cohere_native.py,source,15542,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/prompt_renderer.py,source,957,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/pair_selection.py,source,6375,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/cache_store.py,source,1770,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/request_plan.py,source,4363,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/report.py,source,1945,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py,source,16249,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/validation.py,source,1463,tracked,2026-07-27,canonical source code,yes,,keep,high
+src/consistency_ranker/counterfactual_benchmark/collector.py,source,27863,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_synthetic.py,source,27706,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/build_manuscript_artifacts.py,source,31003,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_extraction_study.py,source,17848,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/summarize_failure_mining.py,source,4142,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/run_offline_active_acquisition_pilot.py,source,21015,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/generate_cost_accuracy_analysis.py,source,16810,tracked,2026-03-29,canonical source code,yes,,keep,high
+scripts/estimate_counterfactual_benchmark_cost.py,source,3196,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_fas_balance_score_sum_borda_grid.py,source,13004,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_production_uht.py,source,4296,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/diagnose_vote_graph_cycles.py,source,2801,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/run_modern_bootstrap.py,source,7345,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/build_manuscript_assets.py,source,6286,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/generate_bootstrap_tables.py,source,7746,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/reevaluate_multifactor_offline.py,source,28316,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/check_api_readiness.py,source,7806,tracked,2026-04-05,canonical source code,yes,,keep,high
+scripts/run_llm_scidocs_pilot_comparison.py,source,25664,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/build_paper_evidence_package.py,source,19673,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_paper_ready_experiments.py,source,16237,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/build_llm_bootstrap_summaries.py,source,7402,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/generate_synthetic_perturbed_scores.py,source,5021,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_bootstrap.py,source,14034,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_gemini_scidocs_pilot.py,source,29196,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/build_votes_file.py,source,16106,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/build_variant_followup_artifacts.py,source,12153,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/generate_bm25_scores.py,source,5507,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_oracle_headroom_analysis.py,source,6263,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/run_all_real_experiments.py,source,13177,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/prepare_real_data_experiment_setup.py,source,15762,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/build_results_bundle.py,source,10672,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/audit_hotpotqa_graph_stats.py,source,15699,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_fas_niche_analysis.sh,source,319,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/bootstrap_method_deltas.py,source,5368,tracked,2026-03-20,canonical source code,yes,,keep,high
+scripts/run_reliability_aware_repair_experiment.py,source,24049,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_reviewer_concerns_program.py,source,66033,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/run_failure_mining.py,source,16324,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/run_expanded_selective_repair.py,source,11116,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_small_llm_pairwise_experiment.py,source,18930,tracked,2026-04-05,canonical source code,yes,,keep,high
+scripts/run_noise_sensitivity.py,source,13136,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_all_paper_ready.sh,source,2151,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/prepare_hotpotqa.py,source,3645,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/render_jdiq_manuscript_figures.py,source,10122,tracked,2026-07-12,canonical source code,yes,,keep,high
+scripts/compute_pct_changed.py,source,3340,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_policy_selection_experiment.py,source,46418,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/learned_selector_experiment.py,source,22184,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/analyze_publication_vote_deltas.py,source,4675,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/build_results_audit_artifacts.py,source,19529,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/track_selector_llm_cost.py,source,5589,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/run_real_experiment.py,source,109801,tracked,2026-07-15,canonical source code,yes,,keep,high
+scripts/run_repair_selector_overnight.py,source,30042,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/run_fas_balance_alpha_beta_grid.py,source,8629,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_repair_frontier_pilot.py,source,35303,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/run_fas_balance_alpha_beta_generalization.py,source,10448,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_multi_scorer_experiments.sh,source,878,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/generate_paper_tables.py,source,13658,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_openai_real_listwise.py,source,15137,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/prepare_datasets.py,source,11181,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_counterfactual_micro_pilot.py,source,2691,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_adaptive_acquisition_experiment.py,source,32917,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_fas_balance_alpha_sweep.py,source,7085,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/generate_proxy_datasets.py,source,13790,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_linear_extension_extraction_experiment.py,source,44802,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_llm_scidocs_real_pilot.py,source,30192,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_validated_multi_scorer.py,source,10509,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/diagnose_greedy_fas_underperformance.py,source,16025,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/__init__.py,source,18,tracked,2026-03-20,canonical source code,yes,,keep,high
+scripts/run_ir_evidence_audit.py,source,38061,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/run_multi_provider_repair_pilot.py,source,29712,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/audit_provider_capabilities.py,source,4740,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/run_openai_real_pairwise_q30.py,source,17610,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_variant_followup.py,source,8834,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/generate_dense_scores.py,source,8450,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/generate_cross_encoder_scores.py,source,4345,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_real_query_policy_replay.py,source,28573,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/analyze_fas_niche.py,source,16114,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/validate_multi_scorer_pipeline.py,source,6037,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_repository_scale_headroom_analysis.py,source,22695,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/postprocess_votes_drop_mutual_pairs.py,source,2880,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/run_multi_provider_llm_robustness.py,source,35776,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/build_modern_baseline_tables.py,source,8421,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_modern_baselines.py,source,21251,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_repair_selector_overnight_tmux.sh,source,1634,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/run_publication_vote_suite.py,source,8277,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_learned_selector.py,source,6675,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/generate_q1_tables.py,source,22750,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_diagnostic_experiments.py,source,24134,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_exact_vs_greedy.py,source,19485,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/run_pub_vote_all4_bright_remaining.sbatch,source,4059,tracked,2026-03-22,canonical source code,yes,,keep,high
+scripts/generate_score_file.py,source,10844,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/build_proxy_real_clean_comparison.py,source,6338,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/summarize_publication_vote_suite.py,source,3599,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_repair_diagnostic_study.py,source,17882,untracked,n/a (untracked),canonical source code,yes,,keep,high
+scripts/run_failure_mining_tmux.sh,source,2578,tracked,2026-07-14,canonical source code,yes,,keep,high
+scripts/plot_timings.py,source,9440,tracked,2026-03-20,canonical source code,yes,,keep,high
+scripts/run_expanded_experiments.sh,source,927,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/download_datasets.py,source,11972,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/generate_manuscript_tables_and_figures.py,source,23775,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/run_openai_real_pointwise.py,source,15738,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/aggregate_multi_scorer_results.py,source,6597,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_real_query_multifactor_acquisition.py,source,51734,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/run_openai_real_pilot.py,source,19437,tracked,2026-03-24,canonical source code,yes,,keep,high
+scripts/run_stopping_rule_pilot.py,source,27714,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/show_example_rankings.py,source,2608,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_metric_aware_first_experiment.py,source,20422,tracked,2026-04-05,canonical source code,yes,,keep,high
+scripts/AUDIT_POLICY_GATE.md,source,7188,tracked,2026-07-26,canonical source code,yes,,keep,high
+scripts/check_repo_ready.py,source,10057,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_regularized_aggregation_pilot.py,source,26127,tracked,2026-07-28,canonical source code,yes,,keep,high
+scripts/run_regime_analysis.py,source,20944,tracked,2026-03-21,canonical source code,yes,,keep,high
+scripts/download_beir_via_irds.py,source,2650,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_prior_robust_experiment.py,source,19010,tracked,2026-07-27,canonical source code,yes,,keep,high
+scripts/build_hotpotqa_report.py,source,18091,tracked,2026-04-04,canonical source code,yes,,keep,high
+scripts/run_adaptive_repair_policy_experiment.py,source,8869,tracked,2026-04-05,canonical source code,yes,,keep,high
+tests/test_graph_and_solver.py,test,3458,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_provider_capability_audit.py,test,12293,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_check_repo_ready.py,test,5524,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_failure_mining.py,test,36254,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_beir_loader.py,test,9159,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_llm_api_status.py,test,3134,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_build_paper_evidence_package.py,test,1016,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_stopping.py,test,12676,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_task4_exact_baseline_fairness.py,test,14959,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_small_llm_pairwise_experiment.py,test,2282,tracked,2026-04-05,canonical source code,yes,,keep,high
+tests/test_repair_selector_mining.py,test,3059,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_greedy_fas.py,test,2434,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_generate_manuscript_tables_and_figures.py,test,10277,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_cli_validation.py,test,2920,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_offline_active_acquisition.py,test,11902,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_reliability_repair.py,test,6703,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_evaluation.py,test,4919,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_generate_q1_tables.py,test,11592,tracked,2026-03-22,canonical source code,yes,,keep,high
+tests/test_pool_cutoff_evaluation.py,test,7178,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_bootstrap_method_deltas.py,test,1387,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_counterfactual_benchmark_integration.py,test,6424,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_azure_multifactor_repair.py,test,10791,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_normalization_protocols.py,test,18944,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_data_registry.py,test,2546,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_regularized_aggregation.py,test,8066,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_run_synthetic_variants.py,test,798,tracked,2026-03-21,canonical source code,yes,,keep,high
+tests/test_outcome_bcd_experiment_drivers.py,test,7224,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_qrels_reference.py,test,3585,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_repair_diagnostic.py,test,13082,untracked,n/a (untracked),canonical source code,yes,,keep,high
+tests/test_dag_linear_extensions.py,test,11727,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_adaptive_acquisition.py,test,19153,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_data_schema.py,test,3790,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_metric_aware_first_experiment.py,test,3476,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_counterfactual_gemini_normalization.py,test,8897,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_run_bootstrap.py,test,5556,tracked,2026-03-21,canonical source code,yes,,keep,high
+tests/test_repair_frontier.py,test,11704,untracked,n/a (untracked),canonical source code,yes,,keep,high
+tests/test_hardening.py,test,11443,tracked,2026-03-22,canonical source code,yes,,keep,high
+tests/test_prior_robust.py,test,14225,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_task3_ranker_dependence.py,test,16114,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_repository_scale_headroom_analysis.py,test,4336,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_counterfactual_cohere_native_v2.py,test,23941,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_production_operating_point.py,test,19554,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_oracle_headroom.py,test,14147,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_bright_loader.py,test,5600,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_counterfactual_benchmark_rendering.py,test,9251,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/__init__.py,test,16,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_output_directory_isolation.py,test,4986,tracked,2026-03-21,canonical source code,yes,,keep,high
+tests/test_real_query_policy_replay.py,test,6665,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_multi_provider_eval.py,test,8486,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_stopping_rule_pilot_analysis.py,test,6594,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_counterfactual_benchmark_collector.py,test,32951,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_candidate_pool_policies.py,test,8176,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_extraction_study.py,test,9569,untracked,n/a (untracked),canonical source code,yes,,keep,high
+tests/test_counterfactual_pool_v2.py,test,12032,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_data_pairwise.py,test,15582,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_regularized_aggregation_pilot_analysis.py,test,3626,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_external_preference_generation.py,test,7257,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_generate_paper_tables.py,test,5079,tracked,2026-03-22,canonical source code,yes,,keep,high
+tests/test_dag_ambiguity_and_soft_ranking.py,test,4043,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_multifactor_acquisition.py,test,1292,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_counterfactual_cohere_schema_projection.py,test,11761,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_policy_selection.py,test,15104,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_counterfactual_versioning.py,test,7481,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_adaptive_repair_policy_experiment.py,test,1271,tracked,2026-04-05,canonical source code,yes,,keep,high
+tests/test_metric_aware_repair.py,test,3453,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_real_experiment_modes.py,test,26538,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_multifactor_evaluation_contract.py,test,26176,tracked,2026-07-26,canonical source code,yes,,keep,high
+tests/test_ir_datasets_export.py,test,2755,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_modern_baselines.py,test,9322,tracked,2026-03-24,canonical source code,yes,,keep,high
+tests/test_counterfactual_pilot_freeze.py,test,10393,tracked,2026-07-27,canonical source code,yes,,keep,high
+tests/test_timing.py,test,8194,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_exact_mwfas_scip.py,test,10137,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_cycle_detection.py,test,3494,tracked,2026-03-20,canonical source code,yes,,keep,high
+tests/test_mwfas_solver.py,test,3165,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_baseline_ranking.py,test,26394,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/test_statistical_inference.py,test,6732,tracked,2026-07-28,canonical source code,yes,,keep,high
+tests/test_conditional_subsets.py,test,9126,tracked,2026-07-15,canonical source code,yes,,keep,high
+tests/test_new_baseline_methods.py,test,5545,tracked,2026-07-14,canonical source code,yes,,keep,high
+tests/test_hotpotqa_loader.py,test,1692,tracked,2026-04-04,canonical source code,yes,,keep,high
+tests/fixtures,directory(aggregate),7393,partially_tracked,2026-07-26,canonical source code,yes,,keep,high
+configs/counterfactual_collector_canary_v1.json,config,5785,tracked,2026-07-27,canonical experiment configuration,yes,,keep,high
+configs/preserve_repair_experiment_spec_v1.json,config,7933,tracked,2026-07-28,canonical experiment configuration,yes,,keep,high
+configs/counterfactual_collector_canary_v2.json,config,6286,tracked,2026-07-27,canonical experiment configuration,yes,,keep,high
+configs/multi_provider_repair_pilot_v1.json,config,969,untracked,n/a (untracked),canonical experiment configuration,yes,,keep,high
+configs/stopping_rule_pilot_v1.json,config,4809,tracked,2026-07-28,canonical experiment configuration,yes,,keep,high
+configs/counterfactual_micro_pilot_v1.json,config,7341,tracked,2026-07-27,canonical experiment configuration,yes,,keep,high
+configs/offline_active_acquisition_pilot_v1.json,config,2508,tracked,2026-07-28,canonical experiment configuration,yes,,keep,high
+configs/regularized_aggregation_pilot_v1.json,config,3155,tracked,2026-07-28,canonical experiment configuration,yes,,keep,high
+configs/counterfactual_micro_pilot_v2.json,config,8242,tracked,2026-07-27,canonical experiment configuration,yes,,keep,high
+schemas/counterfactual_pairwise_judgment_v1.json,schema,1059,tracked,2026-07-27,canonical experiment configuration,yes,,keep,medium
+prompts/pointwise_relevance.txt,prompt,569,tracked,2026-03-24,canonical experiment configuration,yes,,keep,medium
+prompts/counterfactual_pairwise_judge_v1.txt,prompt,1379,tracked,2026-07-27,canonical experiment configuration,yes,,keep,medium
+prompts/pairwise_comparison.txt,prompt,282,tracked,2026-03-24,canonical experiment configuration,yes,,keep,medium
+prompts/listwise_ranking.txt,prompt,387,tracked,2026-03-24,canonical experiment configuration,yes,,keep,medium
+batch/metric_aware/run_scidocs_metric_aware_debug.sbatch,misc,1274,tracked,2026-04-04,unclear and requiring review,unknown,,review,low
+notebooks/.gitkeep,notebook,55,tracked,2026-03-20,unclear and requiring review,unknown,,review (check for output-cell secrets/large embedded data),low
+figures/fig_cyclicity_and_scc.png,figure,180382,tracked,2026-03-24,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_pipeline.pdf,figure,22782,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_graph_qrels_bew_pre_post.svg,figure,42256,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_cyclicity_and_scc.png,figure,180382,tracked,2026-03-24,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_mean_ndcg_hybrids.pdf,figure,21876,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_graph_qrels_bew_pre_post.pdf,figure,24323,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/README.md,figure,371,tracked,2026-03-22,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_mean_ndcg_hybrids.png,figure,168482,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_ndcg_copeland_ms1_four_datasets.png,figure,56019,tracked,2026-03-22,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_pipeline.png,figure,219500,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_graph_qrels_bew_pre_post.png,figure,238284,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_failure_classes.png,figure,114890,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_failure_classes.pdf,figure,15190,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_delta_ndcg_bootstrap.png,figure,112690,tracked,2026-03-22,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/manuscript/fig_pipeline.svg,figure,17911,tracked,2026-07-12,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/graphical_abstract/README.md,figure,769,tracked,2026-03-22,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+figures/graphical_abstract/graphical_abstract.png,figure,692565,tracked,2026-03-22,publication-ready figure or table,partial,,keep; confirm which are cited by current manuscript vs. legacy,medium
+docs/RESULTS_FOR_PAPER.md,doc,5149,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/DATASET_ACCESS_DIAGNOSIS.md,doc,13063,tracked,2026-03-22,reproducibility documentation,partial,,keep,medium
+docs/.gitkeep,doc,54,tracked,2026-03-20,reproducibility documentation,partial,,keep,medium
+docs/LLM_PILOT_STATUS.md,doc,2782,tracked,2026-04-06,reproducibility documentation,partial,,keep,medium
+docs/PAPER_READY_RESULTS_SUMMARY.md,doc,3772,tracked,2026-03-29,reproducibility documentation,partial,,keep,medium
+docs/PAPER_TABLES_GENERATION.md,doc,1365,tracked,2026-03-22,reproducibility documentation,partial,,keep,medium
+docs/ARTIFACT_POLICY.md,doc,9590,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/LLM_REAL_PILOT_RESULTS.md,doc,1800,tracked,2026-04-06,reproducibility documentation,partial,,keep,medium
+docs/related_work_positioning_note.md,doc,2873,tracked,2026-04-06,reproducibility documentation,partial,,keep,medium
+docs/revision_strategy.md,doc,3647,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/safe_claims.md,doc,2767,tracked,2026-04-06,reproducibility documentation,partial,,keep,medium
+docs/COST_ACCURACY_DECISION_ANALYSIS.md,doc,7727,tracked,2026-03-29,reproducibility documentation,partial,,keep,medium
+docs/EVIDENCE_MAP.md,doc,8978,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/SAFE_Q1_CLAIMS.md,doc,2745,tracked,2026-03-22,reproducibility documentation,partial,,keep,medium
+docs/Q1_POSITIONING_AND_CLAIMS.md,doc,12028,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/RESULTS_AUDIT.md,doc,27997,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/THREATS_TO_VALIDITY.md,doc,3861,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/experiment_inventory.md,doc,10130,tracked,2026-07-14,reproducibility documentation,partial,,keep,medium
+docs/READ_ME_FIRST_FOR_AI.md,doc,3460,tracked,2026-07-14,reproducibility documentation,partial,,keep,medium
+docs/LLM_MANUSCRIPT_CONSISTENCY_AUDIT.md,doc,2070,tracked,2026-04-06,reproducibility documentation,partial,,keep,medium
+docs/AUDIT.md,doc,45157,tracked,2026-07-14,reproducibility documentation,partial,,keep,medium
+docs/EXPERIMENTS.md,doc,2894,tracked,2026-04-05,reproducibility documentation,partial,,keep,medium
+docs/THEORETICAL_FOUNDATION.md,doc,12561,tracked,2026-04-04,reproducibility documentation,partial,,keep,medium
+docs/LITERATURE_ALIGNMENT.md,doc,18600,tracked,2026-04-04,reproducibility documentation,partial,,keep,medium
+docs/REPRODUCTION_CANONICAL.md,doc,8767,tracked,2026-07-14,reproducibility documentation,partial,,keep,medium
+docs/REPRODUCTION_Q1.md,doc,10188,tracked,2026-07-14,reproducibility documentation,partial,,keep,medium
+docs/multifactor_production_uht_corrected_summary_20260727.json,doc,28135,tracked,2026-07-26,reproducibility documentation,partial,,keep,medium
+docs/MULTIFACTOR_PRODUCTION_UHT_EVAL_INVALIDATION.md,doc,3597,tracked,2026-07-26,reproducibility documentation,partial,,keep,medium
+docs/ROUTING_COST_ACCURACY_DECISION_ANALYSIS.md,doc,3365,tracked,2026-03-29,reproducibility documentation,partial,,keep,medium
+docs/SAFE_CLAIMS_FOR_PAPER.md,doc,9985,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/JOURNAL_READY_CONTRIBUTIONS.md,doc,2228,tracked,2026-03-22,reproducibility documentation,partial,,keep,medium
+docs/research/EXPERIMENT_ROADMAP.md,doc,18846,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/research/REPRODUCIBILITY_AND_ARTIFACTS.md,doc,5580,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/research/MANUSCRIPT_SUMMARY.md,doc,6314,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/research/NOVELTY_AND_RELATED_WORK.md,doc,9058,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/research/RESEARCH_TRAJECTORY.md,doc,27507,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/research/DECISION_LOG.md,doc,9128,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/historical/AUDIT_LOCAL_BRANCH_20260726_pre_remediation.md,doc,36564,tracked,2026-07-26,reproducibility documentation,partial,,keep,medium
+docs/historical/linear_extension_method_audit.md,doc,3193,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/benchmarks/REAL_COUNTERFACTUAL_BENCHMARK_SPEC.md,doc,4982,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md,doc,41035,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/figures/exact_vs_greedy_objective_gap.png,doc,77421,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_alpha_sweep.png,doc,81877,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/diagnostic_gap_vs_noise.png,doc,119585,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_score_sum_borda_heatmap_noise025.png,doc,69480,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/regime_analysis_ndcg.png,doc,320831,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_alpha_beta_grid.png,doc,81560,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/diagnostic_agreement_vs_tau.png,doc,140025,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/diagnostic_topo_ambiguity.png,doc,83202,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/regime_analysis_gap_to_borda.png,doc,125809,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_alpha_beta_generalization_vs_noise.png,doc,137816,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/regime_analysis_pairwise_accuracy.png,doc,170841,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/regime_analysis_gap_to_score_sum.png,doc,120571,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/regime_analysis_kendall_tau.png,doc,335863,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/exact_vs_greedy_all_methods.png,doc,366903,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/exact_vs_greedy_gap.png,doc,80625,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_score_sum_borda_heatmap_noise030.png,doc,79060,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/figures/fas_balance_alpha_beta_multiseed_promising_noises.png,doc,60322,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/handoff/CURRENT_BRANCH_HANDOFF.md,doc,34977,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/handoff/state_snapshot.json,doc,18988,tracked,2026-07-28,reproducibility documentation,partial,,keep,medium
+docs/experiments/provider_capability_summary_20260727.json,doc,4055,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/experiments/OUTCOME_BCD_DRIVERS.md,doc,2736,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/experiments/PROVIDER_CAPABILITY_AUDIT.md,doc,1535,tracked,2026-07-27,reproducibility documentation,partial,,keep,medium
+docs/tables/bootstrap_results_qrels.csv,doc,5218,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_variant_diagnostics.csv,doc,3499,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/diagnostic_method_run_level.csv,doc,31876,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/variant_followup_summary.csv,doc,9133,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/diagnostic_run_level.csv,doc,5339,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/exact_vs_greedy_summary.csv,doc,4497,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_score_sum_borda_summary.csv,doc,2744,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/exact_vs_greedy_fas.csv,doc,40410,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_sweep.csv,doc,6677,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/main_results.csv,doc,4115,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/variant_followup_win_counts.csv,doc,3250,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/exact_vs_greedy_report.txt,doc,3590,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/ablation_results.csv,doc,560,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/variant_followup_main_results.csv,doc,17251,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/diagnostic_regime_breakdown.csv,doc,1405,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/regime_deltas.csv,doc,8795,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/regime_analysis.csv,doc,62853,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/regime_report.txt,doc,4285,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_beta_grid.csv,doc,32503,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_variant_diagnostics_summary.csv,doc,1206,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/bootstrap_results_combined_summary.csv,doc,10660,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/result_inventory.csv,doc,10997,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_beta_generalization.csv,doc,4472,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/regime_summary.csv,doc,49074,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/diagnostic_method_properties.csv,doc,1019,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_summary.csv,doc,275,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_beta_generalization_summary.csv,doc,1497,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/runtime_results.csv,doc,1839,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_score_sum_borda_grid.csv,doc,94318,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/fas_balance_alpha_beta_summary.csv,doc,955,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/proxy_real_clean_comparison.csv,doc,1909,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/bootstrap_results.csv,doc,459,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+docs/tables/bootstrap_results_qrels_flip.csv,doc,5552,tracked,2026-03-21,reproducibility documentation,partial,,keep,medium
+data/.gitkeep,data,59,tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/beir/fiqa,directory(aggregate),49833865,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/beir/scidocs,directory(aggregate),42242963,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/hotpotqa/queries.jsonl,data,1198013,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/hotpotqa/documents.jsonl,data,54403045,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/hotpotqa/.gitkeep,data,0,tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/hotpotqa/qrels.jsonl,data,8660049,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/hotpotqa/pairwise,directory(aggregate),348645,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/bright/queries.jsonl,data,1227558,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/bright/documents.jsonl,data,217098651,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/bright/.gitkeep,data,0,tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/bright/qrels.jsonl,data,143607673,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/processed/bright/pairwise,directory(aggregate),8001551,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/msmarco_passage/README.md,data,1065,tracked,2026-04-04,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/robust04/README.md,data,931,tracked,2026-04-04,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/beir/nfcorpus,directory(aggregate),514,partially_tracked,2026-04-04,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/beir/fiqa,directory(aggregate),96098617,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/beir/scidocs,directory(aggregate),72752814,partially_tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/queries.jsonl,data,1198013,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/documents.jsonl,data,54403045,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/_home_soroush_consistency-aware-llm-rankin_data_raw_hotpotqa_hotpot_qa_fullwiki_0.0.0_1908d6afbbead072334abe2965f91bd2709910ab.lock,data,0,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/.gitkeep,data,0,tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/qrels.jsonl,data,8660049,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/hotpotqa/hotpot_qa,directory(aggregate),645921536,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/trec_dl_passage/README.md,data,1307,tracked,2026-04-04,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/queries.jsonl,data,1227648,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/documents.jsonl,data,217116610,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/README.md,data,1057,tracked,2026-03-21,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/.gitkeep,data,0,tracked,2026-03-20,canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/_home_soroush_consistency-aware-llm-rankin_data_raw_bright_xlangai___bright_examples_0.0.0_3066d29c9651a576c8aba4832d249807b181ecae.lock,data,0,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/_home_soroush_consistency-aware-llm-rankin_data_raw_bright_xlangai___bright_documents_0.0.0_3066d29c9651a576c8aba4832d249807b181ecae.lock,data,0,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/qrels.jsonl,data,143607673,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/_home_soroush_consistency-aware-llm-rankin_data_raw_bright_xlangai___bright_long_documents_0.0.0_3066d29c9651a576c8aba4832d249807b181ecae.lock,data,0,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+data/raw/bright/xlangai___bright,directory(aggregate),1482150778,untracked,n/a (untracked),canonical raw data,yes,,keep (mostly gitignored by design),medium
+.claude,tooling config,0,untracked,n/a (untracked),reproducibility documentation,yes,,keep,medium
+.github,CI config,1412,partially_tracked,2026-04-06,reproducibility documentation,yes,,keep,medium
+/home/soroush/consistency-aware-llm-rankin/reports/adaptive_acquisition_20260725T220000Z,report_dir(aggregate),12180289,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/additional_metrics_investigation,report_dir(aggregate),4652580,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/b3_margin_calibration_investigation,report_dir(aggregate),425621120,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/blocking_issues_investigation,report_dir(aggregate),82942827,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/candidate_pool_conditional_audit_20260714,report_dir(aggregate),7402818,partially_tracked,2026-07-14,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_json_schema_confirmation_20260727T200000Z,report_dir(aggregate),2191,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_native_v2_confirmation_20260727T210000Z,report_dir(aggregate),2169,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z,report_dir(aggregate),2324,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z,report_dir(aggregate),2297,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z,report_dir(aggregate),2357,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/cohere_normalization_diagnostic_20260727T183000Z,report_dir(aggregate),2353,partially_tracked,2026-07-27,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/counterfactual_collector_canary_v1_20260727T145126Z,report_dir(aggregate),43262,partially_tracked,2026-07-27,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/counterfactual_collector_canary_v2_20260727T161921Z,report_dir(aggregate),48600,partially_tracked,2026-07-27,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/exact_ilp_repair_investigation,report_dir(aggregate),14616,untracked,n/a (untracked),stale or superseded artifact,no,Superseded by reports/exact_open_source_ilp_repair_investigation/ (used by all current scripts/tests); this old dir is gitignored and only mentioned in anonymous-submission manifest scripts,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/exact_open_source_ilp_repair_investigation,report_dir(aggregate),4296815,partially_tracked,2026-07-14,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/extraction_study_20260729T151610Z,report_dir(aggregate),98151,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining,report_dir(aggregate),202235727,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining_llm,report_dir(aggregate),19079989,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining_llm_smoke_v2,report_dir(aggregate),278043,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining_llm_v2,report_dir(aggregate),20614659,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining_llm_v3,report_dir(aggregate),42720778,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/failure_mining_smoke,report_dir(aggregate),704231,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_page_limit_freeze_20260715,report_dir(aggregate),13214927,partially_tracked,2026-07-15,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task10_submission_freeze_20260715,report_dir(aggregate),22823522,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715,report_dir(aggregate),1987308404,untracked,n/a (untracked),canonical derived results,yes,Read directly by scripts/run_ir_evidence_audit.py (POOL_CUTOFF / BASELINE_FAIRNESS constants); ENTIRE directory is gitignored via blanket 'reports/final_revision_*/' rule -- including the small tables/ summary CSVs actually consumed by the audit script. Not reproducible from a fresh clone.,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task2_statistical_power_20260715,report_dir(aggregate),1466887,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task3_ranker_dependence_20260715,report_dir(aggregate),39014852,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task4_exact_baseline_fairness_20260715,report_dir(aggregate),1990142,untracked,n/a (untracked),canonical derived results,yes,Read directly by scripts/run_ir_evidence_audit.py (POOL_CUTOFF / BASELINE_FAIRNESS constants); ENTIRE directory is gitignored via blanket 'reports/final_revision_*/' rule -- including the small tables/ summary CSVs actually consumed by the audit script. Not reproducible from a fresh clone.,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task5_dq_framework_20260715,report_dir(aggregate),191790,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task6_literature_rejection_audit_20260715,report_dir(aggregate),127604,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task7_jdiq_policy_ai_artifact_20260715,report_dir(aggregate),139890,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task8_manuscript_compression_20260715,report_dir(aggregate),158736,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task9_final_peer_review_20260715,report_dir(aggregate),193695,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/final_submission_materials_20260715,report_dir(aggregate),21366,partially_tracked,2026-07-15,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/full_calibrated_core,report_dir(aggregate),1229220214,partially_tracked,2026-07-15,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/ir_evidence_audit_20260729T182949Z,report_dir(aggregate),349936,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/ir_evidence_audit_review_20260729T235053Z,report_dir(aggregate),25298,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/jdiq-overnight-20260713-225928,report_dir(aggregate),54444310,partially_tracked,2026-07-13,stale or superseded artifact,no,Intermediate artifact-prep scratch runs for the anonymous submission bundle; superseded by papers/JDIQ_2026/submission/final_anonymous/. Contains duplicate votes_ms1*.jsonl also present under experiments/method_improvement_audit_20260711_205733/,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/jdiq-overnight-cont-20260713-230229,report_dir(aggregate),54729062,partially_tracked,2026-07-13,stale or superseded artifact,no,Intermediate artifact-prep scratch runs for the anonymous submission bundle; superseded by papers/JDIQ_2026/submission/final_anonymous/. Contains duplicate votes_ms1*.jsonl also present under experiments/method_improvement_audit_20260711_205733/,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/jis_final_tables,report_dir(aggregate),15139,partially_tracked,2026-03-23,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/linear_extension_extraction_20260725T150000Z,report_dir(aggregate),278490,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/linear_extension_extraction_20260725T151500Z,report_dir(aggregate),857761,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/linear_extension_extraction_20260725T152000Z,report_dir(aggregate),710135,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/linear_extension_extraction_20260725T190000Z,report_dir(aggregate),708058,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/linear_extension_extraction_20260725T191500Z,report_dir(aggregate),847001,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/manuscript_final_audit,report_dir(aggregate),35407,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/manuscript_improvement_audit,report_dir(aggregate),166419,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/manuscript_quality_audit_20260714,report_dir(aggregate),11824,partially_tracked,2026-07-14,stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/manuscript_reframing_20260729T174326Z,report_dir(aggregate),31535,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/manuscript_rewrite_plan,report_dir(aggregate),536812,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/multi_provider_llm_robustness_20260725T200000Z,report_dir(aggregate),318929,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/multi_provider_repair_pilot_20260729T032348Z,report_dir(aggregate),2500754,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/multi_provider_repair_pilot_smoke_20260729T032209Z,report_dir(aggregate),113477,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/normalization_protocol_audit_20260714,report_dir(aggregate),32085362,partially_tracked,2026-07-14,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/offline_active_acquisition_pilot_20260728T142414Z,report_dir(aggregate),2043267,partially_tracked,2026-07-28,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/oracle_headroom_gate0_20260728T230000Z,report_dir(aggregate),23042,partially_tracked,2026-07-28,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/paper_tables,report_dir(aggregate),16914,partially_tracked,2026-03-22,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/policy_selection_20260726T025426Z,report_dir(aggregate),370960,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/policy_selection_20260726T030500Z,report_dir(aggregate),606805,partially_tracked,2026-07-26,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/prior_robust_20260725T233000Z,report_dir(aggregate),5551685,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/provider_capability_audit_live_20260727T042703Z,report_dir(aggregate),45244,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/real_query_multifactor_acquisition_20260726T044254Z,report_dir(aggregate),21692506,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/real_query_multifactor_acquisition_corrected_20260727T022304Z,report_dir(aggregate),6550523,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/real_query_multifactor_acquisition_corrected_20260727T022613Z,report_dir(aggregate),6646352,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/real_query_multifactor_acquisition_corrected_20260727T030457Z,report_dir(aggregate),7495561,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/real_query_policy_replay_20260726T042025Z,report_dir(aggregate),1255668,partially_tracked,2026-07-26,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/regularized_aggregation_pilot_20260728T164943Z,report_dir(aggregate),1005781,partially_tracked,2026-07-28,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/reliability_aware_repair_20260725T210000Z,report_dir(aggregate),31284,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/repair_diagnostic_20260729T162748Z,report_dir(aggregate),135487,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/repair_frontier_20260729T144742Z,report_dir(aggregate),3691093,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/repo_hygiene_audit_20260729T235053Z,report_dir(aggregate),0,untracked,n/a (untracked),historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/repository_scale_headroom_analysis,report_dir(aggregate),38681636,partially_tracked,2026-07-28,canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/retention_matching_investigation,report_dir(aggregate),1470109,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/reviewer_concerns_program_20260729T035320Z,report_dir(aggregate),12310019,untracked,n/a (untracked),canonical derived results,yes,,keep,high
+/home/soroush/consistency-aware-llm-rankin/reports/rrf_pool_investigation,report_dir(aggregate),25277351,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/selector_llm_extension,report_dir(aggregate),12038765,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/stopping_rule_pilot_20260728T190000Z,report_dir(aggregate),5713114,partially_tracked,2026-07-28,historical but useful artifact,conditional,,review: confirm not cited by any current report/manuscript before archiving,low
+/home/soroush/consistency-aware-llm-rankin/reports/two_directory_investigation,report_dir(aggregate),3166767,untracked,n/a (untracked),stale or superseded artifact,no,,archive (move under reports/_archive/ or delete if fully superseded and unreferenced),medium
+/home/soroush/consistency-aware-llm-rankin/reports/README.md,doc,981,tracked,2026-04-06,reproducibility documentation,no (superseded),"Points to repo_publication_audit.md as 'start here', which names outputs/pub_vote_cmp_all4 (abandoned pipeline, last touched 2026-03-24) as canonical -- contradicted by the actual current manuscript backbone (full_calibrated_core, 2026-07-15) and by this session's run_ir_evidence_audit.py","add 'HISTORICAL -- superseded by full_calibrated_core, see PROJECT_STATUS.md' banner, or rewrite to point at current canonical package",high
+/home/soroush/consistency-aware-llm-rankin/reports/repo_cleanup_recommendations.md,doc,2281,tracked,2026-03-22,stale or superseded artifact,no,Part of the March/April-2026 publication audit that recommended outputs/pub_vote_cmp_all4 as canonical; superseded by full_calibrated_core-backed JDIQ_2026 manuscript,add HISTORICAL banner or move to reports/_archive/,high
+/home/soroush/consistency-aware-llm-rankin/reports/repo_publication_audit.md,doc,11655,tracked,2026-03-22,stale or superseded artifact,no,Part of the March/April-2026 publication audit that recommended outputs/pub_vote_cmp_all4 as canonical; superseded by full_calibrated_core-backed JDIQ_2026 manuscript,add HISTORICAL banner or move to reports/_archive/,high
+/home/soroush/consistency-aware-llm-rankin/reports/paper_safe_contributions.md,doc,1708,tracked,2026-03-22,stale or superseded artifact,no,Part of the March/April-2026 publication audit that recommended outputs/pub_vote_cmp_all4 as canonical; superseded by full_calibrated_core-backed JDIQ_2026 manuscript,add HISTORICAL banner or move to reports/_archive/,high
+/home/soroush/consistency-aware-llm-rankin/reports/canonical_results_inventory.csv,derived table,2531,tracked,2026-03-22,stale or superseded artifact,no,"Companion data to the stale March/April-2026 publication audit (repo_publication_audit.md); describes outputs/pub_vote_cmp_all4/v2, not the current full_calibrated_core backbone",add HISTORICAL banner or move to reports/_archive/,medium
+/home/soroush/consistency-aware-llm-rankin/reports/repaired_vs_unrepaired_master_table.csv,derived table,8338,tracked,2026-03-22,stale or superseded artifact,no,"Companion data to the stale March/April-2026 publication audit (repo_publication_audit.md); describes outputs/pub_vote_cmp_all4/v2, not the current full_calibrated_core backbone",add HISTORICAL banner or move to reports/_archive/,medium
+/home/soroush/consistency-aware-llm-rankin/reports/claim_support_matrix.csv,derived table,2640,tracked,2026-03-22,stale or superseded artifact,no,"Companion data to the stale March/April-2026 publication audit (repo_publication_audit.md); describes outputs/pub_vote_cmp_all4/v2, not the current full_calibrated_core backbone",add HISTORICAL banner or move to reports/_archive/,medium
+/home/soroush/consistency-aware-llm-rankin/experiments/counterfactual_generation_feasibility_,experiment_dir(aggregate),8533988,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/created_data_audit_20260711_232004,experiment_dir(aggregate),1751453,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/failure_class_audit_20260711_212157,experiment_dir(aggregate),1609463108,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/final_method_gap_audit_20260711_221113,experiment_dir(aggregate),36865129,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733,experiment_dir(aggregate),38865599,partially_tracked,2026-07-14,historical but useful artifact,conditional,inputs/scidocs/votes_ms1*.jsonl duplicated byte-identical under reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/publication_readiness_audit_20260711_233629,experiment_dir(aggregate),388292,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/real_llm_integrity_audit_20260712_232154_SUPERSEDED_originmain_only,experiment_dir(aggregate),5551176,partially_tracked,2026-07-13,stale or superseded artifact,no,Directory name explicitly says SUPERSEDED_originmain_only; still git-tracked (5.4MB parsed_response_audit.csv),already self-labeled SUPERSEDED in its own dirname; archive or delete (confirm no citation first),high
+/home/soroush/consistency-aware-llm-rankin/experiments/real_llm_integrity_audit_20260713_034713,experiment_dir(aggregate),3059452,partially_tracked,2026-07-13,historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/experiments/reviewer_response_state_audit_20260711_214959,experiment_dir(aggregate),246882,untracked,n/a (untracked),historical but useful artifact,conditional,,review: several *_audit_2026071*/ dirs look like one-off exploratory audits from the pre-JDIQ era,low
+/home/soroush/consistency-aware-llm-rankin/outputs/adaptive_repair_policy,output_dir(aggregate),2275,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/analysis,output_dir(aggregate),350591,partially_tracked,2026-03-29,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/api_readiness_check,output_dir(aggregate),1939,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/audit,output_dir(aggregate),5131,partially_tracked,2026-04-04,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/bootstrap_modern,output_dir(aggregate),9341,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/final_comparison,output_dir(aggregate),11243,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/final_jis_package,output_dir(aggregate),529051,partially_tracked,2026-03-23,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/final_modern_baselines,output_dir(aggregate),527770,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/final_modern_baselines_reference,output_dir(aggregate),7462462,partially_tracked,2026-03-24,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/gemini_scidocs_real_pilot,output_dir(aggregate),241474,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/hotpotqa_report,output_dir(aggregate),13020,partially_tracked,2026-04-04,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/learned_selector,output_dir(aggregate),107028,partially_tracked,2026-04-04,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/llm_pairwise_small,output_dir(aggregate),745,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/llm_scidocs_pilot_comparison,output_dir(aggregate),4579900,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/llm_scidocs_real_pilot,output_dir(aggregate),4300,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/manuscript_artifacts,output_dir(aggregate),732620,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/margin_multiseed_n20_noise0.20,output_dir(aggregate),66389,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/modern_baseline_comparison,output_dir(aggregate),4429,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/modern_baselines,output_dir(aggregate),97702,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/modern_baselines_reference,output_dir(aggregate),567956,partially_tracked,2026-03-24,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sensitivity,output_dir(aggregate),5423584,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.05,output_dir(aggregate),9747,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.10,output_dir(aggregate),11397,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.15,output_dir(aggregate),12418,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.20,output_dir(aggregate),11491,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.25,output_dir(aggregate),12302,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_n0.30,output_dir(aggregate),12144,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/noise_sweep_variant_followup,output_dir(aggregate),91046,partially_tracked,2026-03-21,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_fiqa_real_run_q20_k15,output_dir(aggregate),23250,partially_tracked,2026-04-06,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_hotpotqa_real_listwise_q10_k15,output_dir(aggregate),8176,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_hotpotqa_real_pointwise_q10_k15,output_dir(aggregate),26675,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_hotpotqa_real_run_q10_k15,output_dir(aggregate),186227,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_hotpotqa_real_run_q20_k15,output_dir(aggregate),508699,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_robustness_checks,output_dir(aggregate),32392,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_scidocs_real_listwise_q20_k15,output_dir(aggregate),23749,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_scidocs_real_pairwise_q30_k15,output_dir(aggregate),1666384,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_scidocs_real_pairwise_q50_k15,output_dir(aggregate),2773468,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_scidocs_real_pointwise_q20_k15,output_dir(aggregate),93553,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_scidocs_real_run_q20_k15,output_dir(aggregate),1111517,partially_tracked,2026-03-24,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_smoke_scidocs_q1_k5,output_dir(aggregate),10077,partially_tracked,2026-04-05,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/paper_ready,output_dir(aggregate),6841,partially_tracked,2026-04-04,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/paper_tables,output_dir(aggregate),2104,partially_tracked,2026-03-29,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/plots,output_dir(aggregate),0,partially_tracked,2026-03-20,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/pub_vote_cmp_all4,output_dir(aggregate),671921,partially_tracked,2026-03-24,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/pub_vote_cmp_v2,output_dir(aggregate),266367,partially_tracked,2026-03-22,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/q1_journal_package,output_dir(aggregate),11539,partially_tracked,2026-03-22,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/real_full,output_dir(aggregate),10723955,partially_tracked,2026-03-21,stale or superseded artifact,no,"Named canonical by root README.md/docs/READ_ME_FIRST_FOR_AI.md/reports/repo_publication_audit.md, but not referenced anywhere in papers/JDIQ_2026/manuscript/main.tex; superseded by reports/full_calibrated_core/",add HISTORICAL banner; do not cite for the current manuscript,high
+/home/soroush/consistency-aware-llm-rankin/outputs/real_small_validation,output_dir(aggregate),273733,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/scale_sweep_n10,output_dir(aggregate),7131,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/scale_sweep_n100,output_dir(aggregate),154132,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/scale_sweep_n20,output_dir(aggregate),11385,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/scale_sweep_n50,output_dir(aggregate),41799,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/timings,output_dir(aggregate),0,partially_tracked,2026-03-20,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/uniform_multiseed_n20_noise0.20,output_dir(aggregate),63524,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/variant_multiseed_n20_noise0.20,output_dir(aggregate),84289,partially_tracked,2026-03-21,historical but useful artifact,conditional,,review: pre-consistency-aware-pivot exploratory run,low
+/home/soroush/consistency-aware-llm-rankin/outputs/openai_real_llm_cross_dataset_summary.md,loose output file,1871,tracked,2026-04-06,unclear and requiring review,no,,review,low
+/home/soroush/consistency-aware-llm-rankin/outputs/.gitkeep,loose output file,79,tracked,2026-03-20,unclear and requiring review,no,,review,low
+papers/papers,orphan directory,0,untracked,n/a (untracked),stale or superseded artifact,no,"Empty nested directory tree (papers/papers/JDIQ_2026/submission/final_anonymous), zero files, untracked, not referenced anywhere -- looks like an accidental mkdir/cp artifact","delete (zero risk: contains no files, untracked)",high
+papers/JDIQ_2026/manuscript/main.tex,manuscript source,29854,tracked,2026-07-15,manuscript source,yes,Submitted manuscript; all cited statistics are hand-typed literals (zero \input of generated tables) -- numbers must be manually kept in sync with reports/full_calibrated_core,keep,high
+papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv,doc,11792,tracked,2026-07-14,stale or superseded artifact,no,"Dated 2026-07-12/14, predates reports/full_calibrated_core (2026-07-15); still names outputs/pub_vote_cmp_all4 as canonical per its own 'canonical' column -- PROJECT_STATUS.md cites this file as authoritative for evidence-to-claim mapping without noting it predates the pipeline that actually backs the submitted manuscript",regenerate against full_calibrated_core or add a superseding banner,high
+papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv,doc,7298,tracked,2026-07-14,stale or superseded artifact,no,"Same issue as MASTER_EVIDENCE_INVENTORY.csv (same date, same pub_vote_cmp_all4 references, zero full_calibrated_core references)",regenerate against full_calibrated_core or add a superseding banner,high
+papers/JDIQ_2026/submission/TASK5_FINAL_REPORT.md,submission bundle,12043,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/ANONYMITY_AUDIT.md,submission bundle,5018,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/SUPPLEMENTAL_PACKAGE.md,submission bundle,6986,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/TASK6_FINAL_REPORT.md,submission bundle,14531,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/FIGURE_INVENTORY.md,submission bundle,4354,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/SUBMISSION_CHECKLIST.md,submission bundle,9774,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/FIGURE_DATA_VERIFICATION_REPORT.md,submission bundle,1819,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous.zip,submission bundle,11980216,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/COVER_LETTER.md,submission bundle,8263,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/SUBMISSION_FREEZE_MANIFEST.json,submission bundle,18329,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/README.md,submission bundle,2447,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/SOURCE_MANIFEST.md,submission bundle,15698,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/requirements.txt,submission bundle,827,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/SUBMISSION_CHECKLIST.md,submission bundle,9774,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/CHECKSUMS.sha256.txt,submission bundle,26024,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/REPRODUCIBILITY.md,submission bundle,6485,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/FIGURE_INVENTORY.md,submission bundle,4354,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/DATA_AVAILABILITY.md,submission bundle,1423,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/FIGURE_DATA_VERIFICATION_REPORT.md,submission bundle,1819,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/SUBMISSION_FREEZE_MANIFEST.json,submission bundle,18329,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/task_reports,directory(aggregate),7467610,partially_tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/tables,directory(aggregate),52748252,partially_tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/supplemental/scripts,directory(aggregate),282536,partially_tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/references.bib,submission bundle,16855,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.pdf,submission bundle,1005370,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/figure5.png,submission bundle,1052299,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/main.tex,submission bundle,29854,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/figure1.png,submission bundle,1386879,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/main.pdf,submission bundle,2138124,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.tex,submission bundle,24056,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/figure3.png,submission bundle,844261,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2,directory(aggregate),251146,partially_tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/build_anonymous_supplementary.py,submission bundle,18681,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/build_final_anonymous.py,submission bundle,11523,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/verify_figure_data.py,submission bundle,12891,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/validate_submission_materials.py,submission bundle,9688,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/build_freeze_manifest.py,submission bundle,9376,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/templates/REPRODUCIBILITY.md,submission bundle,6485,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/templates/README.md,submission bundle,2447,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/scripts/templates/DATA_AVAILABILITY.md,submission bundle,1423,tracked,2026-07-14,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/highlights.tex,submission bundle,1562,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/README.md,submission bundle,885,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/title_page.pdf,submission bundle,17831,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary.zip,submission bundle,28112478,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/cover_letter.pdf,submission bundle,11722,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/highlights.pdf,submission bundle,13241,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/SUBMISSION_FILES.md,submission bundle,256,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/title_page.tex,submission bundle,1785,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/cover_letter.tex,submission bundle,2261,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/CHECKSUMS.sha256.txt,submission bundle,258,tracked,2026-07-15,duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/README.md,submission bundle,2265,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/requirements.txt,submission bundle,827,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/pyproject.toml,submission bundle,1867,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/supplemental,directory(aggregate),389698907,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/src,directory(aggregate),389852,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/metadata,directory(aggregate),70995,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/manuscript,directory(aggregate),6972063,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/.ruff_cache,directory(aggregate),11271,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/tests,directory(aggregate),337463,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/scripts,directory(aggregate),1084252,untracked,n/a (untracked),duplicate,conditional,,"keep as frozen submission snapshot, but document in canonical_artifacts.md that these are intentional frozen duplicates of reports/normalization_protocol_audit_20260714 and reports/full_calibrated_core tables, not independent evidence",medium
+papers/negative_result_2026,manuscript planning docs,44522,partially_tracked,2026-07-28,manuscript source,conditional,Plan-only (no main.tex yet); JDIQ_2026/main.tex never cites it; reports/repository_scale_headroom_analysis backs this track,keep,medium
+.mypy_cache,cache/env,149115104,untracked,n/a (untracked),generated cache or temporary file,no,"gitignored, correctly untracked","already ignored, no action needed",high
+.ruff_cache,cache/env,98014,untracked,n/a (untracked),generated cache or temporary file,no,"gitignored, correctly untracked","already ignored, no action needed",high
+.pytest_cache,cache/env,119437,untracked,n/a (untracked),generated cache or temporary file,no,"gitignored, correctly untracked","already ignored, no action needed",high
+.venv,cache/env,5890913648,untracked,n/a (untracked),generated cache or temporary file,no,"gitignored, correctly untracked","already ignored, no action needed",high
