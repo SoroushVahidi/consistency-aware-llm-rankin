@@ -33,10 +33,11 @@ This workspace is the **master blueprint** for the JDIQ submission. It is isolat
 | File | Step | Purpose |
 |------|------|---------|
 | `JDIQ_GUIDELINE_SUMMARY.md` | 1 | Journal study |
-| `MASTER_EVIDENCE_INVENTORY.csv` | 2 | 69 repository artifacts |
+| `MASTER_EVIDENCE_INVENTORY.csv` | 2 | **STALE (2026-07-30):** 69 repository artifacts, dated 2026-07-12, predates `reports/full_calibrated_core/` (2026-07-15) and still lists the historical `outputs/pub_vote_cmp_all4/` as canonical. See `EVIDENCE_PROVENANCE_20260730.md` for the current mapping; kept here for provenance only. |
 | `CANONICAL_PAPER_STORY.md` | 3 | Canonical story |
 | `MANUSCRIPT_OUTLINE.md` | 4 | Section outline |
-| `SECTION_EVIDENCE_MAP.csv` | 5 | Evidence → section mapping |
+| `SECTION_EVIDENCE_MAP.csv` | 5 | **STALE (2026-07-30):** Evidence → section mapping, same staleness as `MASTER_EVIDENCE_INVENTORY.csv` above. See `EVIDENCE_PROVENANCE_20260730.md`. |
+| `EVIDENCE_PROVENANCE_20260730.md` | 2b/5b | **Current** evidence-to-claim mapping, added 2026-07-30 repo hygiene Stage 1 (supersedes the two rows above for lookups) |
 | `MISSING_COMPONENTS.md` | 6 | Gap analysis |
 | `FIGURE_PLAN.md` | 7 | Figure plan (superseded by FIGURE_SPECIFICATIONS.md) |
 | `FIGURE_SPECIFICATIONS.md` | 7+ | **Complete figure reproduction briefs** |

@@ -19,6 +19,6 @@
 | `scripts/generate_paper_tables.py` | Build manuscript-ready CSV bundle in `reports/paper_tables/` |
 | `scripts/summarize_publication_vote_suite.py` | Markdown-style aggregate table |
 
-**Pinned evidence (in git):** `outputs/pub_vote_cmp_all4/paper_package/` (canonical breadth); `outputs/pub_vote_cmp_v2/paper_package/` (historical two-dataset run — see `reports/repo_publication_audit.md` before mixing numbers).
+**Pinned evidence (in git):** `outputs/pub_vote_cmp_all4/paper_package/` (historical — see `README.md`'s Key Finding section; current canonical evidence is `reports/full_calibrated_core/`); `outputs/pub_vote_cmp_v2/paper_package/` (historical two-dataset run — see `reports/_archive/publication_audit_20260406/repo_publication_audit.md` before mixing numbers).
 
 **Dependencies:** `datasets>=2.18,<4.0` (see `pyproject.toml`) for Hugging Face datasets. Optional **`ir-datasets`** (`pip install 'consistency-ranker[ir]'`) for TREC DL passage and Robust04 exports.

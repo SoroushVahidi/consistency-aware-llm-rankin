@@ -39,7 +39,8 @@ claims to describe the same thing.
 | Branch-specific history and exact continuation point | `docs/handoff/CURRENT_BRANCH_HANDOFF.md` | Companion to this file; branch-scoped |
 | Machine-readable snapshot | `docs/handoff/state_snapshot.json` | Same scope as the handoff doc, structured for tooling |
 | Scientific claims actually being made | `papers/JDIQ_2026/manuscript/main.tex` | The submitted manuscript source — not any `docs/*CLAIMS*.md` file |
-| Evidence-to-claim mapping | `papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv`, `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` | Correctly distinguishes canonical (`outputs/pub_vote_cmp_all4/`) from stale/`do_not_use` (`outputs/pub_vote_cmp_v2/`, `outputs/q1_journal_package/`) packages |
+| Evidence-to-claim mapping | `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` (current, added 2026-07-30) | Supersedes `SECTION_EVIDENCE_MAP.csv`/`MASTER_EVIDENCE_INVENTORY.csv` below, which are **stale** (dated 2026-07-12/14, predate `full_calibrated_core`, still list the historical `outputs/pub_vote_cmp_all4/` as canonical) — retained for provenance, not for current lookups |
+| ~~Evidence-to-claim mapping (superseded)~~ | `papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv`, `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv` | Distinguished canonical (`outputs/pub_vote_cmp_all4/`) from stale/`do_not_use` (`outputs/pub_vote_cmp_v2/`, `outputs/q1_journal_package/`) packages, correctly for its own time — but predates the pipeline (`full_calibrated_core`) that actually backs the submitted manuscript; do not use for current lookups |
 | Manuscript status (readiness, drafting) | `papers/JDIQ_2026/CANONICAL_PAPER_STORY.md`, `papers/JDIQ_2026/CONTRIBUTION_AUDIT.md` | **Not** `papers/JDIQ_2026/PROJECT_STATUS_SUPERSEDED_20260712.md` (renamed 2026-07-28 from `PROJECT_STATUS.md` — it described 22%-readiness pre-writing state and is obsolete now the manuscript is a complete draft) |
 | Protocol freezes (counterfactual benchmark) | `docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md` | Frozen protocol identifiers and the Cohere investigation narrative |
 | Preserve-vs-repair research trajectory (revised direction for the mature graph-repair program; now concluded NO-GO) | `docs/research/RESEARCH_TRAJECTORY.md` | Narrative; see also `EXPERIMENT_ROADMAP.md`, `NOVELTY_AND_RELATED_WORK.md`, `DECISION_LOG.md` (entry D6 = final decision), `REPRODUCIBILITY_AND_ARTIFACTS.md`, `MANUSCRIPT_SUMMARY.md` in the same `docs/research/` directory, and `configs/preserve_repair_experiment_spec_v1.json` for the machine-readable spec |
@@ -460,7 +461,24 @@ not a silent edit — see `config.verify_frozen_contract` and
 See `docs/ARTIFACT_POLICY.md` for the general policy. Current classification:
 
 **Canonical, committed evidence:**
-- `outputs/pub_vote_cmp_all4/paper_package/` — mature program's canonical result package.
+- `reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/` —
+  mature program's (JDIQ_2026) actual current canonical result package;
+  every number quoted in `papers/JDIQ_2026/manuscript/main.tex` that I
+  spot-checked traces here. **Correction (2026-07-30, repo hygiene pass,
+  `reports/repo_hygiene_audit_20260729T235053Z/`):** this bullet previously
+  named `outputs/pub_vote_cmp_all4/paper_package/` as the canonical package.
+  That pipeline was last regenerated 2026-03-24 and is referenced nowhere in
+  `main.tex` (zero string matches for `pub_vote_cmp`); it is a **historical**
+  predecessor package, not the current one. `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv`
+  and `SECTION_EVIDENCE_MAP.csv` (cited two rows below as authoritative for
+  evidence-to-claim mapping) have the same staleness — both predate
+  `full_calibrated_core` by about three days and still list `pub_vote_cmp_all4`
+  as canonical; see `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` for the
+  corrected mapping until those two CSVs are regenerated.
+- `outputs/pub_vote_cmp_all4/paper_package/` — **historical** predecessor
+  result package (see correction above); still the functional default for
+  `scripts/generate_q1_tables.py`/`build_paper_evidence_package.py`, so not
+  moved or deleted, just no longer presented as canonical.
 - `reports/policy_selection_20260726T030500Z/` — Outcome F canonical synthetic package.
 - `reports/real_query_policy_replay_20260726T042025Z/` — tracked offline replay.
 - `docs/multifactor_production_uht_corrected_summary_20260727.json` — compact corrected-multifactor summary.

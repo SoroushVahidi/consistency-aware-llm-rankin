@@ -401,9 +401,12 @@ class AuditRunner:
         self.update_status()
 
     def phase0_baseline(self) -> None:
-        audit_text = (REPO / "reports/repo_publication_audit.md").read_text(encoding="utf-8")
-        inv_rows = list(csv.DictReader((REPO / "reports/canonical_results_inventory.csv").open(encoding="utf-8")))
-        claim_rows = list(csv.DictReader((REPO / "reports/claim_support_matrix.csv").open(encoding="utf-8")))
+        # Paths updated 2026-07-30 (repo Stage 2): these three files moved to
+        # reports/_archive/publication_audit_20260406/ when the pipeline they
+        # audit (outputs/pub_vote_cmp_all4/) was marked historical.
+        audit_text = (REPO / "reports/_archive/publication_audit_20260406/repo_publication_audit.md").read_text(encoding="utf-8")
+        inv_rows = list(csv.DictReader((REPO / "reports/_archive/publication_audit_20260406/canonical_results_inventory.csv").open(encoding="utf-8")))
+        claim_rows = list(csv.DictReader((REPO / "reports/_archive/publication_audit_20260406/claim_support_matrix.csv").open(encoding="utf-8")))
         graph_rows = list(csv.DictReader((REPO / "outputs/pub_vote_cmp_all4/paper_package/tables/table_graph_ndcg_and_consistency.csv").open(encoding="utf-8")))
         delta_rows = list(csv.DictReader((REPO / "outputs/pub_vote_cmp_all4/paper_package/tables/table_bootstrap_delta_ndcg.csv").open(encoding="utf-8")))
         bew_rows = list(csv.DictReader((REPO / "outputs/pub_vote_cmp_all4/paper_package/tables/table_consistency_qrels_bew.csv").open(encoding="utf-8")))

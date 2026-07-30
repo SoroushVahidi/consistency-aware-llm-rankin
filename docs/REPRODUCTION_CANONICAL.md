@@ -23,9 +23,13 @@ git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
 cd consistency-aware-llm-rankin
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-pip install -e ".[dev]"
+pip install -e ".[dev,exact]"        # [exact] installs PySCIPOpt, required for the
+                                      # SCIP-dependent exact-repair results this guide covers
 python scripts/check_repo_ready.py   # expect: 0 failures
-pytest -q                            # expect: 550 passed (as of this guide)
+make verify-env                      # expect: PySCIPOpt 6.2.1 reported, exits 0
+make test-full                       # expect: 0 skipped (fails otherwise); run `pytest -q`
+                                      # for the pass count, which changes as tests are added --
+                                      # require zero failures and zero skips, not a fixed count
 ```
 
 ## 2. Repository state

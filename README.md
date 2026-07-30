@@ -21,23 +21,58 @@ known blockers, and safe continuation instructions, see:
 > not uniformly improve retrieval effectiveness; outcomes depend on vote
 > construction, graph regime, and extraction strategy.*
 
-The **canonical evidence package** is `outputs/pub_vote_cmp_all4/paper_package/`
-(four datasets). An earlier two-dataset package lives at
-`outputs/pub_vote_cmp_v2/paper_package/` and is **historical**; do not mix its numbers
-with the all4 package in manuscripts. Both packages show that FAS repair is
-**neutral/inactive** under near-acyclic vote constructions and can be **significantly
-harmful** (nDCG, bootstrap 95% CI strictly negative) under high-cyclicity construction
-on some benchmarks (e.g. SciDocs in the committed bundles). See
+**Current classical-study canonical evidence** (backs the submitted
+`papers/JDIQ_2026/manuscript/main.tex`) is
+[`reports/full_calibrated_core/`](reports/full_calibrated_core/), extended by
+[`reports/normalization_protocol_audit_20260714/`](reports/normalization_protocol_audit_20260714/)
+and
+[`reports/candidate_pool_conditional_audit_20260714/`](reports/candidate_pool_conditional_audit_20260714/).
+See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for the
+full pipeline map and exact reproduction commands. That evidence base shows
+FAS repair is **neutral/inactive** under near-acyclic vote constructions and
+does not survive multiple-testing correction as a reliable positive effect
+under high-cyclicity construction either (0/110 Holm-significant larger-pool
+cells; see `reports/ir_evidence_audit_20260729T182949Z/`).
+
+`outputs/pub_vote_cmp_all4/paper_package/` (four datasets) and
+`outputs/pub_vote_cmp_v2/paper_package/` (two datasets, older) are an
+**earlier, historical evidence package** from a prior phase of this project
+(last regenerated 2026-03-24). They are **not** what the current manuscript
+cites — `papers/JDIQ_2026/manuscript/main.tex` contains zero references to
+either path — and should not be presented as canonical. They remain useful
+for historical/ablation comparison only; do not mix their numbers with the
+current `full_calibrated_core`-backed results. See
 [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) and
-[`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) for conservative claim wording.
+[`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) for conservative claim
+wording written for that earlier package (has not yet been re-validated
+against the current evidence base).
+
+Beyond the classical multi-ranker-fusion backbone above, this repository also
+contains a smaller **real-LLM exploratory evidence base**
+(`reports/repair_frontier_20260729T144742Z/`,
+`reports/extraction_study_20260729T151610Z/`,
+`reports/repair_diagnostic_20260729T162748Z/`, and their upstream sources
+`reports/multi_provider_repair_pilot_20260729T032348Z/` /
+`reports/reviewer_concerns_program_20260729T035320Z/`) using real
+Azure/Gemini/Cohere/Fireworks pairwise judgments. This base currently covers
+only **6 underlying real queries** (replicated across ~20 provider/pool
+constructions each, reported as "n=120 query-graphs" in places — see
+`reports/ir_evidence_audit_review_20260729T235053Z/FINAL_META_AUDIT_REVIEW.md`
+for why that count should not be read as 120 independent observations) and is
+exploratory/directional, not a second large-*n* confirmatory study.
+
+For an integrated read of both evidence bases together, see
+`reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md` (the
+evidence audit) and
+`reports/ir_evidence_audit_review_20260729T235053Z/FINAL_META_AUDIT_REVIEW.md`
+(an independent meta-audit of that audit's conclusions).
 
 **Scope caveat (important):**
-- Canonical **paper-package** tables/plots for the vote-comparison manuscript live under
-  `outputs/pub_vote_cmp_all4/paper_package/` (four datasets). The bundle under
-  `outputs/pub_vote_cmp_v2/paper_package/` is **historical** and should be cited only
-  as such (e.g., ablation lineage), not mixed with the all4 package.
-- Preference edges in the committed publication package are generated from
-  multi-ranker score votes (BM25/TF-IDF/MiniLM), not direct human annotation.
+- Preference edges in the historical `pub_vote_cmp_*` publication package are
+  generated from multi-ranker score votes (BM25/TF-IDF/MiniLM), not direct
+  human annotation. The current `full_calibrated_core` backbone uses the same
+  multi-ranker-fusion construction; the real-LLM exploratory base above uses
+  genuine LLM pairwise judgments instead.
 - Additional experiment trees (including per-dataset runs) may appear under `outputs/real_full/`.
 
 ---
@@ -81,20 +116,24 @@ different results package and is kept for historical reference only.
 
 | Document | Description |
 |---|---|
-| [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | **Start here** — orientation for humans and AI assistants |
-| [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | Exact commands to reproduce all tables and figures |
+| [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | **Start here** — canonical entry point for humans and AI assistants; documentation-authority map for every other status/evidence doc |
+| [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) | **Current classical-study canonical evidence** — exact commands to reproduce every table cited in `papers/JDIQ_2026/manuscript/main.tex` |
+| [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | Orientation for AI assistants (being reconciled with `PROJECT_STATUS.md`/`REPRODUCTION_CANONICAL.md` — see history note at its top) |
+| [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | **Historical** — reproduces the earlier `pub_vote_cmp_*` package, superseded by `REPRODUCTION_CANONICAL.md` |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
-| [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing |
-| [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing |
-| [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims |
-| [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels |
+| [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing (written for the historical package; not yet re-validated against `full_calibrated_core`) |
+| [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing (historical package era) |
+| [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims (historical package era) |
+| [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) | Claim-to-evidence mapping with support levels (historical package era; carries a superseded banner per `PROJECT_STATUS.md`) |
 | [`docs/JOURNAL_READY_CONTRIBUTIONS.md`](docs/JOURNAL_READY_CONTRIBUTIONS.md) | Candidate journal-style contribution statements |
-| [`docs/RESULTS_FOR_PAPER.md`](docs/RESULTS_FOR_PAPER.md) | What to include vs avoid in manuscript results section |
-| [`docs/THREATS_TO_VALIDITY.md`](docs/THREATS_TO_VALIDITY.md) | Structured threats-to-validity section draft |
+| [`docs/RESULTS_FOR_PAPER.md`](docs/RESULTS_FOR_PAPER.md) | What to include vs avoid in manuscript results section (historical package era; carries a superseded banner) |
+| [`docs/THREATS_TO_VALIDITY.md`](docs/THREATS_TO_VALIDITY.md) | Structured threats-to-validity section draft (historical package era; carries a superseded banner) |
 | [`docs/PAPER_TABLES_GENERATION.md`](docs/PAPER_TABLES_GENERATION.md) | Guide for generating `reports/paper_tables/` |
 | [`docs/experiment_inventory.md`](docs/experiment_inventory.md) | Summary of every experiment family |
-| [`reports/repo_publication_audit.md`](reports/repo_publication_audit.md) | **Evidence audit** — canonical result package, claim support, v2 vs all4 |
-| [`outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md) | Latest four-dataset manuscript summary (SciDocs, FiQA, HotpotQA, BRIGHT) |
+| [`reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md`](reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md) | **Current evidence audit** — integrates the classical `full_calibrated_core` backbone with the real-LLM exploratory studies |
+| [`reports/ir_evidence_audit_review_20260729T235053Z/FINAL_META_AUDIT_REVIEW.md`](reports/ir_evidence_audit_review_20260729T235053Z/FINAL_META_AUDIT_REVIEW.md) | Independent meta-audit of the evidence audit above (readiness caveats, real-LLM sample-size caveat) |
+| [`reports/_archive/publication_audit_20260406/repo_publication_audit.md`](reports/_archive/publication_audit_20260406/repo_publication_audit.md) | **Historical evidence audit** (2026-04-06) — canonical-package recommendation for the now-superseded `pub_vote_cmp_all4`/`v2` split; kept for provenance, see `reports/README.md` for current pointers |
+| [`outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_all4/paper_package/MANUSCRIPT_SUMMARY.md) | Historical four-dataset summary from the earlier (pre-`full_calibrated_core`) pipeline — not cited by the current manuscript |
 | [`outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md`](outputs/pub_vote_cmp_v2/paper_package/MANUSCRIPT_SUMMARY.md) | Earlier two-dataset manuscript findings (historical) |
 | [`figures/manuscript/README.md`](figures/manuscript/README.md) | Curated manuscript figures + graphical abstract pointer |
 
@@ -180,17 +219,20 @@ consistency-aware-llm-rankin/
 │   ├── interim/                    # Scratch space
 │   └── cache/                      # HuggingFace cache
 ├── outputs/
-│   ├── pub_vote_cmp_all4/          # Four-dataset publication vote suite (tables/plots committed)
+│   ├── pub_vote_cmp_all4/          # HISTORICAL: earlier publication vote suite, not cited by main.tex
 │   │   └── paper_package/
-│   ├── pub_vote_cmp_v2/            # Earlier two-dataset publication bundle (historical)
+│   ├── pub_vote_cmp_v2/            # HISTORICAL: earlier two-dataset publication bundle
 │   │   └── paper_package/
-│   └── q1_journal_package/         # Aggregated Q1 tables (auto-generated)
+│   └── q1_journal_package/         # HISTORICAL: aggregated Q1 tables derived from pub_vote_cmp_v2
 ├── figures/                        # Curated manuscript figures + graphical abstract
-├── reports/                        # Publication audit, claim matrix, merged result tables
-├── docs/                           # Extended documentation
+├── reports/
+│   ├── full_calibrated_core/       # CURRENT canonical classical-study evidence (backs main.tex)
+│   ├── ir_evidence_audit_20260729T182949Z/  # Current integrated evidence audit
+│   └── _archive/publication_audit_20260406/  # HISTORICAL publication audit (pub_vote_cmp era; moved here in repo Stage 2)
+├── docs/                           # Extended documentation; see docs/REPRODUCTION_CANONICAL.md first
+│   └── historical/                 # Superseded root-level docs (TODO.md and others; moved here in repo Stage 2)
 ├── pyproject.toml
 ├── requirements.txt
-├── TODO.md
 └── README.md
 ```
 
@@ -625,15 +667,19 @@ outputs/
 
 ## Current Status
 
+**Note: the table below predates the JDIQ_2026 manuscript and the
+`full_calibrated_core` pipeline and has not been fully refreshed; treat
+`PROJECT_STATUS.md` as authoritative wherever the two disagree.**
+
 | Area | Status |
 |---|---|
 | Core library (`src/consistency_ranker/`) | ✅ Implemented and unit-tested (see `pytest`) |
 | Synthetic experiments | ✅ Executed (noise sweep, scale sweep, multi-seed) |
-| Real-data pipeline — four benchmarks | ✅ Publication-facing tables/plots in `outputs/pub_vote_cmp_all4/paper_package/` |
-| Bootstrap significance analysis | ✅ Executed (2000 reps; tables in paper packages where applicable) |
+| Real-data pipeline — four benchmarks | ✅ Current canonical evidence is `reports/full_calibrated_core/` (see `docs/REPRODUCTION_CANONICAL.md`); `outputs/pub_vote_cmp_all4/paper_package/` is the historical predecessor package, not cited by the current manuscript |
+| Bootstrap significance analysis | ✅ Executed (10,000 reps in the current `full_calibrated_core`/`statistical_inference.py` pipeline; 2,000 reps in the historical `pub_vote_cmp_*` packages) |
 | Real-data pipeline — per-dataset full trees | ⚙️ Additional runs may live under `outputs/real_full/` (not all committed) |
 | Exact ILP MWFAS solver (open-source SCIP) | ✅ Implemented in `mwfas_solver.py` (`method="scip"`/`"exact"`/`"ilp"`; optional dependency, no license required — `pip install "consistency-ranker[exact]"`); see `tests/test_exact_mwfas_scip.py` |
-| LLM pairwise preferences | ⏳ Publication experiments use score-derived votes, not LLM judgments. A separate, active multi-provider LLM-judge counterfactual benchmark exists in engineering/canary form (not yet run at benchmark scale) — see [Project status](PROJECT_STATUS.md) |
+| LLM pairwise preferences | ✅ Real multi-provider LLM-judge preference graphs (Azure/Gemini/Cohere/Fireworks) now exist for a small (6-real-query) exploratory pilot — see `reports/repair_frontier_20260729T144742Z/`, `reports/extraction_study_20260729T151610Z/`, `reports/repair_diagnostic_20260729T162748Z/`. This is exploratory/directional, not benchmark-scale; the classical publication-package rows above still use score-derived votes, not LLM judgments. |
 
 **Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
 

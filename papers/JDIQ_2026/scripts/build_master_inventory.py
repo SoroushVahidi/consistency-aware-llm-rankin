@@ -104,16 +104,16 @@ CURATED: list[dict] = [
     {"artifact": "q1_journal_package", "location": "outputs/q1_journal_package/",
      "description": "Q1 tables built from v2 by default", "publication_quality": "low",
      "recommended_usage": "do_not_use", "manuscript_section": "n/a", "confidence": "low", "canonical": "no", "historical": "yes", "stale": "yes"},
-    {"artifact": "ijcs_manuscript_zip", "location": "Consistency_Aware_Reranking_via_Preference_Graph_Repair__Structural_Gains_and_Conditional_Retrieval_Effects_IJCS.zip",
+    {"artifact": "ijcs_manuscript_zip", "location": "papers/_archive/IJCS_early_draft.zip",  # moved 2026-07-30, repo Stage 2
      "description": "Rejected IJCS submission archive", "publication_quality": "low",
      "recommended_usage": "historical_reference_only", "manuscript_section": "n/a", "confidence": "low", "canonical": "no", "historical": "yes", "stale": "yes"},
     {"artifact": "manuscript_artifacts_stale", "location": "outputs/manuscript_artifacts/",
      "description": "Pre-all4 generated LaTeX/CSV tables", "publication_quality": "low",
      "recommended_usage": "regenerate", "manuscript_section": "n/a", "confidence": "low", "canonical": "no", "historical": "yes", "stale": "yes"},
-    {"artifact": "MANUSCRIPT_SUMMARY_root", "location": "MANUSCRIPT_SUMMARY.md",
+    {"artifact": "MANUSCRIPT_SUMMARY_root", "location": "docs/historical/MANUSCRIPT_SUMMARY.md",  # moved 2026-07-30, repo Stage 2
      "description": "Root manuscript summary (may predate all4)", "publication_quality": "low",
      "recommended_usage": "historical_reference_only", "manuscript_section": "n/a", "confidence": "low", "canonical": "no", "historical": "yes", "stale": "yes"},
-    {"artifact": "PAPER_DRAFT_WORDING", "location": "PAPER_DRAFT_WORDING.md",
+    {"artifact": "PAPER_DRAFT_WORDING", "location": "docs/historical/PAPER_DRAFT_WORDING.md",  # moved 2026-07-30, repo Stage 2
      "description": "Draft wording snippets", "publication_quality": "low",
      "recommended_usage": "historical_reference_only", "manuscript_section": "n/a", "confidence": "low", "canonical": "no", "historical": "yes", "stale": "yes"},
     # Baselines / modern
@@ -137,10 +137,10 @@ CURATED: list[dict] = [
      "description": "Synthetic scalability timing (n=20)", "publication_quality": "medium",
      "recommended_usage": "supplementary", "manuscript_section": "Results;Supplement", "confidence": "medium", "canonical": "no", "historical": "no", "stale": "no"},
     # Docs / claims
-    {"artifact": "repo_publication_audit", "location": "reports/repo_publication_audit.md",
+    {"artifact": "repo_publication_audit", "location": "reports/_archive/publication_audit_20260406/repo_publication_audit.md",  # moved 2026-07-30, repo Stage 2
      "description": "Conservative publication audit (2026-03-22)", "publication_quality": "high",
      "recommended_usage": "authoring_blueprint", "manuscript_section": "n/a", "confidence": "high", "canonical": "yes", "historical": "no", "stale": "no"},
-    {"artifact": "claim_support_matrix", "location": "reports/claim_support_matrix.csv",
+    {"artifact": "claim_support_matrix", "location": "reports/_archive/publication_audit_20260406/claim_support_matrix.csv",  # moved 2026-07-30, repo Stage 2
      "description": "Original claim-evidence matrix", "publication_quality": "high",
      "recommended_usage": "claims_discipline", "manuscript_section": "Introduction;Limitations", "confidence": "high", "canonical": "yes", "historical": "no", "stale": "no"},
     {"artifact": "final_claim_support_matrix", "location": "experiments/publication_readiness_audit_20260711_233629/final_claim_support_matrix.csv",
