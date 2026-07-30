@@ -6,6 +6,11 @@ on:
 
 jobs:
   tests:
+    # Lightweight job: does NOT install the [exact] (PySCIPOpt/SCIP) extra, so
+    # the 16 solver-dependent tests are expected to skip here. This job exists
+    # for fast lint/non-solver feedback only. The solver-enabled job below
+    # (`tests-solver-enabled`) is the one that must show zero solver skips --
+    # do not rely on this job's skip count to mean "everything ran".
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,5 +27,39 @@ jobs:
           pip install -r requirements.txt
           pip install -e ".[dev]"
 
-      - name: Run tests
+      - name: Run tests (non-solver; SCIP tests expected to skip in this job)
         run: pytest
+
+  tests-solver-enabled:
+    # Required job: installs the [exact] extra so the SCIP-dependent tests
+    # actually run instead of silently skipping. This is the job that
+    # enforces the canonical solver version and must show 0 skipped tests.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (incl. [exact] solver extra)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e ".[dev,exact]"
+
+      - name: Report installed SCIP / PySCIPOpt versions
+        run: |
+          python -c "
+          import pyscipopt
+          print('PySCIPOpt version:', pyscipopt.__version__)
+          print('Underlying SCIP version:', pyscipopt.Model().version())
+          "
+
+      - name: Verify canonical solver version (fails visibly on mismatch)
+        run: make verify-env
+
+      - name: Run full suite and require zero skipped tests
+        run: make test-full
