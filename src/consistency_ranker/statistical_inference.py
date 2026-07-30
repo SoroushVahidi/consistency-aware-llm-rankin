@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, Sequence
+from typing import Any, Iterable, Sequence
 
 import numpy as np
+import pandas as pd
 from scipy.stats import beta as beta_dist
 from scipy.stats import norm
 from scipy.stats import t as student_t
@@ -601,3 +602,329 @@ def paired_tost(
         mean_delta=mean_delta,
         se_delta=se,
     )
+
+
+# ---------------------------------------------------------------------------
+# Adjusted-p-value significance helper
+#
+# Added 2026-07-30 (repo hygiene Stage 1,
+# reports/repo_cleanup_stage1_20260730T004010Z/) to centralize and guard
+# against a bug caught while building reports/ir_evidence_audit_20260729T182949Z/:
+# `pool_cutoff_statistics.csv`'s `holm_active_ms1_family` column is a
+# Holm-adjusted p-value (float, NaN outside the active family), despite its
+# boolean-sounding name. Comparing it with `series == True` silently matches
+# rows where the p-value happens to equal exactly 1.0 (pandas casts
+# `True` -> `1.0`) -- the OPPOSITE of "significant" -- which produced a
+# spurious "24/216 Holm-significant" result before it was caught. This
+# helper makes that specific misuse raise loudly instead of silently
+# returning a wrong mask.
+#
+# This is deliberately NOT applied to genuinely boolean columns such as
+# `holm_significant_at_0.05` in `exact_larger_pool_family_statistics.csv` /
+# `baseline_targeted_tests_primary_canonical.csv` (verified `dtype == bool`
+# there) -- for those, indexing with the column directly (or `== True`) is
+# correct; this helper exists for the float-disguised-as-boolean case only,
+# and rejects real boolean input specifically so the two cases can never be
+# confused for one another.
+# ---------------------------------------------------------------------------
+
+
+def is_significant_pvalue(values: Any, alpha: float = 0.05) -> pd.Series:
+    """Return a boolean mask of which (adjusted) p-values are < ``alpha``.
+
+    Treats missing values (``NaN``, ``None``, ``pd.NA``) as not-significant
+    rather than raising or silently matching. Raises ``TypeError`` if
+    ``values`` is boolean-typed (plain ``bool``, NumPy ``bool_``, or
+    pandas' nullable ``BooleanDtype``) -- a real p-value series should never
+    be boolean-typed, and the historical bug this helper guards against is
+    exactly a float p-value column being mistaken for (or compared as if it
+    were) a boolean column. Raises ``ValueError``/``TypeError`` via
+    ``pandas.to_numeric(..., errors="raise")`` on genuinely non-numeric
+    input (e.g. the strings ``"True"``/``"yes"``) rather than silently
+    coercing it.
+    """
+    s = values if isinstance(values, pd.Series) else pd.Series(values)
+    if isinstance(s.dtype, pd.BooleanDtype) or s.dtype == bool:
+        raise TypeError(
+            "is_significant_pvalue() expects a numeric (adjusted) p-value "
+            f"series, but received boolean dtype {s.dtype!r}. This is exactly "
+            "the historical bug this helper guards against: a float p-value "
+            "column that happens to contain the value 1.0 would silently "
+            "match `series == True` (pandas casts True -> 1.0), which is the "
+            "OPPOSITE of significant. If this series is genuinely a "
+            "precomputed significance flag (e.g. a column already named "
+            "`holm_significant_at_<alpha>` with real bool dtype), use it "
+            "directly instead of calling this helper."
+        )
+    numeric = pd.to_numeric(s, errors="raise")
+    return numeric.notna() & (numeric < alpha)
+
+
+def parse_numeric_threshold(value: Any) -> float:
+    """Parse ``value`` (a float, int, or numeric string) into a plain float.
+
+    Added alongside :func:`is_significant_pvalue` to centralize numeric
+    threshold parsing (e.g. an alpha/significance cutoff read from a config
+    file or CLI argument) after a second, unrelated bug was caught in the
+    same audit: ``df.holm_significant_at_0.05`` parses as the attribute
+    access ``df.holm_significant_at_0`` followed by the float literal
+    ``.05`` -- a ``SyntaxError`` at parse time, not a silent runtime bug,
+    but a trap for any column name containing a literal ``.`` (always use
+    bracket indexing, ``df["holm_significant_at_0.05"]``, for such columns).
+
+    Accepts standard Python float literals/strings, including a leading-dot
+    form (``".05"``) and scientific notation (``"5e-2"``), and negative
+    values. Rejects booleans explicitly (``True``/``False`` are not valid
+    thresholds even though ``float(True) == 1.0`` would otherwise silently
+    "succeed"), and rejects malformed strings by letting the underlying
+    ``ValueError`` propagate.
+    """
+    if isinstance(value, bool):
+        raise TypeError(
+            f"parse_numeric_threshold() rejects bool input ({value!r}); "
+            "a significance threshold must be a real number, not a boolean flag."
+        )
+    return float(value)
+
+
+# ---------------------------------------------------------------------------
+# Cluster-aware inference
+#
+# Added 2026-07-30 (repo Stage 3, real-LLM clustered re-analysis) to
+# centralize the fix for a second, distinct bug family from the same
+# research thread: `repair_frontier`/`extraction_study`/`repair_diagnostic`
+# each report "n=120" observations, but those 120 rows are 6 real,
+# independent underlying queries replicated across ~20 provider/pool
+# construction variants apiece. `bootstrap_mean_interval()` (above)
+# resamples individual rows i.i.d. -- correct when rows genuinely are
+# independent draws, silently wrong (understates uncertainty) when they are
+# nested within a much smaller number of true clusters. These two functions
+# make "resample the clusters, not the rows" the explicit, only way to get a
+# CI for clustered data in this codebase, so a future study cannot
+# reintroduce the same mistake by reaching for `bootstrap_mean_interval`
+# out of habit.
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class ClusteredMeanResult:
+    """Cluster-level summary: one mean per cluster, then the mean of means.
+
+    This is the "query-level aggregation" step several inference methods in
+    this module build on: computing statistics over ``cluster_means`` (6
+    numbers, one per query) rather than over the raw rows (120 numbers, 20
+    per query) is what makes every downstream CI/test honest about the true
+    number of independent observations.
+    """
+
+    overall_mean: float
+    cluster_ids: tuple[Any, ...]
+    cluster_means: tuple[float, ...]
+    cluster_sizes: tuple[int, ...]
+    n_clusters: int
+    n_rows: int
+
+
+def compute_cluster_means(values: Sequence[float], clusters: Sequence[Any]) -> ClusteredMeanResult:
+    """Aggregate ``values`` to one mean per distinct value in ``clusters``.
+
+    ``clusters`` must be the same length as ``values`` (one cluster label
+    per row); rows sharing a cluster label are averaged together before any
+    further inference is performed on them.
+    """
+    values = list(values)
+    clusters = list(clusters)
+    if len(values) != len(clusters):
+        raise ValueError(
+            f"compute_cluster_means: values (n={len(values)}) and clusters "
+            f"(n={len(clusters)}) must be the same length"
+        )
+    if not values:
+        return ClusteredMeanResult(
+            overall_mean=float("nan"),
+            cluster_ids=(),
+            cluster_means=(),
+            cluster_sizes=(),
+            n_clusters=0,
+            n_rows=0,
+        )
+    by_cluster: dict[Any, list[float]] = {}
+    order: list[Any] = []
+    for v, c in zip(values, clusters):
+        if c not in by_cluster:
+            by_cluster[c] = []
+            order.append(c)
+        by_cluster[c].append(float(v))
+    cluster_ids = tuple(order)
+    cluster_means = tuple(float(np.mean(by_cluster[c])) for c in order)
+    cluster_sizes = tuple(len(by_cluster[c]) for c in order)
+    overall_mean = float(np.mean(cluster_means))  # mean of cluster means, NOT mean of rows
+    return ClusteredMeanResult(
+        overall_mean=overall_mean,
+        cluster_ids=cluster_ids,
+        cluster_means=cluster_means,
+        cluster_sizes=cluster_sizes,
+        n_clusters=len(cluster_ids),
+        n_rows=len(values),
+    )
+
+
+def cluster_bootstrap_mean_interval(
+    values: Sequence[float],
+    clusters: Sequence[Any],
+    *,
+    method: str = "percentile",
+    reps: int = 10_000,
+    seed: int = 13,
+    min_clusters: int = 3,
+) -> BootstrapIntervalResult:
+    """Cluster (block) bootstrap CI for the mean, resampling clusters.
+
+    Each bootstrap replicate draws ``n_clusters`` cluster labels **with
+    replacement** from the observed clusters, then averages those clusters'
+    *already-aggregated* per-cluster means (see :func:`compute_cluster_means`)
+    -- never resamples individual rows. With ``n_clusters`` this small (e.g.
+    6), the bootstrap distribution is necessarily coarse (only
+    ``comb(2*n_clusters-1, n_clusters)`` distinct resample compositions are
+    possible); this is reported honestly via ``reps`` and ``n_clusters`
+    rather than dressed up as high-resolution.
+
+    Raises ``ValueError`` if fewer than ``min_clusters`` distinct clusters
+    are present -- silently returning a CI computed on 1-2 clusters would be
+    worse than refusing, since no percentile interval is meaningful there.
+    """
+    agg = compute_cluster_means(values, clusters)
+    if agg.n_clusters < min_clusters:
+        raise ValueError(
+            f"cluster_bootstrap_mean_interval requires at least {min_clusters} distinct "
+            f"clusters, got {agg.n_clusters}. Refusing to silently compute a CI that would "
+            "understate uncertainty (or be undefined) with this few clusters."
+        )
+    cluster_means_arr = np.asarray(agg.cluster_means, dtype=float)
+    n = agg.n_clusters
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, n, size=(reps, n))
+    boot_means = cluster_means_arr[idx].mean(axis=1)
+    theta_hat = agg.overall_mean
+    frac_gt_zero = float(np.mean(boot_means > 0.0))
+    alpha_lo, alpha_hi = 0.025, 0.975
+
+    if method == "percentile":
+        lo, hi = np.quantile(boot_means, [alpha_lo, alpha_hi])
+    elif method == "basic":
+        q_lo, q_hi = np.quantile(boot_means, [alpha_lo, alpha_hi])
+        lo, hi = (2 * theta_hat - q_hi), (2 * theta_hat - q_lo)
+    else:
+        raise ValueError(f"cluster_bootstrap_mean_interval: unknown method {method!r}")
+
+    return BootstrapIntervalResult(
+        method=f"cluster_{method}",
+        lower=float(lo),
+        upper=float(hi),
+        frac_gt_zero=frac_gt_zero,
+        reps=reps,
+        seed=seed,
+    )
+
+
+def cluster_exact_sign_flip_pvalue(
+    values: Sequence[float], clusters: Sequence[Any]
+) -> SignFlipResult:
+    """Exact paired sign-flip test on cluster-level means (query-level
+    aggregation followed by an exact permutation test).
+
+    With only a handful of clusters (e.g. 6, so 2**6=64 sign patterns) this
+    is enumerated exactly by :func:`exact_sign_flip_pvalue` -- delegating to
+    it here (rather than duplicating the enumeration logic) after the
+    query-level aggregation step, so the "cluster" version and the
+    already-existing row-level version share one tested implementation.
+    """
+    agg = compute_cluster_means(values, clusters)
+    return exact_sign_flip_pvalue(agg.cluster_means)
+
+
+def cluster_exact_permutation_correlation(
+    feature_values: Sequence[float],
+    outcome_values: Sequence[float],
+    clusters: Sequence[Any],
+    *,
+    max_exact_n: int = 8,
+    mc_reps: int = 10_000,
+    seed: int = 19,
+) -> dict[str, Any]:
+    """Query-clustered feature-outcome association: aggregate both
+    ``feature_values`` and ``outcome_values`` to one value per cluster
+    (mean; for a 0/1 feature this is the within-cluster fraction), compute
+    Pearson r on the resulting (n_clusters) pairs, and get a p-value by
+    exact permutation (enumerating all ``n_clusters!`` relabelings when
+    ``n_clusters <= max_exact_n`` -- 6! = 720, trivial to enumerate exactly;
+    falls back to a seeded Monte Carlo permutation for larger cluster
+    counts). This replaces a row-level Pearson correlation computed at
+    n=120 (which treats 20 replicates of each of 6 queries as 120
+    independent data points) with the honest n=6 test the data can
+    actually support -- the scipy/asymptotic p-value at n=6 would rest on a
+    t-distribution approximation that is not trustworthy this far from its
+    large-sample justification, so this always reports an exact/permutation
+    p-value instead, never the asymptotic one.
+    """
+    import itertools
+    import math
+
+    agg_feat = compute_cluster_means(feature_values, clusters)
+    agg_out = compute_cluster_means(outcome_values, clusters)
+    if agg_feat.cluster_ids != agg_out.cluster_ids:
+        raise ValueError(
+            "cluster_exact_permutation_correlation: feature and outcome clusters must "
+            "appear in the same order -- build both from the same (values, clusters) call order"
+        )
+    x = np.asarray(agg_feat.cluster_means, dtype=float)
+    y = np.asarray(agg_out.cluster_means, dtype=float)
+    n = len(x)
+    if n < 3:
+        return {
+            "n_clusters": n,
+            "pearson_r": None,
+            "pvalue": None,
+            "method": "insufficient_clusters",
+        }
+    if np.std(x) < _ZERO_TOL or np.std(y) < _ZERO_TOL:
+        return {
+            "n_clusters": n,
+            "pearson_r": 0.0,
+            "pvalue": 1.0,
+            "method": "degenerate_zero_variance",
+        }
+    observed_r = float(np.corrcoef(x, y)[0, 1])
+
+    if n <= max_exact_n:
+        perms = list(itertools.permutations(range(n)))
+        count = 0
+        for perm in perms:
+            r = np.corrcoef(x, np.array(y)[list(perm)])[0, 1]
+            if abs(r) >= abs(observed_r) - _ZERO_TOL:
+                count += 1
+        pvalue = count / len(perms)
+        method = f"exact_permutation_{math.factorial(n)}"
+        reps = len(perms)
+    else:
+        rng = np.random.default_rng(seed)
+        count = 0
+        for _ in range(mc_reps):
+            perm_y = rng.permutation(y)
+            r = np.corrcoef(x, perm_y)[0, 1]
+            if abs(r) >= abs(observed_r) - _ZERO_TOL:
+                count += 1
+        pvalue = (count + 1) / (mc_reps + 1)
+        method = "monte_carlo_permutation"
+        reps = mc_reps
+
+    return {
+        "n_clusters": n,
+        "cluster_ids": agg_feat.cluster_ids,
+        "cluster_feature_means": tuple(x.tolist()),
+        "cluster_outcome_means": tuple(y.tolist()),
+        "pearson_r": observed_r,
+        "pvalue": float(pvalue),
+        "method": method,
+        "reps": reps,
+    }
