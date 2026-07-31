@@ -8,6 +8,7 @@ RUFF := $(VENV)/bin/ruff
 OUTPUTS := outputs
 
 .PHONY: help setup check lint test test-full typecheck verify-env \
+        check-architecture \
         validate-evidence reproduce-ir-audit reproduce-real-llm-reanalysis \
         validate-offline doc-links secret-scan repo-ready \
         synth-smoke q1-tables paper-tables \
@@ -17,7 +18,8 @@ help:
 	@echo "Targets:"
 	@echo "  setup                          Create venv and install dependencies (incl. [dev,exact])"
 	@echo "  verify-env                     Confirm Python/solver versions match the canonical spec"
-	@echo "  check                          Run repository readiness checks"
+	@echo "  check                          Run repository readiness checks (includes check-architecture)"
+	@echo "  check-architecture             Fail if any consistency_ranker subpackage has a circular import dependency"
 	@echo "  lint                           Run Ruff lint checks"
 	@echo "  test                           Run pytest (fast: whatever is installed; SCIP tests skip if absent)"
 	@echo "  test-full                      Run pytest and fail if any test is skipped (requires [exact] extra)"
@@ -50,6 +52,9 @@ verify-env:
 
 check:
 	"$(PYTHON)" scripts/check_repo_ready.py
+
+check-architecture:
+	"$(PYTHON)" scripts/check_architecture_boundaries.py
 
 lint:
 	"$(RUFF)" check .

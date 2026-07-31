@@ -202,6 +202,22 @@ def check_output_directories() -> None:
                 _fail("directories", f"Cannot create {rel}/: {exc}")
 
 
+def check_architecture_boundaries() -> None:
+    """Verify no circular dependency exists among consistency_ranker's
+    subpackages (see scripts/check_architecture_boundaries.py). Added after
+    a real cycle was found and fixed between multi_provider_eval and
+    multifactor_acquisition (repo hygiene Stage 5, 2026-07-30)."""
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    from check_architecture_boundaries import build_package_graph, find_one_cycle
+
+    graph = build_package_graph()
+    cycle = find_one_cycle(graph)
+    if cycle is None:
+        _ok("architecture", f"No circular subpackage dependency ({len(graph)} subpackages scanned)")
+    else:
+        _fail("architecture", f"Circular subpackage dependency: {' -> '.join(cycle)}")
+
+
 def check_optional_ir_datasets() -> None:
     """ir-datasets is optional; warn if missing (TREC DL / Robust04)."""
     try:
@@ -249,6 +265,7 @@ def run_all_checks() -> None:
     check_docs()
     check_committed_tables()
     check_output_directories()
+    check_architecture_boundaries()
     check_optional_ir_datasets()
     check_pytest_discovery()
 

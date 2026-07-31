@@ -27,6 +27,9 @@ jobs:
           pip install -r requirements.txt
           pip install -e ".[dev]"
 
+      - name: Check architecture boundaries (no circular subpackage dependencies)
+        run: python scripts/check_architecture_boundaries.py
+
       - name: Run tests (non-solver; SCIP tests expected to skip in this job)
         run: pytest
 
