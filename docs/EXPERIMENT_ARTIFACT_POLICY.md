@@ -70,6 +70,51 @@ The decision is:
   `reports/multi_provider_repair_pilot_20260729T032348Z/PROVIDER_MODELS.json`
   so the reanalysis does not depend on raw transcripts.
 
+The current tracked compact evidence is sufficient for the committed
+cluster-aware reanalysis. Re-running the raw provider collection from scratch
+would require paid/provider calls and is not byte-deterministic because provider
+outputs may change over time even under frozen prompts and schemas.
+
+### Raw Transcript Storage Classes
+
+| Class | Examples | Git status | Use |
+|---|---|---|---|
+| Git-tracked compact evidence | Parsed judgment JSONL, provider usage/failure ledgers, `PROVIDER_MODELS.json`, run configs, summaries, clustered reanalysis tables. | Tracked. | Supports current repository claims without exposing raw payloads. |
+| Locally retained ignored raw transcripts | `reports/*/raw_calls/` and `*_calls.jsonl` entries listed in `docs/artifact_inventories/untracked_outputs_20260731.csv`. | Ignored by narrow `.gitignore` rules. | Allows the original operator to audit exact provider exchanges locally. |
+| Externally archived raw evidence | A tarball or object-store bundle created from the ignored raw transcript paths plus inventory/checksums. | Not in Git. | Durable restricted-access preservation if exact raw exchanges become necessary for review or public artifact release. |
+| Regenerable debug/smoke caches | Smoke `cache/`, `checkpoint/`, and log directories classified as duplicate or temporary in the inventory. | Ignored by narrow `.gitignore` rules. | Local debugging only; regenerate from the tracked scripts/configs if needed. |
+
+### External Archive Procedure
+
+Before deleting any local raw transcript, first create and verify an external
+archive. The archive must not be committed to Git and must not be printed in
+logs or documentation beyond its filename, checksum, and storage handle.
+
+1. Create a new archive version named
+   `raw-provider-transcripts-YYYYMMDDTHHMMSSZ`.
+2. Include only the ignored raw-transcript paths whose inventory category is
+   `raw provider request/response cache`; keep smoke/debug duplicates separate.
+3. Include a manifest with repo-relative paths, byte sizes, SHA-256 checksums,
+   source experiment directory, provider/model metadata file, generating script,
+   and the Git commit used for the inventory.
+4. Verify every archived file against the manifest after packaging and again
+   after upload or copy to external storage.
+5. Store the archive in a restricted-access research artifact location selected
+   by the project owner. No destination is currently configured in this
+   repository.
+6. Record the archive version, external storage handle, top-level archive
+   SHA-256, manifest SHA-256, access restrictions, and deletion authorization in
+   a tracked status note. Do not include raw request/response contents in that
+   note.
+7. Delete local raw transcripts only after the tracked status note records
+   successful verification and explicit human authorization for deletion.
+
+Selecting and populating a durable external archive destination is a
+**public-release condition** for any release that promises exact raw-provider
+transcript availability. It is not a merge blocker for code or documentation
+integration because the current claims are supported by tracked compact
+evidence and the ignored local raw files remain untouched.
+
 ## Adding a New Experiment Family
 
 Before running:
