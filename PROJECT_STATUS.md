@@ -1,5 +1,15 @@
 # Project Status
 
+> **2026-07-31 correction:** this document's branch-status narrative below
+> (`fix/outcome-f-production-operating-point`, "28 ahead / 0 behind
+> `origin/main`", etc.) describes the state **before** that branch merged
+> into `main` via PR #44 (`76dd680`, merged 2026-07-31T14:00:09Z). It is kept
+> as dated history/handoff narrative, not rewritten. **For the current state
+> of `main`, read `docs/PROJECT_STATUS.md` first** -- it is now the
+> authoritative live-state snapshot; this file remains authoritative for the
+> detailed pre-merge branch history and reasoning that produced today's
+> `main`.
+
 *Canonical entry point for humans and agents. If this document and any other document
 disagree about current state, re-verify Git/code directly (see "Last verified state")
 rather than trusting either document blindly.*
