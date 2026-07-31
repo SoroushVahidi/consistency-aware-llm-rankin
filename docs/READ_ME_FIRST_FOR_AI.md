@@ -1,5 +1,14 @@
 # Read this first (for humans and AI assistants)
 
+> **SUPERSEDED as the primary AI-orientation entry point (2026-07-31).**
+> This file's role is now filled by **`docs/AGENT_GUIDE.md`** (operational
+> "what to do") and **`docs/CONTRIBUTIONS.md`** (what exists and its
+> status) — read those first. This file's code-map (§5) and environment
+> notes (§7) below remain accurate and are kept for reference, but do not
+> use §1-4/§6 as your primary orientation; they duplicate, with slightly
+> different framing, information `docs/CONTRIBUTIONS.md` now maintains
+> canonically.
+
 **This file is being reconciled with `../PROJECT_STATUS.md`, which now
 self-declares as "the canonical entry point for humans and agents" and
 should be read first if the two ever disagree — re-verify against Git/code

@@ -20,6 +20,29 @@ history/context for that work but no longer describes "the current branch" --
 `4b1e610`) and this repo-hygiene pass. This file is the current snapshot;
 that file is the archived narrative that produced it.
 
+## Document authority hierarchy
+
+One document is authoritative for each concern below. If two documents ever
+disagree, trust the one listed here, not the other.
+
+| Question type | Authoritative document |
+|---|---|
+| Orientation, how to install/validate, where to look | `README.md` |
+| What this repo contributes and does not contribute | `docs/CONTRIBUTIONS.md` |
+| Current state, what's unfinished, subsystem status | `docs/PROJECT_STATUS.md` (this file) |
+| Concise operational guide for an agent | `docs/AGENT_GUIDE.md` |
+| Module layering, canonical implementations, terminology | `docs/ARCHITECTURE.md` |
+| Experiment families, entry points, test tiers, evidence inventory | `docs/EXPERIMENTS.md` |
+| Machine-readable per-claim evidence/status | `docs/claim_evidence_registry.yaml` |
+| What belongs in Git vs. local/external archive | `docs/EXPERIMENT_ARTIFACT_POLICY.md` (specifics), `docs/ARTIFACT_POLICY.md` (broad policy) |
+| Operational validation contract (what must pass before merge) | `docs/RELEASE_READINESS.md` + `docs/EXPERIMENTS.md` "Cloud Validation" |
+| Exact scientific numbers | `papers/JDIQ_2026/manuscript/main.tex` (+ `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` for provenance) |
+| Detailed pre-merge branch history | root `PROJECT_STATUS.md` (historical narrative, not current state) |
+
+Any document not listed here (including single-purpose historical files
+under `docs/`) is secondary detail reachable by following links from the
+table above, not a competing source of truth.
+
 ---
 
 ## Verified state at time of writing
@@ -33,23 +56,25 @@ that file is the archived narrative that produced it.
 
 ## Subsystem status
 
-| Subsystem | Status | Notes / entry point |
-|---|---|---|
-| Core pairwise-preference and ranking algorithms | **Canonical, stable** | `src/consistency_ranker/{pairwise_prefs,graph_construction,baseline_ranking,evaluation}.py`; see `docs/ARCHITECTURE.md` §2-3 |
-| Exact MWFAS repair (SCIP) | **Canonical, complete** | `mwfas_solver.py`; 1,025/1,025 canonical queries proven optimal (`reports/exact_open_source_ilp_repair_investigation/`) |
-| Gurobi backend | **Internal validation only, complete** | Optional legacy backend, never used for manuscript results; cross-validated against SCIP 2026-07-31 (perfect agreement, 1,025/1,025) -- see `docs/CONTRIBUTIONS.md` §1.6 and `reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/` |
-| Repaired-vs-unrepaired evaluation | **Canonical, concluded (negative/conditional)** | The manuscript's central result; see `docs/CONTRIBUTIONS.md` §1.1 |
-| Statistical inference (incl. cluster-aware) | **Canonical infra; cluster-aware correction complete** | `src/consistency_ranker/statistical_inference.py`; corrected a real pseudo-replication bug in the real-LLM pilot re-analysis |
-| Real-LLM reanalysis | **Complete, canonical for inference on that pilot** | `reports/real_llm_clustered_reanalysis_20260730T023745Z/` |
-| Extraction study / repair frontier / repair diagnostic | **Exploratory, row-level; superseded for inference by clustered reanalysis** | `docs/CONTRIBUTIONS.md` §1.3 |
-| Repository-scale oracle-headroom (preserve-vs-repair) | **Concluded -- NO-GO** | `reports/repository_scale_headroom_analysis/research_decision.md` |
-| Policy selection ("Outcome F") | **Concluded (negative result); production locked to fixed default** | `src/consistency_ranker/policy_selection/production_config.py` |
-| Multi-provider evaluation (counterfactual benchmark) | **Engineering, canary stage, paused (not abandoned)** | 3/4 providers pass a clean canary (Cohere blocked); bounded micro-pilot designed but never executed |
-| Consistency-aware pivot (active-acquisition / regularized-aggregation / stopping-rule) | **Three real-oracle pilots complete**; not yet a deployment-ready combined contribution | See root `PROJECT_STATUS.md` "Consistency-aware pivot" section for full narrative (unchanged by this pass) |
-| Dataset preparation | **Working, but was an implicit, undocumented unit-test prerequisite until this pass** | `scripts/download_datasets.py` (network) + `scripts/prepare_datasets.py`; now cleanly separated into the `real_data` pytest tier -- see `docs/EXPERIMENTS.md` "Test Tiers" |
-| Manuscript (`papers/JDIQ_2026/`) | **Submitted, finalized draft** (commit `e873017`, 2026-07-15; unchanged since) | `papers/JDIQ_2026/manuscript/main.tex`; do not use `CANONICAL_PAPER_STORY.md` or `CONTRIBUTION_AUDIT.md` (both one revision behind, self-marked superseded) |
-| Packaging / release readiness | **Documented, `make repo-ready` exists** | `docs/RELEASE_READINESS.md`; CI currently non-functional due to the billing issue above, independent of code readiness |
-| Raw-provider-transcript archival | **Procedure documented, no destination configured** | `docs/ARTIFACT_POLICY.md` "External Archive Procedure" -- a public-release condition, not a merge blocker |
+| Area | Status | Canonical implementation | Canonical evidence | Validation | Remaining work |
+|---|---|---|---|---|---|
+| Core ranking / graph construction | Canonical, stable | `src/consistency_ranker/{pairwise_prefs,graph_construction,baseline_ranking,evaluation}.py` | `reports/full_calibrated_core/` | `tests/test_graph_and_solver.py`, `tests/test_baseline_ranking.py` | None |
+| Exact repair -- SCIP | Canonical, complete | `mwfas_solver.py` (`method="scip"/"exact"/"ilp"`) | `reports/exact_open_source_ilp_repair_investigation/` (1,025/1,025 proven optimal) | `tests/test_exact_mwfas_scip.py` | None |
+| Exact repair -- Gurobi | Internal validation only, complete | `mwfas_solver.py` (`method="gurobi"`, optional legacy) | `reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/` (0 mismatches vs. SCIP on all 1,025), `reports/exact_solver_scaling_study_20260731T162314Z/` (scaling frontier) | `tests/test_mwfas_solver.py` | Never becomes a manuscript claim -- internal-only by design |
+| Repaired-vs-unrepaired evaluation | Canonical, concluded (negative/conditional) | evaluation pipeline in `reports/full_calibrated_core/scripts/full_calibration_utils.py` | `reports/full_calibrated_core/`, `reports/normalization_protocol_audit_20260714/` | `main.tex` Table 3-4 | None -- this is the manuscript's settled thesis |
+| Statistical inference (incl. cluster-aware) | Canonical infra, complete | `src/consistency_ranker/statistical_inference.py` | `reports/real_llm_clustered_reanalysis_20260730T023745Z/` | `tests/test_statistical_inference.py` | None |
+| Real-LLM pilot + reanalysis | Exploratory pilot; clustered reanalysis canonical for its own inference | `src/consistency_ranker/real_llm_reanalysis/` | `reports/real_llm_clustered_reanalysis_20260730T023745Z/` | `tests/test_real_llm_clustered_reanalysis.py` | n=6 queries only -- no cross-dataset generalization evidence |
+| Extraction study / repair frontier / repair diagnostic | Exploratory, row-level; superseded for inference | `src/consistency_ranker/{extraction_study,repair_frontier,repair_diagnostic}/` | row-level reports, but see clustered reanalysis for CIs | `tests/test_extraction_study.py` etc. | None planned -- concluded exploratory |
+| Repository-scale oracle-headroom | Concluded -- NO-GO | `scripts/run_repository_scale_headroom_analysis.py` | `reports/repository_scale_headroom_analysis/research_decision.md` | `tests/test_repository_scale_headroom_analysis.py` | None -- direction stopped |
+| Policy selection ("Outcome F") | Concluded (negative result); production locked to fixed default | `src/consistency_ranker/policy_selection/production_config.py` | `reports/policy_selection_20260726T030500Z/` | `tests/test_policy_selection.py`, `tests/test_production_operating_point.py` | None -- concluded |
+| Multi-provider evaluation (counterfactual benchmark) | Engineering, canary stage, paused (not abandoned) | `src/consistency_ranker/counterfactual_benchmark/` | `reports/counterfactual_collector_canary_v2_20260727T161921Z/` | canary-only, no benchmark-scale run | Cohere transport wiring; bounded micro-pilot never executed |
+| Consistency-aware pivot | Three real-oracle pilots complete; not yet deployment-ready combined | `src/consistency_ranker/active_acquisition/` | `reports/offline_active_acquisition_pilot_20260728T142414Z/`, `reports/regularized_aggregation_pilot_20260728T164943Z/`, `reports/stopping_rule_pilot_20260728T190000Z/` | pilot-specific tests | Better-calibrated stopping statistic (see root `PROJECT_STATUS.md`) |
+| Dataset preparation / `real_data` test tier | Working, cleanly separated | `scripts/download_datasets.py` + `scripts/prepare_datasets.py` | -- | `tests/test_fresh_checkout_reproducibility.py` | None -- fixed 2026-07-31 |
+| Packaging | Verified working | `pyproject.toml`, `python -m build` | `.cloud_validation_runs/*/` (sdist+wheel build + wheel-install smoke) | `scripts/run_cloud_validation.py --tier core` | None |
+| Fresh-clone / cloud validation | Canonical replacement for blocked GitHub Actions | `scripts/run_cloud_validation.py` | `.cloud_validation_runs/<run_id>/summary.json` (gitignored, local) | `tests/test_cloud_validation.py` (31 tests) | Cross-check against a live GitHub runner once billing is resolved |
+| Manuscript (`papers/JDIQ_2026/`) | Submitted, finalized draft (commit `e873017`, 2026-07-15; unchanged since) | -- | `papers/JDIQ_2026/manuscript/main.tex` | `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` | None -- do not use `CANONICAL_PAPER_STORY.md`/`CONTRIBUTION_AUDIT.md` (self-marked superseded) |
+| Raw-provider-transcript archival | Procedure documented, no destination configured | -- | `docs/ARTIFACT_POLICY.md` "External Archive Procedure" | -- | Select a durable external archive destination -- a public-release condition, not a merge blocker |
+| Public release readiness | Blocked only on GitHub Actions billing (external) | -- | this file + `docs/RELEASE_READINESS.md` | `scripts/run_cloud_validation.py --tier core`/`--tier solver`, both PASS as of `6ea6a86` | Repository owner resolves GitHub billing; everything else already passes |
 
 ## Fresh-checkout reproducibility (this pass, 2026-07-31)
 
@@ -64,10 +89,25 @@ Verified fix in a second, independent fresh clone: `pytest -q` -> **1306
 passed, 0 skipped, 0 failed, 64 deselected**; `make test-full` -> `OK (0
 skipped)`. Regression guard: `tests/test_fresh_checkout_reproducibility.py`.
 
+**Update (same day, after the cloud-validation pass below):** the total grew
+to **1338 passed, 64 deselected, 0 skipped, 0 failed** with the addition of
+31 tests for `scripts/run_cloud_validation.py`. Independently re-verified
+via `python scripts/run_cloud_validation.py --tier all` (commit `9e1472c`):
+all three tiers (`core`, `solver`, `real-data`) PASS. If this number and the
+one above ever disagree with a fresh `pytest -q` run, trust the fresh run,
+not either cached number here.
+
 ## Known blockers (not fixable by a commit)
 
 - **GitHub Actions billing.** See "Verified state" above. Action: repository owner must resolve in GitHub billing settings.
 - **Cohere structured-output enforcement** for the counterfactual benchmark (unrelated to the above) -- see root `PROJECT_STATUS.md` for full detail; unchanged by this pass.
+
+## Prioritized remaining work
+
+- **Required before ordinary development:** nothing -- `pytest -q` is green on a fresh clone, `docs/CONTRIBUTIONS.md`/this file describe current state accurately.
+- **Required before public release:** resolve the GitHub Actions billing block (external, repository-owner action); select a durable external archive destination for raw provider transcripts (`docs/ARTIFACT_POLICY.md`, not currently a merge blocker but is a release condition).
+- **Optional research extensions:** a better-calibrated stopping statistic for the consistency-aware pivot (see root `PROJECT_STATUS.md`); Cohere native-transport wiring for the counterfactual benchmark; cross-dataset generalization evidence for the real-LLM pilot.
+- **External infrastructure limitations (not fixable in this repo):** GitHub Actions billing; any future need for a durable raw-transcript archive destination.
 
 ## Exact next action
 

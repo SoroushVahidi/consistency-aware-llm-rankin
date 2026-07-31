@@ -1,60 +1,146 @@
 # consistency-aware-llm-rankin
 
-> **Research Repository** — Consistency-Aware Retrieval Ranking via Graph Repair  
+> **Research Repository** — Consistency-Aware Retrieval Ranking via Graph Repair
 > Using Minimum Weighted Feedback Arc Set (MWFAS) Optimisation
 
----
+## Project identity
 
-## Understand the repository
+**Research question:** given a query and a candidate document pool, several
+independent signals (classical retrieval rankers, or real LLM pairwise
+judges) each vote on which of two documents should rank higher. Aggregating
+these votes into a directed preference graph often produces **cycles** —
+A beats B, B beats C, yet C beats A — a structural sign that the voters
+disagree. Can a graph-repair algorithm (Minimum Weighted Feedback Arc Set,
+MWFAS: remove the minimum-weight set of edges that makes the graph acyclic)
+resolve this inconsistency, and — the actual question that matters — **does
+the repaired ranking retrieve better documents than an unrepaired one?**
 
-A future reader (human or AI agent) should start here, not by grepping
-`docs/*.md` at random -- each concern below has exactly one authoritative
-document:
+**"Consistency-aware" here means:** structural consistency of the
+aggregated preference graph (acyclicity/agreement among voters) — not
+semantic or factual consistency of LLM outputs. A second, unrelated research
+thread in this repo (§1.8 of `docs/CONTRIBUTIONS.md`, "the consistency-aware
+pivot") reuses the same term for a different question (adaptive judge/pair
+acquisition under budget); the two share only that general theme, not code.
 
-| I want to understand... | Read this |
+**Current scientific conclusion (the paper's actual thesis, not a caveat):**
+graph repair is structurally real — it removes cycles and changes top-*k*
+membership — but it **does not yield a statistically supported general
+retrieval-quality improvement** after Holm correction for multiple
+comparisons, across the primary protocol, a larger-pool robustness check, or
+an exact (SCIP-solved) repair check. This is a **null/conditional result**,
+methodologically framed: claims about graph repair must report
+normalization, vote construction, pooling, and evaluation-cutoff choices as
+first-class data-quality decisions, because those choices determine both the
+graph being repaired and any effect an evaluation can observe. See
+`docs/CONTRIBUTIONS.md` §1.1 for the full, evidence-linked statement, and §3
+("Non-contributions") for what this repository explicitly does **not**
+support.
+
+## Verified contributions
+
+`docs/CONTRIBUTIONS.md` is the authoritative, independently-verified map —
+every row cross-checked against the manuscript, tests, and tracked evidence,
+not assumed from a filename. Summary:
+
+- **Scientific** — the data-quality taxonomy + construction-sensitivity
+  result and the central null/conditional repair-vs-retrieval finding above
+  (both canonical, back the submitted manuscript); a cluster-aware
+  statistical-inference correction; several exploratory/negative-result
+  studies (real-LLM pilot, Outcome F policy selection, repository-scale
+  oracle-headroom NO-GO, a 3-pilot active-acquisition program) that are
+  **not** manuscript claims.
+- **Engineering** — the unified MWFAS solver abstraction (greedy/SCIP/Gurobi),
+  provenance/reproducibility infrastructure, architecture-boundary
+  enforcement, artifact-retention policy, and (2026-07-31) a fresh-checkout
+  test-reproducibility fix plus a native cloud-validation system.
+- **Internal validation only, never a manuscript claim** — a Gurobi-vs-SCIP
+  solver cross-validation and an exact-solver scaling study (both
+  2026-07-31); see `docs/CONTRIBUTIONS.md` §1.6.
+- **Explicitly unsupported** (do not infer these from a report title) — that
+  repair generally improves nDCG; that exploratory Borda/extraction effects
+  are statistically confirmed; that Gurobi's agreement with SCIP is a
+  manuscript contribution; that learned policy routing is
+  production-approved; that the real-LLM pilot's ~120 replicated rows are
+  independent samples (they are 6). Full list: `docs/CONTRIBUTIONS.md` §3.
+
+## Repository status
+
+| | |
 |---|---|
-| What this repo actually contributes, scientifically and technically, and what it does *not* support | [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md) |
-| What's currently active/unfinished/blocked on `main` right now | [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) |
+| Default test suite | **1338 passed, 64 deselected, 0 skipped, 0 failed** (solver tier / `pytest -q` with `[exact]` installed; re-run to confirm current — see `docs/PROJECT_STATUS.md`) |
+| `real_data` tier (~64 dataset-dependent tests) | Passes when BEIR/HotpotQA/BRIGHT datasets are prepared (`make test-real-data`); cleanly deselected, not silently skipped, otherwise |
+| Gurobi | Optional. 13.0.2 + academic WLS license verified working on the validation machine (2026-07-31); **SCIP remains the fully-supported, free, open-source exact-solver path** — a machine with no Gurobi license passes every required check |
+| GitHub Actions CI | **Not currently authoritative** — every run has failed since at least 2026-07-16 due to a GitHub account billing/spending-limit issue, not a code problem. Do not read a red/absent check as a code signal |
+| Canonical validation alternative | `python scripts/run_cloud_validation.py --tier core` / `--tier solver` — both **PASS** as of commit `6ea6a86` |
+
+## Getting started
+
+```bash
+# Install
+git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
+cd consistency-aware-llm-rankin
+python -m venv .venv && source .venv/bin/activate
+python -m pip install -r requirements.txt && python -m pip install -e ".[dev]"
+
+# Quick-start (no network)
+python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42 --output-dir /tmp/synthetic_smoke
+
+# Core validation (mirrors ci.yml's `tests` job; no network, no prepared datasets needed)
+python scripts/run_cloud_validation.py --tier core          # or: make cloud-validate
+
+# Solver validation (mirrors ci.yml's `tests-solver-enabled` job; requires [exact])
+python -m pip install -e ".[dev,exact]"
+python scripts/run_cloud_validation.py --tier solver         # or: make cloud-validate-solver
+
+# Real-data tier (~64 tests; network + ~3GB; optional)
+python scripts/download_datasets.py && python scripts/prepare_datasets.py --dataset all
+make test-real-data
+
+# Gurobi (fully optional; SCIP above is the supported path)
+python -m pip install gurobipy   # only if you already have a Gurobi license
+```
+
+See "Quickstart" and "Testing" below for the unabbreviated walkthrough, and
+`docs/EXPERIMENTS.md` "Cloud Validation" / "Test Tiers" for full detail on
+every command above.
+
+## Where to look
+
+| I want... | Read this |
+|---|---|
+| What this repo contributes, and what it does *not* support | [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md) |
+| Current state, subsystem status, unfinished work | [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) |
+| A concise, operational "start here" for a coding/research agent | [`docs/AGENT_GUIDE.md`](docs/AGENT_GUIDE.md) |
 | Module layering, canonical implementations, terminology | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
-| Experiment families, entry points, test tiers | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) |
-| What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) |
-| A specific claim's evidence, status, and manuscript applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
+| Experiment families, entry points, test tiers, cloud validation | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) |
+| A specific claim's evidence/status/manuscript-applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
+| What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) (timestamped-experiment specifics) and [`docs/ARTIFACT_POLICY.md`](docs/ARTIFACT_POLICY.md) (broader policy + dated decision log) |
 | Exact reproduction commands for the manuscript's numbers | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
 | The submitted manuscript itself | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
-| How to install, prepare datasets, and run tests | "Quickstart" and "Testing" below |
-| Why GitHub Actions is red/absent and how to validate this repo instead | "Quickstart" below and [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) "Cloud Validation" |
+| Production-facing policy logic (guarded, never learned-routing by default) | `src/consistency_ranker/policy_selection/production_config.py` — see `docs/CONTRIBUTIONS.md` §1.7 |
+| The internal-only Gurobi validation studies (never manuscript evidence) | [`reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`](reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/), [`reports/exact_solver_scaling_study_20260731T162314Z/`](reports/exact_solver_scaling_study_20260731T162314Z/) |
+| A separate, NO-GO'd companion research thread + planned companion paper | [`docs/research/RESEARCH_TRAJECTORY.md`](docs/research/RESEARCH_TRAJECTORY.md), [`papers/negative_result_2026/`](papers/negative_result_2026/) |
 | Detailed pre-merge branch history/handoff narrative | [Project status (root, historical)](PROJECT_STATUS.md), [Branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md) |
 
-Release-readiness navigation:
-- [Architecture guide](docs/ARCHITECTURE.md) explains layers, canonical modules,
-  terminology, and current evidence.
-- [Experiment index](docs/EXPERIMENTS.md) classifies active, exploratory,
-  canonical, and historical workflows.
-- [Experiment artifact policy](docs/EXPERIMENT_ARTIFACT_POLICY.md) defines what
-  belongs in Git versus local/external archive storage.
-- [Release readiness checklist](docs/RELEASE_READINESS.md) maps CI/local checks
-  to the properties they enforce before this branch is integrated.
+## Scope and limitations
+
+- **Gurobi is optional, never required.** SCIP (`pip install
+  "consistency-ranker[exact]"`, no license) is the fully supported
+  open-source exact-solver path for every test, reproduction, and manuscript
+  result. Gurobi backs only an optional legacy solver path and two
+  internal-only validation studies (see table above) — **never** a
+  manuscript claim.
+- **Raw LLM provider transcripts are not in Git** — only compact, sanitized
+  parsed judgments and summaries are tracked; see
+  `docs/EXPERIMENT_ARTIFACT_POLICY.md`.
+- **The `real_data` test tier requires prepared datasets** (network, ~3GB);
+  it is cleanly separated from the default suite, not silently skipped.
+- **No `docs/*.md` file overrides `papers/JDIQ_2026/manuscript/main.tex`
+  on an actual number** — if any status document and the manuscript
+  disagree, trust the manuscript for the number and `docs/CONTRIBUTIONS.md`
+  for how to classify it.
 
 ---
-
-## Key Finding
-
-> *Repairing cyclic preference graphs improves structural consistency, but does
-> not uniformly improve retrieval effectiveness; outcomes depend on vote
-> construction, graph regime, and extraction strategy.*
-
-**Current classical-study canonical evidence** (backs the submitted
-`papers/JDIQ_2026/manuscript/main.tex`) is
-[`reports/full_calibrated_core/`](reports/full_calibrated_core/), extended by
-[`reports/normalization_protocol_audit_20260714/`](reports/normalization_protocol_audit_20260714/)
-and
-[`reports/candidate_pool_conditional_audit_20260714/`](reports/candidate_pool_conditional_audit_20260714/).
-See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for the
-full pipeline map and exact reproduction commands. That evidence base shows
-FAS repair is **neutral/inactive** under near-acyclic vote constructions and
-does not survive multiple-testing correction as a reliable positive effect
-under high-cyclicity construction either (0/110 Holm-significant larger-pool
-cells; see `reports/ir_evidence_audit_20260729T182949Z/`).
 
 `outputs/pub_vote_cmp_all4/paper_package/` (four datasets) and
 `outputs/pub_vote_cmp_v2/paper_package/` (two datasets, older) are an
@@ -174,10 +260,13 @@ different results package and is kept for historical reference only.
 
 | Document | Description |
 |---|---|
-| [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | **Start here** — canonical entry point for humans and AI assistants; documentation-authority map for every other status/evidence doc |
+| [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md) | **Start here** — authoritative contribution map (scientific, engineering, internal-validation, and explicitly-unsupported claims) |
+| [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) | Current `main` state, subsystem status matrix, unfinished work |
+| [`docs/AGENT_GUIDE.md`](docs/AGENT_GUIDE.md) | Concise operational guide for a coding/research agent (validation, tmux, artifact rules, how to add a claim) |
+| [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | Historical — detailed pre-merge branch handoff narrative; superseded by `docs/PROJECT_STATUS.md` for current state (see banner at its top) |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | **Architecture guide** — layers, end-to-end data flow, canonical-module map, terminology, experiment/evidence map, and "where to start" navigation for a new reader |
 | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) | **Current classical-study canonical evidence** — exact commands to reproduce every table cited in `papers/JDIQ_2026/manuscript/main.tex` |
-| [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | Orientation for AI assistants (being reconciled with `PROJECT_STATUS.md`/`REPRODUCTION_CANONICAL.md` — see history note at its top) |
+| [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | Historical — its orientation role is now filled by `docs/AGENT_GUIDE.md`/`docs/CONTRIBUTIONS.md` (see banner at its top); its code-map/environment notes remain accurate |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | **Historical** — reproduces the earlier `pub_vote_cmp_*` package, superseded by `REPRODUCTION_CANONICAL.md` |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Experiment-family index: active/canonical/historical status, entry points, tracked outputs, and exclusions |
 | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) | Policy for tracking, ignoring, or externally archiving experiment outputs and raw provider caches |
@@ -728,23 +817,17 @@ outputs/
 
 ## Current Status
 
-**Note: the table below predates the JDIQ_2026 manuscript and the
-`full_calibrated_core` pipeline and has not been fully refreshed; treat
-`PROJECT_STATUS.md` as authoritative wherever the two disagree.**
-
-| Area | Status |
-|---|---|
-| Core library (`src/consistency_ranker/`) | ✅ Implemented and unit-tested (see `pytest`) |
-| Synthetic experiments | ✅ Executed (noise sweep, scale sweep, multi-seed) |
-| Real-data pipeline — four benchmarks | ✅ Current canonical evidence is `reports/full_calibrated_core/` (see `docs/REPRODUCTION_CANONICAL.md`); `outputs/pub_vote_cmp_all4/paper_package/` is the historical predecessor package, not cited by the current manuscript |
-| Bootstrap significance analysis | ✅ Executed (10,000 reps in the current `full_calibrated_core`/`statistical_inference.py` pipeline; 2,000 reps in the historical `pub_vote_cmp_*` packages) |
-| Real-data pipeline — per-dataset full trees | ⚙️ Additional runs may live under `outputs/real_full/` (not all committed) |
-| Exact ILP MWFAS solver (open-source SCIP) | ✅ Implemented in `mwfas_solver.py` (`method="scip"`/`"exact"`/`"ilp"`; optional dependency, no license required — `pip install "consistency-ranker[exact]"`); see `tests/test_exact_mwfas_scip.py` |
-| LLM pairwise preferences | ✅ Real multi-provider LLM-judge preference graphs (Azure/Gemini/Cohere/Fireworks) now exist for a small (6-real-query) exploratory pilot — see `reports/repair_frontier_20260729T144742Z/`, `reports/extraction_study_20260729T151610Z/`, `reports/repair_diagnostic_20260729T162748Z/`. This is exploratory/directional, not benchmark-scale; the classical publication-package rows above still use score-derived votes, not LLM judgments. |
+**This section intentionally does not duplicate a status table.** The
+subsystem-by-subsystem status (core library, real-data pipeline, exact
+solver, LLM pairwise evidence, what's implemented vs. not) is maintained in
+exactly one place: [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md)'s
+"Subsystem status" table. An earlier version of this section kept a second,
+independent copy of the same information here, which drifted out of sync
+with the real state more than once — see `docs/CONTRIBUTIONS.md` and
+`docs/PROJECT_STATUS.md` instead, both kept current as of the commit at the
+top of this repository's history.
 
 **Environment note:** Downloading raw benchmarks requires HuggingFace Hub access; some CI/sandboxes block `huggingface.co`. See [`docs/DATASET_ACCESS_DIAGNOSIS.md`](docs/DATASET_ACCESS_DIAGNOSIS.md).
-
-**What is not yet implemented for the publication-facing pipeline:** LLM pairwise judgments in the committed vote-comparison manuscript results; cross-encoder ranker. (A separate real LLM pairwise comparator exists for the active counterfactual-benchmark effort — see [Project status](PROJECT_STATUS.md).)
 
 ---
 
@@ -772,7 +855,13 @@ These limitations must be understood before drawing conclusions from this reposi
 
 6. **Scale:** Only n ≤ 100 items tested in synthetic experiments. Real-world graph densities and sizes may differ substantially.
 
-See [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) for a full set of safe and unsafe claims, and [`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) for the claim-to-evidence mapping.
+See [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md) §3 ("Non-contributions
+and rejected claims") for the current, maintained set of safe/unsafe claims,
+and [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml)
+for the machine-readable claim-to-evidence mapping.
+[`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) and
+[`docs/EVIDENCE_MAP.md`](docs/EVIDENCE_MAP.md) cover the same ground for an
+earlier, historical evidence package and are kept for provenance only.
 
 ---
 
