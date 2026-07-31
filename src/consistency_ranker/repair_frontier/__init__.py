@@ -4,6 +4,17 @@ See ``docs/`` (or the module docstrings in this package) for the
 discovery-vs-selection framing: does a richer candidate set contain
 beneficial rankings the original single-method repair missed (discovery),
 and can a label-free rule pick them out on held-out queries (selection)?
+
+**Related "repair" packages** (repo hygiene Stage 5, 2026-07-30): this
+package discovers a *richer set of repair candidates* per query (a "best
+of many" framing). ``repair_diagnostic`` asks whether repair's rare
+benefits are predictable from pre-repair graph features alone (and imports
+this package's ``edge_confidence`` -- the only cross-dependency among these
+four packages). ``repair_selector_mining`` mines which (preserve, repair)
+action pairs are worth training a selector on -- two fixed actions, not a
+candidate set. ``reliability_repair`` repairs a graph given per-edge
+reliability estimates. See each package's own module docstring for its
+specific research question.
 """
 
 from .acceptance import accept_candidate, candidate_objective

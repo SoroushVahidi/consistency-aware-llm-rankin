@@ -32,6 +32,7 @@ import networkx as nx
 
 from consistency_ranker.baseline_ranking import (
     borda_scores,
+    priority_topological_ranking,
     score_sum_scores,
     weighted_out_minus_in_scores,
 )
@@ -225,22 +226,26 @@ def prior_priority_topological_ranking(
     dag: nx.DiGraph,
     priority_scores: dict[str, float],
 ) -> list[str]:
-    """Among available sources, pick highest prior score (id fallback)."""
+    """Legacy alias for :func:`consistency_ranker.baseline_ranking.priority_topological_ranking`.
+
+    This function and ``baseline_ranking.priority_topological_ranking`` used
+    to be two independent implementations of the exact same algorithm
+    (Kahn's algorithm: repeatedly pick the currently-available zero-in-degree
+    source with the highest priority score, id as tie-break) -- verified
+    byte-for-byte identical output across randomized trials before being
+    consolidated here (repo hygiene Stage 5, 2026-07-30).
+    ``baseline_ranking.priority_topological_ranking`` is the canonical
+    implementation; this module keeps its own name as a thin wrapper purely
+    for backward compatibility with this module's existing test suite
+    (``tests/test_dag_linear_extensions.py``, which already informally
+    called this the "legacy" variant) and
+    ``HARD_CONSTRAINT_METHODS``'s ``"prior_priority_topo"`` entry. Prefer
+    importing ``priority_topological_ranking`` directly in new code.
+    """
     require_dag(dag, "prior_priority_topological_ranking")
-    in_deg = {n: dag.in_degree(n) for n in dag.nodes()}
-    available = [n for n, d in in_deg.items() if d == 0]
-    ranking: list[str] = []
-    while available:
-        best = max(available, key=lambda n: (float(priority_scores.get(n, 0.0)), n))
-        available.remove(best)
-        ranking.append(best)
-        for child in dag.successors(best):
-            in_deg[child] -= 1
-            if in_deg[child] == 0:
-                available.append(child)
-    if len(ranking) != dag.number_of_nodes():
-        raise nx.NetworkXUnfeasible("prior_priority_topological_ranking failed: not a DAG.")
-    return ranking
+    return priority_topological_ranking(
+        dag, {node: float(score) for node, score in priority_scores.items()}
+    )
 
 
 def balance_priority_topological_ranking(

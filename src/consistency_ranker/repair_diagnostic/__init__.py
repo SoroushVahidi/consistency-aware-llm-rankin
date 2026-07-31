@@ -1,6 +1,16 @@
 """Bounded diagnostic study: are the rare benefits of consistency repair
 predictable from observable (pre-repair) graph properties, or are they
 isolated and non-deployable?
+
+**Related "repair" packages** (repo hygiene Stage 5, 2026-07-30): this
+package asks whether repair's benefit is *predictable* from pre-repair
+features. ``repair_frontier`` discovers a richer set of repair
+*candidates* per query (this package imports its ``edge_confidence``, the
+only cross-dependency among these four packages). ``repair_selector_mining``
+mines which (preserve, repair) action pairs are worth training a selector
+on. ``reliability_repair`` repairs a graph given per-edge reliability
+estimates. See each package's own module docstring for its specific
+research question.
 """
 
 from .association import (

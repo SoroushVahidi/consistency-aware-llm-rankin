@@ -11,6 +11,16 @@ Stages (ablate independently):
 7. reliability-aware MWFAS
 8. optional prior-regularized ordering
 9. prior-priority topological extraction + stability diagnostics
+
+**Related "repair" packages** (repo hygiene Stage 5, 2026-07-30 -- added to
+help navigate four distinct packages that all use "repair" in their name):
+this package repairs a graph *given* per-edge reliability estimates.
+``repair_selector_mining`` mines which (preserve, repair) action pairs are
+worth training a selector on. ``repair_frontier`` discovers a richer set of
+repair *candidates* per query and asks whether a label-free rule can select
+among them. ``repair_diagnostic`` asks whether repair's rare benefits are
+*predictable* from pre-repair graph features alone. See each package's own
+module docstring for its specific research question.
 """
 
 from consistency_ranker.reliability_repair.pair_evidence import (

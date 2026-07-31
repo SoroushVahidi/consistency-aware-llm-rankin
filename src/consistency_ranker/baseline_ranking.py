@@ -164,6 +164,13 @@ def priority_topological_ranking(
 ) -> list[str]:
     """Topological ranking with deterministic priority tie-breaking.
 
+    This is the **canonical** implementation of this algorithm.
+    ``consistency_ranker.dag_linear_extensions.prior_priority_topological_ranking``
+    is a legacy alias kept only for backward compatibility with that
+    module's existing test suite and its ``HARD_CONSTRAINT_METHODS`` name
+    table -- both call this function internally; prefer this one directly
+    in new code.
+
     Parameters
     ----------
     dag:
@@ -430,6 +437,16 @@ def local_adjacent_swap_refinement(
 
 def borda_ranking(graph: nx.DiGraph) -> list[str]:
     """Rank items by Borda count (number of items each node beats).
+
+    This is the **graph tournament** Borda count: it counts, per node, how
+    many other nodes it directly beats in the preference graph (an
+    out-degree/Copeland-style tally). This is a different algorithm from
+    ``consistency_ranker.borda_fuse_ranking``'s Borda, which fuses several
+    separately *ranked lists* (not a preference graph) via
+    ``N_q - rank(d)`` point assignment -- see that module's docstring for
+    the full distinction. Use this function when you have a preference
+    graph; use ``borda_fuse_ranking`` when you have multiple rankers' score
+    files to combine.
 
     Parameters
     ----------
