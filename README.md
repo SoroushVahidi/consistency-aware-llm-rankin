@@ -121,7 +121,8 @@ different results package and is kept for historical reference only.
 | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) | **Current classical-study canonical evidence** — exact commands to reproduce every table cited in `papers/JDIQ_2026/manuscript/main.tex` |
 | [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | Orientation for AI assistants (being reconciled with `PROJECT_STATUS.md`/`REPRODUCTION_CANONICAL.md` — see history note at its top) |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | **Historical** — reproduces the earlier `pub_vote_cmp_*` package, superseded by `REPRODUCTION_CANONICAL.md` |
-| [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Quick-reference script index |
+| [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Experiment-family index: active/canonical/historical status, entry points, tracked outputs, and exclusions |
+| [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) | Policy for tracking, ignoring, or externally archiving experiment outputs and raw provider caches |
 | [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing (written for the historical package; not yet re-validated against `full_calibrated_core`) |
 | [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing (historical package era) |
 | [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims (historical package era) |

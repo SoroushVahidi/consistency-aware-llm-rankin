@@ -4,7 +4,9 @@ This document exists so a new reader (human or AI assistant) can understand
 this repository's purpose, structure, terminology, and current state without
 reading every historical report. It is deliberately concise and focused on
 active/canonical paths — it does not catalog every archived file (see
-`reports/_archive/` and `docs/historical/` for historical material, and
+`reports/_archive/` and `docs/historical/` for historical material,
+`docs/EXPERIMENTS.md` for the experiment-family index,
+`docs/EXPERIMENT_ARTIFACT_POLICY.md` for output-tracking decisions, and
 `PROJECT_STATUS.md` for the full documentation-authority map).
 
 ---
@@ -57,7 +59,7 @@ directional, not a second large-*n* confirmatory study — see §6 and §7.
 | **Real-LLM exploratory pilot** | `src/consistency_ranker/extraction_study/`, `real_llm_reanalysis/` | Extraction-method comparison and query-clustered re-analysis of the pilot's own statistics (§6). |
 | **Production policy selection** | `src/consistency_ranker/policy_selection/` (17 files: 2 production, 15 research — see §5, §7) | A *separate* research thread from repair: adaptive LLM-judge budget allocation. Production is locked to always-UHT after the "Outcome F" finding; everything else in the package is experimental and requires an explicit opt-in. |
 | **Experiment orchestration** | `scripts/*.py` (108 files) | CLI entry points. Most are thin; a few (`run_real_experiment.py`) contain substantial directly-testable logic, not just argument parsing. |
-| **Reports & evidence** | `reports/`, `outputs/`, `papers/JDIQ_2026/` | Generated experiment outputs and the manuscript. See §6 for which are canonical. |
+| **Reports & evidence** | `reports/`, `outputs/`, `papers/JDIQ_2026/`, `docs/EXPERIMENTS.md`, `docs/EXPERIMENT_ARTIFACT_POLICY.md` | Generated experiment outputs, their tracking policy, and the manuscript. See §6 for which are canonical. |
 | **Architecture safeguards** | `scripts/check_architecture_boundaries.py` | Detects circular import dependencies among subpackages (added after finding and fixing one real cycle — §4). |
 
 This layering is real but was, until this document, **implicit** — nothing
@@ -163,7 +165,7 @@ ranking extraction                mwfas_solver.solve(graph, method="greedy"|"sci
 | Query-clustered re-analysis of the pilot above | `reports/real_llm_clustered_reanalysis_20260730T023745Z/` | **Canonical for inference** on the real-LLM pilot; point estimates in the row-level reports above remain valid, only their CIs/p-values are superseded |
 | Integrated evidence audit (both bases together) | `reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md` | **Canonical**, current; independently reviewed by `reports/ir_evidence_audit_review_20260729T235053Z/FINAL_META_AUDIT_REVIEW.md` |
 | Outcome F: active-acquisition policy selection | `reports/policy_selection_20260726T030500Z/` | **Canonical, concluded** — no learned gate beat always-UHT; production locked accordingly (§7) |
-| Raw real-LLM provider-response caches | `reports/multi_provider_repair_pilot_20260729T032348Z/`, `reports/multi_provider_repair_pilot_smoke_20260729T032209Z/`, `reports/reviewer_concerns_program_20260729T035320Z/` | **Deliberately untracked** — see §7 |
+| Raw real-LLM provider-response caches | `reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/`, `reports/multi_provider_repair_pilot_smoke_20260729T032209Z/raw_calls/`, `reports/reviewer_concerns_program_20260729T035320Z/raw_calls/` | **Excluded from Git** — compact parsed judgments/metadata are tracked where needed; raw transcripts are local/external-archive artifacts per `docs/EXPERIMENT_ARTIFACT_POLICY.md` |
 
 Evidence-to-claim traceability for every number in `main.tex` is maintained
 in `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` (supersedes the older,
@@ -179,7 +181,7 @@ provenance, not for current use).
 - **The Outcome F production guard exists and predates the repository-hygiene work described in this document.** It was committed before the reorganization/consolidation work this document describes, in the branch history that established `fix/outcome-f-production-operating-point`. It is a fully separate concern from repair (§1) — Outcome F is about *adaptive LLM-judge budget allocation policy*, not preference-graph repair.
 - **Production misuse of learned routing is prevented by runtime validation, not just documentation.** `policy_selection.policy_gate.PolicySelector.__post_init__` raises `ValueError` if `execution_mode is ExecutionMode.PRODUCTION_UHT` and any learned-routing configuration (a non-default gate mode, or an attached calibration model) is present. Tests substitute a spy on `ProductionSafeguards`' methods and assert they were actually *called and changed execution* — the module's own docstring explicitly rejects "instantiating the object is not evidence of enforcement" as insufficient proof.
 - **Recent repository work (this document's own motivating changes) primarily improved organization, statistical correctness, provenance, and experiment infrastructure** — not the scientific findings themselves. Specifically: a repository-hygiene reorganization (legacy reports/screenshots relocated into `docs/historical/`, `reports/_archive/`, etc.); a statistical bug fix (the real-LLM pilot's row-level bootstrap treated 120+ replicated rows as independent when only 6 queries are truly independent — now corrected via cluster-aware inference); a reproducibility hardening pass (solver-version pinning, a required CI job with zero tolerated test skips); and the consolidation/cycle-fix/documentation work described in this file.
-- **Raw provider-response caches are deliberately not tracked, pending an explicit archival policy.** Three directories (`reports/multi_provider_repair_pilot_20260729T032348Z/`, `.../multi_provider_repair_pilot_smoke_20260729T032209Z/`, `reports/reviewer_concerns_program_20260729T035320Z/`) contain real LLM API request/response transcripts (~14.7MB total) that are not byte-reproducible on demand (re-querying providers may return different results as models update). They remain local and untracked until a deliberate keep/exclude decision is made — see each directory for its own narrative summary files, which *are* tracked where already committed.
+- **Raw provider-response caches are deliberately not tracked under the explicit artifact policy.** Three real-LLM directories contain request/response transcripts that are not byte-reproducible on demand (re-querying providers may return different results as models update). Compact parsed judgments, model metadata, summaries, and row-level evidence are tracked where needed; raw transcripts and logs remain local/external-archive material. See `docs/EXPERIMENT_ARTIFACT_POLICY.md` and `docs/artifact_inventories/untracked_outputs_20260731.csv`.
 
 ---
 
@@ -189,9 +191,9 @@ provenance, not for current use).
 |---|---|
 | **The core algorithm** (graphs, repair, ranking) | `src/consistency_ranker/graph_construction.py` → `mwfas_solver.py` → `baseline_ranking.py`; then `tests/test_graph_and_solver.py`, `tests/test_mwfas_solver.py`, `tests/test_baseline_ranking.py` |
 | **Production policy selection** | `src/consistency_ranker/policy_selection/__init__.py`'s "Production vs research" docstring, then `production_config.py` → `production_runner.py`; tests in `tests/test_production_operating_point.py` |
-| **The real-LLM experiments** | `docs/READ_ME_FIRST_FOR_AI.md`'s evidence-pointer section, then `reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md`, then the individual study STATUS.md files in `reports/repair_frontier_20260729T144742Z/` etc. |
+| **The real-LLM experiments** | `docs/EXPERIMENTS.md`, then `reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md`, then the individual study STATUS.md files in `reports/repair_frontier_20260729T144742Z/` etc. |
 | **Statistical analysis** | `src/consistency_ranker/statistical_inference.py`, especially the cluster-aware functions' docstrings; `tests/test_statistical_inference.py`, `tests/test_real_llm_clustered_reanalysis.py` |
-| **Reproducibility** | `docs/REPRODUCTION_CANONICAL.md` for exact commands; `src/consistency_ranker/provenance.py` for the manifest/hashing primitives; `make verify-env` / `make check` / `make repo-ready` |
+| **Reproducibility** | `docs/REPRODUCTION_CANONICAL.md` for exact commands; `docs/EXPERIMENT_ARTIFACT_POLICY.md` for output-retention rules; `src/consistency_ranker/provenance.py` for the manifest/hashing primitives; `make verify-env` / `make check` / `make repo-ready` |
 | **Tests** | `pytest -q` from the repo root; `tests/` mirrors `src/consistency_ranker/`'s module names 1:1 in most cases |
 | **Manuscript evidence** | `papers/JDIQ_2026/manuscript/main.tex`, cross-referenced against `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` |
 | **Overall project status / handoff** | `PROJECT_STATUS.md` (the canonical entry point and documentation-authority map — read this first if any two documents disagree) |

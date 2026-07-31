@@ -1,5 +1,10 @@
 # Repository Artifact Policy
 
+For timestamped experiment-output decisions, raw provider caches, and the
+2026-07-31 untracked-output classification, see
+`docs/EXPERIMENT_ARTIFACT_POLICY.md`. This document remains the broader
+repository-level policy and historical decision log.
+
 **Audience:** contributors deciding what belongs in Git on this repository.
 **Related:** `.gitignore`, `docs/REPRODUCTION_CANONICAL.md`, Outcome F package README under `reports/policy_selection_20260726T030500Z/`.
 
