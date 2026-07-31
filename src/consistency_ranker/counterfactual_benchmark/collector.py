@@ -17,7 +17,10 @@ from typing import Any, Callable, Literal, cast
 
 from consistency_ranker.counterfactual_benchmark import config as config_mod
 from consistency_ranker.counterfactual_benchmark import pool_builder
-from consistency_ranker.counterfactual_benchmark.cache_store import JudgmentCacheStore
+from consistency_ranker.counterfactual_benchmark.cache_store import (
+    JudgmentCacheStore,
+    is_reusable_live_cache_record,
+)
 from consistency_ranker.counterfactual_benchmark.dispatch import (
     call_provider,
     estimate_request_tokens,
@@ -175,6 +178,17 @@ def _resolve_cache_only(
     return NormalizedJudgment(**fields, from_cache=True)
 
 
+def _resolve_reusable_live_cache_hit(
+    request_hash: str, cache: JudgmentCacheStore
+) -> NormalizedJudgment | None:
+    """Return only reusable completed provider responses for live resume."""
+    hit = cache.get(request_hash)
+    if hit is None or not is_reusable_live_cache_record(hit):
+        return None
+    fields = {k: v for k, v in hit.items() if k != "from_cache"}
+    return NormalizedJudgment(**fields, from_cache=True)
+
+
 def _resolve_live(
     *,
     request: PlannedRequest,
@@ -186,11 +200,9 @@ def _resolve_live(
     cache: JudgmentCacheStore,
     call_fn: Callable[..., tuple[str, object]] | None,
 ) -> NormalizedJudgment:
-    cached = cache.get(request.request_hash)
+    cached = _resolve_reusable_live_cache_hit(request.request_hash, cache)
     if cached is not None:
-        return NormalizedJudgment(
-            **{k: v for k, v in cached.items() if k != "from_cache"}, from_cache=True
-        )
+        return cached
 
     doc_a_text = pool.truncated_texts[request.doc_a_id]
     doc_b_text = pool.truncated_texts[request.doc_b_id]
@@ -316,7 +328,8 @@ def _resolve_live(
         ),
         error_message=result.error_message,
     )
-    cache.put(sanitize_mapping(judgment.to_dict()))
+    if is_reusable_live_cache_record(judgment.to_dict()):
+        cache.put(sanitize_mapping(judgment.to_dict()))
     return judgment
 
 

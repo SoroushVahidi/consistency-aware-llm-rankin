@@ -823,6 +823,123 @@ def test_missing_credentials_do_not_count_as_inference_attempted(
     assert all(j["error_category"] == "missing_credentials" for j in judgments)
 
 
+def test_live_resume_retries_cached_preflight_failures(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from consistency_ranker.counterfactual_benchmark.cache_store import JudgmentCacheStore
+    from consistency_ranker.counterfactual_benchmark.collector import _resolve_live
+    from consistency_ranker.counterfactual_benchmark.models import (
+        CandidatePoolRecord,
+        PlannedRequest,
+        RenderedDocumentRecord,
+    )
+
+    for var in ("AZURE_OPENAI_API_KEY", "AZURE_OPENAI_ENDPOINT"):
+        monkeypatch.setenv(var, "fake")
+
+    request = PlannedRequest(
+        request_hash="stable-request-hash",
+        benchmark_version="v1",
+        dataset="d",
+        query_id="q",
+        pool_hash="pool",
+        provider="azure",
+        model_id="gpt-4.1-mini",
+        doc_a_id="a",
+        doc_b_id="b",
+        presentation_order="ab",
+        pair_id="q::a::b",
+        pair_reason="top_ranked",
+        temperature=0.0,
+        seed=42,
+        attempt_type="initial",
+    )
+    pool = CandidatePoolRecord(
+        dataset="d",
+        query_id="q",
+        candidate_ids=("a", "b"),
+        pool_hash="pool",
+        text_hashes={"a": "a" * 64, "b": "b" * 64},
+        construction_method="test",
+        pool_protocol_version="test",
+        rendering_policy_version="test",
+        prior_scores_primary={"a": 1.0, "b": 0.0},
+        prior_scores_secondary={},
+        truncated_texts={"a": "alpha", "b": "beta"},
+        rendering_metadata={
+            "a": RenderedDocumentRecord("a", "a" * 64, "a" * 64, 5, 5, False, "none", True),
+            "b": RenderedDocumentRecord("b", "b" * 64, "b" * 64, 4, 4, False, "none", True),
+        },
+    )
+
+    cache = JudgmentCacheStore(tmp_path / "cache.jsonl")
+    cache.put(
+        {
+            "request_hash": request.request_hash,
+            "dataset": "d",
+            "query_id": "q",
+            "provider": "azure",
+            "model_id": "gpt-4.1-mini",
+            "doc_a_id": "a",
+            "doc_b_id": "b",
+            "pair_id": "q::a::b",
+            "presentation_order": "ab",
+            "attempt_type": "initial",
+            "success": False,
+            "inference_attempted": False,
+            "error_category": "missing_credentials",
+            "error_message": "missing_env:AZURE_OPENAI_API_KEY",
+        }
+    )
+
+    calls = 0
+
+    def succeeds(prompt: str, config: object) -> tuple[str, object]:
+        nonlocal calls
+        calls += 1
+
+        class _Usage:
+            prompt_tokens = 11
+            completion_tokens = 7
+
+        return (
+            '{"preference":"A","confidence":0.9,'
+            '"evidence_strength":"moderate","reason_code":"direct_relevance"}',
+            _Usage(),
+        )
+
+    ledger = LiveCallLedger(
+        max_total_live_calls=2,
+        max_live_calls_per_provider=2,
+        max_total_input_tokens=10_000,
+        max_total_output_tokens=10_000,
+        max_retries_per_request=1,
+        max_estimated_cost_usd=None,
+        path=tmp_path / "ledger.jsonl",
+    )
+
+    judgment = _resolve_live(
+        request=request,
+        query_text="query",
+        pool=pool,
+        config={
+            "candidate_pool": {"max_candidate_chars": 20},
+            "generation_defaults": {"max_output_tokens": 64},
+        },
+        repo_root=REPO_ROOT,
+        ledger=ledger,
+        cache=cache,
+        call_fn=succeeds,
+    )
+
+    assert calls == 1
+    assert judgment.success is True
+    assert judgment.from_cache is False
+    cached = cache.get(request.request_hash)
+    assert cached is not None
+    assert cached["success"] is True
+
+
 def test_no_reserve_call_occurs_in_canary_configuration(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

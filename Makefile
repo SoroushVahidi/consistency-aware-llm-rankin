@@ -1,10 +1,10 @@
 SHELL := /bin/bash
 
 VENV ?= .venv
-PYTHON := $(VENV)/bin/python
-PIP := $(VENV)/bin/pip
-PYTEST := $(VENV)/bin/pytest
-RUFF := $(VENV)/bin/ruff
+PYTHON ?= $(if $(wildcard $(VENV)/bin/python),$(VENV)/bin/python,python)
+PIP ?= $(if $(wildcard $(VENV)/bin/pip),$(VENV)/bin/pip,python -m pip)
+PYTEST ?= $(if $(wildcard $(VENV)/bin/pytest),$(VENV)/bin/pytest,pytest)
+RUFF ?= $(if $(wildcard $(VENV)/bin/ruff),$(VENV)/bin/ruff,ruff)
 OUTPUTS := outputs
 
 .PHONY: help setup check lint lint-full test test-full typecheck verify-env \
@@ -64,8 +64,8 @@ help:
 
 setup:
 	python3 -m venv "$(VENV)"
-	"$(PIP)" install -r requirements.txt
-	"$(PIP)" install -e ".[dev,exact]"
+	"$(VENV)/bin/pip" install -r requirements.txt
+	"$(VENV)/bin/pip" install -e ".[dev,exact]"
 
 verify-env:
 	"$(PYTHON)" -c "import sys; print('python', sys.version)"
@@ -92,7 +92,14 @@ test:
 	"$(PYTEST)"
 
 test-full:
-	@SKIPPED=$$("$(PYTEST)" -q 2>&1 | tail -1 | grep -o '[0-9]* skipped' | grep -o '[0-9]*'); \
+	@TMP_OUT=$$(mktemp); \
+	"$(PYTEST)" -q 2>&1 | tee "$$TMP_OUT"; \
+	PYTEST_STATUS=$${PIPESTATUS[0]}; \
+	SKIPPED=$$(tail -20 "$$TMP_OUT" | grep -o '[0-9][0-9]* skipped' | tail -1 | grep -o '[0-9][0-9]*' || true); \
+	rm -f "$$TMP_OUT"; \
+	if [ "$$PYTEST_STATUS" -ne 0 ]; then \
+		exit "$$PYTEST_STATUS"; \
+	fi; \
 	if [ -n "$$SKIPPED" ] && [ "$$SKIPPED" != "0" ]; then \
 		echo "test-full FAILED: $$SKIPPED test(s) skipped -- install '.[exact]' (and any other optional extra) for a full run, or use 'make test' if skips are expected"; \
 		exit 1; \

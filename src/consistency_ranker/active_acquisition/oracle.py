@@ -6,7 +6,7 @@ judgments for SciDocs from ``outputs/openai_scidocs_real_pairwise_q50_k15/``
 exposes, per query:
 
 * a fixed candidate pool;
-* the exhaustive win/loss oracle (revealed only on request by the simulator);
+* the exhaustive provider-judgment reference (revealed only on request by the simulator);
 * a cheap, offline, qrels-free initial ranking score (in-pool BM25);
 * qrels relevance, kept separate and used only by the evaluation module —
   never passed to any acquisition-scoring function.
@@ -111,7 +111,7 @@ def load_scidocs_pairwise_oracle(
     Raises if any query's cached judgments are not exhaustive over its
     candidate pool (``C(n, 2)`` pairs) — this pilot requires an exhaustive
     offline oracle so any acquired-budget subset can be evaluated fairly
-    against the same "ground truth" exhaustive result.
+    against the same exhaustive provider-judgment reference.
     """
     judgments_path = Path(judgments_path)
     raw_by_query: dict[str, list[dict]] = defaultdict(list)

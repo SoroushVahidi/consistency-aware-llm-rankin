@@ -15,6 +15,11 @@ from pathlib import Path
 from typing import Any
 
 
+def is_reusable_live_cache_record(record: dict[str, Any]) -> bool:
+    """Return True for completed provider responses reusable by live resume."""
+    return record.get("success") is True or record.get("error_category") == "parse_failure"
+
+
 class JudgmentCacheStore:
     def __init__(self, path: Path) -> None:
         self.path = Path(path)
@@ -37,8 +42,14 @@ class JudgmentCacheStore:
     def put(self, record: dict[str, Any]) -> None:
         key = record["request_hash"]
         with self._lock:
-            if key in self._index:
-                return
+            existing = self._index.get(key)
+            if existing is not None:
+                if not is_reusable_live_cache_record(
+                    existing
+                ) and is_reusable_live_cache_record(record):
+                    pass
+                else:
+                    return
             with self.path.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
                 f.flush()
