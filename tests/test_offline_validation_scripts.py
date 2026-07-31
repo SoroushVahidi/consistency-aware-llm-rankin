@@ -14,8 +14,10 @@ from pathlib import Path
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
 
-from scripts import validate_canonical_evidence_manifest  # noqa: E402
-from scripts import validate_report_links  # noqa: E402
+from scripts import (  # noqa: E402
+    validate_canonical_evidence_manifest,
+    validate_report_links,
+)
 from scripts.validate_canonical_evidence_manifest import (  # noqa: E402
     extract_path_candidates,
 )

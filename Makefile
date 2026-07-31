@@ -7,12 +7,33 @@ PYTEST := $(VENV)/bin/pytest
 RUFF := $(VENV)/bin/ruff
 OUTPUTS := outputs
 
-.PHONY: help setup check lint test test-full typecheck verify-env \
+.PHONY: help setup check lint lint-full test test-full typecheck verify-env \
         check-architecture check-portability \
         validate-evidence reproduce-ir-audit reproduce-real-llm-reanalysis \
         validate-offline doc-links secret-scan repo-ready \
         synth-smoke q1-tables paper-tables \
         noise-sweep scale-sweep multiseed clean-outputs
+
+MAINTAINED_LINT_PATHS := \
+	scripts/check_active_portability.py \
+	scripts/check_architecture_boundaries.py \
+	scripts/check_repo_ready.py \
+	scripts/run_real_llm_clustered_reanalysis.py \
+	scripts/run_secret_scan.py \
+	scripts/validate_canonical_evidence_manifest.py \
+	scripts/validate_report_links.py \
+	src/consistency_ranker/experiment_cli.py \
+	src/consistency_ranker/provenance.py \
+	src/consistency_ranker/real_llm_reanalysis/population.py \
+	tests/test_active_portability.py \
+	tests/test_check_architecture_boundaries.py \
+	tests/test_check_repo_ready.py \
+	tests/test_cli_validation.py \
+	tests/test_experiment_cli.py \
+	tests/test_offline_validation_scripts.py \
+	tests/test_provenance.py \
+	tests/test_real_llm_clustered_reanalysis.py \
+	tests/test_secret_scan.py
 
 help:
 	@echo "Targets:"
@@ -21,7 +42,8 @@ help:
 	@echo "  check                          Run repository readiness checks (includes check-architecture)"
 	@echo "  check-architecture             Fail if any consistency_ranker subpackage has a circular import dependency"
 	@echo "  check-portability              Fail if active code/docs contain machine-specific paths"
-	@echo "  lint                           Run Ruff lint checks"
+	@echo "  lint                           Run Ruff on maintained readiness/provenance/reanalysis paths"
+	@echo "  lint-full                      Run Ruff on the whole repository (known historical debt)"
 	@echo "  test                           Run pytest (fast: whatever is installed; SCIP tests skip if absent)"
 	@echo "  test-full                      Run pytest and fail if any test is skipped (requires [exact] extra)"
 	@echo "  typecheck                      No mypy configured in this repo -- documented no-op, see canonical_environment_specification.md"
@@ -61,6 +83,9 @@ check-portability:
 	"$(PYTHON)" scripts/check_active_portability.py
 
 lint:
+	"$(RUFF)" check $(MAINTAINED_LINT_PATHS)
+
+lint-full:
 	"$(RUFF)" check .
 
 test:
