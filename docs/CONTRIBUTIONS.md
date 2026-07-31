@@ -172,6 +172,13 @@ Not part of the JDIQ manuscript (zero references to "policy_selection",
 research thread on the same codebase, about adaptive LLM-judge budget
 allocation, not preference-graph repair.
 
+**Naming note (do not conflate):** this section's "Outcome F" is an
+outcome-letter in the policy-selection thread's own A-F decision taxonomy.
+It is unrelated to `main.tex`'s `tab:dq-taxonomy` audit dimension "F"
+("graph repair is assumed to improve retrieval") -- that is the
+manuscript's own, differently-scoped A-G lettering for a different
+question. Same letter, two unrelated taxonomies, no shared meaning.
+
 | Field | Value |
 |---|---|
 | Contribution | Established that an oracle query-specific acquisition-policy selector beats a fixed always-UHT default in principle (margin 0.1965 corrected utility), but that **no currently-implemented learned/hard/calibrated/selective/soft/staged gate realizes that gap** -- one gate (`selective_three_way`) was actively worse than the fixed default. |

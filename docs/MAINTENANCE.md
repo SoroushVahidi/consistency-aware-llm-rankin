@@ -47,8 +47,8 @@ See `docs/EXPERIMENT_ARTIFACT_POLICY.md` (raw provider transcripts) and
 
 ## Archival expectations
 
-See `docs/ARTIFACT_POLICY.md` "External Archive Procedure" and issue #46
-(no destination currently configured). Not repeated here.
+See `docs/EXPERIMENT_ARTIFACT_POLICY.md` "External Archive Procedure" and
+issue #46 (no destination currently configured). Not repeated here.
 
 ## GitHub Actions limitation
 

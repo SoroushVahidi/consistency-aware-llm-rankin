@@ -100,6 +100,12 @@ all three tiers (`core`, `solver`, `real-data`) PASS. If this number and the
 one above ever disagree with a fresh `pytest -q` run, trust the fresh run,
 not either cached number here.
 
+**Update (2026-07-31, GitHub repository polish pass):** the total grew again
+to **1362 passed, 64 deselected, 0 skipped, 0 failed** as of commit
+`2cd71ce`, with the addition of the claim-registry-validator and
+repo-clarity-validator regression tests. Same caveat applies: trust a fresh
+`pytest -q` run over any number in this file.
+
 ## Known blockers (not fixable by a commit)
 
 - **GitHub Actions billing.** See "Verified state" above. Action: repository owner must resolve in GitHub billing settings. Tracked: [issue #45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45).
