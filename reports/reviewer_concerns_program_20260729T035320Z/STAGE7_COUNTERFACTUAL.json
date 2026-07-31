@@ -1,0 +1,16 @@
+{
+  "n_graphs_tested": 24,
+  "single_edge_removal_inside_topk": {
+    "n": 238,
+    "mean": 0.000572546455497796,
+    "std": 0.00669618745218407,
+    "frac_nonzero": 0.13445378151260504
+  },
+  "single_edge_removal_outside_topk": {
+    "n": 42,
+    "mean": 0.003452791216213246,
+    "std": 0.011071142588028974,
+    "frac_nonzero": 0.19047619047619047
+  },
+  "interpretation": "SYNTHETIC / exploratory only -- single-edge removal within an observed SCC, not a full MWFAS re-solve, and not validated against any new real LLM judgment. A materially higher frac_nonzero / |mean| for the inside-top-k group versus the outside-top-k group would be intervention-consistent with the 'cycles confined to the non-consequential tail' hypothesis motivating Branch B; a similar or null difference would not support it."
+}

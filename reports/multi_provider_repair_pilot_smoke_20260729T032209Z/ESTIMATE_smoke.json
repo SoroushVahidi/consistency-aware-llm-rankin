@@ -1,0 +1,48 @@
+{
+  "smoke": true,
+  "n_queries": 1,
+  "n_providers": 4,
+  "providers": [
+    "azure",
+    "gemini",
+    "cohere",
+    "fireworks"
+  ],
+  "debias_position": true,
+  "total_planned_api_calls": 24,
+  "calls_per_provider_total": 6,
+  "per_query": [
+    {
+      "dataset": "scidocs",
+      "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "pool_size": 3,
+      "n_pairs": 3,
+      "calls_per_provider": 6,
+      "calls_all_providers": 24
+    }
+  ],
+  "est_prompt_tokens_per_call_rough": 450,
+  "cost_estimate_usd": {
+    "per_provider": {
+      "azure": {
+        "low_usd": 0.001,
+        "high_usd": 0.005
+      },
+      "gemini": {
+        "low_usd": 0.0,
+        "high_usd": 0.002
+      },
+      "cohere": {
+        "low_usd": 0.002,
+        "high_usd": 0.012
+      },
+      "fireworks": {
+        "low_usd": 0.001,
+        "high_usd": 0.005
+      }
+    },
+    "total_low": 0.004,
+    "total_high": 0.024,
+    "caveat": "Rough order-of-magnitude planning estimate only, based on typical published per-token rate bands I have not verified against current live pricing pages for these exact models. Treat as a sanity check, not an exact prediction. Non-Fireworks providers use max_tokens=4; Fireworks uses max_tokens=512 (reasoning-model budget) but the verification smoke test showed only ~20-100 completion tokens actually consumed for a trivial prompt."
+  }
+}

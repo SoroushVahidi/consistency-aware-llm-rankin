@@ -1,0 +1,169 @@
+{
+  "branch": "B",
+  "variants": [
+    "pool8_complete",
+    "pool8_sparse57",
+    "pool10_sparse56"
+  ],
+  "n_base_queries": 6,
+  "n_plan_rows": 18,
+  "per_provider_calls": 828,
+  "total_planned_api_calls": 3312,
+  "per_provider_cost_usd": {
+    "azure": 0.0630936,
+    "gemini": 0.12751200000000001,
+    "cohere": 1.0639800000000001,
+    "fireworks": 0.10743299999999999
+  },
+  "total_cost_usd": 1.3620186,
+  "cost_ceiling_usd": 8.0,
+  "cost_target_usd": 4.0,
+  "within_ceiling": true,
+  "caveat": "Cost calibrated against the FINISHED main pilot's own observed token usage (provider_usage.jsonl), not just a generic band -- more reliable than a pre-pilot guess, but still not fetched from a live pricing API. See _RATE_USD_PER_M_TOKENS.",
+  "plan": [
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "scidocs",
+      "query_id": "0674058618d04def58c79a0b28174301ef591433",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "scidocs",
+      "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "scidocs",
+      "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "fiqa",
+      "query_id": "11039",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "fiqa",
+      "query_id": "2377",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_complete",
+      "pool_size": 8,
+      "sparse_coverage": null,
+      "dataset": "fiqa",
+      "query_id": "4002",
+      "n_pairs": 28
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "scidocs",
+      "query_id": "0674058618d04def58c79a0b28174301ef591433",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "scidocs",
+      "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "scidocs",
+      "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "fiqa",
+      "query_id": "11039",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "fiqa",
+      "query_id": "2377",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool8_sparse57",
+      "pool_size": 8,
+      "sparse_coverage": 0.57,
+      "dataset": "fiqa",
+      "query_id": "4002",
+      "n_pairs": 16
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "scidocs",
+      "query_id": "0674058618d04def58c79a0b28174301ef591433",
+      "n_pairs": 25
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "scidocs",
+      "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "n_pairs": 25
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "scidocs",
+      "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "n_pairs": 25
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "fiqa",
+      "query_id": "11039",
+      "n_pairs": 25
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "fiqa",
+      "query_id": "2377",
+      "n_pairs": 25
+    },
+    {
+      "variant": "pool10_sparse56",
+      "pool_size": 10,
+      "sparse_coverage": 0.56,
+      "dataset": "fiqa",
+      "query_id": "4002",
+      "n_pairs": 25
+    }
+  ]
+}

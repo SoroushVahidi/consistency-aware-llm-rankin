@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "purpose": "Compact provider model metadata for the real-LLM pilot. This preserves model identity without requiring raw request/response transcripts to be tracked in Git.",
+  "aggregate": "derived (unweighted combination of azure/gemini/cohere/fireworks)",
+  "models": {
+    "azure": "gpt-4.1-mini",
+    "gemini": "gemini-2.5-flash",
+    "cohere": "command-r-plus-08-2024",
+    "fireworks": "accounts/fireworks/models/gpt-oss-120b"
+  },
+  "source_raw_call_hashes": {
+    "reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/azure_calls.jsonl": "796b736daf64fe3a67b0ce29f8ae3501518e4388d572bce48719b856f9f1abca",
+    "reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/gemini_calls.jsonl": "13f55632c6a3a4774471dfb5a272df93eeb575e73c30a7042b326a59de74fa24",
+    "reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/cohere_calls.jsonl": "0af32363999e1e730e454ac2cdff492946f833ee3b43f5d26e01b93cd0656a82",
+    "reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/fireworks_calls.jsonl": "099d3327ab888d1a607b91eaa09175f1c5002c47e80f581ce81ecfeacfdcc612"
+  },
+  "notes": [
+    "Raw call transcripts are local/external-archive artifacts because they contain provider request/response payloads and are not byte-reproducible by rerunning providers.",
+    "The model strings above were extracted from the first record's model field in each raw call transcript before those transcripts were excluded from Git."
+  ]
+}

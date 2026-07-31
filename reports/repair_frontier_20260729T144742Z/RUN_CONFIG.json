@@ -1,0 +1,42 @@
+{
+  "main_protection_rules": [
+    "unanimous_multi_provider:min_providers=2",
+    "confidence_threshold:tau=0.5",
+    "margin_threshold:tau=0.5",
+    "topk_boundary_crossing:topk=10:window=2",
+    "low_confidence_first:tau=0.25"
+  ],
+  "main_topk": 10,
+  "main_conservative_margin": 0.05,
+  "main_weak_edge_tau": 0.5,
+  "main_exact_max_n": 12,
+  "sensitivity_confidence_taus": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9
+  ],
+  "sensitivity_margin_taus": [
+    0.1,
+    0.5,
+    1.0,
+    2.0
+  ],
+  "sensitivity_conservative_margins": [
+    0.01,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "sensitivity_topks": [
+    3,
+    5,
+    10,
+    20
+  ],
+  "sources": [
+    "reports/multi_provider_repair_pilot_20260729T032348Z",
+    "reports/reviewer_concerns_program_20260729T035320Z"
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "n_total_rows": 240,
+  "slices": {
+    "method=greedy": {
+      "label": "method=greedy",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 1.0
+    },
+    "method=exact": {
+      "label": "method=exact",
+      "n_queries": 6,
+      "headroom": 0.0004062476650565916,
+      "headroom_ci": [
+        7.757581408568415e-05,
+        0.0007544348581330166
+      ],
+      "frac_beneficial": 0.3333333333333333,
+      "frac_harmful": 0.6666666666666666
+    },
+    "graph_id=azure": {
+      "label": "graph_id=azure",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.16666666666666666
+    },
+    "graph_id=gemini": {
+      "label": "graph_id=gemini",
+      "n_queries": 6,
+      "headroom": 0.0004330739505354897,
+      "headroom_ci": [
+        0.0,
+        0.0012992218516059695
+      ],
+      "frac_beneficial": 0.16666666666666666,
+      "frac_harmful": 0.3333333333333333
+    },
+    "graph_id=cohere": {
+      "label": "graph_id=cohere",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.0
+    },
+    "graph_id=fireworks": {
+      "label": "graph_id=fireworks",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.0
+    },
+    "graph_id=aggregate": {
+      "label": "graph_id=aggregate",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 1.0
+    },
+    "dataset=scidocs": {
+      "label": "dataset=scidocs",
+      "n_queries": 3,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 1.0
+    },
+    "dataset=fiqa": {
+      "label": "dataset=fiqa",
+      "n_queries": 3,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 1.0
+    },
+    "variant=pool10_sparse56": {
+      "label": "variant=pool10_sparse56",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.16666666666666666
+    },
+    "variant=pool6_original": {
+      "label": "variant=pool6_original",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.0
+    },
+    "variant=pool8_complete": {
+      "label": "variant=pool8_complete",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.16666666666666666,
+      "frac_harmful": 0.0
+    },
+    "variant=pool8_sparse57": {
+      "label": "variant=pool8_sparse57",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 0.8333333333333334
+    },
+    "whole_graph_repair": {
+      "label": "whole_graph_repair",
+      "n_queries": 6,
+      "headroom": 0.0,
+      "headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "frac_beneficial": 0.0,
+      "frac_harmful": 1.0
+    }
+  }
+}

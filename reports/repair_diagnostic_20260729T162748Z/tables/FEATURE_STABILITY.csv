@@ -1,0 +1,191 @@
+feature,dimension,group_value,n,correlation,note
+n_nodes,by_dataset,scidocs,60,-0.1878671647834158,
+n_nodes,by_dataset,fiqa,60,1.5740464190836687e-17,
+n_nodes,by_provider,azure,24,-0.29488391230979427,
+n_nodes,by_provider,gemini,24,2.8879828832301805e-19,
+n_nodes,by_provider,cohere,24,,no variance
+n_nodes,by_provider,fireworks,24,,no variance
+n_nodes,by_provider,aggregate,24,-0.08716445635993697,
+n_nodes,by_pool_size,6,30,,no variance
+n_nodes,by_pool_size,8,60,,no variance
+n_nodes,by_pool_size,10,30,,no variance
+n_edges,by_dataset,scidocs,60,-0.029860933808116538,
+n_edges,by_dataset,fiqa,60,0.10303010666925082,
+n_edges,by_provider,azure,24,-0.1486075233534274,
+n_edges,by_provider,gemini,24,0.3521799092090303,
+n_edges,by_provider,cohere,24,,no variance
+n_edges,by_provider,fireworks,24,,no variance
+n_edges,by_provider,aggregate,24,0.3182254897014026,
+n_edges,by_pool_size,6,30,,no variance
+n_edges,by_pool_size,8,60,0.18950973019367287,
+n_edges,by_pool_size,10,30,0.00806618199534555,
+graph_density,by_dataset,scidocs,60,0.19740330041969856,
+graph_density,by_dataset,fiqa,60,0.12542188861590248,
+graph_density,by_provider,azure,24,0.2160253548459353,
+graph_density,by_provider,gemini,24,0.32616507235477354,
+graph_density,by_provider,cohere,24,,no variance
+graph_density,by_provider,fireworks,24,,no variance
+graph_density,by_provider,aggregate,24,0.4201469170524004,
+graph_density,by_pool_size,6,30,,no variance
+graph_density,by_pool_size,8,60,0.18950973019367293,
+graph_density,by_pool_size,10,30,0.00806618199534553,
+pool_size,by_dataset,scidocs,60,-0.1878671647834158,
+pool_size,by_dataset,fiqa,60,1.5740464190836687e-17,
+pool_size,by_provider,azure,24,-0.29488391230979427,
+pool_size,by_provider,gemini,24,2.8879828832301805e-19,
+pool_size,by_provider,cohere,24,,no variance
+pool_size,by_provider,fireworks,24,,no variance
+pool_size,by_provider,aggregate,24,-0.08716445635993697,
+pool_size,by_pool_size,6,30,,no variance
+pool_size,by_pool_size,8,60,,no variance
+pool_size,by_pool_size,10,30,,no variance
+n_sccs,by_dataset,scidocs,60,0.03667113073811691,
+n_sccs,by_dataset,fiqa,60,0.18062690918038973,
+n_sccs,by_provider,azure,24,-0.052310553817961604,
+n_sccs,by_provider,gemini,24,0.009425626450759629,
+n_sccs,by_provider,cohere,24,,no variance
+n_sccs,by_provider,fireworks,24,,no variance
+n_sccs,by_provider,aggregate,24,-0.22441135187298522,
+n_sccs,by_pool_size,6,30,,no variance
+n_sccs,by_pool_size,8,60,0.309021286276791,
+n_sccs,by_pool_size,10,30,0.09956504811192844,
+n_nontrivial_sccs,by_dataset,scidocs,60,-0.1994122283140191,
+n_nontrivial_sccs,by_dataset,fiqa,60,-0.22657589599322578,
+n_nontrivial_sccs,by_provider,azure,24,-0.4662524041201568,
+n_nontrivial_sccs,by_provider,gemini,24,-0.02300833390268233,
+n_nontrivial_sccs,by_provider,cohere,24,,no variance
+n_nontrivial_sccs,by_provider,fireworks,24,,no variance
+n_nontrivial_sccs,by_provider,aggregate,24,0.1441617827611656,
+n_nontrivial_sccs,by_pool_size,6,30,,no variance
+n_nontrivial_sccs,by_pool_size,8,60,-0.38620071925201754,
+n_nontrivial_sccs,by_pool_size,10,30,-0.05776841509622337,
+largest_scc_size,by_dataset,scidocs,60,-0.230348822807378,
+largest_scc_size,by_dataset,fiqa,60,-0.2586705147644734,
+largest_scc_size,by_provider,azure,24,-0.3953943920371077,
+largest_scc_size,by_provider,gemini,24,-0.012898746028477293,
+largest_scc_size,by_provider,cohere,24,,no variance
+largest_scc_size,by_provider,fireworks,24,,no variance
+largest_scc_size,by_provider,aggregate,24,0.04290825305716917,
+largest_scc_size,by_pool_size,6,30,,no variance
+largest_scc_size,by_pool_size,8,60,-0.28948886845970795,
+largest_scc_size,by_pool_size,10,30,-0.15534576446367138,
+largest_scc_frac,by_dataset,scidocs,60,-0.15867147466811568,
+largest_scc_frac,by_dataset,fiqa,60,-0.2317915638028773,
+largest_scc_frac,by_provider,azure,24,-0.25074519740384127,
+largest_scc_frac,by_provider,gemini,24,-0.011184714210472157,
+largest_scc_frac,by_provider,cohere,24,,no variance
+largest_scc_frac,by_provider,fireworks,24,,no variance
+largest_scc_frac,by_provider,aggregate,24,0.12823237715912555,
+largest_scc_frac,by_pool_size,6,30,,no variance
+largest_scc_frac,by_pool_size,8,60,-0.28948886845970795,
+largest_scc_frac,by_pool_size,10,30,-0.15534576446367138,
+is_cyclic,by_dataset,scidocs,60,-0.265572678909617,
+is_cyclic,by_dataset,fiqa,60,-0.3353650613877161,
+is_cyclic,by_provider,azure,24,-0.4662524041201568,
+is_cyclic,by_provider,gemini,24,-0.02300833390268233,
+is_cyclic,by_provider,cohere,24,,no variance
+is_cyclic,by_provider,fireworks,24,,no variance
+is_cyclic,by_provider,aggregate,24,,no variance
+is_cyclic,by_pool_size,6,30,,no variance
+is_cyclic,by_pool_size,8,60,-0.3578127681283953,
+is_cyclic,by_pool_size,10,30,-0.23107366038489335,
+scc_cycle_weight,by_dataset,scidocs,60,-0.14356376900573406,
+scc_cycle_weight,by_dataset,fiqa,60,-0.194362992329848,
+scc_cycle_weight,by_provider,azure,24,-0.37286893787744885,
+scc_cycle_weight,by_provider,gemini,24,-0.006226818765798368,
+scc_cycle_weight,by_provider,cohere,24,,no variance
+scc_cycle_weight,by_provider,fireworks,24,,no variance
+scc_cycle_weight,by_provider,aggregate,24,0.12946433097534926,
+scc_cycle_weight,by_pool_size,6,30,,no variance
+scc_cycle_weight,by_pool_size,8,60,-0.2530133573170806,
+scc_cycle_weight,by_pool_size,10,30,-0.0449033221806265,
+scc_cycle_weight_frac,by_dataset,scidocs,60,-0.21710639485364133,
+scc_cycle_weight_frac,by_dataset,fiqa,60,-0.26838437836429646,
+scc_cycle_weight_frac,by_provider,azure,24,-0.3205328978919828,
+scc_cycle_weight_frac,by_provider,gemini,24,-0.09183427668036137,
+scc_cycle_weight_frac,by_provider,cohere,24,,no variance
+scc_cycle_weight_frac,by_provider,fireworks,24,,no variance
+scc_cycle_weight_frac,by_provider,aggregate,24,0.000806911036396042,
+scc_cycle_weight_frac,by_pool_size,6,30,,no variance
+scc_cycle_weight_frac,by_pool_size,8,60,-0.4134951429971505,
+scc_cycle_weight_frac,by_pool_size,10,30,-0.10655595588104362,
+edge_weight_mean,by_dataset,scidocs,60,-0.15189188261468328,
+edge_weight_mean,by_dataset,fiqa,60,-0.3015315267281558,
+edge_weight_mean,by_provider,azure,24,,no variance
+edge_weight_mean,by_provider,gemini,24,,no variance
+edge_weight_mean,by_provider,cohere,24,,no variance
+edge_weight_mean,by_provider,fireworks,24,,no variance
+edge_weight_mean,by_provider,aggregate,24,0.08933323200662327,
+edge_weight_mean,by_pool_size,6,30,,no variance
+edge_weight_mean,by_pool_size,8,60,-0.46585611148371375,
+edge_weight_mean,by_pool_size,10,30,0.0328852678003091,
+edge_weight_std,by_dataset,scidocs,60,-0.1658263163227409,
+edge_weight_std,by_dataset,fiqa,60,-0.3323357087116532,
+edge_weight_std,by_provider,azure,24,,no variance
+edge_weight_std,by_provider,gemini,24,,no variance
+edge_weight_std,by_provider,cohere,24,,no variance
+edge_weight_std,by_provider,fireworks,24,,no variance
+edge_weight_std,by_provider,aggregate,24,-0.09270049338430016,
+edge_weight_std,by_pool_size,6,30,,no variance
+edge_weight_std,by_pool_size,8,60,-0.5001375302002776,
+edge_weight_std,by_pool_size,10,30,0.02166137430336394,
+edge_weight_max,by_dataset,scidocs,60,-0.15903475709410422,
+edge_weight_max,by_dataset,fiqa,60,-0.33345528566125904,
+edge_weight_max,by_provider,azure,24,,no variance
+edge_weight_max,by_provider,gemini,24,,no variance
+edge_weight_max,by_provider,cohere,24,,no variance
+edge_weight_max,by_provider,fireworks,24,,no variance
+edge_weight_max,by_provider,aggregate,24,,no variance
+edge_weight_max,by_pool_size,6,30,,no variance
+edge_weight_max,by_pool_size,8,60,-0.4921692744793272,
+edge_weight_max,by_pool_size,10,30,0.027709743962578897,
+mean_edge_reliability,by_dataset,scidocs,60,0.2353965145727533,
+mean_edge_reliability,by_dataset,fiqa,60,0.21334946693153214,
+mean_edge_reliability,by_provider,azure,24,0.04898498867708906,
+mean_edge_reliability,by_provider,gemini,24,0.21697424297735976,
+mean_edge_reliability,by_provider,cohere,24,,no variance
+mean_edge_reliability,by_provider,fireworks,24,,no variance
+mean_edge_reliability,by_provider,aggregate,24,0.08933323200662327,
+mean_edge_reliability,by_pool_size,6,30,,no variance
+mean_edge_reliability,by_pool_size,8,60,0.3678989197013634,
+mean_edge_reliability,by_pool_size,10,30,0.06133765913329112,
+frac_edges_unanimous,by_dataset,scidocs,60,0.26177383145816696,
+frac_edges_unanimous,by_dataset,fiqa,60,0.18231340644567146,
+frac_edges_unanimous,by_provider,azure,24,0.0498747618307768,
+frac_edges_unanimous,by_provider,gemini,24,0.22419612749817738,
+frac_edges_unanimous,by_provider,cohere,24,,no variance
+frac_edges_unanimous,by_provider,fireworks,24,,no variance
+frac_edges_unanimous,by_provider,aggregate,24,0.0893332320066233,
+frac_edges_unanimous,by_pool_size,6,30,,no variance
+frac_edges_unanimous,by_pool_size,8,60,0.31353295270488085,
+frac_edges_unanimous,by_pool_size,10,30,0.09818782744768752,
+provider_disagreement,by_dataset,scidocs,60,-0.23539651457275335,
+provider_disagreement,by_dataset,fiqa,60,-0.21334946693153195,
+provider_disagreement,by_provider,azure,24,-0.0489849886770891,
+provider_disagreement,by_provider,gemini,24,-0.2169742429773598,
+provider_disagreement,by_provider,cohere,24,,no variance
+provider_disagreement,by_provider,fireworks,24,,no variance
+provider_disagreement,by_provider,aggregate,24,-0.08933323200662328,
+provider_disagreement,by_pool_size,6,30,,no variance
+provider_disagreement,by_pool_size,8,60,-0.3678989197013634,
+provider_disagreement,by_pool_size,10,30,-0.06133765913329118,
+topk_involvement,by_dataset,scidocs,60,-0.265572678909617,
+topk_involvement,by_dataset,fiqa,60,-0.3353650613877161,
+topk_involvement,by_provider,azure,24,-0.4662524041201568,
+topk_involvement,by_provider,gemini,24,-0.02300833390268233,
+topk_involvement,by_provider,cohere,24,,no variance
+topk_involvement,by_provider,fireworks,24,,no variance
+topk_involvement,by_provider,aggregate,24,,no variance
+topk_involvement,by_pool_size,6,30,,no variance
+topk_involvement,by_pool_size,8,60,-0.3578127681283953,
+topk_involvement,by_pool_size,10,30,-0.23107366038489335,
+incumbent_topk_margin,by_dataset,scidocs,60,,no variance
+incumbent_topk_margin,by_dataset,fiqa,60,,no variance
+incumbent_topk_margin,by_provider,azure,24,,no variance
+incumbent_topk_margin,by_provider,gemini,24,,no variance
+incumbent_topk_margin,by_provider,cohere,24,,no variance
+incumbent_topk_margin,by_provider,fireworks,24,,no variance
+incumbent_topk_margin,by_provider,aggregate,24,,no variance
+incumbent_topk_margin,by_pool_size,6,30,,no variance
+incumbent_topk_margin,by_pool_size,8,60,,no variance
+incumbent_topk_margin,by_pool_size,10,30,,no variance

@@ -1,0 +1,66 @@
+{
+  "pool_size": 4,
+  "tiers": {
+    "high": [
+      "1f25ed3c9707684cc0cdf3e8321c791bc7164147"
+    ],
+    "boundary": [
+      "39b58ef6487c893219c77c61c762eee5694d0e36",
+      "7c3a4b84214561d8a6e4963bbb85a17a5b1e003a"
+    ],
+    "low_explicit": [
+      "0859b73ef7bd5757e56a429d862a3696029ec20b"
+    ]
+  },
+  "n_sparse_pairs": 3,
+  "providers": {
+    "azure": {
+      "n_pairs": 3,
+      "non_empty": 3,
+      "stats": {
+        "api_calls": 6,
+        "cache_hits": 0,
+        "prompt_tokens": 1910,
+        "completion_tokens": 14,
+        "total_tokens": 1924,
+        "errors": 0
+      }
+    },
+    "gemini": {
+      "n_pairs": 3,
+      "non_empty": 3,
+      "stats": {
+        "api_calls": 6,
+        "cache_hits": 0,
+        "prompt_tokens": 1860,
+        "completion_tokens": 6,
+        "total_tokens": 1866,
+        "errors": 0
+      }
+    },
+    "cohere": {
+      "n_pairs": 3,
+      "non_empty": 3,
+      "stats": {
+        "api_calls": 6,
+        "cache_hits": 0,
+        "prompt_tokens": 1910,
+        "completion_tokens": 6,
+        "total_tokens": 1916,
+        "errors": 0
+      }
+    },
+    "fireworks": {
+      "n_pairs": 3,
+      "non_empty": 3,
+      "stats": {
+        "api_calls": 6,
+        "cache_hits": 0,
+        "prompt_tokens": 2300,
+        "completion_tokens": 521,
+        "total_tokens": 2821,
+        "errors": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "timestamp": 1785342480.8716552,
+  "runtime_s": 4.052615165710449,
+  "n_query_graphs": 120,
+  "outcome_group_stats": {
+    "improves": {
+      "n": 1,
+      "mean_delta": 0.010393774812847534,
+      "mean_ndcg_preserve": 0.9565912771023182,
+      "mean_ndcg_repair": 0.9669850519151657
+    },
+    "harms": {
+      "n": 9,
+      "mean_delta": -0.013497422426815089,
+      "mean_ndcg_preserve": 0.8499598064920818,
+      "mean_ndcg_repair": 0.8364623840652666
+    },
+    "no_change": {
+      "n": 110,
+      "mean_delta": 0.0,
+      "mean_ndcg_preserve": 0.8912440380705388,
+      "mean_ndcg_repair": 0.8912440380705388
+    }
+  },
+  "overall_delta_ci": {
+    "method": "percentile",
+    "lower": -0.0019134283023891348,
+    "upper": -0.00018849725657282544,
+    "reps": 10000,
+    "seed": 13
+  },
+  "outlier_sensitivity": {
+    "mean_delta_full": -0.0009256918919040689,
+    "mean_delta_excluding_top_n": -0.0010208134608515613,
+    "drop_top_n": 1,
+    "fraction_of_mean_from_top_n": -0.10275726705549455
+  },
+  "feature_associations": [
+    {
+      "feature": "n_nodes",
+      "family": "pre_repair",
+      "correlation": -0.12524975947476136,
+      "pvalue_raw": 0.18858114188581143,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "n_edges",
+      "family": "pre_repair",
+      "correlation": 0.007161551059635267,
+      "pvalue_raw": 0.9488051194880512,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "graph_density",
+      "family": "pre_repair",
+      "correlation": 0.15518262361581753,
+      "pvalue_raw": 0.06669333066693331,
+      "pvalue_holm": 0.9584041595840416,
+      "n": 120
+    },
+    {
+      "feature": "pool_size",
+      "family": "pre_repair",
+      "correlation": -0.12524975947476136,
+      "pvalue_raw": 0.18858114188581143,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "n_sccs",
+      "family": "pre_repair",
+      "correlation": 0.06295452897166466,
+      "pvalue_raw": 0.49345065493450657,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "n_nontrivial_sccs",
+      "family": "pre_repair",
+      "correlation": -0.19091036390050212,
+      "pvalue_raw": 0.043495650434956505,
+      "pvalue_holm": 0.8699130086991301,
+      "n": 120
+    },
+    {
+      "feature": "largest_scc_size",
+      "family": "pre_repair",
+      "correlation": -0.19339393411528066,
+      "pvalue_raw": 0.0367963203679632,
+      "pvalue_holm": 0.7727227277272273,
+      "n": 120
+    },
+    {
+      "feature": "largest_scc_frac",
+      "family": "pre_repair",
+      "correlation": -0.1403119579172014,
+      "pvalue_raw": 0.09759024097590241,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "is_cyclic",
+      "family": "pre_repair",
+      "correlation": -0.24786696856924056,
+      "pvalue_raw": 0.000999900009999,
+      "pvalue_holm": 0.022997700229977002,
+      "n": 120
+    },
+    {
+      "feature": "scc_cycle_weight",
+      "family": "pre_repair",
+      "correlation": -0.12531710317375758,
+      "pvalue_raw": 0.10948905109489052,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "scc_cycle_weight_frac",
+      "family": "pre_repair",
+      "correlation": -0.16872202579158363,
+      "pvalue_raw": 0.05729427057294271,
+      "pvalue_holm": 0.9377062293770623,
+      "n": 120
+    },
+    {
+      "feature": "edge_weight_mean",
+      "family": "pre_repair",
+      "correlation": -0.17361791532563506,
+      "pvalue_raw": 0.0638936106389361,
+      "pvalue_holm": 0.9584041595840416,
+      "n": 120
+    },
+    {
+      "feature": "edge_weight_std",
+      "family": "pre_repair",
+      "correlation": -0.1872575219434313,
+      "pvalue_raw": 0.047795220477952205,
+      "pvalue_holm": 0.908109189081092,
+      "n": 120
+    },
+    {
+      "feature": "edge_weight_max",
+      "family": "pre_repair",
+      "correlation": -0.1832356679870381,
+      "pvalue_raw": 0.052094790520947905,
+      "pvalue_holm": 0.9377062293770623,
+      "n": 120
+    },
+    {
+      "feature": "mean_edge_reliability",
+      "family": "pre_repair",
+      "correlation": 0.1314710353371148,
+      "pvalue_raw": 0.12638736126387362,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "frac_edges_unanimous",
+      "family": "pre_repair",
+      "correlation": 0.11574947204099266,
+      "pvalue_raw": 0.16468353164683533,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "provider_disagreement",
+      "family": "pre_repair",
+      "correlation": -0.1314710353371149,
+      "pvalue_raw": 0.12638736126387362,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "topk_involvement",
+      "family": "pre_repair",
+      "correlation": -0.24786696856924056,
+      "pvalue_raw": 0.000999900009999,
+      "pvalue_holm": 0.022997700229977002,
+      "n": 120
+    },
+    {
+      "feature": "incumbent_topk_margin",
+      "family": "pre_repair",
+      "correlation": 0.0,
+      "pvalue_raw": 1.0,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "repair_objective",
+      "family": "post_repair",
+      "correlation": -0.14363124283531128,
+      "pvalue_raw": 0.0841915808419158,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "n_reversed_edges",
+      "family": "post_repair",
+      "correlation": -0.14439237330190502,
+      "pvalue_raw": 0.0800919908009199,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "weight_reversed_edges",
+      "family": "post_repair",
+      "correlation": -0.14363124283531128,
+      "pvalue_raw": 0.0841915808419158,
+      "pvalue_holm": 1.0,
+      "n": 120
+    },
+    {
+      "feature": "repair_objective_frac",
+      "family": "post_repair",
+      "correlation": -0.16905891594029013,
+      "pvalue_raw": 0.05269473052694731,
+      "pvalue_holm": 0.9377062293770623,
+      "n": 120
+    }
+  ],
+  "headroom_gate_decision": "NO_HEADROOM_DO_NOT_LEARN",
+  "headroom_gate_rationale": "Headroom 95% CI upper bound (0.00026) does not exceed the threshold (0.01000); a learned selector cannot plausibly beat the stronger fixed baseline by more than noise on this slice. Do not proceed to label/feature/model work on this slice; see the negative-result fallback path.",
+  "baselines": {
+    "never_repair": 0.8886922810274193,
+    "always_repair": 0.8877665891355152,
+    "random_selection": 0.8882294350814672,
+    "oracle_selection": 0.8887788958175264
+  },
+  "oracle_headroom_mean": 8.661479010718676e-05,
+  "predictor_result": {
+    "n_rows": 120,
+    "n_groups": 6,
+    "class_balance": {
+      "positive": 1,
+      "negative": 119
+    },
+    "status": "UNSUPPORTED",
+    "reason": "Only 1 'improves' and 119 non-improving rows -- inadequate class balance for grouped-CV classification (folds without any positive example would trivially inflate balanced accuracy for every model, including negative controls). Reporting UNSUPPORTED rather than a misleading metric."
+  },
+  "stability_fraction": 0.0,
+  "stability_detail": {},
+  "decision": "NO_IDENTIFIABLE_REPAIR_REGIME",
+  "decision_rationale": "Oracle headroom (0.00009, gate decision 'NO_HEADROOM_DO_NOT_LEARN') does not clear the 0.01 threshold at all -- there is no repair benefit to identify a regime for, predictable or not.",
+  "decision_conditions": {
+    "pre_repair_features_only": true,
+    "survives_grouped_validation": false,
+    "policy_beats_never_repair": false,
+    "stable_across_subgroups": false,
+    "practically_meaningful": false
+  }
+}

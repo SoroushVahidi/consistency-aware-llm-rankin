@@ -1,0 +1,88 @@
+{
+  "smoke": false,
+  "n_queries": 6,
+  "n_providers": 4,
+  "providers": [
+    "azure",
+    "gemini",
+    "cohere",
+    "fireworks"
+  ],
+  "debias_position": true,
+  "total_planned_api_calls": 720,
+  "calls_per_provider_total": 180,
+  "per_query": [
+    {
+      "dataset": "scidocs",
+      "query_id": "0674058618d04def58c79a0b28174301ef591433",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    },
+    {
+      "dataset": "scidocs",
+      "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    },
+    {
+      "dataset": "fiqa",
+      "query_id": "11039",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    },
+    {
+      "dataset": "fiqa",
+      "query_id": "2377",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    },
+    {
+      "dataset": "fiqa",
+      "query_id": "4002",
+      "pool_size": 6,
+      "n_pairs": 15,
+      "calls_per_provider": 30,
+      "calls_all_providers": 120
+    }
+  ],
+  "est_prompt_tokens_per_call_rough": 450,
+  "cost_estimate_usd": {
+    "per_provider": {
+      "azure": {
+        "low_usd": 0.02,
+        "high_usd": 0.15
+      },
+      "gemini": {
+        "low_usd": 0.005,
+        "high_usd": 0.05
+      },
+      "cohere": {
+        "low_usd": 0.05,
+        "high_usd": 0.35
+      },
+      "fireworks": {
+        "low_usd": 0.02,
+        "high_usd": 0.15
+      }
+    },
+    "total_low": 0.095,
+    "total_high": 0.7,
+    "caveat": "Rough order-of-magnitude planning estimate only, based on typical published per-token rate bands I have not verified against current live pricing pages for these exact models. Treat as a sanity check, not an exact prediction. Non-Fireworks providers use max_tokens=4; Fireworks uses max_tokens=512 (reasoning-model budget) but the verification smoke test showed only ~20-100 completion tokens actually consumed for a trivial prompt."
+  }
+}

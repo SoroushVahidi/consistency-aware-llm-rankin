@@ -418,3 +418,21 @@ reports/stopping_rule_pilot_20260728T190000Z/simulate/raw_stopping_histories.jso
 # in the same directory are tracked and are what downstream analysis and
 # citations should reference.
 reports/repository_scale_headroom_analysis/per_query_effects.csv
+
+# Real-LLM provider-pilot raw payloads and bulky smoke/debug outputs.
+# Compact parsed judgments, manifests, summaries, and aggregate tables are
+# tracked where they are active evidence; raw request/response transcripts and
+# transient logs remain local/external-archive material. See
+# docs/EXPERIMENT_ARTIFACT_POLICY.md and
+# docs/artifact_inventories/untracked_outputs_20260731.csv.
+reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/
+reports/multi_provider_repair_pilot_20260729T032348Z/logs/
+reports/multi_provider_repair_pilot_smoke_20260729T032209Z/raw_calls/
+reports/multi_provider_repair_pilot_smoke_20260729T032209Z/cache/
+reports/multi_provider_repair_pilot_smoke_20260729T032209Z/checkpoint/
+reports/multi_provider_repair_pilot_smoke_20260729T032209Z/logs/
+reports/reviewer_concerns_program_20260729T035320Z/raw_calls/
+reports/reviewer_concerns_program_20260729T035320Z/cache/
+reports/reviewer_concerns_program_20260729T035320Z/logs/
+reports/reviewer_concerns_program_20260729T035320Z/smoke_branch_b/*_calls.jsonl
+reports/reviewer_concerns_program_20260729T035320Z/smoke_branch_b/cache/
