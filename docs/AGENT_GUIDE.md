@@ -120,6 +120,65 @@ rather than `canonical`, and leave `manuscript_applicable: false`.
 
 ## 10. Highest-priority open items (check `docs/PROJECT_STATUS.md` for current state)
 
-1. GitHub Actions billing block -- external, requires the repository owner to act in GitHub's billing settings; not fixable by a commit.
-2. Once resolved, cross-check an actual `ci.yml` run against `scripts/run_cloud_validation.py --tier core`/`--tier solver` on the same commit to close the "verified on a live runner" gap.
+All tracked as GitHub issues (labels: `priority: blocking`/`high`/`medium`/`low`).
+See `docs/PROJECT_STATUS.md` "Prioritized remaining work" for the full,
+textually-robust list (issue links there are a convenience, not the source
+of truth).
+
+1. GitHub Actions billing block ([#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45)) -- external, requires the repository owner to act in GitHub's billing settings; not fixable by a commit.
+2. Once resolved, cross-check an actual `ci.yml` run against `scripts/run_cloud_validation.py --tier core`/`--tier solver` on the same commit ([#47](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/47)) to close the "verified on a live runner" gap.
 3. Everything else currently active is tracked in `docs/PROJECT_STATUS.md`'s subsystem table and "Exact next action" section -- check there rather than assuming this list is exhaustive or current.
+
+## 11. Maintainer/agent workflow
+
+**When investigating:**
+- Read the canonical docs (§1 above) before anything else.
+- Check `docs/claim_evidence_registry.yaml` for the current status of any
+  claim you're touching (`python scripts/validate_claim_evidence_registry.py`
+  to confirm it's internally consistent first).
+- Verify current `main` yourself (`git fetch origin && git status --short
+  --branch && git rev-parse HEAD`) -- do not trust a hash in any status
+  document once new commits exist.
+- Do not rely on `/tmp` reports or prior-session artifacts as ground truth
+  -- if a finding matters, it should already be (or should become) a
+  tracked file in this repository, not a local scratch file.
+
+**When changing code:**
+- Identify which claim (if any) or component the change affects.
+- Run the relevant focused tests, then the applicable cloud-validation
+  tier (§4).
+- Update `docs/PROJECT_STATUS.md`/`docs/CONTRIBUTIONS.md`/the claim
+  registry if the change affects what they describe -- see §8.
+
+**When running experiments:**
+- Classify canonical vs. exploratory vs. internal-validation **before**
+  execution, not after seeing results (§9, and the "Scientific experiment
+  proposal" issue template enforces this ordering).
+- Use provenance (`consistency_ranker.provenance.collect_provenance()` or
+  `experiment_cli.write_run_manifest()`).
+- Use tmux for anything expected to exceed ~5 minutes (§5).
+- Follow `docs/EXPERIMENT_ARTIFACT_POLICY.md` for what gets tracked.
+
+**When reporting completion** (to a user, in a PR description, or in an
+issue comment), state explicitly:
+- The exact commit.
+- The exact commands run.
+- Exact test totals (e.g. "1362 passed, 64 deselected, 0 skipped, 0
+  failed") -- never a vague "tests pass".
+- Artifact paths produced.
+- Which claim(s), if any, are affected.
+- Remaining limitations, stated plainly, not omitted.
+- Push/PR state (pushed to `main`? PR opened? still local?).
+
+**When updating GitHub:**
+- Update the relevant issue (comment with progress, or close with a link
+  to the merged commit/PR that resolved it).
+- Update `docs/PROJECT_STATUS.md` if the change affects tracked completion
+  state.
+- Close an issue only with objective evidence (a merged PR, a passing
+  validation run) -- never close an issue merely because it looks old.
+- **Never mark a GitHub Actions/infrastructure failure as a test
+  failure.** If a job fails before installing anything (billing, quota, a
+  platform outage), that's an infrastructure issue (`type: infrastructure`
+  / `status: external blocker` labels) -- file or update the infrastructure
+  issue, don't file a bug report against the code.

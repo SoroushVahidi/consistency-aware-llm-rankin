@@ -36,6 +36,9 @@ disagree, trust the one listed here, not the other.
 | Machine-readable per-claim evidence/status | `docs/claim_evidence_registry.yaml` |
 | What belongs in Git vs. local/external archive | `docs/EXPERIMENT_ARTIFACT_POLICY.md` (specifics), `docs/ARTIFACT_POLICY.md` (broad policy) |
 | Operational validation contract (what must pass before merge) | `docs/RELEASE_READINESS.md` + `docs/EXPERIMENTS.md` "Cloud Validation" |
+| Merge vs. public-release requirements | `docs/RELEASE_CHECKLIST.md` |
+| How to contribute (setup, PR expectations, wording rules) | `CONTRIBUTING.md` |
+| Tracked open work (issues, labels) | [GitHub issues](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues) -- textual context always lives in this file too, not only in issue numbers |
 | Exact scientific numbers | `papers/JDIQ_2026/manuscript/main.tex` (+ `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` for provenance) |
 | Detailed pre-merge branch history | root `PROJECT_STATUS.md` (historical narrative, not current state) |
 
@@ -99,21 +102,28 @@ not either cached number here.
 
 ## Known blockers (not fixable by a commit)
 
-- **GitHub Actions billing.** See "Verified state" above. Action: repository owner must resolve in GitHub billing settings.
-- **Cohere structured-output enforcement** for the counterfactual benchmark (unrelated to the above) -- see root `PROJECT_STATUS.md` for full detail; unchanged by this pass.
+- **GitHub Actions billing.** See "Verified state" above. Action: repository owner must resolve in GitHub billing settings. Tracked: [issue #45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45).
+- **Cohere structured-output enforcement** for the counterfactual benchmark (unrelated to the above) -- see root `PROJECT_STATUS.md` for full detail; unchanged by this pass. Tracked: [issue #48](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/48) (native-transport wiring).
 
 ## Prioritized remaining work
 
+Every item below is tracked as a GitHub issue (see `docs/RELEASE_CHECKLIST.md`
+for how these map to the merge/release bar) — the issue links are a
+convenience, not the source of truth; if an issue number is ever wrong or
+an issue is closed, trust the prose here and `docs/RELEASE_CHECKLIST.md`
+over a stale link.
+
 - **Required before ordinary development:** nothing -- `pytest -q` is green on a fresh clone, `docs/CONTRIBUTIONS.md`/this file describe current state accurately.
-- **Required before public release:** resolve the GitHub Actions billing block (external, repository-owner action); select a durable external archive destination for raw provider transcripts (`docs/ARTIFACT_POLICY.md`, not currently a merge blocker but is a release condition).
-- **Optional research extensions:** a better-calibrated stopping statistic for the consistency-aware pivot (see root `PROJECT_STATUS.md`); Cohere native-transport wiring for the counterfactual benchmark; cross-dataset generalization evidence for the real-LLM pilot.
-- **External infrastructure limitations (not fixable in this repo):** GitHub Actions billing; any future need for a durable raw-transcript archive destination.
+- **Required before public release:** resolve the GitHub Actions billing block (external, repository-owner action, [#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45)); select a durable external archive destination for raw provider transcripts (`docs/ARTIFACT_POLICY.md`, not currently a merge blocker but is a release condition, [#46](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/46)). Full bar: `docs/RELEASE_CHECKLIST.md`.
+- **Optional research extensions:** a better-calibrated stopping statistic for the consistency-aware pivot ([#49](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/49), see also root `PROJECT_STATUS.md`); Cohere native-transport wiring for the counterfactual benchmark ([#48](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/48)); cross-dataset generalization evidence for the real-LLM pilot ([#50](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/50)).
+- **External infrastructure limitations (not fixable in this repo):** GitHub Actions billing ([#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45)); any future need for a durable raw-transcript archive destination ([#46](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/46)).
+- **Deferred, blocked on the above:** cross-check cloud-validation tiers against a live GitHub Actions runner once billing is restored ([#47](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/47), blocked by #45).
 
 ## Exact next action
 
-1. Repository owner resolves the GitHub Actions billing block so CI can run at all again (currently the single highest-priority item -- no amount of code correctness is visible to CI until this is fixed).
-2. Once CI runs, confirm the fresh-checkout fix holds on an actual GitHub Actions runner (this pass validated it in a local isolated clone only).
-3. For the mature program: no further action recommended -- it is a complete, submitted manuscript. For the consistency-aware pivot: see root `PROJECT_STATUS.md`'s own "Exact next action" (unchanged, still current).
+1. Repository owner resolves the GitHub Actions billing block ([#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45)) so CI can run at all again (currently the single highest-priority item -- no amount of code correctness is visible to CI until this is fixed).
+2. Once CI runs, confirm the fresh-checkout fix holds on an actual GitHub Actions runner ([#47](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/47); this pass validated it in a local isolated clone only).
+3. For the mature program: no further action recommended -- it is a complete, submitted manuscript. For the consistency-aware pivot: see root `PROJECT_STATUS.md`'s own "Exact next action" (unchanged, still current), and issues [#49](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/49)/[#50](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/50) for the specific optional follow-ons.
 
 ## How to resume safely
 

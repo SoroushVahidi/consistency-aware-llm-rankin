@@ -120,6 +120,10 @@ every command above.
 | Production-facing policy logic (guarded, never learned-routing by default) | `src/consistency_ranker/policy_selection/production_config.py` — see `docs/CONTRIBUTIONS.md` §1.7 |
 | The internal-only Gurobi validation studies (never manuscript evidence) | [`reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`](reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/), [`reports/exact_solver_scaling_study_20260731T162314Z/`](reports/exact_solver_scaling_study_20260731T162314Z/) |
 | A separate, NO-GO'd companion research thread + planned companion paper | [`docs/research/RESEARCH_TRAJECTORY.md`](docs/research/RESEARCH_TRAJECTORY.md), [`papers/negative_result_2026/`](papers/negative_result_2026/) |
+| How to propose a change, set up the environment, and PR expectations | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| What's required before merging vs. before a public release | [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) |
+| Periodic checks, dependency version-sensitivity, document ownership | [`docs/MAINTENANCE.md`](docs/MAINTENANCE.md) |
+| Tracked open work (blockers, engineering, optional research) | [GitHub issues](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues) |
 | Detailed pre-merge branch history/handoff narrative | [Project status (root, historical)](PROJECT_STATUS.md), [Branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md) |
 
 ## Scope and limitations
