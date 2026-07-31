@@ -289,6 +289,11 @@ def run_packaging_steps(runner: Runner, source_python: str, work_dir: Path) -> l
     dist_dir = work_dir / "dist"
     steps.append(
         runner.run(
+            "install_build_backend", [source_python, "-m", "pip", "install", "--quiet", "build"]
+        )
+    )
+    steps.append(
+        runner.run(
             "package_build_sdist_wheel",
             [source_python, "-m", "build", "--outdir", str(dist_dir)],
         )

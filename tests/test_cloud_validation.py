@@ -20,6 +20,31 @@ def test_module_imports():
     import scripts.run_cloud_validation  # noqa: F401
 
 
+def test_packaging_steps_install_build_backend_before_building(tmp_path, monkeypatch):
+    """Regression test: an earlier version called `python -m build` without
+    ever installing the `build` package into the tier venv first, which
+    failed with 'No module named build' on every real run. The build
+    backend must be installed before the build step runs."""
+    calls = []
+
+    class FakeRunner:
+        def run(self, name, cmd, **kwargs):
+            calls.append(name)
+            return rcv.StepResult(name, cmd, str(tmp_path), 0, 0.01, f"{name}.log", "PASS")
+
+    monkeypatch.setattr(rcv, "make_venv", lambda path: str(path / "bin" / "python"))
+    # Simulate a wheel appearing after the (mocked) build step.
+    dist_dir = tmp_path / "dist"
+    dist_dir.mkdir()
+    (dist_dir / "consistency_ranker-0.1.0-py3-none-any.whl").touch()
+
+    rcv.run_packaging_steps(FakeRunner(), "fake_python", tmp_path)
+
+    assert "install_build_backend" in calls
+    assert "package_build_sdist_wheel" in calls
+    assert calls.index("install_build_backend") < calls.index("package_build_sdist_wheel")
+
+
 # ---------------------------------------------------------------------------
 # Runner / command construction / failure propagation
 # ---------------------------------------------------------------------------
