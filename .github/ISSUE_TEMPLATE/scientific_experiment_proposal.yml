@@ -1,0 +1,97 @@
+name: Scientific experiment proposal
+description: Propose a new experiment, analysis, or claim.
+title: "[experiment] "
+labels:
+  - "type: scientific"
+body:
+  - type: textarea
+    id: research-question
+    attributes:
+      label: Research question
+      description: What are you trying to find out?
+    validations:
+      required: true
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: What do you expect, and why?
+    validations:
+      required: true
+  - type: textarea
+    id: relationship-to-existing-claims
+    attributes:
+      label: Relationship to existing claims
+      description: >-
+        Does this confirm, extend, or challenge a claim already in
+        docs/claim_evidence_registry.yaml or docs/CONTRIBUTIONS.md? Cite the
+        claim ID(s) if any.
+    validations:
+      required: true
+  - type: input
+    id: datasets
+    attributes:
+      label: Datasets
+      description: Which dataset(s)? Real data requires the `real_data` pytest tier -- see docs/EXPERIMENTS.md.
+    validations:
+      required: true
+  - type: input
+    id: statistical-unit
+    attributes:
+      label: Statistical unit
+      description: What does "n" count over (queries, query clusters, synthetic instances)?
+    validations:
+      required: true
+  - type: input
+    id: correction-method
+    attributes:
+      label: Multiple-comparison correction method
+      description: e.g. Holm, BH, none (state why none is appropriate)
+    validations:
+      required: true
+  - type: textarea
+    id: expected-artifacts
+    attributes:
+      label: Expected artifacts
+      description: Entry-point script, output directory naming, what gets tracked vs. excluded (docs/EXPERIMENT_ARTIFACT_POLICY.md).
+    validations:
+      required: true
+  - type: dropdown
+    id: classification
+    attributes:
+      label: Canonical or exploratory?
+      description: Classify before running, not after seeing results.
+      options:
+        - Exploratory (default for anything new)
+        - Internal validation only (never a manuscript claim)
+        - Intended as canonical (requires explicit justification below)
+    validations:
+      required: true
+  - type: textarea
+    id: api-network-cost
+    attributes:
+      label: API / network / cost requirements
+      description: >-
+        Any paid LLM API calls require explicit, scoped authorization
+        (exact query/pair/provider and a stated call ceiling) before
+        running -- see AGENTS.md / docs/AGENT_GUIDE.md.
+    validations:
+      required: true
+  - type: textarea
+    id: manuscript-relevance
+    attributes:
+      label: Manuscript relevance
+      description: >-
+        Does this belong in papers/JDIQ_2026/manuscript/main.tex? See
+        docs/AGENT_GUIDE.md section 9 for the decision rule (note: results
+        depending on a commercial solver or a non-public identity-linked
+        package must not enter double-blind material).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: What result(s) would make this experiment "done"?
+    validations:
+      required: true

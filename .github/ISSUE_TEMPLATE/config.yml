@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Repository documentation hierarchy
+    url: https://github.com/SoroushVahidi/consistency-aware-llm-rankin/blob/main/docs/PROJECT_STATUS.md
+    about: Check docs/PROJECT_STATUS.md's "Document authority hierarchy" before filing -- your question may already be answered there.

@@ -1,0 +1,70 @@
+name: Experiment-result intake
+description: Report a completed experiment's results for classification and (if warranted) claim-registry inclusion.
+title: "[result] "
+labels:
+  - "type: scientific"
+body:
+  - type: input
+    id: script
+    attributes:
+      label: Generating script
+      description: e.g. scripts/run_something.py
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Configuration
+      description: Exact CLI args / config file used.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: output-dir
+    attributes:
+      label: Output directory
+      description: e.g. reports/my_family_20260731T000000Z/
+    validations:
+      required: true
+  - type: dropdown
+    id: provenance
+    attributes:
+      label: Provenance manifest present?
+      description: Via consistency_ranker.provenance.collect_provenance() or experiment_cli.write_run_manifest().
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: input
+    id: claim-id-impact
+    attributes:
+      label: Claim ID impact
+      description: >-
+        New claim ID to add to docs/claim_evidence_registry.yaml, an
+        existing ID this supports/contradicts, or "none" if this doesn't
+        rise to claim-registry significance.
+    validations:
+      required: true
+  - type: dropdown
+    id: result-classification
+    attributes:
+      label: Result classification
+      options:
+        - canonical
+        - negative_result
+        - exploratory
+        - internal_validation
+        - superseded
+    validations:
+      required: true
+  - type: textarea
+    id: artifact-policy-decision
+    attributes:
+      label: Artifact-policy decision
+      description: >-
+        What's tracked vs. excluded, per docs/EXPERIMENT_ARTIFACT_POLICY.md?
+        List any raw/bulky/sensitive files that must stay local or go to
+        external archive.
+    validations:
+      required: true

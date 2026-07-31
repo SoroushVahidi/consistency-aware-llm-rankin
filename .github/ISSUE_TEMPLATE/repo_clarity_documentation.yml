@@ -1,0 +1,37 @@
+name: Repository clarity / documentation issue
+description: A document is confusing, stale, contradictory, or hard to find.
+title: "[docs] "
+labels:
+  - documentation
+body:
+  - type: input
+    id: path
+    attributes:
+      label: Confusing or stale path
+      description: The file (and line, if applicable) that's the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: replacement
+    attributes:
+      label: Current canonical replacement (if known)
+      description: >-
+        Check docs/PROJECT_STATUS.md's "Document authority hierarchy" table
+        first -- is there already a document that should be authoritative
+        here?
+    validations:
+      required: false
+  - type: textarea
+    id: affected-workflow
+    attributes:
+      label: Affected future-agent workflow
+      description: What would a new agent/contributor get wrong because of this?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Proposed acceptance criterion
+      description: What change would resolve this?
+    validations:
+      required: true

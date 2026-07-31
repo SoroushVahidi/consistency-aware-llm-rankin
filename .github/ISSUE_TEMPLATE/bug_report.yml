@@ -1,0 +1,66 @@
+name: Bug report
+description: Something is broken.
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: input
+    id: commit
+    attributes:
+      label: Exact commit
+      description: Output of `git rev-parse HEAD`.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: >-
+        Python version, OS, which optional extras installed
+        (`.[dev]`/`.[dev,exact]`/`.[dev,exact,llm]`), Gurobi present or not.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction command
+      description: The exact command that triggers the bug.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected-vs-observed
+    attributes:
+      label: Expected vs. observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste the relevant excerpt, not a full log dump. Redact anything secret-shaped first.
+      render: shell
+  - type: dropdown
+    id: fresh-checkout
+    attributes:
+      label: Does a fresh checkout reproduce this?
+      description: >-
+        Try `python scripts/run_cloud_validation.py --tier core` (or
+        `--tier solver`) in a genuinely fresh clone before filing, if
+        feasible -- this rules out developer-local state as the cause.
+      options:
+        - "Yes, reproduces in a fresh clone"
+        - "No, only reproduces in my existing environment"
+        - "Not tested"
+    validations:
+      required: true
+  - type: dropdown
+    id: real-data-or-provider
+    attributes:
+      label: Does this require real data or provider access?
+      options:
+        - "No -- reproduces with the default tier, no network"
+        - "Yes -- requires the real_data tier (prepared datasets)"
+        - "Yes -- requires live LLM provider access"
+    validations:
+      required: true
