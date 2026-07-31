@@ -13,6 +13,8 @@ Checks performed
 4. pytest can discover tests
 5. Expected output and data directories exist or can be created
 6. Pre-committed result tables are readable
+7. Architecture import boundaries are acyclic
+8. Active source/docs do not contain machine-specific paths
 
 Usage
 -----
@@ -218,6 +220,22 @@ def check_architecture_boundaries() -> None:
         _fail("architecture", f"Circular subpackage dependency: {' -> '.join(cycle)}")
 
 
+def check_active_portability() -> None:
+    """Verify active source/docs do not embed contributor-specific paths."""
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    from check_active_portability import scan_active_files
+
+    findings = scan_active_files()
+    if not findings:
+        _ok("portability", "No machine-specific active paths found")
+        return
+    preview = ", ".join(
+        f"{path.relative_to(REPO_ROOT)}:{line_no}" for path, line_no, _ in findings[:5]
+    )
+    more = "" if len(findings) <= 5 else f" (+{len(findings) - 5} more)"
+    _fail("portability", f"Machine-specific active paths found: {preview}{more}")
+
+
 def check_optional_ir_datasets() -> None:
     """ir-datasets is optional; warn if missing (TREC DL / Robust04)."""
     try:
@@ -266,6 +284,7 @@ def run_all_checks() -> None:
     check_committed_tables()
     check_output_directories()
     check_architecture_boundaries()
+    check_active_portability()
     check_optional_ir_datasets()
     check_pytest_discovery()
 

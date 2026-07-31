@@ -30,6 +30,9 @@ jobs:
       - name: Check architecture boundaries (no circular subpackage dependencies)
         run: python scripts/check_architecture_boundaries.py
 
+      - name: Check active path portability
+        run: python scripts/check_active_portability.py
+
       - name: Run tests (non-solver; SCIP tests expected to skip in this job)
         run: pytest
 

@@ -17,17 +17,61 @@ FRONTIER_DIR = _REPO_ROOT / "reports/repair_frontier_20260729T144742Z"
 EXTRACTION_DIR = _REPO_ROOT / "reports/extraction_study_20260729T151610Z"
 DIAGNOSTIC_DIR = _REPO_ROOT / "reports/repair_diagnostic_20260729T162748Z"
 
-# Model identifiers per provider, read directly from the raw provider-call
-# transcripts (reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls/
-# *_calls.jsonl, each record's own "model" field) -- not hardcoded from
-# memory. See population_manifest() below for the actual read.
-_PILOT_DIR = _REPO_ROOT / "reports/multi_provider_repair_pilot_20260729T032348Z/raw_calls"
+# Model identifiers per provider are stored in a compact tracked metadata
+# file. Raw provider-call transcripts remain local/external-archive artifacts
+# because they contain request/response payloads and are not byte-reproducible.
+_PILOT_REPORT_DIR = _REPO_ROOT / "reports/multi_provider_repair_pilot_20260729T032348Z"
+_PROVIDER_MODELS_FILE = _PILOT_REPORT_DIR / "PROVIDER_MODELS.json"
+_PILOT_DIR = _PILOT_REPORT_DIR / "raw_calls"
 _RAW_CALL_FILES = {
     "azure": _PILOT_DIR / "azure_calls.jsonl",
     "gemini": _PILOT_DIR / "gemini_calls.jsonl",
     "cohere": _PILOT_DIR / "cohere_calls.jsonl",
     "fireworks": _PILOT_DIR / "fireworks_calls.jsonl",
 }
+
+ANALYSIS_INPUT_PATHS = [
+    _PILOT_REPORT_DIR / "PROVIDER_MODELS.json",
+    _PILOT_REPORT_DIR / "ANALYSIS.json",
+    _PILOT_REPORT_DIR / "ESTIMATE_main.json",
+    _PILOT_REPORT_DIR / "checkpoint/pilot_results.jsonl",
+    _PILOT_REPORT_DIR / "checkpoint/progress.json",
+    _PILOT_REPORT_DIR / "provider_usage.jsonl",
+    _PILOT_REPORT_DIR / "provider_failures.jsonl",
+    _PILOT_REPORT_DIR / "cache/azure/llm_pairwise_judgments.jsonl",
+    _PILOT_REPORT_DIR / "cache/gemini/llm_pairwise_judgments.jsonl",
+    _PILOT_REPORT_DIR / "cache/cohere/llm_pairwise_judgments.jsonl",
+    _PILOT_REPORT_DIR / "cache/fireworks/llm_pairwise_judgments.jsonl",
+    FRONTIER_DIR / "STATUS.md",
+    FRONTIER_DIR / "RUN_CONFIG.json",
+    FRONTIER_DIR / "FINAL_REPORT.md",
+    FRONTIER_DIR / "FINAL_SUMMARY.json",
+    FRONTIER_DIR / "checkpoint/frontier_results.jsonl",
+    FRONTIER_DIR / "checkpoint/progress.json",
+    FRONTIER_DIR / "discovery/FRONTIER_ORACLE_HEADROOM.json",
+    FRONTIER_DIR / "discovery/oracle_best_method_per_query.jsonl",
+    FRONTIER_DIR / "feature_rows.jsonl",
+    FRONTIER_DIR / "runtime_stats.json",
+    FRONTIER_DIR / "scc_decisions.jsonl",
+    FRONTIER_DIR / "selection/STAGE_SELECTION.json",
+    FRONTIER_DIR / "sensitivity/SENSITIVITY_TABLES.csv",
+    EXTRACTION_DIR / "STATUS.md",
+    EXTRACTION_DIR / "RUN_CONFIG.json",
+    EXTRACTION_DIR / "FINAL_REPORT.md",
+    EXTRACTION_DIR / "FINAL_SUMMARY.json",
+    EXTRACTION_DIR / "extraction_results.jsonl",
+    EXTRACTION_DIR / "failures.jsonl",
+    EXTRACTION_DIR / "tables/BREAKDOWN_TABLES.csv",
+    EXTRACTION_DIR / "tables/EXTRACTOR_SUMMARY.csv",
+    DIAGNOSTIC_DIR / "STATUS.md",
+    DIAGNOSTIC_DIR / "RUN_CONFIG.json",
+    DIAGNOSTIC_DIR / "FINAL_REPORT.md",
+    DIAGNOSTIC_DIR / "FINAL_SUMMARY.json",
+    DIAGNOSTIC_DIR / "diagnostic_results.jsonl",
+    DIAGNOSTIC_DIR / "failures.jsonl",
+    DIAGNOSTIC_DIR / "tables/FEATURE_ASSOCIATIONS.csv",
+    DIAGNOSTIC_DIR / "tables/FEATURE_STABILITY.csv",
+]
 
 
 def _load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -36,10 +80,19 @@ def _load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def provider_model_map() -> dict[str, str]:
-    """Read the actual model string used by each provider from the raw call
-    transcripts (first record of each provider's file). "aggregate" is not
-    a raw model call -- it is a derived combination of the four real
-    providers' judgments, recorded as such."""
+    """Return the model string used by each provider.
+
+    Prefer the compact tracked metadata file so reanalysis works from a fresh
+    clone without raw provider transcripts. If an older checkout lacks that
+    file, fall back to the historical raw-call location for compatibility.
+    """
+    if _PROVIDER_MODELS_FILE.exists():
+        metadata = json.loads(_PROVIDER_MODELS_FILE.read_text(encoding="utf-8"))
+        return {
+            "aggregate": metadata["aggregate"],
+            **metadata["models"],
+        }
+
     models = {"aggregate": "derived (unweighted combination of azure/gemini/cohere/fireworks)"}
     for provider, path in _RAW_CALL_FILES.items():
         if not path.exists():

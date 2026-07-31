@@ -6,6 +6,7 @@ Mines queries where matched repaired/unrepaired ranking methods show material
 NDCG@10 gains, with leakage-safe splits, multi-provider LLM judgments, and
 continuous checkpointing.
 """
+# ruff: noqa: E402, E501, I001
 
 from __future__ import annotations
 
@@ -22,10 +23,8 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-import numpy as np
-
 _REPO = Path(__file__).resolve().parent.parent
-_CAAR = Path("/home/soroush/consistency-aware-llm-rankin-caar")
+_CAAR = Path(os.environ.get("CAAR_REPO", _REPO.parent / f"{_REPO.name}-caar")).expanduser()
 # Main repo must precede CAAR so failure_mining and core modules resolve correctly.
 for _path in (_CAAR, _CAAR / "src", _REPO, _REPO / "src"):
     _s = str(_path)

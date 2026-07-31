@@ -34,11 +34,11 @@ Before doing anything else in this repository:
 ## Cursor Cloud specific instructions
 
 This is a pure Python research library (no web servers, databases, or Docker).
-The virtual environment lives at `/workspace/.venv`. Always activate it before
-running any commands:
+Activate the project virtual environment before running commands. Prefer
+`$VENV_PATH` when set; otherwise use the repository-local `.venv`:
 
 ```bash
-source /workspace/.venv/bin/activate
+source "${VENV_PATH:-.venv}/bin/activate"
 ```
 
 ### Quick reference

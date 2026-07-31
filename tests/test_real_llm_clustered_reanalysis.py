@@ -68,6 +68,18 @@ def test_real_studies_share_identical_six_queries() -> None:
     assert len(by_study["extraction_study"]) == 6
 
 
+def test_provider_model_metadata_is_tracked_compact_evidence() -> None:
+    models = population.provider_model_map()
+    assert models == {
+        "aggregate": "derived (unweighted combination of azure/gemini/cohere/fireworks)",
+        "azure": "gpt-4.1-mini",
+        "gemini": "gemini-2.5-flash",
+        "cohere": "command-r-plus-08-2024",
+        "fireworks": "accounts/fireworks/models/gpt-oss-120b",
+    }
+    assert all("raw_calls" not in path.as_posix() for path in population.ANALYSIS_INPUT_PATHS)
+
+
 def test_bootstrap_resamples_clusters_not_rows() -> None:
     """If the cluster bootstrap secretly resampled rows, its CI would be
     much narrower than one computed from only 6 independent numbers --

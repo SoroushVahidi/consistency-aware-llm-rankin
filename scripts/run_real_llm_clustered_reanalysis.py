@@ -269,9 +269,7 @@ def write_reproducibility_manifest(output_dir: Path, pop_summary: dict) -> None:
         generator_script="scripts/run_real_llm_clustered_reanalysis.py",
         seeds={"bootstrap_seed": SEED},
         independence_cluster_count=pop_summary.get("total_unique_queries_overall"),
-        input_paths=[
-            population.FRONTIER_DIR, population.EXTRACTION_DIR, population.DIAGNOSTIC_DIR,
-        ],
+        input_paths=population.ANALYSIS_INPUT_PATHS,
         config={
             "bootstrap_replicates": REPS,
             "ci_method": "percentile, cluster (block) bootstrap over query_id clusters",
