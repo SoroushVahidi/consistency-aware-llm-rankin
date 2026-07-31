@@ -1,0 +1,54 @@
+{
+  "completed_at": "2026-07-14T23:34:35-0400",
+  "configs": [
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "scidocs",
+      "metric_cutoff": 10,
+      "pool_size": 50,
+      "query_count_with_outputs": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "fiqa",
+      "metric_cutoff": 10,
+      "pool_size": 50,
+      "query_count_with_outputs": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "bright",
+      "metric_cutoff": 10,
+      "pool_size": 50,
+      "query_count_with_outputs": 50
+    },
+    {
+      "config_id": "pool35_ndcg10",
+      "dataset": "hotpotqa",
+      "metric_cutoff": 10,
+      "pool_size": 35,
+      "query_count_with_outputs": 52
+    }
+  ],
+  "mip_gap": 0.0,
+  "regime": "ms1",
+  "repo_state": {
+    "branch": "main",
+    "canonical_manifest": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/phase_reports/canonical_rerun_manifest.json",
+    "commit": "b0d48520b72dfa05f6cfe07309cb39ef980be032",
+    "final_anonymous_dir": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/submission/final_anonymous",
+    "final_anonymous_zip": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/submission/final_anonymous.zip",
+    "manuscript_pdf": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/manuscript/main.pdf",
+    "manuscript_pdf_sha256": "7c0213620d6f259964dae17af1d3041b850e8d1984710569caa6a6d5887c6083",
+    "manuscript_tex": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/manuscript/main.tex",
+    "status_short": [
+      " M reports/full_calibrated_core/scripts/full_calibration_utils.py",
+      " M reports/full_calibrated_core/scripts/run_full_calibrated_core.py",
+      "?? reports/final_revision_task1_pool_cutoff_20260715/",
+      "?? tests/test_pool_cutoff_evaluation.py"
+    ],
+    "working_tree_clean": false
+  },
+  "started_at": "2026-07-14T23:31:59-0400",
+  "time_limit_s": 300.0
+}

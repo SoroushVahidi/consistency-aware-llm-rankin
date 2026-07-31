@@ -1,0 +1,7 @@
+{
+  "command_script": "/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_validation.sh",
+  "created_at": "2026-07-14T23:58:26-0400",
+  "launch_command": "bash -lc 'cd /home/soroush/consistency-aware-llm-rankin && reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_validation.sh > reports/final_revision_task1_pool_cutoff_20260715/logs/20260714_235826_validation.log 2>&1'",
+  "log_path": "/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715/logs/20260714_235826_validation.log",
+  "session_name": "jdiq_pool_cutoff_task1_validate"
+}

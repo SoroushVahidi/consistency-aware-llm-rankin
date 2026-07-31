@@ -1,0 +1,13 @@
+dataset,ranker,query_count,usable_query_count,min_depth_usable,max_depth_usable,queries_ge_10,queries_ge_20,queries_ge_35,queries_ge_50,queries_ge_100,queries_ge_200
+scidocs,bm25,120,120,50,50,120,120,120,120,0,0
+scidocs,tfidf,120,120,50,50,120,120,120,120,0,0
+scidocs,minilm,120,120,50,50,120,120,120,120,0,0
+fiqa,bm25,120,120,50,50,120,120,120,120,0,0
+fiqa,tfidf,120,120,50,50,120,120,120,120,0,0
+fiqa,minilm,120,120,50,50,120,120,120,120,0,0
+hotpotqa,bm25,70,52,35,35,52,52,52,0,0,0
+hotpotqa,tfidf,70,52,35,35,52,52,52,0,0,0
+hotpotqa,minilm,70,52,35,35,52,52,52,0,0,0
+bright,bm25,50,50,50,50,50,50,50,50,0,0
+bright,tfidf,50,50,50,50,50,50,50,50,0,0
+bright,minilm,50,50,50,50,50,50,50,50,0,0

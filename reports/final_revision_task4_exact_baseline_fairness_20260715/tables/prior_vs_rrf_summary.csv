@@ -1,0 +1,5 @@
+dataset,n_queries,fraction_identical_candidate_sets,fraction_identical_fused_scores,mean_n_rrf_tie_groups,mean_largest_rrf_tie_group_size,fraction_order_modulo_ties_agrees,fraction_ranking_differs_only_by_tiebreak,fraction_underlying_scores_differ,fraction_exact_ranking_match,mean_kendall_tau_b,mean_spearman_rho,mean_n_unscored_by_any_ranker
+scidocs,120,1.0,0.0,0.13333333333333333,0.25,0.0,0.0,1.0,0.0,0.9005263157894737,0.9667543859649121,0.0
+fiqa,120,1.0,0.0,0.1,0.2,0.0,0.0,1.0,0.0,0.8716666666666667,0.9493483709273182,0.0
+hotpotqa,52,1.0,0.019230769230769232,0.019230769230769232,0.038461538461538464,0.21153846153846154,0.038461538461538464,0.7884615384615384,0.17307692307692307,0.9068376068376067,0.9603729603729604,0.0
+bright,50,1.0,0.0,1.14,1.18,0.06,0.0,0.94,0.06,0.9077894736842106,0.9686315789473683,0.0

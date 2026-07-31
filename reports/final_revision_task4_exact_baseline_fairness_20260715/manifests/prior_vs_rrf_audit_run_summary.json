@@ -1,0 +1,10 @@
+{
+  "elapsed_seconds": 4.857489347457886,
+  "generated_at": "2026-07-15T12:15:42-0400",
+  "manuscript_claim_under_test": "main.tex lines ~887-891,1095-1108 state Prior and RRF 'differ only in tie-breaking' and report 216/6156 exact matches across the full study (342 queries x 3 regimes x 6 protocols). This script computes the analogous figure restricted to canonical-pool ms1 only (342 queries, 1 regime, 1 protocol) and additionally decomposes mismatches into tie-break-only vs genuine score-order differences.",
+  "overall_exact_match_fraction": 0.03508771929824561,
+  "pool": "canonical",
+  "regime": "ms1",
+  "total_exact_ranking_matches": 12,
+  "total_queries": 342
+}

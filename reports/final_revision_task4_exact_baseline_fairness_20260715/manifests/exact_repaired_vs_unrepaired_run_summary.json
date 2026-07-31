@@ -1,0 +1,13 @@
+{
+  "canonical_family_definition": "primary protocol, canonical (P=k) pool, ms1 regime, all 4 datasets, all 9 graph-dependent method pairs = 36 cells, Holm-corrected jointly",
+  "canonical_family_n_significant": 0,
+  "canonical_family_size": 36,
+  "elapsed_seconds": 180.5248737335205,
+  "generated_at": "2026-07-15T12:09:33-0400",
+  "larger_pool_family_definition": "Task 1 larger-pool design, ms1 regime, all 4 datasets, ndcg5 (new) and ndcg10 (reused from Task 1) cutoffs, all 9 pairs = 56 cells, Holm-corrected jointly, SEPARATE from the canonical family",
+  "larger_pool_family_n_significant": 0,
+  "larger_pool_family_size": 56,
+  "mip_gap": 0.0,
+  "reused_task1_rows": 1710,
+  "solver_time_limit_s": 300.0
+}

@@ -1,0 +1,12 @@
+{
+  "answers": {
+    "does_exact_change_the_larger_pool_conclusion": "No: the larger-pool exact family (ndcg5 new cells + ndcg10 cells reused from Task 1) remains 0 Holm-significant, consistent with Task 1's original larger-pool exact finding.",
+    "does_exact_ever_reverse_greedy_sign": "Mean-nDCG sign reversal (greedy positive vs exact negative, or vice versa) observed in 0 of 36 dataset/pair cells (descriptive, not Holm-tested per cell); examples: []",
+    "does_exact_improve_objective_without_retrieval_gain": "Yes, by construction and directly observed: exact repair always achieves the minimum-weight feedback arc set (proven optimal in every solved cell -- see exact_repaired_vs_unrepaired_solver_status.csv) while showing no Holm-significant retrieval gain, confirming the manuscript's central distinction between structural consistency and retrieval effectiveness at the graph-objective level too.",
+    "does_exact_produce_reliable_gain_where_greedy_does_not": "No: 0 of 36 canonical-pool exact cells and 0 of 56 larger-pool exact cells are Holm-significant (see exact_canonical_family_statistics.csv / exact_larger_pool_family_statistics.csv); greedy also shows 0 Holm-significant repaired-vs-unrepaired cells in the same canonical/larger-pool families (Tasks 1-2), so neither method shows a reliable gain in the tested cells."
+  },
+  "elapsed_seconds": 0.031856536865234375,
+  "generated_at": "2026-07-15T12:15:29-0400",
+  "n_sign_reversals": 0,
+  "n_three_way_cells": 36
+}

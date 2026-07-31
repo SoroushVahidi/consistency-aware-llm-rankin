@@ -1,0 +1,9 @@
+{
+  "pdf_sha256": "44bcb47339d9036fe531884e7e0e4ca4877e4160fc72c4d2e2910fa8d5addaa9",
+  "pytest_summary": {
+    "duration": "8.08s",
+    "status": "561 passed"
+  },
+  "repo_ready_failures": 0,
+  "verification_json": "/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715/validation/pool_cutoff_verification.json"
+}

@@ -1,0 +1,57 @@
+# Task 4 Claim-to-Evidence Audit
+
+- [PASS] exact_canonical_family_size: claimed=36 actual=36.000000
+- [PASS] exact_canonical_family_n_significant: claimed=0 actual=0.000000
+- [PASS] exact_larger_pool_family_size: claimed=56 actual=56.000000
+- [PASS] exact_larger_pool_family_n_significant: claimed=0 actual=0.000000
+- [PASS] exact_canonical_all_proven_optimal: claimed=1.0 actual=1.000000
+- [PASS] exact_canonical_mean_solve_time_ms: claimed=18.14 actual=18.143198
+- [PASS] exact_canonical_max_solve_time_ms: claimed=61.25 actual=61.252117
+- [PASS] three_way_n_cells: claimed=36 actual=36.000000
+- [PASS] three_way_n_sign_reversals: claimed=0 actual=0.000000
+- [PASS] primary_targeted_family_size: claimed=8 actual=8.000000
+- [PASS] primary_targeted_n_significant: claimed=0 actual=0.000000
+- [PASS] secondary_neutral_pool_n_significant: claimed=1 actual=1.000000
+- [PASS] secondary_significant_dataset_is_fiqa: claimed=1.0 actual=1.000000
+- [PASS] secondary_significant_mean_delta: claimed=0.014 actual=0.013968
+- [PASS] secondary_significant_holm_p: claimed=0.013 actual=0.012799
+- [PASS] table_canonical_delta('scidocs', 'rrf'): claimed=-0.0066 actual=-0.006617
+- [PASS] table_canonical_holm('scidocs', 'rrf'): claimed=0.625 actual=0.625000
+- [PASS] table_canonical_delta('scidocs', 'combsum'): claimed=-0.0099 actual=-0.009909
+- [PASS] table_canonical_holm('scidocs', 'combsum'): claimed=0.625 actual=0.625000
+- [PASS] table_canonical_delta('fiqa', 'rrf'): claimed=0.0141 actual=0.014122
+- [PASS] table_canonical_holm('fiqa', 'rrf'): claimed=0.058 actual=0.057594
+- [PASS] table_canonical_delta('fiqa', 'combsum'): claimed=0.0135 actual=0.013516
+- [PASS] table_canonical_holm('fiqa', 'combsum'): claimed=0.342 actual=0.341966
+- [PASS] table_canonical_delta('hotpotqa', 'rrf'): claimed=-0.0197 actual=-0.019653
+- [PASS] table_canonical_holm('hotpotqa', 'rrf'): claimed=0.625 actual=0.625000
+- [PASS] table_canonical_delta('hotpotqa', 'combsum'): claimed=0.0045 actual=0.004489
+- [PASS] table_canonical_holm('hotpotqa', 'combsum'): claimed=0.625 actual=0.625000
+- [PASS] table_canonical_delta('bright', 'rrf'): claimed=0.0137 actual=0.013682
+- [PASS] table_canonical_holm('bright', 'rrf'): claimed=0.342 actual=0.341966
+- [PASS] table_canonical_delta('bright', 'combsum'): claimed=0.025 actual=0.025025
+- [PASS] table_canonical_holm('bright', 'combsum'): claimed=0.198 actual=0.198080
+- [PASS] table_neutral_delta('scidocs', 'rrf'): claimed=-0.0058 actual=-0.005807
+- [PASS] table_neutral_holm('scidocs', 'rrf'): claimed=0.863 actual=0.862714
+- [PASS] table_neutral_delta('scidocs', 'combsum'): claimed=-0.0051 actual=-0.005075
+- [PASS] table_neutral_holm('scidocs', 'combsum'): claimed=1.0 actual=1.000000
+- [PASS] table_neutral_delta('fiqa', 'rrf'): claimed=0.0082 actual=0.008186
+- [PASS] table_neutral_holm('fiqa', 'rrf'): claimed=0.629 actual=0.629237
+- [PASS] table_neutral_delta('fiqa', 'combsum'): claimed=0.014 actual=0.013968
+- [PASS] table_neutral_holm('fiqa', 'combsum'): claimed=0.013 actual=0.012799
+- [PASS] table_neutral_delta('hotpotqa', 'rrf'): claimed=-0.0103 actual=-0.010321
+- [PASS] table_neutral_holm('hotpotqa', 'rrf'): claimed=1.0 actual=1.000000
+- [PASS] table_neutral_delta('hotpotqa', 'combsum'): claimed=0.0127 actual=0.012664
+- [PASS] table_neutral_holm('hotpotqa', 'combsum'): claimed=1.0 actual=1.000000
+- [PASS] table_neutral_delta('bright', 'rrf'): claimed=0.0043 actual=0.004294
+- [PASS] table_neutral_holm('bright', 'rrf'): claimed=1.0 actual=1.000000
+- [PASS] table_neutral_delta('bright', 'combsum'): claimed=0.0123 actual=0.012323
+- [PASS] table_neutral_holm('bright', 'combsum'): claimed=1.0 actual=1.000000
+- [PASS] prior_rrf_underlying_differ_min_pct: claimed=79 actual=78.846154
+- [PASS] prior_rrf_underlying_differ_max_pct: claimed=100 actual=100.000000
+- [PASS] prior_rrf_tiebreak_only_min_pct: claimed=0 actual=0.000000
+- [PASS] prior_rrf_tiebreak_only_max_pct: claimed=3.8 actual=3.846154
+- [PASS] prior_rrf_overall_match_fraction_pct: claimed=3.5 actual=3.508772
+- [PASS] prior_rrf_total_exact_matches: claimed=12 actual=12.000000
+
+Overall: ALL CLAIMS VERIFIED (53 checks)

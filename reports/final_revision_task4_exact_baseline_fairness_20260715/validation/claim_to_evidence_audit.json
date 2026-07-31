@@ -1,0 +1,373 @@
+[
+  {
+    "claim": "exact_canonical_family_size",
+    "claimed": 36,
+    "actual": 36,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "exact_canonical_family_n_significant",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "exact_larger_pool_family_size",
+    "claimed": 56,
+    "actual": 56,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "exact_larger_pool_family_n_significant",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "exact_canonical_all_proven_optimal",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "exact_canonical_mean_solve_time_ms",
+    "claimed": 18.14,
+    "actual": 18.14319794638115,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "exact_canonical_max_solve_time_ms",
+    "claimed": 61.25,
+    "actual": 61.25211715698242,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "three_way_n_cells",
+    "claimed": 36,
+    "actual": 36,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "three_way_n_sign_reversals",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "primary_targeted_family_size",
+    "claimed": 8,
+    "actual": 8,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "primary_targeted_n_significant",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "secondary_neutral_pool_n_significant",
+    "claimed": 1,
+    "actual": 1,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "secondary_significant_dataset_is_fiqa",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "secondary_significant_mean_delta",
+    "claimed": 0.014,
+    "actual": 0.013968172860950952,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "secondary_significant_holm_p",
+    "claimed": 0.013,
+    "actual": 0.012798720127987202,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('scidocs', 'rrf')",
+    "claimed": -0.0066,
+    "actual": -0.006617247808597169,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('scidocs', 'rrf')",
+    "claimed": 0.625,
+    "actual": 0.625,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('scidocs', 'combsum')",
+    "claimed": -0.0099,
+    "actual": -0.009908622879606302,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('scidocs', 'combsum')",
+    "claimed": 0.625,
+    "actual": 0.625,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('fiqa', 'rrf')",
+    "claimed": 0.0141,
+    "actual": 0.014122106817042195,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('fiqa', 'rrf')",
+    "claimed": 0.058,
+    "actual": 0.0575942405759424,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('fiqa', 'combsum')",
+    "claimed": 0.0135,
+    "actual": 0.013515905946985235,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('fiqa', 'combsum')",
+    "claimed": 0.342,
+    "actual": 0.34196580341965804,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('hotpotqa', 'rrf')",
+    "claimed": -0.0197,
+    "actual": -0.019653496467030844,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('hotpotqa', 'rrf')",
+    "claimed": 0.625,
+    "actual": 0.625,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('hotpotqa', 'combsum')",
+    "claimed": 0.0045,
+    "actual": 0.004488808387542716,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('hotpotqa', 'combsum')",
+    "claimed": 0.625,
+    "actual": 0.625,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('bright', 'rrf')",
+    "claimed": 0.0137,
+    "actual": 0.01368198780489172,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('bright', 'rrf')",
+    "claimed": 0.342,
+    "actual": 0.34196580341965804,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_delta('bright', 'combsum')",
+    "claimed": 0.025,
+    "actual": 0.025025099301747254,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_canonical_holm('bright', 'combsum')",
+    "claimed": 0.198,
+    "actual": 0.1980801919808019,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('scidocs', 'rrf')",
+    "claimed": -0.0058,
+    "actual": -0.005806985541038448,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('scidocs', 'rrf')",
+    "claimed": 0.863,
+    "actual": 0.8627137286271374,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('scidocs', 'combsum')",
+    "claimed": -0.0051,
+    "actual": -0.005074925252151895,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('scidocs', 'combsum')",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('fiqa', 'rrf')",
+    "claimed": 0.0082,
+    "actual": 0.008186304459054775,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('fiqa', 'rrf')",
+    "claimed": 0.629,
+    "actual": 0.6292370762923707,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('fiqa', 'combsum')",
+    "claimed": 0.014,
+    "actual": 0.013968172860950952,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('fiqa', 'combsum')",
+    "claimed": 0.013,
+    "actual": 0.012798720127987202,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('hotpotqa', 'rrf')",
+    "claimed": -0.0103,
+    "actual": -0.010321059745906355,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('hotpotqa', 'rrf')",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('hotpotqa', 'combsum')",
+    "claimed": 0.0127,
+    "actual": 0.012663881207753263,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('hotpotqa', 'combsum')",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('bright', 'rrf')",
+    "claimed": 0.0043,
+    "actual": 0.004293655680667951,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('bright', 'rrf')",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_delta('bright', 'combsum')",
+    "claimed": 0.0123,
+    "actual": 0.012322589830776214,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "table_neutral_holm('bright', 'combsum')",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "prior_rrf_underlying_differ_min_pct",
+    "claimed": 79,
+    "actual": 78.84615384615384,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "prior_rrf_underlying_differ_max_pct",
+    "claimed": 100,
+    "actual": 100.0,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "prior_rrf_tiebreak_only_min_pct",
+    "claimed": 0,
+    "actual": 0.0,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "prior_rrf_tiebreak_only_max_pct",
+    "claimed": 3.8,
+    "actual": 3.8461538461538463,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "prior_rrf_overall_match_fraction_pct",
+    "claimed": 3.5,
+    "actual": 3.508771929824561,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "prior_rrf_total_exact_matches",
+    "claimed": 12,
+    "actual": 12,
+    "match": true,
+    "tol": 0.005
+  }
+]

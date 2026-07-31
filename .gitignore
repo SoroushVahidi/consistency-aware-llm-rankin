@@ -352,6 +352,38 @@ reports/final_revision_*/
 reports/final_revision_page_limit_freeze_*/
 reports/final_submission_materials_*/
 
+# Surgical carve-out (2026-07-30, repo hygiene Stage 1 --
+# reports/repo_cleanup_stage1_20260730T004010Z/): two of the final_revision_*
+# directories above are the SOLE source for scripts/run_ir_evidence_audit.py's
+# cutoff-robustness and baseline-fairness sections (POOL_CUTOFF /
+# BASELINE_FAIRNESS constants); without this carve-out that script cannot run
+# on a fresh clone. Track their small canonical tables/manifests/scripts (all
+# well under docs/ARTIFACT_POLICY.md's "prefer << 10MB" guidance except the
+# one file noted below), but keep the genuinely bulky regenerable
+# intermediates local. See gitignore_exception_manifest.csv in the stage
+# report for the exact file-by-file rationale.
+!reports/final_revision_task1_pool_cutoff_20260715/
+!reports/final_revision_task4_exact_baseline_fairness_20260715/
+# task1: keep tables/manifests/scripts/logs/validation/FINAL_REPORT.md; the
+# 1.6GB outputs/ tree and two large CSVs not read by run_ir_evidence_audit.py
+# stay local and regenerable via scripts/run_pool_cutoff_study.py +
+# scripts/run_pool_cutoff_exact.py (both now tracked under this dir's own
+# scripts/ subfolder).
+reports/final_revision_task1_pool_cutoff_20260715/outputs/
+# pool_cutoff_method_metrics.csv (~254MB, raw per-method-per-query, not read
+# by run_ir_evidence_audit.py or any tracked test) and
+# pool_cutoff_exact_pair_metrics.csv (~6.7MB, not read by
+# run_ir_evidence_audit.py) stay local; regenerate via the scripts above.
+reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_method_metrics.csv
+reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_pair_metrics.csv
+# task1/tables/pool_cutoff_pair_metrics.csv (~68MB) IS tracked despite being
+# above the soft 10MB guidance: it is the direct, sole source of the per-query
+# n=17,532 structure-utility correlation and publication figure in
+# reports/ir_evidence_audit_20260729T182949Z/ -- excluding it would leave that
+# headline result unreproducible from a fresh clone. Revisit if repo size
+# becomes a problem (e.g. move to Git LFS) rather than silently re-excluding it.
+# task4/tables/ is tracked in full (~1.7MB total, no further exclusion needed).
+
 # Large anonymous supplementary bundles (regenerate / ship outside Git)
 papers/JDIQ_2026/submission/final_submission_materials/anonymous_supplementary/
 
