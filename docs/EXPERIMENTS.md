@@ -20,6 +20,24 @@ navigation aid, not a full archive catalog.
 | Gurobi vs. SCIP solver cross-validation | Independent verification of the canonical SCIP exact-repair result using a second commercial MIP solver, now that a Gurobi license is available for the first time. | `reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/scripts/run_gurobi_vs_scip_cross_validation.py`. | `reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/` (FINDINGS.md, per-query CSV, summary JSON, log). | None (all outputs are compact). | **Internal validation only** -- perfect agreement (0/1,025 mismatches); never cited in manuscript material, see `docs/CONTRIBUTIONS.md` §1.6. |
 | Exact-solver scaling study | First empirical characterization of exact MWFAS solver scaling (SCIP vs. Gurobi) beyond the n=20 production scale. | `reports/exact_solver_scaling_study_20260731T162314Z/scripts/run_solver_scaling_study.py`. | `reports/exact_solver_scaling_study_20260731T162314Z/` (FINDINGS.md, per-instance CSV, log). | None (all outputs are compact). | **Internal validation only** -- confirms existing "prefer greedy for large graphs" design assumption with data; not cited in manuscript material. |
 
+### Gurobi studies — full detail
+
+Both rows above share the same classification, repeated here explicitly per
+`docs/AGENT_GUIDE.md` §2: **internal validation only; not double-blind
+manuscript evidence; compactly reproducible; non-secret.**
+
+| Field | Cross-validation | Scaling study |
+|---|---|---|
+| Question | Does Gurobi agree with SCIP on every canonical exact-repair instance? | Where does exact MWFAS solving become intractable, and does Gurobi extend the tractable range? |
+| Status | Internal validation, complete | Internal validation, complete |
+| Inputs | The 1,025 canonical production preference graphs already used by `reports/exact_open_source_ilp_repair_investigation/` | Synthetic cyclic graphs, n in {15,20,25,30,40,50}, 2 seeds, one weight scheme/noise level -- **limited graph distribution and seed count, disclosed in the study's own FINDINGS.md** |
+| Statistical unit | Query (n=1,025) | Synthetic graph instance |
+| Correction method | n/a (exact-match comparison, not a hypothesis test) | n/a |
+| Reproduction requirements | A working Gurobi license (WLS or other) + PySCIPOpt; no network | Same |
+| Network/API requirements | None | None |
+| Manuscript relevance | **None -- must never be cited in `main.tex` or anonymized submission material** (see `papers/JDIQ_2026/manuscript/integrity_audit/EXTERNAL_SOLVER_MANUSCRIPT_DECISION.md`) | Same |
+| Non-secret confirmation | Verified: logs contain only Gurobi's standard startup banner (parameter *names* and a public license ID number), never WLS credential values | Same |
+
 ## Test Tiers
 
 Since 2026-07-31, the test suite has two tiers, enforced via a `real_data`
@@ -77,7 +95,7 @@ Or via Makefile: `make cloud-validate` / `make cloud-validate-solver` /
 | Tier | Mirrors | Extras installed | Test command | Zero-skip required? |
 |---|---|---|---|---|
 | `core` | `ci.yml` job `tests` | `.[dev,llm]` | bare `pytest` | No -- SCIP-dependent tests are expected to skip (no `[exact]` installed), matching that job's own documented behavior. Gate is "no failures/errors". |
-| `solver` | `ci.yml` job `tests-solver-enabled` | `.[dev,exact,llm]` + `gurobipy` | `pytest -q` | **Yes.** This is the tier that produces the "1307 passed, 64 deselected, 0 skipped, 0 failed" contract. |
+| `solver` | `ci.yml` job `tests-solver-enabled` | `.[dev,exact,llm]` + `gurobipy` | `pytest -q` | **Yes.** This is the tier that must show 0 skipped (exact count grows as tests are added -- **1338 passed, 64 deselected, 0 skipped, 0 failed** as of commit `6ea6a86`; re-run rather than trusting any cached number, per `docs/PROJECT_STATUS.md`). |
 | `real-data` | (not covered by either CI job) | `.[dev,llm]` | `pytest -q -m real_data` | Runs the ~64 dataset-dependent tests; requires `--prepare-real-data` (network, ~3GB) unless datasets are already present under `data/processed/`. |
 | `all` | both CI jobs + real-data if already prepared | -- | -- | Runs core, then solver, then real-data only if datasets are already valid (never auto-downloads 3GB silently; reports real-data as explicitly not-run otherwise). |
 

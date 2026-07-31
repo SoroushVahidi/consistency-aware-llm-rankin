@@ -13,6 +13,30 @@ and trust `papers/JDIQ_2026/manuscript/main.tex` for exact *numbers*. See
 `docs/PROJECT_STATUS.md` for what is currently active/unfinished, and
 `docs/claim_evidence_registry.yaml` for a machine-readable per-claim index.
 
+**A future agent must not infer, from any report title, filename, or
+directory name in this repository, that:**
+1. Graph repair generally improves nDCG (the central, settled result is the opposite -- §1.1, §3).
+2. Exploratory Borda/extraction-study effects are statistically confirmed (they are row-level point estimates that do not survive cluster-aware correction -- §1.2, §3).
+3. Gurobi's agreement with SCIP is a paper contribution (it is an internal correctness check, never a manuscript claim -- §1.6, §3).
+4. Learned policy routing is production-approved (Outcome F concluded the opposite; production is locked to a fixed default -- §1.7, §3).
+5. Replicated rows from the real-LLM pilot are independent samples (there are 6 independent queries, not ~120 -- §1.2, §3).
+
+## Contribution at a glance
+
+| # | Contribution | Category | Status | Manuscript? |
+|---|---|---|---|---|
+| 1.1 | Data-quality taxonomy + construction-sensitivity demonstration | Scientific | Canonical | Yes |
+| 1.1 | Exact MWFAS repair (SCIP) | Scientific | Canonical | Yes |
+| 1.1 | Structural repair does not reliably improve retrieval (central result) | Scientific | Canonical, negative/conditional | Yes |
+| 1.2 | Cluster-aware statistical inference | Scientific/methodological | Canonical (for its scope) | No |
+| 1.3 | Extraction study / repair frontier / repair diagnostic | Scientific | Exploratory, row-level | No |
+| 1.4 | Repository-scale oracle-headroom (preserve-vs-repair) | Scientific | Negative -- NO-GO | No (separate companion paper) |
+| 1.5 | Real-LLM multi-provider pilot | Scientific | Exploratory | Directional only |
+| 1.6 | Gurobi vs. SCIP solver cross-validation + scaling study | Internal validation | Internal validation only | **No -- never** |
+| 1.7 | Production policy selection ("Outcome F") | Scientific | Negative, concluded | No |
+| 1.8 | Consistency-aware pivot (3 pilots) | Scientific | Complete, mixed results | No |
+| 2 | Solver abstraction, provenance infra, architecture guardrails, artifact policy, fresh-checkout fix, claim registry | Engineering | Complete | N/A |
+
 ---
 
 ## 1. Scientific contributions

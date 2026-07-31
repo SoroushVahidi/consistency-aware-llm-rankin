@@ -96,8 +96,20 @@ def main() -> int:
                 "internal validation (e.g. solver cross-checks) must never be canonical"
             )
 
+        if claim.get("canonical") is True and status == "superseded":
+            errors.append(
+                f"{cid}: marked canonical=true but status=superseded -- "
+                "a superseded row-level/historical result must never be used as canonical evidence"
+            )
+
         if claim.get("manuscript_applicable") is True and status == "superseded":
             errors.append(f"{cid}: marked manuscript_applicable=true but status=superseded")
+
+        if claim.get("manuscript_applicable") is True and status == "internal_validation":
+            errors.append(
+                f"{cid}: marked manuscript_applicable=true but status=internal_validation -- "
+                "internal-only validation (e.g. Gurobi checks) must never be manuscript-applicable"
+            )
 
         for field in ("implementation_paths", "generating_scripts", "evidence_paths"):
             for rel_path in claim.get(field, []) or []:

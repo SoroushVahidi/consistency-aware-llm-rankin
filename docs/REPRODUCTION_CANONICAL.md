@@ -16,7 +16,12 @@
   versions for individual generated outputs are recorded in their
   reproducibility manifests or report-level environment captures.
 - Exact solver: **SCIP** via `pyscipopt` (open-source, no commercial
-  solver dependency — Gurobi is not used anywhere in the current pipeline).
+  solver dependency — Gurobi is not used anywhere in this reproduction
+  pipeline or any manuscript-evidence-generating script). A Gurobi backend
+  exists in `mwfas_solver.py` as an optional legacy path and was used, since
+  2026-07-31, for an internal-only correctness/scaling validation against
+  SCIP — see `docs/CONTRIBUTIONS.md` §1.6. That validation is not part of
+  this reproduction pipeline and never produces a manuscript number.
 
 ```bash
 git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
