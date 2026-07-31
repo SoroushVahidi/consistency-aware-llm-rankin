@@ -9,7 +9,7 @@ OUTPUTS := outputs
 
 .PHONY: help setup check lint lint-full test test-full test-real-data typecheck verify-env \
         check-architecture check-portability \
-        validate-evidence validate-claims cloud-validate cloud-validate-solver cloud-validate-all reproduce-ir-audit reproduce-real-llm-reanalysis \
+        validate-evidence validate-claims validate-clarity cloud-validate cloud-validate-solver cloud-validate-all reproduce-ir-audit reproduce-real-llm-reanalysis \
         validate-offline doc-links secret-scan repo-ready \
         synth-smoke q1-tables paper-tables \
         noise-sweep scale-sweep multiseed clean-outputs
@@ -23,6 +23,7 @@ MAINTAINED_LINT_PATHS := \
 	scripts/run_cloud_validation.py \
 	scripts/validate_canonical_evidence_manifest.py \
 	scripts/validate_claim_evidence_registry.py \
+	scripts/validate_repo_clarity.py \
 	scripts/validate_report_links.py \
 	src/consistency_ranker/experiment_cli.py \
 	src/consistency_ranker/provenance.py \
@@ -36,7 +37,9 @@ MAINTAINED_LINT_PATHS := \
 	tests/test_provenance.py \
 	tests/test_real_llm_clustered_reanalysis.py \
 	tests/test_secret_scan.py \
-	tests/test_cloud_validation.py
+	tests/test_cloud_validation.py \
+	tests/test_claim_evidence_registry_validator.py \
+	tests/test_repo_clarity_validator.py
 
 help:
 	@echo "Targets:"
@@ -56,6 +59,7 @@ help:
 	@echo "  typecheck                      No mypy configured in this repo -- documented no-op, see canonical_environment_specification.md"
 	@echo "  validate-evidence              Validate the canonical evidence inventory's paths all exist"
 	@echo "  validate-claims                Validate docs/claim_evidence_registry.yaml paths and internal consistency"
+	@echo "  validate-clarity               Validate the doc hierarchy, README links, and no-CI-green-claims invariants"
 	@echo "  reproduce-ir-audit             Re-run the classical IR evidence audit and diff against committed output"
 	@echo "  reproduce-real-llm-reanalysis  Re-run the real-LLM clustered re-analysis and diff against committed output"
 	@echo "  validate-offline               Run the full offline validation workflow (env + both reproductions + tests + link/manifest checks)"
@@ -145,6 +149,9 @@ validate-evidence:
 validate-claims:
 	"$(PYTHON)" scripts/validate_claim_evidence_registry.py
 
+validate-clarity:
+	"$(PYTHON)" scripts/validate_repo_clarity.py
+
 reproduce-ir-audit:
 	"$(PYTHON)" scripts/run_offline_validation_workflow.py --only ir-audit
 
@@ -160,7 +167,7 @@ doc-links:
 secret-scan:
 	"$(PYTHON)" scripts/run_secret_scan.py
 
-repo-ready: check check-portability lint test validate-evidence validate-claims doc-links secret-scan
+repo-ready: check check-portability lint test validate-evidence validate-claims validate-clarity doc-links secret-scan
 	@echo "repo-ready: all checks passed"
 
 synth-smoke:

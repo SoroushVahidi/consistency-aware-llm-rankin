@@ -48,6 +48,10 @@ ACTIVE_FILES = (
     "docs/EXPERIMENT_ARTIFACT_POLICY.md",
     "docs/REPOSITORY_LAYOUT.md",
     "docs/REPRODUCTION_CANONICAL.md",
+    "docs/CONTRIBUTIONS.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/AGENT_GUIDE.md",
+    "docs/claim_evidence_registry.yaml",
 )
 
 TEXT_SUFFIXES = {

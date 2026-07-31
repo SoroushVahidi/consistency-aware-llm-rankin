@@ -29,12 +29,16 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_FILES = [
     "reports/README.md",
     "README.md",
+    "AGENTS.md",
     "docs/READ_ME_FIRST_FOR_AI.md",
     "docs/REPOSITORY_LAYOUT.md",
     "docs/EXPERIMENTS.md",
     "docs/EXPERIMENT_ARTIFACT_POLICY.md",
     "docs/ARCHITECTURE.md",
     "docs/RELEASE_READINESS.md",
+    "docs/CONTRIBUTIONS.md",
+    "docs/PROJECT_STATUS.md",
+    "docs/AGENT_GUIDE.md",
 ]
 
 _LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
