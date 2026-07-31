@@ -13,6 +13,11 @@ from consistency_ranker.failure_mining.llm_runner import (
     detect_llm_providers,
     health_check_provider,
 )
+from consistency_ranker.multi_provider_eval.azure_request import (
+    AZURE_MAX_TOKENS_V1,
+    AZURE_REQUEST_PROFILE,
+    AZURE_SYSTEM_MESSAGE_V1,
+)
 from consistency_ranker.multi_provider_eval.cache import (
     ProvenanceJudgmentStore,
     canonical_pair_id,
@@ -26,11 +31,6 @@ from consistency_ranker.multi_provider_eval.parsing import (
 from consistency_ranker.multi_provider_eval.prompts import format_prompt, get_prompt
 from consistency_ranker.multi_provider_eval.schema import JudgmentRecord
 from consistency_ranker.multi_provider_eval.spending import SpendingCeiling
-from consistency_ranker.multifactor_acquisition.azure_request import (
-    AZURE_MAX_TOKENS_V1,
-    AZURE_REQUEST_PROFILE,
-    AZURE_SYSTEM_MESSAGE_V1,
-)
 from rerankers.llm_pairwise import PairwiseConfig, _call_llm
 
 TARGET_PROVIDERS = ("azure", "cohere", "fireworks", "gemini")
