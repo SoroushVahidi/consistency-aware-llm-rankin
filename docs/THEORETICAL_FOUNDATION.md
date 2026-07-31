@@ -1,5 +1,15 @@
 # Theoretical Foundation: Conflict-Aware Selective Repair
 
+> **SUPERSEDED (flagged 2026-07-31).** This document argues for a "selective
+> repair" contribution (apply FAS only when disagreement/BEW is high) that
+> "outperforms both always-FAS and never-FAS." The submitted manuscript
+> (`papers/JDIQ_2026/manuscript/main.tex`) reaches the **opposite**
+> conclusion: structural repair does not reliably improve retrieval quality
+> under any tested condition, and there is no committed evidence for a
+> positive selective-repair effect (see `docs/CONTRIBUTIONS.md` §1.1 and §3
+> "Non-contributions"). This document describes an earlier, abandoned
+> project direction. Do not cite its empirical claims as current.
+
 This document formalizes the problem setting, defines key concepts, states propositions, and provides a unified theoretical framework for upgrading the work to Q1 journal level.
 
 ---

@@ -1,5 +1,16 @@
 # Literature Alignment: Critical Review for Q1 Submission
 
+> **SUPERSEDED (flagged 2026-07-31).** This document claims a "selective
+> repair" policy (conditioning on BEW/disagreement) "improves over both
+> always-FAS and never-FAS," citing up to 6.5% nDCG@10 gains. The submitted
+> manuscript (`papers/JDIQ_2026/manuscript/main.tex`) reaches the **opposite**
+> conclusion: no repaired-vs-unrepaired cell survives Holm correction, and
+> there is no positive selective-repair claim anywhere in the current paper
+> (see `docs/CONTRIBUTIONS.md` §1.1 and §3 "Non-contributions"). This
+> document describes an earlier, abandoned project direction. Do not cite
+> its empirical claims as current; use `main.tex`'s own related-work section
+> instead.
+
 This document provides a strict, reviewer-level alignment between our method and prior work. It identifies overclaims, clarifies novelty, and positions the contribution precisely.
 
 ---

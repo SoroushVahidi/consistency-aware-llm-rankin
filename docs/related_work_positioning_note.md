@@ -1,8 +1,13 @@
 # Related Work Positioning Note — LLM Baselines
 
-> **Updated:** 2026-04-06
-> **Purpose:** How to position this work relative to LLM-based reranking
-> literature, given the current evidence.
+> **HISTORICAL (flagged 2026-07-31).** Written 2026-04-06, before the
+> finalized `papers/JDIQ_2026/manuscript/main.tex`'s own related-work section
+> (which cites Dwork/Kemeny, ACN/tournaments, RRF/CombSUM/Borda, and
+> data-quality/data-cascades literature more broadly than this note). Not
+> contradicted, just superseded in scope/detail. Already referenced as
+> "historical package era" by `README.md`'s own doc index, but previously
+> missing this in-file banner. Use `main.tex`'s related-work section for
+> current positioning.
 
 ---
 

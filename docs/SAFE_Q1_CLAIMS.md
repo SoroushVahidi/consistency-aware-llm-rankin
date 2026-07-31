@@ -1,5 +1,15 @@
 # Safe Q1 Claims and Wording Guardrails
 
+> **HISTORICAL (flagged 2026-07-31).** Written for the earlier, two-dataset
+> `pub_vote_cmp_v2`-era evidence package, before the current four-dataset
+> `reports/full_calibrated_core/` pipeline and the finalized
+> `papers/JDIQ_2026/manuscript/main.tex` (already referenced as
+> "historical package era" by `README.md`'s own doc index, but previously
+> missing this in-file banner). Its "unsafe claims to avoid" list remains
+> generally good practice, but its "supported claims" section describes the
+> older package's scope, not the current one. Use `docs/CONTRIBUTIONS.md`
+> and `main.tex` directly for current claim wording.
+
 ## Supported claims (safe)
 
 1. Vote-construction regime strongly changes cyclicity/SCC structure in

@@ -145,7 +145,17 @@
 
 ## Real-Data Experiments
 
-### REAL-1: Publication Vote Comparison v2 (Canonical Evidence)
+### REAL-1: Publication Vote Comparison v2 (~~Canonical Evidence~~ **Historical, superseded**)
+
+> **Correction (2026-07-31):** this row and its "Canonical"/"primary evidence
+> package" labels below are **stale**. `outputs/pub_vote_cmp_v2/` was last
+> regenerated 2026-03-24 and has **zero citations** in the submitted
+> `papers/JDIQ_2026/manuscript/main.tex`. The actual current canonical
+> package is `reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/`
+> (2 datasets became 4: BRIGHT, FiQA, HotpotQA, SciDocs; see REAL-3/REAL-4
+> below, also corrected). See `docs/CONTRIBUTIONS.md` §1.1 and
+> `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` for the current mapping.
+> Row left below unmodified for historical reference only.
 
 | Field | Value |
 |---|---|
@@ -157,8 +167,8 @@
 | Post-processing | `scripts/build_paper_evidence_package.py`, `scripts/analyze_publication_vote_deltas.py` |
 | Final tables | `outputs/pub_vote_cmp_v2/paper_package/tables/` (3 tables) |
 | Status | **executed** |
-| Results present | Yes — canonical paper evidence |
-| Paper-evidence ready | **Yes** — primary evidence package |
+| Results present | Yes — historical paper evidence (superseded, see correction above) |
+| Paper-evidence ready | **No** — superseded by `reports/full_calibrated_core/`; kept for provenance/ablation only |
 
 ### REAL-2: Real-Data Bootstrap Significance
 
@@ -175,29 +185,37 @@
 
 ### REAL-3: FiQA Experiment
 
+> **Correction (2026-07-31):** stale. FiQA is part of the current
+> four-dataset canonical package and is directly reported in `main.tex`
+> (Table 2 `tab:setup`).
+
 | Field | Value |
 |---|---|
 | Name | FiQA (BEIR) full pipeline |
-| Script | `scripts/run_publication_vote_suite.py` with `--dataset fiqa` |
+| Script | `reports/full_calibrated_core/scripts/full_calibration_utils.py` (current); `scripts/run_publication_vote_suite.py --dataset fiqa` (historical path) |
 | Datasets | FiQA (BEIR) |
 | Key args | Same vote constructions as REAL-1 |
-| Output paths | None committed |
-| Status | **implemented** (loader exists, not run) |
-| Results present | No |
-| Paper-evidence ready | No — requires HuggingFace download |
+| Output paths | `reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/` |
+| Status | **executed, canonical** |
+| Results present | Yes |
+| Paper-evidence ready | **Yes** — part of the current canonical package (see `docs/CONTRIBUTIONS.md` §1.1) |
 
 ### REAL-4: BRIGHT Experiment
+
+> **Correction (2026-07-31):** stale. BRIGHT is part of the current
+> four-dataset canonical package and is directly reported in `main.tex`
+> (Table 2 `tab:setup`).
 
 | Field | Value |
 |---|---|
 | Name | BRIGHT benchmark full pipeline |
-| Script | `scripts/run_publication_vote_suite.py` with `--dataset bright` |
+| Script | `reports/full_calibrated_core/scripts/full_calibration_utils.py` (current); `scripts/run_publication_vote_suite.py --dataset bright` (historical path) |
 | Datasets | BRIGHT |
 | Key args | Same vote constructions as REAL-1 |
-| Output paths | None committed |
-| Status | **implemented** (loader exists with manual-download fallback, not run) |
-| Results present | No |
-| Paper-evidence ready | No — requires dataset download |
+| Output paths | `reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/` |
+| Status | **executed, canonical** |
+| Results present | Yes |
+| Paper-evidence ready | **Yes** — part of the current canonical package (see `docs/CONTRIBUTIONS.md` §1.1) |
 
 ### REAL-5: Real Experiment Validation Run
 

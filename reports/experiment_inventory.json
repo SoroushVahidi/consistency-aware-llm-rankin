@@ -3,7 +3,9 @@
     "id": "SYN-1",
     "name": "Noise Sweep",
     "script": "scripts/run_synthetic.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "--n-items 20 --weight-scheme margin --seed 42 --noise {0.05,0.10,0.15,0.20,0.25,0.30}",
     "output_paths": [
       "outputs/noise_sweep_n0.05/synthetic_results.json",
@@ -23,7 +25,9 @@
     "id": "SYN-2",
     "name": "Scale Sweep",
     "script": "scripts/run_synthetic.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "--noise 0.1 --weight-scheme margin --seed 42 --n-items {10,20,50,100} --save-timings",
     "output_paths": [
       "outputs/scale_sweep_n10/",
@@ -41,7 +45,9 @@
     "id": "SYN-3",
     "name": "Margin Multi-Seed Replication",
     "script": "scripts/run_synthetic.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "--n-items 20 --noise 0.20 --weight-scheme margin --seed {42,123,456,789,1234}",
     "output_paths": [
       "outputs/margin_multiseed_n20_noise0.20/seed_42/",
@@ -60,7 +66,9 @@
     "id": "SYN-4",
     "name": "Uniform Multi-Seed Replication",
     "script": "scripts/run_synthetic.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "--n-items 20 --noise 0.20 --weight-scheme uniform --seed {42,123,456,789,1234}",
     "output_paths": [
       "outputs/uniform_multiseed_n20_noise0.20/seed_42/",
@@ -79,7 +87,9 @@
     "id": "SYN-5",
     "name": "Variant Method Follow-up",
     "script": "scripts/run_variant_followup.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "outputs/noise_sweep_variant_followup/",
@@ -94,7 +104,9 @@
     "id": "SYN-6",
     "name": "Exact vs Greedy FAS Comparison",
     "script": "scripts/run_exact_vs_greedy.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "docs/tables/exact_vs_greedy_fas.csv",
@@ -110,7 +122,9 @@
     "id": "SYN-7",
     "name": "FAS Balance Alpha Sweep",
     "script": "scripts/run_fas_balance_alpha_sweep.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "docs/tables/fas_balance_alpha_sweep.csv",
@@ -125,7 +139,9 @@
     "id": "SYN-8",
     "name": "FAS Balance Alpha-Beta Grid",
     "script": "scripts/run_fas_balance_alpha_beta_grid.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "docs/tables/fas_balance_alpha_beta_grid.csv",
@@ -140,7 +156,9 @@
     "id": "SYN-9",
     "name": "Regime Analysis",
     "script": "scripts/run_regime_analysis.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "docs/tables/regime_analysis.csv",
@@ -157,7 +175,9 @@
     "id": "SYN-10",
     "name": "Diagnostic Experiments",
     "script": "scripts/run_diagnostic_experiments.py",
-    "datasets": ["synthetic"],
+    "datasets": [
+      "synthetic"
+    ],
     "key_args": "see script",
     "output_paths": [
       "docs/tables/diagnostic_method_properties.csv",
@@ -171,9 +191,12 @@
   },
   {
     "id": "REAL-1",
-    "name": "Publication Vote Comparison v2 (Canonical Evidence)",
+    "name": "Publication Vote Comparison v2 (historical, superseded)",
     "script": "scripts/run_publication_vote_suite.py",
-    "datasets": ["scidocs", "hotpotqa"],
+    "datasets": [
+      "scidocs",
+      "hotpotqa"
+    ],
     "key_args": "vote constructions: ms2, ms1, ms1_drop_mutual; rankers: BM25, TF-IDF, MiniLM",
     "output_paths": [
       "outputs/pub_vote_cmp_v2/paper_package/tables/table_graph_ndcg_and_consistency.csv",
@@ -183,14 +206,17 @@
     ],
     "status": "executed",
     "results_present": true,
-    "paper_evidence_ready": true,
-    "notes": "Primary publication evidence package; requires HuggingFace access to re-run from scratch"
+    "paper_evidence_ready": false,
+    "notes": "STALE AS OF 2026-07-31: previously labeled 'Primary publication evidence package'. outputs/pub_vote_cmp_v2/ was last regenerated 2026-03-24 and has zero citations in papers/JDIQ_2026/manuscript/main.tex. Current canonical package is reports/full_calibrated_core/outputs/calibrated_all4/paper_package/ (see docs/CONTRIBUTIONS.md and papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md). Kept for historical/ablation reference only."
   },
   {
     "id": "REAL-2",
     "name": "Real-Data Bootstrap Significance",
     "script": "scripts/bootstrap_method_deltas.py",
-    "datasets": ["scidocs", "hotpotqa"],
+    "datasets": [
+      "scidocs",
+      "hotpotqa"
+    ],
     "key_args": "--bootstrap-reps 2000",
     "output_paths": [
       "outputs/pub_vote_cmp_v2/paper_package/tables/table_bootstrap_delta_ndcg.csv"
@@ -203,32 +229,42 @@
   {
     "id": "REAL-3",
     "name": "FiQA Experiment",
-    "script": "scripts/run_publication_vote_suite.py",
-    "datasets": ["fiqa"],
+    "script": "reports/full_calibrated_core/scripts/full_calibration_utils.py",
+    "datasets": [
+      "fiqa"
+    ],
     "key_args": "--dataset fiqa",
-    "output_paths": [],
-    "status": "implemented",
-    "results_present": false,
-    "paper_evidence_ready": false,
-    "notes": "Loader exists; no committed output; requires HuggingFace download"
+    "output_paths": [
+      "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "CORRECTED 2026-07-31 (was stale: 'no committed output'). FiQA is part of the current four-dataset canonical package, reported in main.tex Table 2."
   },
   {
     "id": "REAL-4",
     "name": "BRIGHT Experiment",
-    "script": "scripts/run_publication_vote_suite.py",
-    "datasets": ["bright"],
+    "script": "reports/full_calibrated_core/scripts/full_calibration_utils.py",
+    "datasets": [
+      "bright"
+    ],
     "key_args": "--dataset bright",
-    "output_paths": [],
-    "status": "implemented",
-    "results_present": false,
-    "paper_evidence_ready": false,
-    "notes": "Loader exists with manual-download fallback; no committed output"
+    "output_paths": [
+      "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/"
+    ],
+    "status": "executed",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "CORRECTED 2026-07-31 (was stale: 'no committed output'). BRIGHT is part of the current four-dataset canonical package, reported in main.tex Table 2."
   },
   {
     "id": "REAL-5",
     "name": "Real Experiment Validation Run",
     "script": "scripts/run_real_experiment.py",
-    "datasets": ["any supported"],
+    "datasets": [
+      "any supported"
+    ],
     "key_args": "--dataset scidocs --max-queries 20",
     "output_paths": [
       "outputs/real_small_validation/",
@@ -243,7 +279,9 @@
     "id": "PLAN-1",
     "name": "LLM Pairwise Comparator",
     "script": null,
-    "datasets": ["any"],
+    "datasets": [
+      "any"
+    ],
     "key_args": null,
     "output_paths": [],
     "status": "planned",
@@ -255,19 +293,24 @@
     "id": "PLAN-2",
     "name": "ILP Exact MWFAS Solver",
     "script": "src/consistency_ranker/mwfas_solver.py",
-    "datasets": ["synthetic", "real"],
+    "datasets": [
+      "synthetic",
+      "real"
+    ],
     "key_args": null,
     "output_paths": [],
-    "status": "planned",
-    "results_present": false,
-    "paper_evidence_ready": false,
-    "notes": "Stub exists in mwfas_solver.py; pulp/gurobipy integration not implemented"
+    "status": "done",
+    "results_present": true,
+    "paper_evidence_ready": true,
+    "notes": "CORRECTED 2026-07-31 (was stale: 'pulp/gurobipy integration not implemented'). Implemented with the free, open-source SCIP solver via PySCIPOpt (mwfas_solver.solve(method='scip'/'exact'/'ilp')); optional legacy gurobi backend also present and internally cross-validated (docs/CONTRIBUTIONS.md section 1.6). See tests/test_exact_mwfas_scip.py and reports/exact_open_source_ilp_repair_investigation/."
   },
   {
     "id": "PLAN-3",
     "name": "Additional Rankers (cross-encoder)",
     "script": "scripts/generate_score_file.py",
-    "datasets": ["any"],
+    "datasets": [
+      "any"
+    ],
     "key_args": null,
     "output_paths": [],
     "status": "planned",

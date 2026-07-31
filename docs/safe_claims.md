@@ -1,5 +1,13 @@
 # Safe Claims — Real LLM Pairwise Evidence
 
+> **HISTORICAL (flagged 2026-07-31).** Concerns bounded real-OpenAI LLM
+> pairwise runs (SciDocs 50q/HotpotQA 20q/FiQA 10q) from 2026-04-06, and long
+> predates the 2026-07-29/30 real-LLM exploratory pilot and its cluster-aware
+> re-analysis (`reports/real_llm_clustered_reanalysis_20260730T023745Z/`,
+> `docs/CONTRIBUTIONS.md` §1.2). Already referenced as "historical package
+> era" by `README.md`'s own doc index, but previously missing this in-file
+> banner. Treat as historical context, not an actively-maintained claims list.
+
 > **Updated:** 2026-04-06
 > **Scope:** Claims safe to make for manuscript text about real OpenAI pairwise runs.
 > Complements `SAFE_CLAIMS_FOR_PAPER.md` (core non-LLM graph-repair claims).

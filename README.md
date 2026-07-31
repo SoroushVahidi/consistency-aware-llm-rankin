@@ -5,13 +5,24 @@
 
 ---
 
-## Current development status
+## Understand the repository
 
-For the current scientific status, branch handoff, validated claims,
-known blockers, and safe continuation instructions, see:
-- [Project status](PROJECT_STATUS.md)
-- [Current branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md)
-- [Machine-readable state snapshot](docs/handoff/state_snapshot.json)
+A future reader (human or AI agent) should start here, not by grepping
+`docs/*.md` at random -- each concern below has exactly one authoritative
+document:
+
+| I want to understand... | Read this |
+|---|---|
+| What this repo actually contributes, scientifically and technically, and what it does *not* support | [`docs/CONTRIBUTIONS.md`](docs/CONTRIBUTIONS.md) |
+| What's currently active/unfinished/blocked on `main` right now | [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) |
+| Module layering, canonical implementations, terminology | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| Experiment families, entry points, test tiers | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) |
+| What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) |
+| A specific claim's evidence, status, and manuscript applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
+| Exact reproduction commands for the manuscript's numbers | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
+| The submitted manuscript itself | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
+| How to install, prepare datasets, and run tests | "Quickstart" and "Testing" below |
+| Detailed pre-merge branch history/handoff narrative | [Project status (root, historical)](PROJECT_STATUS.md), [Branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md) |
 
 Release-readiness navigation:
 - [Architecture guide](docs/ARCHITECTURE.md) explains layers, canonical modules,
@@ -122,6 +133,19 @@ make help          # list all available targets
 make synth-smoke   # quick single synthetic run into outputs/synthetic_smoke/
 make repo-ready    # readiness, maintained lint scope, tests, evidence, links, secrets
 ```
+
+`pytest -q`/`make test`/`make test-full` are fully green on a fresh clone
+with **no network access and no prepared datasets** -- ~64 tests that need
+real BEIR/HotpotQA/BRIGHT dataset content are cleanly separated into a
+`real_data` pytest tier (`-m "not real_data"` by default). To run that tier:
+
+```bash
+python scripts/download_datasets.py                 # network access required
+python scripts/prepare_datasets.py --dataset all
+make test-real-data
+```
+
+See [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) "Test Tiers" for detail.
 
 See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for
 the current reproduction guide covering every table cited in the JDIQ 2026
