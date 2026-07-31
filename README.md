@@ -71,7 +71,7 @@ not assumed from a filename. Summary:
 | `real_data` tier (~64 dataset-dependent tests) | Passes when BEIR/HotpotQA/BRIGHT datasets are prepared (`make test-real-data`); cleanly deselected, not silently skipped, otherwise |
 | Gurobi | Optional. 13.0.2 + academic WLS license verified working on the validation machine (2026-07-31); **SCIP remains the fully-supported, free, open-source exact-solver path** — a machine with no Gurobi license passes every required check |
 | GitHub Actions CI | **Not currently authoritative** — every run has failed since at least 2026-07-16 due to a GitHub account billing/spending-limit issue, not a code problem. Do not read a red/absent check as a code signal |
-| Canonical validation alternative | `python scripts/run_cloud_validation.py --tier core` / `--tier solver` — both **PASS** as of commit `6ea6a86` |
+| Canonical validation alternative | `python scripts/run_cloud_validation.py --tier core` / `--tier solver` / `--tier real-data` — all three **PASS** as of commit `2a5d2b4` |
 
 ## Getting started
 

@@ -59,7 +59,7 @@ here.
 
 None assumed. This repository does not follow a fixed release schedule —
 see `docs/RELEASE_CHECKLIST.md` for the conditions that would trigger a
-release decision (none currently met; no release exists as of `d613d3e`).
+release decision (none currently met; no release exists as of `2a5d2b4`).
 
 ## Ownership of canonical documents
 

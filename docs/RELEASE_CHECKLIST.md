@@ -85,7 +85,7 @@ These cannot be satisfied by a commit:
   for the double-blind-review anonymity considerations noted above before
   either happens.
 
-## Current release/version state (as of `d613d3e`, 2026-07-31)
+## Current release/version state (as of `2a5d2b4`, 2026-07-31)
 
 - Package version: `0.1.0` (`pyproject.toml`) — pre-1.0, no stable API
   guarantee implied or intended.

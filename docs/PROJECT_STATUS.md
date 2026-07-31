@@ -57,6 +57,35 @@ table above, not a competing source of truth.
 
 ---
 
+## Handoff snapshot (last verified 2026-07-31)
+
+A quick-glance summary for an agent arriving with no prior context. This
+section is a pointer to current facts, not a substitute for the sections
+below it -- if anything here ever looks stale, trust a fresh check over
+this text (`git fetch origin && git status --short --branch`, `gh issue
+list --state open`, `gh repo view --json isPrivate,visibility`).
+
+- **Sync:** `main` == `origin/main`, no open PRs, no local uncommitted
+  changes, as of the commit that most recently touched this file.
+- **Visibility / release:** repository is private; no Git tag and no
+  GitHub release exists; package version is pre-1.0 (`pyproject.toml`).
+  See `docs/RELEASE_CHECKLIST.md` for what would need to be true before
+  either changes.
+- **Open GitHub issues:** exactly six, [#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45)-[#50](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/50).
+  Each maps to one bucket in "Prioritized remaining work" below; if a new
+  issue exists that isn't #45-#50, or one of these is closed, trust
+  `gh issue list` over this file.
+- **CI:** GitHub Actions is not authoritative (billing block, [#45](https://github.com/SoroushVahidi/consistency-aware-llm-rankin/issues/45));
+  `scripts/run_cloud_validation.py` is canonical instead -- see "Public
+  release readiness" row below for the last full-tier PASS commit.
+- **Governance surface:** `CONTRIBUTING.md`, `.github/pull_request_template.md`,
+  four `.github/ISSUE_TEMPLATE/*.yml` forms + `config.yml`, and
+  `docs/RELEASE_CHECKLIST.md` are all present and were spot-checked for
+  mutual consistency during the pass that added this section.
+- **Where to resume:** "Exact next action" below, or whichever open issue
+  matches the work you intend to do -- do not start new, untracked work
+  without either updating an existing issue or filing a new one.
+
 ## Subsystem status
 
 | Area | Status | Canonical implementation | Canonical evidence | Validation | Remaining work |
@@ -77,7 +106,7 @@ table above, not a competing source of truth.
 | Fresh-clone / cloud validation | Canonical replacement for blocked GitHub Actions | `scripts/run_cloud_validation.py` | `.cloud_validation_runs/<run_id>/summary.json` (gitignored, local) | `tests/test_cloud_validation.py` (31 tests) | Cross-check against a live GitHub runner once billing is resolved |
 | Manuscript (`papers/JDIQ_2026/`) | Submitted, finalized draft (commit `e873017`, 2026-07-15; unchanged since) | -- | `papers/JDIQ_2026/manuscript/main.tex` | `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` | None -- do not use `CANONICAL_PAPER_STORY.md`/`CONTRIBUTION_AUDIT.md` (self-marked superseded) |
 | Raw-provider-transcript archival | Procedure documented, no destination configured | -- | `docs/EXPERIMENT_ARTIFACT_POLICY.md` "External Archive Procedure" | -- | Select a durable external archive destination -- a public-release condition, not a merge blocker |
-| Public release readiness | Blocked only on GitHub Actions billing (external) | -- | this file + `docs/RELEASE_READINESS.md` | `scripts/run_cloud_validation.py --tier core`/`--tier solver`, both PASS as of `6ea6a86` | Repository owner resolves GitHub billing; everything else already passes |
+| Public release readiness | Blocked only on GitHub Actions billing (external) | -- | this file + `docs/RELEASE_READINESS.md` | `scripts/run_cloud_validation.py --tier core`/`--tier solver`/`--tier real-data`, all three PASS as of `2a5d2b4` | Repository owner resolves GitHub billing; everything else already passes |
 
 ## Fresh-checkout reproducibility (this pass, 2026-07-31)
 
