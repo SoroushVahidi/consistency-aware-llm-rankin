@@ -33,22 +33,55 @@ navigation aid, not a full archive catalog.
 
 ## Script Quick Reference
 
-| Script | Purpose |
-|---|---|
-| `scripts/download_datasets.py` | Fetch raw datasets where licenses/network access permit. |
-| `scripts/prepare_datasets.py` | Build processed JSONL and pairwise preferences. |
-| `scripts/generate_score_file.py` | Create BM25, TF-IDF, or MiniLM score files. |
-| `scripts/build_votes_file.py` | Build multi-ranker vote JSONL. |
-| `scripts/postprocess_votes_drop_mutual_pairs.py` | Drop mutual 2-cycle vote pairs for middle-ground graph regimes. |
-| `scripts/diagnose_vote_graph_cycles.py` | Report cycle and mutual-edge statistics for a vote file. |
-| `scripts/run_real_experiment.py` | Main real-data ranking/evaluation driver. |
-| `scripts/run_publication_vote_suite.py` | Publication vote comparison pipeline. |
-| `scripts/analyze_publication_vote_deltas.py` | Bootstrap repaired-minus-unrepaired nDCG deltas. |
-| `scripts/run_real_llm_clustered_reanalysis.py` | Offline clustered reanalysis of the real-LLM pilot. |
-| `scripts/build_paper_evidence_package.py` | Curated tables, figures, and manuscript summaries. |
-| `scripts/generate_paper_tables.py` | Manuscript-ready CSV bundle in `reports/paper_tables/`. |
-| `scripts/check_repo_ready.py` | Repository readiness checks. |
-| `scripts/check_active_portability.py` | Active code/docs path-portability check. |
+| Entry point | Classification | Purpose / notes |
+|---|---|---|
+| `run-synthetic` console script | Recommended | Installed alias for `scripts/run_synthetic.py`; use for the first local no-network experiment after editable install. |
+| `python scripts/run_synthetic.py ...` | Recommended | End-to-end deterministic synthetic experiment; safe with a temporary `--output-dir`. |
+| `make synth-smoke` | Recommended | Makefile wrapper for the synthetic smoke run into `outputs/synthetic_smoke/`. |
+| `python scripts/check_repo_ready.py` | Recommended | Lightweight repository readiness, architecture, and portability checks. |
+| `make repo-ready` | Recommended | Local release gate: readiness, portability, maintained Ruff scope, tests, evidence manifest, report links, and secret scan. |
+| `make test-full` | Recommended before merge | Requires `.[exact]`; fails if any test is skipped. |
+| `scripts/run_offline_validation_workflow.py` | Recommended before merge | Offline reproduction of canonical IR audit and real-LLM clustered reanalysis into temporary directories. |
+| `scripts/run_real_llm_clustered_reanalysis.py` | Recommended for real-LLM inference | Offline deterministic clustered reanalysis; no provider calls. |
+| `scripts/validate_canonical_evidence_manifest.py` | Recommended | Validates canonical evidence paths. |
+| `scripts/validate_report_links.py` | Recommended | Validates markdown links in report navigation files. |
+| `scripts/run_secret_scan.py` | Recommended | Scans tracked/staged content for secret-shaped strings. |
+| `scripts/check_active_portability.py` | Recommended | Ensures active code/docs do not embed machine-specific local paths. |
+| `scripts/check_architecture_boundaries.py` | Recommended | Guards against recurring package import cycles. |
+| `scripts/run_real_experiment.py` | Advanced | Main real-data ranking/evaluation driver; expects prepared score/qrel inputs. |
+| `scripts/run_publication_vote_suite.py` | Advanced | Publication vote-comparison pipeline; can be expensive and writes study outputs. |
+| `scripts/analyze_publication_vote_deltas.py` | Advanced | Bootstrap repaired-minus-unrepaired nDCG deltas from publication-suite outputs. |
+| `scripts/download_datasets.py` | Advanced/network | Fetch raw datasets where licenses/network access permit. |
+| `scripts/prepare_datasets.py` | Advanced | Build processed JSONL and pairwise preferences after data are available. |
+| `scripts/generate_score_file.py` | Advanced | Create BM25, TF-IDF, or MiniLM score files; optional extras may be needed. |
+| `scripts/build_votes_file.py` | Advanced | Build multi-ranker vote JSONL. |
+| `scripts/postprocess_votes_drop_mutual_pairs.py` | Advanced | Drop mutual 2-cycle vote pairs for middle-ground graph regimes. |
+| `scripts/diagnose_vote_graph_cycles.py` | Advanced | Report cycle and mutual-edge statistics for a vote file. |
+| `scripts/run_production_uht.py` | Production-facing and guarded | Only executes the Outcome F always-UHT operating point; diagnostic mode is non-routing. |
+| `scripts/run_policy_selection_experiment.py` | Experimental | Research gate/selector experiments; not production routing. |
+| `scripts/run_multi_provider_repair_pilot.py` | Experimental/provider-backed | Real provider pilot; requires explicit call authorization and configured credentials. |
+| `scripts/run_reviewer_concerns_program.py` | Experimental/provider-backed | Reviewer-concern probing; requires explicit call authorization and configured credentials. |
+| `scripts/run_repair_frontier_pilot.py` | Experimental/offline when inputs exist | Repair-frontier study from compact real-LLM inputs. |
+| `scripts/run_extraction_study.py` | Experimental/offline when inputs exist | Extraction-method study from compact real-LLM inputs. |
+| `scripts/run_repair_diagnostic_study.py` | Experimental/offline when inputs exist | Repair-benefit predictability diagnostic from compact inputs. |
+| `scripts/generate_q1_tables.py` | Historical | Regenerates earlier Q1 tables from `outputs/pub_vote_cmp_v2/`; not the current manuscript evidence. |
+| `scripts/build_paper_evidence_package.py` | Historical/advanced | Builds curated packages for the older publication-suite path. |
+| `scripts/run_openai_real_*.py`, `scripts/run_gemini_scidocs_pilot.py`, `scripts/run_llm_scidocs_*.py` | Historical/provider-backed | Older bounded provider pilots; do not run without explicit authorization. |
+
+The repository contains many additional `scripts/` files used for one-off
+audits or historical experiment branches. Treat a script as public only if it
+appears in the table above or in a current experiment-family `STATUS.md` /
+`README.md`.
+
+## Representative Reproducibility Workflows
+
+| Workflow | Command | Inputs | Output | Network/API |
+|---|---|---|---|---|
+| Core synthetic example | `python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42 --output-dir /tmp/consistency_ranker_synthetic_smoke` | None beyond installed package | `synthetic_results.json` in the chosen temp directory | No |
+| Statistical inference tests | `pytest -q tests/test_statistical_inference.py tests/test_real_llm_clustered_reanalysis.py` | Synthetic fixtures plus tracked compact real-LLM tables | Test result only | No |
+| Real-LLM clustered reanalysis | `python scripts/run_real_llm_clustered_reanalysis.py --output-dir /tmp/real_llm_reanalysis` | Tracked compact row-level reports | Cluster-aware CSV/JSON summaries | No |
+| Outcome F production validation | `pytest -q tests/test_production_operating_point.py tests/test_policy_selection.py` and `python scripts/run_production_uht.py --help` | Synthetic local fixtures | Test/help output only | No |
+| Repository readiness | `make repo-ready` | Tracked source/docs/evidence | Validation output only, except tests may create temp files | No |
 
 ## Artifact Policy
 

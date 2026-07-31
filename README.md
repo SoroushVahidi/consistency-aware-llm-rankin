@@ -13,6 +13,16 @@ known blockers, and safe continuation instructions, see:
 - [Current branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md)
 - [Machine-readable state snapshot](docs/handoff/state_snapshot.json)
 
+Release-readiness navigation:
+- [Architecture guide](docs/ARCHITECTURE.md) explains layers, canonical modules,
+  terminology, and current evidence.
+- [Experiment index](docs/EXPERIMENTS.md) classifies active, exploratory,
+  canonical, and historical workflows.
+- [Experiment artifact policy](docs/EXPERIMENT_ARTIFACT_POLICY.md) defines what
+  belongs in Git versus local/external archive storage.
+- [Release readiness checklist](docs/RELEASE_READINESS.md) maps CI/local checks
+  to the properties they enforce before this branch is integrated.
+
 ---
 
 ## Key Finding
@@ -83,25 +93,34 @@ evidence audit) and
 # 1. Install
 git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
 cd consistency-aware-llm-rankin
-pip install -r requirements.txt && pip install -e ".[dev]"
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e ".[dev]"
 
 # 2. Verify the repository is ready
 python scripts/check_repo_ready.py
 
-# 3. Run tests
-pytest
+# 3. Run basic tests
+pytest -q
 
 # 4. Run a synthetic experiment (no network needed)
-python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42
+python scripts/run_synthetic.py \
+  --n-items 20 \
+  --noise 0.2 \
+  --seed 42 \
+  --output-dir /tmp/consistency_ranker_synthetic_smoke
 
-# 5. Regenerate the Q1 journal tables from the historical two-dataset package (no network needed)
-python scripts/generate_q1_tables.py
-#  → outputs/q1_journal_package/  (7 tables + summary_report.md; derived from pub_vote_cmp_v2)
+# 5. Optional exact-solver/full-validation install
+python -m pip install -e ".[dev,exact]"
+make verify-env
+make test-full
 
 # Alternative: use make targets
 make help          # list all available targets
-make smoke-test    # quick single synthetic run
-make q1-tables     # regenerate Q1 tables
+make synth-smoke   # quick single synthetic run into outputs/synthetic_smoke/
+make repo-ready    # readiness, maintained lint scope, tests, evidence, links, secrets
 ```
 
 See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for
@@ -123,6 +142,7 @@ different results package and is kept for historical reference only.
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | **Historical** — reproduces the earlier `pub_vote_cmp_*` package, superseded by `REPRODUCTION_CANONICAL.md` |
 | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) | Experiment-family index: active/canonical/historical status, entry points, tracked outputs, and exclusions |
 | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) | Policy for tracking, ignoring, or externally archiving experiment outputs and raw provider caches |
+| [`docs/RELEASE_READINESS.md`](docs/RELEASE_READINESS.md) | Reader-facing CI/local validation contract, integration recommendation, and merge acceptance checklist |
 | [`docs/Q1_POSITIONING_AND_CLAIMS.md`](docs/Q1_POSITIONING_AND_CLAIMS.md) | Safe claims, unsafe claims, reviewer objections, abstract framing (written for the historical package; not yet re-validated against `full_calibrated_core`) |
 | [`docs/SAFE_CLAIMS_FOR_PAPER.md`](docs/SAFE_CLAIMS_FOR_PAPER.md) | Conservative claim set for manuscript writing (historical package era) |
 | [`docs/SAFE_Q1_CLAIMS.md`](docs/SAFE_Q1_CLAIMS.md) | Conservative wording guardrails for manuscript claims (historical package era) |

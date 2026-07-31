@@ -10,9 +10,10 @@ that missed updating one reference).
 
 Checked by default: reports/README.md, README.md,
 docs/READ_ME_FIRST_FOR_AI.md, docs/REPOSITORY_LAYOUT.md, docs/EXPERIMENTS.md,
-docs/ARCHITECTURE.md -- the documents most affected by file moves and
-reference rewrites, plus the top-level architecture guide (repo hygiene
-Stage 5, 2026-07-30). Pass --files to check a different/additional set.
+docs/ARCHITECTURE.md, docs/RELEASE_READINESS.md -- the documents most
+affected by file moves and reference rewrites, plus the top-level
+architecture and release guides. Pass --files to check a
+different/additional set.
 """
 
 from __future__ import annotations
@@ -32,6 +33,7 @@ DEFAULT_FILES = [
     "docs/REPOSITORY_LAYOUT.md",
     "docs/EXPERIMENTS.md",
     "docs/ARCHITECTURE.md",
+    "docs/RELEASE_READINESS.md",
 ]
 
 _LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")

@@ -4,6 +4,22 @@
 disagree about current state, re-verify Git/code directly (see "Last verified state")
 rather than trusting either document blindly.*
 
+## Current onboarding note
+
+This file preserves a broad branch-status narrative and includes historical
+snapshot fields below. For the current repository map and release-readiness
+entry points, start with:
+
+- `README.md` for installation and the first no-network synthetic run.
+- `docs/ARCHITECTURE.md` for layers, terminology, and canonical modules.
+- `docs/EXPERIMENTS.md` for active versus historical experiment workflows.
+- `docs/EXPERIMENT_ARTIFACT_POLICY.md` for tracked/ignored/archive decisions.
+- `docs/RELEASE_READINESS.md` for CI/local validation and integration policy.
+
+Static hashes in this file are not self-updating; always run `git fetch
+origin`, `git status --short --branch`, and `git rev-parse HEAD` before
+acting on the branch.
+
 ## Status snapshot
 
 | Field | Value |
@@ -47,6 +63,7 @@ claims to describe the same thing.
 | Negative-result manuscript package (formalizes the NO-GO finding for external publication) | `papers/negative_result_2026/MANUSCRIPT_PLAN.md` | Companion paper to `papers/JDIQ_2026/`, not a revision of it; see also `CLAIMS_AND_EVIDENCE.md`, `RELATED_WORK_POSITIONING.md`, `FIGURE_AND_TABLE_PLAN.md`, `LIMITATIONS.md`, `ABSTRACT_DRAFTS.md`, `OUTLINE.md` in the same directory |
 | Historical/superseded records | `docs/historical/`, and any file carrying a `SUPERSEDED` banner (e.g. `docs/THREATS_TO_VALIDITY.md`, `docs/RESULTS_AUDIT.md`, `docs/RESULTS_FOR_PAPER.md`, `docs/EVIDENCE_MAP.md`, `docs/SAFE_CLAIMS_FOR_PAPER.md`, `docs/revision_strategy.md`, `docs/Q1_POSITIONING_AND_CLAIMS.md`) | Kept for provenance; banner states the current replacement |
 | Repository architecture, module layering, canonical-vs-compatibility implementations, terminology (added 2026-07-30, repo hygiene Stage 5) | `docs/ARCHITECTURE.md` | Layers, end-to-end data flow, canonical-module map (provenance, ranking, MWFAS, provider requests, policy selection), terminology guide, experiment/evidence map, and navigation for a new reader |
+| Release readiness, CI/local validation contract, and branch-integration recommendation | `docs/RELEASE_READINESS.md` | Use before deciding whether this branch should become `main`; complements CI and `make repo-ready` |
 
 If a document is not listed here and is not explicitly marked historical,
 treat its claims as unverified until cross-checked against the
