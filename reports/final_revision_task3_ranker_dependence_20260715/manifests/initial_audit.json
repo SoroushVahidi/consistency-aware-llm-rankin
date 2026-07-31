@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-07-15T14:11:21.169879Z",
+  "repo": "/home/soroush/consistency-aware-llm-rankin",
+  "branch": "main",
+  "head_commit": "b0d48520b72dfa05f6cfe07309cb39ef980be032",
+  "origin_main_commit": "b0d48520b72dfa05f6cfe07309cb39ef980be032",
+  "dirty_tree_porcelain": [
+    "M papers/JDIQ_2026/manuscript/main.pdf",
+    " M papers/JDIQ_2026/manuscript/main.tex",
+    " M reports/full_calibrated_core/scripts/conditional_subsets.py",
+    " M reports/full_calibrated_core/scripts/full_calibration_utils.py",
+    " M reports/full_calibrated_core/scripts/run_full_calibrated_core.py",
+    " M scripts/run_real_experiment.py",
+    " M src/consistency_ranker/failure_mining/graph_features.py",
+    " M src/consistency_ranker/failure_mining/query_processor.py",
+    " M tests/test_conditional_subsets.py",
+    " M tests/test_real_experiment_modes.py",
+    "?? reports/final_revision_task1_pool_cutoff_20260715/",
+    "?? reports/final_revision_task2_statistical_power_20260715/",
+    "?? src/consistency_ranker/qrels_reference.py",
+    "?? src/consistency_ranker/statistical_inference.py",
+    "?? tests/test_pool_cutoff_evaluation.py",
+    "?? tests/test_qrels_reference.py",
+    "?? tests/test_statistical_inference.py"
+  ],
+  "manuscript_pdf_path": "papers/JDIQ_2026/manuscript/main.pdf",
+  "manuscript_pdf_sha256_at_task3_start": "cd9aba45b2206d9363d73278284c9f18abcfaadaf18a9593a6a5dd92ac9185ff",
+  "task1_report_present": true,
+  "task2_report_present": true,
+  "task1_report_path": "reports/final_revision_task1_pool_cutoff_20260715/FINAL_REPORT.md",
+  "task2_report_path": "reports/final_revision_task2_statistical_power_20260715/FINAL_REPORT.md"
+}

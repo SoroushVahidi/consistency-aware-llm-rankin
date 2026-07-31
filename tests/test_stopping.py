@@ -99,6 +99,7 @@ def test_fully_identical_rankings_give_zero_distance():
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_worst_case_over_larger_pair_set_is_at_least_as_large(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -193,6 +194,7 @@ def test_public_functions_do_not_accept_oracle_qrels_or_exhaustive_ranking(fn):
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_stopping_decision_invariant_to_unrevealed_outcome(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -243,6 +245,7 @@ def test_stopping_decision_invariant_to_unrevealed_outcome(oracles):
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_worst_case_topk_change_is_deterministic(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -265,6 +268,7 @@ def test_worst_case_topk_change_is_deterministic(oracles):
     assert r1 == r2
 
 
+@pytest.mark.real_data
 def test_worst_case_topk_change_reproducible_across_process_launches():
     script = """
 import sys

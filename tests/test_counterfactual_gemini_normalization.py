@@ -164,6 +164,7 @@ def _fake_call_fn_with_fenced_gemini(prompt: str, config: object) -> tuple[str, 
     return BARE_JUDGMENT, _Usage()
 
 
+@pytest.mark.real_data
 def test_gemini_fenced_response_now_normalizes_successfully(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -203,6 +204,7 @@ def test_gemini_fenced_response_now_normalizes_successfully(
         assert j["wrapper_extraction_used"] is False
 
 
+@pytest.mark.real_data
 def test_other_providers_unaffected_when_they_send_genuinely_malformed_json(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

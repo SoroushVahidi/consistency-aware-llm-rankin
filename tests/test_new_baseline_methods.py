@@ -3,6 +3,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR = REPO_ROOT / "reports" / "full_calibrated_core" / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
@@ -81,6 +83,7 @@ class TestNewBaselinesRegistered:
         assert len(rfc.PAIR_SPECS) == len(rfc.LEGACY_PAIR_NAMES) + len(rfc.NEW_BASELINE_PAIR_NAMES)
 
 
+@pytest.mark.real_data
 class TestNewBaselineFairness:
     def test_all_new_methods_present_for_a_real_query(self):
         record, *_ = _one_query_eval_record()
@@ -123,6 +126,7 @@ class TestNewBaselineFairness:
             ), key
 
 
+@pytest.mark.real_data
 class TestBradleyTerryIntegration:
     def test_bradley_terry_repaired_has_no_more_edges_than_unrepaired(self):
         # Repair only removes edges; Bradley-Terry is fit on graph edges, so

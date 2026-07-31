@@ -38,18 +38,21 @@ SCIDOCS_DOCS_PATH = REPO_ROOT / "data/processed/beir/scidocs/documents.jsonl"
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_v1_config_declares_v1_pool_protocol() -> None:
     cfg = config_mod.load_config(V1_MICRO_PILOT)
     assert cfg["candidate_pool"]["pool_protocol_version"] == POOL_PROTOCOL_VERSION
     config_mod.verify_frozen_contract(cfg, repo_root=REPO_ROOT)  # must not raise
 
 
+@pytest.mark.real_data
 def test_v1_canary_config_declares_v1_pool_protocol() -> None:
     cfg = config_mod.load_config(V1_CANARY)
     assert cfg["candidate_pool"]["pool_protocol_version"] == POOL_PROTOCOL_VERSION
     config_mod.verify_frozen_contract(cfg, repo_root=REPO_ROOT)  # must not raise
 
 
+@pytest.mark.real_data
 def test_v1_pool_hash_reproduces_the_frozen_canary_artifact() -> None:
     """The exact pool_hash recorded in
     reports/counterfactual_collector_canary_v1_20260727T145126Z/candidate_pools.jsonl
@@ -70,12 +73,14 @@ def test_v1_pool_hash_reproduces_the_frozen_canary_artifact() -> None:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_v2_config_declares_v2_pool_protocol() -> None:
     cfg = config_mod.load_config(V2_MICRO_PILOT)
     assert cfg["candidate_pool"]["pool_protocol_version"] == POOL_PROTOCOL_VERSION_V2
     config_mod.verify_frozen_contract(cfg, repo_root=REPO_ROOT)  # must not raise
 
 
+@pytest.mark.real_data
 def test_v2_canary_config_declares_v2_pool_protocol() -> None:
     cfg = config_mod.load_config(V2_CANARY)
     assert cfg["candidate_pool"]["pool_protocol_version"] == POOL_PROTOCOL_VERSION_V2
@@ -105,6 +110,7 @@ def test_v2_config_keeps_v1_frozen_queries_prompt_and_schema_unchanged() -> None
     )
 
 
+@pytest.mark.real_data
 def test_v2_pool_hash_differs_from_v1_for_the_same_query() -> None:
     v1_pool = build_candidate_pool(
         dataset="scidocs",
@@ -152,6 +158,7 @@ def test_unknown_benchmark_version_is_refused() -> None:
         config_mod.verify_frozen_contract(cfg, repo_root=REPO_ROOT)
 
 
+@pytest.mark.real_data
 def test_collector_dispatches_to_matching_pool_builder(tmp_path: Path) -> None:
     from consistency_ranker.counterfactual_benchmark.collector import _build_pools
 
@@ -166,6 +173,7 @@ def test_collector_dispatches_to_matching_pool_builder(tmp_path: Path) -> None:
         assert pool.pool_protocol_version == POOL_PROTOCOL_VERSION_V2
 
 
+@pytest.mark.real_data
 def test_unsupported_pool_protocol_version_rejected_by_build_pools() -> None:
     from consistency_ranker.counterfactual_benchmark.collector import (
         CollectorInputError,

@@ -37,10 +37,12 @@ def oracles() -> dict[str, QueryOracle]:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_oracle_has_expected_query_count(oracles):
     assert len(oracles) == 50
 
 
+@pytest.mark.real_data
 def test_oracle_pools_are_exhaustive_and_fixed_size(oracles):
     for qid, oe in oracles.items():
         n = len(oe.candidates)
@@ -52,6 +54,7 @@ def test_oracle_pools_are_exhaustive_and_fixed_size(oracles):
         assert set(oe.relevance) == set(oe.candidates)
 
 
+@pytest.mark.real_data
 def test_oracle_reveal_matches_cached_direction(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -66,6 +69,7 @@ def test_oracle_reveal_matches_cached_direction(oracles):
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_initial_ranking_is_pure_bm25_order(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -75,6 +79,7 @@ def test_initial_ranking_is_pure_bm25_order(oracles):
     assert initial_ranking == expected
 
 
+@pytest.mark.real_data
 def test_exhaustive_ranking_is_order_invariant_across_algorithms(oracles):
     """Copeland at completion depends only on the *set* of revealed edges,
     not the order acquired — so every algorithm must converge to the exact
@@ -109,6 +114,7 @@ def test_exhaustive_ranking_is_order_invariant_across_algorithms(oracles):
     assert r1 == r2 == expected_exhaustive
 
 
+@pytest.mark.real_data
 def test_simulate_trajectory_reveals_exactly_budget_edges(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -117,6 +123,7 @@ def test_simulate_trajectory_reveals_exactly_budget_edges(oracles):
     assert budgets == [5, 21, 42]
 
 
+@pytest.mark.real_data
 def test_random_strategy_is_seed_deterministic(oracles):
     qid = sorted(oracles)[0]
     oe = oracles[qid]
@@ -162,6 +169,7 @@ def test_pick_next_pair_does_not_accept_oracle_or_qrels():
             assert bad not in p.lower()
 
 
+@pytest.mark.real_data
 def test_scoring_is_invariant_to_the_unrevealed_answer(oracles):
     """Behavioral leakage test: flipping the *cached* oracle answer for a
     still-unrevealed pair must not change any acquisition score computed for
@@ -221,6 +229,7 @@ def test_scoring_is_invariant_to_the_unrevealed_answer(oracles):
     assert scores_before == scores_after
 
 
+@pytest.mark.real_data
 def test_static_adjacent_ignores_downstream_state(oracles):
     """The static baseline's order must be fixed by the initial BM25 ranking
     alone and must not depend on ctx (a stand-in confirms the branch never

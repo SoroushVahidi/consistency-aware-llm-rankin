@@ -1,0 +1,65 @@
+{
+  "custom_formulation": {
+    "cosine": "dot(query_weights, doc_weights) / (||doc||_2 * ||query||_2)",
+    "empty_query_fallback": "if query tokenizes to nothing, returns zero-padded fallback (real-hit-first then ascending doc_id) rather than an empty list",
+    "idf_formula": "smoothed: idf = ln((n_docs + 1) / (df + 1)) + 1.0 (matches scikit-learn's smooth_idf=True convention exactly)",
+    "term_frequency": "raw count per doc/query, then sublinear weight w = (1 + ln(tf)) applied per term",
+    "tokenization": "regex [A-Za-z0-9]+ on lowercased text; document text = title + '\\n' + text if title else text",
+    "zero_vector_handling": "doc or query with zero sum-of-squares gets norm=1.0 fallback (score stays 0 rather than dividing by zero)"
+  },
+  "dataset_manifests": {
+    "bright": {
+      "index_build_time_seconds": 18.637001276016235,
+      "n_documents": 55643,
+      "n_queries_sampled": 5,
+      "sampled_query_ids": [
+        "biology:0",
+        "biology:1",
+        "biology:10",
+        "biology:11",
+        "biology:12"
+      ]
+    },
+    "fiqa": {
+      "index_build_time_seconds": 4.995691537857056,
+      "n_documents": 57638,
+      "n_queries_sampled": 5,
+      "sampled_query_ids": [
+        "0",
+        "102",
+        "105",
+        "107",
+        "108"
+      ]
+    },
+    "hotpotqa": {
+      "index_build_time_seconds": 5.62190318107605,
+      "n_documents": 73642,
+      "n_queries_sampled": 5,
+      "sampled_query_ids": [
+        "5a7166395542994082a3e814",
+        "5a722b8655429971e9dc9329",
+        "5a7320565542991f9a20c61d",
+        "5a74106b55429979e288289e",
+        "5a7571135542992d0ec05f98"
+      ]
+    },
+    "scidocs": {
+      "index_build_time_seconds": 3.183640956878662,
+      "n_documents": 25657,
+      "n_queries_sampled": 5,
+      "sampled_query_ids": [
+        "01d208b33561362f7714f714d3bc4a1f7aa1637c",
+        "04e4034344bda5c97015ea634e6eb1b65ef3a898",
+        "065985d4d0854c51f52ad7a7507b267d9b88ab1c",
+        "0674058618d04def58c79a0b28174301ef591433",
+        "071f47b7bc5830643e31dbed82e0375bf9b26559"
+      ]
+    }
+  },
+  "elapsed_seconds": 39.270801305770874,
+  "generated_at": "2026-07-15T10:48:07-0400",
+  "reference_config": "sklearn.TfidfVectorizer(sublinear_tf=True, smooth_idf=True, norm='l2', use_idf=True, token_pattern=r'[A-Za-z0-9]+', lowercase=True)",
+  "sample_queries_per_dataset": 5,
+  "token_pattern": "[A-Za-z0-9]+"
+}

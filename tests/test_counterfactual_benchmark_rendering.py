@@ -166,6 +166,7 @@ def test_rendering_is_deterministic_across_rebuilds() -> None:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_ab_ba_use_byte_for_byte_identical_excerpts(real_config: dict) -> None:
     """The collector never re-renders per orientation: the same
     truncated_texts[doc_id] string is reused regardless of whether a document
@@ -187,6 +188,7 @@ def test_ab_ba_use_byte_for_byte_identical_excerpts(real_config: dict) -> None:
     assert pool.truncated_texts[doc_b] == pool.truncated_texts[doc_b]
 
 
+@pytest.mark.real_data
 def test_full_document_text_not_present_in_pool_manifest(real_config: dict) -> None:
     """candidate_pools.jsonl (via CandidatePoolRecord.to_dict()) must only
     ever contain the bounded excerpt and hashes -- never a field holding the

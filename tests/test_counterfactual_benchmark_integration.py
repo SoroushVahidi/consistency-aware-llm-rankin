@@ -12,8 +12,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from consistency_ranker.counterfactual_benchmark.collector import run_collection
 from consistency_ranker.counterfactual_pilot.trajectory import validate_step_record
+
+pytestmark = pytest.mark.real_data
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = REPO_ROOT / "configs" / "counterfactual_micro_pilot_v1.json"

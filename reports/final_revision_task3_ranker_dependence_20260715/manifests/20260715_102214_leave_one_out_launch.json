@@ -1,0 +1,6 @@
+{
+  "session": "jdiq_task3_leave_one_out",
+  "command": "./.venv/bin/python reports/final_revision_task3_ranker_dependence_20260715/scripts/run_leave_one_out.py",
+  "log": "reports/final_revision_task3_ranker_dependence_20260715/logs/20260715_102214_leave_one_out.log",
+  "launched_at": "20260715_102214"
+}

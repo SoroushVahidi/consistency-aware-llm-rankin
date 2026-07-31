@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from consistency_ranker.multifactor_acquisition.pricing import estimate_usd, project_spend
 from consistency_ranker.multifactor_acquisition.sampling import (
     QUOTAS,
@@ -27,6 +29,7 @@ def test_pricing_known_providers():
     assert proj["usd_maximum"] < 20.0
 
 
+@pytest.mark.real_data
 def test_sample_queries_quotas_deterministic():
     repo = Path(__file__).resolve().parents[1]
     a, _ = sample_queries(repo, seed=SEED, quotas=QUOTAS)

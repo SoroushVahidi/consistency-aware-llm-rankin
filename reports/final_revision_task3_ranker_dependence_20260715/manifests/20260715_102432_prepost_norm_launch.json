@@ -1,0 +1,1 @@
+{"session": "jdiq_task3_prepost_norm", "command": "./.venv/bin/python reports/final_revision_task3_ranker_dependence_20260715/scripts/run_pre_post_normalization.py", "log": "reports/final_revision_task3_ranker_dependence_20260715/logs/20260715_102432_prepost_norm.log", "launched_at": "20260715_102432"}

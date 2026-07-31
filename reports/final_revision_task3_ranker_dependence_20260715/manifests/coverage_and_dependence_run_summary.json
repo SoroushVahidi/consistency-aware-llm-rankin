@@ -1,0 +1,61 @@
+{
+  "datasets": [
+    "scidocs",
+    "fiqa",
+    "hotpotqa",
+    "bright"
+  ],
+  "elapsed_seconds": 53.93898916244507,
+  "generated_at": "2026-07-15T10:45:22-0400",
+  "large_depth_by_dataset": {
+    "bright": 50,
+    "fiqa": 50,
+    "hotpotqa": 35,
+    "scidocs": 50
+  },
+  "pools": {
+    "canonical": {
+      "bright": 20,
+      "fiqa": 20,
+      "hotpotqa": 10,
+      "scidocs": 20
+    },
+    "task1_larger": {
+      "bright": 50,
+      "fiqa": 50,
+      "hotpotqa": 35,
+      "scidocs": 50
+    }
+  },
+  "rankers": [
+    "bm25",
+    "tfidf",
+    "minilm"
+  ],
+  "regimes": [
+    "ms2",
+    "ms1",
+    "ms1_drop_mutual"
+  ],
+  "tables_written": [
+    "coverage_per_query.csv",
+    "coverage_aggregate.csv",
+    "pair_funnel_per_query.csv",
+    "pair_funnel_aggregate.csv",
+    "rank_correlation_per_query.csv",
+    "rank_correlation_summary.csv",
+    "topk_overlap_per_query.csv",
+    "topk_overlap_summary.csv",
+    "directional_agreement_margin_correlation.csv",
+    "mutual_pair_attribution_raw.csv",
+    "mutual_pair_attribution_summary.csv",
+    "ms2_sparsity_per_query.csv",
+    "ms2_sparsity_summary.csv"
+  ],
+  "topk_depths_used": [
+    5,
+    10,
+    20,
+    "dataset-specific-large-depth (see LARGE_DEPTH)"
+  ]
+}

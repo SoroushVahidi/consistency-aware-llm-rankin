@@ -45,6 +45,7 @@ def real_config() -> dict:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_frozen_config_passes_verification(real_config: dict) -> None:
     config_mod.verify_frozen_contract(real_config, repo_root=REPO_ROOT)
 
@@ -77,6 +78,7 @@ def test_model_id_mismatch_fails(real_config: dict) -> None:
         config_mod.verify_frozen_contract(tampered, repo_root=REPO_ROOT)
 
 
+@pytest.mark.real_data
 def test_query_list_mismatch_fails(real_config: dict) -> None:
     tampered = json.loads(json.dumps(real_config))
     tampered["datasets"]["fiqa"]["query_ids"] = ["999", "998"]
@@ -124,6 +126,7 @@ def test_nested_qrels_fields_rejected() -> None:
         assert_no_qrels_anywhere({"steps": [{"ok": 1}, {"relevance_labels": {"a": 1}}]})
 
 
+@pytest.mark.real_data
 def test_pool_and_pair_records_are_qrels_free(real_config: dict) -> None:
     meta = real_config["datasets"]["fiqa"]
     pool = build_candidate_pool(
@@ -140,6 +143,7 @@ def test_pool_and_pair_records_are_qrels_free(real_config: dict) -> None:
         assert_no_qrels_anywhere(p.to_dict())
 
 
+@pytest.mark.real_data
 def test_pair_selection_unchanged_when_qrels_modified(real_config: dict) -> None:
     """Pool/pair construction never reads qrels, so tampering with the qrels
     file on disk must not change the pool or the selected pairs at all."""
@@ -173,6 +177,7 @@ def test_pair_selection_unchanged_when_qrels_modified(real_config: dict) -> None
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_pair_set_deterministic_given_seed(real_config: dict) -> None:
     meta = real_config["datasets"]["scidocs"]
     pool = build_candidate_pool(
@@ -190,6 +195,7 @@ def test_pair_set_deterministic_given_seed(real_config: dict) -> None:
     assert [p.pair_id for p in pairs_a] != [p.pair_id for p in pairs_c]
 
 
+@pytest.mark.real_data
 def test_pair_set_has_no_duplicates(real_config: dict) -> None:
     meta = real_config["datasets"]["scidocs"]
     pool = build_candidate_pool(
@@ -205,6 +211,7 @@ def test_pair_set_has_no_duplicates(real_config: dict) -> None:
     assert len(keys) == len(set(keys)) == 8
 
 
+@pytest.mark.real_data
 def test_pair_selection_reasons_recorded(real_config: dict) -> None:
     meta = real_config["datasets"]["scidocs"]
     pool = build_candidate_pool(
@@ -230,6 +237,7 @@ def test_pair_selection_reasons_recorded(real_config: dict) -> None:
     assert all(p.reason for p in pairs)
 
 
+@pytest.mark.real_data
 def test_shared_pair_set_is_reused_across_providers(real_config: dict) -> None:
     """build_initial_requests must reuse ONE pair set per query across all
     four providers -- verified via the actual request-plan builder."""
@@ -602,6 +610,7 @@ def test_one_provider_failure_does_not_change_another_providers_hash() -> None:
     assert h_azure == h_azure_again
 
 
+@pytest.mark.real_data
 def test_dry_run_never_constructs_a_live_client(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -626,6 +635,7 @@ def test_dry_run_never_constructs_a_live_client(
     assert summary["paid_api_calls"] == 0
 
 
+@pytest.mark.real_data
 def test_cache_only_never_constructs_a_live_client(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -658,6 +668,7 @@ def test_cache_only_never_constructs_a_live_client(
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_dry_run_writes_all_required_files(tmp_path: Path) -> None:
     from consistency_ranker.counterfactual_benchmark.collector import run_collection
 
@@ -683,6 +694,7 @@ def test_dry_run_writes_all_required_files(tmp_path: Path) -> None:
     assert "AZURE_OPENAI_API_KEY" not in json.dumps(manifest)
 
 
+@pytest.mark.real_data
 def test_candidate_pool_hash_stable_across_rebuilds(real_config: dict) -> None:
     meta = real_config["datasets"]["scidocs"]
     p1 = build_candidate_pool(
@@ -705,6 +717,7 @@ def test_candidate_pool_hash_stable_across_rebuilds(real_config: dict) -> None:
     assert p1.candidate_ids == p2.candidate_ids
 
 
+@pytest.mark.real_data
 def test_missing_cells_explicit_in_cache_only(tmp_path: Path) -> None:
     from consistency_ranker.counterfactual_benchmark.collector import run_collection
 
@@ -747,6 +760,7 @@ def test_frozen_config_declares_the_documented_invariants(real_config: dict) -> 
     assert cb["initial_live_calls"] + cb["reserved_followup_calls"] == cb["hard_max_live_calls"]
 
 
+@pytest.mark.real_data
 def test_parse_failure_counts_as_inference_attempted(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -786,6 +800,7 @@ def test_parse_failure_counts_as_inference_attempted(
     assert all(j["parse_failed"] is True for j in judgments)
 
 
+@pytest.mark.real_data
 def test_missing_credentials_do_not_count_as_inference_attempted(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
@@ -940,6 +955,7 @@ def test_live_resume_retries_cached_preflight_failures(
     assert cached["success"] is True
 
 
+@pytest.mark.real_data
 def test_no_reserve_call_occurs_in_canary_configuration(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:

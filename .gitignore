@@ -364,12 +364,21 @@ reports/final_submission_materials_*/
 # report for the exact file-by-file rationale.
 !reports/final_revision_task1_pool_cutoff_20260715/
 !reports/final_revision_task4_exact_baseline_fairness_20260715/
+!reports/final_revision_task3_ranker_dependence_20260715/
 # task1: keep tables/manifests/scripts/logs/validation/FINAL_REPORT.md; the
 # 1.6GB outputs/ tree and two large CSVs not read by run_ir_evidence_audit.py
 # stay local and regenerable via scripts/run_pool_cutoff_study.py +
 # scripts/run_pool_cutoff_exact.py (both now tracked under this dir's own
 # scripts/ subfolder).
 reports/final_revision_task1_pool_cutoff_20260715/outputs/
+# task3: same pattern (found 2026-07-31, fresh-checkout reproducibility pass
+# -- tests/test_task3_ranker_dependence.py does an unconditional module-level
+# import of scripts/run_coverage_and_dependence.py etc., which previously
+# lived only in the gitignored reports/final_revision_*/ blanket pattern and
+# was silently absent on any real fresh clone). Track the ~450KB
+# scripts/manifests/logs/validation/tables/FINAL_REPORT.md/TAXONOMY.md; the
+# 33MB outputs/ tree is bulky regenerable scratch and stays local.
+reports/final_revision_task3_ranker_dependence_20260715/outputs/
 # pool_cutoff_method_metrics.csv (~254MB, raw per-method-per-query, not read
 # by run_ir_evidence_audit.py or any tracked test) and
 # pool_cutoff_exact_pair_metrics.csv (~6.7MB, not read by

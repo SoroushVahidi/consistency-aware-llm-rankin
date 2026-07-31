@@ -43,6 +43,7 @@ _mfg_mod = _load_module(
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_real_unified_table_matches_committed_summary_counts():
     """Re-derives the unified table from the real, already-committed source
     files and checks it against the numbers already committed in

@@ -135,6 +135,7 @@ class TestPrefixComparisonHelpers:
 
 
 class TestPoolSizeOverride:
+    @pytest.mark.real_data
     def test_prepare_dataset_inputs_respects_pool_size_override(self):
         default_inputs = rfc._analysis_dataset_inputs("hotpotqa")
         larger_inputs = rfc._analysis_dataset_inputs("hotpotqa", pool_size_override=35)
@@ -143,6 +144,7 @@ class TestPoolSizeOverride:
         assert len(default_inputs["per_query_inputs"][0]["candidate_pool"]) == 10
         assert len(larger_inputs["per_query_inputs"][0]["candidate_pool"]) == 35
 
+    @pytest.mark.real_data
     def test_real_query_records_keep_pool_size_and_metric_cutoff_separate(self):
         _dataset_inputs, item, record = _one_query_eval_record(
             dataset="hotpotqa",

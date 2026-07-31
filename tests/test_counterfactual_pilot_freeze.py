@@ -145,6 +145,7 @@ def test_qrels_not_passed_into_policy_execution() -> None:
         assert_no_qrels_in_policy_inputs({"relevance_map": {"a": 1}})
 
 
+@pytest.mark.real_data
 def test_query_selection_reproducibility(config: dict) -> None:
     frozen = load_frozen_query_ids(config)
     assert sum(len(v) for v in frozen.values()) == 8
@@ -260,6 +261,7 @@ def test_token_caps_are_tighter_than_call_cap_would_allow_by_default(config: dic
     assert cb["hard_max_live_calls"] == 384
 
 
+@pytest.mark.real_data
 def test_worst_case_rendered_fixture_within_per_request_token_cap(config: dict) -> None:
     """Render the real frozen prompt against the longest real query/candidate text
     (truncated per the frozen max_candidate_chars) and confirm the resulting

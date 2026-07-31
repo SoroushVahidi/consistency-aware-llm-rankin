@@ -7,9 +7,9 @@ PYTEST ?= $(if $(wildcard $(VENV)/bin/pytest),$(VENV)/bin/pytest,pytest)
 RUFF ?= $(if $(wildcard $(VENV)/bin/ruff),$(VENV)/bin/ruff,ruff)
 OUTPUTS := outputs
 
-.PHONY: help setup check lint lint-full test test-full typecheck verify-env \
+.PHONY: help setup check lint lint-full test test-full test-real-data typecheck verify-env \
         check-architecture check-portability \
-        validate-evidence reproduce-ir-audit reproduce-real-llm-reanalysis \
+        validate-evidence validate-claims reproduce-ir-audit reproduce-real-llm-reanalysis \
         validate-offline doc-links secret-scan repo-ready \
         synth-smoke q1-tables paper-tables \
         noise-sweep scale-sweep multiseed clean-outputs
@@ -46,8 +46,10 @@ help:
 	@echo "  lint-full                      Run Ruff on the whole repository (known historical debt)"
 	@echo "  test                           Run pytest (fast: whatever is installed; SCIP tests skip if absent)"
 	@echo "  test-full                      Run pytest and fail if any test is skipped (requires [exact] extra)"
+	@echo "  test-real-data                 Run the 'real_data' tier (needs 'python scripts/prepare_datasets.py --dataset all' first)"
 	@echo "  typecheck                      No mypy configured in this repo -- documented no-op, see canonical_environment_specification.md"
 	@echo "  validate-evidence              Validate the canonical evidence inventory's paths all exist"
+	@echo "  validate-claims                Validate docs/claim_evidence_registry.yaml paths and internal consistency"
 	@echo "  reproduce-ir-audit             Re-run the classical IR evidence audit and diff against committed output"
 	@echo "  reproduce-real-llm-reanalysis  Re-run the real-LLM clustered re-analysis and diff against committed output"
 	@echo "  validate-offline               Run the full offline validation workflow (env + both reproductions + tests + link/manifest checks)"
@@ -107,11 +109,26 @@ test-full:
 	fi
 	@echo "test-full: OK (0 skipped)"
 
+test-real-data:
+	@if [ ! -f data/processed/beir/scidocs/queries.jsonl ] || \
+	   [ ! -f data/processed/beir/fiqa/queries.jsonl ] || \
+	   [ ! -f data/processed/hotpotqa/queries.jsonl ] || \
+	   [ ! -f data/processed/bright/queries.jsonl ]; then \
+		echo "test-real-data: prepared datasets not found under data/processed/."; \
+		echo "  Run: python scripts/download_datasets.py   (network access required)"; \
+		echo "  Then: python scripts/prepare_datasets.py --dataset all"; \
+		exit 1; \
+	fi
+	"$(PYTEST)" -m real_data
+
 typecheck:
 	@echo "typecheck: no [tool.mypy] configuration exists in this repository (documented, not an oversight -- see canonical_environment_specification.md); this target is a deliberate no-op, not a failure"
 
 validate-evidence:
 	"$(PYTHON)" scripts/validate_canonical_evidence_manifest.py
+
+validate-claims:
+	"$(PYTHON)" scripts/validate_claim_evidence_registry.py
 
 reproduce-ir-audit:
 	"$(PYTHON)" scripts/run_offline_validation_workflow.py --only ir-audit
@@ -128,7 +145,7 @@ doc-links:
 secret-scan:
 	"$(PYTHON)" scripts/run_secret_scan.py
 
-repo-ready: check check-portability lint test validate-evidence doc-links secret-scan
+repo-ready: check check-portability lint test validate-evidence validate-claims doc-links secret-scan
 	@echo "repo-ready: all checks passed"
 
 synth-smoke:

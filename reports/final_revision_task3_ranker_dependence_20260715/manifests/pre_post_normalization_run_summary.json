@@ -1,0 +1,13 @@
+{
+  "active_family_definition": "ms1 regime only x 4 datasets x 2 pool labels x 2 constructions x 2 pair methods = 32 cells, Holm-corrected jointly",
+  "active_family_size": 32,
+  "constructions": [
+    "post_pool_minmax",
+    "pre_pool_minmax"
+  ],
+  "elapsed_seconds": 32.302480697631836,
+  "generated_at": "2026-07-15T10:47:20-0400",
+  "metric_cutoff_policy": "canonical pool: metric_cutoff=pool_size (P=k); task1_larger: metric_cutoff=10",
+  "n_records": 4104,
+  "quantile_threshold_policy": "independently defined per-construction q=0.5 (median) of that construction's own pooled pairwise-margin distribution; no aggregate-weight cut beyond min_support"
+}

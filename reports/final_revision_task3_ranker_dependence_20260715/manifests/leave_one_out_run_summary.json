@@ -1,0 +1,70 @@
+{
+  "active_family_definition": "one pre-specified family: for each of the 4 variants (all_three, pair_bm25_tfidf, pair_bm25_minilm, pair_tfidf_minilm), the variant's own 'active' permissive regime (ms1 for all_three, pair_any for two-ranker variants) x 4 datasets x 2 pool labels x 2 pair methods (copeland, balance) = 64 cells, Holm-corrected jointly.",
+  "active_family_size": 64,
+  "active_regime_by_variant": {
+    "all_three": "ms1",
+    "pair_bm25_minilm": "pair_any",
+    "pair_bm25_tfidf": "pair_any",
+    "pair_tfidf_minilm": "pair_any"
+  },
+  "calibration": "minmax_query_ranker",
+  "candidate_pool_policy": "held fixed at the canonical RRF-fused-over-all-three-rankers pool for every variant, so only the vote source is ablated",
+  "elapsed_seconds": 66.7147843837738,
+  "fixed_vote_threshold": 0.05,
+  "generated_at": "2026-07-15T10:46:40-0400",
+  "metric_cutoff_policy": "canonical pool: metric_cutoff = pool_size (P=k); task1_larger pool: metric_cutoff=10 (matches Task 1's targeted exact-study P>k cells)",
+  "n_per_query_records": 8208,
+  "three_ranker_regimes": {
+    "ms1": [
+      1,
+      0.0,
+      false
+    ],
+    "ms1_drop_mutual": [
+      1,
+      0.0,
+      true
+    ],
+    "ms2": [
+      2,
+      0.1,
+      false
+    ]
+  },
+  "two_ranker_regimes": {
+    "pair_any": [
+      1,
+      0.0,
+      false
+    ],
+    "pair_any_drop_mutual": [
+      1,
+      0.0,
+      true
+    ],
+    "pair_unanimous": [
+      2,
+      0.1,
+      false
+    ]
+  },
+  "variants": {
+    "all_three": [
+      "bm25",
+      "tfidf",
+      "minilm"
+    ],
+    "pair_bm25_minilm": [
+      "bm25",
+      "minilm"
+    ],
+    "pair_bm25_tfidf": [
+      "bm25",
+      "tfidf"
+    ],
+    "pair_tfidf_minilm": [
+      "tfidf",
+      "minilm"
+    ]
+  }
+}

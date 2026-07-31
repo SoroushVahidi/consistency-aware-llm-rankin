@@ -36,6 +36,7 @@ dev = [
     "pytest>=7.4",
     "pytest-cov>=4.1",
     "ruff>=0.3",
+    "pyyaml>=6.0",
 ]
 # TREC DL passage (MS MARCO–based) and Robust04 export via scripts/download_datasets.py
 ir = [
@@ -83,7 +84,16 @@ include = ["consistency_ranker*", "rerankers*", "scripts"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v"
+# "not real_data" excludes tests that require prepared BEIR/HotpotQA/BRIGHT
+# dataset files under data/processed/ (multi-GB, network-fetched, gitignored
+# -- see docs/EXPERIMENT_ARTIFACT_POLICY.md). This keeps the default `pytest`
+# / `make test` / `make test-full` / CI run green on a genuinely fresh clone.
+# Run `make test-real-data` (after `scripts/prepare_datasets.py --dataset
+# all`) to run the excluded tier. See docs/EXPERIMENTS.md.
+addopts = "-v -m \"not real_data\""
+markers = [
+    "real_data: requires prepared BEIR/HotpotQA/BRIGHT dataset files under data/processed/ (see docs/EXPERIMENTS.md)",
+]
 
 [tool.ruff]
 line-length = 100

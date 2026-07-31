@@ -1,0 +1,366 @@
+[
+  {
+    "claim": "tau_b(scidocs,bm25,tfidf)",
+    "claimed": 0.452,
+    "actual": 0.4518177029670537,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(scidocs,bm25,minilm)",
+    "claimed": 0.214,
+    "actual": 0.21361706048024112,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(scidocs,tfidf,minilm)",
+    "claimed": 0.175,
+    "actual": 0.17528544551410685,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(fiqa,bm25,tfidf)",
+    "claimed": 0.312,
+    "actual": 0.3121149354275576,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(fiqa,bm25,minilm)",
+    "claimed": 0.175,
+    "actual": 0.174745567257934,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(fiqa,tfidf,minilm)",
+    "claimed": 0.187,
+    "actual": 0.18673877191011812,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(hotpotqa,bm25,tfidf)",
+    "claimed": 0.562,
+    "actual": 0.5620990043034026,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(hotpotqa,bm25,minilm)",
+    "claimed": 0.436,
+    "actual": 0.4363924314203768,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(hotpotqa,tfidf,minilm)",
+    "claimed": 0.434,
+    "actual": 0.43368210362255566,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(bright,bm25,tfidf)",
+    "claimed": 0.142,
+    "actual": 0.14162394413435053,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(bright,bm25,minilm)",
+    "claimed": 0.182,
+    "actual": 0.18239683119186076,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tau_b(bright,tfidf,minilm)",
+    "claimed": 0.171,
+    "actual": 0.17100656748437706,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "directional_agreement(scidocs,bm25,tfidf)",
+    "claimed": 0.72,
+    "actual": 0.719918196518596,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "directional_agreement(fiqa,bm25,tfidf)",
+    "claimed": 0.627,
+    "actual": 0.6270401179319786,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "directional_agreement(hotpotqa,bm25,tfidf)",
+    "claimed": 0.817,
+    "actual": 0.8173873045078197,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "directional_agreement(bright,bm25,tfidf)",
+    "claimed": 0.573,
+    "actual": 0.5728263908303047,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "directional_agreement(bright,bm25,minilm)",
+    "claimed": 0.604,
+    "actual": 0.6044083526682135,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "mutual_lexical_vs_minilm_pct(scidocs)",
+    "claimed": 14.8,
+    "actual": 14.80978260869565,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_single_vs_single_pct(scidocs)",
+    "claimed": 78.9,
+    "actual": 78.87228260869566,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_lexical_vs_minilm_pct(fiqa)",
+    "claimed": 5.9,
+    "actual": 5.923344947735192,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_single_vs_single_pct(fiqa)",
+    "claimed": 89.8,
+    "actual": 89.76480836236934,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_lexical_vs_minilm_pct(hotpotqa)",
+    "claimed": 26.8,
+    "actual": 26.804123711340207,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_single_vs_single_pct(hotpotqa)",
+    "claimed": 66.5,
+    "actual": 66.49484536082474,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_lexical_vs_minilm_pct(bright)",
+    "claimed": 3.8,
+    "actual": 3.802281368821293,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "mutual_single_vs_single_pct(bright)",
+    "claimed": 91.1,
+    "actual": 91.06463878326996,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "leave_one_out_active_family_size",
+    "claimed": 64,
+    "actual": 64,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "leave_one_out_active_family_n_significant",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_bm25_tfidf', 'pair_any')",
+    "claimed": 41.1,
+    "actual": 41.06666666666667,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_bm25_minilm', 'pair_any')",
+    "claimed": 11.9,
+    "actual": 11.883333333333333,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('fiqa', 'canonical', 'pair_tfidf_minilm', 'pair_any')",
+    "claimed": 12.6,
+    "actual": 12.641666666666667,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_bm25_tfidf', 'pair_any')",
+    "claimed": 3.4,
+    "actual": 3.423076923076923,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_bm25_minilm', 'pair_any')",
+    "claimed": 5.3,
+    "actual": 5.3076923076923075,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "loo_mean_mutual_pairs('hotpotqa', 'canonical', 'pair_tfidf_minilm', 'pair_any')",
+    "claimed": 6.0,
+    "actual": 6.019230769230769,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "pre_post_normalization_active_family_size",
+    "claimed": 32,
+    "actual": 32,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "pre_post_normalization_active_family_n_significant",
+    "claimed": 0,
+    "actual": 0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "scidocs_ms1_post_pool_mean_edges",
+    "claimed": 153.9,
+    "actual": 153.925,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "scidocs_ms1_pre_pool_mean_edges",
+    "claimed": 154.1,
+    "actual": 154.08333333333334,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "removed_edge_jaccard_cell_mean_min",
+    "claimed": 0.748,
+    "actual": 0.7479251049660378,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "removed_edge_jaccard_cell_mean_max",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "ms2_density_min",
+    "claimed": 0.013,
+    "actual": 0.012604081632653062,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "ms2_density_max",
+    "claimed": 0.27,
+    "actual": 0.2683760683760684,
+    "match": true,
+    "tol": 0.06
+  },
+  {
+    "claim": "ms2_edges_min",
+    "claimed": 21,
+    "actual": 21.18,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "ms2_edges_max",
+    "claimed": 191,
+    "actual": 190.90833333333333,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "ms2_total_dataset_query_pool_cells",
+    "claimed": 684,
+    "actual": 684,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "ms2_max_observed_scc",
+    "claimed": 1,
+    "actual": 1,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tfidf_validation_jaccard_min",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tfidf_validation_pearson_min",
+    "claimed": 0.9999,
+    "actual": 0.9999999999999997,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "tfidf_validation_agreement_min",
+    "claimed": 1.0,
+    "actual": 1.0,
+    "match": true,
+    "tol": 0.005
+  },
+  {
+    "claim": "minilm_coverage_min_pct",
+    "claimed": 44,
+    "actual": 44.29166666666667,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "minilm_coverage_max_pct",
+    "claimed": 71,
+    "actual": 71.15384615384616,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "lexical_coverage_min_pct",
+    "claimed": 75,
+    "actual": 74.80000000000001,
+    "match": true,
+    "tol": 1.0
+  },
+  {
+    "claim": "lexical_coverage_max_pct",
+    "claimed": 100,
+    "actual": 99.6153846153846,
+    "match": true,
+    "tol": 1.0
+  }
+]

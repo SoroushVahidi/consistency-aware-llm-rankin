@@ -96,6 +96,7 @@ def test_substantive_document_without_title_is_valid() -> None:
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_v1_pool_is_captured_by_title_only_documents_on_the_canary_query() -> None:
     """Locks in the diagnosed v1 defect as a regression guard: this exact
     query's v1 pool really is 100% title-only, matching the frozen canary
@@ -118,6 +119,7 @@ def test_v1_pool_is_captured_by_title_only_documents_on_the_canary_query() -> No
     assert title_only_count == 10
 
 
+@pytest.mark.real_data
 def test_v2_pool_excludes_title_only_documents_on_the_same_query() -> None:
     pool = build_candidate_pool_v2(
         dataset="scidocs",
@@ -148,6 +150,7 @@ def test_v2_pool_excludes_title_only_documents_on_the_same_query() -> None:
     assert pool.pool_hash != v1_pool.pool_hash
 
 
+@pytest.mark.real_data
 def test_v2_pool_records_exclusion_with_replacement_and_reason() -> None:
     pool = build_candidate_pool_v2(
         dataset="scidocs",
@@ -168,6 +171,7 @@ def test_v2_pool_records_exclusion_with_replacement_and_reason() -> None:
         assert rec["excluded_document_id"] not in pool.candidate_ids
 
 
+@pytest.mark.real_data
 def test_v2_pool_deterministic_across_rebuilds() -> None:
     p1 = build_candidate_pool_v2(
         dataset="scidocs",
@@ -215,6 +219,7 @@ def test_v2_pool_construction_never_reads_qrels(v2_config: dict) -> None:
         ),
     ],
 )
+@pytest.mark.real_data
 def test_v2_pool_contains_exactly_ten_valid_documents_for_frozen_queries(
     dataset: str, query_id: str, query_text: str, v2_config: dict
 ) -> None:
@@ -236,6 +241,7 @@ def test_v2_pool_contains_exactly_ten_valid_documents_for_frozen_queries(
 # ---------------------------------------------------------------------------
 
 
+@pytest.mark.real_data
 def test_select_shared_pairs_v2_succeeds_on_a_valid_pool() -> None:
     pool = build_candidate_pool_v2(
         dataset="scidocs",
@@ -257,6 +263,7 @@ def test_select_shared_pairs_v2_succeeds_on_a_valid_pool() -> None:
             assert is_valid, f"{doc_id} invalid in selected pair: {reason}"
 
 
+@pytest.mark.real_data
 def test_select_shared_pairs_v2_covers_expected_archetypes() -> None:
     pool = build_candidate_pool_v2(
         dataset="scidocs",
@@ -271,6 +278,7 @@ def test_select_shared_pairs_v2_covers_expected_archetypes() -> None:
     assert "top_ranked" in reasons
 
 
+@pytest.mark.real_data
 def test_select_shared_pairs_v2_refuses_pool_with_invalid_candidate() -> None:
     """Defense-in-depth: even if a pool somehow contained an invalid
     candidate, the v2 pair selector must refuse rather than silently pairing
@@ -300,6 +308,7 @@ def test_select_shared_pairs_v2_never_reads_qrels() -> None:
     assert "qrels" not in sig.parameters
 
 
+@pytest.mark.real_data
 def test_no_title_only_pair_in_v2_canary_query() -> None:
     """The specific real-world regression this whole v2 protocol exists to
     fix: the exact query used by canary v1 (where every candidate was
