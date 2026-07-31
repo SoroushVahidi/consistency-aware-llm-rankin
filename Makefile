@@ -9,7 +9,7 @@ OUTPUTS := outputs
 
 .PHONY: help setup check lint lint-full test test-full test-real-data typecheck verify-env \
         check-architecture check-portability \
-        validate-evidence validate-claims reproduce-ir-audit reproduce-real-llm-reanalysis \
+        validate-evidence validate-claims cloud-validate cloud-validate-solver cloud-validate-all reproduce-ir-audit reproduce-real-llm-reanalysis \
         validate-offline doc-links secret-scan repo-ready \
         synth-smoke q1-tables paper-tables \
         noise-sweep scale-sweep multiseed clean-outputs
@@ -20,7 +20,9 @@ MAINTAINED_LINT_PATHS := \
 	scripts/check_repo_ready.py \
 	scripts/run_real_llm_clustered_reanalysis.py \
 	scripts/run_secret_scan.py \
+	scripts/run_cloud_validation.py \
 	scripts/validate_canonical_evidence_manifest.py \
+	scripts/validate_claim_evidence_registry.py \
 	scripts/validate_report_links.py \
 	src/consistency_ranker/experiment_cli.py \
 	src/consistency_ranker/provenance.py \
@@ -33,7 +35,8 @@ MAINTAINED_LINT_PATHS := \
 	tests/test_offline_validation_scripts.py \
 	tests/test_provenance.py \
 	tests/test_real_llm_clustered_reanalysis.py \
-	tests/test_secret_scan.py
+	tests/test_secret_scan.py \
+	tests/test_cloud_validation.py
 
 help:
 	@echo "Targets:"
@@ -47,6 +50,9 @@ help:
 	@echo "  test                           Run pytest (fast: whatever is installed; SCIP tests skip if absent)"
 	@echo "  test-full                      Run pytest and fail if any test is skipped (requires [exact] extra)"
 	@echo "  test-real-data                 Run the 'real_data' tier (needs 'python scripts/prepare_datasets.py --dataset all' first)"
+	@echo "  cloud-validate                 Canonical release validation, core tier (mirrors ci.yml 'tests' job)"
+	@echo "  cloud-validate-solver          Canonical release validation, solver tier (mirrors ci.yml 'tests-solver-enabled' job)"
+	@echo "  cloud-validate-all             Canonical release validation, all local tiers (core+solver+real-data if already prepared)"
 	@echo "  typecheck                      No mypy configured in this repo -- documented no-op, see canonical_environment_specification.md"
 	@echo "  validate-evidence              Validate the canonical evidence inventory's paths all exist"
 	@echo "  validate-claims                Validate docs/claim_evidence_registry.yaml paths and internal consistency"
@@ -120,6 +126,15 @@ test-real-data:
 		exit 1; \
 	fi
 	"$(PYTEST)" -m real_data
+
+cloud-validate:
+	python3 scripts/run_cloud_validation.py --tier core
+
+cloud-validate-solver:
+	python3 scripts/run_cloud_validation.py --tier solver
+
+cloud-validate-all:
+	python3 scripts/run_cloud_validation.py --tier all
 
 typecheck:
 	@echo "typecheck: no [tool.mypy] configuration exists in this repository (documented, not an oversight -- see canonical_environment_specification.md); this target is a deliberate no-op, not a failure"

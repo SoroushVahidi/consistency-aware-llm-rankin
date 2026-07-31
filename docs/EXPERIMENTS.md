@@ -46,6 +46,78 @@ machine happened to already have `data/processed/` populated from earlier
 work, and hard-failed (not skipped) on any genuinely fresh clone. See
 `tests/test_fresh_checkout_reproducibility.py` for the regression guard.
 
+## Cloud Validation
+
+**Why GitHub Actions status is not currently authoritative:** every run of
+`.github/workflows/ci.yml` has failed since at least 2026-07-16 due to a
+GitHub account billing/spending-limit issue ("recent account payments have
+failed"), confirmed via `gh run view` -- every job aborts in 2-12 seconds
+*before* installing anything. **This is not a code failure** and cannot be
+fixed by a commit; it requires the repository owner to act in GitHub's
+billing settings. Do not read a red/absent GitHub Actions check as evidence
+of a code problem, and do not claim GitHub CI is green -- it currently
+cannot run at all.
+
+**The canonical replacement:** `scripts/run_cloud_validation.py` runs the
+equivalent checks natively on any Linux host with this repo cloned, producing
+durable, auditable results under `.cloud_validation_runs/<timestamp>/`
+(gitignored, local). It never relies on the caller's active virtualenv --
+every tier creates its own fresh, isolated venv.
+
+```bash
+python scripts/run_cloud_validation.py --tier core     # mirrors ci.yml's `tests` job
+python scripts/run_cloud_validation.py --tier solver   # mirrors ci.yml's `tests-solver-enabled` job
+python scripts/run_cloud_validation.py --tier real-data --prepare-real-data
+python scripts/run_cloud_validation.py --tier all
+```
+
+Or via Makefile: `make cloud-validate` / `make cloud-validate-solver` /
+`make cloud-validate-all`.
+
+| Tier | Mirrors | Extras installed | Test command | Zero-skip required? |
+|---|---|---|---|---|
+| `core` | `ci.yml` job `tests` | `.[dev,llm]` | bare `pytest` | No -- SCIP-dependent tests are expected to skip (no `[exact]` installed), matching that job's own documented behavior. Gate is "no failures/errors". |
+| `solver` | `ci.yml` job `tests-solver-enabled` | `.[dev,exact,llm]` + `gurobipy` | `pytest -q` | **Yes.** This is the tier that produces the "1307 passed, 64 deselected, 0 skipped, 0 failed" contract. |
+| `real-data` | (not covered by either CI job) | `.[dev,llm]` | `pytest -q -m real_data` | Runs the ~64 dataset-dependent tests; requires `--prepare-real-data` (network, ~3GB) unless datasets are already present under `data/processed/`. |
+| `all` | both CI jobs + real-data if already prepared | -- | -- | Runs core, then solver, then real-data only if datasets are already valid (never auto-downloads 3GB silently; reports real-data as explicitly not-run otherwise). |
+
+Every tier also runs: package build (sdist+wheel) and a wheel-only install
+into a separate fresh venv with an import + CLI smoke check; the quick-start
+synthetic example; and every maintained repo validator (architecture,
+portability, canonical-evidence manifest, claim registry, report links,
+secret scan, maintained-scope Ruff) -- covering everything `make repo-ready`
+covers plus packaging, which no CI job currently checks.
+
+**Gurobi's role:** optional but strongly recommended for the `solver` tier
+on a machine that has a license (never mandatory -- SCIP is the fully
+supported, license-free open-source exact-solver path; a machine with no
+Gurobi license still passes the `solver` tier, with `gurobi_smoke.available:
+false` recorded and no test failure). The Gurobi smoke step never prints or
+records credential values -- only package availability, version, and a tiny
+optimize-call status code (verified in `tests/test_cloud_validation.py`).
+
+**tmux (recommended for `solver`/`real-data`/`all`, which can exceed 5
+minutes):**
+
+```bash
+python scripts/run_cloud_validation.py --print-tmux-command --tier all
+# prints the exact tmux new-session command with a timestamped session
+# name and a log file under .cloud_validation_runs/; copy-paste to run it
+```
+
+**Reading a run's artifacts** (`.cloud_validation_runs/<run_id>/`):
+`SUMMARY.md` (human-readable), `summary.json` (machine-readable, the
+authoritative record), `environment.json`, `commands.json`, `logs/*.log`
+(one per step, full uncensored output -- this is where to look for detail;
+`summary.json`/`commands.json` deliberately never embed raw stdout).
+Verify an existing run's internal consistency with:
+`python scripts/run_cloud_validation.py --verify-run .cloud_validation_runs/<run_id>`.
+
+**Before merging or public release:** `core` and `solver` tiers must both
+report `overall_status: PASS` from a clean (non-dirty) worktree. `real-data`
+is not required for every change -- run it when touching dataset loaders,
+candidate-pool construction, or anything under `src/consistency_ranker/data/`.
+
 ## Regeneration Notes
 
 - Classical manuscript evidence: start with `docs/REPRODUCTION_CANONICAL.md`.

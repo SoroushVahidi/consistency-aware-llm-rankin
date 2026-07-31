@@ -22,6 +22,7 @@ document:
 | Exact reproduction commands for the manuscript's numbers | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
 | The submitted manuscript itself | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
 | How to install, prepare datasets, and run tests | "Quickstart" and "Testing" below |
+| Why GitHub Actions is red/absent and how to validate this repo instead | "Quickstart" below and [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) "Cloud Validation" |
 | Detailed pre-merge branch history/handoff narrative | [Project status (root, historical)](PROJECT_STATUS.md), [Branch handoff](docs/handoff/CURRENT_BRANCH_HANDOFF.md) |
 
 Release-readiness navigation:
@@ -146,6 +147,20 @@ make test-real-data
 ```
 
 See [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) "Test Tiers" for detail.
+
+**GitHub Actions CI is not currently authoritative** -- it has failed on
+every run since at least 2026-07-16 due to a GitHub account billing issue,
+not a code problem (do not read a red/absent check as a code signal). The
+canonical way to validate this repo is:
+
+```bash
+python scripts/run_cloud_validation.py --tier core     # or: make cloud-validate
+python scripts/run_cloud_validation.py --tier solver   # or: make cloud-validate-solver
+```
+
+See [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) "Cloud Validation" for tiers,
+Gurobi's role, tmux usage for long tiers, and how to read the resulting
+`.cloud_validation_runs/<run_id>/` artifacts.
 
 See [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) for
 the current reproduction guide covering every table cited in the JDIQ 2026

@@ -5,6 +5,14 @@ It complements `PROJECT_STATUS.md` (scientific status), `docs/ARCHITECTURE.md`
 (module/layer map), `docs/EXPERIMENTS.md` (experiment entry points), and
 `docs/EXPERIMENT_ARTIFACT_POLICY.md` (what belongs in Git).
 
+> **GitHub Actions is not currently authoritative for this contract.** Every
+> `ci.yml` run has failed since at least 2026-07-16 due to a GitHub account
+> billing/spending-limit issue, not a code problem -- jobs abort in ~2-12s
+> before installing anything. Use `scripts/run_cloud_validation.py`
+> (`make cloud-validate` / `cloud-validate-solver`) to check this contract
+> natively instead; see `docs/EXPERIMENTS.md` "Cloud Validation". Do not
+> treat a red or absent GitHub check as evidence the contract below fails.
+
 ## Current Verdict Template
 
 Use this classification before integrating the branch:

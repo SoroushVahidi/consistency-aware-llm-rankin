@@ -142,6 +142,11 @@ env/
 venv/
 ENV/
 env.bak/
+
+# scripts/run_cloud_validation.py output: timestamped run directories with
+# their own fresh venvs, logs, and summaries -- local/regenerable, never
+# tracked (see docs/EXPERIMENTS.md "Cloud validation").
+.cloud_validation_runs/
 venv.bak/
 
 # Spyder project settings

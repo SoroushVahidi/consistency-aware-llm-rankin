@@ -196,7 +196,7 @@ provenance, not for current use).
 | **The real-LLM experiments** | `docs/EXPERIMENTS.md`, then `reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md`, then the individual study STATUS.md files in `reports/repair_frontier_20260729T144742Z/` etc. |
 | **Statistical analysis** | `src/consistency_ranker/statistical_inference.py`, especially the cluster-aware functions' docstrings; `tests/test_statistical_inference.py`, `tests/test_real_llm_clustered_reanalysis.py` |
 | **Reproducibility** | `docs/REPRODUCTION_CANONICAL.md` for exact commands; `docs/EXPERIMENT_ARTIFACT_POLICY.md` for output-retention rules; `src/consistency_ranker/provenance.py` for the manifest/hashing primitives; `make verify-env` / `make check` / `make repo-ready` |
-| **Release readiness / CI contract** | `docs/RELEASE_READINESS.md`; `.github/workflows/ci.yml`; `Makefile` |
+| **Release readiness / CI contract** | `docs/RELEASE_READINESS.md`; `.github/workflows/ci.yml`; `Makefile`; `scripts/run_cloud_validation.py` (canonical local/cloud replacement while GitHub Actions is blocked by a billing issue -- see `docs/EXPERIMENTS.md` "Cloud Validation") |
 | **Tests** | `pytest -q` from the repo root; `tests/` mirrors `src/consistency_ranker/`'s module names 1:1 in most cases |
 | **Manuscript evidence** | `papers/JDIQ_2026/manuscript/main.tex`, cross-referenced against `papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md` |
 | **Overall project status / handoff** | `PROJECT_STATUS.md` (the canonical entry point and documentation-authority map — read this first if any two documents disagree) |
