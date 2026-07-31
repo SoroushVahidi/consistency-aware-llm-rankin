@@ -357,6 +357,7 @@ def run_repo_validators(runner: Runner, python_exe: str) -> list[StepResult]:
             "validate_claim_evidence_registry",
             [python_exe, "scripts/validate_claim_evidence_registry.py"],
         ),
+        runner.run("validate_repo_clarity", [python_exe, "scripts/validate_repo_clarity.py"]),
         runner.run("validate_report_links", [python_exe, "scripts/validate_report_links.py"]),
         runner.run("secret_scan", [python_exe, "scripts/run_secret_scan.py"]),
     ]

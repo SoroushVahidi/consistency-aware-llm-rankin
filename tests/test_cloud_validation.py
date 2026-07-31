@@ -20,6 +20,22 @@ def test_module_imports():
     import scripts.run_cloud_validation  # noqa: F401
 
 
+def test_repo_validators_bundle_includes_repo_clarity(tmp_path, monkeypatch):
+    """Regression test: validate_repo_clarity.py was added after
+    run_repo_validators() was first written and had to be wired in
+    separately -- guard against it silently dropping out of the bundle
+    again on a future refactor."""
+    calls = []
+
+    class FakeRunner:
+        def run(self, name, cmd, **kwargs):
+            calls.append(name)
+            return rcv.StepResult(name, cmd, str(tmp_path), 0, 0.01, f"{name}.log", "PASS")
+
+    rcv.run_repo_validators(FakeRunner(), "fake_python")
+    assert "validate_repo_clarity" in calls
+
+
 def test_packaging_steps_install_build_backend_before_building(tmp_path, monkeypatch):
     """Regression test: an earlier version called `python -m build` without
     ever installing the `build` package into the tier venv first, which
