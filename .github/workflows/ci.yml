@@ -25,7 +25,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -e ".[dev]"
+          pip install -e ".[dev,llm]"
 
       - name: Check architecture boundaries (no circular subpackage dependencies)
         run: python scripts/check_architecture_boundaries.py
@@ -54,7 +54,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -e ".[dev,exact]"
+          pip install -e ".[dev,exact,llm]"
+          # Free-tier gurobipy: no license/credentials needed for the tiny
+          # graphs in test_legacy_gurobi_backend_matches_scip_objective; lets
+          # that optional/never-required legacy-backend test actually run
+          # instead of skipping, so this job can show a literal 0 skipped.
+          pip install gurobipy
 
       - name: Report installed SCIP / PySCIPOpt versions
         run: |

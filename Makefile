@@ -37,7 +37,7 @@ MAINTAINED_LINT_PATHS := \
 
 help:
 	@echo "Targets:"
-	@echo "  setup                          Create venv and install dependencies (incl. [dev,exact])"
+	@echo "  setup                          Create venv and install dependencies (incl. [dev,exact,llm])"
 	@echo "  verify-env                     Confirm Python/solver versions match the canonical spec"
 	@echo "  check                          Run repository readiness checks (includes check-architecture)"
 	@echo "  check-architecture             Fail if any consistency_ranker subpackage has a circular import dependency"
@@ -65,7 +65,8 @@ help:
 setup:
 	python3 -m venv "$(VENV)"
 	"$(VENV)/bin/pip" install -r requirements.txt
-	"$(VENV)/bin/pip" install -e ".[dev,exact]"
+	"$(VENV)/bin/pip" install -e ".[dev,exact,llm]"
+	"$(VENV)/bin/pip" install gurobipy
 
 verify-env:
 	"$(PYTHON)" -c "import sys; print('python', sys.version)"
