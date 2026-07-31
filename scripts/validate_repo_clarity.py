@@ -85,6 +85,7 @@ def _top_level_markdown_files() -> list[Path]:
     files.append(_REPO_ROOT / "README.md")
     files.append(_REPO_ROOT / "PROJECT_STATUS.md")
     files.append(_REPO_ROOT / "AGENTS.md")
+    files.append(_REPO_ROOT / "CONTRIBUTING.md")
     return [f for f in files if f.exists()]
 
 

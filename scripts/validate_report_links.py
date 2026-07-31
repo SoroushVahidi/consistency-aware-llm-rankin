@@ -39,6 +39,9 @@ DEFAULT_FILES = [
     "docs/CONTRIBUTIONS.md",
     "docs/PROJECT_STATUS.md",
     "docs/AGENT_GUIDE.md",
+    "docs/RELEASE_CHECKLIST.md",
+    "docs/MAINTENANCE.md",
+    "CONTRIBUTING.md",
 ]
 
 _LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")

@@ -52,6 +52,9 @@ ACTIVE_FILES = (
     "docs/PROJECT_STATUS.md",
     "docs/AGENT_GUIDE.md",
     "docs/claim_evidence_registry.yaml",
+    "docs/RELEASE_CHECKLIST.md",
+    "docs/MAINTENANCE.md",
+    "CONTRIBUTING.md",
 )
 
 TEXT_SUFFIXES = {
