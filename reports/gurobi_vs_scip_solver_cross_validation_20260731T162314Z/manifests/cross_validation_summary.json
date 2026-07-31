@@ -1,0 +1,16 @@
+{
+  "n_queries_total": 1025,
+  "n_objective_mismatches": 0,
+  "n_removed_edge_set_mismatches_given_matching_objective": 0,
+  "n_removed_edge_set_mismatches_total": 0,
+  "n_not_both_proven_optimal": 0,
+  "scip_total_solve_time_s": 7.431202411651611,
+  "gurobi_total_solve_time_s": 7.640197515487671,
+  "scip_mean_solve_time_s": 0.007249953572343036,
+  "gurobi_mean_solve_time_s": 0.007453851234622118,
+  "scip_max_solve_time_s": 0.023665666580200195,
+  "gurobi_max_solve_time_s": 0.17868852615356445,
+  "gurobi_version": "(13, 0, 2)",
+  "pyscipopt_version": "6.2.1",
+  "elapsed_seconds": 72.91625428199768
+}
