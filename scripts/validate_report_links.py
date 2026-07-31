@@ -9,9 +9,10 @@ that the path is not broken (e.g. left dangling by a Stage 2 file move
 that missed updating one reference).
 
 Checked by default: reports/README.md, README.md,
-docs/READ_ME_FIRST_FOR_AI.md, docs/REPOSITORY_LAYOUT.md, docs/EXPERIMENTS.md
--- the documents most affected by this session's Stage 1/2 file moves and
-reference rewrites. Pass --files to check a different/additional set.
+docs/READ_ME_FIRST_FOR_AI.md, docs/REPOSITORY_LAYOUT.md, docs/EXPERIMENTS.md,
+docs/ARCHITECTURE.md -- the documents most affected by file moves and
+reference rewrites, plus the top-level architecture guide (repo hygiene
+Stage 5, 2026-07-30). Pass --files to check a different/additional set.
 """
 
 from __future__ import annotations
@@ -30,6 +31,7 @@ DEFAULT_FILES = [
     "docs/READ_ME_FIRST_FOR_AI.md",
     "docs/REPOSITORY_LAYOUT.md",
     "docs/EXPERIMENTS.md",
+    "docs/ARCHITECTURE.md",
 ]
 
 _LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")

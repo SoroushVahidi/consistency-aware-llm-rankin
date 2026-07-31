@@ -117,6 +117,7 @@ different results package and is kept for historical reference only.
 | Document | Description |
 |---|---|
 | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | **Start here** — canonical entry point for humans and AI assistants; documentation-authority map for every other status/evidence doc |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | **Architecture guide** — layers, end-to-end data flow, canonical-module map, terminology, experiment/evidence map, and "where to start" navigation for a new reader |
 | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) | **Current classical-study canonical evidence** — exact commands to reproduce every table cited in `papers/JDIQ_2026/manuscript/main.tex` |
 | [`docs/READ_ME_FIRST_FOR_AI.md`](docs/READ_ME_FIRST_FOR_AI.md) | Orientation for AI assistants (being reconciled with `PROJECT_STATUS.md`/`REPRODUCTION_CANONICAL.md` — see history note at its top) |
 | [`docs/REPRODUCTION_Q1.md`](docs/REPRODUCTION_Q1.md) | **Historical** — reproduces the earlier `pub_vote_cmp_*` package, superseded by `REPRODUCTION_CANONICAL.md` |
