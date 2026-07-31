@@ -86,7 +86,9 @@ def main() -> int:
 
         status = claim.get("status")
         if status not in _VALID_STATUSES:
-            errors.append(f"{cid}: invalid status {status!r} (must be one of {sorted(_VALID_STATUSES)})")
+            errors.append(
+                f"{cid}: invalid status {status!r} (must be one of {sorted(_VALID_STATUSES)})"
+            )
 
         if claim.get("canonical") is True and status == "internal_validation":
             errors.append(
