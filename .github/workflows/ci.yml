@@ -1,3 +1,13 @@
+# NOTE (2026-07-31): these two jobs are hand-maintained but are also
+# faithfully mirrored, command-by-command, by scripts/run_cloud_validation.py
+# (`--tier core` / `--tier solver`), the canonical local/cloud validation
+# entry point used while this workflow cannot run at all due to a GitHub
+# account billing issue (see docs/PROJECT_STATUS.md / docs/EXPERIMENTS.md
+# "Cloud Validation"). Not yet refactored to call that script directly from
+# here -- doing so without being able to verify it on a live runner (billing
+# is currently blocking every run) would be an untested change to a
+# previously-working, unmodified workflow; keep both in sync manually until
+# a live run can confirm the refactor. If you change one, check the other.
 name: CI
 
 on:

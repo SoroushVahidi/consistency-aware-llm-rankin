@@ -113,6 +113,13 @@ authoritative record), `environment.json`, `commands.json`, `logs/*.log`
 Verify an existing run's internal consistency with:
 `python scripts/run_cloud_validation.py --verify-run .cloud_validation_runs/<run_id>`.
 
+**Disk usage:** each tier's fresh venv (sentence-transformers pulls in
+`torch`) is ~5.5GB, so a full `--tier all` run leaves ~22GB of venvs under
+the run directory. `--verify-run` only reads `summary.json` and the log
+files, so it's safe to delete `venv_*/` and `dist/` after a run to reclaim
+space -- e.g. `rm -rf .cloud_validation_runs/<run_id>/{venv_*,dist}` --
+without losing the audit trail (logs, summaries, environment metadata).
+
 **Before merging or public release:** `core` and `solver` tiers must both
 report `overall_status: PASS` from a clean (non-dirty) worktree. `real-data`
 is not required for every change -- run it when touching dataset loaders,
