@@ -1,0 +1,71 @@
+{
+  "disclaimer": "EXPLORATORY ONLY -- not a validated predictor",
+  "group_summary": {
+    "n_queries": 35,
+    "early_stop_group": {
+      "n": 11,
+      "mean_budget_frac": 0.17056277056277055,
+      "exhaustive_improvement_available": 0.1740940482531101,
+      "bm25_gap_at_cutoff": 0.028043011229175352,
+      "upset_fraction_in_revealed": 0.27340484658746783,
+      "n_revealed_at_stop": 17.90909090909091,
+      "frac_cycle_at_stop": 0.0
+    },
+    "mid_group": {
+      "n": 13,
+      "mean_budget_frac": 0.3743589743589744,
+      "exhaustive_improvement_available": 0.14950243442868533,
+      "bm25_gap_at_cutoff": 0.014459674736541943,
+      "upset_fraction_in_revealed": 0.3504774579074054,
+      "n_revealed_at_stop": 39.30769230769231,
+      "frac_cycle_at_stop": 0.23076923076923078
+    },
+    "late_or_capped_group": {
+      "n": 11,
+      "mean_budget_frac": 0.5714285714285714,
+      "exhaustive_improvement_available": 0.14268751714902456,
+      "bm25_gap_at_cutoff": 0.005956155252298979,
+      "upset_fraction_in_revealed": 0.36400133850056804,
+      "n_revealed_at_stop": 60.0,
+      "frac_cycle_at_stop": 0.8181818181818182
+    }
+  },
+  "examples": {
+    "earliest_stop": {
+      "query_id": "5f1f12015d55c51764be27df92de175d2de8ee0d",
+      "stop_budget_frac": 0.02857142857142857,
+      "stopped": true,
+      "ndcg_vs_bm25": 0.02351175279410167,
+      "premature_stop_qrel_label": true,
+      "exhaustive_improvement_available": 0.0715408168054511,
+      "bm25_gap_at_cutoff": 0.07735490790864533,
+      "upset_fraction_in_revealed": 0.6666666666666666,
+      "has_cycle_at_stop": false,
+      "n_revealed_at_stop": 3
+    },
+    "latest_stop_or_capped": {
+      "query_id": "b045f045e331700cdef309e0d40b15a64cdf5b8a",
+      "stop_budget_frac": 0.6,
+      "stopped": false,
+      "ndcg_vs_bm25": 0.24309394712395782,
+      "premature_stop_qrel_label": false,
+      "exhaustive_improvement_available": 0.24309394712395782,
+      "bm25_gap_at_cutoff": 0.02251867231278023,
+      "upset_fraction_in_revealed": 0.2857142857142857,
+      "has_cycle_at_stop": true,
+      "n_revealed_at_stop": 63
+    },
+    "earliest_premature_stop_failure": {
+      "query_id": "5f1f12015d55c51764be27df92de175d2de8ee0d",
+      "stop_budget_frac": 0.02857142857142857,
+      "stopped": true,
+      "ndcg_vs_bm25": 0.02351175279410167,
+      "premature_stop_qrel_label": true,
+      "exhaustive_improvement_available": 0.0715408168054511,
+      "bm25_gap_at_cutoff": 0.07735490790864533,
+      "upset_fraction_in_revealed": 0.6666666666666666,
+      "has_cycle_at_stop": false,
+      "n_revealed_at_stop": 3
+    }
+  }
+}

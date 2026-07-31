@@ -1,0 +1,8 @@
+# Status (added 2026-07-30, repo Stage 3 — non-destructive, additive only)
+
+- **Raw observations in this directory remain valid** and unchanged (`extraction_results.jsonl`, `tables/EXTRACTOR_SUMMARY.csv`, `tables/BREAKDOWN_TABLES.csv`, `FINAL_SUMMARY.json`, `FINAL_REPORT.md`). Nothing in this directory was modified.
+- **This study's own row-level inferential statistics are superseded**: every per-extractor bootstrap CI in `FINAL_REPORT.md`/`tables/EXTRACTOR_SUMMARY.csv` was computed over 120 rows (6 real queries × ~20 provider/construction replicates each) treated as independent, and **no correction was ever applied across the 8-extractor comparison family**.
+- **Cluster-aware, Holm-corrected results are authoritative**: `reports/real_llm_clustered_reanalysis_20260730T023745Z/extraction_clustered_results.csv`. Headline correction: **the "Borda is significantly worse than the incumbent" claim does not survive** query-clustered, family-corrected inference (exact sign-flip p=0.16 raw, p=0.94 Holm-corrected; direction inconsistent across the 6 queries). **0 of 8 extractors are Holm-significant** after correction — the qualitative conclusion ("no extractor shows a practically meaningful, statistically defensible gain") is unchanged and now on firmer methodological footing, but the specific "Borda underperforms" claim must not be repeated as stated.
+- **HodgeRank** remains the most directionally-consistent extractor (5 of 6 queries positive) but does not reach significance even before correction (exact p=0.06 raw) — report this as suggestive, not as an established finding.
+
+See `reports/real_llm_clustered_reanalysis_20260730T023745Z/REAL_LLM_CLUSTERED_REANALYSIS.md` for the full account.

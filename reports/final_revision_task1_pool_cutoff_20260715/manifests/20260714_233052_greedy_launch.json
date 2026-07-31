@@ -1,0 +1,6 @@
+{
+  "session_name": "jdiq_pool_cutoff_task1_greedy",
+  "log_path": "/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715/logs/20260714_233052_greedy.log",
+  "command": "/home/soroush/consistency-aware-llm-rankin/reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_pool_cutoff_study.sh",
+  "started_at": "20260714_233052"
+}

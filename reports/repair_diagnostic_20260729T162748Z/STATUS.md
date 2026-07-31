@@ -1,0 +1,9 @@
+# Status (added 2026-07-30, repo Stage 3 — non-destructive, additive only)
+
+- **Raw observations in this directory remain valid** and unchanged (`diagnostic_results.jsonl`, `tables/FEATURE_ASSOCIATIONS.csv`, `tables/FEATURE_STABILITY.csv`, `FINAL_SUMMARY.json`, `FINAL_REPORT.md`). Nothing in this directory was modified.
+- **This study's own row-level feature-association p-values are superseded**: `tables/FEATURE_ASSOCIATIONS.csv`'s Pearson/Spearman correlations and Holm correction were computed at n=120 (6 real queries × ~20 replicates), not the true n=6 independent queries.
+- **Cluster-aware, Holm-corrected results are authoritative**: `reports/real_llm_clustered_reanalysis_20260730T023745Z/repair_diagnostic_clustered_results.csv`. Headline correction: **the `is_cyclic`/`topk_involvement` Holm-significant association (originally Holm p=0.023) does not survive** query-level re-analysis (query-level r=-0.34, exact permutation p=0.55, Holm p=1.0 across the 23-feature family). This was the only feature association the original study flagged as significant, and it should no longer be cited as such.
+- **The overall "repair is mildly harmful on average" finding is UNCHANGED and, if anything, more robust than originally stated**: all 6 independent queries show a negative mean delta (perfect direction consistency), giving an exact sign-flip p=0.03 even under the strictest available small-sample test.
+- **The grouped cross-validation predictor status (UNSUPPORTED, 1 positive example) required no correction**: `src/consistency_ranker/repair_diagnostic/prediction.py` already used `sklearn.model_selection.GroupKFold` grouped by `(dataset, query_id)` from the start — verified by reading the code this stage, not re-implemented. No leakage was found.
+
+See `reports/real_llm_clustered_reanalysis_20260730T023745Z/REAL_LLM_CLUSTERED_REANALYSIS.md` for the full account.

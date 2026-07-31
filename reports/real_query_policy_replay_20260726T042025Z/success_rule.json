@@ -1,0 +1,11 @@
+{
+  "label": "exploratory_conservative",
+  "requirements": [
+    "mean utility delta vs always_unrepaired > 0",
+    "query-clustered sign-flip 95% CI reported",
+    "catastrophic_false_trust_rate does not exceed always_repair",
+    "stable sign across >1 dataset when LODO is feasible",
+    "no dependence on a single anomalous query (max |gain| share < 0.5 of total positive mass)"
+  ],
+  "note": "Not a formal risk certificate; Outcome F risk-control remains empirical-only."
+}

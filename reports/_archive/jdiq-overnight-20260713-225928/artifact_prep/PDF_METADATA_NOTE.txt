@@ -1,0 +1,1 @@
+exiftool not installed; PDF metadata not scrubbed at binary tag level

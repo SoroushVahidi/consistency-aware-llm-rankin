@@ -1,0 +1,21 @@
+{
+  "n_queries": 50,
+  "max_step_analyzed": 21,
+  "n_query_step_observations": 1050,
+  "n_steps_with_topk_churn": 435,
+  "frac_steps_with_topk_churn": 0.4142857142857143,
+  "n_steps_ejecting_a_relevant_doc": 60,
+  "frac_steps_ejecting_a_relevant_doc": 0.05714285714285714,
+  "n_queries_step1": 50,
+  "n_step1_topk_churn": 36,
+  "frac_step1_topk_churn": 0.72,
+  "n_step1_ejects_relevant_doc": 7,
+  "frac_step1_ejects_relevant_doc": 0.14,
+  "n_ejection_events_le_10pct_budget": 44,
+  "n_ejection_events_total_le_20pct": 60,
+  "n_ejected_docs_that_return_in_exhaustive": 56,
+  "frac_ejected_docs_that_return_in_exhaustive": 0.9333333333333333,
+  "mean_abs_ndcg_delta_le10pct_budget_churn_steps": 0.06727044541800711,
+  "mean_abs_ndcg_delta_le10pct_budget_nochurn_steps": 0.035977023860682036,
+  "mean_ndcg_delta_le10pct_budget_all_steps": 0.00671165880801909
+}

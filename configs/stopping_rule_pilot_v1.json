@@ -1,0 +1,46 @@
+{
+  "protocol": "stopping_rule_pilot_v1",
+  "status": "frozen",
+  "description": "Risk-controlled, qrel-free stopping rule for the regularized partial-information rank aggregator (regularized_aggregation_pilot_v1). Reuses the same frozen SciDocs q50/k15 exhaustive gpt-4o-mini pairwise oracle, the same 15/35 dev/test split, and the same frozen linear_decay regularization schedule. No live provider calls, no new judgments, no qrel leakage into the stopping decision itself.",
+  "dataset": "scidocs",
+  "judgments_path": "outputs/openai_scidocs_real_pairwise_q50_k15/judgments.jsonl",
+  "n_queries_expected": 50,
+  "candidate_pool_size_expected": 15,
+  "primary_cutoff_k": 10,
+  "seed": 42,
+  "n_dev_queries": 15,
+  "dev_split_seed": 4242,
+  "frozen_schedule": "linear_decay",
+  "acquisition_order_primary": "random",
+  "acquisition_order_secondary_robustness_check": "static_adjacent",
+  "max_simulated_budget_fraction": 0.6,
+  "max_simulated_budget_rationale": "Matches the task's own stop/go criterion ('needs more than 60% of comparisons -> insufficiently useful'); capping the expensive per-step simulation horizon here is a computational-cost decision, not a scientific one -- any (tau, m) setting that fails to trigger patience within this cap is recorded as 'capped, not stopped' and evaluated at the cap budget, which already disqualifies it from being a practically useful setting under the task's own bar.",
+  "boundary_window_ranks": 3,
+  "counterfactual_warm_start_iterations": 150,
+  "threshold_settings": [
+    {"name": "primary", "tau": 0.20, "patience_m": 3},
+    {"name": "conservative", "tau": 0.15, "patience_m": 3},
+    {"name": "aggressive", "tau": 0.25, "patience_m": 3}
+  ],
+  "frozen_setting_name": "primary",
+  "simple_rule_patience_m": 3,
+  "threshold_selection_rationale": "Selected on the 15-query dev split (random order only), before any test-set metric was computed. tau in {0.10, 0.15, 0.20, 0.25, 0.30} x patience in {2, 3, 5} were tried (15 combinations; recorded in REPORT.md Phase 4/9). tau<=0.15 essentially never triggers within the 60%-budget cap (9-15 of 15 dev queries capped), failing the H1 practical-savings target outright. tau>=0.30 triggers very early (median ~11-17% budget) but with mean nDCG 0.07-0.14 below exhaustive-BM25 gap recovery well under 50%. tau=0.20 was the smallest threshold that reliably triggers well inside the 60% cap for a majority of dev queries (13-15/15 not capped, depending on patience) while keeping severe-harm at 0/15 across every (tau, patience) combination tried. Patience m=3 was fixed (not swept per-tau) as a reasonable middle value between m=2 (marginally noisier, more capped-avoidance) and m=5 (materially higher median budget, e.g. 43.8% vs 32.4% at tau=0.20, crossing the H1 40% target). The two sensitivity settings vary only tau (0.15 more conservative, 0.25 more aggressive) at the same fixed patience, isolating the threshold's effect.",
+  "fixed_budget_fractions": [0.05, 0.10, 0.20],
+  "severe_harm_threshold_delta_ndcg_at_10_vs_bm25": -0.05,
+  "premature_stop_ndcg_margin": 0.02,
+  "premature_stop_qrel_label_definition": "the stopped top-k differs from the exhaustive top-k AND (exhaustive nDCG@10 - stopped nDCG@10) >= 0.02 -- a qrel-bearing EVALUATION label only, computed after the stopping decision, never fed back into it.",
+  "premature_instability_qrelfree_definition": "the stopped top-k set differs from the exhaustive top-k set (no qrels; a purely structural instability signal, reported separately from the qrel-bearing label above).",
+  "pre_registered_primary_comparisons": [
+    "proposed_stopping_vs_fixed_10pct_ndcg",
+    "proposed_stopping_vs_fixed_20pct_ndcg",
+    "proposed_stopping_vs_fixed_10pct_acquired_judgments",
+    "proposed_stopping_vs_fixed_20pct_acquired_judgments",
+    "proposed_stopping_vs_simple_recent_stability_ndcg"
+  ],
+  "correction": "Holm, family = the 5 pre-registered primary comparisons above, evaluated only on the 35-query held-out test split, random acquisition order",
+  "leakage_controls": [
+    "stopping.py's public functions take only (candidates, revealed-so-far outcomes, qrels-free BM25 prior, frozen schedule, current qrels-free utilities) -- no qrels, no oracle object, no unrevealed pair's actual cached outcome (only its own simulated hypothetical outcomes), no exhaustive ranking",
+    "the counterfactual worst-case statistic is computed purely from currently-revealed evidence plus self-generated hypothetical outcomes for still-unrevealed pairs -- it never reads the oracle's cached answer for those pairs",
+    "the premature-stop qrel label and severe-harm rate are evaluation-only, computed strictly after the stopping decision, in a separate code path (run_stopping_rule_pilot.py's analyze stage) that stopping.py itself has no access to"
+  ]
+}

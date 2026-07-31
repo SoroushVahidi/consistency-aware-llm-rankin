@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "counterfactual_pairwise_judgment_v1",
+  "title": "Counterfactual pairwise judgment v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "preference", "confidence", "evidence_strength", "reason_code"],
+  "properties": {
+    "schema_version": {
+      "const": "counterfactual_pairwise_judgment_v1"
+    },
+    "preference": {
+      "type": "string",
+      "enum": ["A", "B", "TIE", "ABSTAIN"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Provider self-report; not assumed calibrated across providers."
+    },
+    "evidence_strength": {
+      "type": "string",
+      "enum": ["weak", "moderate", "strong"]
+    },
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "direct_relevance",
+        "partial_answer",
+        "unsupported",
+        "ambiguous",
+        "other"
+      ],
+      "description": "Compact categorical code; not chain-of-thought."
+    }
+  }
+}

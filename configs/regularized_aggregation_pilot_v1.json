@@ -1,0 +1,44 @@
+{
+  "protocol": "regularized_aggregation_pilot_v1",
+  "status": "frozen",
+  "description": "Narrowly-bounded pivot: can a regularized partial-information rank aggregator safely combine a strong BM25 initial ranking with sparse cached LLM pairwise judgments? Reuses the same frozen SciDocs q50/k15 exhaustive gpt-4o-mini pairwise oracle as offline_active_acquisition_pilot_v1. No live provider calls, no new judgments, no qrel leakage into aggregation decisions.",
+  "dataset": "scidocs",
+  "judgments_path": "outputs/openai_scidocs_real_pairwise_q50_k15/judgments.jsonl",
+  "n_queries_expected": 50,
+  "candidate_pool_size_expected": 15,
+  "primary_cutoff_k": 10,
+  "budget_fractions": [0.0, 0.05, 0.10, 0.20, 0.40, 0.60, 1.00],
+  "seed": 42,
+  "n_dev_queries": 15,
+  "dev_split_seed": 4242,
+  "methods_compared": [
+    "initial_bm25",
+    "sparse_copeland",
+    "pure_bt_no_prior",
+    "fixed_blend",
+    "regularized_bt",
+    "exhaustive"
+  ],
+  "acquisition_order_primary": "random",
+  "acquisition_order_secondary_robustness_check": "static_adjacent",
+  "schedules_considered": ["linear_decay", "inverse_coverage", "pseudo_count_cutoff"],
+  "frozen_schedule": "linear_decay",
+  "frozen_schedule_lambda0": 8.0,
+  "frozen_schedule_selection_rationale": "Chosen on the 15-query dev split, before any test-set inspection. Schedule shape: linear_decay had 0/15 severe-harm queries at 10% budget (vs inverse_coverage's 1/15) and tied-lowest at 5% (2/15, same as pseudo_count_cutoff, vs inverse_coverage's 3/15); its mean nDCG gain over BM25 at 10% (+0.065) was close to the other two (+0.067 to +0.074). Tie-broken toward linear_decay for interpretability: it reaches exactly lambda=0 at full coverage, unlike inverse_coverage which never fully releases the prior. lambda0 magnitude: 3 values tried (2.0, 8.0, 20.0) on dev at 5%/10% -- lambda0=2.0 had higher mean gain but markedly worse safety (4/15 and 1/15 severe-harm); lambda0=8.0 and 20.0 tied on safety (2/15 and 0/15) but 8.0 had higher mean gain, so 8.0 was frozen. See REPORT.md Phase 4 for the full recorded dev comparison, including all variants not selected.",
+  "severe_harm_threshold_delta_ndcg_at_10_vs_bm25": -0.05,
+  "fixed_blend_weight_bm25": 0.5,
+  "unregularized_stabilizer_lambda": 0.001,
+  "pre_registered_primary_comparisons": [
+    "proposed_vs_sparse_copeland_5pct",
+    "proposed_vs_sparse_copeland_10pct",
+    "proposed_vs_bm25_10pct",
+    "proposed_vs_bm25_20pct",
+    "auc_proposed_vs_strongest_non_oracle_baseline_selected_on_dev"
+  ],
+  "correction": "Holm, family = the 5 pre-registered primary comparisons above, evaluated only on the 35-query held-out test split",
+  "leakage_controls": [
+    "regularized_aggregation.py functions take only (candidates, revealed-so-far outcomes, qrels-free BM25 prior, coverage-derived lambda) -- no qrels, no oracle object, no unrevealed outcome, no exhaustive ranking",
+    "the strongest-baseline selection for the AUC comparison uses only the 15-query dev split's AUC values, never the 35-query test split",
+    "the regularization schedule (shape + lambda0) is frozen from the dev split before any test-set metric is computed"
+  ]
+}

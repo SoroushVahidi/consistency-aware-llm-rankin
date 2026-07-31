@@ -1,0 +1,18 @@
+path,change_type,reason
+src/consistency_ranker/statistical_inference.py,content edit (additive),"Added cluster_bootstrap_mean_interval(), cluster_exact_sign_flip_pvalue(), cluster_exact_permutation_correlation(), compute_cluster_means(), ClusteredMeanResult. No existing function modified. Full suite re-run (1249 passed)."
+src/consistency_ranker/real_llm_reanalysis/__init__.py,new file,Package docstring/entry point
+src/consistency_ranker/real_llm_reanalysis/population.py,new file,Direct enumeration of the 3 studies' source JSONLs; builds the population manifest and summary
+src/consistency_ranker/real_llm_reanalysis/frontier_reanalysis.py,new file,"Reconstructs per-unit nDCG from stored global_ranking + relevance maps (verified byte-exact match to published aggregates, max abs diff 1.1e-16); cluster-aware analysis for 3 comparisons"
+src/consistency_ranker/real_llm_reanalysis/extraction_reanalysis.py,new file,Cluster-aware analysis for all 8 extractors + Holm correction across the family
+src/consistency_ranker/real_llm_reanalysis/diagnostic_reanalysis.py,new file,Cluster-aware overall-delta and 23-feature-association analysis; confirms (does not re-implement) that grouped CV was already correctly implemented
+scripts/run_real_llm_clustered_reanalysis.py,new file,Driver script producing all canonical re-analysis outputs; verified deterministic (byte-identical across 2 independent runs)
+tests/test_real_llm_clustered_reanalysis.py,new file,12 regression tests preventing recurrence of the independence-unit error
+reports/real_llm_clustered_reanalysis_20260730T023745Z/*,new files (13),The canonical re-analysis report directory (all required deliverables)
+reports/repair_frontier_20260729T144742Z/STATUS.md,"new file (additive, non-destructive)","Status marker: raw observations valid, row-level CIs superseded, cluster-aware results authoritative"
+reports/extraction_study_20260729T151610Z/STATUS.md,"new file (additive, non-destructive)","Same, plus the specific Borda correction"
+reports/repair_diagnostic_20260729T162748Z/STATUS.md,"new file (additive, non-destructive)","Same, plus the specific is_cyclic correction and the grouped-CV confirmation"
+reports/repo_preparation_stage1_20260730T011354Z/canonical_evidence_inventory.csv,content edit,LLM-03/04/05 limitations+reproducibility_status updated to point at the Stage 3 correction; IR-PENDING-01 marked COMPLETE; new AUD-03 row added
+reports/repo_preparation_stage1_20260730T011354Z/deferred_cleanup_items.csv,content edit,The 'no cluster-robust re-analysis' item marked RESOLVED
+reports/README.md,content edit,"Added a 'Real-LLM studies' pointer section directing inferential claims to the new canonical re-analysis, not the original studies' row-level statistics"
+papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md,content edit,"Sec.5 changed from 'PENDING' to 'RESOLVED', with headline corrections summarized"
+papers/JDIQ_2026/manuscript/main.tex,NOT MODIFIED,"Confirmed via git diff HEAD --stat -- zero content difference from HEAD, both before and after this stage"

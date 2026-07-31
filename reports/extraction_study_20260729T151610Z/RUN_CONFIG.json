@@ -1,0 +1,19 @@
+{
+  "extractors": [
+    "incumbent",
+    "copeland",
+    "borda",
+    "pagerank",
+    "rank_centrality",
+    "balance_score",
+    "hodge_rank",
+    "fas_balance_prior_fusion",
+    "hybrid_rrf_prior_fusion"
+  ],
+  "incumbent_name": "incumbent",
+  "meaningful_threshold": 0.01,
+  "sources": [
+    "reports/multi_provider_repair_pilot_20260729T032348Z",
+    "reports/reviewer_concerns_program_20260729T035320Z"
+  ]
+}

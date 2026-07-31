@@ -1,0 +1,21 @@
+command,category,entrypoint,requires_network,validated_this_stage,notes
+make help,meta,Makefile:help,no,yes,Lists all targets. Verified via `make help` this stage.
+make setup,setup,Makefile:setup,yes (pip install),no,"Not re-run this stage (would recreate .venv); changed to install '.[dev,exact]' instead of '.[dev]' so the exact-solver extra is present by default going forward."
+make verify-env,verify,Makefile:verify-env -> consistency_ranker.mwfas_solver.verify_canonical_solver_version,no,yes,Confirmed Python 3.12.3 + PySCIPOpt 6.2.1 in .venv this stage.
+make check,verify,Makefile:check -> scripts/check_repo_ready.py,no,yes,"Pre-existing script (unchanged this stage); ran this stage: 56 OK, 5 warnings, 0 failures."
+make lint,verify,Makefile:lint -> ruff check .,no,yes,All files added/edited this stage pass; repo-wide ruff has pre-existing unrelated findings not in this stage's scope.
+make test,test,Makefile:test -> pytest,no,yes,"Full suite: 1308 passed, 0 skipped (in .venv)."
+make test-full,test,Makefile:test-full,no,yes,New this stage: fails the build if any test is skipped. Verified: exits 0 with '0 skipped' in .venv.
+make typecheck,verify,Makefile:typecheck,no,yes,New this stage: documented no-op (no mypy config exists in this repo). Verified prints its message and exits 0.
+make validate-evidence,reproduction,Makefile:validate-evidence -> scripts/validate_canonical_evidence_manifest.py,no,yes,New script this stage. Verified: 18/18 canonical_evidence_inventory.csv rows resolve (after fixing 2 stale CB-04/CB-05 paths found by this exact check).
+make reproduce-ir-audit,reproduction,Makefile:reproduce-ir-audit -> scripts/run_offline_validation_workflow.py --only ir-audit,no,yes,Verified: 6/6 output files byte-identical to committed reports/ir_evidence_audit_20260729T182949Z/.
+make reproduce-real-llm-reanalysis,reproduction,Makefile:reproduce-real-llm-reanalysis -> scripts/run_offline_validation_workflow.py --only real-llm,no,yes,Verified: 11/11 output files byte-identical to committed reports/real_llm_clustered_reanalysis_20260730T023745Z/.
+make validate-offline,reproduction,Makefile:validate-offline -> scripts/run_offline_validation_workflow.py,no,yes,Full 8-step workflow. Verified end to end this stage (with and without the regression-test step): overall_status PASS both times.
+make doc-links,verify,Makefile:doc-links -> scripts/validate_report_links.py,no,yes,"New script this stage. Verified: 0 broken links across reports/README.md, README.md, docs/READ_ME_FIRST_FOR_AI.md, docs/REPOSITORY_LAYOUT.md, docs/EXPERIMENTS.md."
+make secret-scan,verify,Makefile:secret-scan -> scripts/run_secret_scan.py,no,NOT YET CREATED,Deferred to the next Stage 4 sub-task (CI update). Makefile target exists and references this script; running `make secret-scan` will fail with 'No such file' until that script is added.
+make repo-ready,verify,Makefile:repo-ready (composed target),no,partially,Composes check+lint+test+validate-evidence+doc-links+secret-scan; every sub-target except secret-scan was validated this stage. Will fail until run_secret_scan.py exists.
+make synth-smoke,legacy-experiment,Makefile:synth-smoke -> scripts/run_synthetic.py,no,no,"Pre-existing, unmodified this stage; not re-run (out of scope: no scientific-conclusion-affecting change here)."
+make q1-tables,legacy-experiment,Makefile:q1-tables -> scripts/generate_q1_tables.py,no,no,"Pre-existing, unmodified this stage; historical pipeline per outputs/q1_journal_package/HISTORICAL.md (Stage 2)."
+make paper-tables,legacy-experiment,Makefile:paper-tables -> scripts/generate_paper_tables.py,no,no,"Pre-existing, unmodified this stage."
+make noise-sweep / scale-sweep / multiseed,legacy-experiment,"Makefile:noise-sweep, scale-sweep, multiseed -> scripts/run_synthetic.py",no,no,"Pre-existing synthetic-data sweeps, unmodified this stage; unrelated to the real-data canonical evidence this stage covers."
+make clean-outputs,maintenance,Makefile:clean-outputs,no,no,Destructive (rm -rf of generated outputs dirs); not run this stage to avoid disturbing repository state mid-audit.

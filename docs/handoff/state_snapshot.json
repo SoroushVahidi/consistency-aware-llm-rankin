@@ -1,0 +1,207 @@
+{
+  "schema_version": "repository_state_snapshot_v1",
+  "snapshot_scope": "code state immediately before this session's commit; NOT a self-updating live HEAD",
+  "generated_at_utc": "2026-07-28T22:30:00Z",
+  "repository": "consistency-aware-llm-rankin",
+  "branch": "fix/outcome-f-production-operating-point",
+  "documented_code_head": "cd678f02cec725496c484757146d44649ac0d034",
+  "git_state_must_be_reconfirmed": true,
+  "origin_main": "3e02b73666506f3eb894f5df2c531284ea31a60e",
+  "ahead": 28,
+  "behind": 0,
+  "ahead_behind_note": "ahead/behind counted relative to documented_code_head, not the eventual next-commit tip. Re-run git rev-list --left-right --count origin/main...HEAD before trusting this. A post-pivot polish pass (Wilson proportion intervals, explicit capped-run counts, this documentation update) adds further commits on top of documented_code_head -- see PROJECT_STATUS.md's 'Last verified state' for the true current tip.",
+  "working_tree": {
+    "clean_of_source_changes": true,
+    "note": "Clean of tracked-file changes as of documented_code_head. Untracked at that commit: the three consistency-aware-pivot report directories (see visible_untracked_files) -- the post-pivot polish pass tracks these in Git (each in full except one deterministically-regenerable raw log kept local via .gitignore); see canonical_evidence below, which reflects the post-polish state.",
+    "visible_untracked_files": [
+      "reports/offline_active_acquisition_pilot_20260728T142414Z/",
+      "reports/regularized_aggregation_pilot_20260728T164943Z/",
+      "reports/stopping_rule_pilot_20260728T190000Z/"
+    ]
+  },
+  "current_phase": "consistency_aware_active_acquisition_regularized_aggregation_stopping_rule_pivot",
+  "current_phase_previous": "multi_provider_counterfactual_benchmark_engineering_pre_micro_pilot (paused, not abandoned, as of commit 756495d)",
+  "current_goal": "Refine the stopping rule's worst-case statistic or the aggregator's regularization schedule to narrow the gap to exhaustive quality at moderate budgets (a small follow-up), not a broader acquisition-policy search (closed out as unsupported). Separately-paused goal: freeze a provider panel that can pass a clean end-to-end counterfactual-benchmark canary, then run the bounded micro-pilot only after that.",
+  "validated_contributions": [
+    "preference_graphs_are_derived_not_objective_inputs",
+    "vote_construction_and_pool_construction_materially_affect_graph_topology_and_repair_activity",
+    "raw_heterogeneous_score_scales_create_artificial_edge_weight_dominance",
+    "structural_graph_repair_removes_cycles_and_reduces_feedback_arc_mass",
+    "structural_improvement_does_not_imply_retrieval_quality_improvement",
+    "exact_ilp_repair_does_not_rescue_conclusion_vs_greedy_repair",
+    "repair_effect_can_disappear_at_multiple_pipeline_stages",
+    "provider_capability_audit_four_of_four_providers_authenticate_live_connectivity_only",
+    "lexical_prior_pool_v2_eliminated_measured_title_only_selection_bias",
+    "vertex_ai_gemini_fenced_json_normalization_fix_confirmed_live",
+    "cohere_native_clientv2_schema_projection_v3_confirmed_live_valid_judgment",
+    "regularized_bt_aggregation_is_safety_dominant_not_universally_superior",
+    "sparse_copeland_aggregation_measurably_unstable_41pct_step_topk_churn"
+  ],
+  "negative_results": [
+    {
+      "id": "active_pair_selection_proposal_loses_to_random",
+      "summary": "Offline active-acquisition pilot on a real, pre-existing SciDocs q50/k15 oracle: the proposed uncertainty x counterfactual-impact x ambiguity strategy loses to random unrevealed-pair selection at both 10% and 20% budget (Holm-corrected; e.g. budget=10: mean deltaNDCG -0.145, 9 wins / 41 losses vs. random). No leakage into scoring (structurally and behaviorally tested). Closes out this acquisition-policy direction as evidenced-unsupported on this oracle.",
+      "evidence": "reports/offline_active_acquisition_pilot_20260728T142414Z/statistical_analysis.json"
+    },
+    {
+      "id": "stopping_rule_does_not_meet_quality_recovery_bar",
+      "summary": "The qrel-free stopping rule (built on the regularized aggregator) does not meet its own near-exhaustive quality-recovery targets (>=95% of exhaustive improvement recovered; within 0.02 nDCG of exhaustive) -- traced to the aggregator's own slow-converging tail past 60% budget coverage, disclosed as an aggregator property, not a stopping-rule defect. Severe-harm containment (0/35 observed) and cost-effectiveness vs. fixed low budgets are both met.",
+      "evidence": "reports/stopping_rule_pilot_20260728T190000Z/REPORT.md"
+    },
+    {
+      "id": "outcome_f_no_learned_gate_beats_always_uht",
+      "summary": "Oracle query-specific selector beats always-UHT (U_corr 0.1708 vs -0.0257) but no learned/hard/calibrated/selective/soft/staged/contextual gate does; selective_three_way was worse than always-UHT (-0.1121). Production fails closed to always-UHT.",
+      "evidence": "reports/policy_selection_20260726T030500Z/decision.json"
+    },
+    {
+      "id": "multifactor_no_matched_budget_quality_win",
+      "summary": "Corrected qrels-based re-evaluation of production_uht found NO MATCHED-BUDGET QUALITY WIN ESTABLISHED; only cost-only utility signals present. Full-pool prior_topk_jaccard was structurally uninformative (identically 1.0) and replaced with prior_kendall_tau.",
+      "evidence": "docs/multifactor_production_uht_corrected_summary_20260727.json"
+    },
+    {
+      "id": "cohere_compat_api_structured_output_not_honored",
+      "summary": "Two bounded live calls through Cohere's OpenAI-compatibility endpoint (json_object-only, then full JSON Schema via response_format) both returned byte-identical malformed Cohere output (evidence_strength: 'unsupported'). Cohere is unsupported for the frozen panel under this access path. The implementation attempt is archived, not part of this branch's history.",
+      "evidence": "reports/cohere_normalization_diagnostic_20260727T183000Z/diagnostic_record.json, reports/cohere_json_schema_confirmation_20260727T200000Z/confirmation_record.json, archive/cohere-compat-schema-failed-20260727 (0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2)"
+    },
+    {
+      "id": "cohere_native_clientv2_three_confirmations_rejected_each_on_a_different_field_then_resolved",
+      "summary": "The native Cohere ClientV2 transport had three authorized live confirmations rejected with 400 before producing any content, each naming a different field, before a fourth confirmation succeeded. Call 1 (unprojected schema): rejected, error capture truncated to HTTP headers only (fixed afterward: cohere_native._sanitized_error_message). Call 2 (schema projection v1, minimum/maximum removed): rejected again, fixed capture recovered the exact reason for the first time: '$id' schema-identity keyword unsupported. Call 3 (schema projection v2, $id additionally removed; request_hash be312ecf...): rejected a third time, on a new field: schema_version's 'const' declared without a required 'type' companion. Call 4 (schema projection v3, type: 'string' added to schema_version; request_hash f062ea28...): SUCCEEDED -- finish_reason COMPLETE, valid judgment generated and passed full canonical local validation. RESOLVED as of call 4; superseded by the positive result in validated_contributions.",
+      "evidence": "reports/cohere_native_v2_confirmation_20260727T210000Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/confirmation_record.json, reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/confirmation_record.json"
+    }
+  ],
+  "experimental_components": [
+    "policy_selection (Outcome F gates, synthetic)",
+    "multifactor_acquisition (production UHT + factorial, real queries)",
+    "adaptive_acquisition, prior_robust, reliability_repair, dag_linear_extensions (Outcome B-D drivers)",
+    "counterfactual_benchmark collector (paused, not current focus, canary stage)",
+    "active_acquisition: oracle/scoring/strategies/simulate/evaluate/stats/regularized_aggregation/stopping (CURRENT focus, consistency-aware pivot)"
+  ],
+  "current_blockers": [
+    "None blocking for the consistency-aware pivot itself (current focus) -- all three pilots ran to completion offline.",
+    "Paused thread: native Cohere ClientV2 transport (schema projection v3) is live-confirmed working (request_hash f062ea28..., valid judgment, passed canonical local validation) but is NOT YET WIRED into dispatch.call_provider / the frozen collector -- it remains a standalone module invoked only by ad hoc confirmation scripts. This wiring (a deliberate, reviewed implementation task with open design questions -- see the wiring plan in the freeze doc) is now the sole blocker to a clean four-provider canary; the schema/transport question itself is resolved. Unchanged since the prior snapshot; not being worked on."
+  ],
+  "next_action": "Consistency-aware pivot (current focus): refine the stopping rule's worst-case statistic or the aggregator's regularization schedule to narrow the gap to exhaustive quality at moderate budgets -- a small, separate follow-up, not a broader acquisition-policy search. Paused thread: implement the native Cohere transport's wiring into dispatch.call_provider / the frozen collector per the 'Native Cohere collector-wiring plan' in docs/benchmarks/COUNTERFACTUAL_PILOT_FREEZE_V1.md (not yet started); once implemented and offline-tested, run a clean four-provider canary; only then consider the bounded micro-pilot v2.",
+  "do_not_do_yet": [
+    "Do not run the 256-384 call bounded micro-pilot v2.",
+    "Do not make any provider call without explicit, scoped, up-front authorization.",
+    "Do not merge or cherry-pick archive/cohere-compat-schema-failed-20260727 onto this branch as a resolved fix.",
+    "Do not change production_config.py / the always-UHT default.",
+    "Do not edit a frozen protocol artifact in place; add a new version instead.",
+    "Do not run a real oracle-opportunity audit before the panel question is resolved.",
+    "Do not claim the Cohere/frozen-panel question is fully resolved: the schema/transport works (live-confirmed), but the native transport is not yet wired into dispatch.call_provider/the collector, and no clean four-provider canary has been run under it.",
+    "Do not remove $schema without equivalent live evidence naming it.",
+    "Do not generalize the single ABSTAIN/confidence=0.0 confirmation judgment into any claim about Cohere's judgment quality.",
+    "Do not resume the active pair-selection proposal as-is -- evidenced-worse than random on the one oracle tested.",
+    "Do not cite the stopping pilot's severe-harm rate as '[0.0%, 0.0%]' -- the corrected Wilson interval is [0.0%, 9.9%]; zero observed events at n=35 does not imply a true rate of exactly zero.",
+    "Do not claim regularized aggregation is universally superior to every baseline -- it is safety-dominant, not established as beating the strongest baseline on raw mean nDCG/AUC."
+  ],
+  "provider_panel": [
+    {
+      "provider": "azure",
+      "model_id": "gpt-4.1-mini",
+      "role": "closed_model_production_style_judge_not_ground_truth",
+      "status": "reliable"
+    },
+    {
+      "provider": "cohere",
+      "model_id": "command-r-plus-08-2024",
+      "role": "independent_command_family_judge",
+      "status": "native_path_confirmed_working_not_yet_wired_into_collector"
+    },
+    {
+      "provider": "fireworks",
+      "model_id": "accounts/fireworks/models/gpt-oss-120b",
+      "role": "hosted_open_weight_economical_judge",
+      "status": "reliable"
+    },
+    {
+      "provider": "vertex",
+      "model_family": "gemini",
+      "model_id": "gemini-2.5-flash",
+      "access_path": "google_vertex_ai",
+      "role": "gemini_family_judge_via_vertex_ai",
+      "status": "reliable_after_fenced_json_fix"
+    }
+  ],
+  "protocol_versions": [
+    {"name": "counterfactual_pairwise_judge_v1", "status": "frozen"},
+    {"name": "counterfactual_pairwise_judgment_v1", "status": "frozen"},
+    {"name": "counterfactual_provider_panel_v1", "status": "frozen_currently_unsatisfiable_end_to_end_pending_cohere_native_wiring"},
+    {"name": "lexical_prior_pool_v1", "status": "frozen_superseded_for_new_work"},
+    {"name": "lexical_prior_pool_v2", "status": "frozen_current"},
+    {"name": "document_validity_v2", "status": "frozen_current"},
+    {"name": "title_plus_prefix_truncate_v1", "status": "frozen_unchanged"},
+    {"name": "counterfactual_micro_pilot_v1", "status": "frozen_not_executed"},
+    {"name": "counterfactual_micro_pilot_v2", "status": "frozen_not_executed"},
+    {"name": "counterfactual_collector_canary_v1", "status": "executed_local_evidence_instrumentation_only"},
+    {"name": "counterfactual_collector_canary_v2", "status": "executed_local_evidence_conditional_pass"},
+    {"name": "cohere_json_schema_v1", "status": "implemented_offline_tested_live_confirmation_failed_archived_not_in_branch_history", "archive_ref": "archive/cohere-compat-schema-failed-20260727", "archive_commit": "0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2"},
+    {"name": "cohere_native_v2_json_schema_v1", "status": "implemented_offline_tested_live_confirmed_working_4th_call_standalone_not_yet_wired_into_frozen_panel", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_native.py", "standalone_not_wired_into_frozen_panel": true},
+    {"name": "cohere_native_v2_schema_projection_v1", "status": "superseded_removed_minimum_maximum_only_confirmed_insufficient_alone_one_live_call_persisted_under_this_identity", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "confirmation_request_hash": "41f1de66736d8bb70410eefe0a59ad378b68fbc87c44bc00078fb71a5d19b302"},
+    {"name": "cohere_native_v2_schema_projection_v2", "status": "superseded_additionally_removed_id_confirmed_insufficient_alone_one_live_call_persisted_under_this_identity", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "projected_schema_sha256": "02870598a56c19838cb8eb8ca8ba5f9b864594cbf54e421e9d8ec8b548904917", "confirmation_request_hash": "be312ecf7ba089348ffa2e0a93d1e0f2155940f6721175d63f9de14e26aa6c78"},
+    {"name": "cohere_native_v2_schema_projection_v3", "status": "implemented_offline_tested_live_confirmed_working_current", "module": "src/consistency_ranker/counterfactual_benchmark/cohere_schema_projection.py", "projected_schema_sha256": "d001a8a52fb72f5a0798e7468411348eed16516104ba00c7ba69aeb8bdcdba26", "confirmation_request_hash": "f062ea286398b73316c1dcbbc6a9868ab698491d47a6cd0d8041a43718d1e829"}
+  ],
+  "canonical_evidence": [
+    "outputs/pub_vote_cmp_all4/paper_package/",
+    "reports/policy_selection_20260726T030500Z/",
+    "reports/real_query_policy_replay_20260726T042025Z/",
+    "docs/multifactor_production_uht_corrected_summary_20260727.json",
+    "reports/counterfactual_collector_canary_v1_20260727T145126Z/",
+    "reports/counterfactual_collector_canary_v2_20260727T161921Z/",
+    "reports/cohere_normalization_diagnostic_20260727T183000Z/",
+    "reports/cohere_json_schema_confirmation_20260727T200000Z/",
+    "reports/cohere_native_v2_confirmation_20260727T210000Z/",
+    "reports/cohere_native_v2_schema_projection_confirmation_20260728T000000Z/",
+    "reports/cohere_native_v2_schema_projection_v2_confirmation_20260728T010224Z/",
+    "reports/cohere_native_v2_schema_projection_v3_confirmation_20260728T011703Z/",
+    "reports/offline_active_acquisition_pilot_20260728T142414Z/ (tracked minus raw_trajectories.jsonl)",
+    "reports/regularized_aggregation_pilot_20260728T164943Z/ (tracked in full)",
+    "reports/stopping_rule_pilot_20260728T190000Z/ (tracked minus simulate/raw_stopping_histories.jsonl)"
+  ],
+  "canonical_evidence_note": "The 8 counterfactual/Cohere canary and diagnostic entries above were tracked in commit e8f6006 -- an earlier version of this file incorrectly listed them under local_only_artifacts; each was individually inspected for secrets/raw transcripts before committing (see docs/ARTIFACT_POLICY.md). They remain canary/diagnostic-only in their own status fields regardless of being tracked.",
+  "invalid_or_non_citable_evidence": [
+    "reports/real_query_multifactor_acquisition_20260726T044254Z/",
+    "reports/policy_selection_20260726T025426Z/"
+  ],
+  "local_only_artifacts": [
+    "reports/real_query_multifactor_acquisition_corrected_20260727T030457Z/",
+    "reports/provider_capability_audit_live_20260727T042703Z/"
+  ],
+  "validation": {
+    "full_test_count": 1127,
+    "skipped": 0,
+    "failed": 0,
+    "last_result": "1127 passed, 0 skipped, 0 failed (pytest -q)",
+    "verified_at_utc": "2026-07-28T22:30:00Z",
+    "verified_with": "local .venv, base + dev optional dependency group only (no llm/exact extras in this environment)",
+    "no_type_checker_configured": "No mypy (or other type checker) is configured in this repository -- no [tool.mypy] section in pyproject.toml, not a dev dependency. Any earlier snapshot's mypy claim described a different environment/session's ad hoc use of the tool.",
+    "note": "Skip/fail counts here are environment-dependent, not a fixed repository property: exact-repair tests skip without PySCIPOpt installed, and provider-SDK-dependent tests (e.g. Cohere) fail outright (not skip) if their SDK is absent, and differ further depending on which optional dependency groups are installed. Do not treat any single cached count as durable -- re-run `pytest -q` locally against the current HEAD before trusting a number, including this one."
+  },
+  "safety_branches": [
+    "backup/pre-final-branch-polish-20260728-174708",
+    "backup/pre-risk-controlled-stopping-pilot-20260728-182920",
+    "backup/pre-regularized-aggregation-pilot-20260728-163011",
+    "backup/pre-active-acquisition-pilot-20260728-141641",
+    "backup/pre-cleanup-polish-20260728-030421",
+    "backup/pre-native-cohere-clientv2-20260727",
+    "backup/pre-cohere-schema-projection-20260727",
+    "backup/pre-cohere-schema-enforcement-20260727",
+    "backup/pre-cohere-normalization-diagnostic-20260727",
+    "backup/pre-counterfactual-canary-v2-20260727",
+    "backup/pre-counterfactual-canary-20260727",
+    "backup/pre-counterfactual-collector-20260727",
+    "backup/pre-counterfactual-pilot-freeze-20260727",
+    "backup/pre-provider-capability-audit-20260727",
+    "backup/pre-driver-organization-20260727",
+    "backup/pre-multifactor-eval-fix-20260726",
+    "backup/pre-polish-outcome-f-20260726"
+  ],
+  "archive_branches": [
+    {
+      "name": "archive/cohere-compat-schema-failed-20260727",
+      "commit": "0646fde88a3d529ce4ebd4a4c2d5b6d3b21074a2",
+      "parent": "3a47e9001ccc2ef14ae85e72a15f623cdcff19ad",
+      "purpose": "Preserves the failed Cohere OpenAI-compatibility schema-enforcement attempt for diagnosis only; not merged, not pushed."
+    }
+  ]
+}

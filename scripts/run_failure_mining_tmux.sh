@@ -14,8 +14,10 @@
 # (an account/infra state, not a code bug) and retrying it burns ~30-60s per
 # pairwise comparison; re-add it once CloudRift has an active deployment.
 set -euo pipefail
-cd /home/soroush/consistency-aware-llm-rankin
-source .venv/bin/activate
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+cd "${REPO_ROOT}"
+source "${VENV_PATH:-${REPO_ROOT}/.venv}/bin/activate"
 
 echo "=== Failure mining experiment runner started at $(date -Iseconds) ==="
 

@@ -28,7 +28,7 @@ Usage
 -----
 ::
 
-    source /workspace/.venv/bin/activate
+    source "${VENV_PATH:-.venv}/bin/activate"
     python scripts/run_llm_scidocs_pilot_comparison.py
 
 """

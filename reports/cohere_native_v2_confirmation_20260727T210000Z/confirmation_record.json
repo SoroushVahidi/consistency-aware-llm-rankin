@@ -1,0 +1,28 @@
+{
+  "status_label": "COHERE NATIVE CLIENTV2 CONFIRMATION -- NOT BENCHMARK DATA",
+  "request_hash": "d6ba44eb9fc254a2bdd9cbae2c3005f56e4c849f6b35788998031fb88c8338fe",
+  "provider": "cohere",
+  "model_id": "command-r-plus-08-2024",
+  "transport_family": "cohere_native_v2",
+  "structured_output_protocol": "cohere_native_v2_json_schema_v1",
+  "success": false,
+  "error_category": "malformed_request",
+  "error_message": "headers: {'access-control-expose-headers': 'X-Debug-Trace-ID', 'cache-control': 'no-cache, no-store, no-transform, must-revalidate, private, max-age=0', 'content-encoding': 'gzip', 'content-type': 'application/json', 'expires': 'Thu, 01 Jan 1970 00:00:00 GMT', 'pragma': 'no-cache', 'vary': 'Origin,Accept-Encoding', 'x-accel-expires': '0', 'x-debug-trace-id': '3c9eba76299caef7564d8a695fe14f20', 'date': 'Mon, 27 Jul 2026 23:41:15 GMT', 'x-envoy-upstream-service-time': '12', 'server': 'envoy', 'via",
+  "response_type": null,
+  "finish_reason": null,
+  "content_block_types": [],
+  "multiple_text_blocks": false,
+  "thinking_blocks_present": false,
+  "citations_present": false,
+  "tool_calls_present": false,
+  "prompt_tokens": 0,
+  "completion_tokens": 0,
+  "latency_seconds": 0.4310314655303955,
+  "raw_text_sha256": null,
+  "parse_outcome": {
+    "wrapper_extraction_used": null,
+    "parse_failed": null,
+    "validated": null,
+    "error": null
+  }
+}

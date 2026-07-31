@@ -1,0 +1,31 @@
+# Core graph and numeric libraries
+networkx>=3.2
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.3
+tqdm>=4.66
+
+# Dataset download and loading
+datasets>=2.18,<4.0
+huggingface-hub>=0.21
+sentence-transformers>=5.3.0
+
+# Visualisation and data analysis
+matplotlib>=3.8
+pandas>=2.1
+
+# Development / testing
+pytest>=7.4
+pytest-cov>=4.1
+ruff>=0.3
+
+# Notebooks (optional – install separately if needed)
+# jupyter>=1.0
+# seaborn>=0.13
+
+# TREC DL passage + Robust04 automatic download (optional):
+# pip install ir-datasets
+# or: pip install 'consistency-ranker[ir]' from pyproject optional-dependencies
+
+# BM25 score generation (optional):
+# pip install 'consistency-ranker[bm25]'

@@ -1,0 +1,222 @@
+[
+  {
+    "id": "azure_raw_00",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_01",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_02",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_03",
+    "raw_response": "Neither A nor B is relevant to the query about moral development, executive functioning, peak experiences, brain patterns, and performance in classical musicians. However, since the",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_04",
+    "raw_response": "Neither A nor B is relevant to the query about moral development, executive functioning, peak experiences, and brain patterns in classical musicians. However, since the instruction is",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_05",
+    "raw_response": "Neither document A nor B is relevant to the query about moral development, executive functioning, peak experiences, and brain patterns in classical musicians interpreted through a Unified Theory of",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_06",
+    "raw_response": "Neither A nor B is relevant to the query about moral development, executive functioning, peak experiences, brain patterns, and performance in classical musicians. However, since the",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_07",
+    "raw_response": "Neither document A nor B is relevant to the query about moral development, executive functioning, peak experiences, and brain patterns in classical musicians interpreted through a Unified Theory of",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_08",
+    "raw_response": "A",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "A",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_09",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_10",
+    "raw_response": "Neither document A nor B is relevant to the query about moral development, executive functioning, peak experiences, and brain patterns in classical musicians interpreted through a Unified Theory of",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_11",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_12",
+    "raw_response": "Neither document A nor document B is relevant to the query about moral development, executive functioning, peak experiences, and brain patterns in classical musicians interpreted through a Unified Theory",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_13",
+    "raw_response": "A",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "A",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_14",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_15",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ab"
+  },
+  {
+    "id": "azure_raw_16",
+    "raw_response": "A",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "A",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ba"
+  },
+  {
+    "id": "azure_raw_17",
+    "raw_response": "B",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "B",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ba"
+  },
+  {
+    "id": "azure_raw_18",
+    "raw_response": "A",
+    "completion_tokens": 2,
+    "max_tokens": 32,
+    "valid_original": true,
+    "parsed_choice_original": "A",
+    "parse_note_original": "plaintext_token",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ba"
+  },
+  {
+    "id": "azure_raw_19",
+    "raw_response": "Neither A nor B is relevant to the query about moral development, executive functioning, peak experiences, brain patterns in musicians, and a Unified Theory of Performance. However",
+    "completion_tokens": 32,
+    "max_tokens": 32,
+    "valid_original": false,
+    "parsed_choice_original": "INVALID",
+    "parse_note_original": "ambiguous_or_malformed",
+    "prompt_version": "legacy_v1",
+    "displayed_orientation": "ba"
+  }
+]

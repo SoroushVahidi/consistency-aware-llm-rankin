@@ -1,0 +1,50 @@
+{
+  "n_rows": 120,
+  "n_unique_queries": 6,
+  "n_nonzero_delta_rows": 10,
+  "n_groups": 6,
+  "class_balance": {
+    "positive": 1,
+    "negative": 119
+  },
+  "models": {
+    "always_repair": {
+      "mean_balanced_accuracy": 0.0,
+      "n_folds_used": 4
+    },
+    "never_repair": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    },
+    "majority_class": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    },
+    "repair_whenever_cyclic": {
+      "mean_balanced_accuracy": 0.675,
+      "n_folds_used": 4
+    },
+    "repair_whenever_large_scc": {
+      "mean_balanced_accuracy": 0.875,
+      "n_folds_used": 4
+    },
+    "logistic_regression": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    },
+    "decision_tree": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    },
+    "control_shuffled_labels_logreg": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    },
+    "control_random_features_logreg": {
+      "mean_balanced_accuracy": 1.0,
+      "n_folds_used": 4
+    }
+  },
+  "negative_controls_note": "control_shuffled_labels_logreg and control_random_features_logreg should perform no better than majority_class if the real models' apparent skill is genuine rather than an artifact of the tiny sample.",
+  "caveat": "n_unique_query_groups=6 is far below what is needed for a reliable predictive-evaluation claim; treat all model numbers here as illustrative/diagnostic, not a validated selector, pending a Branch-A-style query-count scale-up."
+}

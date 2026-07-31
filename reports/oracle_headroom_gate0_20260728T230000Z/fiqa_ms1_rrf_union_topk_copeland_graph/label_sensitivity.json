@@ -1,0 +1,56 @@
+[
+  {
+    "epsilon": 0.0,
+    "n_beneficial": 21,
+    "n_neutral": 89,
+    "n_harmful": 10,
+    "frac_beneficial": 0.175,
+    "frac_neutral": 0.7416666666666667,
+    "frac_harmful": 0.08333333333333333
+  },
+  {
+    "epsilon": 0.0025,
+    "n_beneficial": 21,
+    "n_neutral": 90,
+    "n_harmful": 9,
+    "frac_beneficial": 0.175,
+    "frac_neutral": 0.75,
+    "frac_harmful": 0.075
+  },
+  {
+    "epsilon": 0.005,
+    "n_beneficial": 20,
+    "n_neutral": 92,
+    "n_harmful": 8,
+    "frac_beneficial": 0.16666666666666666,
+    "frac_neutral": 0.7666666666666667,
+    "frac_harmful": 0.06666666666666667
+  },
+  {
+    "epsilon": 0.01,
+    "n_beneficial": 18,
+    "n_neutral": 94,
+    "n_harmful": 8,
+    "frac_beneficial": 0.15,
+    "frac_neutral": 0.7833333333333333,
+    "frac_harmful": 0.06666666666666667
+  },
+  {
+    "epsilon": 0.02,
+    "n_beneficial": 15,
+    "n_neutral": 98,
+    "n_harmful": 7,
+    "frac_beneficial": 0.125,
+    "frac_neutral": 0.8166666666666667,
+    "frac_harmful": 0.058333333333333334
+  },
+  {
+    "epsilon": 0.05,
+    "n_beneficial": 8,
+    "n_neutral": 108,
+    "n_harmful": 4,
+    "frac_beneficial": 0.06666666666666667,
+    "frac_neutral": 0.9,
+    "frac_harmful": 0.03333333333333333
+  }
+]

@@ -1,5 +1,10 @@
 # Revision Strategy — LLM Baseline Gap
 
+> **SUPERSEDED (as of 2026-07-28).** Predates `papers/JDIQ_2026/`, whose
+> manuscript (`papers/JDIQ_2026/manuscript/main.tex`) reflects whatever
+> revision strategy was actually adopted. Treat this file as a historical
+> planning record, not current guidance.
+
 > **Updated:** 2026-04-06
 > **Context:** The editor flagged (1) missing LLM baselines, (2) insufficient
 > modern baselines, (3) weak positioning. This tracks resolution status.

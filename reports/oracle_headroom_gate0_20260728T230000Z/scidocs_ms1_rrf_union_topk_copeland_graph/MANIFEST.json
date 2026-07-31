@@ -1,0 +1,51 @@
+{
+  "decision": {
+    "decision": "NO_HEADROOM_DO_NOT_LEARN",
+    "headroom_threshold": 0.01,
+    "min_heterogeneity_fraction": 0.05,
+    "rationale": "Headroom 95% CI upper bound (0.00870) does not exceed the threshold (0.01000); a learned selector cannot plausibly beat the stronger fixed baseline by more than noise on this slice. Do not proceed to label/feature/model work on this slice; see the negative-result fallback path."
+  },
+  "filters": {
+    "dataset": "scidocs",
+    "pair_name": "copeland_graph",
+    "pool_id": "rrf_union_topk",
+    "regime": "ms1"
+  },
+  "input_csv": "/home/soroush/consistency-aware-llm-rankin/reports/candidate_pool_conditional_audit_20260714/tables/pool_robustness_paired_deltas.csv",
+  "input_csv_sha256": "bfe1c7cd5fa24ed8638e7c8a6a33e755b6786c92c21440c7e511963773dd0c94",
+  "result": {
+    "always_preserve_is_safer_default": false,
+    "delta_summary": {
+      "mean": 0.011042968687951581,
+      "median": 0.0,
+      "n": 120,
+      "nonzero_count": 58,
+      "nonzero_fraction": 0.48333333333333334,
+      "observed_standardized_effect": 0.1928666636062435,
+      "q05": -0.04387703313094845,
+      "q25": 0.0,
+      "q75": 0.011041952055485985,
+      "q95": 0.08053624936086762,
+      "se": 0.00522682608727282,
+      "std": 0.057257011043115785
+    },
+    "frac_benefit_from_repair": 0.3,
+    "frac_harmed_by_repair": 0.18333333333333332,
+    "frac_neutral_exact": 0.5166666666666667,
+    "headroom_ci": {
+      "frac_gt_zero": 1.0,
+      "lower": 0.002906681792869783,
+      "method": "percentile",
+      "reps": 10000,
+      "seed": 13,
+      "upper": 0.00870193628603186
+    },
+    "headroom_vs_best_baseline": 0.00556108675670014,
+    "mean_oracle": 0.34142882952021975,
+    "mean_preserve": 0.324824774075568,
+    "mean_regret_always_preserve": 0.01660405544465172,
+    "mean_regret_always_repair": 0.005561086756700138,
+    "mean_repair": 0.3358677427635196,
+    "n_queries": 120
+  }
+}

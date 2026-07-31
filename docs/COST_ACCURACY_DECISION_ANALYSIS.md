@@ -122,6 +122,6 @@ See `outputs/analysis/cross_dataset_insights.csv`.
 Regenerate:
 
 ```bash
-source /workspace/.venv/bin/activate
+source "${VENV_PATH:-.venv}/bin/activate"
 python scripts/generate_cost_accuracy_analysis.py
 ```

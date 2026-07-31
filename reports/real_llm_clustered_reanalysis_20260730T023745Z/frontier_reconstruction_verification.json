@@ -1,0 +1,11 @@
+{
+  "n_outcomes_recomputed": 120,
+  "n_outcomes_published": 120,
+  "published_mean_incumbent_ndcg": 0.8886922810274193,
+  "recomputed_mean_incumbent_ndcg": 0.8886922810274193,
+  "published_mean_best_ndcg": 0.8940608417000744,
+  "recomputed_mean_best_ndcg": 0.8940608417000743,
+  "published_mean_headroom": 0.005368560672655015,
+  "recomputed_mean_headroom": 0.0053685606726550095,
+  "max_abs_diff": 1.1102230246251565e-16
+}

@@ -1,0 +1,446 @@
+{
+  "bright": {
+    "common_complete_depth_usable": 50,
+    "depths": {
+      "10": {
+        "dataset": "bright",
+        "depth": 10,
+        "max_union_size": 30,
+        "mean_missing_score_rate": 0.5846517829718729,
+        "mean_pairwise_overlap_at_depth": 0.23,
+        "mean_union_size": 24.56,
+        "min_union_size": 16,
+        "usable_queries_with_complete_scores": 50
+      },
+      "100": {
+        "dataset": "bright",
+        "depth": 100,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "20": {
+        "dataset": "bright",
+        "depth": 20,
+        "max_union_size": 60,
+        "mean_missing_score_rate": 0.5890986441047665,
+        "mean_pairwise_overlap_at_depth": 0.21633333333333338,
+        "mean_union_size": 49.38,
+        "min_union_size": 36,
+        "usable_queries_with_complete_scores": 50
+      },
+      "200": {
+        "dataset": "bright",
+        "depth": 200,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "35": {
+        "dataset": "bright",
+        "depth": 35,
+        "max_union_size": 102,
+        "mean_missing_score_rate": 0.5931801235635326,
+        "mean_pairwise_overlap_at_depth": 0.2095238095238095,
+        "mean_union_size": 86.92,
+        "min_union_size": 68,
+        "usable_queries_with_complete_scores": 50
+      },
+      "50": {
+        "dataset": "bright",
+        "depth": 50,
+        "max_union_size": 145,
+        "mean_missing_score_rate": 0.5958015568140167,
+        "mean_pairwise_overlap_at_depth": 0.20346666666666668,
+        "mean_union_size": 124.72,
+        "min_union_size": 100,
+        "usable_queries_with_complete_scores": 50
+      }
+    },
+    "query_count": 50,
+    "rankers": {
+      "bm25": {
+        "dataset": "bright",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 50,
+        "queries_ge_100": 0,
+        "queries_ge_20": 50,
+        "queries_ge_200": 0,
+        "queries_ge_35": 50,
+        "queries_ge_50": 50,
+        "query_count": 50,
+        "ranker": "bm25",
+        "usable_query_count": 50
+      },
+      "minilm": {
+        "dataset": "bright",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 50,
+        "queries_ge_100": 0,
+        "queries_ge_20": 50,
+        "queries_ge_200": 0,
+        "queries_ge_35": 50,
+        "queries_ge_50": 50,
+        "query_count": 50,
+        "ranker": "minilm",
+        "usable_query_count": 50
+      },
+      "tfidf": {
+        "dataset": "bright",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 50,
+        "queries_ge_100": 0,
+        "queries_ge_20": 50,
+        "queries_ge_200": 0,
+        "queries_ge_35": 50,
+        "queries_ge_50": 50,
+        "query_count": 50,
+        "ranker": "tfidf",
+        "usable_query_count": 50
+      }
+    },
+    "usable_query_count": 50
+  },
+  "fiqa": {
+    "common_complete_depth_usable": 50,
+    "depths": {
+      "10": {
+        "dataset": "fiqa",
+        "depth": 10,
+        "max_union_size": 28,
+        "mean_missing_score_rate": 0.5599840623278615,
+        "mean_pairwise_overlap_at_depth": 0.27194444444444443,
+        "mean_union_size": 23.075,
+        "min_union_size": 14,
+        "usable_queries_with_complete_scores": 120
+      },
+      "100": {
+        "dataset": "fiqa",
+        "depth": 100,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "20": {
+        "dataset": "fiqa",
+        "depth": 20,
+        "max_union_size": 56,
+        "mean_missing_score_rate": 0.5513862401172923,
+        "mean_pairwise_overlap_at_depth": 0.29222222222222227,
+        "mean_union_size": 45.108333333333334,
+        "min_union_size": 30,
+        "usable_queries_with_complete_scores": 120
+      },
+      "200": {
+        "dataset": "fiqa",
+        "depth": 200,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "35": {
+        "dataset": "fiqa",
+        "depth": 35,
+        "max_union_size": 93,
+        "mean_missing_score_rate": 0.5444514451537116,
+        "mean_pairwise_overlap_at_depth": 0.30761904761904757,
+        "mean_union_size": 77.56666666666666,
+        "min_union_size": 49,
+        "usable_queries_with_complete_scores": 120
+      },
+      "50": {
+        "dataset": "fiqa",
+        "depth": 50,
+        "max_union_size": 129,
+        "mean_missing_score_rate": 0.5398372248880102,
+        "mean_pairwise_overlap_at_depth": 0.31677777777777777,
+        "mean_union_size": 109.71666666666667,
+        "min_union_size": 63,
+        "usable_queries_with_complete_scores": 120
+      }
+    },
+    "query_count": 120,
+    "rankers": {
+      "bm25": {
+        "dataset": "fiqa",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "bm25",
+        "usable_query_count": 120
+      },
+      "minilm": {
+        "dataset": "fiqa",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "minilm",
+        "usable_query_count": 120
+      },
+      "tfidf": {
+        "dataset": "fiqa",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "tfidf",
+        "usable_query_count": 120
+      }
+    },
+    "usable_query_count": 120
+  },
+  "hotpotqa": {
+    "common_complete_depth_usable": 35,
+    "depths": {
+      "10": {
+        "dataset": "hotpotqa",
+        "depth": 10,
+        "max_union_size": 24,
+        "mean_missing_score_rate": 0.4373376969472572,
+        "mean_pairwise_overlap_at_depth": 0.4974358974358975,
+        "mean_union_size": 18.46153846153846,
+        "min_union_size": 10,
+        "usable_queries_with_complete_scores": 52
+      },
+      "100": {
+        "dataset": "hotpotqa",
+        "depth": 100,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "20": {
+        "dataset": "hotpotqa",
+        "depth": 20,
+        "max_union_size": 50,
+        "mean_missing_score_rate": 0.47422308723069106,
+        "mean_pairwise_overlap_at_depth": 0.4458333333333334,
+        "mean_union_size": 38.82692307692308,
+        "min_union_size": 29,
+        "usable_queries_with_complete_scores": 52
+      },
+      "200": {
+        "dataset": "hotpotqa",
+        "depth": 200,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "35": {
+        "dataset": "hotpotqa",
+        "depth": 35,
+        "max_union_size": 86,
+        "mean_missing_score_rate": 0.49684183660671305,
+        "mean_pairwise_overlap_at_depth": 0.408058608058608,
+        "mean_union_size": 70.46153846153847,
+        "min_union_size": 53,
+        "usable_queries_with_complete_scores": 52
+      },
+      "50": {
+        "dataset": "hotpotqa",
+        "depth": 50,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      }
+    },
+    "query_count": 70,
+    "rankers": {
+      "bm25": {
+        "dataset": "hotpotqa",
+        "max_depth_usable": 35,
+        "min_depth_usable": 35,
+        "queries_ge_10": 52,
+        "queries_ge_100": 0,
+        "queries_ge_20": 52,
+        "queries_ge_200": 0,
+        "queries_ge_35": 52,
+        "queries_ge_50": 0,
+        "query_count": 70,
+        "ranker": "bm25",
+        "usable_query_count": 52
+      },
+      "minilm": {
+        "dataset": "hotpotqa",
+        "max_depth_usable": 35,
+        "min_depth_usable": 35,
+        "queries_ge_10": 52,
+        "queries_ge_100": 0,
+        "queries_ge_20": 52,
+        "queries_ge_200": 0,
+        "queries_ge_35": 52,
+        "queries_ge_50": 0,
+        "query_count": 70,
+        "ranker": "minilm",
+        "usable_query_count": 52
+      },
+      "tfidf": {
+        "dataset": "hotpotqa",
+        "max_depth_usable": 35,
+        "min_depth_usable": 35,
+        "queries_ge_10": 52,
+        "queries_ge_100": 0,
+        "queries_ge_20": 52,
+        "queries_ge_200": 0,
+        "queries_ge_35": 52,
+        "queries_ge_50": 0,
+        "query_count": 70,
+        "ranker": "tfidf",
+        "usable_query_count": 52
+      }
+    },
+    "usable_query_count": 52
+  },
+  "scidocs": {
+    "common_complete_depth_usable": 50,
+    "depths": {
+      "10": {
+        "dataset": "scidocs",
+        "depth": 10,
+        "max_union_size": 29,
+        "mean_missing_score_rate": 0.4982811743409211,
+        "mean_pairwise_overlap_at_depth": 0.3958333333333333,
+        "mean_union_size": 20.425,
+        "min_union_size": 13,
+        "usable_queries_with_complete_scores": 120
+      },
+      "100": {
+        "dataset": "scidocs",
+        "depth": 100,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "20": {
+        "dataset": "scidocs",
+        "depth": 20,
+        "max_union_size": 54,
+        "mean_missing_score_rate": 0.4868783261127512,
+        "mean_pairwise_overlap_at_depth": 0.4222222222222223,
+        "mean_union_size": 39.84166666666667,
+        "min_union_size": 25,
+        "usable_queries_with_complete_scores": 120
+      },
+      "200": {
+        "dataset": "scidocs",
+        "depth": 200,
+        "max_union_size": null,
+        "mean_missing_score_rate": null,
+        "mean_pairwise_overlap_at_depth": null,
+        "mean_union_size": null,
+        "min_union_size": null,
+        "usable_queries_with_complete_scores": 0
+      },
+      "35": {
+        "dataset": "scidocs",
+        "depth": 35,
+        "max_union_size": 94,
+        "mean_missing_score_rate": 0.48187918089169274,
+        "mean_pairwise_overlap_at_depth": 0.4365873015873015,
+        "mean_union_size": 68.63333333333334,
+        "min_union_size": 49,
+        "usable_queries_with_complete_scores": 120
+      },
+      "50": {
+        "dataset": "scidocs",
+        "depth": 50,
+        "max_union_size": 131,
+        "mean_missing_score_rate": 0.4767088479319072,
+        "mean_pairwise_overlap_at_depth": 0.4461111111111112,
+        "mean_union_size": 96.88333333333334,
+        "min_union_size": 72,
+        "usable_queries_with_complete_scores": 120
+      }
+    },
+    "query_count": 120,
+    "rankers": {
+      "bm25": {
+        "dataset": "scidocs",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "bm25",
+        "usable_query_count": 120
+      },
+      "minilm": {
+        "dataset": "scidocs",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "minilm",
+        "usable_query_count": 120
+      },
+      "tfidf": {
+        "dataset": "scidocs",
+        "max_depth_usable": 50,
+        "min_depth_usable": 50,
+        "queries_ge_10": 120,
+        "queries_ge_100": 0,
+        "queries_ge_20": 120,
+        "queries_ge_200": 0,
+        "queries_ge_35": 120,
+        "queries_ge_50": 120,
+        "query_count": 120,
+        "ranker": "tfidf",
+        "usable_query_count": 120
+      }
+    },
+    "usable_query_count": 120
+  }
+}

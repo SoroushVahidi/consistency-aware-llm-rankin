@@ -1,0 +1,40 @@
+## main...origin/main
+ M src/consistency_ranker/baseline_ranking.py
+ M src/consistency_ranker/utils/llm_api_status.py
+ M src/rerankers/llm_pairwise.py
+ M tests/test_llm_api_status.py
+?? experiments/counterfactual_generation_feasibility_/
+?? experiments/created_data_audit_20260711_232004/
+?? experiments/failure_class_audit_20260711_212157/
+?? experiments/final_method_gap_audit_20260711_221113/
+?? experiments/method_improvement_audit_20260711_205733/
+?? experiments/publication_readiness_audit_20260711_233629/
+?? experiments/reviewer_response_state_audit_20260711_214959/
+?? papers/JDIQ_2026/CANONICAL_PAPER_STORY.md
+?? papers/JDIQ_2026/CONTRIBUTION_AUDIT.md
+?? papers/JDIQ_2026/EVIDENCE_STRENGTH_AUDIT.md
+?? papers/JDIQ_2026/FIGURE_DATA_MAP.csv
+?? papers/JDIQ_2026/FIGURE_PLAN.md
+?? papers/JDIQ_2026/FIGURE_SPECIFICATIONS.md
+?? papers/JDIQ_2026/HIDDEN_STORY_AUDIT.md
+?? papers/JDIQ_2026/JDIQ_GUIDELINE_SUMMARY.md
+?? papers/JDIQ_2026/MANUSCRIPT_OUTLINE.md
+?? papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv
+?? papers/JDIQ_2026/MISSING_COMPONENTS.md
+?? papers/JDIQ_2026/PROJECT_STATUS.md
+?? papers/JDIQ_2026/README.md
+?? papers/JDIQ_2026/SECTION_EVIDENCE_MAP.csv
+?? papers/JDIQ_2026/SUPPLEMENTARY_MATERIAL.md
+?? papers/JDIQ_2026/TABLE_PLAN.md
+?? papers/JDIQ_2026/figure4_evidence/
+?? papers/JDIQ_2026/manuscript/MANUSCRIPT_SCIENTIFIC_AUDIT.md
+?? papers/JDIQ_2026/manuscript/REDESIGN_REPORT.md
+?? papers/JDIQ_2026/manuscript/main.blg
+?? papers/JDIQ_2026/scripts/
+?? reports/additional_metrics_investigation/
+?? reports/b3_margin_calibration_investigation/
+?? reports/blocking_issues_investigation/
+?? reports/exact_ilp_repair_investigation/
+?? reports/exact_open_source_ilp_repair_investigation/
+?? reports/failure_mining/
+?? reports/failure_mining_llm/

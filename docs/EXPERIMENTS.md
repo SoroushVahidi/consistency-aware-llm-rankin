@@ -1,24 +1,91 @@
-# Experiment scripts (quick index)
+# Experiment Index
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/download_datasets.py` | Fetch raw JSONL (Hugging Face BEIR/HotpotQA/BRIGHT/MS MARCO; optional **ir-datasets** for `trec_dl_passage` / `robust04`) |
-| `scripts/prepare_datasets.py` | Build processed JSONL + pairwise prefs |
-| `scripts/generate_score_file.py` | BM25 / TF–IDF / MiniLM score files |
-| `scripts/build_votes_file.py` | Multi-ranker vote JSONL |
-| `scripts/postprocess_votes_drop_mutual_pairs.py` | Drop mutual 2-cycle vote pairs (middle-ground graph) |
-| `scripts/diagnose_vote_graph_cycles.py` | Cycle / mutual-edge stats for a votes file |
-| `scripts/run_real_experiment.py` | Full real-data ranking + metrics; **Markov graph** (`markov_graph`, `markov_graph_repaired`) on preference graphs; **RRF** + **CombSUM** + **`borda_fuse`** when `--score-prior-files` is set; optional **`--repair-weighting`** `plain` (default) / `metric_aware` / `both` (LambdaRank-style edge reweighting before greedy FAS; `both` adds `*_ma` methods) |
-| `scripts/run_metric_aware_first_experiment.py` | **SciDocs ms1 only:** small grid (plain vs metric-aware × β × focus_top_k) using existing `votes_ms1.jsonl` + score files; writes `outputs/metric_aware_first/scidocs_ms1/` + `REPORT.md` |
-| `scripts/run_adaptive_repair_policy_experiment.py` | **All4 ms1 lightweight policy analysis:** uses committed `pub_vote_cmp_all4` tables + bootstrap strata to estimate “repair only when needed” (skip on acyclic) for Copeland (and optional balance); writes `outputs/adaptive_repair_policy/all4_ms1/`. |
-| `scripts/run_publication_vote_suite.py` | Full publication vote comparison (up to four datasets; ms2 / ms1 / ms1_drop_mutual) |
-| `scripts/analyze_publication_vote_deltas.py` | Bootstrap ΔnDCG (repaired − unrepaired) |
-| `scripts/build_paper_evidence_package.py` | Tables + figures + `MANUSCRIPT_SUMMARY.md` under `<root>/paper_package/`; optional `--datasets` for extra benchmarks under the same root |
-| `scripts/generate_q1_tables.py` | Build `outputs/q1_journal_package/` from a chosen `--pub-root` (defaults to v2; use `pub_vote_cmp_all4` for four-dataset alignment) |
-| `scripts/build_manuscript_assets.py` | Copy figures into `figures/manuscript/` and regenerate curated plots |
-| `scripts/generate_paper_tables.py` | Build manuscript-ready CSV bundle in `reports/paper_tables/` |
-| `scripts/summarize_publication_vote_suite.py` | Markdown-style aggregate table |
+This index maps active experiment families to their entry points, tracked
+outputs, intentionally excluded outputs, and current evidence status. It is a
+navigation aid, not a full archive catalog.
 
-**Pinned evidence (in git):** `outputs/pub_vote_cmp_all4/paper_package/` (canonical breadth); `outputs/pub_vote_cmp_v2/paper_package/` (historical two-dataset run — see `reports/repo_publication_audit.md` before mixing numbers).
+## Current Evidence Families
 
-**Dependencies:** `datasets>=2.18,<4.0` (see `pyproject.toml`) for Hugging Face datasets. Optional **`ir-datasets`** (`pip install 'consistency-ranker[ir]'`) for TREC DL passage and Robust04 exports.
+| Family | Purpose | Entry point / config | Tracked outputs | Excluded outputs | Status |
+|---|---|---|---|---|---|
+| Classical repaired-vs-unrepaired evaluations | Main manuscript evidence for score-derived pairwise preferences across datasets, graph regimes, and repair methods. | `scripts/run_publication_vote_suite.py`, `scripts/run_real_experiment.py`, `scripts/analyze_publication_vote_deltas.py`; see `docs/REPRODUCTION_CANONICAL.md`. | `reports/full_calibrated_core/`, `reports/normalization_protocol_audit_20260714/`, `reports/candidate_pool_conditional_audit_20260714/`, selected final-revision robustness tables. | Large regenerated intermediates and scratch renders, ignored narrowly in `.gitignore`. | Canonical for the current JDIQ manuscript. |
+| Real-LLM multi-provider pilot | Collect genuine Azure/Gemini/Cohere/Fireworks pairwise judgments on a small query set and build preference graphs. | `scripts/run_multi_provider_repair_pilot.py`, `configs/multi_provider_repair_pilot_v1.json`. | Compact summaries, parsed judgment caches, provider usage/failure ledgers, checkpoints, and `PROVIDER_MODELS.json` under `reports/multi_provider_repair_pilot_20260729T032348Z/`. | `raw_calls/` and logs; raw transcripts are local/external-archive material. | Exploratory source evidence for the row-level studies below. |
+| Real-LLM clustered reanalysis | Correct the real-LLM pilot inference by clustering on the 6 independent queries rather than replicated rows. | `scripts/run_real_llm_clustered_reanalysis.py`. | `reports/real_llm_clustered_reanalysis_20260730T023745Z/`, including CSV outputs and `reproducibility_manifest.json`. | None expected; it is an offline deterministic reanalysis from tracked compact inputs. | Canonical for inference on the real-LLM pilot. |
+| Repair frontier | Enumerate richer repair/extraction candidates and estimate oracle headroom for label-free selection. | Repair-frontier code under `src/consistency_ranker/repair_frontier/`; current output generated from the real-LLM pilot and reviewer-concerns program. | `reports/repair_frontier_20260729T144742Z/` compact reports, run config, feature rows, SCC decisions, checkpoint rows, oracle headroom, selection, and sensitivity tables. | Logs only. | Exploratory row-level evidence; inferential claims defer to clustered reanalysis. |
+| Extraction study | Test whether ranking-extraction method choice explains gains relative to incumbent ranking. | `src/consistency_ranker/extraction_study/`; current output generated from real-LLM pilot sources. | `reports/extraction_study_20260729T151610Z/` report, summary, run config, extraction rows, failures, and tables. | Logs only. | Exploratory row-level evidence; inferential claims defer to clustered reanalysis. |
+| Repair diagnostic | Test whether pre-repair graph features predict repair outcomes. | `src/consistency_ranker/repair_diagnostic/`; current output generated from real-LLM pilot sources. | `reports/repair_diagnostic_20260729T162748Z/` report, summary, run config, diagnostic rows, failures, and feature tables. | Logs only. | Exploratory row-level evidence; inferential claims defer to clustered reanalysis. |
+| Reviewer-concerns program | Probe sparse/complete pool variants and branch decisions for reviewer-driven real-LLM concerns. | Real-LLM branch-B scripts/config embedded in the report package. | Compact branch decision, stage summaries, feature rows, checkpoint rows, provider usage/failure ledgers, and final report under `reports/reviewer_concerns_program_20260729T035320Z/`. | `raw_calls/`, cache directories, logs, and smoke raw calls/caches. | Exploratory support for real-LLM pilot interpretation. |
+| Production policy selection evidence | Establish the Outcome F operating point: always-UHT beat learned routing for production use. | `src/consistency_ranker/policy_selection/`, especially `production_config.py` and `production_runner.py`; evidence generated by policy-selection scripts. | `reports/policy_selection_20260726T030500Z/` minimal evidence bundle and `reports/real_query_policy_replay_20260726T042025Z/`. | Regenerated calibrators, plots, replays, and scratch gates. | Canonical, concluded; production is locked to UHT. |
+| Historical publication packages | Earlier two/four-dataset paper-package generation from a prior project phase. | `scripts/build_paper_evidence_package.py`, `scripts/generate_q1_tables.py`. | `outputs/pub_vote_cmp_all4/paper_package/`, `outputs/pub_vote_cmp_v2/paper_package/`. | Scratch outputs outside curated paper packages. | Historical, not cited by the current manuscript. |
+
+## Regeneration Notes
+
+- Classical manuscript evidence: start with `docs/REPRODUCTION_CANONICAL.md`.
+- Real-LLM row-level studies: regeneration from scratch requires paid/provider
+  API calls and explicit user authorization. Reanalysis is offline once compact
+  parsed judgments are present.
+- Production policy selection: production code should start at
+  `src/consistency_ranker/policy_selection/production_runner.py`; research gates
+  require explicit experimental mode.
+- Provider raw transcripts: not tracked. If exact transcripts are needed, use
+  the external archive recorded in the task report and validate SHA-256 hashes
+  against `docs/artifact_inventories/untracked_outputs_20260731.csv`.
+
+## Script Quick Reference
+
+| Entry point | Classification | Purpose / notes |
+|---|---|---|
+| `run-synthetic` console script | Recommended | Installed alias for `scripts/run_synthetic.py`; use for the first local no-network experiment after editable install. |
+| `python scripts/run_synthetic.py ...` | Recommended | End-to-end deterministic synthetic experiment; safe with a temporary `--output-dir`. |
+| `make synth-smoke` | Recommended | Makefile wrapper for the synthetic smoke run into `outputs/synthetic_smoke/`. |
+| `python scripts/check_repo_ready.py` | Recommended | Lightweight repository readiness, architecture, and portability checks. |
+| `make repo-ready` | Recommended | Local release gate: readiness, portability, maintained Ruff scope, tests, evidence manifest, report links, and secret scan. |
+| `make test-full` | Recommended before merge | Requires `.[exact]`; fails if any test is skipped. |
+| `scripts/run_offline_validation_workflow.py` | Recommended before merge | Offline reproduction of canonical IR audit and real-LLM clustered reanalysis into temporary directories. |
+| `scripts/run_real_llm_clustered_reanalysis.py` | Recommended for real-LLM inference | Offline deterministic clustered reanalysis; no provider calls. |
+| `scripts/validate_canonical_evidence_manifest.py` | Recommended | Validates canonical evidence paths. |
+| `scripts/validate_report_links.py` | Recommended | Validates markdown links in report navigation files. |
+| `scripts/run_secret_scan.py` | Recommended | Scans tracked/staged content for secret-shaped strings. |
+| `scripts/check_active_portability.py` | Recommended | Ensures active code/docs do not embed machine-specific local paths. |
+| `scripts/check_architecture_boundaries.py` | Recommended | Guards against recurring package import cycles. |
+| `scripts/run_real_experiment.py` | Advanced | Main real-data ranking/evaluation driver; expects prepared score/qrel inputs. |
+| `scripts/run_publication_vote_suite.py` | Advanced | Publication vote-comparison pipeline; can be expensive and writes study outputs. |
+| `scripts/analyze_publication_vote_deltas.py` | Advanced | Bootstrap repaired-minus-unrepaired nDCG deltas from publication-suite outputs. |
+| `scripts/download_datasets.py` | Advanced/network | Fetch raw datasets where licenses/network access permit. |
+| `scripts/prepare_datasets.py` | Advanced | Build processed JSONL and pairwise preferences after data are available. |
+| `scripts/generate_score_file.py` | Advanced | Create BM25, TF-IDF, or MiniLM score files; optional extras may be needed. |
+| `scripts/build_votes_file.py` | Advanced | Build multi-ranker vote JSONL. |
+| `scripts/postprocess_votes_drop_mutual_pairs.py` | Advanced | Drop mutual 2-cycle vote pairs for middle-ground graph regimes. |
+| `scripts/diagnose_vote_graph_cycles.py` | Advanced | Report cycle and mutual-edge statistics for a vote file. |
+| `scripts/run_production_uht.py` | Production-facing and guarded | Only executes the Outcome F always-UHT operating point; diagnostic mode is non-routing. |
+| `scripts/run_policy_selection_experiment.py` | Experimental | Research gate/selector experiments; not production routing. |
+| `scripts/run_multi_provider_repair_pilot.py` | Experimental/provider-backed | Real provider pilot; requires explicit call authorization and configured credentials. |
+| `scripts/run_reviewer_concerns_program.py` | Experimental/provider-backed | Reviewer-concern probing; requires explicit call authorization and configured credentials. |
+| `scripts/run_repair_frontier_pilot.py` | Experimental/offline when inputs exist | Repair-frontier study from compact real-LLM inputs. |
+| `scripts/run_extraction_study.py` | Experimental/offline when inputs exist | Extraction-method study from compact real-LLM inputs. |
+| `scripts/run_repair_diagnostic_study.py` | Experimental/offline when inputs exist | Repair-benefit predictability diagnostic from compact inputs. |
+| `scripts/generate_q1_tables.py` | Historical | Regenerates earlier Q1 tables from `outputs/pub_vote_cmp_v2/`; not the current manuscript evidence. |
+| `scripts/build_paper_evidence_package.py` | Historical/advanced | Builds curated packages for the older publication-suite path. |
+| `scripts/run_openai_real_*.py`, `scripts/run_gemini_scidocs_pilot.py`, `scripts/run_llm_scidocs_*.py` | Historical/provider-backed | Older bounded provider pilots; do not run without explicit authorization. |
+
+The repository contains many additional `scripts/` files used for one-off
+audits or historical experiment branches. Treat a script as public only if it
+appears in the table above or in a current experiment-family `STATUS.md` /
+`README.md`.
+
+## Representative Reproducibility Workflows
+
+| Workflow | Command | Inputs | Output | Network/API |
+|---|---|---|---|---|
+| Core synthetic example | `python scripts/run_synthetic.py --n-items 20 --noise 0.2 --seed 42 --output-dir /tmp/consistency_ranker_synthetic_smoke` | None beyond installed package | `synthetic_results.json` in the chosen temp directory | No |
+| Statistical inference tests | `pytest -q tests/test_statistical_inference.py tests/test_real_llm_clustered_reanalysis.py` | Synthetic fixtures plus tracked compact real-LLM tables | Test result only | No |
+| Real-LLM clustered reanalysis | `python scripts/run_real_llm_clustered_reanalysis.py --output-dir /tmp/real_llm_reanalysis` | Tracked compact row-level reports | Cluster-aware CSV/JSON summaries | No |
+| Outcome F production validation | `pytest -q tests/test_production_operating_point.py tests/test_policy_selection.py` and `python scripts/run_production_uht.py --help` | Synthetic local fixtures | Test/help output only | No |
+| Repository readiness | `make repo-ready` | Tracked source/docs/evidence | Validation output only, except tests may create temp files | No |
+
+## Artifact Policy
+
+For file-level tracking decisions, see
+`docs/EXPERIMENT_ARTIFACT_POLICY.md`. For the current 2026-07-29 untracked
+output cleanup, see
+`docs/artifact_inventories/untracked_outputs_20260731.csv`.

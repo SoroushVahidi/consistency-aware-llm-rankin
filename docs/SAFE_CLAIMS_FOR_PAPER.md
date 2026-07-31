@@ -1,5 +1,12 @@
 # Safe Claims for Paper Writing
 
+> **SUPERSEDED (as of 2026-07-28).** Written 2026-04-06, before
+> `papers/JDIQ_2026/`. Its evidence citations point at
+> `outputs/pub_vote_cmp_v2/`, explicitly marked `do_not_use`/stale in
+> `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv`. For the actual
+> submitted claim set, see `papers/JDIQ_2026/manuscript/main.tex` directly
+> and `papers/JDIQ_2026/CONTRIBUTION_AUDIT.md`.
+
 > Conservative statement set for manuscript preparation.  All claims in §1 are
 > directly backed by committed artifacts in this repository.  All claims in §2
 > go beyond the evidence and must **not** be stated without additional experiments.

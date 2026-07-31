@@ -1,0 +1,23 @@
+{
+  "completed_at": "2026-07-14T23:38:11-0400",
+  "datasets": [
+    "scidocs",
+    "fiqa",
+    "hotpotqa",
+    "bright"
+  ],
+  "elapsed_seconds": 438.56122183799744,
+  "feasibility_common_depths": {
+    "bright": 50,
+    "fiqa": 50,
+    "hotpotqa": 35,
+    "scidocs": 50
+  },
+  "n_cells": 66,
+  "regimes": [
+    "ms2",
+    "ms1",
+    "ms1_drop_mutual"
+  ],
+  "started_at": "2026-07-14T23:30:56-0400"
+}

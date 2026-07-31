@@ -1,0 +1,41 @@
+{
+  "n_total": 48,
+  "n_train": 32,
+  "n_val": 4,
+  "n_test": 12,
+  "splits": {
+    "train": {
+      "prior": [
+        "accurate",
+        "noisy",
+        "reversed_topk",
+        "block_permute_topk"
+      ],
+      "judge": [
+        "clean",
+        "shared_position_bias"
+      ]
+    },
+    "val": {
+      "prior": [
+        "overconfident_wrong",
+        "shared_failure_priors"
+      ],
+      "judge": [
+        "stable_wrong_consensus"
+      ]
+    },
+    "test": {
+      "prior": [
+        "outsider_buried",
+        "tail_ok_topk_wrong",
+        "diverse_priors"
+      ],
+      "judge": [
+        "nontransitive",
+        "correlated_repeats"
+      ]
+    }
+  },
+  "feature_schema": "policy_gate_features_v1"
+}

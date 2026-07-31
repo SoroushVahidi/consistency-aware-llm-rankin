@@ -1,0 +1,450 @@
+{
+  "n_total_rows": 122203,
+  "n_source_families": 8,
+  "n_source_files": 76,
+  "n_distinct_datasets": 4,
+  "n_distinct_query_dataset_pairs": 419,
+  "datasets": [
+    "bright",
+    "fiqa",
+    "hotpotqa",
+    "scidocs"
+  ],
+  "repair_algorithms": [
+    "exact_ilp",
+    "greedy"
+  ],
+  "pooled_headroom_row_level_CAUTION_pseudoreplicated": {
+    "n_queries": 122203,
+    "mean_preserve": 0.42836668302466546,
+    "mean_repair": 0.4287259710928724,
+    "mean_oracle": 0.4314257957412235,
+    "headroom": 0.002699824648351057,
+    "headroom_ci_lower": 0.0025658721475983227,
+    "headroom_ci_upper": 0.002831678679415706,
+    "frac_benefit": 0.049106814071667636,
+    "frac_harm": 0.042486681996350334,
+    "frac_neutral": 0.9084065039319821,
+    "mean_delta": 0.0003592880682069283,
+    "median_delta": 0.0,
+    "std_delta": 0.03439404604432167
+  },
+  "query_level_headroom_RECOMMENDED": {
+    "n_distinct_queries": 419,
+    "mean_n_regimes_per_query": 291.65393794749406,
+    "mean_preserve": 0.4814865754146003,
+    "mean_repair": 0.4798520610481412,
+    "mean_oracle": 0.48399439964978336,
+    "headroom": 0.0025078242351830315,
+    "headroom_ci_lower": 0.0020410537256332338,
+    "headroom_ci_upper": 0.0030189278051703274,
+    "frac_benefit": 0.28162291169451076,
+    "frac_harm": 0.2720763723150358,
+    "frac_neutral_exact": 0.44630071599045346,
+    "mean_delta": -0.0016345143664592346,
+    "median_delta": 0.0,
+    "std_delta": 0.024419687118669858
+  },
+  "pseudoreplication_note": "The row-level pooled statistic treats every (dataset, query_id, regime, pool, pair) combination as an independent observation -- it is NOT: only n_distinct_query_dataset_pairs queries actually exist, each repeated across many regimes. Its CI is too narrow and should not be quoted as the headline number. query_level_headroom_RECOMMENDED aggregates to one row per distinct query first (averaging across regimes) before bootstrapping, which is the statistically defensible number.",
+  "pooled_frac_benefit_ci95": {
+    "lower": 0.047909366472637535,
+    "upper": 0.05033260848967447
+  },
+  "pooled_frac_harm_ci95": {
+    "lower": 0.0413701372943887,
+    "upper": 0.04363198971272345
+  },
+  "delta_distribution": {
+    "mean": 0.0003592880682069283,
+    "median": 0.0,
+    "std": 0.03439404604432167,
+    "q05": 0.0,
+    "q25": 0.0,
+    "q75": 0.0,
+    "q95": 0.0,
+    "min": -0.6437928128919779,
+    "max": 1.0
+  },
+  "source_coverage": [
+    {
+      "source_family": "pool_robustness_greedy",
+      "path": "reports/candidate_pool_conditional_audit_20260714/tables/pool_robustness_paired_deltas.csv",
+      "n_rows": 46170
+    },
+    {
+      "source_family": "new_baseline_greedy",
+      "path": "reports/candidate_pool_conditional_audit_20260714/tables/new_baseline_paired_deltas.csv",
+      "n_rows": 4104
+    },
+    {
+      "source_family": "full_calibrated_core_greedy",
+      "path": "reports/full_calibrated_core/tables/full_paired_deltas.csv",
+      "n_rows": 30780
+    },
+    {
+      "source_family": "exact_ilp_task4",
+      "path": "reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_pair_metrics.csv",
+      "n_rows": 7866
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms1_drop_mutual/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/bright/ms2/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms1_drop_mutual/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/fiqa/ms2/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1/pool10_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1/pool35_ndcg10/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1/pool35_ndcg20/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1/pool35_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1_drop_mutual/pool10_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1_drop_mutual/pool35_ndcg10/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1_drop_mutual/pool35_ndcg20/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms1_drop_mutual/pool35_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms2/pool10_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms2/pool35_ndcg10/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms2/pool35_ndcg20/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/hotpotqa/ms2/pool35_ndcg5/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms1_drop_mutual/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool20_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool20_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool20_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool50_ndcg20/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_greedy",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/greedy_pool_cutoff/scidocs/ms2/pool50_ndcg5/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_exact_ilp",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/exact_pool_cutoff/bright/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 250
+    },
+    {
+      "source_family": "pool_cutoff_exact_ilp",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/exact_pool_cutoff/fiqa/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "pool_cutoff_exact_ilp",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/exact_pool_cutoff/hotpotqa/ms1/pool35_ndcg10/query_pair_metrics.csv",
+      "n_rows": 260
+    },
+    {
+      "source_family": "pool_cutoff_exact_ilp",
+      "path": "reports/final_revision_task1_pool_cutoff_20260715/outputs/exact_pool_cutoff/scidocs/ms1/pool50_ndcg10/query_pair_metrics.csv",
+      "n_rows": 600
+    },
+    {
+      "source_family": "real_llm_integrity_policy_sensitivity",
+      "path": "experiments/real_llm_integrity_audit_20260713_034713/policy_sensitivity_full.csv",
+      "n_rows": 1974
+    },
+    {
+      "source_family": "cycle_type_diagnostic",
+      "path": "reports/blocking_issues_investigation/tables/query_cycle_type_and_repair_effect.csv",
+      "n_rows": 379
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+=== Pre-move Git state snapshot (Stage 2) ===
+Captured (UTC): 2026-07-30T01:43:54Z
+
+--- branch ---
+fix/outcome-f-production-operating-point
+
+--- HEAD commit ---
+8761004cb5749db515a5de9f7fc5fb14c7ee4de3 2026-07-28T22:47:18-04:00 docs(research): record no-go decision for whole-graph repair selection
+
+--- git status --porcelain=v1 ---
+M  .gitignore
+M  PROJECT_STATUS.md
+M  README.md
+M  docs/READ_ME_FIRST_FOR_AI.md
+A  papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md
+M  papers/JDIQ_2026/README.md
+M  reports/README.md
+A  reports/final_revision_task1_pool_cutoff_20260715/FINAL_REPORT.md
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_233052_greedy_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_233158_exact_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_235826_validation_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260715_000102_validation_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/exact_run_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/exact_study_manifest.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/feasibility.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/greedy_study_manifest.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/run_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/validation_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_pool_cutoff_exact.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_pool_cutoff_study.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_validation.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_exact.py
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_study.py
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/verify_pool_cutoff_outputs.py
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/feasible_config_grid.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_exclusions.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_solver_status.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_statistics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exclusions.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_pair_metrics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_statistics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_structural_summary.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/score_depth_by_ranker.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/score_depth_union_overlap.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/validation/pool_cutoff_verification.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/FINAL_REPORT.md
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_120258_exact_unrepaired_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_120632_exact_unrepaired_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_122225_validation_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/baseline_pool_fairness_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/exact_repaired_vs_unrepaired_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/initial_audit.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/prior_vs_rrf_audit_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/three_way_comparison_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/outputs/prior_vs_rrf_worked_examples.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/run_manifests/run_task4_validation.sh
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/claim_to_evidence_audit.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_baseline_pool_fairness.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_exact_repaired_vs_unrepaired.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_prior_vs_rrf_audit.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_three_way_comparison.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/task4_common.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_pool_fairness_descriptive.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_all_pools.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_primary_canonical.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_secondary_neutral_pool.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_canonical_family_statistics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_larger_pool_family_statistics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_exclusions.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_pair_metrics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_solver_status.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/prior_vs_rrf_per_query.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/prior_vs_rrf_summary.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/three_way_unrepaired_greedy_exact.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/validation/claim_to_evidence_audit.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/validation/claim_to_evidence_audit.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/STAGE1_CLEANUP_REPORT.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/canonical_reference_changes.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/gitignore_exception_manifest.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/manuscript_results_interface.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/modified_files.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/pre_cleanup_git_state.txt
+A  reports/repo_cleanup_stage1_20260730T004010Z/regression_test_report.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/updated_evidence_provenance.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/validation_results.md
+A  reports/repo_hygiene_audit_20260729T235053Z/proposed_moves.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/STAGE1_REPOSITORY_PREPARATION_REPORT.md
+A  reports/repo_preparation_stage1_20260730T011354Z/canonical_evidence_inventory.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/canonical_reference_changes.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/deferred_cleanup_items.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/dependency_provenance_map.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/gitignore_exception_manifest.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/modified_files.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/pre_change_git_state.txt
+A  reports/repo_preparation_stage1_20260730T011354Z/pre_change_manifest.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/regression_test_report.md
+A  reports/repo_preparation_stage1_20260730T011354Z/reproducibility_status.md
+A  reports/repo_preparation_stage1_20260730T011354Z/validation_results.md
+ M src/consistency_ranker/baseline_ranking.py
+M  src/consistency_ranker/statistical_inference.py
+A  tests/test_holm_pvalue_boolean_regression.py
+A  tests/test_numeric_threshold_parsing_regression.py
+?? configs/multi_provider_repair_pilot_v1.json
+?? reports/extraction_study_20260729T151610Z/
+?? reports/ir_evidence_audit_20260729T182949Z/
+?? reports/ir_evidence_audit_review_20260729T235053Z/
+?? reports/manuscript_reframing_20260729T174326Z/
+?? reports/multi_provider_repair_pilot_20260729T032348Z/
+?? reports/multi_provider_repair_pilot_smoke_20260729T032209Z/
+?? reports/repair_diagnostic_20260729T162748Z/
+?? reports/repair_frontier_20260729T144742Z/
+?? reports/repo_hygiene_audit_20260729T235053Z/REPOSITORY_HYGIENE_AUDIT.md
+?? reports/repo_hygiene_audit_20260729T235053Z/canonical_artifacts.md
+?? reports/repo_hygiene_audit_20260729T235053Z/cleanup_execution_plan.md
+?? reports/repo_hygiene_audit_20260729T235053Z/dependency_map.csv
+?? reports/repo_hygiene_audit_20260729T235053Z/repository_inventory.csv
+?? reports/repo_structural_org_stage2_20260730T014347Z/
+?? reports/reviewer_concerns_program_20260729T035320Z/
+?? scripts/run_extraction_study.py
+?? scripts/run_ir_evidence_audit.py
+?? scripts/run_multi_provider_repair_pilot.py
+?? scripts/run_repair_diagnostic_study.py
+?? scripts/run_repair_frontier_pilot.py
+?? scripts/run_reviewer_concerns_program.py
+?? src/consistency_ranker/extraction_study/
+?? src/consistency_ranker/repair_diagnostic/
+?? src/consistency_ranker/repair_frontier/
+?? tests/test_extraction_study.py
+?? tests/test_repair_diagnostic.py
+?? tests/test_repair_frontier.py
+
+--- diff stat for the one modified tracked file NOT part of any stage ---
+ src/consistency_ranker/baseline_ranking.py | 56 ++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+--- confirm main.tex still zero diff vs HEAD (from Stage 1's revert) ---
+(empty above = still clean)
+
+--- stash list (not touched) ---
+stash@{0}: On main: temp: manuscript local blockers for release

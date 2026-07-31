@@ -1,0 +1,17 @@
+{
+  "protocol": "offline_active_acquisition_pilot_v1",
+  "input_judgments_path": "outputs/openai_scidocs_real_pairwise_q50_k15/judgments.jsonl",
+  "input_judgments_sha256": "908ef35caaff8fc273f6d3d4000521950bb0d1392c02f674b25fccec91155d93",
+  "n_queries": 50,
+  "n_pairs_per_query": 105,
+  "budgets": [
+    0,
+    5,
+    10,
+    21,
+    42,
+    63,
+    105
+  ],
+  "seed": 42
+}

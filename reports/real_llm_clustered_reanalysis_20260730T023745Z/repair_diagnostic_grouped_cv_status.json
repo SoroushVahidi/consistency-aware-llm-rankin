@@ -1,0 +1,9 @@
+{
+  "grouped_cv_already_implemented": true,
+  "grouping_key": "(dataset, query_id)",
+  "verified_via": "src/consistency_ranker/repair_diagnostic/prediction.py (sklearn.model_selection.GroupKFold, read directly this stage)",
+  "original_decision": "NO_IDENTIFIABLE_REPAIR_REGIME",
+  "original_predictor_status": "UNSUPPORTED",
+  "reason": "1 'improves' row out of 120 (across only 6 query clusters) is too few positive examples for any grouped-CV fold to contain one -- a genuine data limitation, not a leakage bug. No re-run performed (would not change this).",
+  "leakage_check": "No configuration from the same query appears split across train and test within a single GroupKFold fold by construction (GroupKFold guarantees this); confirmed by reading the grouping key passed to GroupKFold.split(), which is f'{dataset}::{query_id}' -- the query, not the row."
+}

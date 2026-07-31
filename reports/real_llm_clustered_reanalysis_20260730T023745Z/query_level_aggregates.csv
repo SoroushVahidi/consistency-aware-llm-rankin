@@ -1,0 +1,73 @@
+study,query_id,dataset,n_rows,mean_outcome,outcome_definition
+repair_diagnostic,0674058618d04def58c79a0b28174301ef591433,scidocs,20,-0.0009075837877234871,ndcg_repair - ndcg_preserve
+repair_diagnostic,1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.0006909085166115214,ndcg_repair - ndcg_preserve
+repair_diagnostic,9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,-0.0020885144113247044,ndcg_repair - ndcg_preserve
+repair_diagnostic,11039,fiqa,20,-0.0010644473181033675,ndcg_repair - ndcg_preserve
+repair_diagnostic,2377,fiqa,20,-0.0005338774412764147,ndcg_repair - ndcg_preserve
+repair_diagnostic,4002,fiqa,20,-0.0002688198763849181,ndcg_repair - ndcg_preserve
+extraction_study[borda],0674058618d04def58c79a0b28174301ef591433,scidocs,20,-0.0030848195373714637,ndcg[borda] - incumbent_ndcg
+extraction_study[borda],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.017202558933689473,ndcg[borda] - incumbent_ndcg
+extraction_study[borda],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,-0.02809534054090544,ndcg[borda] - incumbent_ndcg
+extraction_study[borda],11039,fiqa,20,0.0007401719541159591,ndcg[borda] - incumbent_ndcg
+extraction_study[borda],2377,fiqa,20,0.0018484917442162518,ndcg[borda] - incumbent_ndcg
+extraction_study[borda],4002,fiqa,20,-0.001879085928541685,ndcg[borda] - incumbent_ndcg
+extraction_study[pagerank],0674058618d04def58c79a0b28174301ef591433,scidocs,20,-0.0015189537106804485,ndcg[pagerank] - incumbent_ndcg
+extraction_study[pagerank],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.0057245538100630265,ndcg[pagerank] - incumbent_ndcg
+extraction_study[pagerank],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,-0.001282187709945526,ndcg[pagerank] - incumbent_ndcg
+extraction_study[pagerank],11039,fiqa,20,0.001318749393764157,ndcg[pagerank] - incumbent_ndcg
+extraction_study[pagerank],2377,fiqa,20,0.001651856736087115,ndcg[pagerank] - incumbent_ndcg
+extraction_study[pagerank],4002,fiqa,20,0.001016454688475782,ndcg[pagerank] - incumbent_ndcg
+extraction_study[rank_centrality],0674058618d04def58c79a0b28174301ef591433,scidocs,20,-0.0016771756312683127,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[rank_centrality],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.0012954788348045975,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[rank_centrality],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.017140882504696475,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[rank_centrality],11039,fiqa,20,-0.0009418241982694087,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[rank_centrality],2377,fiqa,20,0.0005034346879315366,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[rank_centrality],4002,fiqa,20,-0.0004504823150047188,ndcg[rank_centrality] - incumbent_ndcg
+extraction_study[balance_score],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.0,ndcg[balance_score] - incumbent_ndcg
+extraction_study[balance_score],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0,ndcg[balance_score] - incumbent_ndcg
+extraction_study[balance_score],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.0019187512562233167,ndcg[balance_score] - incumbent_ndcg
+extraction_study[balance_score],11039,fiqa,20,-0.000289288719824099,ndcg[balance_score] - incumbent_ndcg
+extraction_study[balance_score],2377,fiqa,20,-0.0001966350081291368,ndcg[balance_score] - incumbent_ndcg
+extraction_study[balance_score],4002,fiqa,20,0.0,ndcg[balance_score] - incumbent_ndcg
+extraction_study[hodge_rank],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.003374233797374104,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[hodge_rank],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0019015057738654196,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[hodge_rank],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.017587102580769676,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[hodge_rank],11039,fiqa,20,0.0006418813748004182,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[hodge_rank],2377,fiqa,20,-0.0002261325141996562,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[hodge_rank],4002,fiqa,20,0.001167624930732919,ndcg[hodge_rank] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.002334856316089351,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.0003756959129482984,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],11039,fiqa,20,0.0009661567387878323,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],2377,fiqa,20,0.0,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[fas_balance_prior_fusion],4002,fiqa,20,0.0008064596291547544,ndcg[fas_balance_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.0010720039589287467,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.0010393774812847533,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.0007832195822921273,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],11039,fiqa,20,0.0009661567387878323,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],2377,fiqa,20,0.0007551520318973048,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[hybrid_rrf_prior_fusion],4002,fiqa,20,0.0005376397527698362,ndcg[hybrid_rrf_prior_fusion] - incumbent_ndcg
+extraction_study[copeland],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.0,ndcg[copeland] - incumbent_ndcg
+extraction_study[copeland],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0,ndcg[copeland] - incumbent_ndcg
+extraction_study[copeland],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.0,ndcg[copeland] - incumbent_ndcg
+extraction_study[copeland],11039,fiqa,20,0.0,ndcg[copeland] - incumbent_ndcg
+extraction_study[copeland],2377,fiqa,20,0.0,ndcg[copeland] - incumbent_ndcg
+extraction_study[copeland],4002,fiqa,20,0.0,ndcg[copeland] - incumbent_ndcg
+repair_frontier[oracle_full_frontier_upper_bound],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.003374233797374104,delta_oracle_full_frontier
+repair_frontier[oracle_full_frontier_upper_bound],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0005196887406423767,delta_oracle_full_frontier
+repair_frontier[oracle_full_frontier_upper_bound],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.02348777076814349,delta_oracle_full_frontier
+repair_frontier[oracle_full_frontier_upper_bound],11039,fiqa,20,0.0015447341784360301,delta_oracle_full_frontier
+repair_frontier[oracle_full_frontier_upper_bound],2377,fiqa,20,0.0018484917442162518,delta_oracle_full_frontier
+repair_frontier[oracle_full_frontier_upper_bound],4002,fiqa,20,0.001436444807117837,delta_oracle_full_frontier
+repair_frontier[whole_graph_repair],0674058618d04def58c79a0b28174301ef591433,scidocs,20,-0.0009075837877234871,delta_whole_graph_repair
+repair_frontier[whole_graph_repair],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,0.0005196887406423767,delta_whole_graph_repair
+repair_frontier[whole_graph_repair],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.0030301251513551062,delta_whole_graph_repair
+repair_frontier[whole_graph_repair],11039,fiqa,20,-0.0010644473181033675,delta_whole_graph_repair
+repair_frontier[whole_graph_repair],2377,fiqa,20,-0.0001966350081291368,delta_whole_graph_repair
+repair_frontier[whole_graph_repair],4002,fiqa,20,-0.0002688198763849181,delta_whole_graph_repair
+repair_frontier[best_alt_extraction],0674058618d04def58c79a0b28174301ef591433,scidocs,20,0.003374233797374104,delta_best_alt_extraction
+repair_frontier[best_alt_extraction],1b1aed7e508dce5e1c2d847ee69b8979e3be69d2,scidocs,20,-0.0012954788348045975,delta_best_alt_extraction
+repair_frontier[best_alt_extraction],9700939818a450d1bff3a3a29d71ef116d3a6a12,scidocs,20,0.022060498239777626,delta_best_alt_extraction
+repair_frontier[best_alt_extraction],11039,fiqa,20,0.0015447341784360301,delta_best_alt_extraction
+repair_frontier[best_alt_extraction],2377,fiqa,20,0.0018484917442162518,delta_best_alt_extraction
+repair_frontier[best_alt_extraction],4002,fiqa,20,0.001436444807117837,delta_best_alt_extraction

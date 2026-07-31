@@ -1,5 +1,12 @@
 # Q1 Journal: Scientific Positioning and Claims
 
+> **SUPERSEDED (as of 2026-07-28).** Written for a pre-JDIQ Q1 submission
+> target; its "Primary evidence" citations point at
+> `outputs/pub_vote_cmp_v2/`, explicitly marked `do_not_use`/stale in
+> `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv`. The actual submitted
+> positioning is in `papers/JDIQ_2026/manuscript/main.tex` and
+> `papers/JDIQ_2026/CANONICAL_PAPER_STORY.md`.
+
 > **Purpose:** Defines the safe claim set, recommended narrative, and likely
 > reviewer objections based on the evidence committed to this repository.
 > Grounded in actual outputs — does not project or invent results.

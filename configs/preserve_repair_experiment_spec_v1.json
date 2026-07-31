@@ -1,0 +1,97 @@
+{
+  "protocol": "preserve_repair_experiment_spec_v1",
+  "status": "draft_phase0_only",
+  "description": "Machine-readable specification for the preserve-vs-repair-vs-requery research trajectory. See docs/research/RESEARCH_TRAJECTORY.md (narrative) and docs/research/EXPERIMENT_ROADMAP.md (phased plan). This file is the source of truth for parameters quoted in prose in those documents; if they disagree, trust this file. Only Phase 0 (oracle_headroom gate) has executable, tested code as of this version -- action_space.requery and all model_training fields describe future, NOT-yet-implemented work.",
+  "action_space": {
+    "current": ["preserve", "repair"],
+    "future_not_implemented": ["requery"],
+    "requery_definition_status": "undefined -- see roadmap doc 'Re-query extension' for six named candidate designs, none selected"
+  },
+  "target_metric": {
+    "primary": "ndcg_at_10",
+    "definition": "M_q(action) = nDCG@10 of the ranking extracted from the graph under `action`, evaluated against qrels for query q",
+    "both_outcomes_observed_offline": true,
+    "methodological_note": "Both preserve and repair outcomes are computable offline from the same graph for the same query -- this is supervised effect prediction / algorithm selection, NOT causal inference, at this phase. See RESEARCH_TRAJECTORY.md section 8."
+  },
+  "label_definitions": {
+    "regression": {
+      "target": "delta_q = M_q(repair) - M_q(preserve)",
+      "implemented_in": "src/consistency_ranker/repair_selector_mining/label_generation.py:regression_labels"
+    },
+    "three_way_classification": {
+      "classes": ["beneficial", "neutral", "harmful"],
+      "rule": "beneficial if delta_q > epsilon; harmful if delta_q < -epsilon; else neutral",
+      "epsilon_status": "NOT YET FROZEN -- must be selected from epsilon_sensitivity_grid using label_sensitivity_table before any model training, and recorded with rationale in docs/research/DECISION_LOG.md",
+      "epsilon_sensitivity_grid": [0.0, 0.0025, 0.005, 0.01, 0.02, 0.05],
+      "implemented_in": "src/consistency_ranker/repair_selector_mining/label_generation.py:three_way_label,three_way_labels,label_sensitivity_table"
+    }
+  },
+  "feature_groups": {
+    "graph_topology": {"status": "mostly_implemented", "source": "cycle_detection.py, graph_construction.graph_summary, repair_selector_mining/candidate_selection.py:pre_outcome_features"},
+    "edge_confidence_and_instability": {"status": "partially_implemented", "source": "repair_selector_mining/candidate_selection.py (_vote_entropy, fas_removed_weight_frac, greedy_exact_disagreement)"},
+    "repair_descriptors_pre_decision": {"status": "partially_implemented", "note": "must never leak post-outcome NDCG -- checked by label_generation.assert_no_outcome_leakage"},
+    "aggregator_disagreement": {"status": "partially_implemented", "source": "repair_selector_mining/candidate_selection.py:_ranker_disagreement (coarse); pairwise Kendall/rank-variance across baseline_ranking.py methods NOT yet wired"},
+    "query_candidate_set_features": {"status": "not_implemented"},
+    "cross_judge_features": {"status": "not_applicable_yet", "note": "current real-data slices are single-judge; revisit if multi-judge data is used"}
+  },
+  "forbidden_feature_substrings": ["ndcg", "delta", "oracle", "repair_gain", "gold", "post_repair", "label", "target"],
+  "leakage_guard_implemented_in": "src/consistency_ranker/repair_selector_mining/label_generation.py:assert_no_outcome_leakage",
+  "split_rule": {
+    "unit": "query, grouped by (dataset, query_id)",
+    "no_query_in_multiple_splits": true,
+    "fractions": {"train": 0.6, "validation": 0.2, "test": 0.2},
+    "implemented_in": "src/consistency_ranker/repair_selector_mining/splits.py:assign_splits (reused via grouped_splits.py:split_records)",
+    "prohibited": "random per-row split that allows the same (dataset, query_id) to appear in more than one split",
+    "required_protocols_not_yet_all_run": ["leave_one_dataset_out", "leave_one_regime_out", "leave_one_pool_construction_method_out (if applicable)"]
+  },
+  "baselines": {
+    "static": ["always_preserve", "always_repair", "oracle", "majority_class"],
+    "heuristic_gates": ["repair_if_cyclic", "repair_if_cyclic_node_fraction_over_threshold", "repair_if_largest_scc_over_threshold", "repair_if_estimated_cost_below_threshold", "repair_if_mean_confidence_low", "repair_if_order_unstable", "repair_if_aggregator_disagreement_high"],
+    "learned": ["logreg", "shallow_tree", "tree_depth4", "random_forest", "gradient_boosting", "random_forest_calibrated"],
+    "learned_implemented_in": "src/consistency_ranker/repair_selector_mining/selector_training.py (never run to completion in this repository as of this spec version)",
+    "required_negative_controls_not_yet_implemented_anywhere": ["permutation_test_label_shuffle", "random_feature_baseline"]
+  },
+  "gate_0_oracle_headroom": {
+    "implemented_in": "src/consistency_ranker/repair_selector_mining/oracle_headroom.py",
+    "formula": "H = mean(oracle_metric) - max(mean(preserve_metric), mean(repair_metric))",
+    "default_headroom_threshold": 0.01,
+    "default_min_heterogeneity_fraction": 0.05,
+    "ci_method": "bootstrap_mean_interval (percentile, 10000 reps) over per-query regret of the stronger fixed baseline vs. oracle",
+    "decisions": ["PROCEED_TO_LABELING", "NO_HEADROOM_DO_NOT_LEARN", "AMBIGUOUS_NEED_MORE_DATA"],
+    "phase0_real_run_report": "reports/oracle_headroom_gate0_20260728T230000Z/",
+    "phase0_real_run_result": "no slice cleared PROCEED_TO_LABELING as of this spec version; see the report README for the honest reading"
+  },
+  "gate_3_model_selection": {
+    "status": "not_yet_defined_numerically",
+    "rule_sketch": "best learned policy must beat both always_preserve and always_repair with a CI (bootstrap or Wilson, per statistical_inference.py) excluding zero on a LOCKED test split, AND survive permutation-test and random-feature-baseline negative controls",
+    "modeled_after": "reports/policy_selection_20260726T030500Z/decision.json's Outcome F rule (oracle_corr - always_uht_corr > 0.05 AND best_gate_corr <= always_uht_corr + 0.01), adapted from an 8-policy to a 2-action space"
+  },
+  "evaluation_criteria": [
+    "ndcg_at_k", "mrr", "recall_at_k",
+    "regret_vs_oracle",
+    "improvement_over_always_preserve", "improvement_over_always_repair",
+    "coverage_vs_gain_for_selective_policies",
+    "precision_recall_balanced_accuracy_pr_auc_for_beneficial_repair_class",
+    "calibration_brier_ece",
+    "bootstrap_or_wilson_confidence_intervals",
+    "severe_harm_rate_with_valid_binomial_ci",
+    "policy_stability_across_datasets_and_judges"
+  ],
+  "statistics_module": "src/consistency_ranker/statistical_inference.py (bootstrap_mean_interval, sign_flip_pvalue, holm_adjust, proportion_interval -- proportion_interval MUST be used for any 0/n or n/n rate; do not reintroduce a degenerate bootstrap CI for those cases)",
+  "reused_infrastructure": {
+    "regret_vs_oracle": "src/consistency_ranker/policy_selection/policy_utility.py",
+    "compute_utility": "src/consistency_ranker/policy_selection/policy_utility.py",
+    "fit_calibrated_gate_predict_proba": "src/consistency_ranker/policy_selection/policy_calibration.py",
+    "fit_regret_models_predict_policy_regret": "src/consistency_ranker/policy_selection/policy_regret.py",
+    "assign_splits_split_rows": "src/consistency_ranker/repair_selector_mining/splits.py",
+    "pre_outcome_features": "src/consistency_ranker/repair_selector_mining/candidate_selection.py",
+    "train_repair_selectors": "src/consistency_ranker/repair_selector_mining/selector_training.py"
+  },
+  "explicitly_out_of_scope_this_version": [
+    "any new LLM judgment collection",
+    "any live provider/API call",
+    "requery action implementation",
+    "GNN or other non-tabular model before tabular baselines are exhausted",
+    "causal/uplift/doubly-robust methods"
+  ]
+}

@@ -1,0 +1,10 @@
+source,metric_cutoff,n_cells,n_holm_significant,n_bh_significant,mean_delta,conclusion_changes_at_this_cutoff
+larger_pool_greedy (final_revision_task1_pool_cutoff),5,40,0.0,0.0,0.002688951780734046,False
+larger_pool_greedy (final_revision_task1_pool_cutoff),10,35,0.0,0.0,0.000991696868156404,False
+larger_pool_greedy (final_revision_task1_pool_cutoff),20,35,0.0,0.0,0.0006584539710442814,False
+larger_pool_exact_scip (final_revision_task4),5_and_10_pooled (cutoff not separated in this family's stats file),56,0.0,,0.001453251390205116,False
+exact_ilp_vs_greedy (exact_open_source_ilp_repair_investigation),MAP,12,,,-0.00031712453277484926,False
+exact_ilp_vs_greedy (exact_open_source_ilp_repair_investigation),MRR,12,,,0.00014141957281729227,False
+exact_ilp_vs_greedy (exact_open_source_ilp_repair_investigation),nDCG@10,12,,,-0.0010585717653915083,False
+exact_ilp_vs_greedy (exact_open_source_ilp_repair_investigation),nDCG@20,9,,,-9.587815525100483e-05,False
+exact_ilp_vs_greedy (exact_open_source_ilp_repair_investigation),nDCG@5,12,,,-0.00040072935268908996,False

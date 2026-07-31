@@ -1,0 +1,10 @@
+artifact_family,new_status,mechanism,current_canonical_pointer
+outputs/pub_vote_cmp_all4/,historical (unchanged location),HISTORICAL.md added in place,reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/
+outputs/pub_vote_cmp_v2/,historical (unchanged location),HISTORICAL.md added in place,reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/
+outputs/q1_journal_package/,historical (unchanged location),HISTORICAL.md added in place,reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/
+reports/repo_publication_audit.md (+ 5 siblings),historical (moved),git mv to reports/_archive/publication_audit_20260406/,reports/ir_evidence_audit_20260729T182949Z/FINAL_IR_EVIDENCE_AUDIT.md
+reports/exact_ilp_repair_investigation/,historical (moved),mv to reports/_archive/exact_ilp_repair_investigation_SUPERSEDED/,reports/exact_open_source_ilp_repair_investigation/
+reports/jdiq-overnight-20260713-225928/ + -cont-20260713-230229/,historical (moved),git mv to reports/_archive/,papers/JDIQ_2026/submission/final_anonymous/ (the finalized bundle these prepared)
+"15 root-level narrative docs (AUDIT_LOCAL_BRANCH.md, TODO.md, etc.)",historical (moved),git mv to docs/historical/,"PROJECT_STATUS.md (current status), papers/JDIQ_2026/manuscript/main.tex (current claims)"
+10 root-level images + 8 root-level PDFs,historical (moved),git mv to docs/assets/legacy_screenshots/ and figures/legacy/,papers/JDIQ_2026/manuscript/figures_v2/ (current manuscript figures)
+Rejected IJCS submission zip,historical (moved),git mv to papers/_archive/IJCS_early_draft.zip,papers/JDIQ_2026/ (current manuscript workspace)

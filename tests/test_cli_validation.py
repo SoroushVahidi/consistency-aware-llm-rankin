@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -96,3 +98,27 @@ def test_synthetic_validation_blocks_overwrite(tmp_path: Path):
             overwrite_existing=False,
         )
 
+
+def test_documented_synthetic_quickstart_runs_in_temp_output(tmp_path: Path):
+    output_dir = tmp_path / "synthetic_quickstart"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "scripts/run_synthetic.py",
+            "--n-items",
+            "8",
+            "--noise",
+            "0.2",
+            "--seed",
+            "42",
+            "--output-dir",
+            str(output_dir),
+        ],
+        cwd=Path(__file__).resolve().parent.parent,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert proc.returncode == 0, proc.stderr
+    assert (output_dir / "synthetic_results.json").exists()

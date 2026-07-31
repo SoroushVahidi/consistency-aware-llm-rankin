@@ -109,6 +109,9 @@ class PairwiseConfig:
     # chain-of-thought tokens bounded -- see _provider_call_config("fireworks")
     # in failure_mining/llm_runner.py.
     extra_body: dict | None = None
+    # Optional system message (provider-isolated request shaping). Does not
+    # alter the scientific user-prompt template / prompt_hash.
+    system_message: str | None = None
     # Number of pairwise comparisons to run concurrently in collect_all_pairs().
     # Default 1 preserves the original fully-serial behavior for every
     # provider that doesn't opt in. The Azure OpenAI latency diagnostic found
@@ -248,9 +251,13 @@ def _call_openai(prompt: str, config: PairwiseConfig) -> tuple[str, object]:
     last_error = None
     for attempt in range(MAX_RETRIES + 1):
         try:
+            messages: list[dict[str, str]] = []
+            if config.system_message:
+                messages.append({"role": "system", "content": config.system_message})
+            messages.append({"role": "user", "content": prompt})
             response = client.chat.completions.create(
                 model=config.model,
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 temperature=config.temperature,
                 max_tokens=config.max_tokens,
                 extra_body=config.extra_body,
@@ -517,7 +524,9 @@ def compare_pair(
                         "raw_response": response_ab,
                         "parsed_winner_label": winner_label,
                         "parse_error": parse_error_ab,
-                        "prompt_tokens": getattr(usage_ab, "prompt_tokens", None) if usage_ab else None,
+                        "prompt_tokens": (
+                            getattr(usage_ab, "prompt_tokens", None) if usage_ab else None
+                        ),
                         "completion_tokens": (
                             getattr(usage_ab, "completion_tokens", None) if usage_ab else None
                         ),

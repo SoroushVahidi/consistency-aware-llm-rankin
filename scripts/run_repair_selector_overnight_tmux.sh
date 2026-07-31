@@ -2,14 +2,15 @@
 # Overnight repair-selector active mining launcher (detached tmux session).
 set -euo pipefail
 
-MAIN_REPO="/home/soroush/consistency-aware-llm-rankin"
-CAAR_REPO="/home/soroush/consistency-aware-llm-rankin-caar"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+MAIN_REPO="${MAIN_REPO:-$(cd -- "${SCRIPT_DIR}/.." && pwd)}"
+CAAR_REPO="${CAAR_REPO:-$(cd -- "${MAIN_REPO}/.." && pwd)/$(basename "${MAIN_REPO}")-caar}"
 SESSION_NAME="repair_selector_overnight"
 TIMESTAMP="$(date -u +%Y%m%d_%H%M%S)"
 OUTPUT_DIR="${CAAR_REPO}/reports/repair_selector_overnight_${TIMESTAMP}"
 WALL_LIMIT="30600"  # 8h30m in seconds
 
-_LAUNCH_ENV="cd ${MAIN_REPO} && source ${MAIN_REPO}/.venv/bin/activate 2>/dev/null || source /workspace/.venv/bin/activate"
+_LAUNCH_ENV="cd ${MAIN_REPO} && source ${VENV_PATH:-${MAIN_REPO}/.venv}/bin/activate"
 
 mkdir -p "${OUTPUT_DIR}"
 

@@ -6,6 +6,11 @@ on:
 
 jobs:
   tests:
+    # Lightweight job: does NOT install the [exact] (PySCIPOpt/SCIP) extra, so
+    # the 16 solver-dependent tests are expected to skip here. This job exists
+    # for fast lint/non-solver feedback only. The solver-enabled job below
+    # (`tests-solver-enabled`) is the one that must show zero solver skips --
+    # do not rely on this job's skip count to mean "everything ran".
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,7 +25,52 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -e ".[dev]"
+          pip install -e ".[dev,llm]"
 
-      - name: Run tests
+      - name: Check architecture boundaries (no circular subpackage dependencies)
+        run: python scripts/check_architecture_boundaries.py
+
+      - name: Check active path portability
+        run: python scripts/check_active_portability.py
+
+      - name: Run tests (non-solver; SCIP tests expected to skip in this job)
         run: pytest
+
+  tests-solver-enabled:
+    # Required job: installs the [exact] extra so the SCIP-dependent tests
+    # actually run instead of silently skipping. This is the job that
+    # enforces the canonical solver version and must show 0 skipped tests.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (incl. [exact] solver extra)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e ".[dev,exact,llm]"
+          # Free-tier gurobipy: no license/credentials needed for the tiny
+          # graphs in test_legacy_gurobi_backend_matches_scip_objective; lets
+          # that optional/never-required legacy-backend test actually run
+          # instead of skipping, so this job can show a literal 0 skipped.
+          pip install gurobipy
+
+      - name: Report installed SCIP / PySCIPOpt versions
+        run: |
+          python -c "
+          import pyscipopt
+          print('PySCIPOpt version:', pyscipopt.__version__)
+          print('Underlying SCIP version:', pyscipopt.Model().version())
+          "
+
+      - name: Verify canonical solver version (fails visibly on mismatch)
+        run: make verify-env
+
+      - name: Run full suite and require zero skipped tests
+        run: make test-full

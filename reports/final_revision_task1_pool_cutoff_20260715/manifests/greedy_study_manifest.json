@@ -1,0 +1,1807 @@
+{
+  "cells": [
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.010760161225878175,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.010760161225878175,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.010760161225878175,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004679549324860623,
+          "minilm": 0.2737660428484724,
+          "tfidf": 0.3403809610419755
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.008061547976941585,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006939021351336554,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.008061547976941585,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006939021351336554,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.008061547976941585,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "scidocs",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006939021351336554,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.004057446256814376,
+          "minilm": 0.2669735147920446,
+          "tfidf": 0.31006503110420053
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011986582398196659,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011986582398196659,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011986582398196659,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.006214589238642559,
+          "minilm": 0.2762740840339412,
+          "tfidf": 0.37455657691146754
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.01081165099159423,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.010986778819029791,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.01081165099159423,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.010986778819029791,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.01081165099159423,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "fiqa",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 120,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.010986778819029791,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.005636866469025026,
+          "minilm": 0.28830195469039405,
+          "tfidf": 0.3320243277327786
+        }
+      },
+      "usable_query_count": 120
+    },
+    {
+      "config_id": "pool10_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 10,
+      "query_count_with_outputs": 52,
+      "regime": "ms2",
+      "requested_pool_size": 10,
+      "thresholds": {
+        "aggregate_threshold": 0.29521736083575784,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.003169393185078373,
+          "minilm": 0.2715111316798037,
+          "tfidf": 0.22761888592674115
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool10_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 10,
+      "query_count_with_outputs": 52,
+      "regime": "ms1",
+      "requested_pool_size": 10,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.003169393185078373,
+          "minilm": 0.2715111316798037,
+          "tfidf": 0.22761888592674115
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool10_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 10,
+      "query_count_with_outputs": 52,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 10,
+      "thresholds": {
+        "aggregate_threshold": 0.0034145975721510454,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.003169393185078373,
+          "minilm": 0.2715111316798037,
+          "tfidf": 0.22761888592674115
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms2",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.004153016762520664,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg5",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg10",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms2",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg10",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.004153016762520664,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg10",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg20",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms2",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg20",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.004153016762520664,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool35_ndcg20",
+      "dataset": "hotpotqa",
+      "excluded_query_ids": [
+        "5a8b57f25542995d1e6f1371",
+        "5abd94525542992ac4f382d2",
+        "5a8db19d5542994ba4e3dd00",
+        "5ab29c24554299449642c932",
+        "5ae7a8175542993210983ed8",
+        "5ae2070a5542994d89d5b313",
+        "5ae4a3265542995ad6573de5",
+        "5a8e068b5542995085b37384",
+        "5a8e1027554299653c1aa15f",
+        "5a77724455429972597f153e",
+        "5a87c13f5542996e4f30890c",
+        "5ae73acb5542991e8301cc07",
+        "5ae32e125542991a06ce9946",
+        "5adc53f75542996e6852530a",
+        "5a7be2595542997c3ec972ac",
+        "5a77152355429966f1a36c2e",
+        "5a8361b65542992ef85e22a0",
+        "5aba7cfe554299232ef4a2fd"
+      ],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 35,
+      "query_count_with_outputs": 52,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 35,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0019937845032204694,
+          "minilm": 0.2476678852192754,
+          "tfidf": 0.1916002452146279
+        }
+      },
+      "usable_query_count": 52
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011353300578474914,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011892800830031414,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011353300578474914,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011892800830031414,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011353300578474914,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool20_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 20,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 20,
+      "thresholds": {
+        "aggregate_threshold": 0.011892800830031414,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0010799385227108433,
+          "minilm": 0.24019335473678716,
+          "tfidf": 0.5547987928568918
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006665206854337888,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg5",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 5,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.007782676183890641,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006665206854337888,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg10",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 10,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.007782676183890641,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms2",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.0,
+        "drop_mutual": false,
+        "min_support": 2,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.006665206854337888,
+        "drop_mutual": false,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    },
+    {
+      "config_id": "pool50_ndcg20",
+      "dataset": "bright",
+      "excluded_query_ids": [],
+      "metric_cutoff": 20,
+      "pool_policy_id": "rrf_union_topk",
+      "pool_size": 50,
+      "query_count_with_outputs": 50,
+      "regime": "ms1_drop_mutual",
+      "requested_pool_size": 50,
+      "thresholds": {
+        "aggregate_threshold": 0.007782676183890641,
+        "drop_mutual": true,
+        "min_support": 1,
+        "notes": "vote thresholds matched to raw per-ranker retained-vote rates across the dataset; aggregate threshold chosen to minimize absolute retained-edge-count gap versus raw for this regime",
+        "vote_thresholds": {
+          "bm25": 0.0008260852559154874,
+          "minilm": 0.22358560133874272,
+          "tfidf": 0.54992155141557
+        }
+      },
+      "usable_query_count": 50
+    }
+  ],
+  "completed_at": "2026-07-14T23:38:11-0400",
+  "grid": {
+    "bright": [
+      "pool20_ndcg5",
+      "pool20_ndcg10",
+      "pool20_ndcg20",
+      "pool50_ndcg5",
+      "pool50_ndcg10",
+      "pool50_ndcg20"
+    ],
+    "fiqa": [
+      "pool20_ndcg5",
+      "pool20_ndcg10",
+      "pool20_ndcg20",
+      "pool50_ndcg5",
+      "pool50_ndcg10",
+      "pool50_ndcg20"
+    ],
+    "hotpotqa": [
+      "pool10_ndcg5",
+      "pool35_ndcg5",
+      "pool35_ndcg10",
+      "pool35_ndcg20"
+    ],
+    "scidocs": [
+      "pool20_ndcg5",
+      "pool20_ndcg10",
+      "pool20_ndcg20",
+      "pool50_ndcg5",
+      "pool50_ndcg10",
+      "pool50_ndcg20"
+    ]
+  },
+  "primary_protocol": "minmax_raw_matched",
+  "regimes": [
+    "ms2",
+    "ms1",
+    "ms1_drop_mutual"
+  ],
+  "repo_state": {
+    "branch": "main",
+    "canonical_manifest": "/home/soroush/consistency-aware-llm-rankin/experiments/method_improvement_audit_20260711_205733/phase_reports/canonical_rerun_manifest.json",
+    "commit": "b0d48520b72dfa05f6cfe07309cb39ef980be032",
+    "final_anonymous_dir": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/submission/final_anonymous",
+    "final_anonymous_zip": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/submission/final_anonymous.zip",
+    "manuscript_pdf": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/manuscript/main.pdf",
+    "manuscript_pdf_sha256": "7c0213620d6f259964dae17af1d3041b850e8d1984710569caa6a6d5887c6083",
+    "manuscript_tex": "/home/soroush/consistency-aware-llm-rankin/papers/JDIQ_2026/manuscript/main.tex",
+    "status_short": [
+      " M reports/full_calibrated_core/scripts/full_calibration_utils.py",
+      " M reports/full_calibrated_core/scripts/run_full_calibrated_core.py",
+      "?? reports/final_revision_task1_pool_cutoff_20260715/",
+      "?? tests/test_pool_cutoff_evaluation.py"
+    ],
+    "working_tree_clean": false
+  },
+  "started_at": "2026-07-14T23:30:56-0400"
+}

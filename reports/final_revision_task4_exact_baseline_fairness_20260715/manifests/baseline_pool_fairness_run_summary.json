@@ -1,0 +1,26 @@
+{
+  "baseline_methods": [
+    "prior_only",
+    "rrf",
+    "combsum",
+    "borda_fuse"
+  ],
+  "elapsed_seconds": 0.7947449684143066,
+  "fixed_graph_method_family": [
+    "copeland_graph_repaired",
+    "balance_graph_repaired",
+    "markov_graph_repaired",
+    "hybrid_repaired_copeland_a0p3_minmax",
+    "hybrid_repaired_balance_a0p3_minmax"
+  ],
+  "fixed_graph_method_family_source": "run_full_calibrated_core.PRIMARY_BASELINE_COMPARISON_METHODS -- pre-existing in the codebase before Task 4, not chosen post hoc from these results",
+  "focus_regime": "ms1",
+  "generated_at": "2026-07-15T12:15:28-0400",
+  "note": "secondary and all-pool tables are reported descriptively/for robustness context; only the primary_canonical_pool family above is treated as an inferential claim, per the task's 'small pre-specified family' instruction",
+  "primary_targeted_family_definition": "PRE-SPECIFIED before inspecting p-values: {RRF, CombSUM} vs fixed repaired Copeland hybrid, 4 datasets, CANONICAL (rrf_union_topk) pool only = 8 cells, Holm-corrected jointly. This is the only family used for an inferential claim.",
+  "primary_targeted_family_size": 8,
+  "primary_targeted_n_significant": 0,
+  "secondary_pool_for_robustness": "neutral_round_robin_union",
+  "secondary_targeted_family_size": 8,
+  "secondary_targeted_n_significant": 1
+}

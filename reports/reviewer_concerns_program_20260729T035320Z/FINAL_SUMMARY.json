@@ -1,0 +1,582 @@
+{
+  "timestamp": 1785299258.0643637,
+  "git_state": {
+    "commit": "8761004cb5749db515a5de9f7fc5fb14c7ee4de3",
+    "dirty": true,
+    "branch": "fix/outcome-f-production-operating-point"
+  },
+  "stage1_interpretation": {
+    "pilot_dir": "reports/multi_provider_repair_pilot_20260729T032348Z",
+    "n_rows_total": 60,
+    "primary_repair_method": "greedy",
+    "method_summaries": {
+      "greedy": {
+        "n": 30,
+        "n_cyclic": 10,
+        "frac_cyclic": 0.3333333333333333,
+        "n_nontrivial_scc": 10,
+        "n_activated": 10,
+        "frac_activated": 0.3333333333333333,
+        "n_beneficial": 0,
+        "n_harmful": 0,
+        "n_neutral": 30,
+        "frac_nonzero_delta_among_activated": 0.0,
+        "mean_delta": 0.0,
+        "min_delta": 0.0,
+        "max_delta": 0.0,
+        "per_graph": {
+          "aggregate": {
+            "n": 6,
+            "n_cyclic": 6,
+            "n_activated": 6,
+            "n_nonzero_delta": 0
+          },
+          "azure": {
+            "n": 6,
+            "n_cyclic": 1,
+            "n_activated": 1,
+            "n_nonzero_delta": 0
+          },
+          "cohere": {
+            "n": 6,
+            "n_cyclic": 0,
+            "n_activated": 0,
+            "n_nonzero_delta": 0
+          },
+          "fireworks": {
+            "n": 6,
+            "n_cyclic": 1,
+            "n_activated": 1,
+            "n_nonzero_delta": 0
+          },
+          "gemini": {
+            "n": 6,
+            "n_cyclic": 2,
+            "n_activated": 2,
+            "n_nonzero_delta": 0
+          }
+        }
+      },
+      "exact": {
+        "n": 30,
+        "n_cyclic": 10,
+        "frac_cyclic": 0.3333333333333333,
+        "n_nontrivial_scc": 10,
+        "n_activated": 10,
+        "frac_activated": 0.3333333333333333,
+        "n_beneficial": 0,
+        "n_harmful": 0,
+        "n_neutral": 30,
+        "frac_nonzero_delta_among_activated": 0.0,
+        "mean_delta": 0.0,
+        "min_delta": 0.0,
+        "max_delta": 0.0,
+        "per_graph": {
+          "aggregate": {
+            "n": 6,
+            "n_cyclic": 6,
+            "n_activated": 6,
+            "n_nonzero_delta": 0
+          },
+          "azure": {
+            "n": 6,
+            "n_cyclic": 1,
+            "n_activated": 1,
+            "n_nonzero_delta": 0
+          },
+          "cohere": {
+            "n": 6,
+            "n_cyclic": 0,
+            "n_activated": 0,
+            "n_nonzero_delta": 0
+          },
+          "fireworks": {
+            "n": 6,
+            "n_cyclic": 1,
+            "n_activated": 1,
+            "n_nonzero_delta": 0
+          },
+          "gemini": {
+            "n": 6,
+            "n_cyclic": 2,
+            "n_activated": 2,
+            "n_nonzero_delta": 0
+          }
+        }
+      }
+    },
+    "query_level_oracle_headroom": {
+      "n_queries": 6,
+      "mean_preserve": 0.8896482373419947,
+      "mean_repair": 0.8896482373419947,
+      "mean_oracle": 0.8896482373419947,
+      "always_preserve_is_safer_default": true,
+      "headroom_vs_best_baseline": 0.0,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": 0.0,
+        "upper": 0.0,
+        "frac_gt_zero": 0.0,
+        "reps": 10000,
+        "seed": 42
+      },
+      "frac_benefit_from_repair": 0.0,
+      "frac_harmed_by_repair": 0.0,
+      "frac_neutral_exact": 1.0,
+      "delta_summary": {
+        "n": 6,
+        "nonzero_count": 0,
+        "nonzero_fraction": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "se": 0.0,
+        "observed_standardized_effect": null,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.0
+      },
+      "mean_regret_always_preserve": 0.0,
+      "mean_regret_always_repair": 0.0
+    },
+    "comparison_to_repo_scale": {
+      "pilot_query_level_headroom": 0.0,
+      "pilot_query_level_headroom_ci": [
+        0.0,
+        0.0
+      ],
+      "pilot_n_queries": 6,
+      "repo_scale_classical_headroom": 0.0025078,
+      "repo_scale_classical_headroom_ci": [
+        0.0020411,
+        0.0030189
+      ],
+      "repo_scale_n_queries": 419,
+      "ratio_pilot_to_classical": 0.0,
+      "minimum_meaningful_effect_mde": 0.0207,
+      "pilot_headroom_exceeds_mde": false
+    },
+    "go_no_go": {
+      "decision": "NO_HEADROOM_DO_NOT_LEARN",
+      "rationale": "Headroom 95% CI upper bound (0.00000) does not exceed the threshold (0.01000); a learned selector cannot plausibly beat the stronger fixed baseline by more than noise on this slice. Do not proceed to label/feature/model work on this slice; see the negative-result fallback path."
+    },
+    "independent_cross_check_passed": true,
+    "n_provider_failures_recorded": 0
+  },
+  "branch_decision": {
+    "branch": "B",
+    "rationale": "Branch B (diagnose graph-construction sensitivity) selected. Primary-method (greedy) evidence: repair activated on 10/30 rows (33.3%; 33.3% of graphs were cyclic pre-repair -- almost entirely the multi-provider aggregate graph, per per_graph breakdown), but 0/10 activated cases changed nDCG at all (0.0% nonzero-among-activated, below the 20% trigger). This is 'nearly invariant outcomes': repair is structurally real (it removes edges, changes graph shape) but never once altered the resulting Copeland ranking's nDCG in this pilot -- consistent with cycles being confined to document pairs/positions that do not affect the top-of-ranking order nDCG measures at pool_size=6, top-relevance-only pool construction. Scaling this exact construction (Branch A) would only add more zero-information rows. Localized analysis (Branch C) presupposes repair sometimes visibly matters at some grain, which was not observed at any grain here. Branch B (vary pool size/diversity/aggregation/orientation/sparsity) is the evidence-supported choice.",
+    "trigger_evidence": {
+      "primary_repair_method": "greedy",
+      "frac_cyclic": 0.3333333333333333,
+      "frac_activated": 0.3333333333333333,
+      "n_activated": 10,
+      "frac_nonzero_delta_among_activated": 0.0,
+      "headroom_ci_upper": 0.0,
+      "trigger_b_fired": true,
+      "trigger_c_fired": false
+    },
+    "timestamp": 1785297207.183153
+  },
+  "stage3_estimate": {
+    "branch": "B",
+    "variants": [
+      "pool8_complete",
+      "pool8_sparse57",
+      "pool10_sparse56"
+    ],
+    "n_base_queries": 6,
+    "n_plan_rows": 18,
+    "per_provider_calls": 828,
+    "total_planned_api_calls": 3312,
+    "per_provider_cost_usd": {
+      "azure": 0.0630936,
+      "gemini": 0.12751200000000001,
+      "cohere": 1.0639800000000001,
+      "fireworks": 0.10743299999999999
+    },
+    "total_cost_usd": 1.3620186,
+    "cost_ceiling_usd": 8.0,
+    "cost_target_usd": 4.0,
+    "within_ceiling": true,
+    "caveat": "Cost calibrated against the FINISHED main pilot's own observed token usage (provider_usage.jsonl), not just a generic band -- more reliable than a pre-pilot guess, but still not fetched from a live pricing API. See _RATE_USD_PER_M_TOKENS.",
+    "plan": [
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "scidocs",
+        "query_id": "0674058618d04def58c79a0b28174301ef591433",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "scidocs",
+        "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "scidocs",
+        "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "fiqa",
+        "query_id": "11039",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "fiqa",
+        "query_id": "2377",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_complete",
+        "pool_size": 8,
+        "sparse_coverage": null,
+        "dataset": "fiqa",
+        "query_id": "4002",
+        "n_pairs": 28
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "scidocs",
+        "query_id": "0674058618d04def58c79a0b28174301ef591433",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "scidocs",
+        "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "scidocs",
+        "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "fiqa",
+        "query_id": "11039",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "fiqa",
+        "query_id": "2377",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool8_sparse57",
+        "pool_size": 8,
+        "sparse_coverage": 0.57,
+        "dataset": "fiqa",
+        "query_id": "4002",
+        "n_pairs": 16
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "scidocs",
+        "query_id": "0674058618d04def58c79a0b28174301ef591433",
+        "n_pairs": 25
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "scidocs",
+        "query_id": "1b1aed7e508dce5e1c2d847ee69b8979e3be69d2",
+        "n_pairs": 25
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "scidocs",
+        "query_id": "9700939818a450d1bff3a3a29d71ef116d3a6a12",
+        "n_pairs": 25
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "fiqa",
+        "query_id": "11039",
+        "n_pairs": 25
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "fiqa",
+        "query_id": "2377",
+        "n_pairs": 25
+      },
+      {
+        "variant": "pool10_sparse56",
+        "pool_size": 10,
+        "sparse_coverage": 0.56,
+        "dataset": "fiqa",
+        "query_id": "4002",
+        "n_pairs": 25
+      }
+    ]
+  },
+  "stage3_collection_result": {
+    "n_units_completed": 180,
+    "running_cost_usd": 1.3850091999999998,
+    "running_calls": 3312,
+    "results_path": "reports/reviewer_concerns_program_20260729T035320Z/checkpoint/branch_b_results.jsonl"
+  },
+  "stage5_prediction": {
+    "n_rows": 120,
+    "n_unique_queries": 6,
+    "n_nonzero_delta_rows": 10,
+    "n_groups": 6,
+    "class_balance": {
+      "positive": 1,
+      "negative": 119
+    },
+    "models": {
+      "always_repair": {
+        "mean_balanced_accuracy": 0.0,
+        "n_folds_used": 4
+      },
+      "never_repair": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      },
+      "majority_class": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      },
+      "repair_whenever_cyclic": {
+        "mean_balanced_accuracy": 0.675,
+        "n_folds_used": 4
+      },
+      "repair_whenever_large_scc": {
+        "mean_balanced_accuracy": 0.875,
+        "n_folds_used": 4
+      },
+      "logistic_regression": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      },
+      "decision_tree": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      },
+      "control_shuffled_labels_logreg": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      },
+      "control_random_features_logreg": {
+        "mean_balanced_accuracy": 1.0,
+        "n_folds_used": 4
+      }
+    },
+    "negative_controls_note": "control_shuffled_labels_logreg and control_random_features_logreg should perform no better than majority_class if the real models' apparent skill is genuine rather than an artifact of the tiny sample.",
+    "caveat": "n_unique_query_groups=6 is far below what is needed for a reliable predictive-evaluation claim; treat all model numbers here as illustrative/diagnostic, not a validated selector, pending a Branch-A-style query-count scale-up."
+  },
+  "stage6_robustness": {
+    "n_total_rows": 240,
+    "slices": {
+      "method=greedy": {
+        "label": "method=greedy",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 1.0
+      },
+      "method=exact": {
+        "label": "method=exact",
+        "n_queries": 6,
+        "headroom": 0.0004062476650565916,
+        "headroom_ci": [
+          7.757581408568415e-05,
+          0.0007544348581330166
+        ],
+        "frac_beneficial": 0.3333333333333333,
+        "frac_harmful": 0.6666666666666666
+      },
+      "graph_id=azure": {
+        "label": "graph_id=azure",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.16666666666666666
+      },
+      "graph_id=gemini": {
+        "label": "graph_id=gemini",
+        "n_queries": 6,
+        "headroom": 0.0004330739505354897,
+        "headroom_ci": [
+          0.0,
+          0.0012992218516059695
+        ],
+        "frac_beneficial": 0.16666666666666666,
+        "frac_harmful": 0.3333333333333333
+      },
+      "graph_id=cohere": {
+        "label": "graph_id=cohere",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.0
+      },
+      "graph_id=fireworks": {
+        "label": "graph_id=fireworks",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.0
+      },
+      "graph_id=aggregate": {
+        "label": "graph_id=aggregate",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 1.0
+      },
+      "dataset=scidocs": {
+        "label": "dataset=scidocs",
+        "n_queries": 3,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 1.0
+      },
+      "dataset=fiqa": {
+        "label": "dataset=fiqa",
+        "n_queries": 3,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 1.0
+      },
+      "variant=pool10_sparse56": {
+        "label": "variant=pool10_sparse56",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.16666666666666666
+      },
+      "variant=pool6_original": {
+        "label": "variant=pool6_original",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.0
+      },
+      "variant=pool8_complete": {
+        "label": "variant=pool8_complete",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.16666666666666666,
+        "frac_harmful": 0.0
+      },
+      "variant=pool8_sparse57": {
+        "label": "variant=pool8_sparse57",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 0.8333333333333334
+      },
+      "whole_graph_repair": {
+        "label": "whole_graph_repair",
+        "n_queries": 6,
+        "headroom": 0.0,
+        "headroom_ci": [
+          0.0,
+          0.0
+        ],
+        "frac_beneficial": 0.0,
+        "frac_harmful": 1.0
+      }
+    }
+  },
+  "stage7_counterfactual": {
+    "n_graphs_tested": 24,
+    "single_edge_removal_inside_topk": {
+      "n": 238,
+      "mean": 0.000572546455497796,
+      "std": 0.00669618745218407,
+      "frac_nonzero": 0.13445378151260504
+    },
+    "single_edge_removal_outside_topk": {
+      "n": 42,
+      "mean": 0.003452791216213246,
+      "std": 0.011071142588028974,
+      "frac_nonzero": 0.19047619047619047
+    },
+    "interpretation": "SYNTHETIC / exploratory only -- single-edge removal within an observed SCC, not a full MWFAS re-solve, and not validated against any new real LLM judgment. A materially higher frac_nonzero / |mean| for the inside-top-k group versus the outside-top-k group would be intervention-consistent with the 'cycles confined to the non-consequential tail' hypothesis motivating Branch B; a similar or null difference would not support it."
+  }
+}

@@ -11,10 +11,10 @@
 ## 1. Environment
 
 - Python 3.12 (tested with 3.12.3; 3.11 is also supported per `pyproject.toml`).
-- Reference dependency versions actually used to generate the numbers in
-  this manuscript (see `requirements.txt` for the full pinned list):
-  `numpy 2.5.1`, `pandas 3.0.3`, `networkx 3.6.1`, `scipy 1.18.0`,
-  `pyscipopt 6.2.1`, `matplotlib 3.11.0`, `pytest 9.1.1`, `ruff 0.15.20`.
+- Dependency constraints are declared in `pyproject.toml` and
+  `requirements.txt`. These are install constraints, not a lock file; exact
+  versions for individual generated outputs are recorded in their
+  reproducibility manifests or report-level environment captures.
 - Exact solver: **SCIP** via `pyscipopt` (open-source, no commercial
   solver dependency — Gurobi is not used anywhere in the current pipeline).
 
@@ -22,21 +22,29 @@
 git clone https://github.com/SoroushVahidi/consistency-aware-llm-rankin.git
 cd consistency-aware-llm-rankin
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e ".[dev]"
+python -m pip install -r requirements.txt
+python -m pip install -e ".[dev,exact]"  # [exact] installs PySCIPOpt==6.2.1,
+                                         # required for SCIP-dependent
+                                         # exact-repair validation
 python scripts/check_repo_ready.py   # expect: 0 failures
-pytest -q                            # expect: 550 passed (as of this guide)
+make verify-env                      # expect: PySCIPOpt 6.2.1 reported, exits 0
+make test-full                       # expect: 0 skipped (fails otherwise); run `pytest -q`
+                                      # for the pass count, which changes as tests are added --
+                                      # require zero failures and zero skips, not a fixed count
 ```
 
 ## 2. Repository state
 
-Git commit this guide was written against: `c8f6f41e656ecc552736f3f6154cf1c34a416043`
-(`2026-07-14T18:36:16-04:00`), plus the uncommitted working-tree changes
-described in `reports/normalization_protocol_audit_20260714/FINAL_REPORT.md`
-and `reports/candidate_pool_conditional_audit_20260714/FINAL_REPORT.md` at
-the time this guide was written. If you are reading this from a commit
-where those two reports' work has since been committed, trust `git log`
-over this paragraph.
+This guide is maintained as a living document. Record the exact code state
+used for any reproduction run with:
+
+```bash
+git rev-parse HEAD
+git status --short --branch
+```
+
+For manuscript evidence, prefer each report's own manifest/provenance files
+over any static commit hash in prose.
 
 ## 3. Canonical pipeline map
 

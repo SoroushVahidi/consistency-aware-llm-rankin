@@ -1,0 +1,107 @@
+{
+  "summary": {
+    "prompt_sha256": "6e8038363393bb3e6c70edb61619107a29253fda60b35295c040c3925661fcf0",
+    "judgment_schema_sha256": "f8332b7eadcbe92e1c4aed5299a0e3b1214c6d53a68aff3c826fe86147366de7",
+    "panel_version": "counterfactual_provider_panel_v1",
+    "model_ids": [
+      "accounts/fireworks/models/gpt-oss-120b",
+      "command-r-plus-08-2024",
+      "gemini-2.5-flash",
+      "gpt-4.1-mini"
+    ],
+    "temperature": 0.0,
+    "max_output_tokens": 128,
+    "pool_hashes": [
+      "eb56c63dfba1322157a689ebdc2d083450ff1e374d8ecdcd290d12203149d030"
+    ],
+    "query_ids": [
+      "scidocs:01273bd34dacfe9ef887b320f36934d2f9fa9b34"
+    ],
+    "policies": [],
+    "eval_k": 5,
+    "hard_max_live_calls": 4
+  },
+  "initial_request_count": 4,
+  "reserved_followup_calls": 0,
+  "hard_max_live_calls": 4,
+  "estimated_input_tokens_initial": 2040,
+  "estimated_output_tokens_initial": 512,
+  "planned_requests": [
+    {
+      "request_hash": "faba4d05eda3076f91cb10bdc0de879e91c7899e65ebbdb9a4f7b5cdd8b3c7af",
+      "benchmark_version": "counterfactual_collector_canary_v1",
+      "dataset": "scidocs",
+      "query_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34",
+      "pool_hash": "eb56c63dfba1322157a689ebdc2d083450ff1e374d8ecdcd290d12203149d030",
+      "provider": "azure",
+      "model_id": "gpt-4.1-mini",
+      "doc_a_id": "11c88f516e1437e16fc94ff8db0e5f906f9aeb24",
+      "doc_b_id": "7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "presentation_order": "ba",
+      "pair_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34::11c88f516e1437e16fc94ff8db0e5f906f9aeb24::7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "pair_reason": "top_ranked",
+      "temperature": 0.0,
+      "seed": 42,
+      "attempt_type": "initial",
+      "reserve_trigger": null,
+      "reserve_priority": null
+    },
+    {
+      "request_hash": "47104fe80427f013914fc4f43c5bd7297c410139098de01173fe38ea93d788dc",
+      "benchmark_version": "counterfactual_collector_canary_v1",
+      "dataset": "scidocs",
+      "query_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34",
+      "pool_hash": "eb56c63dfba1322157a689ebdc2d083450ff1e374d8ecdcd290d12203149d030",
+      "provider": "cohere",
+      "model_id": "command-r-plus-08-2024",
+      "doc_a_id": "11c88f516e1437e16fc94ff8db0e5f906f9aeb24",
+      "doc_b_id": "7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "presentation_order": "ba",
+      "pair_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34::11c88f516e1437e16fc94ff8db0e5f906f9aeb24::7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "pair_reason": "top_ranked",
+      "temperature": 0.0,
+      "seed": 42,
+      "attempt_type": "initial",
+      "reserve_trigger": null,
+      "reserve_priority": null
+    },
+    {
+      "request_hash": "55341e9712822ab156fe14310b909cd7d7bed925a98fcae963b7379ada70eb10",
+      "benchmark_version": "counterfactual_collector_canary_v1",
+      "dataset": "scidocs",
+      "query_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34",
+      "pool_hash": "eb56c63dfba1322157a689ebdc2d083450ff1e374d8ecdcd290d12203149d030",
+      "provider": "fireworks",
+      "model_id": "accounts/fireworks/models/gpt-oss-120b",
+      "doc_a_id": "11c88f516e1437e16fc94ff8db0e5f906f9aeb24",
+      "doc_b_id": "7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "presentation_order": "ba",
+      "pair_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34::11c88f516e1437e16fc94ff8db0e5f906f9aeb24::7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "pair_reason": "top_ranked",
+      "temperature": 0.0,
+      "seed": 42,
+      "attempt_type": "initial",
+      "reserve_trigger": null,
+      "reserve_priority": null
+    },
+    {
+      "request_hash": "6489e26f826aec146430561cda897dd6d7b84d316d57f12b0d6304a6dbe86879",
+      "benchmark_version": "counterfactual_collector_canary_v1",
+      "dataset": "scidocs",
+      "query_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34",
+      "pool_hash": "eb56c63dfba1322157a689ebdc2d083450ff1e374d8ecdcd290d12203149d030",
+      "provider": "gemini",
+      "model_id": "gemini-2.5-flash",
+      "doc_a_id": "11c88f516e1437e16fc94ff8db0e5f906f9aeb24",
+      "doc_b_id": "7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "presentation_order": "ba",
+      "pair_id": "01273bd34dacfe9ef887b320f36934d2f9fa9b34::11c88f516e1437e16fc94ff8db0e5f906f9aeb24::7d2c7748359f57c2b4227b31eca9e5f7a70a6b5c",
+      "pair_reason": "top_ranked",
+      "temperature": 0.0,
+      "seed": 42,
+      "attempt_type": "initial",
+      "reserve_trigger": null,
+      "reserve_priority": null
+    }
+  ]
+}

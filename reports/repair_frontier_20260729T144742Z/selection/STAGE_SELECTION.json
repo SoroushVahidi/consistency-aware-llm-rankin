@@ -1,0 +1,48 @@
+{
+  "status": "SUPPORTED",
+  "reason": "At least one selector (fixed or predictive) beats always-preserve on this data.",
+  "fixed_selector_comparison": {
+    "never_repair": 0.8886922810274193,
+    "always_repair": 0.8877665891355152,
+    "min_objective_candidate": 0.8886922810274193,
+    "frontier_oracle": 0.8940608417000744,
+    "all_fixed_selectors": {
+      "always_preserve": 0.8886922810274193,
+      "min_fas_objective": 0.8886922810274193,
+      "greedy": 0.8877665891355152,
+      "exact": 0.8889871214982731,
+      "objective_improvement_threshold": 0.8886922810274193,
+      "low_confidence_changed_edges_only": 0.8880890525906747
+    }
+  },
+  "predictive_selector": {
+    "n_rows": 312,
+    "n_positive_rows": 66,
+    "n_negative_rows": 246,
+    "n_groups": 6,
+    "models": {
+      "majority_class": {
+        "mean_balanced_accuracy": 0.5,
+        "n_folds_used": 4
+      },
+      "logistic_regression": {
+        "mean_balanced_accuracy": 0.5061554535819242,
+        "n_folds_used": 4
+      },
+      "decision_tree": {
+        "mean_balanced_accuracy": 0.5735365545764706,
+        "n_folds_used": 4
+      },
+      "control_shuffled_labels_logreg": {
+        "mean_balanced_accuracy": 0.47590167240889036,
+        "n_folds_used": 4
+      },
+      "control_random_features_logreg": {
+        "mean_balanced_accuracy": 0.5009182174098141,
+        "n_folds_used": 4
+      }
+    },
+    "negative_controls_note": "control_shuffled_labels_logreg and control_random_features_logreg should perform no better than majority_class if the real models' apparent skill is genuine.",
+    "status": "EVALUATED"
+  }
+}

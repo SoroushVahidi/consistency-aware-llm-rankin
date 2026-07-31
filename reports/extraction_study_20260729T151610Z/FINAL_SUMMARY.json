@@ -1,0 +1,355 @@
+{
+  "timestamp": 1785338175.6507368,
+  "runtime_s": 0.994959831237793,
+  "n_query_graphs": 120,
+  "best_fixed_extractor": "hodge_rank",
+  "best_fixed_stats": {
+    "name": "hodge_rank",
+    "n": 120,
+    "mean_delta": 0.00407436932389048,
+    "headroom_ci": {
+      "method": "percentile",
+      "lower": 0.002013329365166317,
+      "upper": 0.006668486681499247,
+      "reps": 10000,
+      "seed": 13
+    },
+    "n_win": 29,
+    "n_tie": 87,
+    "n_loss": 4,
+    "downside_q05": 0.0,
+    "delta_summary": {
+      "n": 120,
+      "nonzero_count": 33,
+      "nonzero_fraction": 0.275,
+      "mean": 0.00407436932389048,
+      "median": 0.0,
+      "std": 0.012989376953720745,
+      "se": 0.0011857624609150983,
+      "observed_standardized_effect": 0.31366934214064796,
+      "q05": 0.0,
+      "q25": 0.0,
+      "q75": 0.0,
+      "q95": 0.018151675754469743
+    }
+  },
+  "oracle_mean_ndcg": 0.8944500043182515,
+  "incumbent_mean_ndcg": 0.8886922810274193,
+  "oracle_mean_delta": 0.0057577232908322395,
+  "selection": {
+    "status": "SUPPORTED",
+    "reason": "At least one selector (fixed single extractor or predictive) beats always-incumbent.",
+    "comparison": {
+      "always_incumbent": 0.8886922810274193,
+      "always_best_single_extractor": {
+        "name": "hodge_rank",
+        "mean_ndcg": 0.89276665035131
+      },
+      "oracle_extractor_selection": 0.8944500043182515
+    },
+    "predictive_selector": {
+      "n_rows": 960,
+      "n_positive_rows": 111,
+      "n_negative_rows": 849,
+      "n_groups": 6,
+      "models": {
+        "majority_class": {
+          "mean_balanced_accuracy": 0.5,
+          "n_folds_used": 4
+        },
+        "logistic_regression": {
+          "mean_balanced_accuracy": 0.53,
+          "n_folds_used": 4
+        },
+        "decision_tree": {
+          "mean_balanced_accuracy": 0.5419242459667992,
+          "n_folds_used": 4
+        },
+        "control_shuffled_labels_logreg": {
+          "mean_balanced_accuracy": 0.5,
+          "n_folds_used": 4
+        },
+        "control_random_features_logreg": {
+          "mean_balanced_accuracy": 0.5,
+          "n_folds_used": 4
+        }
+      },
+      "negative_controls_note": "control_shuffled_labels_logreg and control_random_features_logreg should perform no better than majority_class if the real models' apparent skill is genuine.",
+      "status": "EVALUATED"
+    }
+  },
+  "decision": "NO_MEANINGFUL_EXTRACTION_GAIN",
+  "decision_rationale": "Neither a fixed extractor (best: 'hodge_rank' at 0.00407), a selector, nor the oracle (0.00576) clears the 0.01 threshold -- extraction method choice does not meaningfully change ranking quality on this data.",
+  "stats_by_extractor": {
+    "incumbent": {
+      "name": "incumbent",
+      "n": 120,
+      "mean_delta": 0.0,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": 0.0,
+        "upper": 0.0,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 0,
+      "n_tie": 120,
+      "n_loss": 0,
+      "downside_q05": 0.0,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 0,
+        "nonzero_fraction": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "se": 0.0,
+        "observed_standardized_effect": null,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.0
+      }
+    },
+    "copeland": {
+      "name": "copeland",
+      "n": 120,
+      "mean_delta": 0.0,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": 0.0,
+        "upper": 0.0,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 0,
+      "n_tie": 120,
+      "n_loss": 0,
+      "downside_q05": 0.0,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 0,
+        "nonzero_fraction": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "se": 0.0,
+        "observed_standardized_effect": null,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.0
+      }
+    },
+    "borda": {
+      "name": "borda",
+      "n": 120,
+      "mean_delta": -0.007945523540362641,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": -0.013921111602947409,
+        "upper": -0.0032872508287801533,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 19,
+      "n_tie": 74,
+      "n_loss": 27,
+      "downside_q05": -0.05722689322991226,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 46,
+        "nonzero_fraction": 0.38333333333333336,
+        "mean": -0.007945523540362641,
+        "median": 0.0,
+        "std": 0.029986546949603576,
+        "se": 0.0027373846976642678,
+        "observed_standardized_effect": -0.2649696063276696,
+        "q05": -0.05722689322991226,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.008967047041898102
+      }
+    },
+    "pagerank": {
+      "name": "pagerank",
+      "n": 120,
+      "mean_delta": -0.0007564390687269911,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": -0.0032661640334176395,
+        "upper": 0.0014647669275449184,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 22,
+      "n_tie": 83,
+      "n_loss": 15,
+      "downside_q05": -0.018151675754469743,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 37,
+        "nonzero_fraction": 0.30833333333333335,
+        "mean": -0.0007564390687269911,
+        "median": 0.0,
+        "std": 0.013436476570192153,
+        "se": 0.0012265768851473149,
+        "observed_standardized_effect": -0.05629742773526627,
+        "q05": -0.018151675754469743,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.015027692501569802
+      }
+    },
+    "rank_centrality": {
+      "name": "rank_centrality",
+      "n": 120,
+      "mean_delta": 0.002213226035546829,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": -0.00023584054500131043,
+        "upper": 0.00532497397441266,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 14,
+      "n_tie": 95,
+      "n_loss": 11,
+      "downside_q05": -0.0072305400879357105,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 25,
+        "nonzero_fraction": 0.20833333333333334,
+        "mean": 0.002213226035546829,
+        "median": 0.0,
+        "std": 0.015527351123912231,
+        "se": 0.0014174467448116537,
+        "observed_standardized_effect": 0.1425372568627269,
+        "q05": -0.0072305400879357105,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.010393774812847534
+      }
+    },
+    "balance_score": {
+      "name": "balance_score",
+      "n": 120,
+      "mean_delta": 0.00023880458804501347,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": -0.00017741686126690562,
+        "upper": 0.0009593756281116583,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 1,
+      "n_tie": 117,
+      "n_loss": 2,
+      "downside_q05": 0.0,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 3,
+        "nonzero_fraction": 0.025,
+        "mean": 0.00023880458804501347,
+        "median": 0.0,
+        "std": 0.0035677601116349345,
+        "se": 0.0003256904488182672,
+        "observed_standardized_effect": 0.0669340372034096,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.0
+      }
+    },
+    "hodge_rank": {
+      "name": "hodge_rank",
+      "n": 120,
+      "mean_delta": 0.00407436932389048,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": 0.002013329365166317,
+        "upper": 0.006668486681499247,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 29,
+      "n_tie": 87,
+      "n_loss": 4,
+      "downside_q05": 0.0,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 33,
+        "nonzero_fraction": 0.275,
+        "mean": 0.00407436932389048,
+        "median": 0.0,
+        "std": 0.012989376953720745,
+        "se": 0.0011857624609150983,
+        "observed_standardized_effect": 0.31366934214064796,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.018151675754469743
+      }
+    },
+    "fas_balance_prior_fusion": {
+      "name": "fas_balance_prior_fusion",
+      "n": 120,
+      "mean_delta": 0.0007471947661633726,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": 0.00011038346596598432,
+        "upper": 0.001502442396894044,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 10,
+      "n_tie": 107,
+      "n_loss": 3,
+      "downside_q05": 0.0,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 13,
+        "nonzero_fraction": 0.10833333333333334,
+        "mean": 0.0007471947661633726,
+        "median": 0.0,
+        "std": 0.0038640094415670206,
+        "se": 0.0003527341889265329,
+        "observed_standardized_effect": 0.1933729141873818,
+        "q05": 0.0,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.00578577439648198
+      }
+    },
+    "hybrid_rrf_prior_fusion": {
+      "name": "hybrid_rrf_prior_fusion",
+      "n": 120,
+      "mean_delta": 0.0005124657638985157,
+      "headroom_ci": {
+        "method": "percentile",
+        "lower": -0.0005158415058751122,
+        "upper": 0.0015815019197566208,
+        "reps": 10000,
+        "seed": 13
+      },
+      "n_win": 16,
+      "n_tie": 94,
+      "n_loss": 10,
+      "downside_q05": -0.00925762649827706,
+      "delta_summary": {
+        "n": 120,
+        "nonzero_count": 26,
+        "nonzero_fraction": 0.21666666666666667,
+        "mean": 0.0005124657638985157,
+        "median": 0.0,
+        "std": 0.005763805463819119,
+        "se": 0.0005261610449342097,
+        "observed_standardized_effect": 0.08891100976870131,
+        "q05": -0.00925762649827706,
+        "q25": 0.0,
+        "q75": 0.0,
+        "q95": 0.008882541533410887
+      }
+    }
+  }
+}

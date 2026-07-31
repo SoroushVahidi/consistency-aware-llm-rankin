@@ -1,0 +1,51 @@
+{
+  "protocol": "offline_active_acquisition_pilot_v1",
+  "status": "frozen",
+  "description": "Smallest offline pilot for consistency-aware active preference acquisition, using the pre-existing exhaustive real OpenAI (gpt-4o-mini) pairwise SciDocs judgments as an offline oracle. No live provider calls, no new judgments, no qrel leakage into acquisition decisions.",
+  "dataset": "scidocs",
+  "judgments_path": "outputs/openai_scidocs_real_pairwise_q50_k15/judgments.jsonl",
+  "n_queries_expected": 50,
+  "candidate_pool_size_expected": 15,
+  "primary_cutoff_k": 10,
+  "secondary_cutoff_k_for_continuity": 15,
+  "budget_fractions": [0.0, 0.05, 0.10, 0.20, 0.40, 0.60, 1.00],
+  "seed": 42,
+  "strategies_phase3": [
+    "random_unobserved",
+    "static_adjacent",
+    "uncertainty_only",
+    "cycle_scc",
+    "existing_uht",
+    "proposed",
+    "exhaustive",
+    "initial"
+  ],
+  "ablations_phase7": [
+    "ablation_impact_only",
+    "ablation_uncertainty_only",
+    "ablation_impact_x_uncertainty",
+    "ablation_full"
+  ],
+  "algorithms_simulated": [
+    "random",
+    "static_adjacent",
+    "cycle_scc",
+    "score:uncertainty_only",
+    "score:impact_only",
+    "score:impact_x_uncertainty",
+    "score:proposed"
+  ],
+  "proposed_formula": "score(i,j) = uncertainty(i,j) * impact(i,j) * (1 + ambiguity(i,j)); cost term omitted (uniform cost, documented, not hidden)",
+  "extraction_rule": "Copeland score (wins - losses over revealed edges only), tie-broken by BM25 prior score, tie-broken by doc_id. Same rule at every budget for every strategy. No graph repair (MWFAS) in the extraction path.",
+  "pre_registered_primary_comparison": {
+    "comparison": "proposed vs strongest non-oracle baseline",
+    "strongest_baseline_rule": "argmax mean nDCG@10 at the 20%-budget checkpoint, among {random_unobserved, static_adjacent, uncertainty_only, cycle_scc, existing_uht}, computed before inspecting significance",
+    "budgets_tested": [0.10, 0.20],
+    "correction": "Holm, family = proposed vs each of the 5 non-oracle baselines at 10% and 20% (10 comparisons)"
+  },
+  "leakage_controls": [
+    "acquisition scoring functions (scoring.py) take only the candidate pool, the revealed-so-far Copeland tally, and the qrels-free BM25 prior",
+    "qrels are loaded only in oracle.py's QueryOracle.relevance field and consumed only by evaluate.py, never passed to scoring.py or strategies.py",
+    "the cached oracle answer for an unrevealed pair is never read until strategies.py selects that exact pair"
+  ]
+}

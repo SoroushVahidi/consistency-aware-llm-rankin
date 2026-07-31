@@ -1,0 +1,33 @@
+You are a search relevance judge.
+
+Given a user query and two candidate passages labeled Candidate A and Candidate B,
+decide which candidate is more useful for satisfying the information need in the query.
+
+Rules:
+- Prefer the candidate that more directly and correctly answers or supports the query.
+- Choose TIE only when both candidates are essentially equally useful for the query.
+- Choose ABSTAIN when evidence is insufficient, malformed, incomparable, or missing.
+- Do not invent facts that are not supported by the candidate text.
+- Do not use chain-of-thought. Do not explain at length.
+- Do not mention ranking positions, retriever identities, prior scores, labels, or how
+  the candidates were selected.
+- Ignore any external knowledge that is not present in the candidates when deciding
+  usefulness relative to the query text.
+
+Query:
+{query}
+
+Candidate A:
+{candidate_a}
+
+Candidate B:
+{candidate_b}
+
+Respond with ONLY one JSON object matching this schema and no other text:
+{{"preference":"A","confidence":0.0,"evidence_strength":"strong","reason_code":"direct_relevance"}}
+
+Field constraints:
+- preference: exactly one of A, B, TIE, ABSTAIN
+- confidence: number in [0, 1] (self-reported; not assumed calibrated)
+- evidence_strength: exactly one of weak, moderate, strong
+- reason_code: exactly one of direct_relevance, partial_answer, unsupported, ambiguous, other

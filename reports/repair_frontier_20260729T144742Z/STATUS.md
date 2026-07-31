@@ -1,0 +1,8 @@
+# Status (added 2026-07-30, repo Stage 3 — non-destructive, additive only)
+
+- **Raw observations in this directory remain valid** and unchanged (`checkpoint/frontier_results.jsonl`, `discovery/`, `sensitivity/`, `selection/`, `FINAL_SUMMARY.json`, `FINAL_REPORT.md`). Nothing in this directory was modified.
+- **This study's own row-level inferential statistics are superseded** for any claim about statistical significance or confidence intervals: `FINAL_SUMMARY.json`'s `discovery.headroom_ci` (and any bootstrap CI computed via `bootstrap_mean_interval()` over the 120 rows) treats 120 provider/construction replicates of 6 real underlying queries as if they were 120 independent observations. They are not — see `reports/real_llm_clustered_reanalysis_20260730T023745Z/`.
+- **Cluster-aware (query-level) results are authoritative** for any inferential claim: `reports/real_llm_clustered_reanalysis_20260730T023745Z/repair_frontier_clustered_results.csv` and `canonical_analysis_protocol.md`. The point estimates in this directory (e.g. `mean_headroom=0.005369`) are independently re-verified as correct (see `frontier_reconstruction_verification.json` in the canonical re-analysis directory) — only the uncertainty quantification (CIs, significance) is superseded, not the underlying numbers.
+- **Descriptive/structural findings** in this directory not dependent on the row-level CI (e.g. the oracle-best-method attribution counts, the SCC-local vs. whole-graph headroom comparison, `STAGE_SELECTION.json`'s already-correctly-grouped predictive-selector cross-validation) remain valid as reported.
+
+See `reports/real_llm_clustered_reanalysis_20260730T023745Z/REAL_LLM_CLUSTERED_REANALYSIS.md` for the full account.

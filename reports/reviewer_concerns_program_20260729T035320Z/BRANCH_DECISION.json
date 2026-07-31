@@ -1,0 +1,15 @@
+{
+  "branch": "B",
+  "rationale": "Branch B (diagnose graph-construction sensitivity) selected. Primary-method (greedy) evidence: repair activated on 10/30 rows (33.3%; 33.3% of graphs were cyclic pre-repair -- almost entirely the multi-provider aggregate graph, per per_graph breakdown), but 0/10 activated cases changed nDCG at all (0.0% nonzero-among-activated, below the 20% trigger). This is 'nearly invariant outcomes': repair is structurally real (it removes edges, changes graph shape) but never once altered the resulting Copeland ranking's nDCG in this pilot -- consistent with cycles being confined to document pairs/positions that do not affect the top-of-ranking order nDCG measures at pool_size=6, top-relevance-only pool construction. Scaling this exact construction (Branch A) would only add more zero-information rows. Localized analysis (Branch C) presupposes repair sometimes visibly matters at some grain, which was not observed at any grain here. Branch B (vary pool size/diversity/aggregation/orientation/sparsity) is the evidence-supported choice.",
+  "trigger_evidence": {
+    "primary_repair_method": "greedy",
+    "frac_cyclic": 0.3333333333333333,
+    "frac_activated": 0.3333333333333333,
+    "n_activated": 10,
+    "frac_nonzero_delta_among_activated": 0.0,
+    "headroom_ci_upper": 0.0,
+    "trigger_b_fired": true,
+    "trigger_c_fired": false
+  },
+  "timestamp": 1785297207.183153
+}

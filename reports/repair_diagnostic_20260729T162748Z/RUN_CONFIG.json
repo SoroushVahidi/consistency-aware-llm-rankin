@@ -1,0 +1,28 @@
+{
+  "pre_repair_feature_names": [
+    "n_nodes",
+    "n_edges",
+    "graph_density",
+    "pool_size",
+    "n_sccs",
+    "n_nontrivial_sccs",
+    "largest_scc_size",
+    "largest_scc_frac",
+    "is_cyclic",
+    "scc_cycle_weight",
+    "scc_cycle_weight_frac",
+    "edge_weight_mean",
+    "edge_weight_std",
+    "edge_weight_max",
+    "mean_edge_reliability",
+    "frac_edges_unanimous",
+    "provider_disagreement",
+    "topk_involvement",
+    "incumbent_topk_margin"
+  ],
+  "meaningful_threshold": 0.01,
+  "sources": [
+    "reports/multi_provider_repair_pilot_20260729T032348Z",
+    "reports/reviewer_concerns_program_20260729T035320Z"
+  ]
+}

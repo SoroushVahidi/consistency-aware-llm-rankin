@@ -1,5 +1,16 @@
 # Threats to Validity
 
+> **SUPERSEDED (as of 2026-07-28).** This document predates the
+> `papers/JDIQ_2026/` manuscript program (four-dataset canonical
+> `outputs/pub_vote_cmp_all4/` package, exact SCIP repair, Holm-corrected
+> P>k pooling). Its "canonical package" references are to the
+> superseded two-dataset `outputs/pub_vote_cmp_v2/`/`outputs/q1_journal_package/`
+> packages, not the current canonical `outputs/pub_vote_cmp_all4/`. For
+> current, authoritative limitations, see `papers/JDIQ_2026/manuscript/main.tex`
+> (Limitations section) and `papers/JDIQ_2026/MASTER_EVIDENCE_INVENTORY.csv`.
+> Section 5 below was also factually corrected on this date (exact ILP
+> MWFAS is implemented — see the note in place).
+
 ## 1) Dataset limitations
 
 1. Canonical vote-derived package centers on SciDocs + HotpotQA, while the
@@ -54,12 +65,21 @@ Mitigation path:
 
 ## 5) Computational cost limits
 
-1. Greedy FAS is the active backend for real runs.
-2. Exact ILP MWFAS is not yet implemented in `src/consistency_ranker/mwfas_solver.py`.
-3. Cost-performance tradeoffs vs exact optimization are therefore unresolved.
+1. Greedy FAS is the active backend for most real runs.
+2. **Correction (2026-07-28): exact ILP MWFAS is implemented** (SCIP-backed,
+   `src/consistency_ranker/mwfas_solver.py`, tested in
+   `tests/test_exact_mwfas_scip.py`/`tests/test_mwfas_solver.py`) and has
+   been run as a robustness check across the canonical corpus (proven
+   optimal on 1,025/1,025 nonempty graphs; see `main.tex`, "Null Result
+   Persists Under Exact Repair"). This item previously said it was "not
+   yet implemented" — that was true when this document was written
+   (2026-04-06) and is no longer true.
+3. Cost-performance tradeoffs vs. exact optimization at full benchmark
+   scale (as opposed to the bounded robustness check already run) remain
+   only partially characterized.
 
 Mitigation path:
-- implement ILP backend and compare exact-vs-greedy on bounded slices.
+- ~~implement ILP backend and compare exact-vs-greedy on bounded slices~~ done; extend the exact-vs-greedy comparison to a larger slice if cost permits.
 
 ---
 
