@@ -1,0 +1,179 @@
+%% SN Computer Science manuscript skeleton -- STAGE 1 (foundation only).
+%%
+%% This file is an initialized skeleton, not a draft. Section bodies contain
+%% short scope notes, not prose. See ../MANUSCRIPT_PLAN.md for the outline
+%% this skeleton follows, ../EVIDENCE_MAP.md for the claim-to-evidence table,
+%% and ../README.md for compilation instructions.
+%%
+%% Template: Springer Nature sn-jnl.cls v3.1 (December 2024), vendored
+%% unmodified in ../template/. Reference style: sn-basic (Numbered), matching
+%% SN Computer Science's numeric-citation submission guidelines.
+%% Peer review model: single-blind (author identity included; SN Computer
+%% Science guidelines confirm single-blind, unlike the double-blind JDIQ_2026
+%% submission this manuscript partially descends from).
+
+\documentclass[pdflatex,sn-basic]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\raggedbottom
+
+\begin{document}
+
+%% ---------------------------------------------------------------------
+%% Title: three candidates under consideration -- see MANUSCRIPT_PLAN.md
+%% Section 1 for the full rationale. Working title used below is T1.
+%% ---------------------------------------------------------------------
+\title[Structural Consistency Is Not Retrieval Utility]{Structural
+  Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of
+  Preference-Graph Repair for Multi-Ranker Retrieval}
+
+\author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}
+
+\affil*[1]{\orgdiv{Ying Wu College of Computing},
+  \orgname{New Jersey Institute of Technology},
+  \orgaddress{\city{Newark}, \state{NJ}, \country{USA}}}
+
+%% ---------------------------------------------------------------------
+%% Structured abstract (Purpose / Methods / Results / Conclusion), per
+%% SN Computer Science submission guidelines: 150-250 words total, no
+%% subheadings rendered as separate sections (bold run-in labels only),
+%% no citations or equations inside the abstract. PLACEHOLDER -- not
+%% drafted this stage; see MANUSCRIPT_PLAN.md Section 2 for the intended
+%% content of each part.
+%% ---------------------------------------------------------------------
+\abstract{\textbf{Purpose:} [Stage 2 drafting. State the research question:
+whether enforcing acyclicity in derived multi-ranker preference graphs --
+via heuristic or exact minimum-weight feedback-arc-set repair -- yields a
+statistically supported improvement in retrieval effectiveness, and what
+that implies about using structural consistency as a proxy for retrieval
+utility.]
+
+\textbf{Methods:} [Stage 2 drafting. Summarize the audited pipeline
+(construction, repair, extraction, evaluation), the four-benchmark
+canonical package, the three vote-construction regimes, greedy vs.\ exact
+SCIP repair, and the Holm-corrected paired-inference protocol.]
+
+\textbf{Results:} [Stage 2 drafting. State the central null/conditional
+result with the headline Holm-corrected cell counts and the exact-repair
+confirmation, without overstating effect direction.]
+
+\textbf{Conclusion:} [Stage 2 drafting. State the restrained conclusion:
+structural repair is real and measurable, but is not a reliable surrogate
+for downstream retrieval utility; implications for practitioners and
+future preference-graph studies.]}
+
+\keywords{preference graphs, feedback arc set, minimum-weight feedback arc
+  set, graph repair, rank aggregation, information retrieval, retrieval
+  evaluation, data quality}
+
+\maketitle
+
+%% =======================================================================
+%% SECTION SKELETON
+%% Each section below is a scope note for Stage 2+ drafting, not prose.
+%% See MANUSCRIPT_PLAN.md Section 4 (section-by-section outline) for the
+%% full rationale, and EVIDENCE_MAP.md for exact evidence citations.
+%% =======================================================================
+
+\section{Introduction}
+\label{sec:introduction}
+%% Scope: motivate preference graphs as derived data artifacts; state the
+%% precise research question (see MANUSCRIPT_PLAN.md Section 2); state the
+%% central contribution list (<=4 contributions, MANUSCRIPT_PLAN.md
+%% Section 3); explicitly disclaim a state-of-the-art reranking framing.
+
+\section{Related Work}
+\label{sec:related_work}
+%% Scope: rank aggregation / feedback-arc-set literature; probabilistic
+%% pairwise models (Bradley-Terry, Rank Centrality); graph-free fusion
+%% (RRF, CombSUM, Borda); LLM-as-judge / pairwise-ranking positional-bias
+%% literature; data-quality-for-derived-artifacts framing. Reuse candidate:
+%% IJCS draft Related Work + JDIQ Background and Related Work (see
+%% MANUSCRIPT_PLAN.md Section 8, reuse plan).
+
+\section{Preference-Graph Construction and Repair}
+\label{sec:method}
+%% Scope: formalize G_q=(V_q,E_q,w_q); the three vote-construction regimes
+%% (ms2 / ms1 / ms1_drop_mutual); the MWFAS repair objective (greedy AND
+%% exact SCIP, presented as co-equal, not exact-as-footnote per the
+%% Iran JCS C7/C8 lesson); ranking extraction (Copeland, balance,
+%% graph-free baselines). Reuse candidate: IJCS draft Method section
+%% (graph formalism, Algorithm 1/2, regime table) reconciled with JDIQ's
+%% seven-dimension audit-taxonomy framing.
+
+\section{Experimental Design}
+\label{sec:experimental_setup}
+%% Scope: four benchmarks (SciDocs, FiQA, HotpotQA, BRIGHT); stored
+%% BM25/TF-IDF/MiniLM scores; canonical vs. larger-pool (P>k) evaluation
+%% cells; Holm-corrected paired nDCG inference as the primary confirmatory
+%% test; bootstrap / exact-repair / alternative-pool / power analysis as
+%% robustness checks, not separate headline families. Bound the six-query
+%% real-LLM pilot explicitly as a directional addendum, not a second
+%% confirmatory study (see MANUSCRIPT_PLAN.md Section 6, forbidden claims).
+
+\section{Results}
+\label{sec:results}
+%% Scope subsections (see MANUSCRIPT_PLAN.md Section 5 for exact
+%% table/figure list and evidence paths):
+%%   5.1 Construction dominates graph structure (BM25 raw-vs-normalized
+%%       edge-weight share; cyclicity by regime).
+%%   5.2 Repair is structurally active but retrieval gains do not survive
+%%       Holm correction (canonical + larger-pool families).
+%%   5.3 Exact SCIP repair confirms the null is not a greedy-heuristic
+%%       artifact (headline reviewer-facing result).
+%%   5.4 Robustness: alternative pools, added baselines, power/MDE,
+%%       narrow equivalence results.
+
+\section{Discussion}
+\label{sec:discussion}
+%% Scope: state the restrained thesis explicitly (see Section 7 below);
+%% separate structural consistency from downstream retrieval utility as
+%% the paper's organizing distinction; practical audit-logic guidance for
+%% practitioners; brief, explicitly bounded real-LLM addendum discussion.
+
+\section{Limitations}
+\label{sec:limitations}
+%% Scope: finite power for small effects; benchmark/ranker scope; bounded
+%% real-LLM evidence; candidate-pool sensitivity; no claim of transfer to
+%% learned fusion, cross-encoder reranking, or online evaluation.
+
+\section{Conclusion}
+\label{sec:conclusion}
+%% Scope: restate the central thesis in one paragraph; state what future
+%% work would be required to overturn it (not what is planned).
+
+\section{Data Availability and Reproducibility}
+\label{sec:data-availability}
+%% Scope: public-benchmark citations; repository URL; reproduction-script
+%% pointers; explicit statement that stored intermediates and fixed
+%% query-ID lists back every numerical claim (no paid API calls required
+%% to regenerate reported statistics).
+
+\backmatter
+
+\section*{Declarations}
+
+\subsection*{Funding}
+[Stage 2: confirm funding statement -- likely ``Not applicable'' per the
+IJCS draft precedent; verify before submission.]
+
+\subsection*{Conflict of interest}
+The author declares no conflict of interest.
+
+\subsection*{Data and code availability}
+The datasets used in this study are publicly available from their
+original sources and are cited in the manuscript. The code and processed
+artifacts used to generate the reported results are available at
+\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}.
+
+\bibliographystyle{sn-basic}
+\bibliography{references}
+
+\end{document}

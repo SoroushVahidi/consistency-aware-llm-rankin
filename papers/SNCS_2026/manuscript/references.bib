@@ -1,0 +1,620 @@
+% Seed bibliography for the SN Computer Science manuscript (Stage 1
+% foundation, not final). Not every entry below is necessarily cited by
+% the current main.tex skeleton -- this is a reuse-candidate pool for
+% Stage 2+ drafting, assembled from two sources:
+%
+%   1. papers/JDIQ_2026/manuscript/references.bib (35 entries) -- the
+%      current, most-vetted bibliography, reused verbatim as the base.
+%   2. papers/_archive/IJCS_early_draft.zip:references.bib -- 13
+%      additional entries covering LLM-reranking paradigms (RankZephyr,
+%      Setwise, RankGPT-adjacent) and classical graph/fusion ranking
+%      (Hodge decomposition, Rank Centrality precursors, RRF-adjacent
+%      fusion) that JDIQ's narrower data-quality framing omitted but a
+%      general-CS-audience SN Computer Science paper may want for
+%      Related Work breadth.
+%
+% Prune unused entries once main.tex prose is drafted (Stage 2+); do not
+% leave dead bib entries in the camera-ready bibliography.
+
+% References cited in Sec.1-4 (Introduction, Background, Methodology,
+% Experimental Setup) of the JDIQ manuscript draft.
+% Sourced from the rejected IJCS submission references.bib (verified DOI-complete
+% entries), per IJCS_REUSE_AUDIT.md disposition: references.bib is directly reusable.
+% Only entries actually \cite{}-d in main.tex Sec.1-4 are included, per task instructions.
+
+@book{liu2011learning,
+  title     = {Learning to Rank for Information Retrieval},
+  author    = {Liu, Tie-Yan},
+  year      = {2011},
+  publisher = {Springer},
+  address   = {Berlin, Heidelberg}
+}
+
+@inproceedings{burges2005learning,
+  author    = {Christopher Burges and Tal Shaked and Erin Renshaw and Ari Lazier and Matt Deeds and Nicole Hamilton and Greg Hullender},
+  title     = {Learning to Rank Using Gradient Descent},
+  booktitle = {Proceedings of the 22nd International Conference on Machine Learning},
+  pages     = {89--96},
+  year      = {2005},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/1102351.1102363}
+}
+
+@inproceedings{sun-etal-2023-chatgpt,
+  title     = {Is {C}hat{GPT} Good at Search? Investigating Large Language Models as Re-Ranking Agents},
+  author    = {Sun, Weiwei and
+               Yan, Lingyong and
+               Ma, Xinyu and
+               Wang, Shuaiqiang and
+               Ren, Pengjie and
+               Chen, Zhumin and
+               Yin, Dawei and
+               Ren, Zhaochun},
+  editor    = {Bouamor, Houda and
+               Pino, Juan and
+               Bali, Kalika},
+  booktitle = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing},
+  address   = {Singapore},
+  publisher = {Association for Computational Linguistics},
+  month     = dec,
+  year      = {2023},
+  pages     = {14918--14937},
+  doi       = {10.18653/v1/2023.emnlp-main.923},
+  url       = {https://aclanthology.org/2023.emnlp-main.923/}
+}
+
+@inproceedings{qin-etal-2024-large,
+  title     = {Large Language Models are Effective Text Rankers with Pairwise Ranking Prompting},
+  author    = {Qin, Zhen and
+               Jagerman, Rolf and
+               Hui, Kai and
+               Zhuang, Honglei and
+               Wu, Junru and
+               Yan, Le and
+               Shen, Jiaming and
+               Liu, Tianqi and
+               Liu, Jialu and
+               Metzler, Donald and
+               Wang, Xuanhui and
+               Bendersky, Michael},
+  editor    = {Duh, Kevin and
+               Gomez, Helena and
+               Bethard, Steven},
+  booktitle = {Findings of the Association for Computational Linguistics: {NAACL} 2024},
+  address   = {Mexico City, Mexico},
+  publisher = {Association for Computational Linguistics},
+  month     = jun,
+  year      = {2024},
+  pages     = {1504--1518},
+  doi       = {10.18653/v1/2024.findings-naacl.97},
+  url       = {https://aclanthology.org/2024.findings-naacl.97/}
+}
+
+@inproceedings{dwork2001rank,
+  title     = {Rank Aggregation Methods for the Web},
+  author    = {Dwork, Cynthia and Kumar, Ravi and Naor, Moni and Sivakumar, Dandapani},
+  booktitle = {Proceedings of the 10th International Conference on World Wide Web},
+  pages     = {613--622},
+  year      = {2001},
+  address   = {Hong Kong, Hong Kong},
+  publisher = {ACM},
+  doi       = {10.1145/371920.372165},
+  url       = {https://doi.org/10.1145/371920.372165}
+}
+
+@article{ailon2008aggregating,
+  title   = {Aggregating Inconsistent Information: Ranking and Clustering},
+  author  = {Ailon, Nir and Charikar, Moses and Newman, Alantha},
+  journal = {Journal of the ACM},
+  volume  = {55},
+  number  = {5},
+  pages   = {23:1--23:27},
+  year    = {2008},
+  doi     = {10.1145/1411509.1411513},
+  url     = {https://doi.org/10.1145/1411509.1411513}
+}
+
+@techreport{page1999pagerank,
+  title       = {The PageRank Citation Ranking: Bringing Order to the Web},
+  author      = {Page, Lawrence and Brin, Sergey and Motwani, Rajeev and Winograd, Terry},
+  institution = {Stanford InfoLab},
+  number      = {1999-66},
+  year        = {1999},
+  url         = {http://ilpubs.stanford.edu:8090/422/}
+}
+
+@article{negahban2017rankcentrality,
+  title   = {Rank Centrality: Ranking from Pairwise Comparisons},
+  author  = {Negahban, Sahand and Oh, Sewoong and Shah, Devavrat},
+  journal = {Operations Research},
+  volume  = {65},
+  number  = {1},
+  pages   = {266--287},
+  year    = {2017},
+  doi     = {10.1287/opre.2016.1534},
+  url     = {https://doi.org/10.1287/opre.2016.1534}
+}
+
+@inproceedings{kenyon2007fewerrors,
+  title     = {How to Rank with Few Errors},
+  author    = {Kenyon-Mathieu, Claire and Schudy, Warren},
+  booktitle = {Proceedings of the 39th Annual ACM Symposium on Theory of Computing},
+  pages     = {95--103},
+  year      = {2007},
+  address   = {San Diego, California, USA},
+  publisher = {ACM},
+  doi       = {10.1145/1250790.1250806},
+  url       = {https://doi.org/10.1145/1250790.1250806}
+}
+
+@article{fagin2003comparing,
+  title        = {Comparing Top k Lists},
+  author       = {Fagin, Ronald and Kumar, Ravi and Sivakumar, Dandapani},
+  journal      = {SIAM Journal on Discrete Mathematics},
+  volume       = {17},
+  number       = {1},
+  pages        = {134--160},
+  year         = {2003},
+  doi          = {10.1137/S0895480102412856}
+}
+
+@inproceedings{cohan2020scidocs,
+  title     = {{SPECTER}: Document-level Representation Learning using Citation-informed Transformers},
+  author    = {Cohan, Arman and Feldman, Sergey and Beltagy, Iz and Downey, Doug and Weld, Daniel},
+  booktitle = {Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics},
+  pages     = {2270--2282},
+  year      = {2020},
+  month     = jul,
+  address   = {Online},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2020.acl-main.207},
+  url       = {https://aclanthology.org/2020.acl-main.207/}
+}
+
+@inproceedings{maia2018fiqa,
+  title     = {{WWW}'18 Open Challenge: Financial Opinion Mining and Question Answering},
+  author    = {Maia, Macedo and Handschuh, Siegfried and Freitas, Andr{\'e} and Davis, Brian and McDermott, Ross and Zarrouk, Manel and Balahur, Alexandra},
+  booktitle = {Companion of the The Web Conference 2018 on The Web Conference 2018},
+  pages     = {1941--1942},
+  year      = {2018},
+  address   = {Lyon, France},
+  publisher = {ACM},
+  doi       = {10.1145/3184558.3192301},
+  url       = {https://doi.org/10.1145/3184558.3192301}
+}
+
+@inproceedings{yang2018hotpotqa,
+  title     = {Hotpot{QA}: A Dataset for Diverse, Explainable Multi-hop Question Answering},
+  author    = {Yang, Zhilin and Qi, Peng and Zhang, Saizheng and Bengio, Yoshua and Cohen, William and Salakhutdinov, Ruslan and Manning, Christopher D.},
+  booktitle = {Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing},
+  pages     = {2369--2380},
+  year      = {2018},
+  address   = {Brussels, Belgium},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/D18-1259},
+  url       = {https://aclanthology.org/D18-1259/}
+}
+
+@article{su2024bright,
+  author        = {Hongjin Su and Howard Yen and Mengzhou Xia and Weijia Shi and Niklas Muennighoff and Han-yu Wang and Haisu Liu and Quan Shi and Zachary S. Siegel and Michael Tang and Ruoxi Sun and Jinsung Yoon and Sercan O. Arik and Danqi Chen and Tao Yu},
+  title         = {{BRIGHT}: A Realistic and Challenging Benchmark for Reasoning-Intensive Retrieval},
+  journal       = {arXiv preprint arXiv:2407.12883},
+  year          = {2024},
+  eprint        = {2407.12883},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@inproceedings{cormack2009rrf,
+  author    = {Gordon V. Cormack and Charles L. A. Clarke and Stefan B{\"u}ttcher},
+  title     = {Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods},
+  booktitle = {Proceedings of the 32nd International ACM SIGIR Conference on Research and Development in Information Retrieval},
+  pages     = {758--759},
+  year      = {2009},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/1571941.1572114}
+}
+
+@inproceedings{thakur2021beir,
+  title        = {{BEIR}: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models},
+  author       = {Thakur, Nandan and Reimers, Nils and R{\"u}ckl{\'e}, Andreas and Srivastava, Abhishek and Gurevych, Iryna},
+  booktitle    = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks},
+  year         = {2021},
+  publisher    = {Curran Associates, Inc.},
+  address      = {Red Hook, NY, USA}
+}
+
+@inproceedings{fox1994combination,
+  author    = {Fox, Edward A. and Shaw, Joseph A.},
+  title     = {Combination of Multiple Searches},
+  booktitle = {The Second Text REtrieval Conference (TREC-2)},
+  editor    = {Harman, Donna K.},
+  series    = {NIST Special Publication},
+  number    = {500-215},
+  pages     = {243--252},
+  year      = {1994},
+  publisher = {National Institute of Standards and Technology},
+  address   = {Gaithersburg, MD, USA},
+  url       = {https://trec.nist.gov/pubs/trec2/papers/txt/23.txt}
+}
+
+@incollection{karp1972reducibility,
+  author    = {Richard M. Karp},
+  title     = {Reducibility Among Combinatorial Problems},
+  booktitle = {Complexity of Computer Computations},
+  editor    = {Raymond E. Miller and James W. Thatcher},
+  pages     = {85--103},
+  year      = {1972},
+  publisher = {Plenum Press},
+  address   = {New York, NY, USA}
+}
+
+@article{kemeny1959mathematics,
+  author  = {John G. Kemeny},
+  title   = {Mathematics without Numbers},
+  journal = {Daedalus},
+  volume  = {88},
+  number  = {4},
+  pages   = {577--591},
+  year    = {1959},
+  publisher = {The MIT Press}
+}
+
+@article{bradley1952rank,
+  author  = {Ralph Allan Bradley and Milton E. Terry},
+  title   = {Rank Analysis of Incomplete Block Designs: {I}. The Method of Paired Comparisons},
+  journal = {Biometrika},
+  volume  = {39},
+  number  = {3/4},
+  pages   = {324--345},
+  year    = {1952},
+  doi     = {10.2307/2334029}
+}
+
+@article{eades1993heuristic,
+  author  = {Peter Eades and Xuemin Lin and W. F. Smyth},
+  title   = {A Fast and Effective Heuristic for the Feedback Arc Set Problem},
+  journal = {Information Processing Letters},
+  volume  = {47},
+  number  = {6},
+  pages   = {319--323},
+  year    = {1993},
+  doi     = {10.1016/0020-0190(93)90079-O}
+}
+
+@inproceedings{manmatha2002formal,
+  author    = {R. Manmatha and H. Sever},
+  title     = {A Formal Approach to Score Normalization for Meta-search},
+  booktitle = {Proceedings of the Second International Conference on Human Language Technology Research},
+  year      = {2002},
+  pages     = {98},
+  publisher = {Morgan Kaufmann},
+  address   = {San Francisco, CA, USA},
+  doi       = {10.3115/1289189.1289265}
+}
+
+@inproceedings{lee1997analyses,
+  author    = {Joon Ho Lee},
+  title     = {Analyses of Multiple Evidence Combination},
+  booktitle = {Proceedings of the 20th Annual International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval},
+  year      = {1997},
+  pages     = {267--276},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/258525.258587}
+}
+
+@inproceedings{urbano2019statistical,
+  author    = {Juli\'{a}n Urbano and Harlley Lima and Alan Hanjalic},
+  title     = {Statistical Significance Testing in Information Retrieval: An Empirical Analysis of Type {I}, Type {II} and Type {III} Errors},
+  booktitle = {Proceedings of the 42nd International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval},
+  year      = {2019},
+  pages     = {505--514},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/3331184.3331259}
+}
+
+@article{plackett1975analysis,
+  author  = {Plackett, R. L.},
+  title   = {The Analysis of Permutations},
+  journal = {Journal of the Royal Statistical Society: Series C (Applied Statistics)},
+  volume  = {24},
+  number  = {2},
+  pages   = {193--202},
+  year    = {1975},
+  doi     = {10.2307/2346567}
+}
+
+@book{luce1959individual,
+  author    = {Luce, R. Duncan},
+  title     = {Individual Choice Behavior: A Theoretical Analysis},
+  publisher = {Wiley},
+  address   = {New York, NY, USA},
+  year      = {1959}
+}
+
+@inproceedings{benham2017risk,
+  author    = {Benham, Rodger and Culpepper, J. Shane},
+  title     = {Risk-Reward Trade-offs in Rank Fusion},
+  booktitle = {Proceedings of the 22nd Australasian Document Computing Symposium},
+  year      = {2017},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/3166072.3166084}
+}
+
+@article{wang1996beyond,
+  author  = {Wang, Richard Y. and Strong, Diane M.},
+  title   = {Beyond Accuracy: What Data Quality Means to Data Consumers},
+  journal = {Journal of Management Information Systems},
+  volume  = {12},
+  number  = {4},
+  pages   = {5--33},
+  year    = {1996},
+  doi     = {10.1080/07421222.1996.11518099}
+}
+
+@article{bruch2023analysis,
+  author  = {Bruch, Sebastian and Gai, Siyu and Ingber, Amir},
+  title   = {An Analysis of Fusion Functions for Hybrid Retrieval},
+  journal = {ACM Transactions on Information Systems},
+  volume  = {42},
+  number  = {1},
+  pages   = {1--35},
+  year    = {2023},
+  doi     = {10.1145/3596512}
+}
+
+@inproceedings{sambasivan2021datacascades,
+  author    = {Sambasivan, Nithya and Kapania, Shivani and Highfill, Hannah and Akrong, Diana and Paritosh, Praveen and Aroyo, Lora M.},
+  title     = {"Everyone Wants to Do the Model Work, Not the Data Work": Data Cascades in High-Stakes AI},
+  booktitle = {Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems},
+  year      = {2021},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  pages     = {1--15},
+  doi       = {10.1145/3411764.3445518}
+}
+
+@inproceedings{northcutt2021labelerrors,
+  author    = {Northcutt, Curtis G. and Athalye, Anish and Mueller, Jonas},
+  title     = {Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks},
+  booktitle = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks (NeurIPS)},
+  year      = {2021}
+}
+
+@inproceedings{zheng2023judging,
+  author    = {Zheng, Lianmin and Chiang, Wei-Lin and Sheng, Ying and Zhuang, Siyuan and
+               Wu, Zhanghao and Zhuang, Yonghao and Lin, Zi and Li, Zhuohan and
+               Li, Dacheng and Xing, Eric P. and Zhang, Hao and Gonzalez, Joseph E. and
+               Stoica, Ion},
+  title     = {Judging {LLM}-as-a-Judge with {MT}-Bench and Chatbot Arena},
+  booktitle = {Proceedings of the 37th Conference on Neural Information Processing Systems (NeurIPS) Track on Datasets and Benchmarks},
+  year      = {2023}
+}
+
+@article{carterette2012multiple,
+  author  = {Carterette, Ben A.},
+  title   = {Multiple Testing in Statistical Analysis of Systems-Based Information Retrieval Experiments},
+  journal = {ACM Transactions on Information Systems},
+  volume  = {30},
+  number  = {1},
+  pages   = {4:1--4:34},
+  year    = {2012},
+  doi     = {10.1145/2094072.2094076}
+}
+
+@article{lakens2018equivalence,
+  author  = {Lakens, Dani\"{e}l and Scheel, Anne M. and Isager, Peder M.},
+  title   = {Equivalence Testing for Psychological Research: A Tutorial},
+  journal = {Advances in Methods and Practices in Psychological Science},
+  volume  = {1},
+  number  = {2},
+  pages   = {259--269},
+  year    = {2018},
+  doi     = {10.1177/2515245918770963}
+}
+
+@inproceedings{shi2025judging,
+  author    = {Shi, Lin and Ma, Chiyu and Liang, Wenhua and Diao, Xingjian and
+               Ma, Weicheng and Vosoughi, Soroush},
+  title     = {Judging the Judges: A Systematic Study of Position Bias in
+               {LLM}-as-a-Judge},
+  booktitle = {Proceedings of the 14th International Joint Conference on
+               Natural Language Processing and the 4th Conference of the
+               Asia-Pacific Chapter of the Association for Computational
+               Linguistics (IJCNLP-AACL)},
+  year      = {2025},
+  doi       = {10.18653/v1/2025.ijcnlp-long.18}
+}
+
+@inproceedings{ihemelandu2024multiple,
+  author    = {Ihemelandu, Ngozi and Ekstrand, Michael D.},
+  title     = {Multiple Testing for {IR} and Recommendation System Experiments},
+  booktitle = {Advances in Information Retrieval: 46th European Conference on
+               Information Retrieval (ECIR)},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {14610},
+  pages     = {449--457},
+  year      = {2024},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-031-56063-7_37}
+}
+
+@misc{zeng2024llmrankfusion,
+  author       = {Zeng, Yifan and Tendolkar, Ojas and Baartmans, Raymond and
+                  Wu, Qingyun and Chen, Lizhong and Wang, Huazheng},
+  title        = {{LLM-RankFusion}: Mitigating Intrinsic Inconsistency in
+                  {LLM}-based Ranking},
+  year         = {2024},
+  eprint       = {2406.00231},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.IR}
+}
+@article{pradeep2023rankzephyr,
+  title   = {RankZephyr: Effective and Robust Zero-Shot Listwise Reranking is a Breeze!},
+  author  = {Pradeep, Ronak and
+             Sharifymoghaddam, Sahel and
+             Lin, Jimmy},
+  journal = {CoRR},
+  volume  = {abs/2312.02724},
+  year    = {2023},
+  doi     = {10.48550/arXiv.2312.02724},
+  url     = {https://arxiv.org/abs/2312.02724}
+}
+
+@inproceedings{zhuang2024setwise,
+  title     = {A Setwise Approach for Effective and Highly Efficient Zero-shot Ranking with Large Language Models},
+  author    = {Zhuang, Shengyao and
+               Zhuang, Honglei and
+               Koopman, Bevan and
+               Zuccon, Guido},
+  editor    = {Yang, Grace Hui and
+               Wang, Hongning and
+               Han, Sam and
+               Hauff, Claudia and
+               Zuccon, Guido and
+               Zhang, Yi},
+  booktitle = {Proceedings of the 47th International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval},
+  address   = {Washington DC, USA},
+  publisher = {ACM},
+  year      = {2024},
+  pages     = {38--47},
+  doi       = {10.1145/3626772.3657813},
+  url       = {https://doi.org/10.1145/3626772.3657813}
+}
+
+@inproceedings{gangi-reddy-etal-2024-first,
+  title     = {{FIRST}: Faster Improved Listwise Reranking with Single Token Decoding},
+  author    = {Gangi Reddy, Revanth and
+               Doo, JaeHyeok and
+               Xu, Yifei and
+               Sultan, Md Arafat and
+               Swain, Deevya and
+               Sil, Avirup and
+               Ji, Heng},
+  editor    = {Al-Onaizan, Yaser and
+               Bansal, Mohit and
+               Chen, Yun-Nung},
+  booktitle = {Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing},
+  address   = {Miami, Florida, USA},
+  publisher = {Association for Computational Linguistics},
+  month     = nov,
+  year      = {2024},
+  pages     = {8642--8652},
+  doi       = {10.18653/v1/2024.emnlp-main.491},
+  url       = {https://aclanthology.org/2024.emnlp-main.491/}
+}
+
+@inproceedings{yoon2024listt5,
+  author    = {Soyoung Yoon and Eunbi Choi and Jiyeon Kim and Hyeongu Yun and Yireun Kim and Seung-won Hwang},
+  title     = {{ListT5}: Listwise Reranking with Fusion-in-Decoder Improves Zero-shot Retrieval},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages     = {2287--2308},
+  year      = {2024},
+  month     = aug,
+  address   = {Bangkok, Thailand},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2024.acl-long.125},
+  url       = {https://aclanthology.org/2024.acl-long.125/}
+}
+
+@article{hunter2004mm,
+  title   = {{MM} Algorithms for Generalized Bradley--Terry Models},
+  author  = {Hunter, David R.},
+  journal = {The Annals of Statistics},
+  volume  = {32},
+  number  = {1},
+  pages   = {384--406},
+  year    = {2004},
+  doi     = {10.1214/aos/1079120141},
+  url     = {https://doi.org/10.1214/aos/1079120141}
+}
+
+@article{jiang2011hodge,
+  title   = {Statistical Ranking and Combinatorial Hodge Theory},
+  author  = {Jiang, Xiaoye and Lim, Lek-Heng and Yao, Yuan and Ye, Yinyu},
+  journal = {Mathematical Programming},
+  volume  = {127},
+  number  = {1},
+  pages   = {203--244},
+  year    = {2011},
+  doi     = {10.1007/s10107-010-0419-x},
+  url     = {https://doi.org/10.1007/s10107-010-0419-x}
+}
+
+@article{vigna2016spectral,
+  title        = {Spectral Ranking},
+  author       = {Vigna, Sebastiano},
+  journal      = {Network Science},
+  volume       = {4},
+  number       = {4},
+  pages        = {433--445},
+  year         = {2016},
+  doi          = {10.1017/nws.2016.21}
+}
+
+@inproceedings{craswell2021overview,
+  title        = {Overview of the {TREC} 2020 Deep Learning Track},
+  author       = {Craswell, Nick and Mitra, Bhaskar and Yilmaz, Emine and Campos, Daniel and Voorhees, Ellen M.},
+  booktitle    = {Proceedings of the Thirtieth Text REtrieval Conference (TREC 2020)},
+  year         = {2021}
+}
+
+@article{nogueira2019passage,
+  title        = {Passage Re-ranking with {BERT}},
+  author       = {Nogueira, Rodrigo and Cho, Kyunghyun},
+  journal      = {arXiv preprint arXiv:1901.04085},
+  year         = {2019}
+}
+
+@article{vogt1999fusion,
+  title        = {The Use of Linearly Combined Probability Estimates as a Basis for Information Retrieval},
+  author       = {Vogt, Christopher C. and Cottrell, Garrison W.},
+  journal      = {Information Retrieval},
+  volume       = {1},
+  number       = {3},
+  pages        = {151--173},
+  year         = {1999},
+  doi          = {10.1023/A:1009980519412}
+}
+
+@inproceedings{zhang2023hybrid,
+  author    = {Zongmeng Zhang and Wengang Zhou and Jiaxin Shi and Houqiang Li},
+  title     = {Hybrid and Collaborative Passage Reranking},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2023},
+  pages     = {14003--14021},
+  year      = {2023},
+  address   = {Toronto, Canada},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2023.findings-acl.880},
+  url       = {https://aclanthology.org/2023.findings-acl.880/}
+}
+
+@inproceedings{lu2024hyrr,
+  author    = {Jing Lu and Keith Hall and Ji Ma and Jianmo Ni},
+  title     = {{HYRR}: Hybrid Infused Reranking for Passage Retrieval},
+  booktitle = {Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation},
+  pages     = {8528--8534},
+  year      = {2024},
+  month     = may,
+  address   = {Torino, Italia},
+  publisher = {ELRA and ICCL},
+  url       = {https://aclanthology.org/2024.lrec-main.748/}
+}
+
+@inproceedings{wang2024dapr,
+  author    = {Kexin Wang and Nils Reimers and Iryna Gurevych},
+  title     = {{DAPR}: A Benchmark on Document-Aware Passage Retrieval},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages     = {4313--4330},
+  year      = {2024},
+  month     = aug,
+  address   = {Bangkok, Thailand},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2024.acl-long.236},
+  url       = {https://aclanthology.org/2024.acl-long.236/}
+}

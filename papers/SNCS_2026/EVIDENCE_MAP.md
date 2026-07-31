@@ -1,0 +1,75 @@
+# Manuscript Evidence Map (Stage 1)
+
+Every planned claim, table, and figure below is mapped to the exact
+repository artifact that backs it. This is the SN Computer Science
+manuscript's own scoped view of `docs/claim_evidence_registry.yaml` --
+consult that file for the machine-readable, repository-wide version and
+for the full mutual-exclusion rules (`canonical` claims never overlap with
+`internal_validation` or `superseded` ones).
+
+All paths below were confirmed to exist on disk during this Stage-1 pass
+(directory-existence checks only; no experiments were re-run). Numbers
+quoted are copied verbatim from `papers/JDIQ_2026/manuscript/main.tex`
+(the most current, already-checked source) or `docs/claim_evidence_registry.yaml`,
+not recomputed.
+
+## Planned main-paper claims
+
+| # | Planned claim (bounded) | Registry ID | Evidence path(s) | Generating script | Statistical unit / correction |
+|---|---|---|---|---|---|
+| 1 | Raw heterogeneous score margins are scale-dominated (BM25 conditional edge-weight share 0.988 raw vs. 0.512 normalized); normalization materially changes retained votes, cyclicity, and removed edges. | REPAIR-01 (supporting) | `reports/full_calibrated_core/`, `reports/normalization_protocol_audit_20260714/` | `reports/full_calibrated_core/scripts/full_calibration_utils.py` | descriptive; no significance test claimed |
+| 2 | Vote-construction regime (`ms1`/`ms2`/`ms1_drop_mutual`) is the dominant determinant of graph cyclicity; e.g. HotpotQA drops from 63.5% to 1.9% cyclic queries after mutual-pair deletion, FiQA from 98.3% to 30.8%. | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
+| 3 | Repair is structurally active under normalized `ms1` graphs (removed weight 0.029-0.080 of total graph weight); `ms2` is acyclic by construction. | REPAIR-01 | `reports/full_calibrated_core/` | same | descriptive |
+| 4 | **Central null result:** no repaired-vs-unrepaired nDCG cell survives Holm correction -- 0/20 active canonical `ms1` cells, 0/60 full canonical cells. | REPAIR-01 | `reports/full_calibrated_core/` | same | query; Holm |
+| 5 | Larger-pool (`P>k`) study: repair changes top-$k$ membership (mean rate 10.6% vs. 0% at `P=k`) but still 0/110 active larger-pool cells survive Holm correction. | REPAIR-01 | `reports/final_revision_task1_pool_cutoff_20260715/` | `reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_study.py` | query; Holm |
+| 6 | **Headline reviewer-facing result:** exact SCIP repair reaches proven optimality on 1,025/1,025 nonempty graphs and removes *less* edge weight than greedy, yet 0/36 canonical and 0/56 larger-pool exact cells survive Holm correction -- the null is not a greedy-heuristic artifact. | REPAIR-02 | `reports/exact_open_source_ilp_repair_investigation/`, `reports/final_revision_task4_exact_baseline_fairness_20260715/` | `reports/exact_open_source_ilp_repair_investigation/scripts/run_exact_open_ilp_study.py` | query; Holm |
+| 7 | Simple graph-free baselines remain competitive: CombSUM dataset-macro mean nDCG 0.554, RRF 0.546, best repaired Copeland hybrid effectively tied with RRF (0.546). | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
+| 8 | Power/MDE: median observed \|delta\| 0.0036 vs. Holm-adjusted median 80%-power MDE 0.0207 in the active larger-pool family; narrow equivalence (13/110 at +/-0.005, 32/110 at +/-0.010). | REPAIR-01 (supporting) | `reports/final_revision_task1_pool_cutoff_20260715/` | same | query; Holm-adjusted MDE |
+
+## Planned appendix / supplementary claims
+
+| # | Planned claim (bounded) | Registry ID | Evidence path(s) | Boundary statement required |
+|---|---|---|---|---|
+| A1 | A six-query real-LLM multi-provider pairwise-judgment pilot shows directionally consistent structural patterns, presented only as a bounded addendum. | LLM-01 | `reports/multi_provider_repair_pilot_20260729T032348Z/` | Must state n=6, not a confirmatory study; must not claim generalization. |
+| A2 | Cluster-aware (query-level, n=6) re-analysis is the only valid inference basis for any statistic derived from the real-LLM pilot's ~120 replicated rows. | LLM-02 | `reports/real_llm_clustered_reanalysis_20260730T023745Z/` | Must explicitly reject any row-level (n=120) significance claim as invalid; this is itself a documented prior error (see `docs/CONTRIBUTIONS.md` S1.2). |
+| A3 (optional) | Independent commercial-solver (Gurobi) cross-validation confirms the SCIP exact-repair result on all 1,025 instances (0 mismatches); solver scaling data (SCIP intractable ~n=40, both solvers fail ~n=50). | SOLVER-01, SCALE-01 | `reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`, `reports/exact_solver_scaling_study_20260731T162314Z/` | `manuscript_applicable: false` in the registry -- include only as a footnote/appendix robustness note if at all, never as a numbered contribution; does not change any conclusion; see Section 6 of `MANUSCRIPT_PLAN.md` for why this is still excluded even though SN Computer Science is single-blind. |
+
+## Planned tables
+
+| Table | Content | Source table/data | Reuse basis |
+|---|---|---|---|
+| T1 | Vote-construction regimes (`ms2`/`ms1`/`ms1_drop_mutual`): min support, min margin, rule, analytical role | `reports/full_calibrated_core/` construction config | Adapt IJCS draft `tab:vote_construction_regimes` / `tab:preference_construction_regimes`, reconciled with JDIQ's regime naming (identical regime names confirmed used in both) |
+| T2 | Datasets and prespecified evaluation settings (stored IDs, usable, depth, evaluated cells) | `reports/full_calibrated_core/`, `reports/final_revision_task1_pool_cutoff_20260715/` | Reuse JDIQ `tab:setup` verbatim (already precise and current) |
+| T3 | Primary empirical findings (Holm-rejected cell counts, exact-repair confirmation) | `reports/full_calibrated_core/`, `reports/exact_open_source_ilp_repair_investigation/` | Reuse/extend JDIQ `tab:primary-findings`; elevate the exact-vs-greedy row per the reviewer lesson (do not present as a footnote) |
+| T4 | Robustness and interpretation summary (exact repair, protocol families, pool robustness, baseline fairness, power/MDE, equivalence) | `reports/final_revision_task1_pool_cutoff_20260715/`, `reports/exact_open_source_ilp_repair_investigation/` | Reuse JDIQ `tab:robustness` verbatim |
+
+## Planned figures
+
+| Figure | Content | Source artifact | Reuse basis |
+|---|---|---|---|
+| F1 | Pipeline/audit schematic (construction -> repair -> extraction -> evaluation) | conceptual, redrawn | Adapt JDIQ `figure1.png` concept; simplify audit-taxonomy framing per reviewer lesson (must not read as decorative) |
+| F2 | Conditional BM25 edge-weight share, raw vs. normalized, across datasets/regimes | `reports/full_calibrated_core/` | Reuse JDIQ `figures_v2/fig2_bm25_share.pdf` if license/authorship allows regeneration from the same underlying CSVs; else regenerate from source tables |
+| F3 | Cyclic-query percentage before/after mutual-pair deletion, by dataset | `reports/full_calibrated_core/` | Reuse JDIQ `figure5.png` concept |
+| F4 | Repaired-minus-unrepaired paired bootstrap $\Delta$nDCG forest plot (active `ms1` regime) | `reports/full_calibrated_core/` | Reuse JDIQ `figures_v2/fig7_bootstrap_forest.pdf` concept |
+| F5 (appendix, new) | Exact-vs-greedy structural gap (removed weight comparison) | `reports/exact_open_source_ilp_repair_investigation/tables/structural_summary_greedy_vs_ilp.csv` | New figure -- not present in either prior manuscript; directly supports the elevated exact-repair contribution |
+
+## Explicitly excluded repository studies (not evidence for this manuscript)
+
+See `MANUSCRIPT_PLAN.md` Section 6 for the full rationale per item. Registry
+IDs for completeness: `HEADROOM-01` (repository-scale oracle headroom,
+NO-GO), `POLICY-01` (Outcome F / production policy selection),
+`PIVOT-01`/`PIVOT-02`/`PIVOT-03` (consistency-aware active-acquisition
+pivot), `DOC-01` (superseded `outputs/pub_vote_cmp_*` packages).
+
+## Verification performed this stage
+
+- Confirmed all ten evidence directories referenced above exist on disk
+  (`ls -d`/`test -d`, not re-run).
+- Confirmed `reports/exact_open_source_ilp_repair_investigation/FINDINGS.md`
+  contains the "1,025" optimality figure quoted above (`grep`).
+- Cross-checked every number quoted in the "Planned main-paper claims"
+  table against `papers/JDIQ_2026/manuscript/main.tex` verbatim (copied,
+  not independently recomputed -- that manuscript's numbers were already
+  extensively audited in prior repository-hygiene sessions and are the
+  submitted, frozen record).
+- No pytest run, no script executed to regenerate any statistic.
