@@ -1,0 +1,366 @@
+=== Post-move Git state snapshot (Stage 2) ===
+Captured (UTC): 2026-07-30T01:59:41Z
+
+--- git status --porcelain=v1 (summary counts) ---
+     38 ??
+     82 A
+      2 AM
+      8 M
+      3 MM
+    214 R
+
+--- full git status --porcelain=v1 ---
+M  .gitignore
+M  PROJECT_STATUS.md
+MM README.md
+ M docs/EXPERIMENTS.md
+MM docs/READ_ME_FIRST_FOR_AI.md
+R  0706C337-D693-4E53-A51D-87B7D8AD0FA5.png -> docs/assets/legacy_screenshots/0706C337-D693-4E53-A51D-87B7D8AD0FA5.png
+R  74556F5F-D495-41DF-9EDE-203C4CD1008A.png -> docs/assets/legacy_screenshots/74556F5F-D495-41DF-9EDE-203C4CD1008A.png
+R  CD2E2086-A0D6-46EC-BD96-2B6F2CF1A432.png -> docs/assets/legacy_screenshots/CD2E2086-A0D6-46EC-BD96-2B6F2CF1A432.png
+R  FC0356B8-3DD3-4014-8903-4368933D867D.png -> docs/assets/legacy_screenshots/FC0356B8-3DD3-4014-8903-4368933D867D.png
+R  IMG_5259.png -> docs/assets/legacy_screenshots/IMG_5259.png
+R  IMG_5260.png -> docs/assets/legacy_screenshots/IMG_5260.png
+R  IMG_5261.png -> docs/assets/legacy_screenshots/IMG_5261.png
+R  IMG_5265.png -> docs/assets/legacy_screenshots/IMG_5265.png
+R  IMG_5268.png -> docs/assets/legacy_screenshots/IMG_5268.png
+R  IMG_5280.png -> docs/assets/legacy_screenshots/IMG_5280.png
+R  AUDIT_LOCAL_BRANCH.md -> docs/historical/AUDIT_LOCAL_BRANCH.md
+R  EXPANDED_SELECTIVE_REPORT.md -> docs/historical/EXPANDED_SELECTIVE_REPORT.md
+R  FAS_NICHE_REPORT.md -> docs/historical/FAS_NICHE_REPORT.md
+R  MANUSCRIPT_SUMMARY.md -> docs/historical/MANUSCRIPT_SUMMARY.md
+R  MULTI_SCORER_EXPERIMENT_REPORT.md -> docs/historical/MULTI_SCORER_EXPERIMENT_REPORT.md
+R  MULTI_SCORER_SUMMARY.md -> docs/historical/MULTI_SCORER_SUMMARY.md
+R  PAPER_DRAFT_WORDING.md -> docs/historical/PAPER_DRAFT_WORDING.md
+R  PAPER_OUTLINE.md -> docs/historical/PAPER_OUTLINE.md
+R  PAPER_READY_REPORT.md -> docs/historical/PAPER_READY_REPORT.md
+R  REAL_SCORER_EXPERIMENT_REPORT.md -> docs/historical/REAL_SCORER_EXPERIMENT_REPORT.md
+R  REASONING_BENCHMARK_FEASIBILITY.md -> docs/historical/REASONING_BENCHMARK_FEASIBILITY.md
+R  REMEDIATION_REPORT.md -> docs/historical/REMEDIATION_REPORT.md
+R  REVIEWER_CONCERN_GAP_AUDIT.md -> docs/historical/REVIEWER_CONCERN_GAP_AUDIT.md
+R  TODO.md -> docs/historical/TODO.md
+R  VALIDATION_REPORT.md -> docs/historical/VALIDATION_REPORT.md
+ M experiments/method_improvement_audit_20260711_205733/run_method_improvement_audit.py
+R  failure_taxonomy_distribution_uniform.pdf -> figures/legacy/failure_taxonomy_distribution_uniform.pdf
+R  fig_mean_ndcg_hybrids_clean.pdf -> figures/legacy/fig_mean_ndcg_hybrids_clean.pdf
+R  figure1_preference_graph_pipeline.pdf -> figures/legacy/figure1_preference_graph_pipeline.pdf
+R  figure2_graph_inconsistency_by_regime.pdf -> figures/legacy/figure2_graph_inconsistency_by_regime.pdf
+R  figure3_structural_quality_improvement_ms1.pdf -> figures/legacy/figure3_structural_quality_improvement_ms1.pdf
+R  figure4_repair_effect_forest_final.pdf -> figures/legacy/figure4_repair_effect_forest_final.pdf
+R  figure5_dataset_comparison.pdf -> figures/legacy/figure5_dataset_comparison.pdf
+R  figure6_failure_taxonomy.pdf -> figures/legacy/figure6_failure_taxonomy.pdf
+A  papers/JDIQ_2026/EVIDENCE_PROVENANCE_20260730.md
+M  papers/JDIQ_2026/README.md
+ M papers/JDIQ_2026/scripts/build_master_inventory.py
+R  Consistency_Aware_Reranking_via_Preference_Graph_Repair__Structural_Gains_and_Conditional_Retrieval_Effects_IJCS.zip -> papers/_archive/IJCS_early_draft.zip
+MM reports/README.md
+R  reports/jdiq-overnight-20260713-225928/OVERNIGHT_REPORT.md -> reports/_archive/jdiq-overnight-20260713-225928/OVERNIGHT_REPORT.md
+R  reports/jdiq-overnight-20260713-225928/artifact_prep/ARTIFACT_MANIFEST.json -> reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/ARTIFACT_MANIFEST.json
+R  reports/jdiq-overnight-20260713-225928/artifact_prep/IDENTITY_LEAK_SCAN.txt -> reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/IDENTITY_LEAK_SCAN.txt
+R  reports/jdiq-overnight-20260713-225928/artifact_prep/UPLOAD_INSTRUCTIONS.md -> reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/UPLOAD_INSTRUCTIONS.md
+R  reports/jdiq-overnight-20260713-225928/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.tar.gz -> reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.tar.gz
+R  reports/jdiq-overnight-20260713-225928/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.zip -> reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.zip
+R  reports/jdiq-overnight-20260713-225928/tables/phase01_retention_evidence.json -> reports/_archive/jdiq-overnight-20260713-225928/tables/phase01_retention_evidence.json
+R  reports/jdiq-overnight-20260713-225928/tables/phase05_validation.json -> reports/_archive/jdiq-overnight-20260713-225928/tables/phase05_validation.json
+R  reports/jdiq-overnight-cont-20260713-230229/COMBMNZ_ASSESSMENT.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/COMBMNZ_ASSESSMENT.md
+R  reports/jdiq-overnight-cont-20260713-230229/NUMERIC_AUDIT.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/NUMERIC_AUDIT.md
+R  reports/jdiq-overnight-cont-20260713-230229/OVERNIGHT_REPORT.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/OVERNIGHT_REPORT.md
+R  reports/jdiq-overnight-cont-20260713-230229/PRIORITY_PLAN.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/PRIORITY_PLAN.md
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/ARTIFACT_MANIFEST.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/ARTIFACT_MANIFEST.json
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/IDENTITY_LEAK_SCAN.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/IDENTITY_LEAK_SCAN.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/PDF_METADATA_NOTE.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/PDF_METADATA_NOTE.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/UPLOAD_INSTRUCTIONS.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/UPLOAD_INSTRUCTIONS.md
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.tar.gz -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.tar.gz
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.zip -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/anonymous_review_bundle/anonymous_review_artifact.zip
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/README.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/README.md
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/pyproject.toml -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/pyproject.toml
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/full_calibration_utils.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/full_calibration_utils.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/run_full_calibrated_core.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/run_full_calibrated_core.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/run_phase0_phase1.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/reports_scripts/run_phase0_phase1.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/requirements.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/requirements.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/__init__.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/__init__.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/baseline_ranking.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/baseline_ranking.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/borda_fuse_ranking.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/borda_fuse_ranking.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/combsum_ranking.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/combsum_ranking.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/cycle_detection.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/cycle_detection.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/__init__.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/__init__.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/beir_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/beir_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/bright_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/bright_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/dataset_registry.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/dataset_registry.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/hotpotqa_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/hotpotqa_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/ir_datasets_export.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/ir_datasets_export.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/msmarco_passage_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/msmarco_passage_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/query_ids.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/query_ids.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/schema.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/schema.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/unified_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data/unified_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data_loader.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/data_loader.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/evaluation.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/evaluation.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/exact_fas.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/exact_fas.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/__init__.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/__init__.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/analysis.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/analysis.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/data_setup.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/data_setup.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/graph_features.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/graph_features.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/llm_runner.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/llm_runner.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/query_processor.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/failure_mining/query_processor.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/graph_construction.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/graph_construction.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/greedy_fas.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/greedy_fas.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/markov_graph_ranking.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/markov_graph_ranking.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/metric_aware_repair.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/metric_aware_repair.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/mwfas_solver.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/mwfas_solver.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/pairwise_prefs.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/pairwise_prefs.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/__init__.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/__init__.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/candidate_selection.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/candidate_selection.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/checkpoint.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/checkpoint.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/processor.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/processor.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/repair_pairs.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/repair_pairs.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/reports.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/reports.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/selector_training.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/selector_training.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/splits.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/repair_selector_mining/splits.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/rrf_ranking.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/rrf_ranking.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/synthetic_data.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/synthetic_data.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/__init__.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/__init__.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/llm_api_status.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/llm_api_status.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/timing.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/code_snapshot/src/consistency_ranker/utils/timing.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/docs/ENVIRONMENT.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/docs/ENVIRONMENT.md
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/query_ids.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/query_ids.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_bm25.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_bm25.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_minilm.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_minilm.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_tfidf.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/scores_tfidf.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms1.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms1.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms1_drop_mutual.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms1_drop_mutual.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms2.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/bright/votes_ms2.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/query_ids.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/query_ids.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_bm25.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_bm25.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_minilm.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_minilm.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_tfidf.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/scores_tfidf.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms1.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms1.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms1_drop_mutual.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms1_drop_mutual.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms2.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/fiqa/votes_ms2.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/query_ids.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/query_ids.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_bm25.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_bm25.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_minilm.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_minilm.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_tfidf.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/scores_tfidf.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms1.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms1.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms1_drop_mutual.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms1_drop_mutual.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms2.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/hotpotqa/votes_ms2.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/query_ids.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/query_ids.txt
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_bm25.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_bm25.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_minilm.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_minilm.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_tfidf.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/scores_tfidf.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms1.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms1.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms1_drop_mutual.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms1_drop_mutual.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms2.jsonl -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/inputs/scidocs/votes_ms2.jsonl
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.png -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.png
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/generate_figure1.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/generate_figure1.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/generate_figures.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/generate_figures.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/style.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/style.py
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.tex -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.tex
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/references.bib -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/references.bib
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_alpha_sensitivity.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_alpha_sensitivity.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_baseline_comparison_by_dataset.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_baseline_comparison_by_dataset.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_bootstrap_permutation.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_bootstrap_permutation.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_cycle_decomposition.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_cycle_decomposition.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_graph_structure.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_graph_structure.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_help_harm_counts.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_help_harm_counts.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_macro_method_comparison.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_macro_method_comparison.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_repair_effects.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_primary_repair_effects.csv
+R  reports/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_raw_vs_calibrated_ablation.csv -> reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/tables/table_raw_vs_calibrated_ablation.csv
+R  reports/jdiq-overnight-cont-20260713-230229/deep_audit/DEEP_AUDIT.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/deep_audit/DEEP_AUDIT.json
+R  reports/jdiq-overnight-cont-20260713-230229/deep_audit/DEEP_AUDIT.md -> reports/_archive/jdiq-overnight-cont-20260713-230229/deep_audit/DEEP_AUDIT.md
+R  reports/jdiq-overnight-cont-20260713-230229/deep_audit/boot_orphan_means.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/deep_audit/boot_orphan_means.json
+R  reports/jdiq-overnight-cont-20260713-230229/deep_audit/tabular_blocks.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/deep_audit/tabular_blocks.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext_after_combmnz.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext_after_combmnz.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext_final.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/main_pdftotext_final.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/pdfinfo.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/pdfinfo.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/pdfinfo_after_combmnz.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/pdfinfo_after_combmnz.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/pdfinfo_final.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/pdfinfo_final.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase05_changes.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase05_changes.txt
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_01_methods.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_01_methods.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_02_path.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_02_path.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_03_combmnz.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_03_combmnz.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_03b_precompile.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_03b_precompile.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_04_artifact.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_04_artifact.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_05_polish.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_05_polish.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_06_validate.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_06_validate.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_06b_reval.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_06b_reval.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/phase_07_report.done -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/phase_07_report.done
+R  reports/jdiq-overnight-cont-20260713-230229/logs/start_git_status.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/logs/start_git_status.txt
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase01_fix_retention_methods.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase01_fix_retention_methods.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase02_fix_path_leak.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase02_fix_path_leak.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase03_combmnz_explore.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase03_combmnz_explore.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase04_prepare_anonymous_artifact.sh -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase04_prepare_anonymous_artifact.sh
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase05_polish.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase05_polish.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase06_validate.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase06_validate.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase07_finalize.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase07_finalize.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase08_numeric_audit.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase08_numeric_audit.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/phase09_deep_table_audit.py -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/phase09_deep_table_audit.py
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/run_combmnz_hardfail.sh -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/run_combmnz_hardfail.sh
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/run_continuation_workflow.sh -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/run_continuation_workflow.sh
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/run_deep_audit.sh -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/run_deep_audit.sh
+R  reports/jdiq-overnight-cont-20260713-230229/scripts/run_numeric_audit_finalize.sh -> reports/_archive/jdiq-overnight-cont-20260713-230229/scripts/run_numeric_audit_finalize.sh
+R  reports/jdiq-overnight-cont-20260713-230229/tables/optional_inventory.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/optional_inventory.json
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase01_methods_fix.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase01_methods_fix.json
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase02_src_leaks.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase02_src_leaks.json
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase03_combmnz.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase03_combmnz.json
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase06_validation.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase06_validation.json
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase08_mismatch_count.txt -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase08_mismatch_count.txt
+R  reports/jdiq-overnight-cont-20260713-230229/tables/phase08_numeric_audit.json -> reports/_archive/jdiq-overnight-cont-20260713-230229/tables/phase08_numeric_audit.json
+R  reports/canonical_results_inventory.csv -> reports/_archive/publication_audit_20260406/canonical_results_inventory.csv
+R  reports/claim_support_matrix.csv -> reports/_archive/publication_audit_20260406/claim_support_matrix.csv
+R  reports/paper_safe_contributions.md -> reports/_archive/publication_audit_20260406/paper_safe_contributions.md
+R  reports/repaired_vs_unrepaired_master_table.csv -> reports/_archive/publication_audit_20260406/repaired_vs_unrepaired_master_table.csv
+R  reports/repo_cleanup_recommendations.md -> reports/_archive/publication_audit_20260406/repo_cleanup_recommendations.md
+R  reports/repo_publication_audit.md -> reports/_archive/publication_audit_20260406/repo_publication_audit.md
+A  reports/final_revision_task1_pool_cutoff_20260715/FINAL_REPORT.md
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_233052_greedy_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_233158_exact_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260714_235826_validation_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/20260715_000102_validation_launch.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/exact_run_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/exact_study_manifest.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/feasibility.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/greedy_study_manifest.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/run_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/manifests/validation_summary.json
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_pool_cutoff_exact.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_pool_cutoff_study.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/run_manifests/run_validation.sh
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_exact.py
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_study.py
+A  reports/final_revision_task1_pool_cutoff_20260715/scripts/verify_pool_cutoff_outputs.py
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/feasible_config_grid.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_exclusions.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_solver_status.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exact_statistics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_exclusions.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_pair_metrics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_statistics.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/pool_cutoff_structural_summary.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/score_depth_by_ranker.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/tables/score_depth_union_overlap.csv
+A  reports/final_revision_task1_pool_cutoff_20260715/validation/pool_cutoff_verification.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/FINAL_REPORT.md
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_120258_exact_unrepaired_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_120632_exact_unrepaired_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/20260715_122225_validation_launch.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/baseline_pool_fairness_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/exact_repaired_vs_unrepaired_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/initial_audit.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/prior_vs_rrf_audit_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/manifests/three_way_comparison_run_summary.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/outputs/prior_vs_rrf_worked_examples.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/run_manifests/run_task4_validation.sh
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/claim_to_evidence_audit.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_baseline_pool_fairness.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_exact_repaired_vs_unrepaired.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_prior_vs_rrf_audit.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/run_three_way_comparison.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/scripts/task4_common.py
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_pool_fairness_descriptive.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_all_pools.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_primary_canonical.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/baseline_targeted_tests_secondary_neutral_pool.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_canonical_family_statistics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_larger_pool_family_statistics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_exclusions.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_pair_metrics.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/exact_repaired_vs_unrepaired_solver_status.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/prior_vs_rrf_per_query.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/prior_vs_rrf_summary.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/tables/three_way_unrepaired_greedy_exact.csv
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/validation/claim_to_evidence_audit.json
+A  reports/final_revision_task4_exact_baseline_fairness_20260715/validation/claim_to_evidence_audit.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/STAGE1_CLEANUP_REPORT.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/canonical_reference_changes.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/gitignore_exception_manifest.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/manuscript_results_interface.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/modified_files.csv
+A  reports/repo_cleanup_stage1_20260730T004010Z/pre_cleanup_git_state.txt
+A  reports/repo_cleanup_stage1_20260730T004010Z/regression_test_report.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/updated_evidence_provenance.md
+A  reports/repo_cleanup_stage1_20260730T004010Z/validation_results.md
+A  reports/repo_hygiene_audit_20260729T235053Z/proposed_moves.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/STAGE1_REPOSITORY_PREPARATION_REPORT.md
+A  reports/repo_preparation_stage1_20260730T011354Z/canonical_evidence_inventory.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/canonical_reference_changes.csv
+AM reports/repo_preparation_stage1_20260730T011354Z/deferred_cleanup_items.csv
+AM reports/repo_preparation_stage1_20260730T011354Z/dependency_provenance_map.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/gitignore_exception_manifest.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/modified_files.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/pre_change_git_state.txt
+A  reports/repo_preparation_stage1_20260730T011354Z/pre_change_manifest.csv
+A  reports/repo_preparation_stage1_20260730T011354Z/regression_test_report.md
+A  reports/repo_preparation_stage1_20260730T011354Z/reproducibility_status.md
+A  reports/repo_preparation_stage1_20260730T011354Z/validation_results.md
+ M src/consistency_ranker/baseline_ranking.py
+M  src/consistency_ranker/statistical_inference.py
+A  tests/test_holm_pvalue_boolean_regression.py
+A  tests/test_numeric_threshold_parsing_regression.py
+?? configs/multi_provider_repair_pilot_v1.json
+?? docs/REPOSITORY_LAYOUT.md
+?? outputs/pub_vote_cmp_all4/HISTORICAL.md
+?? outputs/pub_vote_cmp_v2/HISTORICAL.md
+?? outputs/q1_journal_package/HISTORICAL.md
+?? reports/_archive/exact_ilp_repair_investigation_SUPERSEDED/
+?? reports/_archive/jdiq-overnight-20260713-225928/PRIORITY_PLAN.md
+?? reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/PDF_METADATA_NOTE.txt
+?? reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/
+?? reports/_archive/jdiq-overnight-20260713-225928/logs/
+?? reports/_archive/jdiq-overnight-20260713-225928/scripts/
+?? reports/extraction_study_20260729T151610Z/
+?? reports/ir_evidence_audit_20260729T182949Z/
+?? reports/ir_evidence_audit_review_20260729T235053Z/
+?? reports/manuscript_reframing_20260729T174326Z/
+?? reports/multi_provider_repair_pilot_20260729T032348Z/
+?? reports/multi_provider_repair_pilot_smoke_20260729T032209Z/
+?? reports/repair_diagnostic_20260729T162748Z/
+?? reports/repair_frontier_20260729T144742Z/
+?? reports/repo_hygiene_audit_20260729T235053Z/REPOSITORY_HYGIENE_AUDIT.md
+?? reports/repo_hygiene_audit_20260729T235053Z/canonical_artifacts.md
+?? reports/repo_hygiene_audit_20260729T235053Z/cleanup_execution_plan.md
+?? reports/repo_hygiene_audit_20260729T235053Z/dependency_map.csv
+?? reports/repo_hygiene_audit_20260729T235053Z/repository_inventory.csv
+?? reports/repo_structural_org_stage2_20260730T014347Z/
+?? reports/reviewer_concerns_program_20260729T035320Z/
+?? scripts/run_extraction_study.py
+?? scripts/run_ir_evidence_audit.py
+?? scripts/run_multi_provider_repair_pilot.py
+?? scripts/run_repair_diagnostic_study.py
+?? scripts/run_repair_frontier_pilot.py
+?? scripts/run_reviewer_concerns_program.py
+?? src/consistency_ranker/extraction_study/
+?? src/consistency_ranker/repair_diagnostic/
+?? src/consistency_ranker/repair_frontier/
+?? tests/test_extraction_study.py
+?? tests/test_repair_diagnostic.py
+?? tests/test_repair_frontier.py
+
+--- diff stat for the one modified tracked file NOT part of any stage (still untouched) ---
+ src/consistency_ranker/baseline_ranking.py | 56 ++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+--- confirm main.tex still zero diff vs HEAD ---
+(empty above = still clean)

@@ -1,0 +1,81 @@
+=== Pre-cleanup Git state snapshot ===
+Captured (UTC): 2026-07-30T00:40:28Z
+
+--- branch ---
+fix/outcome-f-production-operating-point
+
+--- HEAD commit ---
+8761004cb5749db515a5de9f7fc5fb14c7ee4de3 2026-07-28T22:47:18-04:00 docs(research): record no-go decision for whole-graph repair selection
+
+--- git status --porcelain=v1 ---
+ M src/consistency_ranker/baseline_ranking.py
+?? configs/multi_provider_repair_pilot_v1.json
+?? reports/extraction_study_20260729T151610Z/
+?? reports/ir_evidence_audit_20260729T182949Z/
+?? reports/ir_evidence_audit_review_20260729T235053Z/
+?? reports/manuscript_reframing_20260729T174326Z/
+?? reports/multi_provider_repair_pilot_20260729T032348Z/
+?? reports/multi_provider_repair_pilot_smoke_20260729T032209Z/
+?? reports/repair_diagnostic_20260729T162748Z/
+?? reports/repair_frontier_20260729T144742Z/
+?? reports/repo_cleanup_stage1_20260730T004010Z/
+?? reports/repo_hygiene_audit_20260729T235053Z/
+?? reports/reviewer_concerns_program_20260729T035320Z/
+?? scripts/run_extraction_study.py
+?? scripts/run_ir_evidence_audit.py
+?? scripts/run_multi_provider_repair_pilot.py
+?? scripts/run_repair_diagnostic_study.py
+?? scripts/run_repair_frontier_pilot.py
+?? scripts/run_reviewer_concerns_program.py
+?? src/consistency_ranker/extraction_study/
+?? src/consistency_ranker/repair_diagnostic/
+?? src/consistency_ranker/repair_frontier/
+?? tests/test_extraction_study.py
+?? tests/test_repair_diagnostic.py
+?? tests/test_repair_frontier.py
+
+--- git status --porcelain=v1 (untracked dirs expanded one level) ---
+ M src/consistency_ranker/baseline_ranking.py
+?? configs/multi_provider_repair_pilot_v1.json
+?? reports/extraction_study_20260729T151610Z/
+?? reports/ir_evidence_audit_20260729T182949Z/
+?? reports/ir_evidence_audit_review_20260729T235053Z/
+?? reports/manuscript_reframing_20260729T174326Z/
+?? reports/multi_provider_repair_pilot_20260729T032348Z/
+?? reports/multi_provider_repair_pilot_smoke_20260729T032209Z/
+?? reports/repair_diagnostic_20260729T162748Z/
+?? reports/repair_frontier_20260729T144742Z/
+?? reports/repo_cleanup_stage1_20260730T004010Z/
+?? reports/repo_hygiene_audit_20260729T235053Z/
+?? reports/reviewer_concerns_program_20260729T035320Z/
+?? scripts/run_extraction_study.py
+?? scripts/run_ir_evidence_audit.py
+?? scripts/run_multi_provider_repair_pilot.py
+?? scripts/run_repair_diagnostic_study.py
+?? scripts/run_repair_frontier_pilot.py
+?? scripts/run_reviewer_concerns_program.py
+?? src/consistency_ranker/extraction_study/
+?? src/consistency_ranker/repair_diagnostic/
+?? src/consistency_ranker/repair_frontier/
+?? tests/test_extraction_study.py
+?? tests/test_repair_diagnostic.py
+?? tests/test_repair_frontier.py
+
+--- diff stat for the one modified tracked file (pre-existing, NOT part of this stage) ---
+ src/consistency_ranker/baseline_ranking.py | 56 ++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+--- stash list (not touched by this stage) ---
+stash@{0}: On main: temp: manuscript local blockers for release
+
+--- recent commit history ---
+8761004 docs(research): record no-go decision for whole-graph repair selection
+5ada2f4 docs(manuscript): add claims, outline, and manuscript plan
+9933515 analysis(manuscript): generate negative-result tables and figures
+17fa2a5 docs: record NO-GO decision for preserve-vs-repair predictive direction
+2fb8ab4 feat: repository-scale preserve-vs-repair headroom meta-analysis (NO-GO)
+000364c docs: document revised preserve-vs-repair research trajectory
+332ec6b chore: run oracle-headroom gate 0 on existing committed data
+87f2580 feat(repair-selector): add oracle-headroom gate for preserve-vs-repair
+ac1329e docs: update project status and branch handoff for the consistency-aware pivot
+cd678f0 chore: track offline active-acquisition report; update artifact policy
