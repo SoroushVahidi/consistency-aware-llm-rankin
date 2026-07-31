@@ -8,6 +8,19 @@ This module factors out one canonical schema (see
 ``reports/repo_reproducibility_stage4_20260730T031306Z/provenance_metadata_schema.md``
 for the human-readable description) plus a guard against silently
 overwriting a committed canonical output directory.
+
+**This module is the canonical home for the repository's low-level
+provenance primitives** (:func:`file_sha256`, :func:`git_commit_info`,
+:func:`hash_paths`). :mod:`consistency_ranker.experiment_cli` -- an older,
+still-supported sibling module used by earlier experiment scripts --
+delegates its equivalent ``file_sha256``/``resolve_git_commit`` helpers to
+the primitives here (added in repo hygiene Stage 5, 2026-07-30) rather than
+duplicating the hashing/subprocess logic a second time; see that module's
+docstring for the compatibility-wrapper details. The two modules'
+higher-level manifest functions (:func:`collect_provenance` here vs.
+``write_run_manifest`` there) intentionally keep their own distinct, already
+call-site-committed schemas -- neither is "more canonical" than the other at
+that level, only the shared low-level primitives were unified.
 """
 
 from __future__ import annotations
@@ -188,6 +201,17 @@ def protect_canonical_output(path: Path, *, allow_overwrite: bool = False) -> No
     is ``False``. Does nothing if ``path`` does not exist, or is an empty
     directory (a location the caller has already reserved but not written
     into).
+
+    **Not the same function as** ``consistency_ranker.experiment_cli.ensure_output_dir``:
+    that function *creates* a fresh output directory for a new experiment
+    run (and also refuses a non-empty existing one). This function never
+    creates anything -- it is a pure guard for reproduction workflows that
+    write into a path that may already hold committed canonical evidence,
+    where directory creation is either unnecessary (the path already exists)
+    or the caller's own responsibility. Use ``ensure_output_dir`` when
+    starting a brand-new run that should own its output directory; use this
+    function when re-running a reproduction against a path that might
+    already be a committed, canonical ``reports/...`` directory.
     """
     if not path.exists():
         return
