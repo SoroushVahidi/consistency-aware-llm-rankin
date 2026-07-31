@@ -1,0 +1,298 @@
+# Claim-to-Evidence Registry
+#
+# Machine-readable index of this repository's major claims. See
+# docs/CONTRIBUTIONS.md for the human-readable narrative version of the same
+# information (that document is authoritative for prose explanation; this
+# file is authoritative for structured, checkable fields).
+#
+# Schema (all fields required unless noted):
+#   id                    stable, unique identifier ("<AREA>-<NN>")
+#   claim                 one-sentence statement of the claim
+#   status                canonical | negative_result | exploratory | internal_validation | superseded
+#   canonical             true if this is evidence the current JDIQ manuscript actually cites
+#   manuscript_applicable true if suitable for citation in papers/JDIQ_2026 double-blind material
+#   implementation_paths  [repo-relative paths to the code implementing the claim]
+#   generating_scripts    [repo-relative paths to the script(s) that produced the evidence]
+#   evidence_paths        [repo-relative paths to the report/output backing the claim]
+#   statistical_unit      what the n in any reported CI/p-value actually counts over
+#   correction_method     multiple-comparison correction used, or "none" / "n/a"
+#   sample_size           short description of n (queries, datasets, seeds, etc.)
+#   limitations           [short strings]
+#   superseded_by         [claim ids that superseded this one], or [] if none
+#   notes                 optional free text
+
+version: 1
+generated: "2026-07-31"
+
+claims:
+  - id: REPAIR-01
+    claim: >-
+      Structural graph repair (greedy or exact MWFAS) removes cycles and
+      reduces feedback-arc weight, but does not reliably improve retrieval
+      quality (nDCG) after multiple-comparison correction.
+    status: canonical
+    canonical: true
+    manuscript_applicable: true
+    implementation_paths:
+      - src/consistency_ranker/mwfas_solver.py
+      - src/consistency_ranker/greedy_fas.py
+    generating_scripts:
+      - reports/full_calibrated_core/scripts/full_calibration_utils.py
+    evidence_paths:
+      - reports/full_calibrated_core/
+      - reports/normalization_protocol_audit_20260714/
+      - reports/candidate_pool_conditional_audit_20260714/
+    statistical_unit: query (per dataset x vote-regime x method cell)
+    correction_method: Holm
+    sample_size: "4 datasets (BRIGHT, FiQA, HotpotQA, SciDocs); primary protocol + larger-pool study"
+    limitations:
+      - "median |delta| 0.0036 vs Holm-adjusted 80%-power MDE 0.0207 -- finite power"
+      - "score-derived votes primary; real-LLM evidence is a small directional addendum (see LLM-01)"
+    superseded_by: []
+    notes: "This is the manuscript's central/thesis claim. See main.tex Table 3-4."
+
+  - id: REPAIR-02
+    claim: >-
+      Exact SCIP-based MWFAS repair does not rescue the retrieval-quality
+      conclusion relative to greedy repair (same null result under exact
+      repair).
+    status: canonical
+    canonical: true
+    manuscript_applicable: true
+    implementation_paths:
+      - src/consistency_ranker/mwfas_solver.py
+    generating_scripts:
+      - reports/exact_open_source_ilp_repair_investigation/scripts/run_exact_open_ilp_study.py
+    evidence_paths:
+      - reports/exact_open_source_ilp_repair_investigation/
+      - reports/final_revision_task4_exact_baseline_fairness_20260715/
+    statistical_unit: query
+    correction_method: Holm
+    sample_size: "1,025 canonical queries, all proven optimal by SCIP"
+    limitations:
+      - "exact solving intractable well beyond this n=20 scale -- see SCALE-01"
+    superseded_by: []
+
+  - id: SOLVER-01
+    claim: >-
+      The commercial Gurobi MIP solver independently agrees with the
+      canonical open-source SCIP solver on every one of the 1,025 canonical
+      exact-repair instances (objective value and removed-edge set).
+    status: internal_validation
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/mwfas_solver.py
+    generating_scripts:
+      - reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/scripts/run_gurobi_vs_scip_cross_validation.py
+    evidence_paths:
+      - reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/
+    statistical_unit: query
+    correction_method: "n/a (exact-match comparison, not a hypothesis test)"
+    sample_size: "1,025 queries, 2 solvers"
+    limitations:
+      - "confirms an existing result; does not change any conclusion"
+      - "must never be cited in double-blind manuscript material -- see papers/JDIQ_2026/manuscript/integrity_audit/EXTERNAL_SOLVER_MANUSCRIPT_DECISION.md"
+    superseded_by: []
+
+  - id: SCALE-01
+    claim: >-
+      Exact MWFAS solving becomes intractable within a 30s budget by n=40
+      (SCIP) to n=50 (both SCIP and Gurobi) on synthetic cyclic graphs,
+      confirming the repository's existing "prefer greedy for large graphs"
+      design assumption with data for the first time.
+    status: internal_validation
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/mwfas_solver.py
+    generating_scripts:
+      - reports/exact_solver_scaling_study_20260731T162314Z/scripts/run_solver_scaling_study.py
+    evidence_paths:
+      - reports/exact_solver_scaling_study_20260731T162314Z/
+    statistical_unit: synthetic graph instance
+    correction_method: "n/a"
+    sample_size: "n in {15,20,25,30,40,50}, 2 seeds each, one weight scheme/noise level"
+    limitations:
+      - "small seed count; single synthetic graph family"
+    superseded_by: []
+
+  - id: LLM-01
+    claim: >-
+      A genuine real-LLM multi-provider pairwise-judgment pilot (6 queries)
+      is directional, exploratory evidence alongside the classical
+      score-vote evidence base -- not a second confirmatory study.
+    status: exploratory
+    canonical: false
+    manuscript_applicable: true
+    implementation_paths:
+      - src/consistency_ranker/multi_provider_eval/
+    generating_scripts:
+      - scripts/run_multi_provider_repair_pilot.py
+    evidence_paths:
+      - reports/multi_provider_repair_pilot_20260729T032348Z/
+    statistical_unit: query (n=6, independent)
+    correction_method: "n/a at row level (see LLM-02 for the corrected version)"
+    sample_size: "6 queries, 4 providers"
+    limitations:
+      - "row-level statistics (120+ rows) over-count independence -- see LLM-02"
+    superseded_by: []
+
+  - id: LLM-02
+    claim: >-
+      Cluster-aware (query-level, n=6) re-analysis of the real-LLM pilot
+      supersedes row-level inference for every extraction/frontier/diagnostic
+      claim derived from it; several row-level "significant" findings do not
+      survive correction at the true independence level.
+    status: canonical
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/statistical_inference.py
+    generating_scripts:
+      - scripts/run_real_llm_clustered_reanalysis.py
+    evidence_paths:
+      - reports/real_llm_clustered_reanalysis_20260730T023745Z/
+    statistical_unit: query cluster (n=6)
+    correction_method: Holm
+    sample_size: "6 independent query clusters, ~20 rows each"
+    limitations:
+      - "n=6 clusters is a small basis for exact permutation inference"
+    superseded_by: []
+    notes: "Not cited by main.tex; canonical for inference on the separate real-LLM pilot only."
+
+  - id: HEADROOM-01
+    claim: >-
+      Whole-graph, aggregate-metric preserve-vs-repair predictive modeling is
+      not viable: repository-scale oracle headroom (419 queries, 4 datasets)
+      is real but ~8x below the manuscript's own detectable-effect floor, and
+      no pre-repair covariate shows more than negligible association.
+    status: negative_result
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/repair_diagnostic/
+    generating_scripts:
+      - scripts/run_repository_scale_headroom_analysis.py
+    evidence_paths:
+      - reports/repository_scale_headroom_analysis/
+      - reports/oracle_headroom_gate0_20260728T230000Z/
+    statistical_unit: query (419 distinct, 122203 unified rows across 76 source files)
+    correction_method: "n/a (CI-based headroom estimate, not a corrected multi-test family)"
+    sample_size: "419 distinct queries, 4 datasets"
+    limitations:
+      - "converges with 4 independent prior attempts at the same question"
+    superseded_by: []
+    notes: "NO-GO decision; not cited by main.tex; belongs to the separate papers/negative_result_2026 track."
+
+  - id: POLICY-01
+    claim: >-
+      An oracle query-specific acquisition-policy selector beats a fixed
+      always-UHT default in principle, but no currently-implemented learned
+      gate realizes that gap -- production is locked to the fixed default.
+    status: negative_result
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/policy_selection/
+    generating_scripts:
+      - scripts/run_policy_selection_experiment.py
+    evidence_paths:
+      - reports/policy_selection_20260726T030500Z/
+    statistical_unit: synthetic query regime
+    correction_method: "n/a (utility comparison, not a significance test)"
+    sample_size: "held-out burial-heavy synthetic regimes"
+    limitations:
+      - "synthetic, not real-query evidence"
+    superseded_by: []
+    notes: "Not in main.tex -- separate research thread (Outcome F)."
+
+  - id: PIVOT-01
+    claim: >-
+      An offline active pair-selection strategy (uncertainty x
+      counterfactual impact x ambiguity) loses to random unrevealed-pair
+      selection at both 10% and 20% budget checkpoints.
+    status: negative_result
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/active_acquisition/
+    generating_scripts:
+      - scripts/run_offline_active_acquisition_pilot.py
+    evidence_paths:
+      - reports/offline_active_acquisition_pilot_20260728T142414Z/
+    statistical_unit: query (n=35, held-out)
+    correction_method: Holm
+    sample_size: "35-query held-out split, one real SciDocs oracle"
+    limitations:
+      - "single oracle, single judge model, single candidate-pool size"
+    superseded_by: []
+
+  - id: PIVOT-02
+    claim: >-
+      A prior-regularized Bradley-Terry aggregator is safety-dominant
+      (significantly reduces severe-harm rate and beats BM25 at low budget)
+      but is not established as beating the strongest non-oracle baseline on
+      raw mean nDCG or AUC.
+    status: exploratory
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/active_acquisition/regularized_aggregation.py
+    generating_scripts:
+      - scripts/run_regularized_aggregation_pilot.py
+    evidence_paths:
+      - reports/regularized_aggregation_pilot_20260728T164943Z/
+    statistical_unit: query (n=35, held-out)
+    correction_method: Holm
+    sample_size: "35-query held-out split, one real SciDocs oracle"
+    limitations:
+      - "not universally superior -- disclosed limit, not an oversight"
+    superseded_by: []
+
+  - id: PIVOT-03
+    claim: >-
+      A qrel-free, risk-controlled stopping rule achieves a median 34.3%
+      stop budget with 0/35 severe-harm test queries, but does not meet its
+      own near-exhaustive quality-recovery bar.
+    status: exploratory
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths:
+      - src/consistency_ranker/active_acquisition/stopping.py
+    generating_scripts:
+      - scripts/run_stopping_rule_pilot.py
+    evidence_paths:
+      - reports/stopping_rule_pilot_20260728T190000Z/
+    statistical_unit: query (n=35, held-out)
+    correction_method: "n/a (Wilson CI on a binary rate, not multi-comparison)"
+    sample_size: "35-query held-out split, one real SciDocs oracle"
+    limitations:
+      - "'useful but incomplete' by its own report's classification"
+    superseded_by: []
+
+  - id: DOC-01
+    claim: >-
+      outputs/pub_vote_cmp_v2/ and outputs/pub_vote_cmp_all4/ are the
+      manuscript's canonical evidence package.
+    status: superseded
+    canonical: false
+    manuscript_applicable: false
+    implementation_paths: []
+    generating_scripts:
+      - scripts/build_paper_evidence_package.py
+      - scripts/generate_q1_tables.py
+    evidence_paths:
+      - outputs/pub_vote_cmp_v2/
+      - outputs/pub_vote_cmp_all4/
+    statistical_unit: "n/a"
+    correction_method: "n/a"
+    sample_size: "n/a"
+    limitations:
+      - "zero citations in main.tex; last regenerated 2026-03-24"
+    superseded_by:
+      - REPAIR-01
+    notes: >-
+      docs/experiment_inventory.md and reports/experiment_inventory.json both
+      still labeled this "Canonical Evidence" as of 2026-07-31; corrected
+      this pass. Real canonical package is reports/full_calibrated_core/.

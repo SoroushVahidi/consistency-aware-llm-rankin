@@ -82,3 +82,12 @@ def test_report_link_check_file_detects_broken_link(tmp_path):
     result = validate_report_links.check_file(doc)
     assert result["status"] == "BROKEN_LINKS"
     assert result["n_broken"] == 1
+
+
+def test_claim_evidence_registry_currently_passes(capsys):
+    from scripts import validate_claim_evidence_registry
+
+    exit_code = validate_claim_evidence_registry.main()
+    captured = capsys.readouterr()
+    assert exit_code == 0, captured.out
+    assert "OK:" in captured.out
