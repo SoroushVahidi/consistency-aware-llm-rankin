@@ -67,7 +67,7 @@ not assumed from a filename. Summary:
 
 | | |
 |---|---|
-| Default test suite | **1338 passed, 64 deselected, 0 skipped, 0 failed** (solver tier / `pytest -q` with `[exact]` installed; re-run to confirm current — see `docs/PROJECT_STATUS.md`) |
+| Default test suite | **1362 passed, 64 deselected, 0 skipped, 0 failed** (solver tier / `pytest -q` with `[exact]` installed, as of commit `2cd71ce`; re-run to confirm current — see `docs/PROJECT_STATUS.md`) |
 | `real_data` tier (~64 dataset-dependent tests) | Passes when BEIR/HotpotQA/BRIGHT datasets are prepared (`make test-real-data`); cleanly deselected, not silently skipped, otherwise |
 | Gurobi | Optional. 13.0.2 + academic WLS license verified working on the validation machine (2026-07-31); **SCIP remains the fully-supported, free, open-source exact-solver path** — a machine with no Gurobi license passes every required check |
 | GitHub Actions CI | **Not currently authoritative** — every run has failed since at least 2026-07-16 due to a GitHub account billing/spending-limit issue, not a code problem. Do not read a red/absent check as a code signal |
@@ -112,6 +112,7 @@ every command above.
 | Current state, subsystem status, unfinished work | [`docs/PROJECT_STATUS.md`](docs/PROJECT_STATUS.md) |
 | A concise, operational "start here" for a coding/research agent | [`docs/AGENT_GUIDE.md`](docs/AGENT_GUIDE.md) |
 | Module layering, canonical implementations, terminology | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| What each top-level directory means and where new work belongs | [`docs/REPOSITORY_LAYOUT.md`](docs/REPOSITORY_LAYOUT.md) |
 | Experiment families, entry points, test tiers, cloud validation | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) |
 | A specific claim's evidence/status/manuscript-applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
 | What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) (timestamped-experiment specifics) and [`docs/ARTIFACT_POLICY.md`](docs/ARTIFACT_POLICY.md) (broader policy + dated decision log) |

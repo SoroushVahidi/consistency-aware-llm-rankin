@@ -95,7 +95,7 @@ Or via Makefile: `make cloud-validate` / `make cloud-validate-solver` /
 | Tier | Mirrors | Extras installed | Test command | Zero-skip required? |
 |---|---|---|---|---|
 | `core` | `ci.yml` job `tests` | `.[dev,llm]` | bare `pytest` | No -- SCIP-dependent tests are expected to skip (no `[exact]` installed), matching that job's own documented behavior. Gate is "no failures/errors". |
-| `solver` | `ci.yml` job `tests-solver-enabled` | `.[dev,exact,llm]` + `gurobipy` | `pytest -q` | **Yes.** This is the tier that must show 0 skipped (exact count grows as tests are added -- **1338 passed, 64 deselected, 0 skipped, 0 failed** as of commit `6ea6a86`; re-run rather than trusting any cached number, per `docs/PROJECT_STATUS.md`). |
+| `solver` | `ci.yml` job `tests-solver-enabled` | `.[dev,exact,llm]` + `gurobipy` | `pytest -q` | **Yes.** This is the tier that must show 0 skipped (exact count grows as tests are added -- **1362 passed, 64 deselected, 0 skipped, 0 failed** as of commit `2cd71ce`; re-run rather than trusting any cached number, per `docs/PROJECT_STATUS.md`). |
 | `real-data` | (not covered by either CI job) | `.[dev,llm]` | `pytest -q -m real_data` | Runs the ~64 dataset-dependent tests; requires `--prepare-real-data` (network, ~3GB) unless datasets are already present under `data/processed/`. |
 | `all` | both CI jobs + real-data if already prepared | -- | -- | Runs core, then solver, then real-data only if datasets are already valid (never auto-downloads 3GB silently; reports real-data as explicitly not-run otherwise). |
 

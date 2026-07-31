@@ -2,7 +2,7 @@
 
 **Purpose**: a technical, internal reference for where things live and how new work should be organized. Not paper prose. Last updated 2026-07-30 (repository organization Stage 2, `reports/repo_structural_org_stage2_20260730T014347Z/`).
 
-If this document and `PROJECT_STATUS.md` ever disagree on canonical evidence location, trust `PROJECT_STATUS.md` (it self-declares as the canonical entry point) and re-verify against Git/code directly.
+If this document and `docs/PROJECT_STATUS.md` ever disagree on canonical evidence location, trust `docs/PROJECT_STATUS.md` (see its "Document authority hierarchy" table) and re-verify against Git/code directly.
 
 ## Top-level directories
 

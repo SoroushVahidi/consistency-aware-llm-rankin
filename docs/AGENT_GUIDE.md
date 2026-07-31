@@ -53,7 +53,9 @@ python scripts/run_cloud_validation.py --tier solver   # mirrors ci.yml's `tests
 ```
 
 Expected result for `solver` (and the repo's default `pytest -q` with
-`[exact]` installed): **1338 passed, 64 deselected, 0 skipped, 0 failed.**
+`[exact]` installed): **1362 passed, 64 deselected, 0 skipped, 0 failed**
+(as of commit `2cd71ce` -- the exact count grows over time; re-run rather
+than trusting this number).
 `core` tolerates some SCIP-related skips (no `[exact]` extra there) by
 design. See `docs/EXPERIMENTS.md` "Cloud Validation" and "Test Tiers" for
 full detail, and `docs/PROJECT_STATUS.md` for the current exact numbers if
