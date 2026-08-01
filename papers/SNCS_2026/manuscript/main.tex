@@ -288,15 +288,16 @@ ranking~\cite{qin-etal-2024-large}, and pointwise, pairwise, and listwise
 LLM reranking paradigms have been compared directly for effectiveness and
 cost~\cite{sun-etal-2023-chatgpt}. Listwise and setwise rerankers reduce the
 number of language-model calls needed to reorder a candidate
-list~\cite{pradeep2023rankzephyr,zhuang2024setwise,gangi-reddy-etal-2024-first,yoon2024listt5},
-and hybrid rerankers combine lexical, dense, and cross-encoder signals
-within a single scoring or fusion
+list~\cite{pradeep2023rankzephyr,zhuang2024setwise,gangi-reddy-etal-2024-first,yoon2024listt5}.
+Hybrid rerankers combine lexical, dense, and cross-encoder signals within
+a single scoring or fusion
 step~\cite{zhang2023hybrid,lu2024hyrr,wang2024dapr,nogueira2019passage}.
 Graph-free score and rank fusion -- reciprocal rank fusion, CombSUM, and
 Borda-style combination -- remains a strong and widely used alternative to
-any graph-based aggregation step, in part because it avoids comparing
-incompatible raw score
-magnitudes~\cite{cormack2009rrf,fox1994combination,lee1997analyses,vogt1999fusion,manmatha2002formal,bruch2023analysis,benham2017risk}.
+any graph-based aggregation step~\cite{cormack2009rrf,fox1994combination,lee1997analyses,vogt1999fusion}.
+Such methods also avoid comparing incompatible raw score magnitudes, a
+long-standing concern in fusion and score-normalization
+work~\cite{manmatha2002formal,bruch2023analysis,benham2017risk}.
 
 A smaller body of work builds an explicit preference graph from pairwise
 document judgments before extracting a ranking, rather than fusing scores or
@@ -1367,8 +1368,8 @@ graph-free baselines and the best-performing repaired hybrid, for context.
     \toprule
     Comparison family & Cells & Holm-rejected & Smallest Holm-adjusted $p$ \\
     \midrule
-    Active canonical (\texttt{ms1}) & 20 & 0/20 & $0.384$ \\
-    Full canonical (all regimes) & 60 & 0/60 & $0.384$ \\
+    Active canonical (\texttt{ms1}) & 20 & 0/20 & $0.240$ \\
+    Full canonical (all regimes) & 60 & 0/60 & $0.720$ \\
     Active larger-pool (\texttt{ms1}, $P{>}k$ incl.) & 110 & 0/110 & $0.352$ \\
     \bottomrule
   \end{tabular}
@@ -1394,9 +1395,10 @@ full $60$-cell canonical family pooling all three regimes, and not the
 $110$-cell active larger-pool family that includes every $P>k$ cell where
 repair has room to change top-$k$ membership
 (Section~\ref{sec:results-repair-structure}). The smallest Holm-adjusted
-$p$-value in the canonical families is $0.384$ (SciDocs, Copeland graph,
-raw sign-flip $p=0.020$ before correction); in the larger-pool family it
-is $0.352$. Figure~\ref{fig:bootstrap-forest} shows the corresponding
+$p$-value is $0.240$ in the active canonical family (SciDocs, Copeland
+hybrid, raw sign-flip $p=0.012$ before correction) and $0.720$ in the full
+canonical family; in the larger-pool family it is $0.352$.
+Figure~\ref{fig:bootstrap-forest} shows the corresponding
 paired bootstrap intervals for the active \texttt{ms1} regime: point
 estimates are sometimes positive, but the great majority of intervals
 cross zero, consistent with the Holm decision.
@@ -2026,7 +2028,7 @@ request and response payloads are not included in the repository, because
 they may contain prompt/completion content and operational details that
 are excluded by the project's artifact policy.
 
-\section*{Acknowledgements}
+\section*{Acknowledgments}
 
 The author thanks Professor Ioannis Koutis for his guidance and emotional
 support throughout this work, and thanks his mother for her emotional
@@ -2039,7 +2041,7 @@ and the AMD AI Developer Program through Fireworks AI credits.
 
 \backmatter
 
-\section*{Declarations}
+\section*{Statements and Declarations}
 
 \subsection*{Funding}
 This research received in-kind API and cloud-credit support from the

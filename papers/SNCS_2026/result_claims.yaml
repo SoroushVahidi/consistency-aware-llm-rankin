@@ -72,17 +72,21 @@ claims:
     source_artifact: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/table_primary_bootstrap_permutation.csv
     filter: "regime == ms1 (20 rows)"
     aggregation: "src.consistency_ranker.statistical_inference.holm_adjust(paired_permutation_pvalue), count(<0.05)"
-    reproduced_value: "0/20 significant; smallest Holm-adjusted p = 0.384"
+    reproduced_value: "0/20 significant; smallest Holm-adjusted p = 0.240"
     prior_value: "0/20"
     verification_status: exact_match
-    notes: "Holm adjustment recomputed with the actual repository function, not reimplemented."
+    notes: >-
+      Final-stage correction: a stale earlier audit reported the second-smallest
+      adjusted value (0.384, SciDocs Copeland graph). Recomputing with the
+      repository Holm function on all 20 active canonical cells gives 0.240
+      for SciDocs Copeland hybrid; the rejected-cell count remains 0/20.
 
   - id: HOLM_CANONICAL_FULL
     manuscript_location: [tab:retrieval-holm]
     source_artifact: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/table_primary_bootstrap_permutation.csv
     filter: "all 60 rows (4 datasets x 3 regimes x 5 pairs)"
     aggregation: "holm_adjust(paired_permutation_pvalue), count(<0.05)"
-    reproduced_value: "0/60 significant"
+    reproduced_value: "0/60 significant; smallest Holm-adjusted p = 0.720"
     prior_value: "0/60"
     verification_status: exact_match
 

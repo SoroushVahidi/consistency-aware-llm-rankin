@@ -61,9 +61,9 @@ No figure or table required regeneration. Captions define or contextualize
 abbreviations where needed, do not imply significance beyond the text, and keep
 structural and retrieval conclusions separate.
 
-## Declarations
+## Statements and Declarations
 
-Declarations now follow Springer-style order and wording:
+Statements and Declarations now follow Springer-style order and wording:
 
 - Funding.
 - Competing interests.

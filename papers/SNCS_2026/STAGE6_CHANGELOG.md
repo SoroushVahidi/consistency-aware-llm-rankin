@@ -11,7 +11,7 @@ Branch: `papers/sncs-2026-foundation`
 - Wrote the full Conclusion, answering RQ1--RQ4 and separating structural
   improvement from retrieval improvement.
 - Completed Data Availability and Reproducibility prose.
-- Added Acknowledgements for Professor Ioannis Koutis, the author's mother,
+- Added Acknowledgments for Professor Ioannis Koutis, the author's mother,
   Anders Borum, and verified in-kind API/cloud-credit support.
 - Replaced the unresolved Funding placeholder with a completed funding
   declaration.

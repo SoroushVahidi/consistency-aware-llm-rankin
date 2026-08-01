@@ -82,11 +82,15 @@ for the larger-pool family. The canonical-family Holm adjustment was
 repository function, imported and run, not reimplemented) on the 60 raw
 `paired_permutation_pvalue` values, and again on the `ms1`-only 20-row
 subset: both give $0$ significant at $\alpha=0.05$, matching JDIQ's stated
-"0/20" and "0/60" exactly, with the same smallest Holm-adjusted $p$-value
-($0.384$, SciDocs Copeland graph) independently reproduced. The
-larger-pool family's pre-computed `holm_active_ms1_family` column, filtered
-to nDCG and `ms1` ($110$ rows), gives $0$ significant, smallest
-Holm-adjusted $p=0.352$; matches JDIQ's "0/110" exactly.
+"0/20" and "0/60" counts exactly. **Final-stage correction (2026-08-01):**
+the smallest Holm-adjusted $p$-value is $0.240$ for the active canonical
+family (SciDocs Copeland hybrid, raw sign-flip $p=0.012$), and $0.720$ for
+the full canonical family. An earlier audit had reported $0.384$ (SciDocs
+Copeland graph), which is the second-smallest active-family adjusted value,
+not the family minimum. The larger-pool family's pre-computed
+`holm_active_ms1_family` column, filtered to nDCG and `ms1` ($110$ rows),
+gives $0$ significant, smallest Holm-adjusted $p=0.352$; matches JDIQ's
+"0/110" count exactly.
 
 **Macro-mean nDCG (CombSUM 0.554, RRF 0.546, best repaired hybrid
 0.546).** Source: same

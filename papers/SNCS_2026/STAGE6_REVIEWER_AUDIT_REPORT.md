@@ -38,9 +38,9 @@ overstatement, ambiguity, and scope creep.
    methodological control on heuristic suboptimality, not as a scalable
    production method or new solver contribution.
 
-6. **Acknowledgements and funding**
+6. **Acknowledgments and funding**
 
-   The acknowledgements and funding declaration now include only support with
+   The acknowledgments and funding declaration now include only support with
    evidence of relevance to this work: Cohere Labs Catalyst Grant Program,
    Google Cloud Research Credits Program, Microsoft Azure for Students, and AMD
    AI Developer Program through Fireworks AI credits. A DeepInfra credit request

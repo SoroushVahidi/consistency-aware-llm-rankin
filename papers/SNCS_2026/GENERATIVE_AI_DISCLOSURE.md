@@ -45,21 +45,17 @@ verification; (e) explicitly denies that the tool made scientific design
 decisions, addressing Springer Nature's stated rationale for prohibiting
 AI authorship (accountability cannot attach to an LLM).
 
-## Tool-naming: not required, included anyway, one gap flagged
+## Tool-naming
 
 `POLICY_CHECK.md` confirms Springer Nature does not require naming the
 specific tool or version. This disclosure names the tool family
 ("Claude," "Claude Code") as a transparency choice beyond the minimum.
 
-`[AUTHOR CONFIRMATION REQUIRED]`: the exact model (e.g. "Claude Sonnet
-5," "Claude Opus 5") differed across the seven drafting stages depending
-on session configuration, and this drafting process does not have
-certain knowledge of which specific model handled every earlier stage.
-If the author wants a precise per-model breakdown (or a single
-representative model name) in the final disclosure, that must be
-supplied or confirmed before submission; the text above deliberately
-stays at the tool-family level ("Claude") to avoid asserting a specific
-model identity this process cannot fully verify for every stage.
+The exact model differed across drafting and audit stages depending on
+session configuration, and the available record does not support a
+complete per-stage model breakdown. The manuscript therefore stays at the
+tool-family level ("Claude") to avoid asserting a specific model identity
+that cannot be verified for every stage.
 
 ## Software-development AI assistance: same disclosure, not a separate one
 
