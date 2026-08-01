@@ -80,15 +80,31 @@ for Stage 2.
 
 ## Compilation
 
-**Not verified by an actual LaTeX compile this stage** -- no `pdflatex`/
-`bibtex` toolchain is installed on the machine this workspace was prepared
-on. A lightweight structural check (brace balance, `\begin`/`\end`
-environment-count matching) was run instead and passed. Before Stage 2
-drafting begins, compile once with either:
+**Verified by an actual compile in Stage 2** using `tectonic` (a
+self-contained TeX engine already available on this machine at
+`~/.local/bin/tectonic`; no system `texlive`/`pdflatex` package could be
+installed here since `apt-get` requires a password this environment does
+not have). `manuscript/main.pdf` is the committed, up-to-date compiled
+output as of Stage 2. To reproduce:
 
 ```bash
 cd papers/SNCS_2026/manuscript
+cp ../template/sn-jnl.cls ../template/bst/sn-basic.bst .   # tectonic needs
+                                                              # them alongside main.tex
+tectonic -X compile main.tex --outdir /tmp/sncs_build
+rm sn-jnl.cls sn-basic.bst                                  # keep manuscript/
+                                                              # free of duplicated
+                                                              # vendored template files
+cp /tmp/sncs_build/main.pdf .
+```
+
+Equivalently, with a system `pdflatex`/`bibtex` toolchain:
+
+```bash
+cd papers/SNCS_2026/manuscript
+cp ../template/sn-jnl.cls ../template/bst/sn-basic.bst .
 pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+rm sn-jnl.cls sn-basic.bst
 ```
 
 or by uploading `manuscript/` + `template/` (flattened into one directory,
@@ -96,6 +112,25 @@ since `sn-jnl.cls` and the `.bst` files must be alongside `main.tex` or on
 the `TEXINPUTS`/`BSTINPUTS` path) to Overleaf
 (`https://www.overleaf.com/latex/templates/springer-nature-latex-template/gsvvftmrppwq`
 hosts the same official template for reference).
+
+Two class-usage pitfalls discovered and fixed during the Stage-2 compile,
+recorded here so they are not rediscovered:
+
+- **Do not add an explicit `\bibliographystyle{sn-basic}` in `main.tex`.**
+  `sn-jnl.cls`'s `sn-basic` document-class option already issues that
+  command internally (see the class file's "Macros for bibliographystyles"
+  section); adding it again in `main.tex` produces a duplicate `\bibstyle`
+  command that BibTeX rejects with "Illegal, another \bibstyle command",
+  silently breaking every citation resolution while `pdflatex`/`tectonic`
+  themselves report no error. `main.tex` calls only
+  `\bibliography{references}`.
+- **`sn-basic` alone renders author-date citations, not numeric ones.**
+  The class's numeric-vs-author-date choice is a second, separate class
+  option: `Numbered` (default off; the class file's internal name for the
+  author-date default is "Namedate"). SN Computer Science's submission
+  guidelines specify numeric, consecutively numbered citations (see
+  "Reference/documentclass choice" above), so `main.tex` uses
+  `\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}`.
 
 ## Evidence sources
 
@@ -116,6 +151,47 @@ to produce this Stage-1 package; a small number of read-only verification
 commands (directory-existence checks, a template byte-diff) were used to
 confirm cited artifacts actually exist, per the task instruction not to
 run expensive new experiments or invent results.
+
+## Stage-2 resolutions of the two Stage-1 inconsistencies
+
+`MANUSCRIPT_PLAN.md` Section 10 flagged two inconsistencies to resolve
+before drafting. Both are now resolved:
+
+1. **BRIGHT citation key.** `manuscript/references.bib` cites the
+   published venue record: `su2025bright`, an `@inproceedings` entry for
+   *BRIGHT: A Realistic and Challenging Benchmark for Reasoning-Intensive
+   Retrieval* (Su, Yen, Xia, Shi, Muennighoff, Wang, Liu, Shi, Siegel,
+   Tang, Sun, Yoon, Arik, Chen, Yu), ICLR 2025, Spotlight
+   (`https://openreview.net/forum?id=ykuc5q381b`). This was verified
+   directly against the ICLR 2025 proceedings PDF header
+   (`https://proceedings.iclr.cc/paper_files/paper/2025/file/7a0f8055c838df8e62329a76c7c6403d-Paper-Conference.pdf`,
+   "Published as a conference paper at ICLR 2025") and the ICLR 2025
+   virtual poster page, both fetched 2026-07-31. The earlier
+   `su2024bright` arXiv-preprint entry (`arXiv:2407.12883`) has been
+   removed from `manuscript/references.bib`; every citation of this
+   benchmark in this manuscript uses `su2025bright`. (JDIQ_2026, a
+   separately submitted manuscript, is untouched and keeps its own
+   `su2024bright` key -- this resolution applies only to `SNCS_2026`.)
+
+2. **"Dimension F" vs. "Outcome F" naming collision.** JDIQ_2026's
+   compact audit taxonomy (`tab:dq-taxonomy`) lettered its seven failure
+   modes A-G, and its dimension F ("graph repair is assumed to improve
+   retrieval") is the letter that collides with the unrelated
+   POLICY-01/"Outcome F" production-policy-selection research thread
+   (`docs/CONTRIBUTIONS.md` SS1.7) -- a thread this manuscript excludes
+   entirely (`MANUSCRIPT_PLAN.md` Section 6.3). Resolution: this
+   manuscript does not letter its diagnostic dimensions at all. Where
+   Stage 2 prose needs to refer to the specific diagnostic question that
+   JDIQ called "dimension F" -- whether graph repair itself improves
+   retrieval -- it is named directly (e.g. "the retrieval-utility
+   check") rather than lettered, and it is never called "Dimension F."
+   If a later stage reintroduces a compact lettered table for the full
+   seven-part audit (as an expanded, worked-example version per
+   `MANUSCRIPT_PLAN.md` Section 8.2 option (a)), that table must use
+   named rows, not letters, specifically to avoid recreating this
+   collision. No manuscript-facing text in this repository should use
+   the bare string "Dimension F" or "Outcome F" interchangeably; they
+   denote two unrelated research threads.
 
 ## Relationship to prior manuscripts
 

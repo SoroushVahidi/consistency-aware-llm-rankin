@@ -1,9 +1,14 @@
-%% SN Computer Science manuscript skeleton -- STAGE 1 (foundation only).
+%% SN Computer Science manuscript -- STAGE 2 (front-half draft).
 %%
-%% This file is an initialized skeleton, not a draft. Section bodies contain
-%% short scope notes, not prose. See ../MANUSCRIPT_PLAN.md for the outline
-%% this skeleton follows, ../EVIDENCE_MAP.md for the claim-to-evidence table,
-%% and ../README.md for compilation instructions.
+%% Introduction, Related Work, and Background and Problem Formulation are
+%% drafted prose as of Stage 2. Experimental Design, Results, Discussion,
+%% Limitations, Conclusion, Data Availability and Reproducibility, and the
+%% structured abstract remain Stage-1 scope-note placeholders, to be
+%% drafted in later stages. See ../MANUSCRIPT_PLAN.md for the outline this
+%% file follows, ../EVIDENCE_MAP.md for the claim-to-evidence table,
+%% ../STORY.md for the Stage-2 narrative plan, ../STAGE2_CHANGELOG.md for
+%% what changed this stage and what remains open, and ../README.md for
+%% compilation instructions.
 %%
 %% Template: Springer Nature sn-jnl.cls v3.1 (December 2024), vendored
 %% unmodified in ../template/. Reference style: sn-basic (Numbered), matching
@@ -12,7 +17,13 @@
 %% Science guidelines confirm single-blind, unlike the double-blind JDIQ_2026
 %% submission this manuscript partially descends from).
 
-\documentclass[pdflatex,sn-basic]{sn-jnl}
+%% "Numbered" is required in addition to "sn-basic" to get sn-basic's
+%% numeric-citation variant; sn-basic alone defaults to the author-date
+%% ("Namedate") variant of the same style (see sn-jnl.cls, \if@Numbered@refstyle
+%% branch around "Macros for bibliographystyles"). SN Computer Science's
+%% submission guidelines specify numeric, consecutively numbered citations
+%% (see README.md, "Reference/documentclass choice"), hence both options.
+\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -84,29 +95,598 @@ future preference-graph studies.]}
 
 \section{Introduction}
 \label{sec:introduction}
-%% Scope: motivate preference graphs as derived data artifacts; state the
-%% precise research question (see MANUSCRIPT_PLAN.md Section 2); state the
-%% central contribution list (<=4 contributions, MANUSCRIPT_PLAN.md
-%% Section 3); explicitly disclaim a state-of-the-art reranking framing.
+
+Pairwise preferences are a natural and increasingly common form of ranking
+evidence. Rather than committing to a single scalar relevance score, a
+pairwise judgment states only that one document should be ranked ahead of
+another for a given query. This form of evidence arises whenever several
+ranking signals are available for the same query -- lexical and dense
+retrievers, cross-encoders, or large language models used as pointwise,
+pairwise, or listwise judges -- and it arises directly whenever a system
+elicits pairwise comparisons instead of absolute scores. Aggregating such
+judgments across several rankers or several repeated comparisons for the
+same query produces a natural representation: a query-specific weighted
+directed preference graph, in which an edge $u \rightarrow v$ records
+support for ranking document $u$ ahead of document $v$, and the edge weight
+records how strongly that support should count.
+
+That representation is attractive because it preserves disagreement rather
+than collapsing it. It is also structurally fragile. Because the graph is
+built from several partially disagreeing sources, it can contain directed
+cycles -- $u \rightarrow v \rightarrow w \rightarrow u$ -- so that no single
+total order is consistent with every retained edge. Cycles of this kind are
+not a pathological edge case; they are the expected outcome whenever
+comparison evidence is aggregated across imperfectly correlated sources.
+Because a cycle is a case where the evidence contradicts itself, it is
+natural to treat acyclicity, or a reduction in cyclic and contradictory
+structure, as a desirable property of the graph, and cycle repair (removing
+or reversing a minimum-weight set of conflicting edges) as an attractive
+preprocessing step before a ranking is read off the graph. This intuition
+is plausible on its face: a graph that no longer contradicts itself seems
+like a strictly better input to whatever ranking rule is applied to it
+next.
+
+That plausibility, however, rests on treating four distinct stages of a
+preference-graph pipeline as if they were one. \emph{Construction} decides
+which pairwise votes are retained and how they are weighted, and is itself
+sensitive to score normalization, vote semantics, and thresholding choices
+made before any graph exists. \emph{Structural repair} operates on the
+resulting graph and optimizes a purely graph-internal objective -- the
+total weight of edges that must be removed or reversed to restore
+acyclicity. \emph{Ranking extraction} reads a final ordering off the
+(possibly repaired) graph using some scoring rule. \emph{Downstream
+evaluation} then compares that ordering against relevance judgments using a
+retrieval metric that has no direct relationship to the repair objective.
+Repair minimizes disagreement with the graph's own edges; retrieval metrics
+score agreement with an external notion of relevance. Nothing in the
+construction of the repair objective guarantees that reducing the former
+improves the latter, and nothing in the standard presentation of repair
+work makes that gap explicit.
+
+This gap is the question prior work leaves open: does improving a preference
+graph's structural consistency -- as measured by the repair objective
+itself -- also improve the retrieval effectiveness of the ranking eventually
+read off that graph? Existing evidence does not answer this cleanly, for
+three reasons that compound. First, essentially all empirical evaluations
+of preference-graph repair use heuristic repair methods, so any observed
+retrieval effect, positive or null, is open to the objection that it
+reflects the heuristic's suboptimality rather than a property of repair
+itself: a null result could always be dismissed as "the heuristic simply
+did not repair enough." Second, graph construction is rarely held explicit
+and varied alongside repair, so it is difficult to attribute an observed
+effect (or its absence) specifically to the repair step rather than to
+upstream choices that determine how much contradictory structure the graph
+contained in the first place. Third, studies that report both structural
+diagnostics (cyclicity, removed edge weight) and a retrieval metric do not
+generally test whether the two move together under corrected statistical
+inference; an improvement in the former is often reported alongside, and
+implicitly read as evidence for, the latter.
+
+This paper addresses that gap directly. We hold graph construction explicit
+across three vote-construction regimes that vary how much contradictory
+structure a graph retains, and we compare, on the same underlying candidate
+sets and ranker scores, \emph{unrepaired}, \emph{greedy-repaired}, and
+\emph{exactly repaired} preference graphs. The greedy-only design that
+dominates prior work cannot, by itself, resolve the central question: a
+null retrieval result under a heuristic repair method is always consistent
+with the hypothesis that a better repair would have revealed a gain the
+heuristic missed. We therefore include exact minimum-weight feedback-arc-set
+(MWFAS) repair, solved to certified optimality with an open-source
+mixed-integer solver, as a diagnostic control rather than as a proposed
+practical method: if exact repair, which by construction cannot be
+out-performed by any heuristic on the repair objective itself, still fails
+to produce a reliable retrieval gain, then heuristic suboptimality is ruled
+out as the explanation for a null result. This is what exact repair is for
+in this study -- not a faster or better production repair algorithm, but a
+diagnostic instrument that isolates whether the retrieval question has an
+answer the heuristic could plausibly have obscured.
+
+The paper's scope is stated honestly rather than maximally. The main
+empirical setting is score-derived multi-ranker retrieval: preference
+graphs built from stored BM25, TF-IDF, and MiniLM scores across four public
+benchmarks spanning distinct retrieval domains. A smaller real-large-language-model
+pairwise-judgment pilot is included only as a bounded, directional
+addendum, not as a second confirmatory study; it is not treated as
+validating or generalizing the main findings. The paper does not claim
+state-of-the-art retrieval effectiveness, does not propose a new
+minimum-weight feedback-arc-set formulation or solver, does not claim that
+repair never helps retrieval in any setting, does not claim that exact
+repair universally fails to help, and does not offer a validated criterion
+for deciding, per query, when repair is worth applying.
+
+Within that scope, the central finding is restrained rather than sweeping.
+Structural repair is genuinely active: under the permissive
+construction regime, both greedy and exact repair remove a measurable share
+of total graph weight, and evaluating against a candidate pool larger than
+the metric cutoff shows that repair can change which documents even enter
+the evaluated top-$k$ set. What does not follow is a reliable retrieval
+benefit. Across four benchmarks, three construction regimes, and both
+repair methods, no repaired-versus-unrepaired normalized discounted
+cumulative gain (nDCG) comparison survives Holm-corrected paired
+significance testing. The paper's thesis is therefore that structural graph
+consistency and downstream retrieval utility are related but empirically
+distinct quality dimensions, and that enforcing acyclicity should not be
+treated as a validated surrogate for improving retrieval effectiveness
+without evidence obtained under the retrieval metric itself.
+
+This paper is a rigorous empirical and computational study of that
+question, not a proposal for a new or superior reranking method. Its
+contributions are:
+
+\begin{enumerate}
+  \item A controlled empirical framework that separates preference-graph
+    construction, structural repair, ranking extraction, and downstream
+    retrieval evaluation into explicit, independently varied stages, so
+    that any observed effect can be attributed to a specific stage rather
+    than to their combination.
+  \item A three-way comparison, under identical construction and
+    evaluation protocols, of unrepaired, greedy-repaired, and exactly
+    (SCIP-based MWFAS) repaired preference graphs -- using exact repair as
+    a diagnostic control that closes the standard objection that a null
+    retrieval result merely reflects heuristic under-repair.
+  \item A four-benchmark, multiplicity-corrected empirical finding: graph
+    repair is structurally active and can change which documents are
+    evaluated at all, yet no repaired-versus-unrepaired nDCG family --
+    canonical, larger-pool, or exact-repair -- survives Holm-corrected
+    paired testing, so structural consistency is not shown to be a
+    reliable general surrogate for retrieval utility.
+  \item An open, reproducible implementation and evidence pipeline
+    covering graph construction, greedy and exact repair, ranking
+    extraction, and the statistical evaluation protocol, so that the
+    audit reported here can be rerun, checked, or extended by others.
+\end{enumerate}
 
 \section{Related Work}
 \label{sec:related_work}
-%% Scope: rank aggregation / feedback-arc-set literature; probabilistic
-%% pairwise models (Bradley-Terry, Rank Centrality); graph-free fusion
-%% (RRF, CombSUM, Borda); LLM-as-judge / pairwise-ranking positional-bias
-%% literature; data-quality-for-derived-artifacts framing. Reuse candidate:
-%% IJCS draft Related Work + JDIQ Background and Related Work (see
-%% MANUSCRIPT_PLAN.md Section 8, reuse plan).
 
-\section{Preference-Graph Construction and Repair}
-\label{sec:method}
-%% Scope: formalize G_q=(V_q,E_q,w_q); the three vote-construction regimes
-%% (ms2 / ms1 / ms1_drop_mutual); the MWFAS repair objective (greedy AND
-%% exact SCIP, presented as co-equal, not exact-as-footnote per the
-%% Iran JCS C7/C8 lesson); ranking extraction (Copeland, balance,
-%% graph-free baselines). Reuse candidate: IJCS draft Method section
-%% (graph formalism, Algorithm 1/2, regime table) reconciled with JDIQ's
-%% seven-dimension audit-taxonomy framing.
+\subsection{Pairwise Ranking and Preference Aggregation}
+\label{sec:related-pairwise}
+
+Representing evidence as pairwise comparisons rather than absolute scores is
+classical in ranking theory. Given comparisons $u \succ v$, two largely
+separate traditions convert them into a ranking. The first is
+\emph{probabilistic preference modeling}: Bradley--Terry-type models explain
+observed comparison outcomes through latent per-item strengths estimated by
+maximum likelihood~\cite{bradley1952rank,hunter2004mm}, and Plackett--Luce
+models generalize the same idea to full or partial
+orderings~\cite{plackett1975analysis,luce1959individual}. Rank Centrality
+recovers a ranking as the stationary distribution of a Markov chain built
+from pairwise comparisons, without fitting a parametric strength
+model~\cite{negahban2017rankcentrality}, and combinatorial Hodge theory
+decomposes a pairwise comparison graph into a gradient (globally consistent)
+component and a curl/harmonic (locally or globally cyclic) residual, giving
+a spectral account of how far the data are from admitting a single
+ranking~\cite{jiang2011hodge,vigna2016spectral}. Bias-aware pairwise ranking
+further shows that even the sampling process that generates which pairs are
+compared can itself introduce systematic ranking bias, independent of any
+repair step~\cite{ferrara2024biasaware}.
+
+The second tradition is \emph{combinatorial rank aggregation and cycle
+repair}, which treats a set of pairwise preferences (or several ranked
+lists) as combinatorial input and asks for an ordering, or a modification of
+the input, that minimizes a specific disagreement objective. Kemeny's
+optimal-consensus ranking minimizes total pairwise disagreement with a set
+of input rankings~\cite{kemeny1959mathematics}; web-scale rank aggregation
+work popularized Markov-chain, Copeland-style (wins-minus-losses), and
+Borda-style (positional) aggregation rules and analyzed their
+properties~\cite{dwork2001rank}; and follow-up work gave approximation
+algorithms and complexity results for Kemeny-optimal and related
+aggregation problems, connecting them to correlation
+clustering~\cite{ailon2008aggregating,kenyon2007fewerrors}. Rank comparison
+metrics that tolerate ties and partial overlap, such as the Fagin--Kumar
+family, are a companion line of work for measuring how much two rankings
+(or a ranking before and after a repair step) actually
+differ~\cite{fagin2003comparing,fagin2004aggregating}.
+
+These two traditions answer different questions. Probabilistic models
+estimate a ranking that best explains noisy comparison outcomes and treat
+residual disagreement as statistical noise around a latent order.
+Combinatorial repair instead treats the observed graph as fixed evidence and
+asks how to modify it, at minimum cost, so that a single consistent order
+becomes possible. The present paper is positioned entirely in the second
+tradition: it uses combinatorial minimum-weight feedback-arc-set repair
+(Section~\ref{sec:mwfas-repair}) on an already-constructed preference graph,
+and its research question is not about estimating latent item strengths but
+about whether the combinatorial repair objective, once optimized, is
+diagnostic of a different objective -- retrieval effectiveness -- that it
+was never designed to optimize.
+
+\subsection{Pairwise and Graph-Based Ranking in Information Retrieval}
+\label{sec:related-ir}
+
+Pairwise comparison has become a common building block of modern retrieval
+and reranking pipelines. Pairwise ranking prompting elicits document-level
+comparisons directly from a large language model and aggregates them into a
+ranking~\cite{qin-etal-2024-large}, and pointwise, pairwise, and listwise
+LLM reranking paradigms have been compared directly for effectiveness and
+cost~\cite{sun-etal-2023-chatgpt}. Listwise and setwise rerankers reduce the
+number of language-model calls needed to reorder a candidate
+list~\cite{pradeep2023rankzephyr,zhuang2024setwise,gangi-reddy-etal-2024-first,yoon2024listt5},
+and hybrid rerankers combine lexical, dense, and cross-encoder signals
+within a single scoring or fusion
+step~\cite{zhang2023hybrid,lu2024hyrr,wang2024dapr,nogueira2019passage}.
+Graph-free score and rank fusion -- reciprocal rank fusion, CombSUM, and
+Borda-style combination -- remains a strong and widely used alternative to
+any graph-based aggregation step, in part because it avoids comparing
+incompatible raw score
+magnitudes~\cite{cormack2009rrf,fox1994combination,lee1997analyses,vogt1999fusion,manmatha2002formal,bruch2023analysis,benham2017risk}.
+
+A smaller body of work builds an explicit preference graph from pairwise
+document judgments before extracting a ranking, rather than fusing scores or
+ranks directly. \texttt{LLM-RankFusion} aggregates several LLM rankers by
+explicitly modeling and mitigating pairwise inconsistency in the resulting
+comparisons~\cite{zeng2024llmrankfusion}, and confidence- or bias-aware
+pairwise aggregation methods weight or correct individual comparisons before
+they are combined~\cite{ferrara2024biasaware}. This is the setting the
+present paper studies: a query-specific weighted directed graph built from
+several ranking signals, from which a ranking is extracted before or after a
+structural repair step. Standard retrieval benchmarking practice -- reusing
+stored candidate pools and score files rather than re-running upstream
+retrieval, and evaluating with rank-sensitive metrics such as
+nDCG -- follows the same evaluation conventions established for zero-shot
+retrieval benchmarking more generally~\cite{thakur2021beir,craswell2021overview}.
+
+\subsection{Inconsistency, Cycles, and Preference Repair}
+\label{sec:related-repair}
+
+A pairwise preference graph is transitive, and therefore admits a single
+consistent total order, only in the special case that it is acyclic. In
+general it is not: aggregating several partially disagreeing sources
+routinely produces directed cycles, including simple two-way contradictions
+and longer cyclic chains. The combinatorial problem of removing the
+least-weight set of edges needed to make a weighted directed graph acyclic
+is the (minimum-weight) feedback arc set problem. It is NP-hard in
+general~\cite{karp1972reducibility}; classical work gives fast, deterministic
+greedy heuristics that repeatedly remove the lightest edge on a discovered
+cycle~\cite{eades1993heuristic}, and later work gives polynomial-time
+approximation schemes and connects the problem to correlation
+clustering~\cite{kenyon2007fewerrors,ailon2008aggregating}. This paper does
+not claim the minimum-weight feedback-arc-set formulation itself as a
+contribution -- it is a long-studied classical combinatorial optimization
+problem -- and instead studies the empirical consequence of solving it, both
+heuristically and to certified optimality, for a downstream retrieval task.
+
+The same structural issue has recently reappeared in the context of large
+language models used as pairwise or comparative judges: repeated or
+multi-evaluator LLM comparisons frequently produce transitivity violations
+and directed cycles, which several recent studies diagnose or attempt to
+resolve~\cite{zheng2023judging,shi2025judging,hu2024acyclic}. That work
+generally treats acyclicity (or reduced contradiction) as a desirable
+property of the resulting evaluation and reports downstream gains on tasks
+such as model ranking, response selection, or fine-tuning-data
+selection~\cite{hu2024acyclic}; it does not test whether the acyclicity
+objective itself is diagnostic of retrieval effectiveness under a
+corrected, paired statistical protocol, which is the specific gap this
+paper addresses.
+
+This paper substantially extends and revises an earlier, unpublished
+feedback-arc-set repair investigation by the same author, which studied a
+smaller and partially overlapping evidence base under a less conservative
+evaluation protocol (no separation of canonical from larger-pool evaluation
+cells, no Holm correction applied to the headline retrieval claim, and no
+exact-repair comparison) and reported a conditional, dataset-dependent
+positive retrieval effect. That manuscript did not complete peer review and
+is not cited here as a prior publication. The present study is not a
+resubmission of it: it uses a materially more conservative statistical
+protocol, adds exact SCIP-based repair specifically to rule out
+heuristic-repair artifacts as an explanation, and reaches a different,
+more restrained conclusion on an updated evidence base. Readers should treat
+the two as distinct, non-comparable analyses rather than as an earlier and
+later version of the same result.
+
+\subsection{Structural Quality Versus Downstream Utility}
+\label{sec:related-utility}
+
+A recurring pattern across the work reviewed above is that structural or
+intrinsic quality -- cyclicity, removed feedback-arc weight, agreement with
+a probabilistic comparison model, or acyclicity of an aggregated evaluation
+graph -- is measured and reported, but rarely tested directly against an
+independent downstream task metric under corrected statistical inference.
+This mirrors a broader distinction in the data-quality literature between
+\emph{intrinsic} quality (properties of the data or artifact itself) and
+\emph{contextual} or task-relative quality (fitness for a specific
+use)~\cite{wang1996beyond}; work on data cascades and benchmark label error
+shows concretely that upstream curation or construction choices can shape
+downstream conclusions in ways that are easy to miss when only the final
+task metric is
+inspected~\cite{sambasivan2021datacascades,northcutt2021labelerrors}. Simple
+significance testing is also known to be an unreliable guide to retrieval
+system comparisons unless multiplicity and pairing are handled
+correctly~\cite{urbano2019statistical,carterette2012multiple,ihemelandu2024multiple},
+and the interpretation of a non-significant result requires care distinct
+from ordinary significance
+testing~\cite{lakens2018equivalence}.
+
+Few studies in the preference-graph or feedback-arc-set literature isolate
+structural improvement from downstream task utility as two separately
+measured and separately tested quantities. Most either report only
+structural diagnostics, or report a task metric without a repair-method
+control (e.g. exact repair) that would rule out heuristic suboptimality as
+the explanation for a null or weak downstream effect. This paper's
+contribution relative to this literature is exactly that controlled
+separation: it holds graph construction explicit, compares unrepaired,
+heuristically repaired, and exactly repaired graphs on the same evidence,
+and tests the structural-repair-to-retrieval-utility link directly under a
+multiplicity-corrected paired protocol, rather than assuming that a gain on
+one objective implies a gain on the other.
+
+\section{Background and Problem Formulation}
+\label{sec:background}
+
+This section fixes notation and formalizes the four stages distinguished in
+Section~\ref{sec:introduction} -- retrieval setting, derived preference
+graph, structural inconsistency, and repair -- before turning to ranking
+extraction and evaluation. Every definition below is stated at the level of
+generality needed to state the paper's research question precisely; the
+specific benchmarks, ranker families, and evaluated cells that instantiate
+this formulation are given in Section~\ref{sec:experimental_setup}.
+
+\subsection{Retrieval and Candidate Rankings}
+\label{sec:retrieval-setting}
+
+Let $q \in \mathcal{Q}$ denote a query drawn from a fixed query set, and let
+$D_q = \{d_1,\dots,d_n\}$ denote its query-specific candidate document set:
+the pool of documents that will be compared and ranked for $q$. Candidate
+sets are formed upstream of this study's pipeline, typically as the union
+of documents retrieved or scored by one or more base rankers, and are held
+fixed once formed.
+
+A base ranker (or, more generally, a judgment source) $s \in S$ assigns a
+score $x_{q,s}(d) \in \mathbb{R}$ to each document $d \in D_q$ it scores; a
+ranker need not score every document in $D_q$, so scores may be missing for
+some $(q,s,d)$ triples. Because different rankers' raw scores are not
+generally comparable in scale or distribution, scores are normalized
+per query and per ranker before they are compared across rankers. The
+normalization used throughout the canonical experiments is per-query,
+per-ranker min-max scaling,
+\begin{equation}
+\bar{x}_{q,s}(d) =
+\frac{x_{q,s}(d) - \min_{d' \in D_q} x_{q,s}(d')}
+     {\max_{d' \in D_q} x_{q,s}(d') - \min_{d' \in D_q} x_{q,s}(d')},
+\label{eq:minmax}
+\end{equation}
+which maps every ranker's retained scores for a given query into a common
+$[0,1]$ range. Section~\ref{sec:pref-graph} builds pairwise votes from
+$\bar{x}_{q,s}$ rather than from $x_{q,s}$ directly; the raw, unnormalized
+construction is retained only as an explicit robustness ablation, not as an
+alternative primary protocol, precisely because raw heterogeneous score
+margins are not a scale-neutral starting point for comparing rankers.
+
+Relevance judgments (qrels) associate each query-document pair with a
+graded or binary relevance label, drawn from each benchmark's original
+human-annotated judgments; they are external to, and never derived from,
+any ranker score or preference graph. All retrieval metrics reported in
+this paper are computed against these external judgments, evaluated at a
+fixed prefix length $k$ (the evaluation cutoff): a metric such as nDCG$@k$
+scores only the top-$k$ documents of a candidate ranking. Because the
+candidate pool $D_q$ evaluated by a ranking method may be larger than the
+cutoff $k$, the relationship between the pool size $P = |D_q|$ (or a
+truncated evaluation pool size) and $k$ is itself an explicit design choice
+returned to in Section~\ref{sec:experimental_setup}: repair can only change
+which documents occupy the top-$k$ set when $P > k$ gives it room to do so.
+
+\subsection{Derived Weighted Preference Graph}
+\label{sec:pref-graph}
+
+For each query $q$, the normalized ranker scores $\bar{x}_{q,s}$ are
+converted into a weighted directed preference graph
+\begin{equation}
+G_q = (V_q, E_q, w_q), \qquad V_q = D_q,
+\label{eq:graph-def}
+\end{equation}
+in which a directed edge $(u,v) \in E_q$ records retained evidence that
+document $u$ should be ranked ahead of document $v$, and the edge weight
+$w_q(u,v) > 0$ records the strength of that retained evidence. The graph is
+a \emph{derived} data object, not ground truth: it is the output of an
+explicit construction procedure applied to the normalized scores, and its
+structure -- which edges exist, in which direction, and with what weight --
+depends on that procedure's choices, not on any property of the documents
+themselves.
+
+Construction proceeds ranker by ranker and pair by pair. For each ranker
+$s$ and each unordered document pair $\{u,v\} \subseteq D_q$ that $s$
+scores, $s$ casts a directional vote for whichever of $u \succ v$ or
+$v \succ u$ its normalized scores support, with vote strength derived from
+the normalized score margin
+$|\bar{x}_{q,s}(u) - \bar{x}_{q,s}(v)|$. A pair with an exactly equal
+normalized score, or for which $s$ does not score both documents, abstains
+rather than casting an imputed vote: ties and missing comparisons are
+treated as an absence of evidence, not as evidence of indifference. Votes
+across rankers are then aggregated per directed pair, and a pair-level and
+graph-level retention rule (the \emph{vote-construction regime}) decides
+which directions are actually retained as edges of $G_q$.
+
+This paper studies three explicit vote-construction regimes that hold the
+candidate set and underlying ranker scores fixed and vary only the
+retention rule:
+\begin{itemize}
+  \item \textbf{\texttt{ms2}} (conservative): retain a direction only when
+    it has majority-style support across rankers and the aggregated margin
+    exceeds a fixed threshold. This suppresses most direct two-way
+    contradictions and, in the canonical package, produces graphs that are
+    nearly always acyclic.
+  \item \textbf{\texttt{ms1}} (permissive): retain every ranker-supported
+    directional vote. Because different rankers may disagree, both
+    $(u,v)$ and $(v,u)$ can be retained for the same unordered pair,
+    producing direct mutual contradictions and, transitively, longer
+    cycles.
+  \item \textbf{\texttt{ms1\_drop\_mutual}}: start from \texttt{ms1} and
+    remove every unordered pair that would otherwise be retained in both
+    directions, before aggregation. This isolates how much of
+    \texttt{ms1}'s cyclicity is attributable specifically to direct mutual
+    contradiction rather than to longer-cycle nontransitivity.
+\end{itemize}
+These three regimes are not alternative proposals for a "correct"
+construction rule; they are a controlled sweep whose purpose is to make
+graph construction, rather than the repair algorithm, a first-class
+experimental factor (Section~\ref{sec:experimental_setup} reports how
+strongly this factor determines observed cyclicity). Because a conflicting
+vote-construction regime can produce a graph in which repair has little or
+no structural work to do, an observed repair effect (or its absence) cannot
+be interpreted without knowing which regime produced the graph it was
+applied to.
+
+\subsection{Cycles and Structural Inconsistency}
+\label{sec:cycles}
+
+A weighted directed graph $G_q$ is \emph{acyclic} if it contains no directed
+cycle $u_1 \to u_2 \to \dots \to u_m \to u_1$; equivalently, its strongly
+connected components (maximal vertex sets within which every vertex is
+reachable from every other) are all singletons. $G_q$ admits at least one
+linear extension consistent with every retained edge direction if and only
+if it is acyclic; a cyclic $G_q$ cannot be represented exactly by any
+single total order over $D_q$; some retained edge must be violated by any
+linear ranking of the graph's vertices.
+
+This paper reports two purpose-specific structural inconsistency measures,
+rather than a single omnibus cyclicity score. The first is a per-query
+binary indicator of whether $G_q$ is cyclic at all under a given
+construction regime, aggregated across queries into a cyclic-query rate.
+The second decomposes that rate into cyclicity attributable to direct
+mutual contradiction (a pair retained in both directions) versus cyclicity
+that survives after mutual pairs are removed (comparing \texttt{ms1} to
+\texttt{ms1\_drop\_mutual}), because these two sources of cyclicity have
+different plausible causes -- near-tied evidence between two rankers versus
+genuine longer-range nontransitivity among three or more documents -- and
+conflating them would over- or under-state how much of the observed
+cyclicity a repair step is actually resolving.
+
+Acyclicity is a purely structural property: it guarantees that $G_q$ admits
+\emph{some} consistent total order, but it does not by itself guarantee
+that the retained edges are correct, that the graph's implied ranking
+agrees with relevance judgments, or that any particular extraction rule
+applied to an acyclic graph will outperform one applied to a cyclic graph.
+Transitivity, acyclicity, evidential correctness, and retrieval optimality
+are four distinct properties; this paper treats none of them as
+substitutes for any other, and Sections~\ref{sec:mwfas-repair}
+and~\ref{sec:extraction-eval} keep the objective that repair optimizes
+(feedback-arc weight) explicitly separate from the metric evaluation uses
+(nDCG against qrels).
+
+\subsection{Minimum-Weight Feedback-Arc-Set Repair}
+\label{sec:mwfas-repair}
+
+Given a (possibly cyclic) preference graph $G_q = (V_q, E_q, w_q)$, repair
+seeks a minimum-weight set of edges $F_q^\star \subseteq E_q$ whose removal
+leaves an acyclic graph:
+\begin{equation}
+F_q^\star = \arg\min_{F \subseteq E_q} \sum_{e \in F} w_q(e)
+\quad \text{s.t.} \quad (V_q,\, E_q \setminus F) \text{ is acyclic}.
+\label{eq:mwfas}
+\end{equation}
+This is the minimum-weight feedback arc set (MWFAS) problem
+(Section~\ref{sec:related-repair}); the repaired graph is
+$\widetilde{G}_q = (V_q, E_q \setminus F_q^\star, w_q)$. The objective in
+Equation~\eqref{eq:mwfas} is entirely graph-internal: it minimizes
+disagreement with $G_q$'s own retained edges, subject to the feasibility
+condition that the result be acyclic. It contains no reference to relevance
+judgments, ranking metrics, or any notion of retrieval utility -- a
+property that is central to this paper's research question rather than an
+incidental modeling detail.
+
+Two solution methods for Equation~\eqref{eq:mwfas} are used and reported as
+co-equal, not as a primary method with a secondary check. \textbf{Greedy
+repair} is a fast, deterministic heuristic: while $\widetilde{G}_q$
+contains a directed cycle, find one such cycle and remove its
+minimum-weight edge, repeating until the graph is acyclic. This does not
+generally reach the optimum of Equation~\eqref{eq:mwfas}, but it is cheap
+enough to run at the scale of the full query set. \textbf{Exact repair}
+solves Equation~\eqref{eq:mwfas} to certified optimality via a standard
+linear-ordering mixed-integer program: for every ordered pair of nodes
+$(u,v)$, a binary variable $\mathrm{before}[u,v]$ indicates that $u$
+precedes $v$ in a chosen total order, subject to antisymmetry
+($\mathrm{before}[u,v] + \mathrm{before}[v,u] = 1$) and transitivity
+constraints over every ordered triple of nodes; the objective minimizes the
+total weight of edges whose direction disagrees with the chosen order,
+\begin{equation}
+\min \sum_{(u,v) \in E_q} w_q(u,v)\, \mathrm{before}[v,u],
+\label{eq:mwfas-mip}
+\end{equation}
+which is exactly Equation~\eqref{eq:mwfas} restricted to orderings
+representable as a linear extension. This program is solved with the
+open-source SCIP solver; a query graph is included in the exact-repair
+evidence only when the solver certifies proven optimality, not merely a
+feasible incumbent.
+
+Exact repair is used here as a \emph{diagnostic control}, not as a proposed
+practical replacement for greedy repair: it does not scale to the largest
+query graphs, and this paper makes no claim about the general scalability
+or practicality of exact MWFAS solving. Its role is narrower and specific
+to this study's question. Because $F_q^\star$ from exact repair is, by
+construction, a global optimum of Equation~\eqref{eq:mwfas}, no repair
+method can remove less weight while still restoring acyclicity. If exact
+repair's downstream retrieval effect is still statistically indistinguishable
+from greedy repair's, then the suboptimality of the greedy heuristic is
+ruled out as an explanation for a null or weak retrieval effect --
+precisely the objection a greedy-only study cannot itself close
+(Section~\ref{sec:introduction}).
+
+\subsection{Ranking Extraction and Evaluation}
+\label{sec:extraction-eval}
+
+A final query-specific ranking is extracted from either the unrepaired
+graph $G_q$ or the repaired graph $\widetilde{G}_q$, or from the upstream
+ranker signal alone. The canonical experiments compare four families of
+extraction rule, evaluated in both unrepaired and repaired form where the
+rule is graph-dependent:
+
+\begin{itemize}
+  \item \textbf{Prior-only}: rank by the upstream per-document score
+    (e.g. a normalized score sum across rankers), independent of any
+    graph.
+  \item \textbf{Graph-free fusion}: reciprocal rank fusion, CombSUM, and
+    Borda-style fusion over the constituent rankers' individual rankings,
+    which likewise does not construct or consult a preference graph.
+  \item \textbf{Graph-only extraction}: a Copeland-style score
+    $s_{\mathrm{cop}}(u) = \deg^+(u) - \deg^-(u)$ (unweighted
+    out-degree minus in-degree); a weighted balance score
+    $s_{\mathrm{bal}}(u) = \sum_{(u,v) \in E} w(u,v) - \sum_{(v,u) \in E}
+    w(v,u)$ (weighted out-edge mass minus in-edge mass); and a
+    Rank-Centrality-style stationary-distribution score computed from a
+    Markov chain over the (weighted) graph. Each of these three rules is
+    computed on both $G_q$ (unrepaired) and $\widetilde{G}_q$ (repaired),
+    holding the extraction rule fixed so that any difference is
+    attributable to repair rather than to a change of scoring rule.
+  \item \textbf{Hybrid prior-plus-graph extraction}: the graph score is
+    combined with the normalized prior score,
+    \begin{equation}
+    h_q(d) = (1-\alpha)\, \hat{s}^{\mathrm{prior}}_q(d)
+             + \alpha\, \hat{s}^{\mathrm{graph}}_q(d),
+    \label{eq:hybrid}
+    \end{equation}
+    with both components normalized query-wise and $\alpha \in [0,1]$
+    fixed in the primary analysis (with a sweep reported as a robustness
+    check). When $\hat{s}^{\mathrm{graph}}_q$ is computed from $G_q$ the
+    method is unrepaired; when computed from $\widetilde{G}_q$ it is
+    repaired.
+\end{itemize}
+
+Retrieval effectiveness is measured with normalized discounted cumulative
+gain (nDCG), the standard graded-relevance ranking
+metric~\cite{jarvelin2002cumulated}: for a ranking with relevance labels
+$\mathrm{rel}_1,\dots,\mathrm{rel}_k$ at ranks $1,\dots,k$,
+$\mathrm{DCG}@k = \sum_{i=1}^{k} (2^{\mathrm{rel}_i}-1) / \log_2(i+1)$, and
+$\mathrm{nDCG}@k = \mathrm{DCG}@k / \mathrm{IDCG}@k$, where
+$\mathrm{IDCG}@k$ is the DCG of the ideal (qrels-sorted) ranking at the same
+cutoff. nDCG is computed per query and compared between the unrepaired and
+repaired variant of the same extraction rule, holding every other choice
+fixed; Section~\ref{sec:experimental_setup} specifies the paired,
+multiplicity-corrected inference protocol used to test whether an observed
+repaired-versus-unrepaired difference is reliable.
+
+The formulation above makes explicit why improving Equation~\eqref{eq:mwfas}
+is not, by construction, the same as improving nDCG. The repair objective
+is computed entirely from $G_q$'s own edges and weights, which are
+themselves a derived function of upstream normalization, vote semantics,
+and thresholding choices (Section~\ref{sec:pref-graph}); nDCG is computed
+from an extraction rule's output ranking against relevance judgments that
+never enter the repair objective at all. A smaller feedback-arc weight, or
+proven-optimal removal of that weight, is evidence about internal
+consistency of the retained votes -- it is not, on its own, evidence about
+agreement with relevance judgments. Whether the two are empirically linked
+in this study's evidence, and how reliably, is the question
+Sections~\ref{sec:experimental_setup} and~\ref{sec:results} take up
+directly.
 
 \section{Experimental Design}
 \label{sec:experimental_setup}
@@ -173,7 +753,9 @@ original sources and are cited in the manuscript. The code and processed
 artifacts used to generate the reported results are available at
 \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}.
 
-\bibliographystyle{sn-basic}
+%% sn-jnl.cls's sn-basic document-class option already issues
+%% \bibliographystyle{sn-basic} internally; an explicit call here would
+%% duplicate it and break BibTeX (see README.md compilation notes).
 \bibliography{references}
 
 \end{document}
