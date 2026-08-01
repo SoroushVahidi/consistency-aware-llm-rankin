@@ -67,10 +67,11 @@ sv96@njit.edu
 
 Funding statement:
 
-This research received in-kind API and cloud-credit support from the Cohere Labs
-Catalyst Grant Program, the Google Cloud Research Credits Program, Microsoft
-Azure for Students, and the AMD AI Developer Program through Fireworks AI
-credits. No direct financial grant funding was received for this work.
+This work received computational support through the Cohere Labs Catalyst Grant
+Program, the Google Cloud Research Credits Program, Microsoft Azure for
+Students, and Fireworks AI credits provided through the AMD AI Developer
+Program. The funders had no role in the study design, data analysis,
+interpretation of results, or preparation of the manuscript.
 
 Competing-interests statement:
 
@@ -127,13 +128,8 @@ author in this manuscript.
 Acknowledgements:
 
 The author thanks Professor Ioannis Koutis for his guidance and emotional
-support throughout this work, and thanks his mother for her emotional support.
-The author is grateful to Anders Borum for providing lifetime access to Secure
-ShellFish, which supported the remote development workflow used during this
-research. The author also acknowledges in-kind API and cloud-credit support from
-the Cohere Labs Catalyst Grant Program, the Google Cloud Research Credits
-Program, Microsoft Azure for Students, and the AMD AI Developer Program through
-Fireworks AI credits.
+support, his mother for her sustained emotional support, and Anders Borum for
+providing lifetime access to Secure ShellFish.
 
 Repository URL:
 
@@ -226,5 +222,5 @@ If it does, use the following conflict list:
 | Professor Ioannis Koutis | Acknowledged for guidance and emotional support; likely advisor/mentor conflict. |
 | Anders Borum | Acknowledged for Secure ShellFish access; not an appropriate scientific reviewer. |
 | The author's mother | Acknowledged for emotional support; personal conflict. |
-| Cohere Labs Catalyst Grant Program; Google Cloud Research Credits Program; Microsoft Azure for Students; AMD AI Developer Program; Fireworks AI | Acknowledged support providers or support programs. |
+| Cohere Labs Catalyst Grant Program; Google Cloud Research Credits Program; Microsoft Azure for Students; AMD AI Developer Program; Fireworks AI | Listed only in the Funding declaration (computational / API-credit support); not repeated in Acknowledgments. |
 | Guido Zuccon | Removed from the suggestion list during final audit because his current UQ profile also lists Google Research Australia, while the manuscript acknowledges Google Cloud Research Credits support. |

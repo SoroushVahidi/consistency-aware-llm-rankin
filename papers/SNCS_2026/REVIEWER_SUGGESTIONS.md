@@ -27,7 +27,7 @@ still run an independent conflict check.
 | Professor Ioannis Koutis | Acknowledged for guidance and emotional support; likely advisor/mentor conflict. |
 | Anders Borum | Acknowledged for providing Secure ShellFish access; not an appropriate scientific reviewer. |
 | Author's mother | Acknowledged for emotional support; personal conflict. |
-| Cohere Labs Catalyst Grant Program, Google Cloud Research Credits Program, Microsoft Azure for Students, AMD AI Developer Program, Fireworks AI | Acknowledged support providers; organizations are not reviewer suggestions and may create perceived support conflicts. |
+| Cohere Labs Catalyst Grant Program, Google Cloud Research Credits Program, Microsoft Azure for Students, AMD AI Developer Program, Fireworks AI | Listed in the Funding declaration (computational / API-credit support); organizations are not reviewer suggestions and may create perceived support conflicts. |
 | Guido Zuccon | Removed during final audit because his current UQ profile also lists Google Research Australia, while the manuscript acknowledges Google Cloud Research Credits support. This may not be a formal conflict, but the final pass removed questionable suggestions rather than guessing. |
 
 ## Notes for Editorial Manager

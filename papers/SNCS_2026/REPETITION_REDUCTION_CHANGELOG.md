@@ -58,6 +58,8 @@ Method: detex word count on `main.tex` from `\abstract` through `\bibliography`;
 - Discussion §Practical Implications bullet list (primary home for recommendations).
 - Full LLM pilot description in Results §LLM.
 - Acknowledgments + Funding dual grant list (Springer dual placement).
+  **Superseded 2026-08-01:** API/cloud computational credits are Funding-only;
+  Acknowledgments are personal/non-funding only (`FUNDING_ACK_CHANGELOG.md`).
 - Brief cross-references that preserve section readability.
 
 ---

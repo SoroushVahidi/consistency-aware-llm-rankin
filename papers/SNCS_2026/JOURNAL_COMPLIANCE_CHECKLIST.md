@@ -23,9 +23,9 @@ Official sources checked:
 | Tables numbered and cited | PASS | Six tables, all labeled/captioned and cited in text. |
 | Figures numbered and cited | PASS | Five figures, all labeled/captioned and cited in text. |
 | Figure files electronic/vector | PASS | Included figure PDFs are single-page vector PDFs with embedded fonts; PNGs are preview copies only. |
-| Acknowledgments | PASS | Separate `Acknowledgments` section; funding organization names are written in full. |
+| Acknowledgments | PASS | Separate `Acknowledgments` section for personal/non-funding support only; provider credit names appear under Funding, written in full. |
 | Statements and Declarations heading | PASS | Manuscript uses `Statements and Declarations`. |
-| Funding | PASS | In-kind API/cloud-credit support listed; no direct financial grant funding claimed. |
+| Funding | PASS | Computational support (API/cloud credits) listed once under Funding; funders' non-role stated; not duplicated in Acknowledgments. |
 | Competing interests | PASS | Declares no competing interests. |
 | Ethics approval | PASS | States not applicable and explains public benchmarks/no human subjects. |
 | Consent | PASS | Consent to participate and consent for publication marked not applicable. |

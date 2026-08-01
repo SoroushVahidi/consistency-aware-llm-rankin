@@ -56,7 +56,7 @@ bibliography.
 | A7 | Results §LLM: six-query / directional / supporting | Discussion §LLM + Limitations §External + §Statistical | High near-dup | One full + brief recalls | **Major** | Full in Results; brief in Limitations External; delete third/fourth full restatements |
 | A8 | Results §Robustness: MDE 0.0036 vs 0.0201 + equivalence minority | Limitations §Statistical: same numbers restated | High | Brief recall OK | **Moderate** | Limitations cite Results; drop number dump |
 | A9 | §Data Availability: URL + raw-payload exclusion | Statements §Data/materials/code: same | Near-exact | Journal often wants both | **Moderate** | Declarations → short cross-ref to §Data Availability |
-| A10 | Acknowledgments: grant/credit list | Statements §Funding: same list | Near-exact | **Necessary** (Springer dual placement) | Necessary | Retain both |
+| A10 | Acknowledgments: grant/credit list | Statements §Funding: same list | Near-exact | No (superseded 2026-08-01) | Was flagged Necessary; **relocated** | Credits now Funding-only; Acknowledgments personal only — see `FUNDING_ACK_CHANGELOG.md` |
 | A11 | Results §Exact: “greedy… real, non-trivial overestimate…” | Discussion §Exact: same claim restated | High | Brief | **Major** | Discussion interpret only; cite Results |
 | A12 | Methodology §Metrics: “three kinds of quantity… restating §Extraction’s closing point” | Already stated in Background §Extraction | Self-acknowledged restatement | No full restatement | **Moderate** | Short operational pointer + cross-ref |
 | A13 | Introduction contribution #3 | Abstract Conclusion + Intro finding paragraph + Discussion + Conclusion | Conceptual cascade | Abstract + one body home | **Critical** | Prefer Intro contributions / Discussion synthesis; Conclusion synthesize only |
@@ -94,7 +94,7 @@ bibliography.
 | Conclusion walks RQ1–RQ4 like a second Results+Discussion | Conclusion should synthesize | **Major** | Compress RQ walkthrough |
 | Results retrieval paragraph lists every family already in `tab:retrieval-holm` | Mild table narration | **Moderate** | Keep one interpretive sentence + point estimates of interest; drop full re-enumeration where table suffices |
 | Limitations Statistical re-dumps power/equivalence table | Duplicate of Results Robustness | **Moderate** | Cross-ref |
-| Funding list in Acknowledgments and Funding | Required dual placement | Necessary | Keep |
+| Funding list in Acknowledgments and Funding | Dual placement not required; credits moved to Funding only (2026-08-01) | Resolved | See `FUNDING_ACK_CHANGELOG.md` |
 
 ---
 
