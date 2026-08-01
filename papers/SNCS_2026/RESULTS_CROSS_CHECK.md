@@ -1,4 +1,21 @@
-# Results Numeric Cross-Check (Stage 4)
+# Results Numeric Cross-Check (Stage 4, indexed in Stage 5)
+
+**Stage-5 note:** every claim below is now also indexed, with its exact
+filter/aggregation logic, in `result_claims.yaml` -- consult that file
+for a compact machine-readable summary; this file remains the
+authoritative narrative record (why each scope decision was made, not
+just what it was). Stage 5 re-searched the whole repository for stale
+`0.0207`, ambiguous `n=379`, and ambiguous `10.6%` occurrences outside
+this manuscript's own documents and corrected `MANUSCRIPT_PLAN.md` and
+`EVIDENCE_MAP.md` accordingly (both previously stated these figures
+without the regime-pooling scope note, or, for `0.0207`, without flagging
+it as superseded); `manuscript/main.tex` itself already stated every one
+of these with the correct scope as of Stage 4 and required no changes.
+Two other manuscripts in this repository (`papers/JDIQ_2026/`, submitted
+and frozen; `papers/negative_result_2026/`, a separate track) still
+contain the old `0.0207` figure and are deliberately left untouched --
+they are not this manuscript and are outside this project's authority to
+edit.
 
 Every numerical claim in `manuscript/main.tex`'s Results section
 (`\section{Results}`) was computed directly from a canonical repository

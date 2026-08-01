@@ -360,20 +360,21 @@ objective itself is diagnostic of retrieval effectiveness under a
 corrected, paired statistical protocol, which is the specific gap this
 paper addresses.
 
-This paper substantially extends and revises an earlier, unpublished
-feedback-arc-set repair investigation by the same author, which studied a
-smaller and partially overlapping evidence base under a less conservative
-evaluation protocol (no separation of canonical from larger-pool evaluation
-cells, no Holm correction applied to the headline retrieval claim, and no
+This paper substantially extends and revises an earlier preprint by the
+same author~\cite{vahidi2026consistencyaware}, which studied a smaller and
+partially overlapping evidence base under a less conservative evaluation
+protocol (no separation of canonical from larger-pool evaluation cells, no
+Holm correction applied to the headline retrieval claim, and no
 exact-repair comparison) and reported a conditional, dataset-dependent
-positive retrieval effect. That manuscript did not complete peer review and
-is not cited here as a prior publication. The present study is not a
-resubmission of it: it uses a materially more conservative statistical
-protocol, adds exact SCIP-based repair specifically to rule out
-heuristic-repair artifacts as an explanation, and reaches a different,
-more restrained conclusion on an updated evidence base. Readers should treat
-the two as distinct, non-comparable analyses rather than as an earlier and
-later version of the same result.
+positive retrieval effect. That preprint has not completed peer review at
+its original target venue and is cited here only as a preprint, not as a
+prior peer-reviewed publication. The present study is not a resubmission
+of it: it uses a materially more conservative statistical protocol, adds
+exact SCIP-based repair specifically to rule out heuristic-repair
+artifacts as an explanation, and reaches a different, more restrained
+conclusion on an updated evidence base. Readers should treat the two as
+distinct, non-comparable analyses rather than as an earlier and later
+version of the same result.
 
 \subsection{Structural Quality Versus Downstream Utility}
 \label{sec:related-utility}
@@ -1207,6 +1208,24 @@ and the scripts used to regenerate every reported statistic and table are
 available at the repository referenced in
 Section~\ref{sec:data-availability}.
 
+\textbf{Generative-AI assistance.} Generative artificial-intelligence
+tools (Anthropic's Claude, via the Claude Code command-line environment)
+were used to assist with software development for this study -- writing
+and revising analysis code, statistical-inference utilities,
+figure-generation scripts, and audit scripts -- and with drafting,
+revising, and fact-checking portions of this manuscript's text and
+figures. Every AI-assisted code change, statistical analysis, figure,
+table, citation, and passage of manuscript text was reviewed and
+independently verified against the underlying stored data and source
+code by the author before inclusion; no generative-AI output was
+accepted without that verification. The author takes full responsibility
+for the accuracy, integrity, and originality of the source code,
+experiments, statistical analyses, figures, tables, interpretations,
+citations, and manuscript text in this work. No generative-AI tool is
+credited as an author, and no generative-AI tool independently designed
+the study, selected the research questions, or made scientific judgments
+attributed to the author in this manuscript.
+
 \section{Results}
 \label{sec:results}
 
@@ -1572,16 +1591,389 @@ construction regimes making up the main evidence package
 
 \section{Discussion}
 \label{sec:discussion}
-%% Scope: state the restrained thesis explicitly (see Section 7 below);
-%% separate structural consistency from downstream retrieval utility as
-%% the paper's organizing distinction; practical audit-logic guidance for
-%% practitioners; brief, explicitly bounded real-LLM addendum discussion.
 
-\section{Limitations}
+\subsection{Main Findings}
+\label{sec:discussion-main}
+
+Four findings, taken together, answer the research questions stated in
+Section~\ref{sec:rqs}. Preference-graph repair causes genuine structural
+change: under the permissive vote-construction regime, both greedy and
+exact repair remove a measurable share of contradictory edge weight, and
+once the candidate pool exceeds the evaluation cutoff, repair changes
+which documents even enter the evaluated top-$k$ set at a
+non-negligible rate (Section~\ref{sec:results-structure},
+\ref{sec:results-repair-structure}). Exact optimization confirms and
+sharpens that structural finding rather than overturning it: solved to
+certified optimality, repair removes systematically less edge weight than
+the greedy heuristic on the same graphs, showing that greedy
+over-corrects relative to the true minimum-weight feedback arc set
+(Section~\ref{sec:results-exact}). Despite that genuine and now
+optimality-confirmed structural activity, no repaired-versus-unrepaired
+retrieval-effectiveness gain is statistically supported as a general
+effect under the canonical protocol: across three prespecified retrieval
+comparison families, four benchmarks, and both repair methods, none
+survives Holm correction (Section~\ref{sec:results-retrieval}). Exact
+repair does not reverse that retrieval conclusion; the same null outcome
+holds whether the graph is repaired by a fast heuristic or by a solver
+that cannot be outperformed on the repair objective itself
+(Section~\ref{sec:results-exact}).
+
+Read together, these four findings support one conclusion: structural
+consistency and downstream retrieval utility behave as empirically
+distinct objectives in this evidence, not as the same underlying quantity
+observed at different resolutions. This is a narrower claim than it may
+first appear, and it is worth being precise about what it does and does
+not say. It does not say that graph repair never helps retrieval, that
+acyclicity is a useless property of a preference graph, that exact repair
+always fails to improve rankings, or that the null hypothesis of no
+effect has been proven; a null result under corrected inference is
+evidence against a general, reliably detectable effect at the scale this
+study is powered to observe, not a proof that no effect exists anywhere.
+The results are more accurately summarized as: repair did not yield a
+statistically supported general improvement in retrieval effectiveness
+under the canonical protocol, exact optimization does not change that
+conclusion, and small or dataset-specific effects below this study's
+detectable scale remain possible
+(Section~\ref{sec:results-robustness}'s power analysis bounds how small).
+On the evidence gathered here, treating acyclicity as a surrogate for
+retrieval effectiveness is not supported.
+
+\subsection{Why Structural Improvement Need Not Improve Retrieval}
+\label{sec:discussion-mechanism}
+
+The formulation in Section~\ref{sec:extraction-eval} already states the
+structural reason a repair-objective improvement need not track an nDCG
+improvement: the two objectives are computed from different information.
+The minimum-weight feedback-arc-set objective (Equation~\eqref{eq:mwfas})
+minimizes disagreement with the graph's own retained edges; nDCG scores
+agreement between an extracted ranking and external relevance judgments
+that never enter the repair objective. A design that makes one of these
+quantities smaller has no logical requirement to make the other larger.
+This subsection interprets that formal gap in light of what the results
+show, distinguishing what the experiments establish from what is a
+plausible mechanism consistent with, but not directly tested by, the
+experimental design.
+
+Several mechanisms are consistent with a genuine structural repair
+producing no detectable retrieval effect, without any one of them being
+individually isolated by this study's design. Feedback-arc-set repair
+targets the least-weight edges needed to restore acyclicity
+(Section~\ref{sec:mwfas-repair}); by construction, those are the edges
+the graph itself treats as weakest evidence, which need not coincide with
+the edges separating a highly relevant document from a marginally
+relevant one near the top of a ranking. A cycle broken far from the
+top-ranked positions can leave the extracted ordering of the most
+relevant documents unchanged even though the graph's global structure is
+now acyclic. Where a hybrid extraction rule mixes a graph-derived score
+with a prior ranking signal (Equation~\eqref{eq:hybrid}), a sufficiently
+informative prior can also compress the downstream influence of whatever
+the graph-side score does -- consistent with, though not the sole
+explanation for, this study's observation that graph-only and hybrid
+methods do not diverge sharply in Section~\ref{sec:results-retrieval}.
+Different extraction rules translate the same repaired graph into
+different rankings by different mechanisms (win-count differencing for
+Copeland, weighted margin differencing for balance, a stationary
+distribution for the Markov-chain rules; Section~\ref{sec:extraction-methods}),
+so a structural change need not propagate identically through every rule,
+which is one plausible contributor to the mixed-sign point estimates in
+Figure~\ref{fig:bootstrap-forest}. Finally, pairwise preference weights
+and relevance judgments are constructed from different evidence
+(Section~\ref{sec:pref-graph}, Section~\ref{sec:retrieval-setting}):
+a vote records one ranker's relative ordering of two candidates, not an
+external judgment of either candidate's relevance, so the graph's
+internal consistency and its agreement with relevance judgments are free
+to vary independently.
+
+None of these four mechanisms is demonstrated as \emph{the} cause of the
+null retrieval result; the experimental design compares repaired and
+unrepaired outcomes under corrected inference, not the causal pathway by
+which repair does or does not influence a given ranking. They are
+offered as mechanisms consistent with the design and the observed
+pattern of results, not as claims independently established by a
+dedicated test.
+
+\subsection{Exact Repair as a Diagnostic Control}
+\label{sec:discussion-exact}
+
+A repair study that only ever applies a heuristic leaves one explanation
+for a null retrieval result permanently open: the heuristic may simply be
+too weak, so a better repair algorithm might have revealed the gain the
+weak one missed. This is not a hypothetical concern for cycle-peeling
+heuristics specifically -- Section~\ref{sec:results-exact} shows exact
+repair removes systematically less edge weight than greedy on the same
+graphs, confirming that greedy is a real, non-trivial overestimate of the
+minimum feedback arc set here, not merely a theoretical possibility. That
+same section shows the retrieval-level conclusion is unchanged under
+exact repair: solved to certified optimality, a repair method that cannot
+be outperformed on the repair objective itself still does not reveal a
+retrieval gain greedy repair missed. Because optimality rules out
+suboptimality as an explanation by construction, this directly closes the
+heuristic-weakness alternative explanation for the retrieval null.
+
+This role for exact SCIP-based repair is deliberately narrow. It is not
+introduced as a novel solver, a novel formulation of the feedback-arc-set
+problem, or a claim about how minimum-weight feedback-arc-set solving
+should be done at scale (Section~\ref{sec:related-repair} situates the
+formulation itself as long-studied, classical combinatorial
+optimization). Its contribution here is methodological control: closing
+a specific alternative explanation for a specific empirical finding, not
+proposing a better repair algorithm for practitioners to adopt.
+
+\subsection{Relation to Prior Literature}
+\label{sec:discussion-literature}
+
+The finding that graph repair is structurally active but not reliably
+retrieval-improving sits against three adjacent, and non-contradictory,
+strands of prior evidence. First, pairwise comparison signals genuinely
+improve ranking quality in several settings: pairwise ranking prompting
+with large language models is competitive with, and in some settings
+better than, pointwise scoring for text
+reranking~\cite{qin-etal-2024-large}, and pointwise, pairwise, and
+listwise LLM reranking paradigms show real, measured effectiveness
+differences depending on formulation~\cite{sun-etal-2023-chatgpt}. Those
+findings are about whether \emph{using} pairwise evidence, instead of
+pointwise scores, changes ranking effectiveness -- a different question
+from this paper's, which holds the pairwise evidence source fixed and
+asks whether \emph{repairing} contradictions within that evidence changes
+effectiveness further. Nothing in this paper's results is in tension with
+pairwise comparison being an effective ranking signal; the null result is
+specifically about the marginal effect of consistency repair on top of an
+already-constructed pairwise-derived graph.
+
+Second, prior work documents that pairwise judgments, including
+LLM-generated ones, are prone to inconsistency and order sensitivity:
+positional and prompt-order biases can affect LLM-as-judge
+outcomes~\cite{zheng2023judging}, systematic position bias has been
+measured directly in LLM-as-judge pairwise
+comparisons~\cite{shi2025judging}, and intrinsic inconsistency in
+LLM-based pairwise rankings has motivated explicit aggregation methods to
+mitigate it~\cite{zeng2024llmrankfusion}. This literature establishes that
+inconsistency is a real, measurable property of pairwise preference
+data, which is the premise this paper's construction-sensitivity results
+(Section~\ref{sec:results-structure}) are consistent with. It does not by
+itself establish that \emph{removing} that inconsistency improves a
+downstream task metric; that is the further, separate claim this paper
+tests directly.
+
+Third, and closest to this paper's specific question, recent work on
+acyclic preference evaluation for language models treats acyclicity as a
+desirable property of an aggregated evaluation and reports downstream
+gains from enforcing it, on tasks including model ranking, response
+selection, and fine-tuning data
+selection~\cite{hu2024acyclic}. That result is not contradicted by this
+paper: the two studies test acyclicity's downstream value in different
+task settings (LLM evaluation and data selection versus document
+retrieval) with different aggregation and repair mechanisms, so a
+positive effect in one setting and an unsupported general effect in
+another are both consistent with the same underlying fact -- that whether
+structural consistency helps a downstream task is an empirical property
+of the specific task and pipeline, not a property of acyclicity itself
+that transfers automatically across settings. This paper's contribution
+relative to that literature is the controlled separation
+(Section~\ref{sec:related-utility}): holding construction explicit,
+comparing unrepaired, heuristically repaired, and exactly repaired
+graphs, and testing the structural-to-utility link directly under
+corrected paired inference, for the retrieval setting specifically.
+
+This paper is a substantial revision of an earlier preprint by the same
+author~\cite{vahidi2026consistencyaware}
+(Section~\ref{sec:related-repair}), which studied algorithmic ranking
+extraction from pairwise comparisons under a less conservative protocol
+and reported a conditional, dataset-dependent positive retrieval effect.
+The present study is retrieval-focused and controlled rather than
+algorithmic: it separates construction, repair, and extraction as
+independently varied factors, adds exact repair as a diagnostic control
+the earlier preprint did not include, and applies multiplicity-corrected
+paired inference throughout. The two should not be read as an earlier and
+later measurement of the same effect; the earlier preprint's specific
+numerical findings are superseded by this study's more conservative
+protocol, not confirmed by it.
+
+\subsection{Practical Implications}
+\label{sec:discussion-practical}
+
+The evidence in this paper supports a small number of restrained,
+directly evidence-backed recommendations for researchers and
+practitioners building preference-graph pipelines.
+
+\begin{itemize}
+  \item Do not assume an acyclic or less-cyclic preference graph is a
+    better retrieval input without checking; this study's evidence does
+    not support that assumption as a general rule.
+  \item Evaluate repaired and unrepaired variants on the downstream
+    task metric directly, with an unrepaired baseline always included as
+    a comparison point, rather than reporting only structural diagnostics
+    (cyclicity, removed weight) as if they were evidence of downstream
+    benefit.
+  \item Where a heuristic repair method is used and a null or weak
+    downstream effect is observed, an exact solve on a representative
+    subset of instances is an effective and specific check on whether
+    heuristic suboptimality, rather than repair itself, could explain the
+    result -- this is a diagnostic use of exact solving, not a claim that
+    exact repair must be run at full scale.
+  \item Report graph-construction choices (normalization, vote
+    semantics, candidate pooling), extraction rule, and evaluation cutoff
+    explicitly alongside any repair claim: Section~\ref{sec:results-structure}
+    shows these choices, not the repair algorithm, are what determine
+    whether a graph has any cyclic structure for repair to act on in the
+    first place.
+  \item Treat structural-quality metrics and downstream-utility metrics
+    as separate reporting dimensions with separate evidence, not as
+    interchangeable indicators of pipeline quality.
+\end{itemize}
+
+These recommendations are audit practices, not a validated deployment
+rule for deciding when to apply repair. This paper does not establish,
+and does not attempt to establish, a criterion for predicting per-query
+whether repair will help; that is a distinct research question this
+paper's evidence base does not address.
+
+\subsection{Implications for LLM-Based Ranking}
+\label{sec:discussion-llm}
+
+Pairwise judgments elicited directly from large language models are
+subject to the same structural possibility studied throughout this
+paper: aggregating several such judgments, or several repeated
+elicitations, can produce a preference graph with directed cycles, for
+the same reason score-derived votes can (Section~\ref{sec:pref-graph}).
+The conceptual distinction this paper's evidence supports -- that
+structural consistency and downstream task utility are separate
+quantities requiring separate evidence -- applies to that setting in
+principle. This paper's own LLM-derived evidence is a six-query bounded
+pilot (Section~\ref{sec:results-llm}), directionally consistent with the
+main score-derived finding but far too small to establish a general
+claim on its own. The data gathered here do not support broad
+conclusions about modern LLM-based rerankers, pairwise-judgment
+pipelines at production scale, or any specific LLM reranking paradigm;
+extending this paper's controlled comparison to a larger, dedicated
+real-LLM evidence base is a direction for future work, not a claim this
+paper makes.
+
+\section{Limitations and Threats to Validity}
 \label{sec:limitations}
-%% Scope: finite power for small effects; benchmark/ranker scope; bounded
-%% real-LLM evidence; candidate-pool sensitivity; no claim of transfer to
-%% learned fusion, cross-encoder reranking, or online evaluation.
+
+\subsection{Internal Validity}
+\label{sec:limitations-internal}
+
+The pipeline (Section~\ref{sec:pipeline}) makes several sequential design
+choices -- score normalization, vote-margin and aggregate-weight
+thresholds, candidate pooling, and the hybrid mixing weight $\alpha$ --
+each of which could in principle interact with the repair effect being
+measured. Two controls mitigate this: the retention-matched thresholding
+procedure (Section~\ref{sec:construction-protocol}) ties the normalized
+protocol's permissiveness to the raw-margin baseline rather than choosing
+it freely, and every retrieval comparison holds construction, pooling,
+and extraction fixed while varying only the repair method
+(Section~\ref{sec:results-retrieval}), so a measured repaired-versus-unrepaired
+difference cannot be attributed to a confound in those other choices.
+What remains unresolved is $\alpha$-dependence beyond the sweep reported
+as a robustness check (Section~\ref{sec:extraction-methods}): the primary
+analysis fixes $\alpha=0.3$, and while the sweep does not change the
+qualitative conclusion, it does not exhaustively rule out every possible
+mixing weight. The paired sign-flip and Holm-correction procedure
+(Section~\ref{sec:statistics}) assumes exchangeability of paired
+differences under the null and independence across queries within a
+family; the query-level pairing is designed to satisfy the first
+assumption, and queries are drawn from disjoint benchmark query sets to
+support the second, but formal independence across the three
+vote-construction regimes evaluated on the same underlying documents
+(Section~\ref{sec:pref-graph}) is not separately tested, since the
+canonical and larger-pool families are never jointly corrected across
+regimes for exactly this reason (Section~\ref{sec:statistics}).
+
+\subsection{Construct Validity}
+\label{sec:limitations-construct}
+
+Acyclicity is one specific, narrow notion of structural consistency
+(Section~\ref{sec:cycles}); it is not the only property a preference
+graph could be judged by, and this study's structural diagnostics
+(cyclic-query rate, removed feedback-arc weight, top-$k$
+membership-change rate) are proxies for graph-internal coherence, not
+direct measurements of evidential correctness. nDCG is this study's
+primary utility construct; it captures rank-weighted agreement with
+graded relevance judgments, but it is one operationalization of retrieval
+quality among several (Section~\ref{sec:metrics} reports MRR and MAP only
+as secondary diagnostics, precisely because the primary claim should not
+rest on whichever metric happens to be most favorable). A further
+construct gap, not resolved by this study's design, is that pairwise
+vote weight (Section~\ref{sec:pref-graph}) encodes a ranker's confidence
+in a relative ordering, not a judgment of either candidate's relevance;
+the two constructs are related in that both derive from the same
+underlying documents, but they are not the same measurement, and this
+study does not claim the graph's internal weights are a proxy for
+relevance at any point (Section~\ref{sec:extraction-eval}'s closing
+paragraph states this distinction as a matter of definition, not as an
+empirical finding requiring separate validation here).
+
+\subsection{External Validity}
+\label{sec:limitations-external}
+
+The main evidence base spans four benchmarks across four retrieval
+domains, three classical and one dense base ranker, and three
+vote-construction regimes (Section~\ref{sec:datasets},
+Section~\ref{sec:rankers}); this is a deliberately controlled, not
+exhaustive, sweep, chosen so that construction-sensitivity and repair
+findings could be checked for domain generality rather than tied to one
+corpus. It does not, by itself, establish that the findings generalize to
+retrieval domains, rankers, or construction regimes outside this set.
+The real-large-language-model evidence is a six-query pilot
+(Section~\ref{sec:results-llm}), directionally consistent with but far
+too small to independently confirm the main finding, and this paper does
+not claim it does. This study does not evaluate learned fusion,
+cross-encoder reranking, modern dense rerankers beyond the single MiniLM
+checkpoint used here, or online (interactive, feedback-driven) retrieval
+evaluation; whether structural repair behaves differently under any of
+those settings is not addressed by this evidence and is not implied one
+way or the other. Extension to other preference-aggregation domains that
+share the same underlying structure -- recommendation, model evaluation
+via pairwise LLM judging, or crowdsourced preference collection -- is
+plausible in principle (Section~\ref{sec:discussion-llm}) but untested
+here.
+
+\subsection{Statistical Conclusion Validity}
+\label{sec:limitations-statistical}
+
+Every confirmatory claim in this paper uses Holm-corrected paired
+inference across a prespecified family (Section~\ref{sec:statistics}),
+and the power analysis (Section~\ref{sec:results-robustness}) reports
+what that correction can and cannot detect: the study is well positioned
+to rule out a general effect at the scale of the observed point estimates
+(median absolute delta $0.0036$), but effects below the Holm-adjusted
+minimum detectable scale ($0.0201$ at 80\% power in the active
+larger-pool family) are not ruled out. A non-significant result under
+this design means the evidence does not support a general effect at a
+detectable scale; it does not establish exact equality between repaired
+and unrepaired rankings, and the narrow equivalence analysis
+(Section~\ref{sec:results-robustness}) found equivalence established for
+only a minority of cells at either tested margin, not the majority --
+this paper deliberately reports that as an open uncertainty rather than
+rounding it to a stronger equivalence claim. The real-LLM pilot's
+repeated per-query rows are handled with cluster-level ($n=6$) inference
+specifically because the alternative, row-level treatment of the same
+data, is a documented, previously-identified source of overstated
+statistical confidence for this exact evidence
+(Section~\ref{sec:statistics}); six independent clusters remain a small
+basis for precise inference, and this is stated as a limitation of that
+subsection's evidence, not resolved by the cluster correction itself.
+
+\subsection{Computational Limitations}
+\label{sec:limitations-computational}
+
+Exact minimum-weight feedback-arc-set solving reaches certified
+optimality quickly at the query-graph sizes studied here (mean solve time
+under ten milliseconds, Section~\ref{sec:results-exact}), but this study
+does not evaluate exact solving at larger graph sizes and makes no claim
+about its scalability beyond the sizes tested. Its role in this paper is
+specifically diagnostic: a repair-method control used to rule out
+heuristic suboptimality as an explanation for a specific empirical
+finding (Section~\ref{sec:discussion-exact}), not a claim that exact
+solving is a practical repair method for graphs materially larger than
+those in this study's candidate pools. Greedy cycle-peeling remains the
+practical choice for larger graphs precisely because exact
+minimum-weight feedback-arc-set solving is NP-hard in general
+(Section~\ref{sec:related-repair}); this study's exact-repair results
+should be read as evidence about a specific, bounded regime, not as a
+general solved-problem claim.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -1600,8 +1992,12 @@ construction regimes making up the main evidence package
 \section*{Declarations}
 
 \subsection*{Funding}
-[Stage 2: confirm funding statement -- likely ``Not applicable'' per the
-IJCS draft precedent; verify before submission.]
+[AUTHOR CONFIRMATION REQUIRED: state the actual funding source, if any,
+or confirm ``Not applicable'' / ``No funding was received for this
+work.'' Not resolved by this drafting process, since no funding
+information exists anywhere in the repository to confirm one way or the
+other; this is not a value that can be inferred from code, data, or prior
+manuscript text, and must be supplied by the author before submission.]
 
 \subsection*{Conflict of interest}
 The author declares no conflict of interest.
@@ -1627,9 +2023,10 @@ results are available at
 \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}.
 
 \subsection*{Authors' contributions}
-Not applicable; this is single-author work. Soroush Vahidi conceived the
-study, implemented the codebase, designed and ran the experiments,
-analyzed the results, and wrote the manuscript.
+This is single-author work. Soroush Vahidi conceived the study, designed
+and implemented the experimental pipeline, ran the experiments, analyzed
+and verified the results, prepared the figures and tables, and wrote the
+manuscript.
 
 %% sn-jnl.cls's sn-basic document-class option already issues
 %% \bibliographystyle{sn-basic} internally; an explicit call here would

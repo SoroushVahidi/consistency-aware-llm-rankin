@@ -193,7 +193,7 @@ before drafting. Both are now resolved:
    the bare string "Dimension F" or "Outcome F" interchangeably; they
    denote two unrelated research threads.
 
-## Page budget (Stage 4)
+## Page budget (Stage 5)
 
 SN Computer Science states no explicit word-count, page-count, or
 figure/table-count limit for original-research articles (verified against
@@ -202,7 +202,7 @@ stated numeric constraint anywhere in the guidelines is the structured
 abstract's 150-250 word limit. This project keeps its own internal budget
 so the manuscript stays a focused empirical study rather than growing
 without bound. Current state (compiled this stage, `tectonic`,
-`sn-basic`+`Numbered`, single column, 33 pages total) and the projected
+`sn-basic`+`Numbered`, single column, 40 pages total) and the projected
 budget for the remaining stages:
 
 | Section | Current pages | Projected final pages | Note |
@@ -211,16 +211,16 @@ budget for the remaining stages:
 | 1 Introduction | 1-3 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
 | 2 Related Work | 4-6 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
 | 3 Background and Problem Formulation | 7-11 (5 pp) | 5 | Drafted Stage 2; not expected to grow |
-| 4 Methodology | 12-19 (8 pp) | 8 | Drafted Stage 3; includes Figure 1 (pipeline schematic) added Stage 4; not expected to grow further |
-| 5 Results | 20-26 (7 pp) | 7 | **Drafted Stage 4.** 4 new tables (structural outcomes, retrieval Holm summary, exact-vs-greedy, robustness) + 5 figures (pipeline in Methodology; BM25 share, cycle decomposition, bootstrap forest, and the new exact-vs-greedy gap figure in Results), all against the Stage-3 budget of 6-9 pp -- came in within budget |
-| 6 Discussion | 27 (0 pp, skeleton) | 1-2 | Not yet drafted (Stage 4 explicitly excludes it). Restrained thesis statement + practitioner audit-logic list, per `MANUSCRIPT_PLAN.md` Section 4 |
-| 7 Limitations | 27 (0 pp, skeleton) | 1 | Not yet drafted. Five bullet points, reused near-verbatim from JDIQ per the Stage-1 reuse plan |
-| 8 Conclusion | 27 (0 pp, skeleton) | <1 | Not yet drafted (Stage 4 explicitly excludes it). One paragraph + one falsifiability sentence |
-| 9 Data Availability and Reproducibility | 27 (0 pp, skeleton) | <1 | Not yet drafted |
-| References | 28-32 (~5 pp) | 6-7 | Will grow further as Discussion cites any remaining seeded entries; prune unused entries only after Discussion/Conclusion are drafted |
-| Declarations (backmatter) | 32-33 (~1 pp) | 1 | Completed Stage 3: all seven Springer-required declaration headings present |
-| Appendix | 0 | 0-2 | The two items originally scoped here (bounded real-LLM pilot, F5 exact-vs-greedy figure) were both placed in main-text Results Sections 5.4/5.6 instead once drafted -- see `STAGE4_CHANGELOG.md` for the reasoning. No appendix currently planned unless a later stage moves a robustness table out of main-text Table 6 for length. |
-| **Total** | **33** | **~38-42** | Internal target, not a journal-imposed limit |
+| 4 Methodology | 12-19 (8 pp) | 8 | Drafted Stage 3; includes Figure 1 (pipeline schematic) added Stage 4 and the generative-AI disclosure paragraph added Stage 5; not expected to grow further |
+| 5 Results | 20-25 (6 pp) | 6 | Drafted Stage 4; unchanged this stage |
+| 6 Discussion | 26-30 (5 pp) | 5 | **Drafted Stage 5.** Six subsections (main findings, mechanism, exact-repair-as-control, literature, practical implications, LLM implications); came in near the Stage-4 projected 1-2 pp budget's high end given the literature-comparison and mechanism subsections the Stage-5 brief added to scope beyond Stage 4's simpler projection |
+| 7 Limitations and Threats to Validity | 31-32 (2 pp) | 2 | **Drafted Stage 5.** Five subsections (internal, construct, external, statistical-conclusion, computational validity), within the Stage-4 projected 1 pp budget's low end (came in slightly over; validity-framed structure is more thorough than the originally-projected five-bullet-point form) |
+| 8 Conclusion | 33 (0 pp, skeleton) | <1 | Not yet drafted (Stage 5 explicitly excludes it) |
+| 9 Data Availability and Reproducibility | 33 (0 pp, skeleton) | <1 | Not yet drafted |
+| References | 34-39 (~6 pp) | 6-7 | Grew this stage with one new reference (`vahidi2026consistencyaware`); will grow further only if Conclusion cites anything new; prune unused entries only after Conclusion is drafted |
+| Declarations (backmatter) | 39-40 (~1 pp) | 1 | Funding remains an explicit `[AUTHOR CONFIRMATION REQUIRED]` placeholder; every other heading is substantively complete |
+| Appendix | 0 | 0 | Confirmed not needed as of Stage 5; both items originally scoped here were placed in main-text Results (Stage 4). No robustness table has needed to move out of Table 6 for length. |
+| **Total** | **40** | **~41-43** | Internal target, not a journal-imposed limit; the remaining growth is almost entirely the Conclusion (<1 pp) and the final structured Abstract, which does not add a page (front matter) |
 
 Reducing repetition across sections was an explicit Stage-3 concern: the
 central null-result thesis is stated once in the Introduction (as the

@@ -78,9 +78,14 @@ compressing it into a slogan.
 2. **A four-benchmark, three-regime empirical demonstration that
    structural repair is genuinely active but not a reliable retrieval
    intervention.** Repair measurably removes cyclic edge mass and, under
-   $P>k$ evaluation, changes top-$k$ membership at a 10.6% mean rate --
-   yet no repaired-vs-unrepaired nDCG cell family (canonical, larger-pool,
-   or exact) survives Holm correction.
+   $P>k$ evaluation, changes top-$k$ membership at a 10.6% mean rate
+   (**Stage-4/5 clarification, confirmed correct as stated but scope was
+   ambiguous here**: this rate is pooled across all three
+   vote-construction regimes, not `ms1`-only -- restricting to `ms1`
+   alone gives 26.2%, a materially different number; see
+   `RESULTS_CROSS_CHECK.md` and `result_claims.yaml`) -- yet no
+   repaired-vs-unrepaired nDCG cell family (canonical, larger-pool, or
+   exact) survives Holm correction.
 3. **A construction-sensitivity finding that vote-construction regime, not
    the repair algorithm, is the dominant driver of graph cyclicity and of
    whether repair has any opportunity to act at all** (e.g. raw BM25
@@ -291,7 +296,10 @@ recur if not addressed structurally.
   format).
 - All headline numbers: BM25 share (0.988/0.512), cyclicity percentages,
   Holm-rejected cell counts (0/20, 0/60, 0/110, 0/36, 0/56), CombSUM/RRF
-  means (0.554/0.546), power/MDE figures (0.0036/0.0207), equivalence
+  means (0.554/0.546), power/MDE figures (0.0036/0.0207 -- **superseded,
+  Stage 4**: the 0.0207 MDE figure does not reproduce from the current
+  canonical `mde_per_cell.csv`; the manuscript uses the reproducible
+  value 0.0201 instead, see `RESULTS_CROSS_CHECK.md`), equivalence
   counts (13/110, 32/110).
 - Table `tab:setup` (datasets and prespecified evaluation settings) --
   reuse verbatim.
