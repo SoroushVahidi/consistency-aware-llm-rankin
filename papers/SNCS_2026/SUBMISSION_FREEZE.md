@@ -15,9 +15,9 @@ should point at the commit recorded here once the SHA is filled.
 |---|---|
 | Freeze date (UTC calendar) | 2026-08-01 |
 | Branch | `papers/sncs-2026-foundation` |
-| Repository commit SHA | `PENDING_NOVELTY_COMMIT` |
+| Repository commit SHA | `1fd2b4812ae034994e9330757f234934c815aaf0` |
 | Canonical repository URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin |
-| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/PENDING_NOVELTY_COMMIT |
+| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/1fd2b4812ae034994e9330757f234934c815aaf0 |
 | Repository visibility at freeze | Public (`gh repo view`: `visibility=PUBLIC`) |
 | Proposed release tag (not created) | `sncs-2026-submission-v1` |
 
