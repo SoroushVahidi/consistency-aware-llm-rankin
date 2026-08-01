@@ -201,7 +201,7 @@ official Springer Nature sources during Stage 3, 2026-07-31); the only
 stated numeric constraint anywhere in the guidelines is the structured
 abstract's 150-250 word limit. This project keeps its own internal budget
 so the manuscript stays a focused empirical study rather than growing
-without bound. Final-stage state: the compiled submission PDF is 41 pages
+without bound. Final-stage state: the compiled submission PDF is 42 pages
 with a 196-word structured abstract, completed conclusion, acknowledgments,
 and completed statements and declarations. No appendix is currently used.
 

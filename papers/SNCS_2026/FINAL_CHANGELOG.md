@@ -61,7 +61,7 @@ Branch: `papers/sncs-2026-foundation`
 ## Final QA
 
 - Tectonic compile succeeded and produced `manuscript/main.pdf`.
-- Final PDF page count: 41 A4 pages.
+- Final PDF page count: 42 A4 pages.
 - Structured abstract word count: 196 words.
 - Citation and reference checks: 59 cited keys, 62 unique BibTeX entries, 0 missing cited keys, 0 duplicate BibTeX keys.
 - Cross-reference checks: 65 labels, all unique; 0 missing `\ref`/`\eqref` targets.
@@ -77,7 +77,8 @@ Known residual compile warnings:
 
 ## Final Cold-Read Pass QA
 
-- Recompiled with Tectonic on 2026-08-01; output remains a 41-page A4 PDF.
+- Recompiled with Tectonic on 2026-08-01; output is now a 42-page A4 PDF after
+  the independent-review citation additions.
 - Visual PDF QA sampled the title page, pipeline figure page, results
   figure/table pages, declarations, and final reference page. No meaningful
   layout problem was found.

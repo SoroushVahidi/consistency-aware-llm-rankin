@@ -1,15 +1,8 @@
 %% SN Computer Science manuscript.
 %%
-%% See ../MANUSCRIPT_PLAN.md for scope, ../EVIDENCE_MAP.md and
-%% ../result_claims.yaml for claim-to-evidence mapping, and ../README.md
-%% for compilation instructions.
-%%
 %% Template: Springer Nature sn-jnl.cls v3.1 (December 2024), vendored
 %% unmodified in ../template/. Reference style: sn-basic (Numbered), matching
 %% SN Computer Science's numeric-citation submission guidelines.
-%% Peer review model: single-blind (author identity included; SN Computer
-%% Science guidelines confirm single-blind, unlike the double-blind JDIQ_2026
-%% submission this manuscript partially descends from).
 
 %% "Numbered" is required in addition to "sn-basic" to get sn-basic's
 %% numeric-citation variant; sn-basic alone defaults to the author-date
@@ -74,9 +67,8 @@ structural intervention but not a validated surrogate for improving
 retrieval effectiveness. Repair claims should therefore report structural
 diagnostics and downstream retrieval metrics separately.}
 
-\keywords{preference graphs, feedback arc set, minimum-weight feedback arc
-  set, graph repair, rank aggregation, information retrieval, retrieval
-  evaluation, data quality}
+\keywords{preference graphs, feedback arc set, graph repair, rank aggregation,
+  information retrieval, retrieval evaluation}
 
 \maketitle
 
@@ -301,7 +293,9 @@ work~\cite{manmatha2002formal,bruch2023analysis,benham2017risk}.
 
 A smaller body of work builds an explicit preference graph from pairwise
 document judgments before extracting a ranking, rather than fusing scores or
-ranks directly. \texttt{LLM-RankFusion} aggregates several LLM rankers by
+ranks directly. \texttt{PRP-Graph} builds a ranking graph from pairwise LLM
+prompting and aggregates it for text reranking~\cite{luo2024prpgraph};
+\texttt{LLM-RankFusion} aggregates several LLM rankers by
 explicitly modeling and mitigating pairwise inconsistency in the resulting
 comparisons~\cite{zeng2026llmrankfusion}, and confidence-aware or
 bias-aware pairwise aggregation methods weight or correct individual
@@ -329,7 +323,10 @@ general~\cite{karp1972reducibility}; classical work gives fast, deterministic
 greedy heuristics that repeatedly remove the lightest edge on a discovered
 cycle~\cite{eades1993heuristic}, and later work gives polynomial-time
 approximation schemes and connects the problem to correlation
-clustering~\cite{kenyon2007fewerrors,ailon2008aggregating}. This paper does
+clustering~\cite{kenyon2007fewerrors,ailon2008aggregating}. Exact
+approaches are also commonly formulated through the related linear-ordering
+problem and branch-and-cut/cutting-plane methods~\cite{groetschel1984cutting,baharev2021exact}.
+This paper does
 not claim the minimum-weight feedback-arc-set formulation itself as a
 contribution -- it is a long-studied classical combinatorial optimization
 problem -- and instead studies the empirical consequence of solving it, both
@@ -1520,7 +1517,7 @@ comparison family rather than a post-hoc search.
     (Section~\ref{sec:results-retrieval}), canonical evidence only.}
   \label{tab:robustness}
   \scriptsize
-  \begin{tabular}{p{2.6cm}p{6.3cm}}
+  \begin{tabular}{p{3.0cm}p{8.2cm}}
     \toprule
     Check & Result \\
     \midrule

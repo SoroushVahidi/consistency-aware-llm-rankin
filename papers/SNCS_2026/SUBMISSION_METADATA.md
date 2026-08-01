@@ -145,9 +145,8 @@ None available as of this audit. See `ARCHIVAL_RELEASE_PLAN.md`.
 
 Required confirmation before final portal submission:
 
-- Confirm whether the repository will be made reviewer-accessible before
-  submission, or whether the portal should receive a separate source/code
-  archive because the repository is currently private.
+- Confirm whether the portal requests any separate source/code archive in
+  addition to the public repository URL and the LaTeX source archive.
 - Confirm the portal's exact article-type label if it differs from "Original
   Research."
 

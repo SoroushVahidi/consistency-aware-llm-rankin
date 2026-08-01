@@ -5,23 +5,17 @@ Branch: `papers/sncs-2026-foundation`
 
 ## Verdict
 
-READY AFTER MINOR FIXES
+READY TO SUBMIT
 
 ## Blocking Issue
 
-The manuscript states that code and processed artifacts are available at
-`https://github.com/SoroushVahidi/consistency-aware-llm-rankin`, but the
-repository is currently private. Before submission, the author must either make
-the repository reviewer-accessible under the journal's rules or upload a
-sanitized source/code artifact through the portal. Do not make the repository
-public, create a release, or mint a DOI without explicit authorization.
-
-No scientific or manuscript-text blocker was found in the final cold read.
+No scientific, manuscript-text, repository-access, or submission-package blocker
+was found in the final cold read and independent review. The repository URL in
+the manuscript is public and accessible:
+`https://github.com/SoroushVahidi/consistency-aware-llm-rankin`.
 
 ## Author Confirmations Still Required
 
-- Confirm repository/reviewer access route: private reviewer access, portal
-  source archive, or later public archival release.
 - Confirm the exact article-type label if the portal does not use "Original
   Research."
 - Confirm whether the portal wants opposed reviewers entered explicitly; if so,
