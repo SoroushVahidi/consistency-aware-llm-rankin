@@ -116,8 +116,9 @@ every command above.
 | Experiment families, entry points, test tiers, cloud validation | [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) |
 | A specific claim's evidence/status/manuscript-applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
 | What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) (timestamped-experiment specifics) and [`docs/ARTIFACT_POLICY.md`](docs/ARTIFACT_POLICY.md) (broader policy + dated decision log) |
-| Exact reproduction commands for the manuscript's numbers | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
-| The submitted manuscript itself | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
+| Exact reproduction commands for the classical evidence tables | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
+| SN Computer Science manuscript + reviewer quickstart | [`papers/SNCS_2026/`](papers/SNCS_2026/), [`papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md`](papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md) |
+| Separate ACM JDIQ manuscript (same classical backbone) | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
 | Production-facing policy logic (guarded, never learned-routing by default) | `src/consistency_ranker/policy_selection/production_config.py` — see `docs/CONTRIBUTIONS.md` §1.7 |
 | The internal-only Gurobi validation studies (never manuscript evidence) | [`reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`](reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/), [`reports/exact_solver_scaling_study_20260731T162314Z/`](reports/exact_solver_scaling_study_20260731T162314Z/) |
 | A separate, NO-GO'd companion research thread + planned companion paper | [`docs/research/RESEARCH_TRAJECTORY.md`](docs/research/RESEARCH_TRAJECTORY.md), [`papers/negative_result_2026/`](papers/negative_result_2026/) |
@@ -140,10 +141,11 @@ every command above.
   `docs/EXPERIMENT_ARTIFACT_POLICY.md`.
 - **The `real_data` test tier requires prepared datasets** (network, ~3GB);
   it is cleanly separated from the default suite, not silently skipped.
-- **No `docs/*.md` file overrides `papers/JDIQ_2026/manuscript/main.tex`
-  on an actual number** — if any status document and the manuscript
-  disagree, trust the manuscript for the number and `docs/CONTRIBUTIONS.md`
-  for how to classify it.
+- **No `docs/*.md` file overrides a manuscript `.tex` on an actual number** —
+  for the SN Computer Science package trust
+  `papers/SNCS_2026/manuscript/main.tex`; for the separate JDIQ package trust
+  `papers/JDIQ_2026/manuscript/main.tex`. Use `docs/CONTRIBUTIONS.md` for
+  classification (canonical / exploratory / internal).
 
 ---
 

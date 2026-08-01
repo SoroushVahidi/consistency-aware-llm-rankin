@@ -3,6 +3,11 @@
 Date: 2026-08-01
 Branch: `papers/sncs-2026-foundation`
 
+> Superseded for freeze/tag/DOI timing by
+> [`RELEASE_CANDIDATE_DECISION.md`](RELEASE_CANDIDATE_DECISION.md)
+> (verdict: READY AFTER MINOR LOGISTICAL FIXES). This file remains useful for
+> the earlier cold-read upload list.
+
 ## Verdict
 
 READY TO SUBMIT

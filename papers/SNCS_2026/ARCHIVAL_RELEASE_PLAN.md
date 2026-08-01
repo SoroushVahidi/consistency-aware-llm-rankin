@@ -2,25 +2,25 @@
 
 Date: 2026-08-01
 Repository: https://github.com/SoroushVahidi/consistency-aware-llm-rankin
-Current repository visibility from `gh repo view`: private.
+Current repository visibility from `gh repo view`: **public**.
 
 ## Recommendation
 
-Create an archival, DOI-backed release before or at journal acceptance, and make
-reviewer-accessible code available at submission either by:
+The public GitHub repository already satisfies reviewer code access at
+submission. Prefer a DOI-backed archival deposit **at acceptance** (or when the
+author explicitly authorizes a submission-time archive). See
+`RELEASE_CANDIDATE_PLAN.md` and `RELEASE_CANDIDATE_DECISION.md` for the active
+release-candidate plan.
 
-1. making the GitHub repository accessible under the journal's review rules; or
-2. uploading a sanitized source/code archive through the submission portal.
-
-Do not create a public release or DOI without explicit authorization.
+Do not create a public GitHub Release or DOI without explicit authorization.
 
 Recommended release tag:
 
-`sncs-2026-submission-20260801`
+`sncs-2026-submission-v1`
 
 Suggested release title:
 
-`SN Computer Science 2026 submission package`
+`SN Computer Science 2026 submission package v1`
 
 ## Include
 
@@ -97,7 +97,7 @@ DOI to be added after Zenodo or equivalent archival deposit.
 
 1. Confirm repository visibility and artifact-access plan with the author.
 2. Run the final QA checks listed in `FINAL_SUBMISSION_DECISION.md`.
-3. Create an annotated Git tag `sncs-2026-submission-20260801` on the exact
+3. Create an annotated Git tag `sncs-2026-submission-v1` on the exact
    submission commit.
 4. Push the tag.
 5. Create a GitHub release from that tag only after authorization.

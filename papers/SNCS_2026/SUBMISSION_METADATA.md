@@ -137,14 +137,16 @@ https://github.com/SoroushVahidi/consistency-aware-llm-rankin
 
 Archival release or DOI:
 
-None available as of this audit. See `ARCHIVAL_RELEASE_PLAN.md`.
+None available as of this audit. Repository is public. See
+`RELEASE_CANDIDATE_PLAN.md` and `ARCHIVAL_RELEASE_PLAN.md` (DOI wait until
+acceptance / explicit authorization).
 
 Required confirmation before final portal submission:
 
-- Confirm whether the portal requests any separate source/code archive in
-  addition to the public repository URL and the LaTeX source archive.
 - Confirm the portal's exact article-type label if it differs from "Original
   Research."
+- Confirm ORCID / phone / structured funding IDs if the portal requires them.
+- Confirm whether opposed reviewers or highlights must be entered.
 
 ## Cover Letter Text
 
