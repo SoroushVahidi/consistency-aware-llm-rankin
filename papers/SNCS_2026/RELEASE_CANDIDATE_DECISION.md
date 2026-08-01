@@ -38,11 +38,8 @@ Previously material issues already resolved before this pass:
 
 ## Exact commit to submit
 
-After this packaging commit lands, record its SHA in `SUBMISSION_FREEZE.md` and
-treat that commit as the submission freeze. Until filled:
-
-- Placeholder: `PENDING_FREEZE_COMMIT`
-- Resolve with: `git rev-parse HEAD` on `papers/sncs-2026-foundation`
+Treat commit `f42ad47f66fe73c14f4cac52b23876b264c10739` as the submission
+freeze (PDF/ZIP hashes and package docs). See `SUBMISSION_FREEZE.md`.
 
 ## Exact files to upload
 

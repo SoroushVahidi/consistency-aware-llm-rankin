@@ -6,7 +6,7 @@ submissions were created.
 
 ## Added
 
-- `SUBMISSION_FREEZE.md` — freeze ledger (SHA filled in follow-up pin commit)
+- `SUBMISSION_FREEZE.md` — freeze ledger (commit `f42ad47f66fe73c14f4cac52b23876b264c10739`)
 - `RELEASE_CANDIDATE_PLAN.md` — unpublished tag/release plan for `sncs-2026-submission-v1`
 - `PUBLIC_REPOSITORY_REVIEW.md` — reviewer-arrival audit of the public repo
 - `REPRODUCIBILITY_QUICKSTART.md` — labeled fast / full / solver / API tracks

@@ -10,7 +10,7 @@
 |---|---|
 | Tag name | `sncs-2026-submission-v1` |
 | Tag type | Annotated Git tag (when authorized) |
-| Commit to tag | The freeze commit recorded in `SUBMISSION_FREEZE.md` (`PENDING_FREEZE_COMMIT` until filled) |
+| Commit to tag | `f42ad47f66fe73c14f4cac52b23876b264c10739` (see `SUBMISSION_FREEZE.md`) |
 | Proposed release title | SN Computer Science 2026 submission package v1 |
 | Create tag before vs after portal submit | Prefer **immediately before** portal submit, after author confirms upload files; do not push a public GitHub Release until authorized |
 
@@ -106,7 +106,7 @@ Full audit: `LICENSE_AND_DISTRIBUTION_AUDIT.md`.
 
 Until a DOI exists:
 
-> Vahidi, S. (2026). Code and artifacts for “Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval” (SN Computer Science submission package). GitHub: https://github.com/SoroushVahidi/consistency-aware-llm-rankin (commit `PENDING_FREEZE_COMMIT`; proposed tag `sncs-2026-submission-v1`).
+> Vahidi, S. (2026). Code and artifacts for “Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval” (SN Computer Science submission package). GitHub: https://github.com/SoroushVahidi/consistency-aware-llm-rankin (commit `f42ad47f66fe73c14f4cac52b23876b264c10739`; proposed tag `sncs-2026-submission-v1`).
 
 After an authorized Zenodo (or equivalent) deposit, append the DOI and update this file and `SUBMISSION_METADATA.md`.
 

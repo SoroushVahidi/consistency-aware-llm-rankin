@@ -5,17 +5,19 @@ corresponds to the SN Computer Science submission package. This file is the
 authoritative freeze ledger for this branch.
 
 **Status:** freeze package prepared on branch `papers/sncs-2026-foundation`.
-The commit SHA below is filled after the freeze commit lands (see
-`RELEASE_CANDIDATE_DECISION.md`). Until then, treat `PENDING_FREEZE_COMMIT`
-as a placeholder and re-resolve with `git rev-parse HEAD` on this branch.
+The commit SHA below is the submission freeze commit that introduced this
+ledger, the regenerated source ZIP, and the release-candidate package docs
+(see `RELEASE_CANDIDATE_DECISION.md`). Later documentation-only tip commits
+may exist; tag `sncs-2026-submission-v1` should still point at this SHA unless
+the PDF/ZIP hashes change.
 
 | Field | Value |
 |---|---|
 | Freeze date (UTC calendar) | 2026-08-01 |
 | Branch | `papers/sncs-2026-foundation` |
-| Repository commit SHA | `PENDING_FREEZE_COMMIT` |
+| Repository commit SHA | `f42ad47f66fe73c14f4cac52b23876b264c10739` |
 | Canonical repository URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin |
-| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/PENDING_FREEZE_COMMIT |
+| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/f42ad47f66fe73c14f4cac52b23876b264c10739 |
 | Repository visibility at freeze | Public (`gh repo view`: `visibility=PUBLIC`) |
 | Proposed release tag (not created) | `sncs-2026-submission-v1` |
 
