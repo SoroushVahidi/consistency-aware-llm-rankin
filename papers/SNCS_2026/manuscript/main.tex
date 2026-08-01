@@ -39,34 +39,37 @@
   \orgname{New Jersey Institute of Technology},
   \orgaddress{\city{Newark}, \state{NJ}, \country{USA}}}
 
-\abstract{\textbf{Purpose:} This study asks whether enforcing acyclicity in
-derived multi-ranker preference graphs, by heuristic or exact
-minimum-weight feedback-arc-set repair, produces a statistically reliable
-improvement in retrieval effectiveness, or whether structural consistency
-and retrieval utility must be treated as separate quality dimensions.
+\abstract{\textbf{Purpose:} Preference-graph repair is often treated as if
+restoring acyclicity should improve ranking quality. This study asks
+whether, for score-derived multi-ranker retrieval graphs, heuristic or
+exact minimum-weight feedback-arc-set repair yields a multiplicity-corrected
+retrieval gain -- or whether structural consistency and retrieval utility
+must be reported as separate claims.
 
-\textbf{Methods:} Stored BM25, TF-IDF, and MiniLM scores were converted
-into query-specific weighted preference graphs on four public retrieval
-benchmarks under three vote-construction regimes. Rankings were extracted
-from unrepaired, greedy-repaired, and exactly repaired graphs, using
-paired query-level inference with Holm correction. Exact repair was solved
-to certified optimality with the open-source SCIP solver as a
-methodological control on heuristic suboptimality.
+\textbf{Methods:} On four public benchmarks, query-level preference graphs
+were built from stored BM25, TF-IDF, and MiniLM scores under three
+vote-construction regimes. Rankings from unrepaired, greedy-repaired, and
+exactly repaired graphs were compared with paired sign-flip tests and Holm
+correction. Exact SCIP solutions served as a diagnostic control on
+heuristic under-repair, not as a production solver.
 
-\textbf{Results:} Graph construction strongly determined cyclicity:
-conservative graphs were acyclic in the observed evidence, whereas the
-permissive regime produced cyclic graphs for most queries. Repair removed
-non-trivial contradictory edge weight and, when the candidate pool exceeded
-the evaluation cutoff, changed evaluated top-ranked membership. However,
-no repaired-versus-unrepaired normalized discounted cumulative gain
-comparison survived Holm correction in the canonical, larger-pool, or
-exact-repair comparison families.
+\textbf{Results:} Construction dominated structure: a conservative regime
+was acyclic throughout, while a permissive regime was cyclic for most
+queries; normalizing scores reduced BM25's conditional edge-weight share
+from $0.988$ to $0.512$. Repair removed non-trivial contradictory weight
+and, pooled across vote regimes when the pool exceeded the cutoff, changed
+top-$k$ membership by $10.6\%$ on average, yet no repaired-versus-unrepaired
+normalized discounted cumulative gain (nDCG) comparison survived Holm
+correction in the canonical, larger-pool, or exact-repair families.
+Graph-free fusion was competitive (CombSUM $0.554$ versus $0.546$ for
+the best repaired hybrid). Exact repair removed less weight than greedy
+repair yet still yielded no corrected retrieval gain.
 
-\textbf{Conclusion:} In this evidence, preference-graph repair is a real
-structural intervention but not a validated surrogate for improving
-retrieval effectiveness. Repair claims should therefore report structural
-diagnostics and downstream retrieval metrics separately.}
-
+\textbf{Conclusion:} Under this protocol, preference-graph repair is a real
+structural intervention but not a validated nDCG optimization step.
+Improving the repair objective -- even to certified optimality -- does not
+substitute for downstream evaluation; treat acyclicity metrics as
+structural diagnostics, not as proxies for retrieval utility.}
 \keywords{preference graphs, feedback arc set, graph repair, rank aggregation,
   information retrieval, retrieval evaluation}
 
@@ -141,74 +144,56 @@ generally test whether the two move together under corrected statistical
 inference; an improvement in the former is often reported alongside, and
 implicitly read as evidence for, the latter.
 
-This paper addresses that gap directly. We hold graph construction explicit
-across three vote-construction regimes that vary how much contradictory
-structure a graph retains, and we compare, on the same underlying candidate
-sets and ranker scores, \emph{unrepaired}, \emph{greedy-repaired}, and
-\emph{exactly repaired} preference graphs. The greedy-only design that
-dominates prior work cannot, by itself, resolve the central question: a
-null retrieval result under a heuristic repair method is always consistent
-with the hypothesis that a better repair would have revealed a gain the
-heuristic missed. We therefore include exact minimum-weight feedback-arc-set
-(MWFAS) repair, solved to certified optimality with an open-source
-mixed-integer solver, as a diagnostic control rather than as a proposed
-practical method: if exact repair, which by construction cannot be
-out-performed by any heuristic on the repair objective itself, still fails
-to produce a reliable retrieval gain, then heuristic suboptimality is ruled
-out as the explanation for a null result. This is what exact repair is for
-in this study -- not a faster or better production repair algorithm, but a
-diagnostic instrument that isolates whether the retrieval question has an
-answer the heuristic could plausibly have obscured.
-
-The paper's scope is stated honestly rather than maximally. The main
-empirical setting is score-derived multi-ranker retrieval: preference
-graphs built from stored BM25, TF-IDF, and MiniLM scores across four public
-benchmarks spanning distinct retrieval domains. A smaller real-large-language-model
-pairwise-judgment pilot is included only as a bounded, directional
-addendum, not as a second confirmatory study; it is not treated as
-validating or generalizing the main findings. The paper does not claim
-state-of-the-art retrieval effectiveness, does not propose a new
-minimum-weight feedback-arc-set formulation or solver, does not claim that
-repair never helps retrieval in any setting, does not claim that exact
-repair universally fails to help, and does not offer a validated criterion
-for deciding, per query, when repair is worth applying.
-
-Within that scope, the central finding is restrained rather than sweeping:
-structural repair is active and can change evaluated top-$k$ membership
-when the candidate pool exceeds the metric cutoff, yet no
+This paper addresses that gap with an empirical and methodological study,
+not with a new ranking model or a new optimization algorithm. We hold graph
+construction explicit across three vote-construction regimes, and we
+compare unrepaired, greedy-repaired, and exactly repaired preference graphs
+on the same candidate sets and stored BM25, TF-IDF, and MiniLM scores.
+Exact minimum-weight feedback-arc-set (MWFAS) repair, solved to certified
+optimality with an open-source mixed-integer solver, is included as a
+diagnostic control: if an optimal repair still fails to produce a reliable
+retrieval gain, heuristic under-repair cannot explain the null. The central
+empirical pattern is stronger than the observation that repair acts only on
+cyclic graphs. Construction choices determine whether repairable
+inconsistency exists at all; when the candidate pool exceeds the evaluation
+cutoff, repair changes top-$k$ membership by $10.6\%$ on average across
+the three vote-construction regimes; yet no
 repaired-versus-unrepaired normalized discounted cumulative gain (nDCG)
-comparison survives Holm-corrected paired testing across the benchmarks,
-construction regimes, and repair methods studied here. Structural graph
-consistency and downstream retrieval utility are therefore treated as
-related but empirically distinct quality dimensions
+comparison survives Holm-corrected paired testing in the canonical,
+larger-pool, or exact-repair families. Simple graph-free fusion remains
+competitive with the best repaired graph method, reinforcing that structural
+consistency and retrieval utility are separate claims
 (Section~\ref{sec:discussion}).
 
-This paper is a rigorous empirical and computational study of that
-question, not a proposal for a new or superior reranking method. Its
-contributions are:
+The contribution is therefore threefold:
 
 \begin{enumerate}
-  \item A controlled empirical framework that separates preference-graph
-    construction, structural repair, ranking extraction, and downstream
-    retrieval evaluation into explicit, independently varied stages, so
-    that any observed effect can be attributed to a specific stage rather
-    than to their combination.
-  \item A three-way comparison, under identical construction and
-    evaluation protocols, of unrepaired, greedy-repaired, and exactly
-    (SCIP-based MWFAS) repaired preference graphs -- using exact repair as
-    a diagnostic control that closes the standard objection that a null
-    retrieval result merely reflects heuristic under-repair.
-  \item A four-benchmark, multiplicity-corrected empirical finding: graph
-    repair is structurally active and can change which documents are
-    evaluated at all, yet no repaired-versus-unrepaired nDCG family --
-    canonical, larger-pool, or exact-repair -- survives Holm-corrected
-    paired testing, so structural consistency is not shown to be a
-    reliable general surrogate for retrieval utility.
-  \item An open, reproducible implementation and evidence pipeline
-    covering graph construction, greedy and exact repair, ranking
-    extraction, and the statistical evaluation protocol, so that the
-    audit reported here can be rerun, checked, or extended by others.
+  \item An empirical separation result: in score-derived multi-ranker
+    retrieval, graph-construction choices determine whether contradictory
+    structure exists to repair, and repair can alter which documents enter
+    the evaluated top-$k$ without producing a Holm-surviving nDCG gain.
+  \item A diagnostic exact-repair control: under matched pools and
+    extraction rules, comparing unrepaired, greedy-repaired, and
+    SCIP-optimal MWFAS-repaired graphs rules out heuristic suboptimality as
+    the explanation for that null in the prespecified comparison families.
+  \item A corrected multi-family null against graph-free anchors: no
+    repaired-versus-unrepaired nDCG family survives Holm correction, while
+    CombSUM and reciprocal rank fusion remain competitive with repaired
+    graph methods, so structural consistency is not shown to be a reliable
+    surrogate for retrieval utility under this protocol.
 \end{enumerate}
+
+\paragraph{Scope of evidence.}
+The confirmatory evidence is score-derived multi-ranker retrieval on four
+public benchmarks (SciDocs, FiQA, HotpotQA, and BRIGHT) with three base
+scorers and three vote-construction regimes. Confirmatory retrieval
+inference is query-level within prespecified Holm families; the
+$1{,}025$ certified exact solves establish solver coverage on the studied
+graphs, not $1{,}025$ independent retrieval effects. A six-query
+real-large-language-model pilot is directional only and is not treated as
+confirmation. The results do not establish behavior for cross-encoder or
+large-scale LLM rerankers, learned fusion, or interactive retrieval, and
+they do not prove that repair never helps outside this protocol.
 
 \section{Related Work}
 \label{sec:related_work}
@@ -699,8 +684,9 @@ section documents what was measured and how, not what was found.
 \subsection{Research Questions}
 \label{sec:rqs}
 
-The study answers four questions, each mapped to one of the paper's
-contributions (Section~\ref{sec:introduction}):
+The study answers four questions that operationalize the separation of
+construction, structural repair, and retrieval utility
+(Section~\ref{sec:introduction}):
 
 \begin{description}
   \item[RQ1] How much structural inconsistency -- cyclicity and
@@ -710,24 +696,24 @@ contributions (Section~\ref{sec:introduction}):
     documents?
   \item[RQ2] How do greedy and exact minimum-weight feedback-arc-set repair
     (Section~\ref{sec:mwfas-repair}) differ in the structural change they
-    produce -- removed edge weight and the chosen feedback arc set itself
-    -- on the same graphs?
+    produce -- removed edge weight, the chosen feedback arc set, and
+    top-$k$ membership when the candidate pool exceeds the evaluation
+    cutoff -- on the same graphs?
   \item[RQ3] Does preference-graph repair, heuristic or exact, produce a
     statistically reliable improvement in downstream retrieval
     effectiveness (nDCG) relative to the unrepaired graph, once paired
-    inference and multiplicity correction are applied?
-  \item[RQ4] Are the answers to RQ1--RQ3 robust to graph-construction
-    regime, candidate-pool policy, extraction rule, and evaluation-cutoff
-    choices -- and, specifically, is any observed retrieval null in RQ3
-    attributable to greedy-repair suboptimality rather than to repair
-    itself?
+    inference and multiplicity correction are applied -- and how do
+    repaired graph methods compare with simple graph-free fusion anchors?
+  \item[RQ4] Is any observed retrieval null in RQ3 attributable to
+    greedy-repair suboptimality rather than to repair itself, once exact
+    MWFAS is used as a diagnostic control under matched construction,
+    pooling, and extraction choices?
 \end{description}
 
-These four questions are the only ones this study is designed to answer.
-Consistent with the scope stated in Section~\ref{sec:introduction}, no
-research question here concerns learned policies for choosing when or how
-to invoke repair in a deployed system; that adjacent research thread uses
-an unrelated evidence base and is out of scope for this paper.
+These questions concern the marginal effect of repair under the stated
+protocol. They do not ask for a learned per-query policy that decides when
+to invoke repair, nor for a state-of-the-art reranker comparison beyond the
+graph-free fusion anchors used to contextualize that marginal effect.
 
 \subsection{Experimental Pipeline}
 \label{sec:pipeline}
@@ -952,7 +938,7 @@ cross-checked against an unrelated brute-force exact method (exhaustive
 permutation search) on synthetic and real query graphs, with all checked
 cases matching exactly. Exact repair is retained here solely as the
 diagnostic control defined in Section~\ref{sec:mwfas-repair}, answering
-RQ4's second half (Section~\ref{sec:results}).
+RQ4 (Section~\ref{sec:results-exact}).
 
 \subsection{Ranking Extraction Methods}
 \label{sec:extraction-methods}
@@ -1181,11 +1167,12 @@ attributed to the author in this manuscript.
 This section reports what the canonical evidence package shows for each
 research question in turn (Section~\ref{sec:rqs}): how much structural
 inconsistency the derived preference graphs contain (RQ1), what repair
-changes structurally (RQ2), whether that change is accompanied by a
-statistically supported retrieval-effectiveness gain (RQ3), and whether
-the answer to RQ3 depends on repair-method optimality or on the
-construction, pooling, and extraction choices held fixed elsewhere in the
-study (RQ4). Every statistic below is computed on the canonical
+changes structurally, including top-$k$ membership when $P>k$ (RQ2),
+whether that change is accompanied by a statistically supported
+retrieval-effectiveness gain relative to unrepaired graphs and
+graph-free fusion anchors (RQ3), and whether any retrieval null in RQ3 is
+attributable to greedy-repair suboptimality once exact MWFAS is used as a
+diagnostic control (RQ4). Every statistic below is computed on the canonical
 \texttt{primary\_minmax\_retention\_matched} protocol (Section~\ref{sec:construction-protocol})
 unless stated otherwise, and every significance statement uses the
 Holm-corrected decision at $\alpha=0.05$ from the prespecified family it
@@ -1383,7 +1370,7 @@ The comparisons in Section~\ref{sec:results-retrieval} use greedy repair,
 which does not generally reach the optimum of the feedback-arc-set
 objective (Equation~\eqref{eq:mwfas}). This subsection reports what
 changes when repair is instead solved to certified optimality, addressing
-RQ4's second half directly: whether the retrieval null in
+RQ4 directly: whether the retrieval null in
 Section~\ref{sec:results-retrieval} could instead reflect greedy repair's
 suboptimality.
 

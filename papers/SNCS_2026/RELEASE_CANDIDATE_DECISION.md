@@ -38,8 +38,11 @@ Previously material issues already resolved before this pass:
 
 ## Exact commit to submit
 
-Treat commit `f42ad47f66fe73c14f4cac52b23876b264c10739` as the submission
-freeze (PDF/ZIP hashes and package docs). See `SUBMISSION_FREEZE.md`.
+Treat the novelty/front-matter revision commit recorded in
+`SUBMISSION_FREEZE.md` (PDF/ZIP hashes
+`70bd3bb9…` / `bfe935f0…`) as the current submission freeze candidate.
+The earlier packaging commit `f42ad47f66fe73c14f4cac52b23876b264c10739`
+is superseded for manuscript PDF/ZIP contents.
 
 ## Exact files to upload
 

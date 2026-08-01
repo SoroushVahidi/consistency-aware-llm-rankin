@@ -4,20 +4,20 @@
 corresponds to the SN Computer Science submission package. This file is the
 authoritative freeze ledger for this branch.
 
-**Status:** freeze package prepared on branch `papers/sncs-2026-foundation`.
-The commit SHA below is the submission freeze commit that introduced this
-ledger, the regenerated source ZIP, and the release-candidate package docs
-(see `RELEASE_CANDIDATE_DECISION.md`). Later documentation-only tip commits
-may exist; tag `sncs-2026-submission-v1` should still point at this SHA unless
-the PDF/ZIP hashes change.
+**Status:** current submission-candidate freeze after the novelty/front-matter
+revision on branch `papers/sncs-2026-foundation`. The prior packaging freeze
+commit `f42ad47f66fe73c14f4cac52b23876b264c10739` remains historically valid
+for that earlier PDF/ZIP pair; **this file now tracks the post-novelty
+revision artifacts below.** Tag `sncs-2026-submission-v1` (when authorized)
+should point at the commit recorded here once the SHA is filled.
 
 | Field | Value |
 |---|---|
 | Freeze date (UTC calendar) | 2026-08-01 |
 | Branch | `papers/sncs-2026-foundation` |
-| Repository commit SHA | `f42ad47f66fe73c14f4cac52b23876b264c10739` |
+| Repository commit SHA | `PENDING_NOVELTY_COMMIT` |
 | Canonical repository URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin |
-| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/f42ad47f66fe73c14f4cac52b23876b264c10739 |
+| Commit-pinned tree URL | https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/PENDING_NOVELTY_COMMIT |
 | Repository visibility at freeze | Public (`gh repo view`: `visibility=PUBLIC`) |
 | Proposed release tag (not created) | `sncs-2026-submission-v1` |
 
@@ -30,16 +30,24 @@ the PDF/ZIP hashes change.
 | Target journal | SN Computer Science (Springer Nature, ISSN 2661-8907) |
 | Article type (intended) | Original Research |
 | Manuscript PDF path | `papers/SNCS_2026/manuscript/main.pdf` |
-| Manuscript PDF SHA-256 | `7980e146ef32731405b4e4845f5a70799dd46391b0878bdc1fb8037aac90b3c7` |
+| Manuscript PDF SHA-256 | `70bd3bb9af205270de1881e4707783a8e91c07420256999915a3aad5c556e973` |
 | LaTeX source ZIP path | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` |
-| Source ZIP SHA-256 | `deca1a011f7e5b3af9facc44c47869211a04b58a5ee1f987ff6f02a053d8418c` |
-| Source `main.tex` SHA-256 | `4f3cb0e09e282b0af0effb2cfe8005d4113e804ddbb50ee087143e930af0f151` |
+| Source ZIP SHA-256 | `bfe935f090e4651b6add6e45528c90fadad9a35805e83ffb178ddf8406ec8ef7` |
+| Source `main.tex` SHA-256 | `ff466027d6b9719bc2121eae43ef455a8a1a050f9bcce1ca4b18e951cbbaacbb` |
 | Page count (compiled PDF) | 39 |
-| Structured abstract word count | 196 (Purpose / Methods / Results / Conclusion) |
+| Structured abstract word count | 250 (Purpose / Methods / Results / Conclusion) |
 | Figures | 5 |
 | Tables | 6 |
 | Algorithms | 1 |
 | Cited references | 62 (compiled bibliography entries `[1]`–`[62]`; BibTeX file has 65 keys, 3 unused) |
+
+### Superseded prior artifact hashes (pre-novelty front-matter revision)
+
+| Artifact | Prior SHA-256 (superseded) |
+|---|---|
+| `main.pdf` (freeze `f42ad47`) | `7980e146ef32731405b4e4845f5a70799dd46391b0878bdc1fb8037aac90b3c7` |
+| `SNCS_2026_latex_source.zip` (freeze `f42ad47`) | `deca1a011f7e5b3af9facc44c47869211a04b58a5ee1f987ff6f02a053d8418c` |
+| Abstract word count at `f42ad47` | 196 |
 
 ## Source ZIP contents
 

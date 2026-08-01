@@ -24,15 +24,15 @@ Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of
 
 Structural Consistency Is Not Retrieval Utility
 
-### Abstract (structured; 196 words)
+### Abstract (structured; 248 words)
 
-Purpose: This study asks whether enforcing acyclicity in derived multi-ranker preference graphs, by heuristic or exact minimum-weight feedback-arc-set repair, produces a statistically reliable improvement in retrieval effectiveness, or whether structural consistency and retrieval utility must be treated as separate quality dimensions.
+Purpose: Preference-graph repair is often treated as if restoring acyclicity should improve ranking quality. This study asks whether, for score-derived multi-ranker retrieval graphs, heuristic or exact minimum-weight feedback-arc-set repair yields a multiplicity-corrected retrieval gain -- or whether structural consistency and retrieval utility must be reported as separate claims.
 
-Methods: Stored BM25, TF-IDF, and MiniLM scores were converted into query-specific weighted preference graphs on four public retrieval benchmarks under three vote-construction regimes. Rankings were extracted from unrepaired, greedy-repaired, and exactly repaired graphs, using paired query-level inference with Holm correction. Exact repair was solved to certified optimality with the open-source SCIP solver as a methodological control on heuristic suboptimality.
+Methods: On four public benchmarks, query-level preference graphs were built from stored BM25, TF-IDF, and MiniLM scores under three vote-construction regimes. Rankings from unrepaired, greedy-repaired, and exactly repaired graphs were compared with paired sign-flip tests and Holm correction. Exact SCIP solutions served as a diagnostic control on heuristic under-repair, not as a production solver.
 
-Results: Graph construction strongly determined cyclicity: conservative graphs were acyclic in the observed evidence, whereas the permissive regime produced cyclic graphs for most queries. Repair removed non-trivial contradictory edge weight and, when the candidate pool exceeded the evaluation cutoff, changed evaluated top-ranked membership. However, no repaired-versus-unrepaired normalized discounted cumulative gain comparison survived Holm correction in the canonical, larger-pool, or exact-repair comparison families.
+Results: Construction dominated structure: a conservative regime was acyclic throughout, while a permissive regime was cyclic for most queries; normalizing scores reduced BM25's conditional edge-weight share from 0.988 to 0.512. Repair removed non-trivial contradictory weight and, pooled across vote regimes when the pool exceeded the cutoff, changed top-k membership by 10.6% on average, yet no repaired-versus-unrepaired normalized discounted cumulative gain (nDCG) comparison survived Holm correction in the canonical, larger-pool, or exact-repair families. Graph-free fusion was competitive (CombSUM 0.554 versus 0.546 for the best repaired hybrid). Exact repair removed less weight than greedy repair yet still yielded no corrected retrieval gain.
 
-Conclusion: In this evidence, preference-graph repair is a real structural intervention but not a validated surrogate for improving retrieval effectiveness. Repair claims should therefore report structural diagnostics and downstream retrieval metrics separately.
+Conclusion: Under this protocol, preference-graph repair is a real structural intervention but not a validated nDCG optimization step. Improving the repair objective -- even to certified optimality -- does not substitute for downstream evaluation; treat acyclicity metrics as structural diagnostics, not as proxies for retrieval utility.
 
 ### Keywords (4–6)
 

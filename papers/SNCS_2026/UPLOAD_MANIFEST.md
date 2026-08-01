@@ -4,14 +4,15 @@
 **Rule:** upload only what the portal asks for. Do **not** upload internal audit
 Markdown from this directory (freeze/review/smoke docs are for authors/agents).
 
-Hashes below match `SUBMISSION_FREEZE.md` at package preparation time.
+Hashes below match the current novelty/front-matter revision artifacts in
+`SUBMISSION_FREEZE.md` (prior `f42ad47` PDF/ZIP hashes are superseded there).
 
 ## Upload items
 
 | # | Item | Local path | Suggested upload filename | Journal file type (typical EM) | Mandatory / optional | Public / confidential | Version / hash | Special instructions |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Main manuscript PDF | `papers/SNCS_2026/manuscript/main.pdf` | `SNCS_2026_main.pdf` | Manuscript (PDF) | Mandatory | Becomes review/production artifact | SHA-256 `7980e146ef32731405b4e4845f5a70799dd46391b0878bdc1fb8037aac90b3c7` | Primary file. Verify portal proof after upload. |
-| 2 | LaTeX source ZIP | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` | `SNCS_2026_latex_source.zip` | Manuscript / Source files | Mandatory (journal requires editable source) | Editorial/production | SHA-256 `deca1a011f7e5b3af9facc44c47869211a04b58a5ee1f987ff6f02a053d8418c` | Contains tex/bib/cls/bst + figure PDFs only. |
+| 1 | Main manuscript PDF | `papers/SNCS_2026/manuscript/main.pdf` | `SNCS_2026_main.pdf` | Manuscript (PDF) | Mandatory | Becomes review/production artifact | SHA-256 `70bd3bb9af205270de1881e4707783a8e91c07420256999915a3aad5c556e973` | Primary file. Verify portal proof after upload. |
+| 2 | LaTeX source ZIP | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` | `SNCS_2026_latex_source.zip` | Manuscript / Source files | Mandatory (journal requires editable source) | Editorial/production | SHA-256 `bfe935f090e4651b6add6e45528c90fadad9a35805e83ffb178ddf8406ec8ef7` | Contains tex/bib/cls/bst + figure PDFs only. |
 | 3 | Figure PDFs (if portal requires separate figure slots) | `papers/SNCS_2026/figures/f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` | `f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` | Figure | Optional if already inside source ZIP; upload separately only if portal demands | Public with paper | Use committed figure binaries | Tag as Figure, not Supplemental, in Editorial Manager-style portals. |
 | 4 | Cover letter | `papers/SNCS_2026/COVER_LETTER.md` (paste or export PDF/TXT) | `SNCS_2026_cover_letter.txt` | Cover Letter | Mandatory if portal has a cover-letter field | Confidential to editors | Text in `COVER_LETTER.md` / `SUBMISSION_METADATA.md` | Do not include internal audit notes. |
 | 5 | Highlights | `papers/SNCS_2026/HIGHLIGHTS.md` | `SNCS_2026_highlights.txt` | Highlights | Optional — **only if requested** | Public if used | See file | SNCS guidelines checked did not require highlights. |
