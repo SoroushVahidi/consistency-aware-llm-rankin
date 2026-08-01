@@ -191,21 +191,33 @@ benefit of whoever runs Stage 3+. It is a change log, not manuscript prose.
    "Rank Centrality" for reader clarity or keep "Markov" to match the
    stored artifact names exactly, and state the equivalence explicitly
    wherever the method first appears in a table.
-4. **Bradley-Terry is not an evaluated canonical-package baseline** --
-   this is a correction to carry into Stage 3, not just an open question.
-   `MANUSCRIPT_PLAN.md`'s response to reviewer concern C9/C10 states
-   "PageRank, Rank Centrality, and Bradley-Terry are already implemented
-   and evaluated." Checking `reports/full_calibrated_core/`'s actual
-   method-key vocabulary this stage found only: `prior_only`, `rrf`,
-   `combsum`, `borda_fuse`, `copeland_graph`(`_repaired`),
-   `balance_graph`(`_repaired`), `markov_graph`(`_repaired`), and the two
-   `hybrid_*_a0p3_minmax` families -- no Bradley-Terry method key appears
-   anywhere in that package's tables, and no Bradley-Terry ranking
-   function exists in `src/consistency_ranker/`. Bradley-Terry is citable
-   as literature (Related Work 2.1) but must **not** be described as an
-   evaluated method in this manuscript's Experimental Design or Results
-   sections. `MANUSCRIPT_PLAN.md` Section 7's C9/C10 row should be
-   corrected accordingly before or during Stage 3.
+4. ~~**Bradley-Terry is not an evaluated canonical-package baseline**~~ --
+   **Stage-3 amendment: this Stage-2 conclusion was wrong, and is retracted.**
+   The check this stage ran only inspected
+   `reports/full_calibrated_core/`'s primary five-pair "paper_package"
+   tables (`method_key` in `prior_only`, `rrf`, `combsum`, `borda_fuse`,
+   `copeland_graph`(`_repaired`), `balance_graph`(`_repaired`),
+   `markov_graph`(`_repaired`), and the two `hybrid_*_a0p3_minmax`
+   families) and, from that alone, wrongly concluded Bradley-Terry is not
+   evaluated anywhere. Stage 3's deeper audit found a Bradley-Terry
+   ranking implementation at `src/rerankers/tournament_agg.py`
+   (`bradley_terry_ranking`, an MM-algorithm MLE fit, Hunter 2004) that
+   *is* evaluated, alongside PageRank, Rank Centrality (a separate,
+   undamped implementation from "Markov"), and a Markov-hybrid, as part
+   of an expanded nine-pair method family used specifically in
+   `reports/final_revision_task4_exact_baseline_fairness_20260715/`'s
+   36-cell canonical and 56-cell larger-pool exact-repair-vs-unrepaired
+   comparison (see the `EVIDENCE_MAP.md` Stage-3 clarification note under
+   its claim table). `MANUSCRIPT_PLAN.md` Section 7's C9/C10 row was
+   correct as originally written and needs no correction. The genuine,
+   surviving nuance -- not an error, just a scope distinction worth
+   stating precisely in Methodology -- is that this expanded nine-method
+   family backs the *exact*-repair canonical/larger-pool headline numbers
+   specifically, while the *greedy*-repair canonical/larger-pool headline
+   numbers (claim #4, 0/20 and 0/60) use only the narrower five-pair
+   family. See `papers/SNCS_2026/manuscript/main.tex` Section "Methodology",
+   subsections on ranking extraction and baselines, for how this is
+   stated in the manuscript itself.
 5. **HodgeRank is implemented but explicitly out of scope**:
    `baseline_ranking.hodge_rank_ranking` exists in the codebase and is
    exercised by unit tests, but

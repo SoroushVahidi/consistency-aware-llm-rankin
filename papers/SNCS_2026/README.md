@@ -193,6 +193,49 @@ before drafting. Both are now resolved:
    the bare string "Dimension F" or "Outcome F" interchangeably; they
    denote two unrelated research threads.
 
+## Page budget (Stage 3)
+
+SN Computer Science states no explicit word-count, page-count, or
+figure/table-count limit for original-research articles (verified against
+`https://link.springer.com/journal/42979/submission-guidelines` and
+`https://link.springer.com/journal/42979` during Stage 3, 2026-07-31); the
+only stated numeric constraint anywhere in the guidelines is the
+structured abstract's 150-250 word limit. Absent a hard limit, this
+project sets its own internal budget so the manuscript stays a focused
+empirical study rather than growing without bound. Current state (as
+compiled this stage, `tectonic`, `sn-basic`+`Numbered`, single column,
+26 pages total) and the projected budget for the remaining stages:
+
+| Section | Current pages | Projected final pages | Note |
+|---|---|---|---|
+| Title/abstract/keywords | <1 (part of p.1) | <1 | Structured abstract still a Stage-1 placeholder |
+| 1 Introduction | 1-3 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
+| 2 Related Work | 4-6 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
+| 3 Background and Problem Formulation | 7-11 (5 pp) | 5 | Drafted Stage 2; not expected to grow |
+| 4 Methodology | 12-19 (8 pp) | 8 | Drafted Stage 3; not expected to grow (protocol-only, no outcome values) |
+| 5 Results | 20 (0 pp, skeleton) | 6-9 | Not yet drafted. Budget: 4 tables (T1-T4, `MANUSCRIPT_PLAN.md` Section 5) + 4 main-paper figures (F1-F4, `FIGURE_TABLE_AUDIT.md`) + null-result prose across 4 subsections |
+| 6 Discussion | 20 (0 pp, skeleton) | 1-2 | Restrained thesis statement + practitioner audit-logic list, per `MANUSCRIPT_PLAN.md` Section 4 |
+| 7 Limitations | 20 (0 pp, skeleton) | 1 | Five bullet points, reused near-verbatim from JDIQ per the Stage-1 reuse plan |
+| 8 Conclusion | 20 (0 pp, skeleton) | <1 | One paragraph + one falsifiability sentence, per `MANUSCRIPT_PLAN.md` Section 4 |
+| 9 Data Availability and Reproducibility | 20 (0 pp, skeleton) | <1 | |
+| References | 21-25 (~5 pp) | 6-7 | Will grow as Results/Discussion cite dataset and statistical-methodology entries already seeded in `references.bib`; prune unused entries only after all sections are drafted (see `references.bib` header) |
+| Declarations (backmatter) | 25-26 (~1 pp) | 1 | Completed this stage: all seven Springer-required declaration headings now present (Funding, Conflict of interest, Ethics approval, Consent to participate, Consent for publication, Data/materials/code availability, Authors' contributions), per the verified requirement that every heading must appear even as "Not applicable" |
+| Appendix (bounded real-LLM pilot; F5 exact-vs-greedy figure; any secondary-protocol robustness tables moved out of the main Results tables) | 0 | 3-5 | Not yet drafted; scope fixed by `MANUSCRIPT_PLAN.md` Section 6.2 |
+| **Total** | **26** | **~34-40** | Internal target, not a journal-imposed limit |
+
+Reducing repetition across sections was an explicit Stage-3 concern: the
+central null-result thesis is stated once in the Introduction (as the
+paper's central finding), once in Background's closing paragraph (as the
+formal reason the repair objective and nDCG are distinct), and is
+deliberately *not* restated a third time anywhere in Methodology, which
+describes protocol only and reports no outcome values. It will
+necessarily be restated in Results (as the finding itself), Discussion
+(as the organizing thesis), and Conclusion (as the closing statement) --
+three restatements across those three sections, matching
+`MANUSCRIPT_PLAN.md` Section 9, item 14's explicit budget ("no repeated
+null-result restatement across more than the Results + Discussion +
+Conclusion sections already required by the outline").
+
 ## Relationship to prior manuscripts
 
 - `papers/JDIQ_2026/manuscript/main.tex` -- the current, submitted (ACM

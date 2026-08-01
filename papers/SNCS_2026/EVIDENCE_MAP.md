@@ -26,6 +26,37 @@ not recomputed.
 | 7 | Simple graph-free baselines remain competitive: CombSUM dataset-macro mean nDCG 0.554, RRF 0.546, best repaired Copeland hybrid effectively tied with RRF (0.546). | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
 | 8 | Power/MDE: median observed \|delta\| 0.0036 vs. Holm-adjusted median 80%-power MDE 0.0207 in the active larger-pool family; narrow equivalence (13/110 at +/-0.005, 32/110 at +/-0.010). | REPAIR-01 (supporting) | `reports/final_revision_task1_pool_cutoff_20260715/` | same | query; Holm-adjusted MDE |
 
+**Stage-3 clarification on claim #4 vs. claim #6's method-family scope**
+(added during Methodology drafting, since this determines exactly which
+extraction methods the Methodology section must define): claim #4's 0/20
+and 0/60 canonical cells (`reports/full_calibrated_core/`, **greedy**
+repair) use only the five original graph-dependent method pairs
+(Copeland, Balance, Markov, Copeland-hybrid, Balance-hybrid) plus the four
+graph-free baselines (Prior, RRF, CombSUM, Borda) --
+`reports/full_calibrated_core/scripts/run_full_calibrated_core.py`'s
+`LEGACY_PAIR_NAMES`. Claim #6's 0/36 canonical and 0/56 larger-pool cells
+(`reports/final_revision_task4_exact_baseline_fairness_20260715/`,
+**exact** repair vs. unrepaired) use an *expanded* nine-pair family: the
+same five plus PageRank, Rank Centrality, a Markov-hybrid, and
+Bradley-Terry (`NEW_BASELINE_PAIR_NAMES` in the same script, added per
+`reports/candidate_pool_conditional_audit_20260714/AUDIT.md` Section 3;
+9 pairs x 4 datasets = 36 canonical cells). A separate, earlier exact-repair
+study, `reports/exact_open_source_ilp_repair_investigation/` (exact
+**vs. greedy**, not vs. unrepaired -- the source of the "1,025/1,025
+proven-optimal, removes less weight than greedy" figures in claim #6),
+uses yet another method family: the five original methods plus
+topological and priority-topological ranking (repaired-graph-only
+methods with no unrepaired variant), evaluated on nDCG@5/10/20, MRR, and
+MAP pooled across 1,025 queries (35 or, at finer granularity, 399
+metric-method cells, both 0 Holm-significant). These three studies are
+evidence for the same REPAIR-01/REPAIR-02 claims but are not
+method-for-method identical; `MANUSCRIPT_PLAN.md` Section 7's C9/C10 row
+("PageRank, Rank Centrality, and Bradley-Terry are already implemented
+and evaluated") is correct and refers to the second (Task 4) family --
+this was mistakenly flagged as a possible error in
+`STAGE2_CHANGELOG.md` Open Question 4 before this closer read; see that
+file's Stage-3 amendment.
+
 ## Planned appendix / supplementary claims
 
 | # | Planned claim (bounded) | Registry ID | Evidence path(s) | Boundary statement required |
