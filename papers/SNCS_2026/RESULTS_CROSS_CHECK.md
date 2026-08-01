@@ -239,6 +239,10 @@ against the same report's Section 1 population table and
   per-dataset breakdown they do not have; redesigned to a plain
   per-dataset structural table with the pooled retrieval result stated in
   the caption instead, before this cross-check was finalized.
+  **Repetition-audit amendment (2026-08-01):** the caption was shortened to
+  structural columns only; the pooled exact-versus-greedy ($0/35$, $0/399$)
+  and exact-versus-unrepaired ($0/36$, $0/56$) Holm outcomes remain in the
+  accompanying Results prose (`sec:results-exact`), unchanged numerically.
 
 ## Compilation
 

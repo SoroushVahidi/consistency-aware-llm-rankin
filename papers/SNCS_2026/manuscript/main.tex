@@ -173,20 +173,15 @@ repair never helps retrieval in any setting, does not claim that exact
 repair universally fails to help, and does not offer a validated criterion
 for deciding, per query, when repair is worth applying.
 
-Within that scope, the central finding is restrained rather than sweeping.
-Structural repair is genuinely active: under the permissive
-construction regime, both greedy and exact repair remove a measurable share
-of total graph weight, and evaluating against a candidate pool larger than
-the metric cutoff shows that repair can change which documents even enter
-the evaluated top-$k$ set. What does not follow is a reliable retrieval
-benefit. Across four benchmarks, three construction regimes, and both
-repair methods, no repaired-versus-unrepaired normalized discounted
-cumulative gain (nDCG) comparison survives Holm-corrected paired
-significance testing. The paper's thesis is therefore that structural graph
-consistency and downstream retrieval utility are related but empirically
-distinct quality dimensions, and that enforcing acyclicity should not be
-treated as a validated surrogate for improving retrieval effectiveness
-without evidence obtained under the retrieval metric itself.
+Within that scope, the central finding is restrained rather than sweeping:
+structural repair is active and can change evaluated top-$k$ membership
+when the candidate pool exceeds the metric cutoff, yet no
+repaired-versus-unrepaired normalized discounted cumulative gain (nDCG)
+comparison survives Holm-corrected paired testing across the benchmarks,
+construction regimes, and repair methods studied here. Structural graph
+consistency and downstream retrieval utility are therefore treated as
+related but empirically distinct quality dimensions
+(Section~\ref{sec:discussion}).
 
 This paper is a rigorous empirical and computational study of that
 question, not a proposal for a new or superior reranking method. Its
@@ -389,13 +384,11 @@ structural improvement from downstream task utility as two separately
 measured and separately tested quantities. Most either report only
 structural diagnostics, or report a task metric without a repair-method
 control (e.g. exact repair) that would rule out heuristic suboptimality as
-the explanation for a null or weak downstream effect. This paper's
-contribution relative to this literature is exactly that controlled
-separation: it holds graph construction explicit, compares unrepaired,
-heuristically repaired, and exactly repaired graphs on the same evidence,
-and tests the structural-repair-to-retrieval-utility link directly under a
-multiplicity-corrected paired protocol, rather than assuming that a gain on
-one objective implies a gain on the other.
+the explanation for a null or weak downstream effect. The controlled
+separation used here -- explicit construction, unrepaired versus heuristic
+versus exact repair, and multiplicity-corrected paired testing of the
+structural-to-retrieval link -- is designed to close that specific gap
+(Section~\ref{sec:introduction}).
 
 \section{Background and Problem Formulation}
 \label{sec:background}
@@ -942,16 +935,11 @@ retrieval.
 \label{sec:repair-protocol}
 
 Two repair methods solve Equation~\eqref{eq:mwfas}, reported as co-equal
-throughout, per Section~\ref{sec:mwfas-repair}. \textbf{Greedy repair} is
-the repository's own deterministic cycle-peeling heuristic: while the
-graph contains a directed cycle, one cycle is located and its
-minimum-weight edge is removed, repeating until the graph is acyclic. This
-is not the classical Eades--Lin--Smyth linear-arrangement
-heuristic~\cite{eades1993heuristic} or another named heuristic from the
-feedback-arc-set literature (Section~\ref{sec:related-repair}); it is a
-simpler, repository-specific procedure, stated here as such rather than
-attributed to prior work it does not implement. \textbf{Exact repair}
-solves the linear-ordering mixed-integer program
+throughout; their roles are defined in Section~\ref{sec:mwfas-repair}.
+\textbf{Greedy repair} is the repository's own deterministic cycle-peeling
+heuristic (not the classical Eades--Lin--Smyth linear-arrangement
+heuristic~\cite{eades1993heuristic}; Section~\ref{sec:related-repair}).
+\textbf{Exact repair} solves the linear-ordering mixed-integer program
 (Equation~\eqref{eq:mwfas-mip}) with the open-source SCIP solver via
 PySCIPOpt (version 6.2.1), requiring a proven-optimal status (relative
 optimality gap $0.0$) rather than accepting a feasible incumbent, with a
@@ -959,23 +947,12 @@ optimality gap $0.0$) rather than accepting a feasible incumbent, with a
 exact-repair result reported in this study reached proven optimality; the
 time limit was never approached (observed per-query solve times range
 from sub-millisecond to a few hundred milliseconds at the graph sizes
-studied here, several orders of magnitude below the limit). The exact
-solver's linear-ordering formulation was independently cross-checked
-against an unrelated brute-force exact method (exhaustive permutation
-search) on synthetic and real query graphs, with all checked cases
-matching exactly, before being used to produce the reported evidence.
-
-Exact repair is used here as a diagnostic control on greedy repair, not as
-a proposed practical replacement for it: it is not evaluated for
-scalability beyond the query-graph sizes studied here, and this paper
-makes no general claim about exact MWFAS solving at larger scale. Its role
-is to answer RQ4's second half directly: because the exact solver's
-removed feedback arc set is, by construction, a global optimum of
-Equation~\eqref{eq:mwfas}, no repair method can remove less weight while
-still restoring acyclicity, so if exact repair's downstream retrieval
-effect is statistically indistinguishable from greedy repair's, greedy
-suboptimality is ruled out as an explanation for any observed retrieval
-null (Section~\ref{sec:results}).
+studied here). The linear-ordering formulation was independently
+cross-checked against an unrelated brute-force exact method (exhaustive
+permutation search) on synthetic and real query graphs, with all checked
+cases matching exactly. Exact repair is retained here solely as the
+diagnostic control defined in Section~\ref{sec:mwfas-repair}, answering
+RQ4's second half (Section~\ref{sec:results}).
 
 \subsection{Ranking Extraction Methods}
 \label{sec:extraction-methods}
@@ -1028,16 +1005,11 @@ reported as a robustness check; a Markov hybrid is evaluated at the same
 fixed $\alpha$ as an additional method in the expanded family
 (Section~\ref{sec:baselines}).
 
-Every graph-dependent rule (graph-only and hybrid) is computed on both the
-unrepaired graph $G_q$ and the repaired graph $\widetilde{G}_q$ wherever
-both are defined, holding the extraction rule fixed so that a
-repaired-versus-unrepaired difference is attributable to repair and not to
-a change of scoring rule. This directly addresses a prior reviewer concern
-that a fixed hybrid-fusion weight could suppress a genuine graph-repair
-effect: because graph-only rules ($\alpha=1$ in spirit, no prior
-component) are evaluated alongside the hybrid rules, a repair effect
-masked by prior-score mixing at $\alpha=0.3$ would still be visible in the
-graph-only comparisons and in the $\alpha$-sweep.
+As in Section~\ref{sec:extraction-eval}, every graph-dependent rule is
+evaluated on both $G_q$ and $\widetilde{G}_q$ wherever both are defined.
+Evaluating graph-only rules alongside hybrids, and reporting the
+$\alpha$-sweep, further addresses the concern that a fixed hybrid mixing
+weight could mask a genuine repair effect at $\alpha=0.3$.
 
 \subsection{Baselines and Comparisons}
 \label{sec:baselines}
@@ -1112,18 +1084,11 @@ used as a primary confirmatory metric. All three are computed at the same
 evaluated $(P,k)$ cell (Table~\ref{tab:setup}) for every method and repair
 variant being compared.
 
-Three kinds of quantity are kept explicitly distinct throughout this
-study, restating Section~\ref{sec:extraction-eval}'s closing point in
-operational terms: the \emph{repair objective} (removed feedback-arc
-weight, Equation~\eqref{eq:mwfas}) is a graph-internal optimization
-target; \emph{structural diagnostics} (cyclic-query rate, strongly
-connected component structure, removed weight as a fraction of total
-graph weight, and top-$k$ membership-change rate between repaired and
-unrepaired rankings) describe what repair changed in the graph; and
-\emph{retrieval metrics} (nDCG, MRR, MAP) describe agreement with external
-relevance judgments. No structural diagnostic is treated as a proxy for,
-or averaged together with, a retrieval metric at any point in this study's
-analysis.
+Following Section~\ref{sec:extraction-eval}, the repair objective
+(Equation~\eqref{eq:mwfas}), structural diagnostics (cyclic-query rate,
+removed-weight fraction, top-$k$ membership-change rate), and retrieval
+metrics (nDCG, with MRR/MAP secondary) are never treated as proxies for
+one another or averaged together.
 
 \subsection{Statistical Analysis}
 \label{sec:statistics}
@@ -1386,19 +1351,12 @@ graph-free baselines and the best-performing repaired hybrid, for context.
 \end{table}
 
 No repaired-versus-unrepaired nDCG comparison survives Holm correction in
-any of the three prespecified families: not the $20$-cell family
-restricted to the structurally active \texttt{ms1} regime, not the
-full $60$-cell canonical family pooling all three regimes, and not the
-$110$-cell active larger-pool family that includes every $P>k$ cell where
-repair has room to change top-$k$ membership
-(Section~\ref{sec:results-repair-structure}). The smallest Holm-adjusted
-$p$-value is $0.240$ in the active canonical family (SciDocs, Copeland
-hybrid, raw sign-flip $p=0.012$ before correction) and $0.720$ in the full
-canonical family; in the larger-pool family it is $0.352$.
-Figure~\ref{fig:bootstrap-forest} shows the corresponding
-paired bootstrap intervals for the active \texttt{ms1} regime: point
-estimates are sometimes positive, but the great majority of intervals
-cross zero, consistent with the Holm decision.
+any of the three families in Table~\ref{tab:retrieval-holm} (smallest
+Holm-adjusted $p=0.240$ in the active canonical family; SciDocs Copeland
+hybrid, raw sign-flip $p=0.012$ before correction).
+Figure~\ref{fig:bootstrap-forest} shows the corresponding paired bootstrap
+intervals for active \texttt{ms1}: point estimates are sometimes positive,
+but nearly every interval crosses zero.
 
 \begin{figure}[t]
   \centering
@@ -1445,15 +1403,10 @@ evidence, not merely a theoretical possibility.
 \begin{table}[t]
   \caption{Exact versus greedy repair, structural comparison, cyclic
     queries only ($n=379$, pooled across vote-construction regimes). Mean
-    weight removed is reported for both repair methods; the last column
-    is the relative reduction from greedy to exact. The corresponding
-    retrieval-level comparison (whether exact- and greedy-repaired
-    rankings differ in nDCG, pooled across every repaired-graph-dependent
-    extraction rule and validated metric -- nDCG@5/10/20, MRR, MAP,
-    $1{,}025$ queries per cell, all regimes) finds $0/35$ pooled and
-    $0/399$ per-dataset-and-regime cells Holm-significant; no dataset
-    breakdown applies to that pooled result, so it is not repeated per
-    row here.}
+    weight removed is reported for both methods; the last column is the
+    relative reduction from greedy to exact. Retrieval-level
+    exact-versus-greedy and exact-versus-unrepaired Holm outcomes are
+    reported in the accompanying text.}
   \label{tab:exact-vs-greedy}
   \scriptsize
   \begin{tabular}{lrrr}
@@ -1581,129 +1534,71 @@ construction regimes making up the main evidence package
 \subsection{Main Findings}
 \label{sec:discussion-main}
 
-Four findings, taken together, answer the research questions stated in
-Section~\ref{sec:rqs}. Preference-graph repair causes genuine structural
-change: under the permissive vote-construction regime, both greedy and
-exact repair remove a measurable share of contradictory edge weight, and
-once the candidate pool exceeds the evaluation cutoff, repair changes
-which documents even enter the evaluated top-$k$ set at a
-non-negligible rate (Section~\ref{sec:results-structure},
-\ref{sec:results-repair-structure}). Exact optimization confirms and
-sharpens that structural finding rather than overturning it: solved to
-certified optimality, repair removes systematically less edge weight than
-the greedy heuristic on the same graphs, showing that greedy
-over-corrects relative to the true minimum-weight feedback arc set
-(Section~\ref{sec:results-exact}). Despite that genuine and now
-optimality-confirmed structural activity, no repaired-versus-unrepaired
-retrieval-effectiveness gain is statistically supported as a general
-effect under the canonical protocol: across three prespecified retrieval
-comparison families, four benchmarks, and both repair methods, none
-survives Holm correction (Section~\ref{sec:results-retrieval}). Exact
-repair does not reverse that retrieval conclusion; the same null outcome
-holds whether the graph is repaired by a fast heuristic or by a solver
-that cannot be outperformed on the repair objective itself
-(Section~\ref{sec:results-exact}).
+Taken together, the results answer the research questions with one
+restrained conclusion: under the canonical protocol, preference-graph
+repair is a real structural intervention -- including under exact
+optimization -- but not a validated general means of improving retrieval
+effectiveness (Sections~\ref{sec:results-structure}--\ref{sec:results-exact}).
+Structural consistency and downstream retrieval utility behave here as
+empirically distinct objectives, not as the same quantity observed at
+different resolutions.
 
-Read together, these four findings support one conclusion: structural
-consistency and downstream retrieval utility behave as empirically
-distinct objectives in this evidence, not as the same underlying quantity
-observed at different resolutions. This is a narrower claim than it may
-first appear, and it is worth being precise about what it does and does
-not say. It does not say that graph repair never helps retrieval, that
-acyclicity is a useless property of a preference graph, that exact repair
-always fails to improve rankings, or that the null hypothesis of no
-effect has been proven; a null result under corrected inference is
-evidence against a general, reliably detectable effect at the scale this
-study is powered to observe, not a proof that no effect exists anywhere.
-The results are more accurately summarized as: repair did not yield a
-statistically supported general improvement in retrieval effectiveness
-under the canonical protocol, exact optimization does not change that
-conclusion, and small or dataset-specific effects below this study's
-detectable scale remain possible
-(Section~\ref{sec:results-robustness}'s power analysis bounds how small).
-On the evidence gathered here, treating acyclicity as a surrogate for
-retrieval effectiveness is not supported.
+That claim is narrower than it may first appear. It does not say that
+graph repair never helps retrieval, that acyclicity is useless, that exact
+repair always fails to improve rankings, or that the null of no effect has
+been proven. A null under corrected inference is evidence against a
+general, reliably detectable effect at the scale this study is powered to
+observe (Section~\ref{sec:results-robustness}); small or dataset-specific
+effects below that scale remain possible. On the evidence gathered here,
+treating acyclicity as a surrogate for retrieval effectiveness is not
+supported.
 
 \subsection{Why Structural Improvement Need Not Improve Retrieval}
 \label{sec:discussion-mechanism}
 
-The formulation in Section~\ref{sec:extraction-eval} already states the
-structural reason a repair-objective improvement need not track an nDCG
-improvement: the two objectives are computed from different information.
-The minimum-weight feedback-arc-set objective (Equation~\eqref{eq:mwfas})
-minimizes disagreement with the graph's own retained edges; nDCG scores
-agreement between an extracted ranking and external relevance judgments
-that never enter the repair objective. A design that makes one of these
-quantities smaller has no logical requirement to make the other larger.
-This subsection interprets that formal gap in light of what the results
-show, distinguishing what the experiments establish from what is a
-plausible mechanism consistent with, but not directly tested by, the
-experimental design.
+Section~\ref{sec:extraction-eval} already states the formal reason a
+repair-objective improvement need not track nDCG: the two objectives are
+computed from different information. This subsection interprets that gap
+in light of the results, distinguishing what the experiments establish
+from mechanisms consistent with -- but not directly tested by -- the
+design.
 
-Several mechanisms are consistent with a genuine structural repair
-producing no detectable retrieval effect, without any one of them being
-individually isolated by this study's design. Feedback-arc-set repair
-targets the least-weight edges needed to restore acyclicity
-(Section~\ref{sec:mwfas-repair}); by construction, those are the edges
-the graph itself treats as weakest evidence, which need not coincide with
-the edges separating a highly relevant document from a marginally
-relevant one near the top of a ranking. A cycle broken far from the
-top-ranked positions can leave the extracted ordering of the most
-relevant documents unchanged even though the graph's global structure is
-now acyclic. Where a hybrid extraction rule mixes a graph-derived score
-with a prior ranking signal (Equation~\eqref{eq:hybrid}), a sufficiently
-informative prior can also compress the downstream influence of whatever
-the graph-side score does -- consistent with, though not the sole
-explanation for, this study's observation that graph-only and hybrid
-methods do not diverge sharply in Section~\ref{sec:results-retrieval}.
-Different extraction rules translate the same repaired graph into
-different rankings by different mechanisms (win-count differencing for
-Copeland, weighted margin differencing for balance, a stationary
-distribution for the Markov-chain rules; Section~\ref{sec:extraction-methods}),
-so a structural change need not propagate identically through every rule,
-which is one plausible contributor to the mixed-sign point estimates in
-Figure~\ref{fig:bootstrap-forest}. Finally, pairwise preference weights
-and relevance judgments are constructed from different evidence
-(Section~\ref{sec:pref-graph}, Section~\ref{sec:retrieval-setting}):
-a vote records one ranker's relative ordering of two candidates, not an
-external judgment of either candidate's relevance, so the graph's
-internal consistency and its agreement with relevance judgments are free
-to vary independently.
+Several mechanisms are consistent with genuine structural repair producing
+no detectable retrieval effect, without any one of them being individually
+isolated. Feedback-arc-set repair targets the least-weight edges needed to
+restore acyclicity (Section~\ref{sec:mwfas-repair}); those need not be the
+edges that separate highly relevant from marginally relevant documents
+near the top of a ranking. A cycle broken far from top-ranked positions
+can leave the extracted ordering of the most relevant documents unchanged.
+Where a hybrid mixes a graph-derived score with a prior
+(Equation~\eqref{eq:hybrid}), an informative prior can also compress the
+influence of the graph-side score -- consistent with graph-only and hybrid
+methods not diverging sharply in Section~\ref{sec:results-retrieval}.
+Different extraction rules translate the same repaired graph differently
+(Section~\ref{sec:extraction-methods}), which is one plausible contributor
+to the mixed-sign point estimates in Figure~\ref{fig:bootstrap-forest}.
+Finally, pairwise preference weights and relevance judgments are built
+from different evidence (Sections~\ref{sec:pref-graph},
+\ref{sec:retrieval-setting}), so internal consistency and agreement with
+qrels are free to vary independently.
 
-None of these four mechanisms is demonstrated as \emph{the} cause of the
-null retrieval result; the experimental design compares repaired and
-unrepaired outcomes under corrected inference, not the causal pathway by
-which repair does or does not influence a given ranking. They are
-offered as mechanisms consistent with the design and the observed
-pattern of results, not as claims independently established by a
-dedicated test.
+None of these mechanisms is demonstrated as \emph{the} cause of the null
+retrieval result; they are offered as accounts consistent with the design
+and the observed pattern, not as claims established by a dedicated causal
+test.
 
 \subsection{Exact Repair as a Diagnostic Control}
 \label{sec:discussion-exact}
 
-A repair study that only ever applies a heuristic leaves one explanation
-for a null retrieval result permanently open: the heuristic may simply be
-too weak, so a better repair algorithm might have revealed the gain the
-weak one missed. This is not a hypothetical concern for cycle-peeling
-heuristics specifically -- Section~\ref{sec:results-exact} shows exact
-repair removes systematically less edge weight than greedy on the same
-graphs, confirming that greedy is a real, non-trivial overestimate of the
-minimum feedback arc set here, not merely a theoretical possibility. That
-same section shows the retrieval-level conclusion is unchanged under
-exact repair: solved to certified optimality, a repair method that cannot
-be outperformed on the repair objective itself still does not reveal a
-retrieval gain greedy repair missed. Because optimality rules out
-suboptimality as an explanation by construction, this directly closes the
-heuristic-weakness alternative explanation for the retrieval null.
-
-This role for exact SCIP-based repair is deliberately narrow. It is not
-introduced as a novel solver, a novel formulation of the feedback-arc-set
-problem, or a claim about how minimum-weight feedback-arc-set solving
-should be done at scale (Section~\ref{sec:related-repair} situates the
-formulation itself as long-studied, classical combinatorial
-optimization). Its contribution here is methodological control: closing
-a specific alternative explanation for a specific empirical finding, not
-proposing a better repair algorithm for practitioners to adopt.
+A heuristic-only repair study leaves open the alternative that a null
+retrieval result reflects under-repair rather than repair itself.
+Section~\ref{sec:results-exact} closes that alternative for this evidence:
+exact repair removes less edge weight than greedy yet still yields no
+Holm-surviving retrieval gain against the unrepaired graph. Exact SCIP
+repair is therefore used here as methodological control
+(Section~\ref{sec:mwfas-repair}), not as a novel solver, a novel
+formulation, or a recommendation that exact MWFAS be run at production
+scale (Section~\ref{sec:related-repair}).
 
 \subsection{Relation to Prior Literature}
 \label{sec:discussion-literature}
@@ -1754,26 +1649,16 @@ positive effect in one setting and an unsupported general effect in
 another are both consistent with the same underlying fact -- that whether
 structural consistency helps a downstream task is an empirical property
 of the specific task and pipeline, not a property of acyclicity itself
-that transfers automatically across settings. This paper's contribution
-relative to that literature is the controlled separation
-(Section~\ref{sec:related-utility}): holding construction explicit,
-comparing unrepaired, heuristically repaired, and exactly repaired
-graphs, and testing the structural-to-utility link directly under
-corrected paired inference, for the retrieval setting specifically.
+that transfers automatically across settings. The controlled separation
+used here for retrieval is stated in Section~\ref{sec:related-utility}.
 
-This paper is a substantial revision of an earlier preprint by the same
-author~\cite{vahidi2026consistencyaware}
-(Section~\ref{sec:related-repair}), which studied algorithmic ranking
-extraction from pairwise comparisons under a less conservative protocol
-and reported a conditional, dataset-dependent positive retrieval effect.
-The present study is retrieval-focused and controlled rather than
-algorithmic: it separates construction, repair, and extraction as
-independently varied factors, adds exact repair as a diagnostic control
-the earlier preprint did not include, and applies multiplicity-corrected
-paired inference throughout. The two should not be read as an earlier and
-later measurement of the same effect; the earlier preprint's specific
-numerical findings are superseded by this study's more conservative
-protocol, not confirmed by it.
+Relative to the earlier preprint discussed in
+Section~\ref{sec:related-repair}, the present study is retrieval-focused
+and more conservative: it adds exact repair as a diagnostic control and
+applies multiplicity-corrected paired inference throughout. The two should
+not be read as successive measurements of the same effect; the preprint's
+specific numerical findings are superseded by this protocol, not confirmed
+by it.
 
 \subsection{Practical Implications}
 \label{sec:discussion-practical}
@@ -1817,23 +1702,15 @@ paper's evidence base does not address.
 \subsection{Implications for LLM-Based Ranking}
 \label{sec:discussion-llm}
 
-Pairwise judgments elicited directly from large language models are
-subject to the same structural possibility studied throughout this
-paper: aggregating several such judgments, or several repeated
-elicitations, can produce a preference graph with directed cycles, for
-the same reason score-derived votes can (Section~\ref{sec:pref-graph}).
-The conceptual distinction this paper's evidence supports -- that
-structural consistency and downstream task utility are separate
-quantities requiring separate evidence -- applies to that setting in
-principle. This paper's own LLM-derived evidence is a six-query bounded
-pilot (Section~\ref{sec:results-llm}), directionally consistent with the
-main score-derived finding but far too small to establish a general
-claim on its own. The data gathered here do not support broad
-conclusions about modern LLM-based rerankers, pairwise-judgment
-pipelines at production scale, or any specific LLM reranking paradigm;
-extending this paper's controlled comparison to a larger, dedicated
-real-LLM evidence base is a direction for future work, not a claim this
-paper makes.
+Pairwise judgments from large language models can produce cyclic
+preference graphs for the same structural reasons as score-derived votes
+(Section~\ref{sec:pref-graph}). The distinction between structural
+consistency and downstream utility therefore applies to that setting in
+principle, but this paper's own LLM evidence is only the bounded
+six-query pilot in Section~\ref{sec:results-llm} and does not support
+broad claims about modern LLM rerankers or production-scale pairwise
+pipelines. Extending the controlled comparison to a larger real-LLM
+evidence base remains future work.
 
 \section{Limitations and Threats to Validity}
 \label{sec:limitations}
@@ -1894,118 +1771,72 @@ empirical finding requiring separate validation here).
 \subsection{External Validity}
 \label{sec:limitations-external}
 
-The main evidence base spans four benchmarks across four retrieval
-domains, two lexical base rankers, one dense base ranker, and three
-vote-construction regimes (Section~\ref{sec:datasets},
-Section~\ref{sec:rankers}); this is a deliberately controlled, not
-exhaustive, sweep, chosen so that construction-sensitivity and repair
-findings could be checked for domain generality rather than tied to one
-corpus. It does not, by itself, establish that the findings generalize to
-retrieval domains, rankers, or construction regimes outside this set.
-The real-large-language-model evidence is a six-query pilot
-(Section~\ref{sec:results-llm}), directionally consistent with but far
-too small to independently confirm the main finding, and this paper does
-not claim it does. This study does not evaluate learned fusion,
-cross-encoder reranking, modern dense rerankers beyond the single MiniLM
-checkpoint used here, or online (interactive, feedback-driven) retrieval
-evaluation; whether structural repair behaves differently under any of
-those settings is not addressed by this evidence and is not implied one
-way or the other. Extension to other preference-aggregation domains that
-share the same underlying structure -- recommendation, model evaluation
-via pairwise LLM judging, or crowdsourced preference collection -- is
-plausible in principle (Section~\ref{sec:discussion-llm}) but untested
-here.
+The main evidence base spans four benchmarks, two lexical base rankers,
+one dense base ranker, and three vote-construction regimes
+(Sections~\ref{sec:datasets}, \ref{sec:rankers}) -- a controlled, not
+exhaustive, sweep. It does not by itself establish generalization beyond
+that set. The real-LLM pilot remains the six-query addendum of
+Section~\ref{sec:results-llm} and is not an independent confirmation.
+This study does not evaluate learned fusion, cross-encoder reranking,
+modern dense rerankers beyond the MiniLM checkpoint used here, or online
+interactive retrieval; whether structural repair behaves differently under
+those settings is unaddressed. Extension to related preference-aggregation
+domains (recommendation, pairwise LLM evaluation, crowdsourced preferences)
+is plausible in principle (Section~\ref{sec:discussion-llm}) but untested.
 
 \subsection{Statistical Conclusion Validity}
 \label{sec:limitations-statistical}
 
-Every confirmatory claim in this paper uses Holm-corrected paired
-inference across a prespecified family (Section~\ref{sec:statistics}),
-and the power analysis (Section~\ref{sec:results-robustness}) reports
-what that correction can and cannot detect: the study is well positioned
-to rule out a general effect at the scale of the observed point estimates
-(median absolute delta $0.0036$), but effects below the Holm-adjusted
-minimum detectable scale ($0.0201$ at 80\% power in the active
-larger-pool family) are not ruled out. A non-significant result under
-this design means the evidence does not support a general effect at a
-detectable scale; it does not establish exact equality between repaired
-and unrepaired rankings, and the narrow equivalence analysis
-(Section~\ref{sec:results-robustness}) found equivalence established for
-only a minority of cells at either tested margin, not the majority --
-this paper deliberately reports that as an open uncertainty rather than
-rounding it to a stronger equivalence claim. The real-LLM pilot's
-repeated per-query rows are handled with cluster-level ($n=6$) inference
-specifically because the alternative, row-level treatment of the same
-data, is a documented, previously-identified source of overstated
-statistical confidence for this exact evidence
-(Section~\ref{sec:statistics}); six independent clusters remain a small
-basis for precise inference, and this is stated as a limitation of that
-subsection's evidence, not resolved by the cluster correction itself.
+Every confirmatory claim uses Holm-corrected paired inference over a
+prespecified family (Section~\ref{sec:statistics}). As reported in
+Section~\ref{sec:results-robustness}, the study is well positioned to
+rule out a general effect at the scale of the observed point estimates,
+but smaller effects below the corrected minimum-detectable scale are not
+ruled out; a non-significant result does not establish equality between
+repaired and unrepaired rankings, and narrow equivalence was established
+only for a minority of cells. The real-LLM pilot uses cluster-level
+($n=6$) inference for the reason stated in
+Section~\ref{sec:statistics}; that correction does not enlarge the pilot
+into a confirmatory study.
 
 \subsection{Computational Limitations}
 \label{sec:limitations-computational}
 
-Exact minimum-weight feedback-arc-set solving reaches certified
-optimality quickly at the query-graph sizes studied here (mean solve time
-under ten milliseconds, Section~\ref{sec:results-exact}), but this study
-does not evaluate exact solving at larger graph sizes and makes no claim
-about its scalability beyond the sizes tested. Its role in this paper is
-specifically diagnostic: a repair-method control used to rule out
-heuristic suboptimality as an explanation for a specific empirical
-finding (Section~\ref{sec:discussion-exact}), not a claim that exact
-solving is a practical repair method for graphs materially larger than
-those in this study's candidate pools. Greedy cycle-peeling remains the
-practical choice for larger graphs precisely because exact
-minimum-weight feedback-arc-set solving is NP-hard in general
-(Section~\ref{sec:related-repair}); this study's exact-repair results
-should be read as evidence about a specific, bounded regime, not as a
-general solved-problem claim.
+Exact MWFAS solving reaches certified optimality quickly at the
+query-graph sizes studied here (Section~\ref{sec:results-exact}), but this
+study does not evaluate larger graphs and makes no scalability claim beyond
+those sizes. Exact repair's role remains the diagnostic control of
+Section~\ref{sec:discussion-exact}. Greedy cycle-peeling remains the
+practical choice for larger graphs because exact MWFAS is NP-hard in
+general (Section~\ref{sec:related-repair}).
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-This study separated four stages that are often collapsed in
-preference-graph ranking pipelines: graph construction, structural repair,
-ranking extraction, and retrieval evaluation. RQ1 asked how much structural
-inconsistency appears in derived multi-ranker preference graphs and how
-strongly it depends on construction choices. The answer is that
-construction is decisive: the conservative \texttt{ms2} regime produced
-acyclic graphs in this evidence, while the permissive \texttt{ms1} regime
-produced cyclic graphs for most queries, with much of the cyclicity coming
-from direct mutual contradiction. RQ2 asked what greedy and exact repair
-change structurally. Both methods restore acyclicity where there is
-structure to repair; exact SCIP-based repair removes systematically less
-edge weight than greedy repair on cyclic graphs, confirming that greedy
-over-removes relative to the true minimum-weight feedback arc set. RQ3
-asked whether repair improves retrieval effectiveness. Across the
-canonical, larger-pool, and exact-repair comparison families, no
-repaired-versus-unrepaired nDCG comparison survives Holm correction, even
-though larger-pool repair can change which documents enter the evaluated
-top-$k$ set. RQ4 asked whether the retrieval conclusion is robust to
-construction, pooling, extraction, cutoff, and repair optimality choices.
-The answer is yes within the study's scope: exact repair closes the
-heuristic-suboptimality explanation, but it does not reveal a retrieval
-gain hidden by greedy repair.
+By separating graph construction, structural repair, ranking extraction,
+and retrieval evaluation, this study shows that construction choices
+decide whether preference graphs are cyclic at all; that greedy and exact
+repair both restore acyclicity where structure exists, with exact repair
+removing less weight than greedy; and that neither repair method yields a
+Holm-surviving repaired-versus-unrepaired nDCG gain in the canonical,
+larger-pool, or exact-repair families -- even when larger-pool repair
+changes top-$k$ membership. Exact repair closes the heuristic-suboptimality
+explanation without revealing a hidden retrieval gain.
 
-The practical implication is therefore not that acyclicity is irrelevant,
-or that repair can never help retrieval. It is that structural improvement
-and retrieval improvement are different claims requiring different
-evidence. Researchers using preference graphs should report construction
-choices, repair diagnostics, extraction rules, and downstream retrieval
-metrics separately, and should include an unrepaired baseline whenever
-repair is proposed as a task-improving intervention. Exact repair is
-especially useful as a bounded methodological control: it can test whether
-a weak or null downstream result is merely an artifact of heuristic repair,
-without being presented as a scalable production method.
+The practical implication is not that acyclicity is irrelevant or that
+repair can never help. It is that structural improvement and retrieval
+improvement are different claims requiring different evidence: report
+construction, repair diagnostics, extraction, and downstream metrics
+separately, keep an unrepaired baseline, and use exact repair as a bounded
+methodological control when a weak downstream result must be stress-tested
+(Section~\ref{sec:discussion-practical}).
 
 Future work should test the same separation on broader large-language-model
-judgment benchmarks, additional graph-construction strategies, alternative
-ranking-extraction methods, and downstream objectives beyond nDCG-based
-retrieval. Such extensions would be able to identify settings where
-structural repair and task utility align more closely, while preserving
-the central discipline established here: acyclicity should be evaluated as
-a structural property first, and as a retrieval-quality intervention only
-when the downstream evidence supports that interpretation.
+judgment benchmarks, additional construction and extraction strategies, and
+downstream objectives beyond nDCG-based retrieval, while preserving the
+discipline established here: evaluate acyclicity as a structural property
+first, and as a retrieval intervention only when downstream evidence
+supports that reading.
 
 \section{Data Availability and Reproducibility}
 \label{sec:data-availability}
@@ -2064,14 +1895,9 @@ Not applicable; no individual person's data are presented in this
 manuscript.
 
 \subsection*{Data, materials, and code availability}
-The datasets used in this study are publicly available from their
-original sources and are cited in the manuscript. No new benchmark dataset
-was generated. The code and processed artifacts used to generate the
-reported results are available at
-\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}. Raw
-provider request and response payloads from the bounded
-large-language-model pilot are not included in the repository for the
-reasons stated in Section~\ref{sec:data-availability}.
+See Section~\ref{sec:data-availability} for dataset sources, repository
+location, and the exclusion of raw provider payloads from the bounded
+large-language-model pilot.
 
 \subsection*{Authors' contributions}
 This is single-author work. Soroush Vahidi conceived the study, designed
