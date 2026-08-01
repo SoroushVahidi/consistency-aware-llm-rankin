@@ -751,14 +751,12 @@ querying a paid API (Section~\ref{sec:reproducibility}).
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{f1_pipeline.pdf}
-  \caption{Pipeline schematic. Stored ranker scores are normalized,
-    converted into pairwise votes, and aggregated into a weighted
-    preference graph, which is diagnosed for cycles and then either left
-    unrepaired or repaired by greedy cycle-peeling or exact SCIP-based
-    MWFAS solving -- two co-equal branches, not a primary method and a
-    footnote. Every branch feeds the same ranking-extraction and
-    evaluation stages, so repaired-versus-unrepaired and
-    greedy-versus-exact comparisons hold every downstream choice fixed.}
+  \caption{Pipeline schematic. Shared construction stages produce a
+    preference graph that is diagnosed for cycles and then either left
+    unrepaired or repaired by greedy cycle-peeling or exact SCIP MWFAS
+    solving as parallel branches. Both branches feed the same ranking
+    extraction and evaluation stages so that repaired-versus-unrepaired
+    and greedy-versus-exact comparisons hold every downstream choice fixed.}
   \label{fig:pipeline}
 \end{figure}
 Figure~\ref{fig:pipeline} summarizes this pipeline, with the greedy and
@@ -1184,43 +1182,52 @@ it.
 \label{sec:results-structure}
 
 The vote-construction regime, not the underlying documents, determines
-whether a query's preference graph is cyclic at all. Table~\ref{tab:structural-outcomes}
-reports, for every dataset and regime, the fraction of queries whose graph
-contains a directed cycle, that same fraction after direct mutual
-contradictions are removed, and the mean feedback-arc weight repair would
-need to remove, expressed as a fraction of total graph weight.
+whether a query's preference graph is cyclic at all.
+Figure~\ref{fig:structural-outcomes} reports, for every dataset and regime,
+the fraction of queries whose graph contains a directed cycle, that same
+fraction after direct mutual contradictions are removed, and the mean
+feedback-arc weight repair would need to remove, expressed as a fraction of
+total graph weight, together with the active-regime before/after comparison.
 
-\begin{table}[t]
-  \caption{Structural inconsistency by dataset and vote-construction
-    regime, canonical protocol. Cyclic: fraction of queries whose graph
-    contains a directed cycle. Post-mutual: the same fraction after
-    direct two-way contradictions are removed before aggregation
-    (Section~\ref{sec:pref-graph}). Norm.\ FAS wt.: mean feedback-arc
-    weight removed by repair, as a fraction of total graph weight.}
-  \label{tab:structural-outcomes}
-  \scriptsize
-  \begin{tabular}{llrrr}
+\begin{figure}[t]
+  \centering
+  {\footnotesize
+  \setlength{\tabcolsep}{5pt}
+  \begin{tabular}{@{}llrrr@{}}
     \toprule
-    Dataset & Regime & Cyclic & Post-mutual & Norm.\ FAS wt. \\
+    Dataset & Regime & Cyclic (\%) & After mutual (\%) & FAS wt. \\
     \midrule
-    SciDocs  & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
-             & \texttt{ms1}             &  99.2\% &  10.8\% & 0.074 \\
-             & \texttt{ms1\_drop\_mutual} &  11.7\% &  11.7\% & 0.002 \\
+    SciDocs  & \texttt{ms2}              &  0.0 &  0.0 & 0.000 \\
+             & \texttt{ms1}              & 99.2 & 10.8 & 0.074 \\
+             & \texttt{ms1\_drop\_mutual} & 11.7 & 11.7 & 0.002 \\
     \addlinespace
-    FiQA     & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
-             & \texttt{ms1}             &  98.3\% &  30.8\% & 0.080 \\
-             & \texttt{ms1\_drop\_mutual} &  30.8\% &  30.8\% & 0.004 \\
+    FiQA     & \texttt{ms2}              &  0.0 &  0.0 & 0.000 \\
+             & \texttt{ms1}              & 98.3 & 30.8 & 0.080 \\
+             & \texttt{ms1\_drop\_mutual} & 30.8 & 30.8 & 0.004 \\
     \addlinespace
-    HotpotQA & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
-             & \texttt{ms1}             &  63.5\% &   1.9\% & 0.029 \\
-             & \texttt{ms1\_drop\_mutual} &   1.9\% &   1.9\% & 0.000 \\
+    HotpotQA & \texttt{ms2}              &  0.0 &  0.0 & 0.000 \\
+             & \texttt{ms1}              & 63.5 &  1.9 & 0.029 \\
+             & \texttt{ms1\_drop\_mutual} &  1.9 &  1.9 & 0.000 \\
     \addlinespace
-    BRIGHT   & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
-             & \texttt{ms1}             &  92.0\% &  22.0\% & 0.055 \\
-             & \texttt{ms1\_drop\_mutual} &  22.0\% &  22.0\% & 0.003 \\
+    BRIGHT   & \texttt{ms2}              &  0.0 &  0.0 & 0.000 \\
+             & \texttt{ms1}              & 92.0 & 22.0 & 0.055 \\
+             & \texttt{ms1\_drop\_mutual} & 22.0 & 22.0 & 0.003 \\
     \bottomrule
-  \end{tabular}
-\end{table}
+  \end{tabular}}
+
+  \vspace{0.55em}
+  \includegraphics[width=\linewidth]{f3_cycle_decomposition.pdf}
+  \caption{Structural inconsistency under the canonical protocol.
+    Top: cyclic-query rate, post-mutual cyclic rate, and mean normalized
+    feedback-arc weight by dataset and vote-construction regime
+    (After mutual: cyclic rate after removing direct two-way contradictions
+    before aggregation; FAS wt.: mean feedback-arc weight removed by repair
+    as a fraction of total graph weight).
+    Bottom: active-regime (\texttt{ms1}) cyclic-query percentage before and
+    after mutual-pair deletion. Most active-regime cyclicity is direct
+    two-way contradiction, with a nonzero residual after mutual-pair deletion.}
+  \label{fig:structural-outcomes}
+\end{figure}
 
 The conservative regime, \texttt{ms2}, is acyclic on every query in every
 dataset in the observed evidence (Section~\ref{sec:pref-graph}): repair
@@ -1234,19 +1241,7 @@ reduces the cyclic-query rate to between $1.9\%$ (HotpotQA) and $30.8\%$
 (FiQA), and \texttt{ms1\_drop\_mutual}'s own cyclic rate matches
 \texttt{ms1}'s post-mutual rate exactly in every dataset, confirming that
 the residual cyclicity in both cases is the same underlying longer-cycle
-structure. Figure~\ref{fig:cycle-decomposition} shows this decomposition
-across datasets.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{f3_cycle_decomposition.pdf}
-  \caption{Cyclic-query percentage under \texttt{ms1} before and after
-    deleting direct mutual pairs, by dataset. Most active-regime
-    cyclicity is direct two-way contradiction, not longer-cycle
-    structure, but a nonzero, dataset-dependent residual remains after
-    mutual-pair deletion.}
-  \label{fig:cycle-decomposition}
-\end{figure}
+structure (Figure~\ref{fig:structural-outcomes}).
 
 Raw, unnormalized score margins are not a scale-neutral starting point for
 this construction (Section~\ref{sec:retrieval-setting}). Under the raw-margin
@@ -1277,7 +1272,7 @@ Under \texttt{ms2}, repair removes nothing on any query, because no graph
 is cyclic. Under \texttt{ms1}, the active regime, repair removes a
 mean of $7.4\%$ (SciDocs) to $8.0\%$ (FiQA) of total graph weight; under
 \texttt{ms1\_drop\_mutual}, the fraction still to remove after mutual
-pairs are already gone drops to $0.2\%$--$0.4\%$ (Table~\ref{tab:structural-outcomes}).
+pairs are already gone drops to $0.2\%$--$0.4\%$ (Figure~\ref{fig:structural-outcomes}).
 This confirms that graph construction, not the repair algorithm, is what
 decides whether repair has any opportunity to act at all -- a point kept
 separate here from whether that activity translates into a retrieval

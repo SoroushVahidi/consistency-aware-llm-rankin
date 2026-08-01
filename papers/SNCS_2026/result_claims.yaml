@@ -39,11 +39,11 @@ claims:
       an earlier repository-hygiene pass.
 
   - id: STRUCTURAL_TABLE
-    manuscript_location: [tab:structural-outcomes]
+    manuscript_location: [fig:structural-outcomes]
     source_artifact: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/tables/table_primary_graph_structure.csv
     filter: "all 12 rows (4 datasets x 3 regimes)"
     aggregation: "direct read of cyclic_query_pct, cyclic_query_pct_after_mutual_deletion, mean_normalized_fas_weight_removed"
-    reproduced_value: "see tab:structural-outcomes in main.tex"
+    reproduced_value: "see fig:structural-outcomes in main.tex"
     prior_value: "matches JDIQ prose (e.g. HotpotQA 63.5% -> 1.9%, FiQA 98.3% -> 30.8%)"
     verification_status: exact_match
     notes: >-

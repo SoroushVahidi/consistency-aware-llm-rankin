@@ -30,16 +30,20 @@ should point at the commit recorded here once the SHA is filled.
 | Target journal | SN Computer Science (Springer Nature, ISSN 2661-8907) |
 | Article type (intended) | Original Research |
 | Manuscript PDF path | `papers/SNCS_2026/manuscript/main.pdf` |
-| Manuscript PDF SHA-256 | `70bd3bb9af205270de1881e4707783a8e91c07420256999915a3aad5c556e973` |
+| Manuscript PDF SHA-256 | `5fb2401939a5ec50c3d989ac99068f787ee551093fd286e19ff0b7faf6ce119d` |
 | LaTeX source ZIP path | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` |
-| Source ZIP SHA-256 | `bfe935f090e4651b6add6e45528c90fadad9a35805e83ffb178ddf8406ec8ef7` |
-| Source `main.tex` SHA-256 | `ff466027d6b9719bc2121eae43ef455a8a1a050f9bcce1ca4b18e951cbbaacbb` |
+| Source ZIP SHA-256 | `d1ca52ba4276eff4a11f8123d6bb5051f9d3d17e1ccd364a4fe23a3492f88f2c` |
+| Source `main.tex` SHA-256 | `0c6528a99178c5ab3168641aec48b46a071b0a9a4904a33e5ba86203af509a6f` |
 | Page count (compiled PDF) | 39 |
 | Structured abstract word count | 250 (Purpose / Methods / Results / Conclusion) |
 | Figures | 5 |
 | Tables | 6 |
 | Algorithms | 1 |
 | Cited references | 62 (compiled bibliography entries `[1]`–`[62]`; BibTeX file has 65 keys, 3 unused) |
+
+### Note
+
+Figure redesign (F1/F3) after novelty front-matter freeze; PDF/ZIP hashes above are current.
 
 ### Superseded prior artifact hashes (pre-novelty front-matter revision)
 
