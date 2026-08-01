@@ -1,14 +1,8 @@
-%% SN Computer Science manuscript -- STAGE 2 (front-half draft).
+%% SN Computer Science manuscript.
 %%
-%% Introduction, Related Work, and Background and Problem Formulation are
-%% drafted prose as of Stage 2. Experimental Design, Results, Discussion,
-%% Limitations, Conclusion, Data Availability and Reproducibility, and the
-%% structured abstract remain Stage-1 scope-note placeholders, to be
-%% drafted in later stages. See ../MANUSCRIPT_PLAN.md for the outline this
-%% file follows, ../EVIDENCE_MAP.md for the claim-to-evidence table,
-%% ../STORY.md for the Stage-2 narrative plan, ../STAGE2_CHANGELOG.md for
-%% what changed this stage and what remains open, and ../README.md for
-%% compilation instructions.
+%% See ../MANUSCRIPT_PLAN.md for scope, ../EVIDENCE_MAP.md and
+%% ../result_claims.yaml for claim-to-evidence mapping, and ../README.md
+%% for compilation instructions.
 %%
 %% Template: Springer Nature sn-jnl.cls v3.1 (December 2024), vendored
 %% unmodified in ../template/. Reference style: sn-basic (Numbered), matching
@@ -52,47 +46,39 @@
   \orgname{New Jersey Institute of Technology},
   \orgaddress{\city{Newark}, \state{NJ}, \country{USA}}}
 
-%% ---------------------------------------------------------------------
-%% Structured abstract (Purpose / Methods / Results / Conclusion), per
-%% SN Computer Science submission guidelines: 150-250 words total, no
-%% subheadings rendered as separate sections (bold run-in labels only),
-%% no citations or equations inside the abstract. PLACEHOLDER -- not
-%% drafted this stage; see MANUSCRIPT_PLAN.md Section 2 for the intended
-%% content of each part.
-%% ---------------------------------------------------------------------
-\abstract{\textbf{Purpose:} [Stage 2 drafting. State the research question:
-whether enforcing acyclicity in derived multi-ranker preference graphs --
-via heuristic or exact minimum-weight feedback-arc-set repair -- yields a
-statistically supported improvement in retrieval effectiveness, and what
-that implies about using structural consistency as a proxy for retrieval
-utility.]
+\abstract{\textbf{Purpose:} This study asks whether enforcing acyclicity in
+derived multi-ranker preference graphs, by heuristic or exact
+minimum-weight feedback-arc-set repair, produces a statistically reliable
+improvement in retrieval effectiveness, or whether structural consistency
+and retrieval utility must be treated as separate quality dimensions.
 
-\textbf{Methods:} [Stage 2 drafting. Summarize the audited pipeline
-(construction, repair, extraction, evaluation), the four-benchmark
-canonical package, the three vote-construction regimes, greedy vs.\ exact
-SCIP repair, and the Holm-corrected paired-inference protocol.]
+\textbf{Methods:} Stored BM25, TF-IDF, and MiniLM scores were converted
+into query-specific weighted preference graphs on four public retrieval
+benchmarks under three vote-construction regimes. Rankings were extracted
+from unrepaired, greedy-repaired, and exactly repaired graphs, using
+paired query-level inference with Holm correction. Exact repair was solved
+to certified optimality with the open-source SCIP solver as a
+methodological control on heuristic suboptimality.
 
-\textbf{Results:} [Stage 2 drafting. State the central null/conditional
-result with the headline Holm-corrected cell counts and the exact-repair
-confirmation, without overstating effect direction.]
+\textbf{Results:} Graph construction strongly determined cyclicity:
+conservative graphs were acyclic in the observed evidence, whereas the
+permissive regime produced cyclic graphs for most queries. Repair removed
+non-trivial contradictory edge weight and, when the candidate pool exceeded
+the evaluation cutoff, changed evaluated top-ranked membership. However,
+no repaired-versus-unrepaired normalized discounted cumulative gain
+comparison survived Holm correction in the canonical, larger-pool, or
+exact-repair comparison families.
 
-\textbf{Conclusion:} [Stage 2 drafting. State the restrained conclusion:
-structural repair is real and measurable, but is not a reliable surrogate
-for downstream retrieval utility; implications for practitioners and
-future preference-graph studies.]}
+\textbf{Conclusion:} In this evidence, preference-graph repair is a real
+structural intervention but not a validated surrogate for improving
+retrieval effectiveness. Repair claims should therefore report structural
+diagnostics and downstream retrieval metrics separately.}
 
 \keywords{preference graphs, feedback arc set, minimum-weight feedback arc
   set, graph repair, rank aggregation, information retrieval, retrieval
   evaluation, data quality}
 
 \maketitle
-
-%% =======================================================================
-%% SECTION SKELETON
-%% Each section below is a scope note for Stage 2+ drafting, not prose.
-%% See MANUSCRIPT_PLAN.md Section 4 (section-by-section outline) for the
-%% full rationale, and EVIDENCE_MAP.md for exact evidence citations.
-%% =======================================================================
 
 \section{Introduction}
 \label{sec:introduction}
@@ -316,9 +302,10 @@ A smaller body of work builds an explicit preference graph from pairwise
 document judgments before extracting a ranking, rather than fusing scores or
 ranks directly. \texttt{LLM-RankFusion} aggregates several LLM rankers by
 explicitly modeling and mitigating pairwise inconsistency in the resulting
-comparisons~\cite{zeng2024llmrankfusion}, and confidence- or bias-aware
-pairwise aggregation methods weight or correct individual comparisons before
-they are combined~\cite{ferrara2024biasaware}. This is the setting the
+comparisons~\cite{zeng2026llmrankfusion}, and confidence-aware or
+bias-aware pairwise aggregation methods weight or correct individual
+comparisons before they are combined~\cite{ferrara2024biasaware}. This is
+the setting the
 present paper studies: a query-specific weighted directed graph built from
 several ranking signals, from which a ranking is extracted before or after a
 structural repair step. Standard retrieval benchmarking practice -- reusing
@@ -351,11 +338,11 @@ The same structural issue has recently reappeared in the context of large
 language models used as pairwise or comparative judges: repeated or
 multi-evaluator LLM comparisons frequently produce transitivity violations
 and directed cycles, which several recent studies diagnose or attempt to
-resolve~\cite{zheng2023judging,shi2025judging,hu2024acyclic}. That work
+resolve~\cite{zheng2023judging,shi2025judging,hu2026acyclic}. That work
 generally treats acyclicity (or reduced contradiction) as a desirable
 property of the resulting evaluation and reports downstream gains on tasks
 such as model ranking, response selection, or fine-tuning-data
-selection~\cite{hu2024acyclic}; it does not test whether the acyclicity
+selection~\cite{hu2026acyclic}; it does not test whether the acyclicity
 objective itself is diagnostic of retrieval effectiveness under a
 corrected, paired statistical protocol, which is the specific gap this
 paper addresses.
@@ -747,10 +734,9 @@ contributions (Section~\ref{sec:introduction}):
 
 These four questions are the only ones this study is designed to answer.
 Consistent with the scope stated in Section~\ref{sec:introduction}, no
-research question here concerns learned repair-decision policies, active
-acquisition of pairwise judgments, or production routing; that adjacent
-research thread uses an unrelated evidence base and is out of scope for
-this paper.
+research question here concerns learned policies for choosing when or how
+to invoke repair in a deployed system; that adjacent research thread uses
+an unrelated evidence base and is out of scope for this paper.
 
 \subsection{Experimental Pipeline}
 \label{sec:pipeline}
@@ -1287,8 +1273,9 @@ need to remove, expressed as a fraction of total graph weight.
 \end{table}
 
 The conservative regime, \texttt{ms2}, is acyclic on every query in every
-dataset, by construction (Section~\ref{sec:pref-graph}): repair has no
-graph to act on under this regime. The permissive regime, \texttt{ms1},
+dataset in the observed evidence (Section~\ref{sec:pref-graph}): repair
+has no graph to act on under this regime. The permissive regime,
+\texttt{ms1},
 is cyclic on the large majority of queries in every dataset, ranging from
 $63.5\%$ (HotpotQA) to $99.2\%$ (SciDocs). Most of that cyclicity is
 direct, two-way contradiction rather than longer-range nontransitivity:
@@ -1574,7 +1561,7 @@ ruled out by this sample size.
 \label{sec:results-llm}
 
 A bounded pilot supplements the score-derived evidence above with real
-large-language-model pairwise judgments: six queries, five providers, and
+large-language-model pairwise judgments: six queries, four providers, and
 four preference-graph construction variants, analyzed at the query-cluster
 level ($n=6$ independent clusters), since the pilot's replicated rows
 within a query are repeated measurements, not additional independent
@@ -1747,7 +1734,7 @@ outcomes~\cite{zheng2023judging}, systematic position bias has been
 measured directly in LLM-as-judge pairwise
 comparisons~\cite{shi2025judging}, and intrinsic inconsistency in
 LLM-based pairwise rankings has motivated explicit aggregation methods to
-mitigate it~\cite{zeng2024llmrankfusion}. This literature establishes that
+mitigate it~\cite{zeng2026llmrankfusion}. This literature establishes that
 inconsistency is a real, measurable property of pairwise preference
 data, which is the premise this paper's construction-sensitivity results
 (Section~\ref{sec:results-structure}) are consistent with. It does not by
@@ -1760,7 +1747,7 @@ acyclic preference evaluation for language models treats acyclicity as a
 desirable property of an aggregated evaluation and reports downstream
 gains from enforcing it, on tasks including model ranking, response
 selection, and fine-tuning data
-selection~\cite{hu2024acyclic}. That result is not contradicted by this
+selection~\cite{hu2026acyclic}. That result is not contradicted by this
 paper: the two studies test acyclicity's downstream value in different
 task settings (LLM evaluation and data selection versus document
 retrieval) with different aggregation and repair mechanisms, so a
@@ -1909,7 +1896,7 @@ empirical finding requiring separate validation here).
 \label{sec:limitations-external}
 
 The main evidence base spans four benchmarks across four retrieval
-domains, three classical and one dense base ranker, and three
+domains, two lexical base rankers, one dense base ranker, and three
 vote-construction regimes (Section~\ref{sec:datasets},
 Section~\ref{sec:rankers}); this is a deliberately controlled, not
 exhaustive, sweep, chosen so that construction-sensitivity and repair
@@ -1977,30 +1964,92 @@ general solved-problem claim.
 
 \section{Conclusion}
 \label{sec:conclusion}
-%% Scope: restate the central thesis in one paragraph; state what future
-%% work would be required to overturn it (not what is planned).
+
+This study separated four stages that are often collapsed in
+preference-graph ranking pipelines: graph construction, structural repair,
+ranking extraction, and retrieval evaluation. RQ1 asked how much structural
+inconsistency appears in derived multi-ranker preference graphs and how
+strongly it depends on construction choices. The answer is that
+construction is decisive: the conservative \texttt{ms2} regime produced
+acyclic graphs in this evidence, while the permissive \texttt{ms1} regime
+produced cyclic graphs for most queries, with much of the cyclicity coming
+from direct mutual contradiction. RQ2 asked what greedy and exact repair
+change structurally. Both methods restore acyclicity where there is
+structure to repair; exact SCIP-based repair removes systematically less
+edge weight than greedy repair on cyclic graphs, confirming that greedy
+over-removes relative to the true minimum-weight feedback arc set. RQ3
+asked whether repair improves retrieval effectiveness. Across the
+canonical, larger-pool, and exact-repair comparison families, no
+repaired-versus-unrepaired nDCG comparison survives Holm correction, even
+though larger-pool repair can change which documents enter the evaluated
+top-$k$ set. RQ4 asked whether the retrieval conclusion is robust to
+construction, pooling, extraction, cutoff, and repair optimality choices.
+The answer is yes within the study's scope: exact repair closes the
+heuristic-suboptimality explanation, but it does not reveal a retrieval
+gain hidden by greedy repair.
+
+The practical implication is therefore not that acyclicity is irrelevant,
+or that repair can never help retrieval. It is that structural improvement
+and retrieval improvement are different claims requiring different
+evidence. Researchers using preference graphs should report construction
+choices, repair diagnostics, extraction rules, and downstream retrieval
+metrics separately, and should include an unrepaired baseline whenever
+repair is proposed as a task-improving intervention. Exact repair is
+especially useful as a bounded methodological control: it can test whether
+a weak or null downstream result is merely an artifact of heuristic repair,
+without being presented as a scalable production method.
+
+Future work should test the same separation on broader large-language-model
+judgment benchmarks, additional graph-construction strategies, alternative
+ranking-extraction methods, and downstream objectives beyond nDCG-based
+retrieval. Such extensions would be able to identify settings where
+structural repair and task utility align more closely, while preserving
+the central discipline established here: acyclicity should be evaluated as
+a structural property first, and as a retrieval-quality intervention only
+when the downstream evidence supports that interpretation.
 
 \section{Data Availability and Reproducibility}
 \label{sec:data-availability}
-%% Scope: public-benchmark citations; repository URL; reproduction-script
-%% pointers; explicit statement that stored intermediates and fixed
-%% query-ID lists back every numerical claim (no paid API calls required
-%% to regenerate reported statistics).
+
+The public benchmarks used in this study are available from their original
+sources: SciDocs, FiQA, HotpotQA, and BRIGHT are cited in
+Section~\ref{sec:datasets}. The code, fixed query lists, processed
+intermediates, figure data, and scripts required to reproduce the reported
+tables and figures are available at
+\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}. The
+main-paper score-derived results are regenerated from stored ranker-score
+and relevance-judgment artifacts; no paid provider call is required to
+recompute those statistics. The bounded real-large-language-model pilot
+reported in Section~\ref{sec:results-llm} is supported by sanitized
+derived artifacts and usage summaries in the repository. Raw provider
+request and response payloads are not included in the repository, because
+they may contain prompt/completion content and operational details that
+are excluded by the project's artifact policy.
+
+\section*{Acknowledgements}
+
+The author thanks Professor Ioannis Koutis for his guidance and emotional
+support throughout this work, and thanks his mother for her emotional
+support. The author is grateful to Anders Borum for providing lifetime
+access to Secure ShellFish, which supported the remote development
+workflow used during this research. The author also acknowledges in-kind
+API and cloud-credit support from the Cohere Labs Catalyst Grant Program,
+the Google Cloud Research Credits Program, Microsoft Azure for Students,
+and the AMD AI Developer Program through Fireworks AI credits.
 
 \backmatter
 
 \section*{Declarations}
 
 \subsection*{Funding}
-[AUTHOR CONFIRMATION REQUIRED: state the actual funding source, if any,
-or confirm ``Not applicable'' / ``No funding was received for this
-work.'' Not resolved by this drafting process, since no funding
-information exists anywhere in the repository to confirm one way or the
-other; this is not a value that can be inferred from code, data, or prior
-manuscript text, and must be supplied by the author before submission.]
+This research received in-kind API and cloud-credit support from the
+Cohere Labs Catalyst Grant Program, the Google Cloud Research Credits
+Program, Microsoft Azure for Students, and the AMD AI Developer Program
+through Fireworks AI credits. No direct financial grant funding was
+received for this work.
 
-\subsection*{Conflict of interest}
-The author declares no conflict of interest.
+\subsection*{Competing interests}
+The author declares no competing interests.
 
 \subsection*{Ethics approval}
 Not applicable. This study uses only publicly available benchmark
@@ -2017,10 +2066,13 @@ manuscript.
 
 \subsection*{Data, materials, and code availability}
 The datasets used in this study are publicly available from their
-original sources and are cited in the manuscript. No new dataset was
-generated. The code and processed artifacts used to generate the reported
-results are available at
-\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}.
+original sources and are cited in the manuscript. No new benchmark dataset
+was generated. The code and processed artifacts used to generate the
+reported results are available at
+\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}. Raw
+provider request and response payloads from the bounded
+large-language-model pilot are not included in the repository for the
+reasons stated in Section~\ref{sec:data-availability}.
 
 \subsection*{Authors' contributions}
 This is single-author work. Soroush Vahidi conceived the study, designed
