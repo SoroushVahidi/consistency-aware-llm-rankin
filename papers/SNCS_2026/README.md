@@ -193,18 +193,17 @@ before drafting. Both are now resolved:
    the bare string "Dimension F" or "Outcome F" interchangeably; they
    denote two unrelated research threads.
 
-## Page budget (Stage 3)
+## Page budget (Stage 4)
 
 SN Computer Science states no explicit word-count, page-count, or
 figure/table-count limit for original-research articles (verified against
-`https://link.springer.com/journal/42979/submission-guidelines` and
-`https://link.springer.com/journal/42979` during Stage 3, 2026-07-31); the
-only stated numeric constraint anywhere in the guidelines is the
-structured abstract's 150-250 word limit. Absent a hard limit, this
-project sets its own internal budget so the manuscript stays a focused
-empirical study rather than growing without bound. Current state (as
-compiled this stage, `tectonic`, `sn-basic`+`Numbered`, single column,
-26 pages total) and the projected budget for the remaining stages:
+official Springer Nature sources during Stage 3, 2026-07-31); the only
+stated numeric constraint anywhere in the guidelines is the structured
+abstract's 150-250 word limit. This project keeps its own internal budget
+so the manuscript stays a focused empirical study rather than growing
+without bound. Current state (compiled this stage, `tectonic`,
+`sn-basic`+`Numbered`, single column, 33 pages total) and the projected
+budget for the remaining stages:
 
 | Section | Current pages | Projected final pages | Note |
 |---|---|---|---|
@@ -212,16 +211,16 @@ compiled this stage, `tectonic`, `sn-basic`+`Numbered`, single column,
 | 1 Introduction | 1-3 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
 | 2 Related Work | 4-6 (3 pp) | 3 | Drafted Stage 2; not expected to grow |
 | 3 Background and Problem Formulation | 7-11 (5 pp) | 5 | Drafted Stage 2; not expected to grow |
-| 4 Methodology | 12-19 (8 pp) | 8 | Drafted Stage 3; not expected to grow (protocol-only, no outcome values) |
-| 5 Results | 20 (0 pp, skeleton) | 6-9 | Not yet drafted. Budget: 4 tables (T1-T4, `MANUSCRIPT_PLAN.md` Section 5) + 4 main-paper figures (F1-F4, `FIGURE_TABLE_AUDIT.md`) + null-result prose across 4 subsections |
-| 6 Discussion | 20 (0 pp, skeleton) | 1-2 | Restrained thesis statement + practitioner audit-logic list, per `MANUSCRIPT_PLAN.md` Section 4 |
-| 7 Limitations | 20 (0 pp, skeleton) | 1 | Five bullet points, reused near-verbatim from JDIQ per the Stage-1 reuse plan |
-| 8 Conclusion | 20 (0 pp, skeleton) | <1 | One paragraph + one falsifiability sentence, per `MANUSCRIPT_PLAN.md` Section 4 |
-| 9 Data Availability and Reproducibility | 20 (0 pp, skeleton) | <1 | |
-| References | 21-25 (~5 pp) | 6-7 | Will grow as Results/Discussion cite dataset and statistical-methodology entries already seeded in `references.bib`; prune unused entries only after all sections are drafted (see `references.bib` header) |
-| Declarations (backmatter) | 25-26 (~1 pp) | 1 | Completed this stage: all seven Springer-required declaration headings now present (Funding, Conflict of interest, Ethics approval, Consent to participate, Consent for publication, Data/materials/code availability, Authors' contributions), per the verified requirement that every heading must appear even as "Not applicable" |
-| Appendix (bounded real-LLM pilot; F5 exact-vs-greedy figure; any secondary-protocol robustness tables moved out of the main Results tables) | 0 | 3-5 | Not yet drafted; scope fixed by `MANUSCRIPT_PLAN.md` Section 6.2 |
-| **Total** | **26** | **~34-40** | Internal target, not a journal-imposed limit |
+| 4 Methodology | 12-19 (8 pp) | 8 | Drafted Stage 3; includes Figure 1 (pipeline schematic) added Stage 4; not expected to grow further |
+| 5 Results | 20-26 (7 pp) | 7 | **Drafted Stage 4.** 4 new tables (structural outcomes, retrieval Holm summary, exact-vs-greedy, robustness) + 5 figures (pipeline in Methodology; BM25 share, cycle decomposition, bootstrap forest, and the new exact-vs-greedy gap figure in Results), all against the Stage-3 budget of 6-9 pp -- came in within budget |
+| 6 Discussion | 27 (0 pp, skeleton) | 1-2 | Not yet drafted (Stage 4 explicitly excludes it). Restrained thesis statement + practitioner audit-logic list, per `MANUSCRIPT_PLAN.md` Section 4 |
+| 7 Limitations | 27 (0 pp, skeleton) | 1 | Not yet drafted. Five bullet points, reused near-verbatim from JDIQ per the Stage-1 reuse plan |
+| 8 Conclusion | 27 (0 pp, skeleton) | <1 | Not yet drafted (Stage 4 explicitly excludes it). One paragraph + one falsifiability sentence |
+| 9 Data Availability and Reproducibility | 27 (0 pp, skeleton) | <1 | Not yet drafted |
+| References | 28-32 (~5 pp) | 6-7 | Will grow further as Discussion cites any remaining seeded entries; prune unused entries only after Discussion/Conclusion are drafted |
+| Declarations (backmatter) | 32-33 (~1 pp) | 1 | Completed Stage 3: all seven Springer-required declaration headings present |
+| Appendix | 0 | 0-2 | The two items originally scoped here (bounded real-LLM pilot, F5 exact-vs-greedy figure) were both placed in main-text Results Sections 5.4/5.6 instead once drafted -- see `STAGE4_CHANGELOG.md` for the reasoning. No appendix currently planned unless a later stage moves a robustness table out of main-text Table 6 for length. |
+| **Total** | **33** | **~38-42** | Internal target, not a journal-imposed limit |
 
 Reducing repetition across sections was an explicit Stage-3 concern: the
 central null-result thesis is stated once in the Introduction (as the

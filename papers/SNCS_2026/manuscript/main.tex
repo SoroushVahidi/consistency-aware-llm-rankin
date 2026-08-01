@@ -26,6 +26,7 @@
 \documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
 \usepackage{graphicx}
+\graphicspath{{../figures/}}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{multirow}
@@ -783,6 +784,25 @@ stage 1 reuses fixed, versioned score files, so every reported statistic
 is reproducible from stored intermediates without repeating retrieval or
 querying a paid API (Section~\ref{sec:reproducibility}).
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{f1_pipeline.pdf}
+  \caption{Pipeline schematic. Stored ranker scores are normalized,
+    converted into pairwise votes, and aggregated into a weighted
+    preference graph, which is diagnosed for cycles and then either left
+    unrepaired or repaired by greedy cycle-peeling or exact SCIP-based
+    MWFAS solving -- two co-equal branches, not a primary method and a
+    footnote. Every branch feeds the same ranking-extraction and
+    evaluation stages, so repaired-versus-unrepaired and
+    greedy-versus-exact comparisons hold every downstream choice fixed.}
+  \label{fig:pipeline}
+\end{figure}
+Figure~\ref{fig:pipeline} summarizes this pipeline, with the greedy and
+exact repair branches drawn explicitly as parallel paths through the same
+downstream extraction and evaluation stages, so that any difference
+between repaired and unrepaired rankings, or between greedy- and
+exact-repaired rankings, is attributable to the repair step alone.
+
 \subsection{Datasets and Retrieval Tasks}
 \label{sec:datasets}
 
@@ -1189,16 +1209,366 @@ Section~\ref{sec:data-availability}.
 
 \section{Results}
 \label{sec:results}
-%% Scope subsections (see MANUSCRIPT_PLAN.md Section 5 for exact
-%% table/figure list and evidence paths):
-%%   5.1 Construction dominates graph structure (BM25 raw-vs-normalized
-%%       edge-weight share; cyclicity by regime).
-%%   5.2 Repair is structurally active but retrieval gains do not survive
-%%       Holm correction (canonical + larger-pool families).
-%%   5.3 Exact SCIP repair confirms the null is not a greedy-heuristic
-%%       artifact (headline reviewer-facing result).
-%%   5.4 Robustness: alternative pools, added baselines, power/MDE,
-%%       narrow equivalence results.
+
+This section reports what the canonical evidence package shows for each
+research question in turn (Section~\ref{sec:rqs}): how much structural
+inconsistency the derived preference graphs contain (RQ1), what repair
+changes structurally (RQ2), whether that change is accompanied by a
+statistically supported retrieval-effectiveness gain (RQ3), and whether
+the answer to RQ3 depends on repair-method optimality or on the
+construction, pooling, and extraction choices held fixed elsewhere in the
+study (RQ4). Every statistic below is computed on the canonical
+\texttt{primary\_minmax\_retention\_matched} protocol (Section~\ref{sec:construction-protocol})
+unless stated otherwise, and every significance statement uses the
+Holm-corrected decision at $\alpha=0.05$ from the prespecified family it
+belongs to (Section~\ref{sec:statistics}); raw, uncorrected $p$-values are
+reported only alongside the corrected decision, never as a substitute for
+it.
+
+\subsection{Structural Inconsistency Before Repair}
+\label{sec:results-structure}
+
+The vote-construction regime, not the underlying documents, determines
+whether a query's preference graph is cyclic at all. Table~\ref{tab:structural-outcomes}
+reports, for every dataset and regime, the fraction of queries whose graph
+contains a directed cycle, that same fraction after direct mutual
+contradictions are removed, and the mean feedback-arc weight repair would
+need to remove, expressed as a fraction of total graph weight.
+
+\begin{table}[t]
+  \caption{Structural inconsistency by dataset and vote-construction
+    regime, canonical protocol. Cyclic: fraction of queries whose graph
+    contains a directed cycle. Post-mutual: the same fraction after
+    direct two-way contradictions are removed before aggregation
+    (Section~\ref{sec:pref-graph}). Norm.\ FAS wt.: mean feedback-arc
+    weight removed by repair, as a fraction of total graph weight.}
+  \label{tab:structural-outcomes}
+  \scriptsize
+  \begin{tabular}{llrrr}
+    \toprule
+    Dataset & Regime & Cyclic & Post-mutual & Norm.\ FAS wt. \\
+    \midrule
+    SciDocs  & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
+             & \texttt{ms1}             &  99.2\% &  10.8\% & 0.074 \\
+             & \texttt{ms1\_drop\_mutual} &  11.7\% &  11.7\% & 0.002 \\
+    \addlinespace
+    FiQA     & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
+             & \texttt{ms1}             &  98.3\% &  30.8\% & 0.080 \\
+             & \texttt{ms1\_drop\_mutual} &  30.8\% &  30.8\% & 0.004 \\
+    \addlinespace
+    HotpotQA & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
+             & \texttt{ms1}             &  63.5\% &   1.9\% & 0.029 \\
+             & \texttt{ms1\_drop\_mutual} &   1.9\% &   1.9\% & 0.000 \\
+    \addlinespace
+    BRIGHT   & \texttt{ms2}             &   0.0\% &   0.0\% & 0.000 \\
+             & \texttt{ms1}             &  92.0\% &  22.0\% & 0.055 \\
+             & \texttt{ms1\_drop\_mutual} &  22.0\% &  22.0\% & 0.003 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The conservative regime, \texttt{ms2}, is acyclic on every query in every
+dataset, by construction (Section~\ref{sec:pref-graph}): repair has no
+graph to act on under this regime. The permissive regime, \texttt{ms1},
+is cyclic on the large majority of queries in every dataset, ranging from
+$63.5\%$ (HotpotQA) to $99.2\%$ (SciDocs). Most of that cyclicity is
+direct, two-way contradiction rather than longer-range nontransitivity:
+removing mutual pairs before aggregation (\texttt{ms1\_drop\_mutual})
+reduces the cyclic-query rate to between $1.9\%$ (HotpotQA) and $30.8\%$
+(FiQA), and \texttt{ms1\_drop\_mutual}'s own cyclic rate matches
+\texttt{ms1}'s post-mutual rate exactly in every dataset, confirming that
+the residual cyclicity in both cases is the same underlying longer-cycle
+structure. Figure~\ref{fig:cycle-decomposition} shows this decomposition
+across datasets.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{f3_cycle_decomposition.pdf}
+  \caption{Cyclic-query percentage under \texttt{ms1} before and after
+    deleting direct mutual pairs, by dataset. Most active-regime
+    cyclicity is direct two-way contradiction, not longer-cycle
+    structure, but a nonzero, dataset-dependent residual remains after
+    mutual-pair deletion.}
+  \label{fig:cycle-decomposition}
+\end{figure}
+
+Raw, unnormalized score margins are not a scale-neutral starting point for
+this construction (Section~\ref{sec:retrieval-setting}). Under the raw-margin
+ablation, BM25 contributes a mean conditional edge-weight share of
+$0.988$ whenever it participates in an edge; under the primary normalized
+protocol, that share falls to $0.512$. Figure~\ref{fig:bm25-share} shows
+this raw-versus-normalized contrast holds across all four datasets and
+all three vote-construction regimes: a graph built from raw margins is
+close to a single-ranker graph with multi-ranker labels attached, and
+normalization is what restores a genuinely mixed graph.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{f2_bm25_share.pdf}
+  \caption{Conditional BM25 edge-weight share under the raw-margin
+    ablation versus the primary normalized protocol, by dataset and vote
+    regime. Raw construction is near-total BM25 domination in every
+    panel; normalization restores a mixed graph.}
+  \label{fig:bm25-share}
+\end{figure}
+
+\subsection{Structural Effect of Repair}
+\label{sec:results-repair-structure}
+
+Repair is structurally active precisely where Section~\ref{sec:results-structure}
+shows a graph has contradictory structure to remove, and inert elsewhere.
+Under \texttt{ms2}, repair removes nothing on any query, because no graph
+is cyclic. Under \texttt{ms1}, the active regime, repair removes a
+mean of $7.4\%$ (SciDocs) to $8.0\%$ (FiQA) of total graph weight; under
+\texttt{ms1\_drop\_mutual}, the fraction still to remove after mutual
+pairs are already gone drops to $0.2\%$--$0.4\%$ (Table~\ref{tab:structural-outcomes}).
+This confirms that graph construction, not the repair algorithm, is what
+decides whether repair has any opportunity to act at all -- a point kept
+separate here from whether that activity translates into a retrieval
+effect, which Section~\ref{sec:results-retrieval} addresses directly.
+
+Repair also changes which documents are visible for evaluation once the
+candidate pool exceeds the metric cutoff. At $P=k$, top-$k$ set membership
+cannot change by construction: the evaluated prefix is the entire pool, so
+repairing the graph can reorder documents but never add or remove one from
+the top-$k$ set, and the measured membership-change rate is exactly
+$0\%$. Once $P>k$, pooling across all three vote-construction regimes and
+every larger-pool evaluation cell (Section~\ref{sec:datasets}), the mean
+top-$k$ membership-change rate rises to $10.6\%$. Repair is therefore not
+merely reordering an already-fixed prefix under $P>k$: it can and does
+change which documents are evaluated at all. Whether that structural
+activity is accompanied by a reliable retrieval-effectiveness gain is
+addressed next.
+
+\subsection{Retrieval Effectiveness}
+\label{sec:results-retrieval}
+
+Table~\ref{tab:retrieval-holm} reports the Holm-corrected outcome for
+every prespecified repaired-versus-unrepaired nDCG comparison family under
+greedy repair, together with dataset-macro mean nDCG for the strongest
+graph-free baselines and the best-performing repaired hybrid, for context.
+
+\begin{table}[t]
+  \caption{Retrieval effectiveness under greedy repair, canonical
+    protocol. Top: Holm-corrected repaired-vs-unrepaired nDCG comparison
+    families (5-pair primary method family, Section~\ref{sec:baselines}).
+    Bottom: dataset-macro mean nDCG for selected methods, for context
+    (not a significance claim; graph-free baselines require no repair
+    step at all).}
+  \label{tab:retrieval-holm}
+  \scriptsize
+  \begin{tabular}{lrrl}
+    \toprule
+    Comparison family & Cells & Holm-rejected & Smallest Holm-adjusted $p$ \\
+    \midrule
+    Active canonical (\texttt{ms1}) & 20 & 0/20 & $0.384$ \\
+    Full canonical (all regimes) & 60 & 0/60 & $0.384$ \\
+    Active larger-pool (\texttt{ms1}, $P{>}k$ incl.) & 110 & 0/110 & $0.352$ \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.4em}
+  \begin{tabular}{lr}
+    \toprule
+    Method (dataset-macro mean nDCG) & Mean nDCG \\
+    \midrule
+    CombSUM (graph-free fusion) & $0.554$ \\
+    Reciprocal rank fusion (graph-free) & $0.546$ \\
+    Copeland hybrid, repaired (\texttt{ms1}) & $0.546$ \\
+    Prior-only (graph-free) & $0.545$ \\
+    Borda fusion (graph-free) & $0.545$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+No repaired-versus-unrepaired nDCG comparison survives Holm correction in
+any of the three prespecified families: not the $20$-cell family
+restricted to the structurally active \texttt{ms1} regime, not the
+full $60$-cell canonical family pooling all three regimes, and not the
+$110$-cell active larger-pool family that includes every $P>k$ cell where
+repair has room to change top-$k$ membership
+(Section~\ref{sec:results-repair-structure}). The smallest Holm-adjusted
+$p$-value in the canonical families is $0.384$ (SciDocs, Copeland graph,
+raw sign-flip $p=0.020$ before correction); in the larger-pool family it
+is $0.352$. Figure~\ref{fig:bootstrap-forest} shows the corresponding
+paired bootstrap intervals for the active \texttt{ms1} regime: point
+estimates are sometimes positive, but the great majority of intervals
+cross zero, consistent with the Holm decision.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{f4_bootstrap_forest.pdf}
+  \caption{Repaired-minus-unrepaired mean $\Delta$nDCG with paired 95\%
+    bootstrap intervals, active \texttt{ms1} regime, primary five-pair
+    method family. Point estimates vary in sign across datasets and
+    methods, and nearly every interval includes zero.}
+  \label{fig:bootstrap-forest}
+\end{figure}
+
+Simple graph-free baselines remain competitive with the best repaired
+graph-dependent method throughout: CombSUM's dataset-macro mean nDCG
+($0.554$) exceeds every graph-dependent method's, and reciprocal rank
+fusion ($0.546$) is effectively tied with the best-performing repaired
+hybrid, the \texttt{ms1} repaired Copeland hybrid ($0.546$). Repair is
+therefore not shown to produce a retrieval ranking that outperforms simple
+score or rank fusion under the canonical protocol.
+
+\subsection{Exact Versus Heuristic Repair}
+\label{sec:results-exact}
+
+The comparisons in Section~\ref{sec:results-retrieval} use greedy repair,
+which does not generally reach the optimum of the feedback-arc-set
+objective (Equation~\eqref{eq:mwfas}). This subsection reports what
+changes when repair is instead solved to certified optimality, addressing
+RQ4's second half directly: whether the retrieval null in
+Section~\ref{sec:results-retrieval} could instead reflect greedy repair's
+suboptimality.
+
+Every exact solve in the canonical evidence package reached proven
+optimality: $1{,}025/1{,}025$ query graphs, relative optimality gap
+$0.0$, with a mean solve time of $7.4$ms (median $0.25$ms, maximum
+$236$ms) against a $300$-second per-query safety limit that was never
+approached (Section~\ref{sec:repair-protocol}). Restricted to the $379$
+queries (pooled across all three vote-construction regimes) whose raw
+graph is actually cyclic, exact repair finds a different feedback arc set
+than greedy in $87.9\%$ of them, and removes systematically less total
+edge weight: Table~\ref{tab:exact-vs-greedy} and Figure~\ref{fig:exact-vs-greedy}
+report the per-dataset gap. Greedy cycle-peeling is therefore a real,
+non-trivial overestimate of the minimum weighted feedback arc set on this
+evidence, not merely a theoretical possibility.
+
+\begin{table}[t]
+  \caption{Exact versus greedy repair, structural comparison, cyclic
+    queries only ($n=379$, pooled across vote-construction regimes). Mean
+    weight removed is reported for both repair methods; the last column
+    is the relative reduction from greedy to exact. The corresponding
+    retrieval-level comparison (whether exact- and greedy-repaired
+    rankings differ in nDCG, pooled across every repaired-graph-dependent
+    extraction rule and validated metric -- nDCG@5/10/20, MRR, MAP,
+    $1{,}025$ queries per cell, all regimes) finds $0/35$ pooled and
+    $0/399$ per-dataset-and-regime cells Holm-significant; no dataset
+    breakdown applies to that pooled result, so it is not repeated per
+    row here.}
+  \label{tab:exact-vs-greedy}
+  \scriptsize
+  \begin{tabular}{lrrr}
+    \toprule
+    Dataset & Wt.\ removed (exact) & Wt.\ removed (greedy) & Reduction \\
+    \midrule
+    SciDocs  & $6.14$ & $8.19$ & $25.1\%$ \\
+    FiQA     & $4.51$ & $6.37$ & $29.2\%$ \\
+    HotpotQA & $1.55$ & $1.80$ & $13.4\%$ \\
+    BRIGHT   & $3.07$ & $3.95$ & $22.3\%$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{f5_exact_vs_greedy_gap.pdf}
+  \caption{Mean feedback-arc weight removed by greedy versus exact
+    repair, cyclic queries only, by dataset. Exact repair removes less
+    weight than greedy in every dataset, confirming that greedy
+    over-removes rather than under-removes edge weight relative to the
+    true optimum.}
+  \label{fig:exact-vs-greedy}
+\end{figure}
+
+That structural gap does not translate into a retrieval-level difference.
+Pooled across all seven repaired-graph-dependent extraction rules
+evaluated in this comparison (Copeland, balance, Markov, both hybrids,
+topological, and priority-topological orderings; Section~\ref{sec:extraction-methods})
+and all five validated metrics, none of the $35$ pooled metric-method
+cells is Holm-significant; at the finer $399$-cell per-dataset-and-regime
+granularity, none is Holm-significant either. The largest raw, uncorrected
+effect in the pooled family is a mean nDCG@10 difference of $-0.00223$ for
+priority-topological ordering (raw sign-flip $p=0.026$; Holm-adjusted
+$p=0.906$).
+
+Exact repair also does not change the headline comparison against the
+unrepaired graph. Using the expanded nine-method family that adds
+PageRank, Rank Centrality, a Markov hybrid, and Bradley--Terry to the
+primary five-pair family specifically for this comparison
+(Table~\ref{tab:baselines}), $0$ of $36$ canonical exact-repaired-versus-unrepaired
+cells and $0$ of $56$ larger-pool cells are Holm-significant -- the same
+qualitative outcome as the greedy-versus-unrepaired comparison in
+Section~\ref{sec:results-retrieval}, now confirmed under a repair method
+that cannot be outperformed on the repair objective itself by any other
+feasible solution. Because exact repair improves the graph objective
+(Equation~\eqref{eq:mwfas}) more than greedy repair does, yet does not
+reveal a retrieval gain greedy repair missed, heuristic suboptimality is
+ruled out as the explanation for the retrieval null in
+Section~\ref{sec:results-retrieval}.
+
+\subsection{Robustness}
+\label{sec:results-robustness}
+
+Table~\ref{tab:robustness} collects four canonical robustness checks
+against the primary retrieval finding, each drawn from a prespecified
+comparison family rather than a post-hoc search.
+
+\begin{table}[t]
+  \caption{Robustness checks against the null retrieval finding
+    (Section~\ref{sec:results-retrieval}), canonical evidence only.}
+  \label{tab:robustness}
+  \scriptsize
+  \begin{tabular}{p{2.6cm}p{6.3cm}}
+    \toprule
+    Check & Result \\
+    \midrule
+    Baseline fairness & Testing whether the RRF-centered primary candidate
+      pool gives a structural advantage to RRF-family baselines: $0/8$
+      Holm-significant cells (RRF and CombSUM vs.\ the fixed repaired
+      Copeland hybrid, canonical pool, all four datasets). No evidence of
+      a pool-driven advantage. \\
+    Power and minimum detectable effect & In the active larger-pool
+      family, median observed absolute mean delta $0.0036$ vs.\ median
+      Holm-adjusted 80\%-power minimum detectable effect $0.0201$: the
+      study is well positioned to rule out larger effects, but many
+      smaller ones remain below the corrected detectable scale. \\
+    Narrow equivalence & Two-one-sided-tests equivalence, active larger-pool
+      family: $13/110$ cells reject non-equivalence at a $\pm 0.005$
+      margin, $32/110$ at $\pm 0.010$, after Holm correction. Equivalence
+      is established for a minority of cells, not the majority; the
+      correct reading of the null result is absence of reliable positive
+      evidence, not blanket practical equivalence. \\
+    Larger-pool ($P{>}k$) family & Already reported in
+      Table~\ref{tab:retrieval-holm}: $0/110$ Holm-significant despite a
+      $10.6\%$ mean top-$k$ membership-change rate
+      (Section~\ref{sec:results-repair-structure}), so membership change
+      alone is not sufficient to produce a corrected retrieval gain. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Each check addresses a distinct way the primary null result could have
+been an artifact of one specific design choice -- an advantageous
+candidate pool, insufficient statistical power, or a $P=k$ evaluation that
+structurally hides repair's effect -- and none overturns it. The power
+analysis is the one qualification worth stating precisely: this evidence
+rules out a general retrieval effect of the size the point estimates
+themselves suggest (median absolute delta $0.0036$), but a considerably
+smaller general effect, below the $0.02$-nDCG detectable scale, is not
+ruled out by this sample size.
+
+\subsection{Supporting LLM Evidence}
+\label{sec:results-llm}
+
+A bounded pilot supplements the score-derived evidence above with real
+large-language-model pairwise judgments: six queries, five providers, and
+four preference-graph construction variants, analyzed at the query-cluster
+level ($n=6$ independent clusters), since the pilot's replicated rows
+within a query are repeated measurements, not additional independent
+samples. Whole-graph repair's effect on retrieval, estimated the same way
+as the score-derived comparisons above, is a mean nDCG change of
+$0.00019$ with a cluster-level $95\%$ interval of $[-0.00072, 0.00140]$
+(exact sign-flip $p=0.875$): indistinguishable from zero, directionally
+consistent with the null finding in Section~\ref{sec:results-retrieval}.
+Six clusters give this pilot very limited power, so this result is
+reported as directional and supporting only -- it does not, on its own,
+extend any conclusion in this paper beyond the four benchmarks and
+construction regimes making up the main evidence package
+(Section~\ref{sec:datasets}).
 
 \section{Discussion}
 \label{sec:discussion}
