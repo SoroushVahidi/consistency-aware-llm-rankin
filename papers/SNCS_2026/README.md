@@ -2,7 +2,7 @@
 
 This directory contains the latest frozen pre-submission manuscript, ‘Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval,’ prepared for SN Computer Science.
 
-The PDF was generated from commit `<SOURCE_SHA>` on branch `papers/sncs-2026-foundation`.
+The PDF was generated from commit `ed14ab0fe153a4d32021ab6779ba0608f8e8e40f` on branch `papers/sncs-2026-foundation`.
 
 - **Title:** Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval
 - **PDF:** [`Structural_Consistency_Is_Not_Retrieval_Utility.pdf`](Structural_Consistency_Is_Not_Retrieval_Utility.pdf)
