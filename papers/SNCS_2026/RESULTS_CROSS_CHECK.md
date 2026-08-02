@@ -38,11 +38,18 @@ and `mean_normalized_fas_weight_removed` value in the table was copied
 from this CSV's 12 rows (4 datasets x 3 regimes) with no transformation
 beyond rounding to the printed precision. Cross-checked against JDIQ's
 submitted manuscript text ("HotpotQA drops from 63.5% to 1.9%... FiQA
-retains a larger residual (98.3% -> 30.8%)"): matches exactly. The
-`ms1_drop_mutual` row's own `cyclic_query_pct` was verified to equal
-`ms1`'s `cyclic_query_pct_after_mutual_deletion` in every dataset (an
-internal-consistency identity, not assumed) -- confirmed exactly (e.g.
-SciDocs: $10.8\%$ both places). The BM25 conditional edge-weight share
+retains a larger residual (98.3% -> 30.8%)"): matches exactly.
+
+**Correctness-methods fix (2026-08-01):** an earlier Stage-4/5 note claimed
+`ms1_drop_mutual`'s `cyclic_query_pct` equals `ms1`'s
+`cyclic_query_pct_after_mutual_deletion` in every dataset (e.g. SciDocs
+10.8% both places). That identity is **false** for SciDocs: CSV values are
+`ms1` after-mutual $0.108333$ (10.8%) vs `ms1_drop_mutual` cyclic
+$0.116667$ (11.7%). FiQA/HotpotQA/BRIGHT do coincide. The two columns are
+different constructions (post-aggregation reciprocal deletion vs
+construction-time drop_mutual with a possibly different aggregate
+threshold); see `CORRECTNESS_METHODS_FIX_CHANGELOG.md`. Manuscript prose
+no longer claims exact equality. The BM25 conditional edge-weight share
 figures ($0.988$ raw, $0.512$ normalized) are carried from
 `reports/full_calibrated_core/EXECUTIVE_SUMMARY.md` (`0.9879644976033446`,
 `0.5123241797137496`), already an exact match to JDIQ's stated figures;
@@ -112,6 +119,13 @@ Source:
 `proven_optimal.sum()` over all rows $= 1025$, out of $1025$ total rows.
 `time_s`: mean $0.007444$s ($7.44$ms), median $0.000252$s ($0.25$ms), max
 $0.235736$s ($236$ms). Matches `FINDINGS.md`'s stated figures exactly.
+
+**Correctness-methods fix (2026-08-01):** the nominal query×regime count is
+$342\times 3=1026$. The missing row is BRIGHT / `ms2` / `biology:0`
+(empty vote rows / zero edges under min_support=2; skipped by
+`run_exact_open_ilp_study.py`). Denominator $1025$ is correct for solved
+instances; manuscript now states the exclusion. See
+`CORRECTNESS_METHODS_FIX_CHANGELOG.md`.
 
 **Cyclic-query count (379) and per-dataset structural gap.** Source:
 `reports/exact_open_source_ilp_repair_investigation/tables/structural_per_query.csv`.

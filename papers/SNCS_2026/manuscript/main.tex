@@ -152,7 +152,8 @@ on the same candidate sets and stored BM25, TF-IDF, and MiniLM scores.
 Exact minimum-weight feedback-arc-set (MWFAS) repair, solved to certified
 optimality with an open-source mixed-integer solver, is included as a
 diagnostic control: if an optimal repair still fails to produce a reliable
-retrieval gain, heuristic under-repair cannot explain the null. The central
+retrieval gain of the scale detectable under the protocol, greedy
+under-repair cannot explain a null of that magnitude. The central
 empirical pattern is stronger than the observation that repair acts only on
 cyclic graphs. Construction choices determine whether repairable
 inconsistency exists at all; when the candidate pool exceeds the evaluation
@@ -174,8 +175,9 @@ The contribution is therefore threefold:
     the evaluated top-$k$ without producing a Holm-surviving nDCG gain.
   \item A diagnostic exact-repair control: under matched pools and
     extraction rules, comparing unrepaired, greedy-repaired, and
-    SCIP-optimal MWFAS-repaired graphs rules out heuristic suboptimality as
-    the explanation for that null in the prespecified comparison families.
+    SCIP-optimal MWFAS-repaired graphs rules out greedy under-repair as an
+    explanation for a retrieval gain of the scale detectable under the
+    evaluated protocol in the reported comparison families.
   \item A corrected multi-family null against graph-free anchors: no
     repaired-versus-unrepaired nDCG family survives Holm correction, while
     CombSUM and reciprocal rank fusion remain competitive with repaired
@@ -187,9 +189,10 @@ The contribution is therefore threefold:
 The confirmatory evidence is score-derived multi-ranker retrieval on four
 public benchmarks (SciDocs, FiQA, HotpotQA, and BRIGHT) with three base
 scorers and three vote-construction regimes. Confirmatory retrieval
-inference is query-level within prespecified Holm families; the
-$1{,}025$ certified exact solves establish solver coverage on the studied
-graphs, not $1{,}025$ independent retrieval effects. A six-query
+inference is query-level within reported Holm families; the
+$1{,}025$ certified exact solves (of $1{,}026$ nominal query--regime
+combinations; Section~\ref{sec:results-exact}) establish solver coverage on
+the studied graphs, not $1{,}025$ independent retrieval effects. A six-query
 real-large-language-model pilot is directional only and is not treated as
 confirmation. The results do not establish behavior for cross-encoder or
 large-scale LLM rerankers, learned fusion, or interactive retrieval, and
@@ -292,13 +295,16 @@ retrieval benchmarking more generally~\cite{thakur2021beir,craswell2021overview}
 \subsection{Inconsistency, Cycles, and Preference Repair}
 \label{sec:related-repair}
 
-A pairwise preference graph is transitive, and therefore admits a single
-consistent total order, only in the special case that it is acyclic. In
-general it is not: aggregating several partially disagreeing sources
-routinely produces directed cycles, including simple two-way contradictions
-and longer cyclic chains. The combinatorial problem of removing the
-least-weight set of edges needed to make a weighted directed graph acyclic
-is the (minimum-weight) feedback arc set problem. It is NP-hard in
+A directed preference graph admits at least one total order consistent with
+all retained edges if and only if it is acyclic. Acyclicity does not imply
+that the observed edge relation is transitively closed: a DAG need not equal
+its transitive closure, and several linear extensions may remain compatible
+with the same retained edges. In general aggregated preference graphs are
+not acyclic: combining partially disagreeing sources routinely produces
+directed cycles, including simple two-way contradictions and longer cyclic
+chains. The combinatorial problem of removing the least-weight set of edges
+needed to make a weighted directed graph acyclic is the (minimum-weight)
+feedback arc set problem. It is NP-hard in
 general~\cite{karp1972reducibility}; classical work gives fast, deterministic
 greedy heuristics that repeatedly remove the lightest edge on a discovered
 cycle~\cite{eades1993heuristic}, and later work gives polynomial-time
@@ -406,16 +412,20 @@ normalization used throughout the canonical experiments is per-query,
 per-ranker min-max scaling,
 \begin{equation}
 \bar{x}_{q,s}(d) =
-\frac{x_{q,s}(d) - \min_{d' \in D_q} x_{q,s}(d')}
-     {\max_{d' \in D_q} x_{q,s}(d') - \min_{d' \in D_q} x_{q,s}(d')},
+\frac{x_{q,s}(d) - \min_{d' \in D_{q,s}} x_{q,s}(d')}
+     {\max_{d' \in D_{q,s}} x_{q,s}(d') - \min_{d' \in D_{q,s}} x_{q,s}(d')},
 \label{eq:minmax}
 \end{equation}
-which maps every ranker's retained scores for a given query into a common
-$[0,1]$ range. Section~\ref{sec:pref-graph} builds pairwise votes from
-$\bar{x}_{q,s}$ rather than from $x_{q,s}$ directly; the raw, unnormalized
-construction is retained only as an explicit robustness ablation, not as an
-alternative primary protocol, precisely because raw heterogeneous score
-margins are not a scale-neutral starting point for comparing rankers.
+where $D_{q,s}\subseteq D_q$ is the subset of candidates actually scored by
+ranker $s$ on query $q$. If all retained scores for a query--ranker pair are
+equal (range below $10^{-12}$), the normalized vector is set to all zeros;
+missing candidates are excluded from the range calculation and remain
+abstentions when votes are formed. Section~\ref{sec:pref-graph} builds
+pairwise votes from $\bar{x}_{q,s}$ rather than from $x_{q,s}$ directly; the
+raw, unnormalized construction is retained only as an explicit robustness
+ablation, not as an alternative primary protocol, precisely because raw
+heterogeneous score margins are not a scale-neutral starting point for
+comparing rankers.
 
 Relevance judgments (qrels) associate each query-document pair with a
 graded or binary relevance label, drawn from each benchmark's original
@@ -475,11 +485,14 @@ retention rule:
     $(u,v)$ and $(v,u)$ can be retained for the same unordered pair,
     producing direct mutual contradictions and, transitively, longer
     cycles.
-  \item \textbf{\texttt{ms1\_drop\_mutual}}: start from \texttt{ms1} and
-    remove every unordered pair that would otherwise be retained in both
-    directions, before aggregation. This isolates how much of
-    \texttt{ms1}'s cyclicity is attributable specifically to direct mutual
-    contradiction rather than to longer-cycle nontransitivity.
+  \item \textbf{\texttt{ms1\_drop\_mutual}}: like \texttt{ms1}, but when both
+    directions of an unordered pair would otherwise be retained, drop the
+    pair entirely at vote construction (before aggregation). This isolates
+    how much of \texttt{ms1}'s cyclicity is attributable specifically to
+    direct mutual contradiction rather than to longer-cycle
+    nontransitivity; it is not a post-hoc rewrite of an already-built
+    \texttt{ms1} graph, and retention-matched aggregate thresholds may
+    differ from \texttt{ms1} (Section~\ref{sec:construction-protocol}).
 \end{itemize}
 These three regimes are not alternative proposals for a ``correct''
 construction rule; they are a controlled sweep whose purpose is to make
@@ -509,12 +522,15 @@ binary indicator of whether $G_q$ is cyclic at all under a given
 construction regime, aggregated across queries into a cyclic-query rate.
 The second decomposes that rate into cyclicity attributable to direct
 mutual contradiction (a pair retained in both directions) versus cyclicity
-that survives after mutual pairs are removed (comparing \texttt{ms1} to
-\texttt{ms1\_drop\_mutual}), because these two sources of cyclicity have
-different plausible causes -- near-tied evidence between two rankers versus
-genuine longer-range nontransitivity among three or more documents -- and
-conflating them would over- or under-state how much of the observed
-cyclicity a repair step is actually resolving.
+that survives after mutual pairs are removed. Two related diagnostics are
+reported: a post-aggregation deletion of reciprocal edges on an
+\texttt{ms1} graph, and the separate \texttt{ms1\_drop\_mutual}
+construction that drops contested pairs at vote time. These are not
+guaranteed to coincide (Section~\ref{sec:results-structure}), because they
+apply mutual handling at different stages and may use different
+retention-matched aggregate thresholds; conflating them would over- or
+under-state how much of the observed cyclicity a repair step is actually
+resolving.
 
 Acyclicity is a purely structural property: it guarantees that $G_q$ admits
 \emph{some} consistent total order, but it does not by itself guarantee
@@ -557,21 +573,25 @@ minimum-weight edge, repeating until the graph is acyclic. This does not
 generally reach the optimum of Equation~\eqref{eq:mwfas}, but it is cheap
 enough to run at the scale of the full query set. \textbf{Exact repair}
 solves Equation~\eqref{eq:mwfas} to certified optimality via a standard
-linear-ordering mixed-integer program: for every ordered pair of nodes
-$(u,v)$, a binary variable $\mathrm{before}[u,v]$ indicates that $u$
-precedes $v$ in a chosen total order, subject to antisymmetry
+linear-ordering mixed-integer program~\cite{groetschel1984cutting,baharev2021exact}:
+the MWFAS problem can equivalently be written as a linear-ordering problem
+-- choose a total order and minimize the weight of edges directed backward
+with respect to that order. For every ordered pair of nodes $(u,v)$, a binary
+variable $\mathrm{before}[u,v]$ indicates that $u$ precedes $v$ in the chosen
+total order, subject to antisymmetry
 ($\mathrm{before}[u,v] + \mathrm{before}[v,u] = 1$) and transitivity
-constraints over every ordered triple of nodes; the objective minimizes the
-total weight of edges whose direction disagrees with the chosen order,
+constraints over every ordered triple of nodes; the objective is
 \begin{equation}
 \min \sum_{(u,v) \in E_q} w_q(u,v)\, \mathrm{before}[v,u],
 \label{eq:mwfas-mip}
 \end{equation}
-which is exactly Equation~\eqref{eq:mwfas} restricted to orderings
-representable as a linear extension. This program is solved with the
-open-source SCIP solver; a query graph is included in the exact-repair
-evidence only when the solver certifies proven optimality, not merely a
-feasible incumbent.
+i.e.\ the total weight of retained edges oriented against the order. The
+removed set is exactly those backward edges, so the objective equals the
+MWFAS objective in Equation~\eqref{eq:mwfas}; every acyclic retained subgraph
+admits at least one topological ordering, and the MIP searches over all total
+orders. This program is solved with the open-source SCIP solver; a query
+graph is included in the exact-repair evidence only when the solver certifies
+proven optimality, not merely a feasible incumbent.
 
 Exact repair is used here as a \emph{diagnostic control}, not as a proposed
 practical replacement for greedy repair: it does not scale to the largest
@@ -621,17 +641,20 @@ rule is graph-dependent:
     extraction rule fixed so that any difference is attributable to
     repair rather than to a change of scoring rule.
   \item \textbf{Hybrid prior-plus-graph extraction}: the graph score is
-    combined with the normalized prior score,
+    combined with a graph-free prior score,
     \begin{equation}
-    h_q(d) = (1-\alpha)\, \hat{s}^{\mathrm{prior}}_q(d)
+    h_q(d) = \hat{s}^{\mathrm{prior}}_q(d)
              + \alpha\, \hat{s}^{\mathrm{graph}}_q(d),
     \label{eq:hybrid}
     \end{equation}
-    with both components normalized query-wise and $\alpha \in [0,1]$
-    fixed in the primary analysis (with a sweep reported as a robustness
-    check). When $\hat{s}^{\mathrm{graph}}_q$ is computed from $G_q$ the
-    method is unrepaired; when computed from $\widetilde{G}_q$ it is
-    repaired.
+    where both components are independently min--max normalized query-wise
+    (constant components map to zeros) and the primary analysis fixes
+    $\alpha=0.3$ (with a sweep $\alpha\in\{0.1,0.3,0.5,1.0\}$ reported as a
+    robustness check). The prior $\hat{s}^{\mathrm{prior}}_q$ is reciprocal
+    rank fusion over the three base rankers on $D_q$ with $k{=}60$, not a
+    simple score sum; final ties break by document id. When
+    $\hat{s}^{\mathrm{graph}}_q$ is computed from $G_q$ the method is
+    unrepaired; when computed from $\widetilde{G}_q$ it is repaired.
 \end{itemize}
 
 Retrieval effectiveness is measured with normalized discounted cumulative
@@ -848,19 +871,60 @@ normalization (Equation~\eqref{eq:minmax}).
 The primary construction protocol normalizes every ranker's scores with
 per-query, per-ranker min-max scaling (Equation~\eqref{eq:minmax}) and
 extracts directional votes from normalized score margins, following
-Section~\ref{sec:pref-graph}. Vote retention within a vote-construction
-regime uses a matched threshold: the per-ranker vote-margin threshold and
-the regime-level aggregate weight threshold are each chosen so that the
-resulting retained-vote rate matches the rate obtained from an unnormalized
-(raw-margin) construction on the same graphs, so that comparisons between
-the normalized primary protocol and the raw-margin ablation
-(Section~\ref{sec:results}) are not confounded by a change in how
-permissive thresholding is. Support requirements are fixed per regime:
-\texttt{ms2} requires support from at least two of the three rankers and a
-positive aggregate margin; \texttt{ms1} and \texttt{ms1\_drop\_mutual}
-require support from at least one ranker, differing only in whether
-mutual (two-way) contradictions are removed before aggregation
-(Section~\ref{sec:pref-graph}).
+Section~\ref{sec:pref-graph}. Vote retention uses a retention-matched
+thresholding rule that never consults qrels or nDCG. On each dataset, a
+raw-margin (unnormalized) construction with the same support rule supplies
+targets: per-ranker retained-vote rates and the regime's retained directed
+edge count. For the normalized protocol, each ranker's vote-margin
+threshold is the empirical quantile of that ranker's pooled pairwise
+normalized margins matching the raw retained-vote rate
+($q=1-\mathrm{target\_rate}$). Given those vote thresholds, the
+regime-level aggregate weight threshold is chosen by a discrete search over
+candidate aggregate weights to minimize the absolute gap in retained edge
+count versus the raw baseline for that regime (ties break toward the smaller
+threshold). Vote-margin thresholds are therefore per dataset and per
+ranker, shared across regimes within a dataset; aggregate thresholds are
+per dataset and per regime; neither is per query. Thresholds are fixed from
+the full usable query set of that dataset before retrieval metrics are
+computed. Matching is approximate (minimum absolute edge-count gap), not
+exact equality of every rate. Canonical values appear in
+Table~\ref{tab:thresholds}. Support requirements are fixed per regime:
+\texttt{ms2} requires support from at least two of the three rankers;
+\texttt{ms1} and \texttt{ms1\_drop\_mutual} require support from at least
+one ranker, differing in whether contested (two-way) pairs are dropped at
+vote construction (Section~\ref{sec:pref-graph}).
+
+\begin{table}[t]
+  \caption{Retention-matched thresholds for the primary protocol
+    (\texttt{primary\_minmax\_retention\_matched}). Vote thresholds are
+    shared across regimes within a dataset; aggregate thresholds and
+    drop-mutual flags are regime-specific. Matching target: raw-margin
+    retained-vote rates (per ranker) and raw retained edge count (per
+    regime). Calibration uses the same usable queries later evaluated;
+    qrels/nDCG are not used. Regime abbreviations: \texttt{ms1},
+    \texttt{ms1dm}=\texttt{ms1\_drop\_mutual}, \texttt{ms2}.}
+  \label{tab:thresholds}
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}llrrrccc@{}}
+    \toprule
+    Dataset & Reg. & BM25 & MiniLM & TF-IDF & Agg. & Sup. & Drop \\
+    \midrule
+    SciDocs & \texttt{ms1} & 0.00468 & 0.274 & 0.340 & 0.0108 & 1 & no \\
+    SciDocs & \texttt{ms1dm} & 0.00468 & 0.274 & 0.340 & 0 & 1 & yes \\
+    SciDocs & \texttt{ms2} & 0.00468 & 0.274 & 0.340 & 0 & 2 & no \\
+    FiQA & \texttt{ms1} & 0.00622 & 0.276 & 0.375 & 0.0120 & 1 & no \\
+    FiQA & \texttt{ms1dm} & 0.00622 & 0.276 & 0.375 & 0 & 1 & yes \\
+    FiQA & \texttt{ms2} & 0.00622 & 0.276 & 0.375 & 0 & 2 & no \\
+    HotpotQA & \texttt{ms1} & 0.00317 & 0.272 & 0.228 & 0 & 1 & no \\
+    HotpotQA & \texttt{ms1dm} & 0.00317 & 0.272 & 0.228 & 0.00341 & 1 & yes \\
+    HotpotQA & \texttt{ms2} & 0.00317 & 0.272 & 0.228 & 0.295 & 2 & no \\
+    BRIGHT & \texttt{ms1} & 0.00108 & 0.240 & 0.555 & 0.0114 & 1 & no \\
+    BRIGHT & \texttt{ms1dm} & 0.00108 & 0.240 & 0.555 & 0.0119 & 1 & yes \\
+    BRIGHT & \texttt{ms2} & 0.00108 & 0.240 & 0.555 & 0 & 2 & no \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 Candidate pools use one primary policy: for each query, the top-$P$
 documents of a reciprocal-rank-fusion ranking computed over the union of
@@ -948,46 +1012,57 @@ which comparison family (Section~\ref{sec:baselines}).
 
 \textbf{Prior-only and graph-free fusion} rank candidates without
 constructing or consulting a preference graph: the prior-only method ranks
-by the normalized, summed base-ranker score used in
-Equation~\eqref{eq:hybrid}; reciprocal rank fusion, CombSUM, and
-Borda-style fusion combine the three rankers' individual per-query
-rankings or scores directly~\cite{cormack2009rrf,fox1994combination}.
+by the same RRF prior used in Equation~\eqref{eq:hybrid}; reciprocal rank
+fusion, CombSUM, and Borda-style fusion combine the three rankers'
+individual per-query rankings or scores
+directly~\cite{cormack2009rrf,fox1994combination}.
 
 \textbf{Graph-only extraction} computes a score from $G_q$ or
-$\widetilde{G}_q$ alone. The Copeland score $s_{\mathrm{cop}}$ and balance
-score $s_{\mathrm{bal}}$ (Section~\ref{sec:extraction-eval}) are evaluated
-on every dataset, regime, and repair method. Two related but distinct
-Markov-chain scores are also evaluated: a damped stationary-distribution
-score computed with a PageRank-style restart term, referred to throughout
-as \emph{Markov}; and an undamped stationary distribution of a Markov
-chain built so that ergodicity is guaranteed by explicit self-loops rather
-than restart mass, following Rank Centrality
-exactly~\cite{negahban2017rankcentrality} and referred to as \emph{Rank
-Centrality}. Standard graph PageRank (computed on the reversed
-graph, so that being preferred by highly-ranked competitors raises a
-node's score)~\cite{page1999pagerank} is evaluated as a further
-graph-only rule. A Bradley--Terry score is evaluated as a probabilistic
-alternative to these combinatorial and spectral rules: strengths
-$p_u > 0$ are fit by maximum likelihood under
-\begin{equation}
-P(u \succ v) = \frac{p_u}{p_u + p_v},
-\label{eq:bt}
-\end{equation}
-using the iterative minorization-maximization (MM) algorithm, with the
-retained graph's edge weights as (possibly fractional) win
-counts~\cite{bradley1952rank,hunter2004mm}. Finally, two ordering-based
-rules apply only to repaired (necessarily acyclic) graphs, since they are
-undefined on a cyclic input: a topological ordering of
-$\widetilde{G}_q$, and a priority-topological ordering that breaks ties
-among currently-available source nodes using the prior score.
+$\widetilde{G}_q$ alone. Table~\ref{tab:extraction-params} records the
+implementation parameters used throughout. The Copeland score
+$s_{\mathrm{cop}}$ and balance score $s_{\mathrm{bal}}$
+(Section~\ref{sec:extraction-eval}) are evaluated on every dataset, regime,
+and repair method. Two related but distinct Markov-chain scores are also
+evaluated: a damped stationary-distribution score with uniform restart
+(``Markov''), and an undamped Rank Centrality chain with explicit
+self-loops~\cite{negahban2017rankcentrality}. Standard graph PageRank on
+the reversed preference graph~\cite{page1999pagerank}, Bradley--Terry MM
+MLE with edge weights as win
+counts~\cite{bradley1952rank,hunter2004mm}, and (on repaired DAGs only)
+NetworkX topological order plus prior-priority topological order complete
+the set.
 
 \textbf{Hybrid prior-plus-graph extraction} combines a graph-only score
-with the normalized prior score via Equation~\eqref{eq:hybrid}. Copeland
-and balance hybrids are evaluated at a fixed mixing weight $\alpha=0.3$ in
-the primary analysis, with a sweep over $\alpha \in \{0.1,0.3,0.5,1.0\}$
-reported as a robustness check; a Markov hybrid is evaluated at the same
-fixed $\alpha$ as an additional method in the expanded family
+with the RRF prior via Equation~\eqref{eq:hybrid}. Copeland and balance
+hybrids use $\alpha=0.3$ in the primary analysis, with
+$\alpha \in \{0.1,0.3,0.5,1.0\}$ as a robustness check; a Markov hybrid at
+the same fixed $\alpha$ enters the expanded family
 (Section~\ref{sec:baselines}).
+
+\begin{table}[t]
+  \caption{Extraction-method implementation parameters matching the
+    canonical pipeline. Direction: edge $u\to v$ means $u$ preferred over
+    $v$. Final ranking sorts by descending score then ascending document id
+    unless noted.}
+  \label{tab:extraction-params}
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lp{3.1cm}p{3.3cm}@{}}
+    \toprule
+    Method & Main parameter(s) / ties & Implementation note \\
+    \midrule
+    Copeland & $\deg^+-\deg^-$; id tie-break & Isolates score $0$ \\
+    Balance & weighted out$-$in; id tie-break & Uses edge weights \\
+    Markov (damped) & restart $0.15$; tol $10^{-10}$; $10^{4}$ iter & Loser$\to$winner + uniform restart \\
+    Rank Centrality & self-loops; tol $10^{-8}$; $200$ iter & No teleport; normalize $\pi$ \\
+    PageRank & damping $0.85$; tol $10^{-6}$; $100$ iter & Reversed graph; weighted \\
+    Bradley--Terry & MM; tol $10^{-6}$; $100$ iter & Uniform init; isolates $0$ \\
+    Topological & NetworkX \texttt{topological\_sort} & DAG-only; construction-order ties \\
+    Priority-topo & RRF prior ($k{=}60$) among sources & Higher prior, then larger id \\
+    Hybrids & $\alpha{=}0.3$; min--max each side & $h=\hat s^{\mathrm{prior}}+\alpha\hat s^{\mathrm{graph}}$; const.\ $\to 0$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 As in Section~\ref{sec:extraction-eval}, every graph-dependent rule is
 evaluated on both $G_q$ and $\widetilde{G}_q$ wherever both are defined.
@@ -1087,14 +1162,46 @@ permutation test on the paired differences (enumerating all $2^m$ sign
 patterns when the number of nonzero differences $m \le 20$; a
 $10{,}000$-replicate Monte Carlo approximation with a fixed seed
 otherwise), testing the null hypothesis that the paired differences are
-symmetric about zero. Every $p$-value from a prespecified family of cells
-(e.g. the full canonical family, or the full larger-pool family) is
+symmetric about zero. Every $p$-value from a reported family of cells
+(e.g.\ the full canonical family, or the full larger-pool family) is
 adjusted jointly with the Holm step-down procedure~\cite{holm1979simple},
-controlling the family-wise error rate at $\alpha=0.05$; different
-families (canonical, larger-pool, exact-repair, alternative-pool,
-added-baseline) are never pooled into one joint correction unless stated
-otherwise, so that a family's size reflects only the comparisons it was
-prespecified to contain.
+controlling the family-wise error rate at $\alpha=0.05$. Families are
+corrected separately (Table~\ref{tab:holm-families}): confirmatory
+families answer the primary repaired-versus-unrepaired nDCG question under
+greedy or exact repair; robustness families vary pool, baselines, or ask
+equivalence/power questions. The reported families were fixed in the
+canonical evidence specification before the final manuscript analysis;
+family membership was not reopened after inspecting the final Holm
+decisions. Datasets and regimes within a family remain separate cells
+(not collapsed into one omnibus test), so repeated regimes from the same
+query contribute separate paired vectors rather than a hierarchical model.
+There is no omnibus multi-regime test beyond the separately corrected
+families listed in Table~\ref{tab:holm-families}.
+
+\begin{table}[t]
+  \caption{Holm multiplicity families used in this manuscript. Confirmatory
+    families support the primary null claims; robustness families are
+    reported alongside and never substituted for confirmatory Holm
+    decisions. Cell counts match Tables~\ref{tab:retrieval-holm}
+    and~\ref{tab:robustness}.}
+  \label{tab:holm-families}
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lp{2.6cm}p{2.4cm}p{2.0cm}r@{}}
+    \toprule
+    Family & Question & Scope & Methods & $n$ \\
+    \midrule
+    Active canonical & Greedy repair gain? & 4$\times$\texttt{ms1}, $P{=}k$ & Prim.\ 5 pairs & 20 \\
+    Full canonical & All regimes? & 4$\times$3 regimes, $P{=}k$ & Prim.\ 5 pairs & 60 \\
+    Active larger-pool & When $P{>}k$? & \texttt{ms1}, larger-pool & Prim.\ 5 pairs & 110 \\
+    Exact-repair canonical & Exact vs unrepaired? & 4$\times$\texttt{ms1}, $P{=}k$ & Exp.\ 9 pairs & 36 \\
+    Exact-repair larger-pool & Exact under $P{>}k$? & larger-pool cells & Exp.\ 9 pairs & 56 \\
+    Exact vs greedy & Exact vs greedy ret.? & pooled / per-cell & Prim.+topo & 35/399 \\
+    Alternative-pool & Pool-policy artifact? & alt.\ pools & vs RRF/CombSUM & 8 \\
+    Equivalence (TOST) & Narrow equivalence? & active larger-pool & Prim.\ pairs & 110 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 Beyond this primary test, four robustness procedures are reported for
 every primary family, never as a substitute for the Holm-corrected
@@ -1218,14 +1325,15 @@ total graph weight, together with the active-regime before/after comparison.
   \vspace{0.55em}
   \includegraphics[width=\linewidth]{f3_cycle_decomposition.pdf}
   \caption{Structural inconsistency under the canonical protocol.
-    Top: cyclic-query rate, post-mutual cyclic rate, and mean normalized
-    feedback-arc weight by dataset and vote-construction regime
-    (After mutual: cyclic rate after removing direct two-way contradictions
-    before aggregation; FAS wt.: mean feedback-arc weight removed by repair
-    as a fraction of total graph weight).
+    Top: cyclic-query rate, post-mutual diagnostic cyclic rate, and mean
+    normalized feedback-arc weight by dataset and vote-construction regime
+    (After mutual: cyclic rate after deleting reciprocal edges from that
+    regime's already-aggregated graph; FAS wt.: mean feedback-arc weight
+    removed by repair as a fraction of total graph weight).
     Bottom: active-regime (\texttt{ms1}) cyclic-query percentage before and
-    after mutual-pair deletion. Most active-regime cyclicity is direct
-    two-way contradiction, with a nonzero residual after mutual-pair deletion.}
+    after that post-aggregation mutual-pair deletion. Most active-regime
+    cyclicity is direct two-way contradiction, with a nonzero residual after
+    mutual-pair deletion.}
   \label{fig:structural-outcomes}
 \end{figure}
 
@@ -1236,12 +1344,19 @@ has no graph to act on under this regime. The permissive regime,
 is cyclic on the large majority of queries in every dataset, ranging from
 $63.5\%$ (HotpotQA) to $99.2\%$ (SciDocs). Most of that cyclicity is
 direct, two-way contradiction rather than longer-range nontransitivity:
-removing mutual pairs before aggregation (\texttt{ms1\_drop\_mutual})
+the construction-time mutual-drop regime (\texttt{ms1\_drop\_mutual})
 reduces the cyclic-query rate to between $1.9\%$ (HotpotQA) and $30.8\%$
-(FiQA), and \texttt{ms1\_drop\_mutual}'s own cyclic rate matches
-\texttt{ms1}'s post-mutual rate exactly in every dataset, confirming that
-the residual cyclicity in both cases is the same underlying longer-cycle
-structure (Figure~\ref{fig:structural-outcomes}).
+(FiQA). That rate is close to, but not identical to, the post-hoc
+``after mutual'' diagnostic on \texttt{ms1} graphs: the diagnostic deletes
+reciprocal edges from the already-aggregated \texttt{ms1} digraph, whereas
+\texttt{ms1\_drop\_mutual} drops contested pairs during vote construction
+and uses its own retention-matched aggregate threshold
+(Table~\ref{tab:thresholds}). The two coincide on FiQA, HotpotQA, and
+BRIGHT, but differ on SciDocs ($10.8\%$ post-mutual \texttt{ms1} versus
+$11.7\%$ cyclic under \texttt{ms1\_drop\_mutual}; one query remains cyclic
+only under the construction-time drop). They therefore measure related but
+distinct residual longer-cycle structure
+(Figure~\ref{fig:structural-outcomes}).
 
 Raw, unnormalized score margins are not a scale-neutral starting point for
 this construction (Section~\ref{sec:retrieval-setting}). Under the raw-margin
@@ -1353,8 +1468,8 @@ but nearly every interval crosses zero.
 Simple graph-free baselines remain competitive with the best repaired
 graph-dependent method throughout: CombSUM's dataset-macro mean nDCG
 ($0.554$) exceeds every graph-dependent method's, and reciprocal rank
-fusion ($0.546$) is effectively tied with the best-performing repaired
-hybrid, the \texttt{ms1} repaired Copeland hybrid ($0.546$). Repair is
+fusion and the repaired Copeland hybrid have the same reported
+dataset-macro mean to three decimal places ($0.546$). Repair is
 therefore not shown to produce a retrieval ranking that outperforms simple
 score or rank fusion under the canonical protocol.
 
@@ -1369,8 +1484,13 @@ RQ4 directly: whether the retrieval null in
 Section~\ref{sec:results-retrieval} could instead reflect greedy repair's
 suboptimality.
 
-Every exact solve in the canonical evidence package reached proven
-optimality: $1{,}025/1{,}025$ query graphs, relative optimality gap
+Of the $1{,}026$ nominal query--regime combinations
+($342$ usable queries $\times$ three vote-construction regimes), one
+BRIGHT query under \texttt{ms2} (\texttt{biology:0}) produces an empty
+edge set -- no directed pair meets \texttt{ms2}'s min-support requirement
+of two rankers -- and is excluded from the exact-repair study, leaving
+$1{,}025$ valid exact-repair instances. Every one of those solves reached
+proven optimality: $1{,}025/1{,}025$ query graphs, relative optimality gap
 $0.0$, with a mean solve time of $7.4$ms (median $0.25$ms, maximum
 $236$ms) against a $300$-second per-query safety limit that was never
 approached (Section~\ref{sec:repair-protocol}). Restricted to the $379$
@@ -1436,9 +1556,9 @@ Section~\ref{sec:results-retrieval}, now confirmed under a repair method
 that cannot be outperformed on the repair objective itself by any other
 feasible solution. Because exact repair improves the graph objective
 (Equation~\eqref{eq:mwfas}) more than greedy repair does, yet does not
-reveal a retrieval gain greedy repair missed, heuristic suboptimality is
-ruled out as the explanation for the retrieval null in
-Section~\ref{sec:results-retrieval}.
+reveal a retrieval gain of the scale detectable under this protocol,
+greedy under-repair is ruled out as an explanation for a retrieval gain
+of that scale in Section~\ref{sec:results-retrieval}.
 
 \subsection{Robustness}
 \label{sec:results-robustness}
@@ -1485,10 +1605,11 @@ Each check addresses a distinct way the primary null result could have
 been an artifact of one specific design choice -- an advantageous
 candidate pool, insufficient statistical power, or a $P=k$ evaluation that
 structurally hides repair's effect -- and none overturns it. The power
-analysis is the one qualification worth stating precisely: this evidence
-rules out a general retrieval effect of the size the point estimates
-themselves suggest (median absolute delta $0.0036$), but a considerably
-smaller general effect, below the $0.02$-nDCG detectable scale, is not
+analysis is the one qualification worth stating precisely: the exact-repair
+analysis rules out greedy under-repair as an explanation for a retrieval
+gain of the scale detectable under the evaluated protocol (median absolute
+delta $0.0036$ versus Holm-adjusted median $80\%$-power MDE $0.0201$), but
+a considerably smaller general effect, below that detectable scale, is not
 ruled out by this sample size.
 
 \subsection{Supporting LLM Evidence}
@@ -1770,7 +1891,7 @@ is plausible in principle (Section~\ref{sec:discussion-llm}) but untested.
 \label{sec:limitations-statistical}
 
 Every confirmatory claim uses Holm-corrected paired inference over a
-prespecified family (Section~\ref{sec:statistics}). As reported in
+reported family (Section~\ref{sec:statistics}). As reported in
 Section~\ref{sec:results-robustness}, the study is well positioned to
 rule out a general effect at the scale of the observed point estimates,
 but smaller effects below the corrected minimum-detectable scale are not
@@ -1802,8 +1923,11 @@ repair both restore acyclicity where structure exists, with exact repair
 removing less weight than greedy; and that neither repair method yields a
 Holm-surviving repaired-versus-unrepaired nDCG gain in the canonical,
 larger-pool, or exact-repair families -- even when larger-pool repair
-changes top-$k$ membership. Exact repair closes the heuristic-suboptimality
-explanation without revealing a hidden retrieval gain.
+changes top-$k$ membership. Exact repair closes greedy under-repair as an
+explanation for a gain of the detectable scale without revealing a hidden
+retrieval gain; equivalence evidence remains limited to a minority of
+TOST cells, and smaller effects below the corrected minimum-detectable
+scale remain possible.
 
 The practical implication is not that acyclicity is irrelevant or that
 repair can never help. It is that structural improvement and retrieval

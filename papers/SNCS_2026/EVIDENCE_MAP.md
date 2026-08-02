@@ -18,12 +18,12 @@ not recomputed.
 | # | Planned claim (bounded) | Registry ID | Evidence path(s) | Generating script | Statistical unit / correction |
 |---|---|---|---|---|---|
 | 1 | Raw heterogeneous score margins are scale-dominated (BM25 conditional edge-weight share 0.988 raw vs. 0.512 normalized); normalization materially changes retained votes, cyclicity, and removed edges. | REPAIR-01 (supporting) | `reports/full_calibrated_core/`, `reports/normalization_protocol_audit_20260714/` | `reports/full_calibrated_core/scripts/full_calibration_utils.py` | descriptive; no significance test claimed |
-| 2 | Vote-construction regime (`ms1`/`ms2`/`ms1_drop_mutual`) is the dominant determinant of graph cyclicity; e.g. HotpotQA drops from 63.5% to 1.9% cyclic queries after mutual-pair deletion, FiQA from 98.3% to 30.8%. | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
+| 2 | Vote-construction regime (`ms1`/`ms2`/`ms1_drop_mutual`) is the dominant determinant of graph cyclicity; e.g. HotpotQA drops from 63.5% to 1.9% cyclic queries under `ms1_drop_mutual`, FiQA from 98.3% to 30.8%. SciDocs post-mutual `ms1` (10.8%) and `ms1_drop_mutual` cyclic (11.7%) are related but **not** identical (see `CORRECTNESS_METHODS_FIX_CHANGELOG.md`). | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
 | 3 | Repair is structurally active under normalized `ms1` graphs (removed weight 0.029-0.080 of total graph weight); `ms2` is acyclic by construction. | REPAIR-01 | `reports/full_calibrated_core/` | same | descriptive |
 | 4 | **Central null result:** no repaired-vs-unrepaired nDCG cell survives Holm correction -- 0/20 active canonical `ms1` cells, 0/60 full canonical cells. | REPAIR-01 | `reports/full_calibrated_core/` | same | query; Holm |
 | 5 | Larger-pool (`P>k`) study: repair changes top-$k$ membership (mean rate 10.6%, **pooled across all three vote-construction regimes** -- not `ms1`-only, which gives 26.2% -- vs. 0% at `P=k`, confirmed 2026-07-31) but still 0/110 active larger-pool cells survive Holm correction. | REPAIR-01 | `reports/final_revision_task1_pool_cutoff_20260715/` | `reports/final_revision_task1_pool_cutoff_20260715/scripts/run_pool_cutoff_study.py` | query; Holm |
-| 6 | **Headline reviewer-facing result:** exact SCIP repair reaches proven optimality on 1,025/1,025 nonempty graphs and, on the $n=379$ queries whose graph is cyclic (**pooled across all three vote-construction regimes**, confirmed 2026-07-31; restricting to `ms1` alone gives only $n=316$), removes *less* edge weight than greedy, yet 0/36 canonical and 0/56 larger-pool exact-vs-unrepaired cells, and 0/35 pooled + 0/399 finer exact-vs-greedy retrieval cells, survive Holm correction -- the null is not a greedy-heuristic artifact. | REPAIR-02 | `reports/exact_open_source_ilp_repair_investigation/`, `reports/final_revision_task4_exact_baseline_fairness_20260715/` | `reports/exact_open_source_ilp_repair_investigation/scripts/run_exact_open_ilp_study.py` | query; Holm |
-| 7 | Simple graph-free baselines remain competitive: CombSUM dataset-macro mean nDCG 0.554, RRF 0.546, best repaired Copeland hybrid effectively tied with RRF (0.546). | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
+| 6 | **Headline reviewer-facing result:** of $1{,}026$ nominal query–regime combinations, one BRIGHT/`ms2`/`biology:0` empty-edge graph is excluded; exact SCIP repair reaches proven optimality on the remaining $1{,}025/1{,}025$ graphs and, on the $n=379$ queries whose graph is cyclic (**pooled across all three vote-construction regimes**, confirmed 2026-07-31; restricting to `ms1` alone gives only $n=316$), removes *less* edge weight than greedy, yet 0/36 canonical and 0/56 larger-pool exact-vs-unrepaired cells, and 0/35 pooled + 0/399 finer exact-vs-greedy retrieval cells, survive Holm correction -- a gain of the detectable scale is not explained by greedy under-repair. | REPAIR-02 | `reports/exact_open_source_ilp_repair_investigation/`, `reports/final_revision_task4_exact_baseline_fairness_20260715/` | `reports/exact_open_source_ilp_repair_investigation/scripts/run_exact_open_ilp_study.py` | query; Holm |
+| 7 | Simple graph-free baselines remain competitive: CombSUM dataset-macro mean nDCG 0.554; RRF and the repaired Copeland hybrid have the same reported dataset-macro mean to three decimal places (0.546). | REPAIR-01 (supporting) | `reports/full_calibrated_core/` | same | descriptive |
 | 8 | Power/MDE: median observed \|delta\| 0.0036 vs. Holm-adjusted median 80%-power MDE **0.0201** (superseded value 0.0207 does not reproduce from the current canonical `mde_per_cell.csv`; see `RESULTS_CROSS_CHECK.md` and `result_claims.yaml`) in the active larger-pool family; narrow equivalence (13/110 at +/-0.005, 32/110 at +/-0.010). | REPAIR-01 (supporting) | `reports/final_revision_task2_statistical_power_20260715/` | same | query; Holm-adjusted MDE |
 
 **Stage-3 clarification on claim #4 vs. claim #6's method-family scope**
@@ -104,3 +104,12 @@ pivot), `DOC-01` (superseded `outputs/pub_vote_cmp_*` packages).
   extensively audited in prior repository-hygiene sessions and are the
   submitted, frozen record).
 - No pytest run, no script executed to regenerate any statistic.
+
+## Correctness-methods fix (2026-08-01)
+
+See `CORRECTNESS_METHODS_FIX_CHANGELOG.md` for full traces of:
+
+- SciDocs 10.8% (post-mutual `ms1` diagnostic) vs 11.7% (`ms1_drop_mutual`
+  cyclic) — equality claim withdrawn;
+- 1,026 nominal combinations → 1,025 exact instances (excluded:
+  BRIGHT/`ms2`/`biology:0`, empty edge set).

@@ -47,9 +47,13 @@ claims:
     prior_value: "matches JDIQ prose (e.g. HotpotQA 63.5% -> 1.9%, FiQA 98.3% -> 30.8%)"
     verification_status: exact_match
     notes: >-
-      Internal-consistency identity confirmed: ms1_drop_mutual's own
-      cyclic_query_pct equals ms1's cyclic_query_pct_after_mutual_deletion
-      in every dataset.
+      CORRECTNESS FIX 2026-08-01: earlier note claiming
+      ms1_drop_mutual.cyclic_query_pct ==
+      ms1.cyclic_query_pct_after_mutual_deletion for every dataset was
+      wrong for SciDocs (0.108333 vs 0.116667). Values are both canonical;
+      constructions differ (post-aggregation mutual deletion vs
+      construction-time drop_mutual + regime-specific aggregate threshold).
+      Manuscript no longer claims exact equality.
 
   - id: TOPK_MEMBERSHIP_CHANGE
     manuscript_location: [sec:results-repair-structure]
@@ -116,6 +120,11 @@ claims:
     reproduced_value: "1025/1025 proven optimal; mean 7.44ms, median 0.25ms, max 236ms"
     prior_value: "1,025/1,025; mean 7.4ms, median 0.25ms, max 236ms"
     verification_status: exact_match
+    notes: >-
+      Nominal combinations = 342 usable queries x 3 regimes = 1026.
+      Excluded: bright/ms2/biology:0 (empty edge set under min_support=2).
+      Denominator 1025 is correct for solved instances
+      (CORRECTNESS_METHODS_FIX_CHANGELOG.md).
 
   - id: EXACT_VS_GREEDY_CYCLIC_N
     manuscript_location: [tab:exact-vs-greedy, fig:exact-vs-greedy, sec:results-exact]
