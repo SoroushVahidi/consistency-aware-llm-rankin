@@ -1,42 +1,44 @@
 # Submission Checklist
 
-Date: 2026-08-01
+Date: 2026-08-02  
+Audience: author only (internal)  
+Companion PDF: `SUBMISSION_CHECKLIST.pdf`
 
 ## Files
 
 | Item | Status | Path |
 |---|---|---|
-| Final manuscript source | PASS | `manuscript/main.tex` |
-| Final PDF | PASS | `manuscript/main.pdf` |
-| Bibliography | PASS | `manuscript/references.bib` |
-| Figure files | PASS | `figures/f1_pipeline.pdf` through `figures/f5_exact_vs_greedy_gap.pdf` |
-| Springer class and bibliography style | PASS | `template/sn-jnl.cls`, `template/bst/sn-basic.bst` |
-| Cover letter | PASS | `COVER_LETTER.md` |
-| Reviewer suggestions | PASS | `REVIEWER_SUGGESTIONS.md` |
-| Keywords/running title | PASS | `KEYWORDS_RUNNING_TITLE.md` |
-| Optional highlights | PASS | `HIGHLIGHTS.md` |
-| Scientific audit | PASS | `PRE_SUBMISSION_SCIENTIFIC_AUDIT.md` |
-| Simulated reviews | PASS | `SIMULATED_REVIEWS.md` |
-| Reproducibility audit | PASS | `REPRODUCIBILITY_AUDIT.md` |
-| Journal compliance checklist | PASS | `JOURNAL_COMPLIANCE_CHECKLIST.md` |
+| Final manuscript source | Ready | `manuscript/main.tex` |
+| Final manuscript PDF | Ready | `manuscript/main.pdf` |
+| Bibliography | Ready | `manuscript/references.bib` |
+| Figure files (vector) | Ready | `figures/f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` |
+| Springer class / bst | Ready | `template/sn-jnl.cls`, `template/bst/sn-basic.bst` |
+| Cover letter (MD + TeX + PDF) | Ready | `COVER_LETTER.md`, `COVER_LETTER.tex`, `COVER_LETTER.pdf` |
+| Highlights (optional) | Ready | `HIGHLIGHTS.md`, `HIGHLIGHTS.tex`, `HIGHLIGHTS.pdf` |
+| Author checklist PDF | Ready | `SUBMISSION_CHECKLIST.pdf` |
+| Portal metadata | Ready | `SUBMISSION_METADATA.md`, `PORTAL_DRY_RUN.md` |
+| Keywords / running title | Ready | `KEYWORDS_RUNNING_TITLE.md` |
+| Journal compliance | Ready | `JOURNAL_COMPLIANCE_CHECKLIST.md` |
+| Freeze notes | Ready | `SUBMISSION_FREEZE_CHANGELOG.md` |
+| Supplementary Information | None | Not used |
 
-## Final QA Commands
+## Disclosures
 
-The final command results are recorded in `FINAL_CHANGELOG.md` after compile and commit preparation.
+| Item | Status |
+|---|---|
+| Funding (in-kind pilot: Azure, Gemini via Google Cloud, Cohere, Fireworks) | Ready |
+| Acknowledgments (Koutis; Sharifani; Borum) | Ready |
+| Competing interests | Ready | The author declares that there are no competing interests. | The author declares that there are no competing interests. |
+| AI disclosure (Methods/Reproducibility) | Ready |
+| Data / code / materials availability | Ready |
+| ORCID `https://orcid.org/0000-0003-1934-6282` | Ready |
+| Repository `https://github.com/SoroushVahidi/consistency-aware-llm-rankin` | Ready |
+| Preprint disclosure (Research Square; no dual submission) | Ready |
 
-Required checks before submission:
+## Validation before submit
 
-- Compile with Tectonic.
-- `git diff --check`.
-- Scan manuscript/package files for development markers and unresolved author notes.
-- Verify citation keys and labels.
-- Verify no duplicate BibTeX keys.
-- Verify no stale auxiliary files are staged.
-- Run repository secret scan.
-
-## Submission Caveats
-
-- Do not submit raw provider request/response payloads.
-- Do not cite internal Gurobi validation artifacts as manuscript evidence.
-- Do not open a pull request for this final-stage branch unless separately requested.
-- Do not submit the manuscript from this repository audit process.
+- Compile manuscript + cover letter + highlights + checklist PDFs
+- Abstract ≤250 words
+- No undefined citations/references
+- Repository validators: claim registry, evidence manifest, report links, portability, repo clarity, secret scan
+- Do not commit/tag/push/submit without explicit authorization

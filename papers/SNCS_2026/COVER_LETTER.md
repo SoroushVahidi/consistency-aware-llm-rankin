@@ -2,21 +2,22 @@
 
 Dear Editor-in-Chief,
 
-Please consider the manuscript "Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval" for publication as an Original Research article in SN Computer Science.
+Please consider “Structural Consistency Does Not Reliably Predict Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval” as an Original Research article in *SN Computer Science*.
 
-The manuscript studies a common assumption in graph-based ranking pipelines: that repairing cycles in a derived preference graph should improve the downstream retrieval ranking. Using four public retrieval benchmarks, three score-derived rankers, three graph-construction regimes, and paired query-level inference with Holm correction, the paper separates graph construction, structural repair, ranking extraction, and retrieval evaluation. It also uses exact SCIP-based minimum-weight feedback-arc-set repair as a methodological control on heuristic repair.
+The manuscript is a controlled empirical audit of the assumption that repairing cycles in a derived preference graph should improve downstream retrieval ranking. On four public benchmarks, with three score-derived rankers, three construction regimes, and paired query-level inference with Holm correction, it factorizes construction, structural repair, extraction, and evaluation. Exact SCIP minimum-weight feedback-arc-set repair is used only as an identification control on greedy suboptimality for the stated edge-deletion objective—not as a new solver or ranking algorithm, and with no state-of-the-art performance claim.
 
-The central finding is deliberately restrained. Repair is structurally active and exact repair removes less edge weight than greedy repair, but no repaired-versus-unrepaired nDCG comparison survives Holm correction in the canonical, larger-pool, or exact-repair comparison families. The paper therefore argues that structural consistency and retrieval utility should be reported as separate quality dimensions.
+The central finding is protocol-conditional. Repair is structurally active, and exact repair removes less edge weight than greedy repair, but no repaired-versus-unrepaired nDCG comparison survives Holm correction in the canonical, larger-pool, or exact-repair families. Absence of Holm-corrected evidence is not proof of equivalence. The reusable contribution is the factorized audit itself.
 
-The manuscript is appropriate for SN Computer Science because it combines information retrieval, graph algorithms, empirical evaluation methodology, and reproducible computational experimentation, all within the journal's broad computer science scope. The contribution is a controlled empirical audit rather than a claim of state-of-the-art reranking performance.
+An earlier public preprint on Research Square (DOI: 10.21203/rs.3.rs-9335700/v1; CC BY 4.0; posted 2026-06-17) is disclosed; it is not an active journal submission. The present manuscript supersedes that preprint’s retrieval interpretation where the revised exact and multiplicity-corrected protocol changes the conclusion. The work has not been published elsewhere and is not under consideration elsewhere (no dual submission). Funding, generative-AI, competing-interest, and data/code disclosures are complete in the manuscript.
 
-I confirm that the work is original, has not been published before, and is not under consideration elsewhere. The code, fixed query lists, processed intermediates, figure data, and scripts required to reproduce the reported tables and figures are available at https://github.com/SoroushVahidi/consistency-aware-llm-rankin. Raw provider request and response payloads from the bounded LLM pilot are excluded for artifact-policy reasons, as stated in the manuscript.
+Code and compact processed artifacts: https://github.com/SoroushVahidi/consistency-aware-llm-rankin. Raw provider payloads from the bounded LLM pilot are excluded as stated in the manuscript.
 
 Thank you for considering this submission.
 
 Sincerely,
 
-Soroush Vahidi
-Ying Wu College of Computing
-New Jersey Institute of Technology
+Soroush Vahidi  
+ORCID: https://orcid.org/0000-0003-1934-6282  
+Ying Wu College of Computing  
+New Jersey Institute of Technology  
 sv96@njit.edu

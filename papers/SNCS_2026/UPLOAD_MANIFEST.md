@@ -1,44 +1,42 @@
 # SNCS 2026 Submission Portal Upload Manifest
 
-**Date:** 2026-08-01  
+**Date:** 2026-08-02  
 **Rule:** upload only what the portal asks for. Do **not** upload internal audit
 Markdown from this directory (freeze/review/smoke docs are for authors/agents).
 
-Hashes below match the current novelty/front-matter revision artifacts in
-`SUBMISSION_FREEZE.md` (prior `f42ad47` PDF/ZIP hashes are superseded there).
-
 ## Upload items
 
-| # | Item | Local path | Suggested upload filename | Journal file type (typical EM) | Mandatory / optional | Public / confidential | Version / hash | Special instructions |
-|---|---|---|---|---|---|---|---|---|
-| 1 | Main manuscript PDF | `papers/SNCS_2026/manuscript/main.pdf` | `SNCS_2026_main.pdf` | Manuscript (PDF) | Mandatory | Becomes review/production artifact | SHA-256 `5fb2401939a5ec50c3d989ac99068f787ee551093fd286e19ff0b7faf6ce119d` | Primary file. Verify portal proof after upload. |
-| 2 | LaTeX source ZIP | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` | `SNCS_2026_latex_source.zip` | Manuscript / Source files | Mandatory (journal requires editable source) | Editorial/production | SHA-256 `d1ca52ba4276eff4a11f8123d6bb5051f9d3d17e1ccd364a4fe23a3492f88f2c` | Contains tex/bib/cls/bst + figure PDFs only. |
-| 3 | Figure PDFs (if portal requires separate figure slots) | `papers/SNCS_2026/figures/f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` | `f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` | Figure | Optional if already inside source ZIP; upload separately only if portal demands | Public with paper | Use committed figure binaries | Tag as Figure, not Supplemental, in Editorial Manager-style portals. |
-| 4 | Cover letter | `papers/SNCS_2026/COVER_LETTER.md` (paste or export PDF/TXT) | `SNCS_2026_cover_letter.txt` | Cover Letter | Mandatory if portal has a cover-letter field | Confidential to editors | Text in `COVER_LETTER.md` / `SUBMISSION_METADATA.md` | Do not include internal audit notes. |
-| 5 | Highlights | `papers/SNCS_2026/HIGHLIGHTS.md` | `SNCS_2026_highlights.txt` | Highlights | Optional — **only if requested** | Public if used | See file | SNCS guidelines checked did not require highlights. |
-| 6 | Suggested reviewers | `papers/SNCS_2026/REVIEWER_SUGGESTIONS.md` | Portal fields (not a file) | Reviewer suggestions | Enter if portal asks | Confidential | See file | Prefer first six; Nihar B. Shah as alternate. |
-| 7 | Opposed reviewers | Conflict list in `SUBMISSION_METADATA.md` | Portal fields | Opposed reviewers | Optional / only if asked | Confidential | See metadata | Do not invent opposition beyond the conflict list. |
-| 8 | Code/data link | Public GitHub URL | Portal “Data/Code availability” fields | URL / statement | Mandatory statement | Public | https://github.com/SoroushVahidi/consistency-aware-llm-rankin | Optionally note freeze commit after it is recorded. No separate code ZIP required now that the repo is public. |
-| 9 | Declarations / metadata | `papers/SNCS_2026/SUBMISSION_METADATA.md` | Portal form fields | Metadata | Mandatory fields as prompted | Mix (funding public; emails as required) | Copy-ready blocks in metadata | Paste abstract, keywords, funding, ethics, AI disclosure, etc. |
-| 10 | Running title / keywords | `papers/SNCS_2026/KEYWORDS_RUNNING_TITLE.md` | Portal fields | Metadata | As prompted | Public | See file | Align with manuscript `\keywords`. |
+| # | Item | Local path | Suggested upload filename | Mandatory / optional | Notes |
+|---|---|---|---|---|---|
+| 1 | Main manuscript PDF | `manuscript/main.pdf` | `SNCS_2026_main.pdf` | Mandatory | Primary file |
+| 2 | Editable LaTeX source | `manuscript/` + `template/` + `figures/*.pdf` (ZIP if portal requires) | `SNCS_2026_latex_source.zip` | Mandatory | Journal requires editable source |
+| 3 | Cover letter PDF | `COVER_LETTER.pdf` | `SNCS_2026_cover_letter.pdf` | Mandatory if cover-letter field exists | Professionally typeset |
+| 4 | Highlights PDF | `HIGHLIGHTS.pdf` | `SNCS_2026_highlights.pdf` | Optional — only if requested | Journal guidelines do not require highlights |
+| 5 | Figures (separate slots) | `figures/f1_pipeline.pdf` … `f5_*.pdf` | same basenames | Optional if already in source ZIP | All vector PDFs |
+| 6 | Suggested reviewers | `REVIEWER_SUGGESTIONS.md` | Portal fields | If asked | Prefer first six |
+| 7 | Opposed reviewers | Conflict list in `SUBMISSION_METADATA.md` | Portal fields | Only if asked | Conflict list only |
+| 8 | Code/data URL | Public GitHub | Portal fields | Mandatory statement | `https://github.com/SoroushVahidi/consistency-aware-llm-rankin` |
+| 9 | ORCID | Portal ORCID field | — | Recommended by SNCS | `https://orcid.org/0000-0003-1934-6282` |
+| 10 | Declarations / metadata | `SUBMISSION_METADATA.md` | Portal form fields | Mandatory as prompted | Abstract, funding, AI, etc. |
 
-## Explicitly exclude from the submission package
+## Author-only (do not upload unless asked)
 
-Do **not** upload:
+- `SUBMISSION_CHECKLIST.pdf` — internal author checklist
+- Freeze/audit/changelog Markdown
 
-- `SUBMISSION_FREEZE.md`, `RELEASE_CANDIDATE_*.md`, `PUBLIC_REPOSITORY_REVIEW.md`, `LICENSE_AND_DISTRIBUTION_AUDIT.md`, stage changelogs, cold-read / independent-review working notes
+## Explicitly exclude
+
 - API keys, credentials, `.env`
-- Personal email exports; rejected-venue correspondence; private legal files
-- Raw provider transcripts / `raw_calls/`
-- Internal Gurobi validation report trees as “supplementary evidence”
-- Entire git working tree ZIP unless the portal explicitly requests a code archive **and** it is sanitized per `RELEASE_CANDIDATE_PLAN.md`
+- Raw provider transcripts
+- Internal Gurobi validation report trees as manuscript evidence
+- Entire unsanitized working tree ZIP
 
 ## Recommended upload order
 
-1. Paste metadata fields (title, abstract, keywords, declarations).
-2. Upload `main.pdf`.
-3. Upload `SNCS_2026_latex_source.zip` (and separate figures only if required).
-4. Paste/upload cover letter.
-5. Enter suggested (and opposed, if asked) reviewers.
-6. Enter public code/data URL.
-7. Review generated proof; **stop before final submit** until author authorizes.
+1. Paste metadata (title, abstract, keywords, ORCID, declarations).
+2. Upload `manuscript/main.pdf`.
+3. Upload editable source ZIP / figures as required.
+4. Upload `COVER_LETTER.pdf`.
+5. Upload `HIGHLIGHTS.pdf` only if requested.
+6. Enter reviewers and code/data URL.
+7. Review proof; **stop before final submit** until author authorizes.

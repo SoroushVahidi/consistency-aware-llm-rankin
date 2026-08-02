@@ -58,6 +58,7 @@ policies (2026-08-01):
 Spelling checked against prior Stage-6 verified records in this workspace:
 
 - Professor Ioannis Koutis
+- Mitra Sharifani
 - Anders Borum
 - Secure ShellFish
 - Cohere Labs Catalyst Grant Program
@@ -65,4 +66,12 @@ Spelling checked against prior Stage-6 verified records in this workspace:
 - Microsoft Azure for Students
 - AMD AI Developer Program / Fireworks AI credits
 
-Terminology: “computational support” / credits — not “financial grants.”
+Terminology: “in-kind computational support” / credits for the bounded
+real-LLM pilot — not broad financial sponsorship of the principal
+score-derived study; not “financial grants” for all four sources.
+
+## 2026-08-02 freeze update
+
+Acknowledgments and Funding statements refreshed to the exact freeze-pass
+wording in `manuscript/main.tex` / `SUBMISSION_METADATA.md`. See
+`SUBMISSION_FREEZE_CHANGELOG.md`.

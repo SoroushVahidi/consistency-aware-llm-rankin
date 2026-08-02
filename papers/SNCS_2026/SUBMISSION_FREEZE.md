@@ -21,21 +21,28 @@ should point at the commit recorded here once the SHA is filled.
 | Repository visibility at freeze | Public (`gh repo view`: `visibility=PUBLIC`) |
 | Proposed release tag (not created) | `sncs-2026-submission-v1` |
 
+> **2026-08-02 freeze pass:** title, abstract (≤250), acknowledgments, funding,
+> AI disclosure, declarations, Figure 1 PDF, and portal metadata were synchronized.
+> Authoritative freeze notes for this pass:
+> [`SUBMISSION_FREEZE_CHANGELOG.md`](SUBMISSION_FREEZE_CHANGELOG.md).
+> Compiled PDF: 36 pages; abstract Method A=219 / Method B=245 words.
+> Repository commit SHA for a tagged freeze is still pending author commit/authorization.
+
 ## Manuscript identity
 
 | Field | Value |
 |---|---|
-| Title | Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval |
-| Running title | Structural Consistency Is Not Retrieval Utility |
+| Title | Structural Consistency Does Not Reliably Predict Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval |
+| Running title | Structural Consistency vs. Retrieval Utility |
 | Target journal | SN Computer Science (Springer Nature, ISSN 2661-8907) |
 | Article type (intended) | Original Research |
 | Manuscript PDF path | `papers/SNCS_2026/manuscript/main.pdf` |
-| Manuscript PDF SHA-256 | `5fb2401939a5ec50c3d989ac99068f787ee551093fd286e19ff0b7faf6ce119d` |
+| Manuscript PDF SHA-256 | `d256ae8819223fe928bd68823885c7858cc942938d343c8a6767676b29928bf7` |
 | LaTeX source ZIP path | `papers/SNCS_2026/submission/SNCS_2026_latex_source.zip` |
 | Source ZIP SHA-256 | `d1ca52ba4276eff4a11f8123d6bb5051f9d3d17e1ccd364a4fe23a3492f88f2c` |
 | Source `main.tex` SHA-256 | `0c6528a99178c5ab3168641aec48b46a071b0a9a4904a33e5ba86203af509a6f` |
-| Page count (compiled PDF) | 39 |
-| Structured abstract word count | 250 (Purpose / Methods / Results / Conclusion) |
+| Page count (compiled PDF) | 36 |
+| Structured abstract word count | Method A 219 / Method B 245 (both ≤250; Purpose/Methods/Results/Conclusion) |
 | Figures | 5 |
 | Tables | 6 |
 | Algorithms | 1 |

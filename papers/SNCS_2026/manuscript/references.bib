@@ -777,20 +777,71 @@
   doi       = {10.1201/9780429246593}
 }
 
-% The author's own earlier, related preprint (Related Work 2.3,
-% Discussion). Verified as a genuine public posted-content record via
-% the Crossref API (api.crossref.org/works/10.21203/rs.3.rs-9335700),
-% 2026-07-31: type "posted-content", publisher "Springer Science and
-% Business Media LLC" (Research Square), posted 2026-06-17. Cited here as
-% a preprint, not a peer-reviewed publication -- see the note-field
-% caveat and the surrounding prose in main.tex, which states explicitly
-% that it did not complete peer review at its original target venue and
-% that its results are superseded by this manuscript's more conservative
-% protocol.
+% TourRank (WWW 2025). Verified 2026-08-02 via Crossref
+% api.crossref.org/works/10.1145/3696410.3714863 and DBLP.
+@inproceedings{chen2025tourrank,
+  author    = {Chen, Yiqun and Liu, Qi and Zhang, Yi and Sun, Weiwei and Ma, Xinyu and Yang, Wei and Shi, Daiting and Mao, Jiaxin and Yin, Dawei},
+  title     = {{TourRank}: Utilizing Large Language Models for Documents Ranking with a Tournament-Inspired Strategy},
+  booktitle = {Proceedings of the ACM on Web Conference 2025},
+  pages     = {1638--1652},
+  year      = {2025},
+  doi       = {10.1145/3696410.3714863},
+  publisher = {ACM}
+}
+
+% GNNRank (ICML 2022 / PMLR 162). Verified 2026-08-02 via
+% https://proceedings.mlr.press/v162/he22b.html (pages 8581--8612).
+@inproceedings{he2022gnnrank,
+  author    = {He, Yixuan and Gan, Quan and Wipf, David and Reinert, Gesine D. and Yan, Junchi and Cucuringu, Mihai},
+  title     = {{GNNRank}: Learning Global Rankings from Pairwise Comparisons via Directed Graph Neural Networks},
+  booktitle = {Proceedings of the 39th International Conference on Machine Learning},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {162},
+  pages     = {8581--8612},
+  year      = {2022},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v162/he22b.html}
+}
+
+% Author combinatorial MWFAS ranking preprint (distinct from this retrieval
+% audit). Verified 2026-08-02 via arXiv abs/2412.16181 (v3). Cited as
+% preprint, not peer-reviewed.
+@misc{vahidi2024mwfas,
+  author = {Vahidi, Soroush and Koutis, Ioannis},
+  title  = {Minimum Weighted Feedback Arc Sets for Ranking from Pairwise Comparisons},
+  year   = {2024},
+  eprint = {2412.16181},
+  archiveprefix = {arXiv},
+  primaryclass = {cs.DS},
+  url    = {https://arxiv.org/abs/2412.16181},
+  note   = {arXiv preprint; not peer-reviewed}
+}
+
+% TCR / Voting with the Graph (RLAIF cycle filtering). Verified 2026-08-02
+% via arXiv abs/2510.15514 (v3). Cited as preprint, not peer-reviewed.
+@misc{liu2025votinggraph,
+  author = {Liu, Boyin and Zhang, Zhuo and Huang, Sen and Xie, Lipeng and Fu, Qingxu and Chen, Haoran and Yu, Li and Hu, Tianyi and Liu, Zhaoyang and Ding, Bolin and Zhao, Dongbin},
+  title  = {Voting with the Graph: Stable {RLAIF} via Topological Consistency Maximization},
+  year   = {2025},
+  eprint = {2510.15514},
+  archiveprefix = {arXiv},
+  primaryclass = {cs.LG},
+  url    = {https://arxiv.org/abs/2510.15514},
+  note   = {arXiv preprint; not peer-reviewed}
+}
+
+% The author's own earlier, related preprint (Related Work; Table
+% tab:preprint-comparison). Verified via Crossref
+% (api.crossref.org/works/10.21203/rs.3.rs-9335700/v1), 2026-08-02:
+% type "posted-content", publisher "Springer Science and Business Media LLC"
+% (Research Square), posted 2026-06-17, license CC BY 4.0. Cited as a
+% preprint, not a peer-reviewed publication. The present manuscript
+% supersedes that preprint's numerical retrieval-effect claims under a
+% stricter protocol (exact SCIP diagnostic; Holm families).
 @misc{vahidi2026consistencyaware,
   author = {Vahidi, Soroush},
   title  = {Consistency-Aware Reranking via Preference Graph Repair: Structural Gains and Conditional Retrieval Effects},
   year   = {2026},
   doi    = {10.21203/rs.3.rs-9335700/v1},
-  note   = {Preprint, Research Square, posted 2026-06-17; not peer-reviewed}
+  note   = {Preprint, Research Square, posted 2026-06-17; CC BY 4.0; not peer-reviewed}
 }

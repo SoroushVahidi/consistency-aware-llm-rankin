@@ -1,6 +1,6 @@
 # Final Submission Decision
 
-Date: 2026-08-01
+Date: 2026-08-02 (freeze pass; prior cold-read 2026-08-01)
 Branch: `papers/sncs-2026-foundation`
 
 > Superseded for freeze/tag/DOI timing by
@@ -10,7 +10,9 @@ Branch: `papers/sncs-2026-foundation`
 
 ## Verdict
 
-READY TO SUBMIT
+**SUBMISSION PACKAGE READY** (2026-08-02 freeze). See `SUBMISSION_FREEZE_CHANGELOG.md`.
+
+Portal click still requires author confirmations below and explicit submit authorization.
 
 ## Blocking Issue
 

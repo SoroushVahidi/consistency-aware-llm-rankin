@@ -1,80 +1,134 @@
-# Missing References and Baselines
+# Missing References and Baselines (Related-Work Pass, 2026-08-02)
 
-This report lists only omissions or underdeveloped comparisons that are
-substantively relevant to the paper's stated scope. It does not recommend
-popular baselines merely because they are common in retrieval papers.
+This file supersedes the prior recommendation list for the Related Work /
+literature-positioning pass. It distinguishes **added**, **rejected**, and
+**discussion-only / future experiment** items. No new experiments were run.
 
-## 1. PRP-Graph
+## A. Four priority candidates (verified)
 
-- Bibliographic details: Jian Luo, Xuanang Chen, Ben He, and Le Sun.
-  `PRP-Graph: Pairwise Ranking Prompting to LLMs with Graph Aggregation for
-  Effective Text Re-ranking`. ACL 2024 Long Papers, pages 5766-5776.
-- Official source: https://aclanthology.org/2024.acl-long.313/; DOI
-  `10.18653/v1/2024.acl-long.313`.
-- Relationship to this paper: PRP-Graph is a close current example of building
-  a graph from pairwise LLM ranking prompts and aggregating it for reranking.
-  It belongs in Related Work because it is directly adjacent to the paper's
-  preference-graph framing.
-- Requires citation/discussion or new experiment? Citation/discussion only.
-  The current paper does not claim to evaluate state-of-the-art LLM graph
-  rerankers.
-- Severity if omitted: Moderate. A reviewer familiar with LLM pairwise ranking
-  could view the Related Work as incomplete.
-- Recommended action: Added to Section 2.2.
+### 1. TourRank — **ADDED** (`chen2025tourrank`)
 
-## 2. TourRank
+- **Title:** TourRank: Utilizing Large Language Models for Documents Ranking
+  with a Tournament-Inspired Strategy
+- **Authors:** Yiqun Chen, Qi Liu, Yi Zhang, Weiwei Sun, Xinyu Ma, Wei Yang,
+  Daiting Shi, Jiaxin Mao, Dawei Yin
+- **Venue / year:** Proceedings of the ACM on Web Conference (WWW) 2025,
+  pages 1638–1652
+- **DOI:** https://doi.org/10.1145/3696410.3714863
+- **Summary:** Tournament-style LLM document ranking that ensembles group
+  outcomes to reduce input-order sensitivity in zero-shot ranking.
+- **Relevance:** Closest recent peer-reviewed LLM ranking system that
+  reviewers may expect near pairwise/listwise LLM ranking discussion; shows
+  order-bias mitigation without preference-graph FAS repair.
+- **Cite in:** Related Work (§2.2); Limitations (External Validity).
+- **Not:** Methodology / Results (no experiment).
 
-- Bibliographic details: Yiqun Chen, Qi Liu, Yi Zhang, Weiwei Sun, Xinyu Ma,
-  Wei Yang, Daiting Shi, Jiaxin Mao, and Dawei Yin. `TourRank: Utilizing Large
-  Language Models for Documents Ranking with a Tournament-Inspired Strategy`.
-  WWW 2025.
-- Official source: DOI `10.1145/3696410.3714863`.
-- Relationship to this paper: TourRank is a recent tournament-inspired LLM
-  document-ranking approach, relevant to pairwise/listwise LLM ranking and
-  comparison scheduling.
-- Requires citation/discussion or new experiment? Optional discussion or future
-  work only. A new experiment would shift the manuscript toward an LLM reranking
-  benchmark, which is outside the frozen evidence.
-- Severity if omitted: Low to moderate. It is relevant but not necessary for the
-  repair-vs-retrieval-utility inference.
-- Recommended action: Do not add before submission unless the author wants a
-  slightly broader LLM-reranking future-work sentence.
+### 2. GNNRank — **ADDED** (`he2022gnnrank`)
 
-## 3. Exact MWFAS Methods
+- **Title:** GNNRank: Learning Global Rankings from Pairwise Comparisons via
+  Directed Graph Neural Networks
+- **Authors:** Yixuan He, Quan Gan, David Wipf, Gesine D. Reinert, Junchi Yan,
+  Mihai Cucuringu
+- **Venue / year:** ICML 2022 / PMLR 162:8581–8612
+- **URL:** https://proceedings.mlr.press/v162/he22b.html
+- **Summary:** Directed GNN embeddings with differentiable upset objectives
+  for recovering global rankings from pairwise comparison digraphs.
+- **Relevance:** Modern learning-based ranking recovery on comparison graphs;
+  clarifies that optimizing ranking-upset objectives is not the same question
+  as testing qrel nDCG after combinatorial repair.
+- **Cite in:** Related Work (§2.1).
 
-- Bibliographic details: Ali Baharev, Hermann Schichl, Arnold Neumaier, and
-  Tobias Achterberg. `An Exact Method for the Minimum Feedback Arc Set Problem`.
-  ACM Journal of Experimental Algorithmics, 26(1), 2021.
-- Official source: DOI `10.1145/3446429`.
-- Relationship to this paper: The paper uses exact MWFAS repair as a diagnostic
-  control. A modern exact-method reference helps make clear that exact repair is
-  not claimed as a new algorithmic contribution.
-- Requires citation/discussion or new experiment? Citation/discussion only.
-- Severity if omitted: Moderate editorial risk in a paper relying on exact
-  repair terminology.
-- Recommended action: Added to Section 2.3.
+### 3. Vahidi & Koutis MWFAS ranking preprint — **ADDED** (`vahidi2024mwfas`)
 
-## 4. Linear Ordering Problem Lineage
+- **Title:** Minimum Weighted Feedback Arc Sets for Ranking from Pairwise
+  Comparisons
+- **Authors:** Soroush Vahidi, Ioannis Koutis
+- **Venue / year:** arXiv preprint, 2024 (abs/2412.16181)
+- **URL:** https://arxiv.org/abs/2412.16181
+- **Summary:** Learning-free combinatorial MWFAS algorithms evaluated on
+  GNNRank-style ranking-recovery metrics/benchmarks (not document retrieval).
+- **Relevance:** Distinguishes the author’s combinatorial ranking-recovery
+  preprint from this retrieval-utility audit; avoids reviewer confusion.
+- **Cite in:** Related Work (§2.1, §2.3). Marked as preprint.
 
-- Bibliographic details: Martin Groetschel, Michael Juenger, and Gerhard
-  Reinelt. `A Cutting Plane Algorithm for the Linear Ordering Problem`.
-  Operations Research, 32(6):1195-1220, 1984.
-- Official source: DOI `10.1287/opre.32.6.1195`.
-- Relationship to this paper: The SCIP exact formulation is naturally connected
-  to the linear-ordering problem and exact/cutting-plane lineage for ordering
-  objectives.
-- Requires citation/discussion or new experiment? Citation/discussion only.
-- Severity if omitted: Low to moderate. The paper is not an optimization-method
-  paper, but the reference improves technical positioning.
-- Recommended action: Added to Section 2.3.
+### 4. Voting with the Graph / TCR — **ADDED** (`liu2025votinggraph`)
 
-## Baselines Considered but Not Recommended Before Submission
+- **Title:** Voting with the Graph: Stable RLAIF via Topological Consistency
+  Maximization
+- **Authors:** Boyin Liu, Zhuo Zhang, Sen Huang, Lipeng Xie, Qingxu Fu,
+  Haoran Chen, Li Yu, Tianyi Hu, Zhaoyang Liu, Bolin Ding, Dongbin Zhao
+- **Venue / year:** arXiv preprint, 2025 (abs/2510.15514)
+- **URL:** https://arxiv.org/abs/2510.15514
+- **Summary:** Preference-cycle filtering via greedy Maximum Acyclic Subgraph
+  approximation (TCR) for stable RLAIF rewards; introduces CIR diagnostic.
+- **Relevance:** Closest recent cycle-breaking preference-graph method; gains
+  are on RLAIF/LLM-eval objectives, not Holm-corrected retrieval nDCG.
+- **Cite in:** Related Work (§2.3, closest-works table); Discussion literature.
+  Marked as preprint. **Not** peer-reviewed.
 
-- State-of-the-art neural rerankers such as monoT5, dense retrievers, SPLADE, or
-  cross-encoders: inappropriate as required baselines because the paper is not a
-  retrieval-model leaderboard study.
-- Full-scale LLM pairwise ranking systems: useful future work, but not essential
-  because the paper's primary canonical study is score-derived multi-ranker
-  retrieval and the LLM pilot is deliberately bounded.
-- Learned repair policies or per-query repair selectors: useful future work, but
-  they would introduce a new research direction and require new experiments.
+## B. Candidates considered but not added (or already present)
+
+| Work | Decision | Why |
+|---|---|---|
+| PRP-Graph (Luo et al., ACL 2024) | Already cited | Closest graph-aggregation LLM reranker |
+| LLM-RankFusion (Zeng et al.) | Already cited | Multi-LLM pairwise inconsistency mitigation |
+| PGED / Hu et al. acyclic prefs | Already cited | Acyclicity for LLM eval/selection |
+| Baharev et al. exact FAS (2021) | Already cited | Exact MWFAS lineage |
+| Groetschel et al. linear ordering (1984) | Already cited | Exact ordering lineage |
+| DuoT5 / pairwise T5 rerankers | Rejected for RW expansion | Adjacent LLM pairwise reranking; already covered by PRP / Qin / Sun line; adding would inflate without sharpening the repair gap |
+| Tang et al. permutation self-consistency | Rejected | Order-bias theme already via Zheng/Shi; not FAS repair |
+| monoT5 / RankT5 / ColBERTv2 / SPLADE | Discussion only | Strong modern baselines, not comparable as repair controls |
+| Learned fusion / cross-encoders | Discussion only | Out of frozen evidence scope |
+
+## C. Baseline relevance audit (no new experiments)
+
+### Already included (controlled anchors, not SOTA)
+
+- Lexical: BM25, TF-IDF
+- Dense: MiniLM
+- Graph-free fusion: RRF, CombSUM, Borda
+- Graph extraction / unrepaired vs repaired comparisons (study core)
+
+### Framing requirement (now in Limitations § External Validity)
+
+Describe these as **controlled multi-ranker construction anchors**, not as a
+modern retrieval leaderboard. Explicitly disclaim SOTA status.
+
+### Omitted baselines — classification
+
+| Baseline class | Action |
+|---|---|
+| Stronger dense retrievers / hybrids beyond MiniLM | Limitations / future work only |
+| Cross-encoder / monoT5-style neural rerankers | Limitations / future work only |
+| Tournament / listwise LLM rankers (e.g., TourRank) | Cite in RW + Limitations; **experiment later** only if author expands scope |
+| Full-scale LLM pairwise graph systems (PRP-Graph scale) | Cite in RW; experiment later if desired |
+| Learned repair / routing policies | Future work; new research direction |
+
+### Not actually comparable as repair baselines
+
+Systems that never build a preference graph, or that replace the entire
+ranking stack, cannot answer the paper’s marginal-repair question. They are
+relevant as **external validity** context, not as missing cells in the
+repair-vs-unrepaired table.
+
+## D. Closest works (3–6) — difference summary
+
+See manuscript Table `tab:closest-works` and `RELATED_WORK_CHANGELOG.md`.
+Short form:
+
+1. **PRP-Graph** — pairwise LLM graph aggregation for text reranking; no
+   unrepaired-vs-repaired Holm audit.
+2. **LLM-RankFusion** — inconsistency mitigation for fusion; no exact MWFAS
+   diagnostic on retrieval deltas.
+3. **PGED (Hu)** — acyclic preference ensembles for LLM eval/selection.
+4. **TCR (Liu)** — cycle filtering for RLAIF rewards (preprint).
+5. **TourRank** — tournament LLM ranking; no FAS repair stage.
+6. **Earlier Research Square preprint** — same theme; superseded protocol.
+
+## E. Journal alignment notes
+
+- SN Computer Science: numeric `sn-basic`+`Numbered` citations (already used).
+- No strict research-article page cap verified on the journal submission
+  guidelines page; self-imposed target remains ~36 pages for this package.
+- Preprints are disclosable; entries carry “not peer-reviewed” notes where
+  applicable (TCR; MWFAS ranking preprint; Research Square preprint).

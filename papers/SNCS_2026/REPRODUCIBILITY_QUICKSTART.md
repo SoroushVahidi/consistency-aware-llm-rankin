@@ -1,6 +1,6 @@
 # SNCS 2026 Reproducibility Quickstart (Reviewer-Facing)
 
-**Manuscript:** Structural Consistency Is Not Retrieval Utility…  
+**Manuscript:** Structural Consistency Does Not Reliably Predict Retrieval Utility…  
 **Freeze ledger:** `SUBMISSION_FREEZE.md`  
 **This guide does not claim one-command full-study reproduction.**
 

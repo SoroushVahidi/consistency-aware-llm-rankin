@@ -1,0 +1,108 @@
+%% Author-only submission checklist PDF (internal).
+\documentclass[10pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\pagestyle{plain}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\title{\bfseries SN Computer Science --- Author Submission Checklist\\[0.35em]
+\large Structural Consistency Does Not Reliably Predict Retrieval Utility}
+\author{Soroush Vahidi \quad ORCID: \href{https://orcid.org/0000-0003-1934-6282}{0000-0003-1934-6282}\\
+\small Ying Wu College of Computing, New Jersey Institute of Technology\\
+\small \href{mailto:sv96@njit.edu}{sv96@njit.edu}}
+\date{Generated 2026-08-02 \quad (internal; do not upload unless requested)}
+
+\begin{document}
+\maketitle
+\noindent\textit{Purpose.} Author-only checklist synchronizing the final manuscript
+with submission materials. Journal guidelines do not require this PDF.
+
+\section*{Manuscript identity}
+\begin{tabular}{@{}L{3.2cm}L{12cm}@{}}
+\textbf{Title} & Structural Consistency Does Not Reliably Predict Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval \\
+\textbf{Running title} & Structural Consistency vs.\ Retrieval Utility \\
+\textbf{Article type} & Original Research (confirm portal label) \\
+\textbf{Journal} & \textit{SN Computer Science} (Springer Nature) \\
+\textbf{Pages / abstract} & 36 pages; structured abstract Method~A 219 / Method~B 245 words (both $\le$250) \\
+\end{tabular}
+
+\section*{Core upload package}
+\begin{longtable}{@{}L{4.2cm}C{1.6cm}L{8.5cm}@{}}
+\toprule
+\textbf{Item} & \textbf{Status} & \textbf{Path / note} \\
+\midrule
+\endhead
+Manuscript PDF & Ready & \texttt{manuscript/main.pdf} \\
+Editable LaTeX source & Ready & \texttt{manuscript/main.tex}, \texttt{references.bib}, \texttt{template/} \\
+Cover letter (PDF) & Ready & \texttt{COVER\_LETTER.pdf} \\
+Cover letter (source) & Ready & \texttt{COVER\_LETTER.md}, \texttt{COVER\_LETTER.tex} \\
+Highlights (PDF) & Optional & \texttt{HIGHLIGHTS.pdf} (journal does not require) \\
+Figures (vector) & Ready & \texttt{figures/f1\_pipeline.pdf} \ldots \texttt{f5\_*.pdf}; Fig.~1 vector \\
+Supplementary Information & None & No SI file in this package \\
+This checklist PDF & Author-only & \texttt{SUBMISSION\_CHECKLIST.pdf} \\
+\bottomrule
+\end{longtable}
+
+\section*{Declarations and disclosures}
+\begin{longtable}{@{}L{4.2cm}C{1.6cm}L{8.5cm}@{}}
+\toprule
+\textbf{Item} & \textbf{Status} & \textbf{Note} \\
+\midrule
+\endhead
+Funding & Ready & In-kind pilot support (Cohere; Google Cloud/Gemini; Azure; Fireworks/AMD); principal experiments = stored scores + local SCIP \\
+Acknowledgments & Ready & Prof.\ Ioannis Koutis; Mitra Sharifani; Anders Borum / Secure ShellFish \\
+Competing interests & Ready & None declared \\
+Ethics / consent & Ready & Not applicable (public benchmarks; no human subjects) \\
+Data availability & Ready & Public benchmarks + compact processed artifacts; raw provider payloads excluded \\
+Code availability & Ready & \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin} \\
+Materials availability & Ready & Not applicable \\
+Author contributions & Ready & Single-author statement \\
+Generative-AI disclosure & Ready & Methods/Reproducibility; Claude assistance; author accountability \\
+Preprint disclosure & Ready & Research Square DOI 10.21203/rs.3.rs-9335700/v1; not dual submission \\
+\bottomrule
+\end{longtable}
+
+\section*{Author / portal metadata}
+\begin{longtable}{@{}L{4.2cm}C{1.6cm}L{8.5cm}@{}}
+\toprule
+\textbf{Item} & \textbf{Status} & \textbf{Value} \\
+\midrule
+\endhead
+Author name & Ready & Soroush Vahidi \\
+Affiliation & Ready & Ying Wu College of Computing, NJIT, Newark, NJ, USA \\
+Email & Ready & sv96@njit.edu \\
+ORCID & Ready & \url{https://orcid.org/0000-0003-1934-6282} \\
+Keywords (6) & Ready & preference graphs; feedback arc set; graph repair; rank aggregation; information retrieval; retrieval evaluation \\
+Repository URL & Ready & \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin} \\
+Portal dry-run notes & Ready & \texttt{PORTAL\_DRY\_RUN.md}, \texttt{SUBMISSION\_METADATA.md} \\
+\bottomrule
+\end{longtable}
+
+\section*{Validation status (2026-08-02 materials pass)}
+\begin{itemize}[leftmargin=1.4em,itemsep=0.25em]
+  \item Clean manuscript compile (\texttt{tectonic}): expected PASS after this pass.
+  \item Abstract $\le$250 words: PASS (219 / 245).
+  \item Figure~1 vector PDF: PASS (\texttt{f1\_pipeline.pdf}).
+  \item Claim/evidence/report-link/portability/repo-clarity/secret-scan validators: re-run in this pass.
+  \item No paid API calls; no commit/tag/push/submit in this pass.
+\end{itemize}
+
+\section*{Remaining author decisions before clicking Submit}
+\begin{enumerate}[leftmargin=1.4em,itemsep=0.25em]
+  \item Confirm portal article-type label and subject-area codes.
+  \item Confirm whether the portal requests highlights or opposed reviewers.
+  \item Confirm phone / mailing address if required.
+  \item Confirm any structured funding award IDs if the portal registry requires them.
+  \item Explicitly authorize git commit/tag and portal submission.
+\end{enumerate}
+
+\end{document}
