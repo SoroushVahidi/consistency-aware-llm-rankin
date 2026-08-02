@@ -26,8 +26,8 @@ Method: same macro-stripped word counter as prior pass; page count via `pdfinfo`
 - Source path on `main`: `71A559E5-30E7-465F-BDC0-33CF17FC3474.png` (PNG only; no vector PDF uploaded).
 - SHA-256: `4feeac61a348f526f79393be017734a7dba45f6502004c8d557c93379bfe5af2`.
 - Installed as `papers/SNCS_2026/figures/f1_pipeline.png` (byte-identical).
-- `main.tex` now includes `f1_pipeline.png`; caption remains in LaTeX outside the image.
-- Older `f1_pipeline.pdf` left on disk but is no longer referenced (not overwritten onto the new asset).
+- `main.tex` includes `f1_pipeline.png`; caption remains in LaTeX outside the image.
+- Unused redesigned `f1_pipeline.pdf` removed from the tree in the final release pass so it cannot be selected by extension fallback.
 
 ### Section-by-section consolidations
 

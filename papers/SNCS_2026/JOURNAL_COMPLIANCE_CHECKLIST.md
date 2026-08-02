@@ -21,8 +21,8 @@ Official sources checked (access date 2026-08-02):
 | Citation style | PASS | `sn-basic` with `Numbered`; compiled citations appear numeric. |
 | Reference list | PASS | Clean tectonic build; no undefined citations/references in log. |
 | Tables numbered and cited | PASS | Ten tables in compiled PDF destinations; all labeled/captioned and cited. |
-| Figures numbered and cited | PASS | Five figures; Figure 1 uses vector PDF `figures/f1_pipeline.pdf`. |
-| Figure files electronic/vector | PASS | `f1_pipeline.pdf` is Matplotlib vector PDF (no embedded raster via `pdfimages -list`); PNGs are preview copies. |
+| Figures numbered and cited | PASS | Five figures; Figure 1 uses author-uploaded `figures/f1_pipeline.png` (SHA-256 `4feeac61…5af2`). |
+| Figure files electronic/vector | PASS | Figures 2–5 are vector PDFs; Figure 1 is the author PNG required for the manuscript. |
 | Acknowledgments | PASS | Separate `Acknowledgments` section (personal/non-funding). SNCS text says acknowledgments “on the title page”; sn-jnl places a dedicated section before declarations — least-risky template-compatible placement retained. Ambiguity recorded. |
 | Statements and Declarations heading | PASS | Manuscript uses `Statements and Declarations`. |
 | Funding | PASS | In-kind computational support for the real-LLM pilot only; principal experiments use stored scores + local SCIP; organizations’ non-role stated. |

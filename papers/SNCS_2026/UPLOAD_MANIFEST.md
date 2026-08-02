@@ -9,10 +9,10 @@ Markdown from this directory (freeze/review/smoke docs are for authors/agents).
 | # | Item | Local path | Suggested upload filename | Mandatory / optional | Notes |
 |---|---|---|---|---|---|
 | 1 | Main manuscript PDF | `manuscript/main.pdf` | `SNCS_2026_main.pdf` | Mandatory | Primary file |
-| 2 | Editable LaTeX source | `manuscript/` + `template/` + `figures/*.pdf` (ZIP if portal requires) | `SNCS_2026_latex_source.zip` | Mandatory | Journal requires editable source |
+| 2 | Editable LaTeX source | `manuscript/` + `template/` + `figures/` (ZIP if portal requires) | `SNCS_2026_latex_source.zip` | Mandatory | Journal requires editable source; include `f1_pipeline.png` and `f2`–`f5` PDFs |
 | 3 | Cover letter PDF | `COVER_LETTER.pdf` | `SNCS_2026_cover_letter.pdf` | Mandatory if cover-letter field exists | Professionally typeset |
 | 4 | Highlights PDF | `HIGHLIGHTS.pdf` | `SNCS_2026_highlights.pdf` | Optional — only if requested | Journal guidelines do not require highlights |
-| 5 | Figures (separate slots) | `figures/f1_pipeline.pdf` … `f5_*.pdf` | same basenames | Optional if already in source ZIP | All vector PDFs |
+| 5 | Figures (separate slots) | `figures/f1_pipeline.png`; `f2`–`f5` `*.pdf` | same basenames | Optional if already in source ZIP | Fig.~1 is author PNG; others vector PDF |
 | 6 | Suggested reviewers | `REVIEWER_SUGGESTIONS.md` | Portal fields | If asked | Prefer first six |
 | 7 | Opposed reviewers | Conflict list in `SUBMISSION_METADATA.md` | Portal fields | Only if asked | Conflict list only |
 | 8 | Code/data URL | Public GitHub | Portal fields | Mandatory statement | `https://github.com/SoroushVahidi/consistency-aware-llm-rankin` |

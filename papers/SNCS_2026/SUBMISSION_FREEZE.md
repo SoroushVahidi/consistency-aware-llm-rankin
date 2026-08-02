@@ -66,7 +66,7 @@ The uploadable LaTeX archive contains exactly:
 
 - `manuscript/main.tex`
 - `manuscript/references.bib`
-- `figures/f1_pipeline.pdf` … `figures/f5_exact_vs_greedy_gap.pdf`
+- `figures/f1_pipeline.png`; `figures/f2_bm25_share.pdf` … `figures/f5_exact_vs_greedy_gap.pdf`
 - `template/sn-jnl.cls`
 - `template/bst/sn-basic.bst`
 

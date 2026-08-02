@@ -47,11 +47,13 @@ portal copy sources.
 
 ## Figure 1
 
-- Selected: `papers/SNCS_2026/figures/f1_pipeline.pdf`
-- SHA-256: `61070c6e000cf0e5d5b32a5bb4c06fdb90751b5b45d1966cbe2062b213021ce2`
-- Quality: genuine Matplotlib vector PDF (no embedded images in
-  `pdfimages -list`); PNG retained as preview only.
-- Manuscript `\includegraphics` switched from PNG to PDF.
+- Freeze-pass selection (historical): `figures/f1_pipeline.pdf`
+  (SHA-256 `61070c6e…021ce2`).
+- **Superseded for release:** author-uploaded
+  `figures/f1_pipeline.png` (SHA-256
+  `4feeac61a348f526f79393be017734a7dba45f6502004c8d557c93379bfe5af2`;
+  source commit `3de82709c5af4c44951c2d57285aa914896cc85a`). Unused PDF
+  removed from the tree.
 
 ## Length
 
