@@ -40,7 +40,7 @@ Source files if requested by the portal:
 2. `papers/SNCS_2026/manuscript/references.bib`
 3. `papers/SNCS_2026/template/sn-jnl.cls`
 4. `papers/SNCS_2026/template/bst/sn-basic.bst`
-5. `papers/SNCS_2026/figures/f1_pipeline.pdf`
+5. `papers/SNCS_2026/figures/f1_pipeline.png`
 6. `papers/SNCS_2026/figures/f2_bm25_share.pdf`
 7. `papers/SNCS_2026/figures/f3_cycle_decomposition.pdf`
 8. `papers/SNCS_2026/figures/f4_bootstrap_forest.pdf`

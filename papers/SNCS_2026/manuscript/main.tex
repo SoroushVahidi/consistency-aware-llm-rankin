@@ -17,9 +17,24 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+
+%% Shared table typography (readable footnotesize; no scriptsize walls of text).
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash\hspace{0pt}}X}
+\newcommand{\sncstable}{%
+  \footnotesize
+  \renewcommand{\arraystretch}{1.28}%
+  \setlength{\tabcolsep}{3.8pt}%
+  \tolerance=2000%
+  \emergencystretch=1.2em%
+  \hyphenpenalty=200\exhyphenpenalty=200\relax
+}
 
 \raggedbottom
 
@@ -273,20 +288,43 @@ under multiplicity-corrected paired tests.
     ``Corrected inference'' means multiplicity-aware paired testing of
     repaired-versus-unrepaired retrieval effects.}
   \label{tab:closest-works}
-  \scriptsize
-  \setlength{\tabcolsep}{2.5pt}
-  \begin{tabular}{@{}p{2.1cm}p{1.7cm}p{1.5cm}p{1.6cm}p{1.1cm}p{1.6cm}p{2.0cm}@{}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}L{2.85cm}L{2.25cm}L{2.35cm}Y@{}}
     \toprule
-    Work & Evidence & Graph & Inconsistency treatment & Exact & Downstream & Diff.\ from this paper \\
+    Work & Setting & Inconsistency~/~exact & Diff.\ from this paper \\
     \midrule
-    PRP-Graph~\cite{luo2024prpgraph} & LLM pairwise prompts & Yes & Aggregate graph scores & No & Text reranking & Tests pairwise graph aggregation, not repair vs.\ unrepaired under Holm \\
-    LLM-RankFusion~\cite{zeng2026llmrankfusion} & Multi-LLM pairwise & Yes & Mitigate inconsistency before fusion & No & Ranking fusion & Improves agreement/aggregation; no exact MWFAS diagnostic on retrieval deltas \\
-    PGED~\cite{hu2026acyclic} & Multi-evaluator prefs & Yes & Ensemble + denoise to DAG & No & LLM eval / selection & Downstream tasks are not document-retrieval nDCG with construction factors \\
-    TCR~\cite{liu2025votinggraph} & LLM-judge prefs & Yes & Greedy MAS / cycle filtering & No & RLAIF rewards & Optimizes RL stability, not qrel nDCG; preprint \\
-    TourRank~\cite{chen2025tourrank} & LLM group ranking & No FAS graph & Points ensemble vs.\ order bias & No & Zero-shot ranking & No preference-graph repair stage \\
-    Earlier preprint~\cite{vahidi2026consistencyaware} & Score-derived & Yes & Greedy repair & No & Retrieval nDCG & Same theme; superseded by exact+Holm protocol (Table~\ref{tab:preprint-comparison}) \\
+    \mbox{PRP-Graph}~\cite{luo2024prpgraph}
+      & LLM pairwise prompts; graph; text reranking
+      & Aggregate graph scores; no exact MWFAS
+      & Tests pairwise graph aggregation, not repair vs.\ unrepaired under Holm \\
+    \addlinespace[0.35em]
+    \mbox{LLM-RankFusion}~\cite{zeng2026llmrankfusion}
+      & Multi-LLM pairwise; graph; ranking fusion
+      & Mitigate inconsistency before fusion; no exact MWFAS
+      & Improves agreement/aggregation; no exact-MWFAS retrieval diagnostic \\
+    \addlinespace[0.35em]
+    \mbox{PGED}~\cite{hu2026acyclic}
+      & Multi-evaluator prefs; graph; LLM eval/selection
+      & Ensemble + denoise to DAG; no exact MWFAS
+      & Downstream tasks are not document-retrieval nDCG with construction factors \\
+    \addlinespace[0.35em]
+    \mbox{TCR}~\cite{liu2025votinggraph}
+      & LLM-judge prefs; graph; RLAIF rewards
+      & Greedy MAS / cycle filtering; no exact MWFAS
+      & Optimizes RL stability, not qrel nDCG; preprint \\
+    \addlinespace[0.35em]
+    \mbox{TourRank}~\cite{chen2025tourrank}
+      & LLM group ranking; no FAS graph; zero-shot ranking
+      & Points ensemble vs.\ order bias; no exact MWFAS
+      & No preference-graph repair stage \\
+    \addlinespace[0.35em]
+    Earlier preprint~\cite{vahidi2026consistencyaware}
+      & Score-derived; graph; retrieval nDCG
+      & Greedy repair only; no exact MWFAS
+      & Same theme; superseded by exact+Holm protocol
+        (Table~\ref{tab:preprint-comparison}) \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Table~\ref{tab:closest-works} summarizes the closest lines. Across them,
@@ -303,22 +341,44 @@ repaired-versus-unrepaired inference is not the confirmatory design.
     claims are superseded here; the construction-sensitivity theme is
     retained and strengthened.}
   \label{tab:preprint-comparison}
-  \scriptsize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}p{2.5cm}p{5.0cm}p{5.0cm}@{}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}L{2.6cm}YY@{}}
     \toprule
     Dimension & Earlier preprint & This manuscript \\
     \midrule
-    Datasets & SciDocs, FiQA, HotpotQA, BRIGHT & Same four public benchmarks \\
-    Vote regimes & \texttt{ms2}/\texttt{ms1}/\texttt{ms1\_drop\_mutual} & Same regime names; updated construction and reporting protocol \\
-    Canonical repair & Greedy cycle-peeling for real-data claims & Greedy plus exact SCIP MWFAS as co-reported diagnostic \\
-    Exact MWFAS & Not used for canonical retrieval claims & Solver-certified optima on $1{,}025$ instances \\
-    Inference & Paired bootstrap intervals on $\Delta$nDCG & Paired sign-flip tests with prespecified Holm families \\
-    Multiplicity & No family-wise Holm correction & Holm correction within confirmatory families \\
-    Main retrieval reading & Conditional / mixed dataset-dependent effects & No Holm-surviving repaired-vs-unrepaired nDCG gain \\
-    Claim status & Public preprint; not peer-reviewed & Supersedes preprint retrieval-effect claims under the present protocol \\
+    Datasets
+      & SciDocs, FiQA, HotpotQA, BRIGHT
+      & Same four public benchmarks \\
+    \addlinespace
+    Vote regimes
+      & \texttt{ms2}/\texttt{ms1}/\texttt{ms1\_drop\_mutual}
+      & Same regime names; updated construction and reporting protocol \\
+    \addlinespace
+    Canonical repair
+      & Greedy cycle-peeling for real-data claims
+      & Greedy plus exact SCIP MWFAS as co-reported diagnostic \\
+    \addlinespace
+    Exact MWFAS
+      & Not used for canonical retrieval claims
+      & Solver-certified optima on $1{,}025$ instances \\
+    \addlinespace
+    Inference
+      & Paired bootstrap intervals on $\Delta$nDCG
+      & Paired sign-flip tests with prespecified Holm families \\
+    \addlinespace
+    Multiplicity
+      & No family-wise Holm correction
+      & Holm correction within confirmatory families \\
+    \addlinespace
+    Main retrieval reading
+      & Conditional / mixed dataset-dependent effects
+      & No Holm-surviving repaired-vs-unrepaired nDCG gain \\
+    \addlinespace
+    Claim status
+      & Public preprint; not peer-reviewed
+      & Supersedes preprint retrieval-effect claims under the present protocol \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Table~\ref{tab:preprint-comparison} records the relationship to the earlier
@@ -674,7 +734,7 @@ querying a paid API (Section~\ref{sec:reproducibility}).
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\linewidth]{f1_pipeline.pdf}
+  \includegraphics[width=\linewidth]{f1_pipeline.png}
   \caption{Experimental pipeline answering RQ1--RQ4. Shared stages 1--4
     build a preference graph from fixed multi-ranker scores; stages 5--9
     then evaluate unrepaired, greedy-repaired, and exact-repaired branches
@@ -723,19 +783,22 @@ minimum-detectable-effect reporting accompany the confirmatory nulls
     cutoff $k$; larger-pool cells set $P>k$ so repair can change top-$k$
     membership (RQ2--RQ3).}
   \label{tab:setup}
-  \scriptsize
-  \begin{tabular}{lrrp{5.6cm}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lrrY@{}}
     \toprule
     Dataset & Usable & Depth & Evaluated $(P,k)$ cells \\
     \midrule
     SciDocs & 120 & 50 & canonical $(20,20)$; larger-pool $(20,5)$,
       $(20,10)$, $(20,20)$, $(50,5)$, $(50,10)$, $(50,20)$ \\
+    \addlinespace
     FiQA & 120 & 50 & same as SciDocs \\
+    \addlinespace
     HotpotQA & 52 & 35 & canonical $(10,10)$; larger-pool $(10,5)$,
       $(35,5)$, $(35,10)$, $(35,20)$ \\
+    \addlinespace
     BRIGHT & 50 & 50 & same as SciDocs \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsection{Base Rankers and Judgment Sources}
@@ -801,23 +864,33 @@ vote construction (Section~\ref{sec:pref-graph}).
     Regime abbreviations: \texttt{ms1},
     \texttt{ms1dm}=\texttt{ms1\_drop\_mutual}, \texttt{ms2}.}
   \label{tab:thresholds}
-  \scriptsize
-  \setlength{\tabcolsep}{3pt}
+  \sncstable
   \begin{tabular}{@{}llrrrccc@{}}
     \toprule
     Dataset & Reg. & BM25 & MiniLM & TF-IDF & Agg. & Sup. & Drop \\
     \midrule
     SciDocs & \texttt{ms1} & 0.00468 & 0.274 & 0.340 & 0.0108 & 1 & no \\
+    \addlinespace
     SciDocs & \texttt{ms1dm} & 0.00468 & 0.274 & 0.340 & 0 & 1 & yes \\
+    \addlinespace
     SciDocs & \texttt{ms2} & 0.00468 & 0.274 & 0.340 & 0 & 2 & no \\
+    \addlinespace
     FiQA & \texttt{ms1} & 0.00622 & 0.276 & 0.375 & 0.0120 & 1 & no \\
+    \addlinespace
     FiQA & \texttt{ms1dm} & 0.00622 & 0.276 & 0.375 & 0 & 1 & yes \\
+    \addlinespace
     FiQA & \texttt{ms2} & 0.00622 & 0.276 & 0.375 & 0 & 2 & no \\
+    \addlinespace
     HotpotQA & \texttt{ms1} & 0.00317 & 0.272 & 0.228 & 0 & 1 & no \\
+    \addlinespace
     HotpotQA & \texttt{ms1dm} & 0.00317 & 0.272 & 0.228 & 0.00341 & 1 & yes \\
+    \addlinespace
     HotpotQA & \texttt{ms2} & 0.00317 & 0.272 & 0.228 & 0.295 & 2 & no \\
+    \addlinespace
     BRIGHT & \texttt{ms1} & 0.00108 & 0.240 & 0.555 & 0.0114 & 1 & no \\
+    \addlinespace
     BRIGHT & \texttt{ms1dm} & 0.00108 & 0.240 & 0.555 & 0.0119 & 1 & yes \\
+    \addlinespace
     BRIGHT & \texttt{ms2} & 0.00108 & 0.240 & 0.555 & 0 & 2 & no \\
     \bottomrule
   \end{tabular}
@@ -937,23 +1010,30 @@ the same fixed $\alpha$ enters the expanded family
     $v$. Final ranking sorts by descending score then ascending document id
     unless noted.}
   \label{tab:extraction-params}
-  \scriptsize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lp{3.1cm}p{3.3cm}@{}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lYY@{}}
     \toprule
     Method & Main parameter(s) / ties & Implementation note \\
     \midrule
     Copeland & $\deg^+-\deg^-$; id tie-break & Isolates score $0$ \\
+    \addlinespace
     Balance & weighted out$-$in; id tie-break & Uses edge weights \\
+    \addlinespace
     Markov (damped) & restart $0.15$; tol $10^{-10}$; $10^{4}$ iter & Loser$\to$winner + uniform restart \\
+    \addlinespace
     Rank Centrality & self-loops; tol $10^{-8}$; $200$ iter & No teleport; normalize $\pi$ \\
+    \addlinespace
     PageRank & damping $0.85$; tol $10^{-6}$; $100$ iter & Reversed graph; weighted \\
+    \addlinespace
     Bradley--Terry & MM; tol $10^{-6}$; $100$ iter & Uniform init; isolates $0$ \\
+    \addlinespace
     Topological & NetworkX \texttt{topological\_sort} & DAG-only; construction-order ties \\
+    \addlinespace
     Priority-topo & RRF prior ($k{=}60$) among sources & Higher prior, then larger id \\
+    \addlinespace
     Hybrids & $\alpha{=}0.3$; min--max each side & $h=\hat s^{\mathrm{prior}}+\alpha\hat s^{\mathrm{graph}}$; const.\ $\to 0$ \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 As in Section~\ref{sec:extraction-eval}, every graph-dependent rule is
@@ -997,28 +1077,42 @@ included anchors are state of the art.
     struct.\ = exact-vs-greedy only. Repair variants: U = unrepaired,
     G = greedy, E = exact.}
   \label{tab:baselines}
-  \scriptsize
-  \begin{tabular}{lp{2.0cm}ccp{2.4cm}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lYccY@{}}
     \toprule
     Method & Family & Graph? & Prior? & Repair variants compared \\
     \midrule
     Prior-only & primary, expanded & no & yes & n/a (no graph) \\
+    \addlinespace
     RRF & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
     CombSUM & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
     Borda fusion & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
     Copeland & primary & yes & no & U, G, E \\
+    \addlinespace
     Balance & primary & yes & no & U, G, E \\
+    \addlinespace
     Markov (damped) & primary & yes & no & U, G, E \\
+    \addlinespace
     Copeland hybrid & primary & yes & yes ($\alpha{=}0.3$) & U, G, E \\
+    \addlinespace
     Balance hybrid & primary & yes & yes ($\alpha{=}0.3$) & U, G, E \\
+    \addlinespace
     PageRank & expanded & yes & no & U, E \\
+    \addlinespace
     Rank Centrality & expanded & yes & no & U, E \\
+    \addlinespace
     Markov hybrid & expanded & yes & yes ($\alpha{=}0.3$) & U, E \\
+    \addlinespace
     Bradley--Terry & expanded & yes & no & U, E \\
+    \addlinespace
     Topological & struct.\ only & yes & no & G vs.\ E only \\
+    \addlinespace
     Priority-topological & struct.\ only & yes & yes (tie-break) & G vs.\ E only \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsection{Evaluation Metrics}
@@ -1072,22 +1166,28 @@ convert nonsignificance into blanket equivalence
     replace them. Counts match Tables~\ref{tab:retrieval-holm}
     and~\ref{tab:robustness}.}
   \label{tab:holm-families}
-  \scriptsize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lp{2.6cm}p{2.4cm}p{2.0cm}r@{}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lYYY r@{}}
     \toprule
     Family & Question & Scope & Methods & $n$ \\
     \midrule
     Active canonical & Greedy repair gain? & 4$\times$\texttt{ms1}, $P{=}k$ & Prim.\ 5 pairs & 20 \\
+    \addlinespace
     Full canonical & All regimes? & 4$\times$3 regimes, $P{=}k$ & Prim.\ 5 pairs & 60 \\
+    \addlinespace
     Active larger-pool & When $P{>}k$? & \texttt{ms1}, larger-pool & Prim.\ 5 pairs & 110 \\
+    \addlinespace
     Exact-repair canonical & Exact vs unrepaired? & 4$\times$\texttt{ms1}, $P{=}k$ & Exp.\ 9 pairs & 36 \\
+    \addlinespace
     Exact-repair larger-pool & Exact under $P{>}k$? & larger-pool cells & Exp.\ 9 pairs & 56 \\
+    \addlinespace
     Exact vs greedy & Exact vs greedy ret.? & pooled / per-cell & Prim.+topo & 35/399 \\
+    \addlinespace
     Alternative-pool & Pool-policy artifact? & alt.\ pools & vs RRF/CombSUM & 8 \\
+    \addlinespace
     Equivalence (TOST) & Narrow equivalence? & active larger-pool & Prim.\ pairs & 110 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 For the appendix-scoped real-large-language-model pilot
@@ -1156,8 +1256,7 @@ total graph weight, together with the active-regime before/after comparison.
 
 \begin{figure}[t]
   \centering
-  {\footnotesize
-  \setlength{\tabcolsep}{5pt}
+  {\sncstable
   \begin{tabular}{@{}llrrr@{}}
     \toprule
     Dataset & Regime & Cyclic (\%) & After mutual (\%) & FAS wt. \\
@@ -1281,39 +1380,50 @@ greedy repair, together with dataset-macro mean nDCG for selected
 graph-free anchors and the best repaired hybrid (descriptive context only).
 
 \begin{table}[t]
-  \caption{RQ3 retrieval evidence under greedy repair. Top: Holm-corrected
-    repaired-vs-unrepaired nDCG families (5-pair primary method family,
-    Section~\ref{sec:baselines}); confirmatory inference concerns these
-    paired comparisons only. Bottom: descriptive dataset-macro mean nDCG
-    across the reported cells for selected controlled anchors
-    (graph-free methods require no repair). Bottom-panel values are
-    aggregate summaries, not a paired superiority test between CombSUM
-    and the repaired hybrid. No cell in the top panel survives Holm
-    correction.}
+  \caption{RQ3 retrieval evidence under greedy repair.
+    Panel~A: confirmatory Holm-corrected repaired-vs-unrepaired nDCG
+    families (5-pair primary method family, Section~\ref{sec:baselines}).
+    Panel~B: descriptive dataset-macro mean nDCG across the reported cells
+    for selected anchors (graph-free methods require no repair); these
+    macros are not a paired superiority test between CombSUM and the
+    repaired hybrid. No cell in Panel~A survives Holm correction.}
   \label{tab:retrieval-holm}
-  \scriptsize
-  \begin{tabular}{lrrl}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}Yrrr@{}}
     \toprule
-    Comparison family & Cells & Holm-rejected & Smallest Holm-adjusted $p$ \\
+    \multicolumn{4}{@{}l}{\textbf{Panel A.} Confirmatory Holm families
+      (paired repaired vs.\ unrepaired)} \\
+    \midrule
+    Comparison family & Cells & Holm-rejected & Smallest Holm-adj.\ $p$ \\
     \midrule
     Active canonical (\texttt{ms1}) & 20 & 0/20 & $0.240$ \\
+    \addlinespace
     Full canonical (all regimes) & 60 & 0/60 & $0.720$ \\
+    \addlinespace
     Active larger-pool (\texttt{ms1}, $P{>}k$ incl.) & 110 & 0/110 & $0.352$ \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 
-  \vspace{0.4em}
-  \begin{tabular}{lr}
+  \vspace{1.15em}
+
+  \begin{tabularx}{\linewidth}{@{}Yr@{}}
     \toprule
-    Method (dataset-macro mean nDCG) & Mean nDCG \\
+    \multicolumn{2}{@{}l}{\textbf{Panel B.} Descriptive dataset-macro mean
+      nDCG (not paired confirmatory tests)} \\
+    \midrule
+    Method & Mean nDCG \\
     \midrule
     CombSUM (graph-free fusion) & $0.554$ \\
+    \addlinespace
     Reciprocal rank fusion (graph-free) & $0.546$ \\
+    \addlinespace
     Copeland hybrid, repaired (\texttt{ms1}) & $0.546$ \\
+    \addlinespace
     Prior-only (graph-free) & $0.545$ \\
+    \addlinespace
     Borda fusion (graph-free) & $0.545$ \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 No repaired-versus-unrepaired nDCG comparison survives Holm correction in
@@ -1384,14 +1494,17 @@ evidence, not merely a theoretical possibility.
     exact-versus-greedy and exact-versus-unrepaired Holm outcomes appear
     in the accompanying text (all nonsignificant after correction).}
   \label{tab:exact-vs-greedy}
-  \scriptsize
-  \begin{tabular}{lrrr}
+  \sncstable
+  \begin{tabular}{@{}lrrr@{}}
     \toprule
     Dataset & Wt.\ removed (exact) & Wt.\ removed (greedy) & Reduction \\
     \midrule
     SciDocs  & $6.14$ & $8.19$ & $25.1\%$ \\
+    \addlinespace
     FiQA     & $4.51$ & $6.37$ & $29.2\%$ \\
+    \addlinespace
     HotpotQA & $1.55$ & $1.80$ & $13.4\%$ \\
+    \addlinespace
     BRIGHT   & $3.07$ & $3.95$ & $22.3\%$ \\
     \bottomrule
   \end{tabular}
@@ -1449,8 +1562,8 @@ comparison family rather than a post-hoc search.
     detectable scale and limited equivalence, not a general proof of
     zero effect.}
   \label{tab:robustness}
-  \scriptsize
-  \begin{tabular}{p{3.0cm}p{8.2cm}}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}L{3.2cm}Y@{}}
     \toprule
     Check & Result \\
     \midrule
@@ -1459,24 +1572,27 @@ comparison family rather than a post-hoc search.
       Holm-significant cells (RRF and CombSUM vs.\ the fixed repaired
       Copeland hybrid, canonical pool, all four datasets). No evidence of
       a pool-driven advantage. \\
+    \addlinespace
     Power and minimum detectable effect & In the active larger-pool
       family, median observed absolute mean delta $0.0036$ vs.\ median
       Holm-adjusted 80\%-power minimum detectable effect $0.0201$: the
       study is well positioned to rule out larger effects, but many
       smaller ones remain below the corrected detectable scale. \\
+    \addlinespace
     Narrow equivalence & Two-one-sided-tests equivalence, active larger-pool
       family: $13/110$ cells reject non-equivalence at a $\pm 0.005$
       margin, $32/110$ at $\pm 0.010$, after Holm correction. Equivalence
       is established for a minority of cells, not the majority; the
       correct reading of the null result is absence of reliable positive
       evidence, not blanket practical equivalence. \\
+    \addlinespace
     Larger-pool ($P{>}k$) family & Already reported in
       Table~\ref{tab:retrieval-holm}: $0/110$ Holm-significant despite a
       $10.6\%$ mean top-$k$ membership-change rate
       (Section~\ref{sec:results-repair-structure}), so membership change
       alone is not sufficient to produce a corrected retrieval gain. \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Each check probes a distinct artifact risk for the primary null -- pool

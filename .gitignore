@@ -450,3 +450,9 @@ reports/reviewer_concerns_program_20260729T035320Z/cache/
 reports/reviewer_concerns_program_20260729T035320Z/logs/
 reports/reviewer_concerns_program_20260729T035320Z/smoke_branch_b/*_calls.jsonl
 reports/reviewer_concerns_program_20260729T035320Z/smoke_branch_b/cache/
+
+# Local editor / agent scratch
+.aider*
+
+papers/SNCS_2026/figures/_layout_review/
+papers/SNCS_2026/SUBMISSION_CHECKLIST.pdf

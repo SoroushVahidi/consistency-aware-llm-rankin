@@ -11,7 +11,7 @@ Companion PDF: `SUBMISSION_CHECKLIST.pdf`
 | Final manuscript source | Ready | `manuscript/main.tex` |
 | Final manuscript PDF | Ready | `manuscript/main.pdf` |
 | Bibliography | Ready | `manuscript/references.bib` |
-| Figure files (vector) | Ready | `figures/f1_pipeline.pdf` … `f5_exact_vs_greedy_gap.pdf` |
+| Figure files | Ready | `figures/f1_pipeline.png` (author upload); `f2`–`f5` vector PDFs |
 | Springer class / bst | Ready | `template/sn-jnl.cls`, `template/bst/sn-basic.bst` |
 | Cover letter (MD + TeX + PDF) | Ready | `COVER_LETTER.md`, `COVER_LETTER.tex`, `COVER_LETTER.pdf` |
 | Highlights (optional) | Ready | `HIGHLIGHTS.md`, `HIGHLIGHTS.tex`, `HIGHLIGHTS.pdf` |
