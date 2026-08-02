@@ -261,14 +261,13 @@ explicitly modeling and mitigating pairwise inconsistency in the resulting
 comparisons~\cite{zeng2026llmrankfusion}, and confidence-aware or
 bias-aware pairwise aggregation methods weight or correct individual
 comparisons before they are combined~\cite{ferrara2024biasaware}. This is
-the setting the
-present paper studies: a query-specific weighted directed graph built from
-several ranking signals, from which a ranking is extracted before or after a
-structural repair step. Standard retrieval benchmarking practice -- reusing
-stored candidate pools and score files rather than re-running upstream
-retrieval, and evaluating with rank-sensitive metrics such as
-nDCG -- follows the same evaluation conventions established for zero-shot
-retrieval benchmarking more generally~\cite{thakur2021beir,craswell2021overview}.
+the setting the present study investigates: a query-specific
+weighted directed graph is built from multiple ranking signals, and a
+ranking is extracted either before or after a structural repair step. Our
+methodology follows standard retrieval benchmarking practice, such as
+reusing stored candidate pools and evaluating with rank-sensitive metrics
+like nDCG, consistent with conventions in zero-shot retrieval
+benchmarking~\cite{thakur2021beir,craswell2021overview}.
 
 \subsection{Inconsistency, Cycles, and Preference Repair}
 \label{sec:related-repair}
@@ -277,37 +276,34 @@ A directed preference graph admits at least one total order consistent with
 all retained edges if and only if it is acyclic. Acyclicity does not imply
 that the observed edge relation is transitively closed: a DAG need not equal
 its transitive closure, and several linear extensions may remain compatible
-with the same retained edges. In general aggregated preference graphs are
-not acyclic: combining partially disagreeing sources routinely produces
-directed cycles, including simple two-way contradictions and longer cyclic
-chains. The combinatorial problem of removing the least-weight set of edges
-needed to make a weighted directed graph acyclic is the (minimum-weight)
-feedback arc set problem. It is NP-hard in
-general~\cite{karp1972reducibility}; classical work gives fast, deterministic
-greedy heuristics that repeatedly remove the lightest edge on a discovered
-cycle~\cite{eades1993heuristic}, and later work gives polynomial-time
-approximation schemes and connects the problem to correlation
-clustering~\cite{kenyon2007fewerrors,ailon2008aggregating}. Exact
-approaches are also commonly formulated through the related linear-ordering
-problem and branch-and-cut/cutting-plane methods~\cite{groetschel1984cutting,baharev2021exact}.
-This paper does
-not claim the minimum-weight feedback-arc-set formulation itself as a
-contribution -- it is a long-studied classical combinatorial optimization
-problem -- and instead studies the empirical consequence of solving it, both
-heuristically and to certified optimality, for a downstream retrieval task.
+with the same retained edges. Aggregated preference graphs are generally
+not acyclic, as combining partially disagreeing sources routinely produces
+directed cycles. The combinatorial problem of removing the minimum-weight
+set of edges required to make a weighted directed graph acyclic is the
+(minimum-weight) feedback arc set problem. This problem is NP-hard in
+general~\cite{karp1972reducibility}. Classical work provides fast,
+deterministic greedy heuristics that iteratively remove the lightest edge on
+a discovered cycle~\cite{eades1993heuristic}, while later work offers
+polynomial-time approximation schemes and connects the problem to
+correlation clustering~\cite{kenyon2007fewerrors,ailon2008aggregating}.
+Exact approaches are often formulated via the related linear-ordering
+problem using branch-and-cut or cutting-plane
+methods~\cite{groetschel1984cutting,baharev2021exact}. This paper does not
+contribute a new formulation for the minimum-weight feedback-arc-set
+problem, a classical topic in combinatorial optimization. Instead, it
+studies the empirical consequences of solving this problem—both
+heuristically and to certified optimality—for a downstream retrieval task.
 
 The same structural issue has recently reappeared in the context of large
 language models used as pairwise or comparative judges: repeated or
 multi-evaluator LLM comparisons frequently produce transitivity violations
 and directed cycles, which several recent studies diagnose or attempt to
 resolve~\cite{zheng2023judging,shi2025judging,hu2026acyclic}. That work
-generally treats acyclicity (or reduced contradiction) as a desirable
-property of the resulting evaluation and reports downstream gains on tasks
-such as model ranking, response selection, or fine-tuning-data
-selection~\cite{hu2026acyclic}; it does not test whether the acyclicity
-objective itself is diagnostic of retrieval effectiveness under a
-corrected, paired statistical protocol, which is the specific gap this
-paper addresses.
+generally treats acyclicity as a desirable property and reports
+downstream gains on various tasks~\cite{hu2026acyclic}. However, it does not
+test whether optimizing for acyclicity is diagnostic of retrieval
+effectiveness under a corrected, paired statistical protocol, which is the
+specific gap this paper addresses.
 
 This paper substantially extends and revises an earlier preprint by the same
 author~\cite{vahidi2026consistencyaware}. The preprint studied a smaller,
@@ -368,18 +364,15 @@ of this framework is detailed in Section~\ref{sec:experimental_setup}.
 Let $q \in \mathcal{Q}$ denote a query drawn from a fixed query set, and let
 $D_q = \{d_1,\dots,d_n\}$ denote its query-specific candidate document set:
 the pool of documents that will be compared and ranked for $q$. Candidate
-sets are formed upstream of this study's pipeline, typically as the union
-of documents retrieved or scored by one or more base rankers, and are held
-fixed once formed.
+sets are formed upstream of our pipeline, typically from the union
+of documents scored by one or more base rankers, and are held fixed.
 
-A base ranker (or, more generally, a judgment source) $s \in S$ assigns a
-score $x_{q,s}(d) \in \mathbb{R}$ to each document $d \in D_q$ it scores; a
-ranker need not score every document in $D_q$, so scores may be missing for
-some $(q,s,d)$ triples. Because different rankers' raw scores are not
-generally comparable in scale or distribution, scores are normalized
-per query and per ranker before they are compared across rankers. The
-normalization used throughout the canonical experiments is per-query,
-per-ranker min-max scaling,
+A base ranker $s \in S$ assigns a score $x_{q,s}(d) \in \mathbb{R}$ to each
+document $d \in D_q$ it evaluates. Scores may be missing for some documents.
+Because raw scores from different rankers are not directly comparable, they
+are normalized per query and per ranker before cross-ranker comparison. The
+normalization used in the canonical experiments is per-query, per-ranker
+min-max scaling,
 \begin{equation}
 \bar{x}_{q,s}(d) =
 \frac{x_{q,s}(d) - \min_{d' \in D_{q,s}} x_{q,s}(d')}
@@ -500,12 +493,10 @@ F_q^\star = \arg\min_{F \subseteq E_q} \sum_{e \in F} w_q(e)
 This is the minimum-weight feedback arc set (MWFAS) problem
 (Section~\ref{sec:related-repair}); the repaired graph is
 $\widetilde{G}_q = (V_q, E_q \setminus F_q^\star, w_q)$. The objective in
-Equation~\eqref{eq:mwfas} is entirely graph-internal: it minimizes
-disagreement with $G_q$'s own retained edges, subject to the feasibility
-condition that the result be acyclic. It contains no reference to relevance
-judgments, ranking metrics, or any notion of retrieval utility -- a
-property that is central to this paper's research question rather than an
-incidental modeling detail.
+Equation~\eqref{eq:mwfas} is purely structural: it minimizes disagreement
+with the graph's own edges to achieve acyclicity. It makes no reference to
+external relevance judgments or retrieval utility, a distinction central to
+our research question.
 
 Two solution methods for Equation~\eqref{eq:mwfas} are used and reported as
 co-equal, not as a primary method with a secondary check. \textbf{Greedy
@@ -531,22 +522,18 @@ i.e.\ the total weight of retained edges oriented against the order. The
 removed set is exactly those backward edges, so the objective equals the
 MWFAS objective in Equation~\eqref{eq:mwfas}; every acyclic retained subgraph
 admits at least one topological ordering, and the MIP searches over all total
-orders. This program is solved with the open-source SCIP solver; a query
-graph is included in the exact-repair evidence only when the solver certifies
-proven optimality, not merely a feasible incumbent.
+orders. We use the open-source SCIP solver and include a graph in the
+exact-repair analysis only if the solver certifies optimality.
 
-Exact repair is used here as a \emph{diagnostic control}, not as a proposed
-practical replacement for greedy repair: it does not scale to the largest
-query graphs, and this paper makes no claim about the general scalability
-or practicality of exact MWFAS solving. Its role is narrower and specific
-to this study's question. Because $F_q^\star$ from exact repair is, by
-construction, a global optimum of Equation~\eqref{eq:mwfas}, no repair
-method can remove less weight while still restoring acyclicity. If exact
-repair's downstream retrieval effect is still statistically indistinguishable
-from greedy repair's, then the suboptimality of the greedy heuristic is
-ruled out as an explanation for a null or weak retrieval effect --
-precisely the objection a greedy-only study cannot itself close
-(Section~\ref{sec:introduction}).
+Exact repair serves as a \emph{diagnostic control}, not a practical
+replacement for the greedy heuristic. We make no claims about its general
+scalability. Its role is specific to our research question. By construction,
+the solution $F_q^\star$ from exact repair is a global optimum of
+Equation~\eqref{eq:mwfas}; no method can restore acyclicity by removing less
+edge weight. If the retrieval effect of exact repair is statistically
+indistinguishable from that of greedy repair, then the heuristic's
+suboptimality cannot explain a null or weak retrieval effect. This addresses
+an objection that a greedy-only study cannot.
 
 \subsection{Ranking Extraction and Evaluation}
 \label{sec:extraction-eval}
