@@ -1,10 +1,15 @@
 # SN Computer Science Manuscript
 
-This directory contains the latest frozen pre-submission manuscript, ‘Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval,’ prepared for SN Computer Science.
+This directory contains the SN Computer Science submission package for:
 
-The PDF was generated from commit `70ee08c594c369e94ed12fff5e84165a579f8f5a` on branch `papers/sncs-2026-foundation`.
+**Structural Consistency Does Not Reliably Predict Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval**
 
-- **Title:** Structural Consistency Is Not Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval
-- **PDF:** [`Structural_Consistency_Is_Not_Retrieval_Utility.pdf`](Structural_Consistency_Is_Not_Retrieval_Utility.pdf)
-- **Pages:** 40
-- **Updated:** 2026-08-02
+- **Manuscript PDF:** [`manuscript/main.pdf`](manuscript/main.pdf)
+- **LaTeX source:** [`manuscript/main.tex`](manuscript/main.tex)
+- **Cover letter PDF:** [`COVER_LETTER.pdf`](COVER_LETTER.pdf)
+- **Highlights PDF (optional):** [`HIGHLIGHTS.pdf`](HIGHLIGHTS.pdf)
+- **Author checklist PDF:** [`SUBMISSION_CHECKLIST.pdf`](SUBMISSION_CHECKLIST.pdf)
+- **Portal metadata:** [`SUBMISSION_METADATA.md`](SUBMISSION_METADATA.md), [`PORTAL_DRY_RUN.md`](PORTAL_DRY_RUN.md)
+- **ORCID:** https://orcid.org/0000-0003-1934-6282
+- **Repository:** https://github.com/SoroushVahidi/consistency-aware-llm-rankin
+- **Updated:** 2026-08-02 (final submission-material generation pass)

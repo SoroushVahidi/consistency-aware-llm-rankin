@@ -78,7 +78,7 @@ separate, non-manuscript research thread run on the same codebase.
 | Implementation | Evaluation pipeline in `reports/full_calibrated_core/scripts/full_calibration_utils.py`; statistics in `src/consistency_ranker/statistical_inference.py` (Holm correction, bootstrap CI, exact sign-flip) |
 | Principal evidence | `reports/full_calibrated_core/`, `reports/normalization_protocol_audit_20260714/`, `reports/candidate_pool_conditional_audit_20260714/`, `reports/final_revision_task1_pool_cutoff_20260715/`, `reports/final_revision_task4_exact_baseline_fairness_20260715/` |
 | Manuscript section | Table 3 rows 3-6, Table 4, Figure 3; Limitations §, `main.tex:459` ("a narrower and stronger conclusion than 'repair helps' or 'repair never helps'") |
-| Limitations | Finite statistical power (median \|Δ\| 0.0036 vs. Holm-adjusted 80%-power MDE 0.0207 -- the null could mask a small true effect); ranker/benchmark scope; bounded real-LLM evidence |
+| Limitations | Finite statistical power (median \|Δ\| 0.0036 vs. Holm-adjusted 80%-power MDE 0.0201 -- the null could mask a small true effect); ranker/benchmark scope; bounded real-LLM evidence |
 | Double-blind suitable | Yes -- this is the paper |
 
 ### 1.2 Cluster-aware statistical inference for repeated judgments
@@ -136,7 +136,7 @@ repair choices matter.
 | Field | Value |
 |---|---|
 | Contribution | Tests whether a query's pre-repair graph properties can predict, in principle, whether repair will help that specific query -- at repository scale (419 distinct queries, 122,203 unified rows from 76 already-existing per-query source files across 4 datasets), not just the 6-query pilot. |
-| Status | **Negative/null -- NO-GO, concluded.** Oracle headroom is real (query-level 95% CI [0.0020, 0.0030]) but ~8x below the manuscript's own Holm-adjusted 80%-power minimum-detectable-effect (0.0207); every pre-repair covariate shows negligible univariate association. Converges with four independent prior attempts at the same question (`outputs/learned_selector/`, `experiments/failure_class_audit_20260711_212157/`, `src/consistency_ranker/repair_selector_mining/` (never executed), and the pilot-scale diagnostic in §1.3). |
+| Status | **Negative/null -- NO-GO, concluded.** Oracle headroom is real (query-level 95% CI [0.0020, 0.0030]) but ~8x below the manuscript's own Holm-adjusted 80%-power minimum-detectable-effect (0.0201); every pre-repair covariate shows negligible univariate association. Converges with four independent prior attempts at the same question (`outputs/learned_selector/`, `experiments/failure_class_audit_20260711_212157/`, `src/consistency_ranker/repair_selector_mining/` (never executed), and the pilot-scale diagnostic in §1.3). |
 | Implementation | `scripts/run_oracle_headroom_analysis.py`, `scripts/run_repository_scale_headroom_analysis.py` |
 | Principal evidence | `reports/oracle_headroom_gate0_20260728T230000Z/`, `reports/repository_scale_headroom_analysis/` (see `research_decision.md` for the stop decision) |
 | Principal tests | `tests/test_oracle_headroom.py`, `tests/test_repository_scale_headroom_analysis.py` |

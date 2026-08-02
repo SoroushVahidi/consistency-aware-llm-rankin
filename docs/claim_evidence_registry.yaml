@@ -46,7 +46,7 @@ claims:
     correction_method: Holm
     sample_size: "4 datasets (BRIGHT, FiQA, HotpotQA, SciDocs); primary protocol + larger-pool study"
     limitations:
-      - "median |delta| 0.0036 vs Holm-adjusted 80%-power MDE 0.0207 -- finite power"
+      - "median |delta| 0.0036 vs Holm-adjusted 80%-power MDE 0.0201 -- finite power"
       - "score-derived votes primary; real-LLM evidence is a small directional addendum (see LLM-01)"
     superseded_by: []
     notes: "This is the manuscript's central/thesis claim. See main.tex Table 3-4."
