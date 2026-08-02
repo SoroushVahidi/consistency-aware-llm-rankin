@@ -498,22 +498,15 @@ with the graph's own edges to achieve acyclicity. It makes no reference to
 external relevance judgments or retrieval utility, a distinction central to
 our research question.
 
-Two solution methods for Equation~\eqref{eq:mwfas} are used and reported as
-co-equal, not as a primary method with a secondary check. \textbf{Greedy
-repair} is a fast, deterministic heuristic: while $\widetilde{G}_q$
-contains a directed cycle, find one such cycle and remove its
-minimum-weight edge, repeating until the graph is acyclic. This does not
-generally reach the optimum of Equation~\eqref{eq:mwfas}, but it is cheap
-enough to run at the scale of the full query set. \textbf{Exact repair}
-solves Equation~\eqref{eq:mwfas} to certified optimality via a standard
-linear-ordering mixed-integer program~\cite{groetschel1984cutting,baharev2021exact}:
-the MWFAS problem can equivalently be written as a linear-ordering problem
--- choose a total order and minimize the weight of edges directed backward
-with respect to that order. For every ordered pair of nodes $(u,v)$, a binary
-variable $\mathrm{before}[u,v]$ indicates that $u$ precedes $v$ in the chosen
-total order, subject to antisymmetry
-($\mathrm{before}[u,v] + \mathrm{before}[v,u] = 1$) and transitivity
-constraints over every ordered triple of nodes; the objective is
+We evaluate two co-equal solution methods for Equation~\eqref{eq:mwfas}.
+\textbf{Greedy repair} is a fast heuristic that iteratively finds a cycle
+and removes its minimum-weight edge until the graph is acyclic. This
+heuristic is not guaranteed to be optimal but is computationally efficient.
+\textbf{Exact repair} solves Equation~\eqref{eq:mwfas} to certified
+optimality using a mixed-integer program based on the equivalent
+linear-ordering problem~\cite{groetschel1984cutting,baharev2021exact}. This
+involves finding a total order of the nodes that minimizes the weight of
+backward-directed edges.
 \begin{equation}
 \min \sum_{(u,v) \in E_q} w_q(u,v)\, \mathrm{before}[v,u],
 \label{eq:mwfas-mip}
