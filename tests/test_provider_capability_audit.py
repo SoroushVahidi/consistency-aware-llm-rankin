@@ -222,7 +222,22 @@ def test_cache_only_zero_calls(tmp_path: Path) -> None:
     assert calls["n"] == 0
 
 
-def test_live_mode_with_mock_respects_caps_and_dedup(tmp_path: Path) -> None:
+def _set_fake_azure_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Satisfy detect_llm_providers' Azure "configured" check without any
+    real credential. call_fn is always injected in these tests, so no
+    network call is ever made; these values only need to be present, not
+    valid. See src/consistency_ranker/failure_mining/llm_runner.py
+    detect_llm_providers() for the exact required env vars.
+    """
+    monkeypatch.setenv("AZURE_OPENAI_API_KEY", "test-fixture-not-a-real-key")
+    monkeypatch.setenv("AZURE_OPENAI_ENDPOINT", "https://test-fixture.invalid")
+    monkeypatch.setenv("AZURE_OPENAI_DEPLOYMENT", "test-fixture-deployment")
+
+
+def test_live_mode_with_mock_respects_caps_and_dedup(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _set_fake_azure_credentials(monkeypatch)
     out = tmp_path / "live"
     out.mkdir()
     calls = {"n": 0}
@@ -274,7 +289,8 @@ def test_live_mode_with_mock_respects_caps_and_dedup(tmp_path: Path) -> None:
     assert result2["paid_api_calls"] == 3
 
 
-def test_retry_cap_single(tmp_path: Path) -> None:
+def test_retry_cap_single(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    _set_fake_azure_credentials(monkeypatch)
     out = tmp_path / "retry"
     out.mkdir()
     state = {"n": 0}
@@ -308,7 +324,10 @@ def test_retry_cap_single(tmp_path: Path) -> None:
     assert result["ledger"]["retries"] >= 1
 
 
-def test_unknown_capability_remains_null_for_logprobs(tmp_path: Path) -> None:
+def test_unknown_capability_remains_null_for_logprobs(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    _set_fake_azure_credentials(monkeypatch)
     out = tmp_path / "unk"
     out.mkdir()
 

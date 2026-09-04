@@ -63,6 +63,25 @@ not assumed from a filename. Summary:
   production-approved; that the real-LLM pilot's ~120 replicated rows are
   independent samples (they are 6). Full list: `docs/CONTRIBUTIONS.md` §3.
 
+## Current Manuscript
+
+**Active submission:** *Structural Consistency Does Not Reliably Predict
+Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair
+for Multi-Ranker Retrieval* — submitted to **SN Computer Science**
+(Springer Nature) on 2026-08-02; with the editor for evaluation as of
+2026-08-27. Manuscript source: [`papers/SNCS_2026/manuscript/main.tex`](papers/SNCS_2026/manuscript/main.tex).
+
+**Earlier submission (declined):** an earlier data-quality framing of a
+subset of this evidence base — *Data Quality for Derived Preference
+Graphs: Construction Sensitivity and Repair Outcomes in Multi-Ranker
+Retrieval* — was submitted to the ACM Journal of Data and Information
+Quality (JDIQ) and declined as outside the journal's scope. It is not
+under review anywhere. The `papers/JDIQ_2026/` package is retained
+because parts of its evidence base and reproduction path are still
+load-bearing for the current manuscript (see "Where to look" below) —
+it is historical submission material, not a second active
+submission.
+
 ## Repository status
 
 | | |
@@ -70,7 +89,7 @@ not assumed from a filename. Summary:
 | Default test suite | **1362 passed, 64 deselected, 0 skipped, 0 failed** (solver tier / `pytest -q` with `[exact]` installed, as of commit `2cd71ce`; re-run to confirm current — see `docs/PROJECT_STATUS.md`) |
 | `real_data` tier (~64 dataset-dependent tests) | Passes when BEIR/HotpotQA/BRIGHT datasets are prepared (`make test-real-data`); cleanly deselected, not silently skipped, otherwise |
 | Gurobi | Optional. 13.0.2 + academic WLS license verified working on the validation machine (2026-07-31); **SCIP remains the fully-supported, free, open-source exact-solver path** — a machine with no Gurobi license passes every required check |
-| GitHub Actions CI | **Not currently authoritative** — every run has failed since at least 2026-07-16 due to a GitHub account billing/spending-limit issue, not a code problem. Do not read a red/absent check as a code signal |
+| GitHub Actions CI | **Not currently green.** Latest run: 1335 passed, 2 failed (`tests/test_provider_capability_audit.py`, both asserting an injected mock `call_fn` was called while exercising `providers=["azure"], mode="live"`). Root cause: no Azure credential is configured as a CI secret, and the live-mode code path does not invoke the injected mock without one — a CI/test-environment gap, not a scientific or dependency failure. (Earlier billing/spending-limit issues, if any, are not the current cause — see commit history around 2026-08-02.) |
 | Canonical validation alternative | `python scripts/run_cloud_validation.py --tier core` / `--tier solver` / `--tier real-data` — all three **PASS** as of commit `2a5d2b4` |
 
 ## Getting started
@@ -117,8 +136,8 @@ every command above.
 | A specific claim's evidence/status/manuscript-applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
 | What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) (timestamped-experiment specifics) and [`docs/ARTIFACT_POLICY.md`](docs/ARTIFACT_POLICY.md) (broader policy + dated decision log) |
 | Exact reproduction commands for the classical evidence tables | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
-| SN Computer Science manuscript + reviewer quickstart | [`papers/SNCS_2026/`](papers/SNCS_2026/), [`papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md`](papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md) |
-| Separate ACM JDIQ manuscript (same classical backbone) | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
+| **Current** manuscript (SN Computer Science, with editor) + reviewer quickstart | [`papers/SNCS_2026/`](papers/SNCS_2026/), [`papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md`](papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md) |
+| Earlier ACM JDIQ manuscript (declined, not under review; shares the classical evidence backbone) | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
 | Production-facing policy logic (guarded, never learned-routing by default) | `src/consistency_ranker/policy_selection/production_config.py` — see `docs/CONTRIBUTIONS.md` §1.7 |
 | The internal-only Gurobi validation studies (never manuscript evidence) | [`reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`](reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/), [`reports/exact_solver_scaling_study_20260731T162314Z/`](reports/exact_solver_scaling_study_20260731T162314Z/) |
 | A separate, NO-GO'd companion research thread + planned companion paper | [`docs/research/RESEARCH_TRAJECTORY.md`](docs/research/RESEARCH_TRAJECTORY.md), [`papers/negative_result_2026/`](papers/negative_result_2026/) |
@@ -142,10 +161,11 @@ every command above.
 - **The `real_data` test tier requires prepared datasets** (network, ~3GB);
   it is cleanly separated from the default suite, not silently skipped.
 - **No `docs/*.md` file overrides a manuscript `.tex` on an actual number** —
-  for the SN Computer Science package trust
-  `papers/SNCS_2026/manuscript/main.tex`; for the separate JDIQ package trust
-  `papers/JDIQ_2026/manuscript/main.tex`. Use `docs/CONTRIBUTIONS.md` for
-  classification (canonical / exploratory / internal).
+  for the current, active SN Computer Science submission trust
+  `papers/SNCS_2026/manuscript/main.tex`; for the earlier, declined JDIQ
+  submission (not under review; retained for shared-evidence provenance)
+  trust `papers/JDIQ_2026/manuscript/main.tex`. Use `docs/CONTRIBUTIONS.md`
+  for classification (canonical / exploratory / internal).
 
 ---
 
@@ -886,13 +906,17 @@ earlier, historical evidence package and are kept for provenance only.
 
 ## Citation
 
-If you use this code in your research, please cite:
+If you use this code in your research, please cite the manuscript
+currently under evaluation:
 
 ```bibtex
-@misc{vahidi2024consistency,
+@unpublished{vahidi2026structural,
   author = {Soroush Vahidi},
-  title  = {Consistency-Aware Retrieval and Reasoning in LLM Systems},
-  year   = {2024},
+  title  = {Structural Consistency Does Not Reliably Predict Retrieval
+            Utility: An Exact-and-Heuristic Audit of Preference-Graph
+            Repair for Multi-Ranker Retrieval},
+  note   = {Manuscript submitted to SN Computer Science},
+  year   = {2026},
   url    = {https://github.com/SoroushVahidi/consistency-aware-llm-rankin}
 }
 ```
