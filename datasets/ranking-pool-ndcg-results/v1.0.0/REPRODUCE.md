@@ -1,0 +1,7 @@
+# Reproduction and validation
+
+From this release directory run `python3 validation/validate_public.py`. It verifies the checksum ledger, schema, 93,504 unique complete results, 342 query clusters, 66 configurations, score range, 1,056 summary means and the comparison table's keyed coverage. Load the main table with `pandas.read_csv("data/novel_ndcg.csv.gz", compression="gzip")` or Python's `gzip` and `csv` modules.
+
+The preserved source-side validation in `validation/source_validation.json` passed a full row-to-source trace, input/code hashes, all 93,504 nDCG recomputations from retained rankings and qrels (maximum absolute difference 3.33e-16), the public pair-table anti-join and the manuscript's 330 paired comparisons. It was run against private source inputs before packaging; its historical checksum count refers to the earlier candidate, while this package has its own `CHECKSUMS.sha256`.
+
+The later clean code commit `b3926dee968840b10e1b2c17ef531347e172c236` reproduced all 66 cells and every one of the 93,504 keyed values without new retrieval or LLM calls. The original source run was at `b0d48520b72dfa05f6cfe07309cb39ef980be032` with uncommitted changes. The exact original run-time tree and eight historical input hashes are unavailable. See `validation/phase5g/` for exact comparison and limitations. Source inputs must be acquired from their benchmark providers under their own terms; the protected source maps, text, qrels and rankings are deliberately absent.

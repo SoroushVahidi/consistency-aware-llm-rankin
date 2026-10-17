@@ -1,0 +1,44 @@
+{
+  "by_dataset": {
+    "bright": {
+      "exact": 14400
+    },
+    "fiqa": {
+      "exact": 34560
+    },
+    "hotpotqa": {
+      "exact": 9984
+    },
+    "scidocs": {
+      "exact": 34560
+    }
+  },
+  "comparison_tolerance": 1e-12,
+  "diagnosis": "No discrepancies",
+  "duplicate_records": 0,
+  "exactly_equal_records": 93504,
+  "historical_records": 93504,
+  "key_note": "run_id is mapped to the historical study cell identifier; the clean rerun timestamp remains separate provenance",
+  "mismatch_inventory": null,
+  "missing_records": 0,
+  "numerically_equivalent_records": 0,
+  "numerically_mismatched_records": 0,
+  "rerun_records": 93504,
+  "scientific_key_fields": [
+    "benchmark",
+    "unit_id",
+    "regime",
+    "pool_policy_id",
+    "pool_size",
+    "metric_cutoff",
+    "config_id",
+    "method_key",
+    "metric_name",
+    "run_id",
+    "protocol_id",
+    "replicate_id",
+    "seed"
+  ],
+  "tolerance_basis": "Predeclared 1e-12 absolute tolerance for binary floating-point path differences; exact decimal strings are counted separately.",
+  "unexpected_additional_records": 0
+}

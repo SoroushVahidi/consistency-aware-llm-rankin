@@ -1,0 +1,42 @@
+{
+  "checks": {
+    "342_benchmark_queries": true,
+    "candidate_summaries_recomputed": true,
+    "cell_configuration_table": true,
+    "configuration_compatible": true,
+    "current_code_sha256": true,
+    "metric_range_finite": true,
+    "ndcg_recomputed_from_qrels": true,
+    "paper_no_holm_gain_reproduced": true,
+    "privacy_schema_and_pseudonyms": true,
+    "public_pair_antijoin": true,
+    "publication_comparison_per_record": true,
+    "published_pair_means_reproduced": true,
+    "record_count_93504": true,
+    "schema_exact": true,
+    "sha256_integrity": true,
+    "source_inputs_sha256": true,
+    "source_traceability": true,
+    "unfavorable_results_retained": true,
+    "unique_record_ids": true,
+    "unique_scientific_keys": true
+  },
+  "details": {
+    "checksummed_files": 18,
+    "holm_significant_active_ms1": 0,
+    "holm_significant_full": 0,
+    "legacy_loose_value_coincidences": 107,
+    "ndcg_max_absolute_difference": 3.3306690738754696e-16,
+    "ndcg_recomputed_rows": 93504,
+    "paired_against_prior_only": {
+      "harmed": 17449,
+      "improved": 13873,
+      "tied": 56338
+    },
+    "published_ndcg_pair_rows": 330,
+    "source_rows_traced": 93504
+  },
+  "failed": [],
+  "inconclusive": [],
+  "status": "PASS"
+}

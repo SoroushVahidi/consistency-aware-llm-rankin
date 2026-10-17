@@ -1,0 +1,10 @@
+{
+  "title": "Larger-Pool Ranking nDCG Results (v1.0.0)",
+  "id": "soroushvahidi/ranking-pool-ndcg-results",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0"
+    }
+  ],
+  "description": "93,504 original numerical nDCG results across 16 methods and 66 larger-pool configurations. Historical research data by Soroush Vahidi; GitHub and Hugging Face distribute the same v1.0.0 release."
+}

@@ -1,0 +1,78 @@
+{
+  "checked_at_utc": "2026-10-14T03:20:06.132267+00:00",
+  "github": {
+    "branch_only_data_files_with_full_candidate_key": 0,
+    "full_candidate_key_matches": 0,
+    "git_lfs_assets_found": 0,
+    "heads": {
+      "backup/pr44-pre-merge-20260731-132117": "66343064a3ad2680d7487b55d4a68e1532975193",
+      "claude/resolve-merge-conflicts-conservatively": "ea0a2bb9a8e77b58ab333fa6b04b8d4120fa90d6",
+      "codex/check-api-access-after-firewall-off": "402c79a8c5b786b57e7b0b798f1babeea7effb4e",
+      "codex/verify-copilot-environment-secrets": "402c79a8c5b786b57e7b0b798f1babeea7effb4e",
+      "copilot/setup-python-research-repo": "84b8cb9cdf82c61d63abaf26e69dc40a99d12da2",
+      "cursor/plotting-legend-visibility-2ec1": "6d3a681b49a00aed8073d45e96944a5375afdb96",
+      "cursor/ranking-repository-analysis-7a0e": "3e247a344e9b155a23145bd2a23f54c1a9081896",
+      "cursor/ranking-repository-analysis-a432": "14c5c233784c5840353a56864b9e0835a33d5b21",
+      "cursor/ranking-repository-analysis-bcf5": "4040b4f3742c1b48b4f90a5d8bca6155dfbec7dd",
+      "main": "4f59780f42c8b3f3642896acd4f2831b3df87378",
+      "papers/sncs-2026-foundation": "7d42d27fad3b6de6bceb2059d6c62e4635acbbcb"
+    },
+    "public_pair_table_git_blob": "7ec7aeb5fa15db4a0e79c1329ff9017bdbe7a75e",
+    "public_pair_table_rows": 29220,
+    "release_count": 0,
+    "relevant_local_csv_blobs_matching_remote_main": 87,
+    "relevant_tracked_csv_headers_checked": 87,
+    "repository": "SoroushVahidi/consistency-aware-llm-rankin",
+    "tags": {
+      "sncs-2026-submission-v1": "a0b569797e549321839e363452b4ed6227656782",
+      "sncs-2026-submission-v2": "e1e4e163647e3ac477f46d44cd558ac44b0c116f"
+    }
+  },
+  "hugging_face": {
+    "consistency-aware-judgments": {
+      "full_candidate_key_matches": 0,
+      "history_commits_checked": 7,
+      "parquet_payload_sha256": {
+        "data/pairwise_judgments.parquet": "f193626d89d77c20c81d7cf178aca32f2786e40d86b0e4cba6bd80f8f4cef780",
+        "data/provider_diagnostics.parquet": "6cded9ffa44fd4b9b776f8f6aa8a1b92f0660ecb8d562e5e6f60972a6a3c5aa6",
+        "data/repeated_measurements.parquet": "7eccce28e20df4707baa29e9fb0bdad78104a25414a3b06b50a481823aa904c4",
+        "data/selector_training.parquet": "0577ffe8140a2f8fda1903562460d51308edfd00b1a52f185dec5b79d0a6b1a5"
+      },
+      "parquet_payload_sha256_unchanged_across_history": true,
+      "payload_type": "pairwise judgments and provider diagnostics; no NDCG field",
+      "revision": "524438d326b5cc2afdfbc6ca09b189a096ee6443"
+    },
+    "frontier-allocation-metrics": {
+      "full_candidate_key_matches": 0,
+      "history_commits_checked": 10,
+      "payload_type": "LLM serving allocation metrics; no ranking NDCG",
+      "revision": "cc4baac7c435261a29d351fae541e26b1bac6160"
+    },
+    "mwfas-heuristic-metrics": {
+      "full_candidate_key_matches": 0,
+      "history_commits_checked": 12,
+      "payload_type": "graph heuristic instance metrics; no retrieval NDCG",
+      "revision": "5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f"
+    },
+    "ranking-fas-results": {
+      "full_candidate_key_matches": 0,
+      "history_commits_checked": 5,
+      "payload_type": "weighted feedback arc set method results; no query-level NDCG",
+      "revision": "59a2a4752af5356519fa65b942965f4f9c8d808f"
+    },
+    "scidocs": {
+      "full_candidate_key_matches": 0,
+      "payload_type": "third-party benchmark mirror; no project-derived NDCG",
+      "revision": "899cac9e27ea7a4b7f1b16ee0f88f724cbdefacc"
+    }
+  },
+  "legacy_public_artifacts": {
+    "interpretation": "Numerical coincidences in older qrels-derived/other pool protocols; not record-identity matches.",
+    "query_method_value_coincidences_without_matching_protocol": 107
+  },
+  "zenodo": {
+    "broader_author_topic_hits_relevant": 0,
+    "exact_project_title_hits": 0,
+    "search_limitation": "Catalog searches do not rule out unnamed or private deposits."
+  }
+}

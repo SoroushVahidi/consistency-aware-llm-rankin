@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite this dataset version and its associated manuscript."
+title: "Larger-Pool Ranking nDCG Results"
+type: dataset
+authors:
+  - family-names: Vahidi
+    given-names: Soroush
+version: 1.0.0
+date-released: 2026-10-16
+url: "https://github.com/SoroushVahidi/consistency-aware-llm-rankin/tree/ranking-pool-ndcg-v1.0.0/datasets/ranking-pool-ndcg-results/v1.0.0"
