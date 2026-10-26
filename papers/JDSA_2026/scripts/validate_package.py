@@ -32,7 +32,8 @@ check('obsolete journal removed','International Journal of Information Technolog
 check('no source subfolders',all('/' not in x for x in re.findall(r'\\input\{([^}]+)\}',main+si)))
 for name,orig in [('main',oldmain),('supplement',oldsi)]:
  s=(src/(name+'.tex')).read_text();get=lambda t:set(k for m in re.findall(r'\\cite\w*\{([^}]+)\}',t) for k in m.split(','))
- check(name+' citation keys unchanged',get(s)==get(orig))
+ allowed=set(json.loads((audit/'CITATION_ADDITIONS_20261026.json').read_text())[name])
+ check(name+' prior citations preserved; only verified additions',get(s)==get(orig)|allowed)
  labels=[]
  for f in src.glob('*.tex'):
   if f.name in ['authors.tex','declarations.tex','common.tex','Fig1.tex'] or f.stem==name or (name=='supplement' and f.stem not in ['main','supplement']):labels+=re.findall(r'\\label\{([^}]+)',f.read_text())
@@ -42,7 +43,7 @@ for name in ['main','supplement','main_anonymous','supplement_anonymous']:
  check(name+' final log clean',not re.search(r'! |Overfull|undefined|multiply defined|There were undefined',s),{'underfull':s.count('Underfull')})
  check(name+' PDF exists',(src/(name+'.pdf')).is_file())
  b=src/'build'/(name+'.bbl');check(name+' bbl exists',b.is_file())
- if b.exists():check(name+' reference count',len(re.findall(r'\\bibitem',b.read_text()))==(32 if name.startswith('main') else 8),len(re.findall(r'\\bibitem',b.read_text())))
+ if b.exists():check(name+' reference count',len(re.findall(r'\\bibitem',b.read_text()))==(34 if name.startswith('main') else 10),len(re.findall(r'\\bibitem',b.read_text())))
 # Authorship/metadata verification uses poppler available with the LaTeX toolchain.
 for name in ['main','supplement']:
  info=subprocess.check_output(['pdfinfo',str(src/(name+'.pdf'))]).decode();check(name+' identified PDF author','Soroush Vahidi' in info)

@@ -1,0 +1,1480 @@
+[
+  {
+    "id": "judgments",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+    "kind": "derived judgments",
+    "support": "Historical judgment lineage; not all cached cohorts or October responses",
+    "recorded_revision": "f9317638ca1cc422661f704168335576d36ca995",
+    "metadata_url": "https://huggingface.co/api/datasets/SoroushVahidi/consistency-aware-judgments/revision/f9317638ca1cc422661f704168335576d36ca995",
+    "checked_utc": "2026-10-26T21:21:19.215678+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+      "sha256": "63b6002844b3f3a920c132f0564bd22b7268fb8bbe861fbede41aea451be57b7",
+      "bytes": 136629,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/SoroushVahidi/consistency-aware-judgments/revision/f9317638ca1cc422661f704168335576d36ca995",
+      "sha256": "f2598f55652cb6c139f728a3a13445782bee9e4a6df81adb5a13983edaa8f813",
+      "bytes": 2635,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "SoroushVahidi/consistency-aware-judgments",
+      "author": "SoroushVahidi",
+      "sha": "f9317638ca1cc422661f704168335576d36ca995",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-08-13T19:31:01.000Z"
+    },
+    "card_license": "cc-by-sa-4.0",
+    "card_datasets": null
+  },
+  {
+    "id": "ranking",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/tree/4d6d9d372c24e541875990923ab5569454b6b44b",
+    "kind": "derived outcomes",
+    "support": "Related pool/cutoff outcomes on the same 342 query identities; not the exact corrected35 or attribution inputs and not substituted for a manuscript result table",
+    "recorded_revision": "4d6d9d372c24e541875990923ab5569454b6b44b",
+    "metadata_url": "https://huggingface.co/api/datasets/SoroushVahidi/ranking-pool-ndcg-results/revision/4d6d9d372c24e541875990923ab5569454b6b44b",
+    "checked_utc": "2026-10-26T21:21:19.216722+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/tree/4d6d9d372c24e541875990923ab5569454b6b44b",
+      "sha256": "941fda92ddd881b007244963d41c3c1f473d245c972e3862174a477adcc745cd",
+      "bytes": 152992,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/SoroushVahidi/ranking-pool-ndcg-results/revision/4d6d9d372c24e541875990923ab5569454b6b44b",
+      "sha256": "537b34be2648b0fbfed71eae983a32b7d919677159732d902ab4f544b7a22515",
+      "bytes": 2191,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "SoroushVahidi/ranking-pool-ndcg-results",
+      "author": "SoroushVahidi",
+      "sha": "4d6d9d372c24e541875990923ab5569454b6b44b",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-10-17T03:09:53.000Z"
+    },
+    "card_license": "cc-by-4.0",
+    "card_datasets": null
+  },
+  {
+    "id": "mwfas_metrics",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics/tree/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+    "kind": "related outputs",
+    "support": "Overlap lineage only; no new retrieval evidence",
+    "recorded_revision": "5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+    "metadata_url": "https://huggingface.co/api/datasets/SoroushVahidi/mwfas-heuristic-metrics/revision/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+    "checked_utc": "2026-10-26T21:21:19.217348+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics/tree/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+      "sha256": "77cb567d3bc0a0a9e45f0e2506ead5dc59ec38ade207693b0e2100cd8fcf6b40",
+      "bytes": 151729,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/SoroushVahidi/mwfas-heuristic-metrics/revision/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+      "sha256": "43521bdcf6448cce0a91b686e1f4e9275d1dbcf7ccda3d61e0728d257163a928",
+      "bytes": 5651,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "SoroushVahidi/mwfas-heuristic-metrics",
+      "author": "SoroushVahidi",
+      "sha": "5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-08-24T23:00:06.000Z"
+    },
+    "card_license": "cc-by-4.0",
+    "card_datasets": null
+  },
+  {
+    "id": "mwfas_extension",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension/tree/117cd82e5b863238377c5effe7430ce771062cf4",
+    "kind": "related outputs",
+    "support": "Overlap lineage only; no new retrieval evidence",
+    "recorded_revision": "117cd82e5b863238377c5effe7430ce771062cf4",
+    "metadata_url": "https://huggingface.co/api/datasets/SoroushVahidi/mwfas-benchmark-extension/revision/117cd82e5b863238377c5effe7430ce771062cf4",
+    "checked_utc": "2026-10-26T21:21:19.217902+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension/tree/117cd82e5b863238377c5effe7430ce771062cf4",
+      "sha256": "e3f2ebd3a6a38fa149422bdc0f889512b57be6d2bdee980445998e7ad581f13f",
+      "bytes": 164074,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/SoroushVahidi/mwfas-benchmark-extension/revision/117cd82e5b863238377c5effe7430ce771062cf4",
+      "sha256": "cc17b7cb59eeca68aaa222361c319956239aeb58964b3a02e376cf55542f2a40",
+      "bytes": 4957,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "SoroushVahidi/mwfas-benchmark-extension",
+      "author": "SoroushVahidi",
+      "sha": "117cd82e5b863238377c5effe7430ce771062cf4",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-10-19T23:05:05.000Z"
+    },
+    "card_license": "cc-by-4.0",
+    "card_datasets": null
+  },
+  {
+    "id": "fiqa",
+    "url": "https://huggingface.co/datasets/BeIR/fiqa/tree/979c07a7cb5ccc6ca009792241fa1250b98055dd",
+    "kind": "converted benchmark",
+    "support": "New FiQA cohorts; historical exact-score snapshot not identified by this later pin",
+    "recorded_revision": "979c07a7cb5ccc6ca009792241fa1250b98055dd",
+    "metadata_url": "https://huggingface.co/api/datasets/BeIR/fiqa/revision/979c07a7cb5ccc6ca009792241fa1250b98055dd",
+    "checked_utc": "2026-10-26T21:21:19.218485+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/BeIR/fiqa/tree/979c07a7cb5ccc6ca009792241fa1250b98055dd",
+      "sha256": "66607d7b694d6a5686155927d5455d5735379316905aecb1c66cb2a6a310afdb",
+      "bytes": 142598,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/BeIR/fiqa/revision/979c07a7cb5ccc6ca009792241fa1250b98055dd",
+      "sha256": "143917cb932f2f56b9c9398739dfc37fe32e2b5021f5a3e59d3eca8e617779dd",
+      "bytes": 3087,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "BeIR/fiqa",
+      "author": "BeIR",
+      "sha": "979c07a7cb5ccc6ca009792241fa1250b98055dd",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-04-09T17:31:58.000Z"
+    },
+    "card_license": [
+      "cc-by-sa-4.0"
+    ],
+    "card_datasets": null
+  },
+  {
+    "id": "scidocs",
+    "url": "https://huggingface.co/datasets/BeIR/scidocs/tree/acebceec772628c6679d76d6cff30ad517d17f4e",
+    "kind": "converted benchmark",
+    "support": "New SciDocs cohorts; historical exact-score snapshot not identified by this later pin",
+    "recorded_revision": "acebceec772628c6679d76d6cff30ad517d17f4e",
+    "metadata_url": "https://huggingface.co/api/datasets/BeIR/scidocs/revision/acebceec772628c6679d76d6cff30ad517d17f4e",
+    "checked_utc": "2026-10-26T21:21:19.218944+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/BeIR/scidocs/tree/acebceec772628c6679d76d6cff30ad517d17f4e",
+      "sha256": "1c992a35082d32c296dd886957d1c8558cd18bff6d0b3a86d997c11956ab60b4",
+      "bytes": 142729,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/BeIR/scidocs/revision/acebceec772628c6679d76d6cff30ad517d17f4e",
+      "sha256": "f938a6bf4f217cb9432a45c8fa4302ef16e03968fecc7e3880bdb24ef5899c0a",
+      "bytes": 3093,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "BeIR/scidocs",
+      "author": "BeIR",
+      "sha": "acebceec772628c6679d76d6cff30ad517d17f4e",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-04-09T17:44:04.000Z"
+    },
+    "card_license": [
+      "cc-by-sa-4.0"
+    ],
+    "card_datasets": null
+  },
+  {
+    "id": "bright",
+    "url": "https://huggingface.co/datasets/xlangai/BRIGHT/tree/3066d29c9651a576c8aba4832d249807b181ecae",
+    "kind": "original benchmark",
+    "support": "BRIGHT biology prospective cohort and benchmark provenance",
+    "recorded_revision": "3066d29c9651a576c8aba4832d249807b181ecae",
+    "metadata_url": "https://huggingface.co/api/datasets/xlangai/BRIGHT/revision/3066d29c9651a576c8aba4832d249807b181ecae",
+    "checked_utc": "2026-10-26T21:21:19.219477+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/xlangai/BRIGHT/tree/3066d29c9651a576c8aba4832d249807b181ecae",
+      "sha256": "1855eedb7aa4e8a19b510afc101f329e6b26abd02c8f570f743d1514dd37811e",
+      "bytes": 215716,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/xlangai/BRIGHT/revision/3066d29c9651a576c8aba4832d249807b181ecae",
+      "sha256": "880b103497918a5068b76567eb0a6a255caa4f9b3d87cc852e66836f8b5662d6",
+      "bytes": 21954,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "xlangai/BRIGHT",
+      "author": "xlangai",
+      "sha": "3066d29c9651a576c8aba4832d249807b181ecae",
+      "private": false,
+      "gated": false,
+      "lastModified": "2025-03-01T16:51:21.000Z"
+    },
+    "card_license": "cc-by-4.0",
+    "card_datasets": null
+  },
+  {
+    "id": "fiqa_qrels",
+    "url": "https://huggingface.co/datasets/BeIR/fiqa-qrels",
+    "kind": "converted qrels",
+    "support": "Separate relevance labels used by BEIR loader; current head is not a recovered historical pin",
+    "recorded_revision": null,
+    "metadata_url": "https://huggingface.co/api/datasets/BeIR/fiqa-qrels",
+    "checked_utc": "2026-10-26T21:21:19.219963+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/BeIR/fiqa-qrels",
+      "sha256": "259eff9a2b167ed175861d16961ae64432ffd4a510c55f35dd0b8847e9feee18",
+      "bytes": 422110,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/BeIR/fiqa-qrels",
+      "sha256": "38f28341664544cfd9bda545c7e0f4644ad0c56d7eac7f07b658e43470f814be",
+      "bytes": 2061,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "BeIR/fiqa-qrels",
+      "author": "BeIR",
+      "sha": "252958f2d646e22cab6d0c72dd3f0d5de6d0655a",
+      "private": false,
+      "gated": false,
+      "lastModified": "2022-10-23T06:06:29.000Z"
+    },
+    "card_license": [
+      "cc-by-sa-4.0"
+    ],
+    "card_datasets": null
+  },
+  {
+    "id": "scidocs_qrels",
+    "url": "https://huggingface.co/datasets/BeIR/scidocs-qrels",
+    "kind": "converted qrels",
+    "support": "Separate relevance labels used by BEIR loader; current head is not a recovered historical pin",
+    "recorded_revision": null,
+    "metadata_url": "https://huggingface.co/api/datasets/BeIR/scidocs-qrels",
+    "checked_utc": "2026-10-26T21:21:19.220517+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/datasets/BeIR/scidocs-qrels",
+      "sha256": "e2313593685aa682aacfbf2b871875cc0baca90782ea473edf01909d045abdc9",
+      "bytes": 438346,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/datasets/BeIR/scidocs-qrels",
+      "sha256": "ae39a4a56a22807aab7d43cbe546ef5bb0b3ec82a3f59c53d92f1efe48aaacd6",
+      "bytes": 2015,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "BeIR/scidocs-qrels",
+      "author": "BeIR",
+      "sha": "735ea1048e37b1ebce14c6dc3d33a5edaf66d3dc",
+      "private": false,
+      "gated": false,
+      "lastModified": "2022-10-23T06:07:54.000Z"
+    },
+    "card_license": [
+      "cc-by-sa-4.0"
+    ],
+    "card_datasets": null
+  },
+  {
+    "id": "qwen",
+    "url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/tree/acbd96531cda22292a3ceaa67e984955d3965282",
+    "kind": "model checkpoint",
+    "support": "Prospective 20-query and prompt controls",
+    "recorded_revision": "acbd96531cda22292a3ceaa67e984955d3965282",
+    "metadata_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-7B-Instruct/revision/acbd96531cda22292a3ceaa67e984955d3965282",
+    "checked_utc": "2026-10-26T21:21:19.220777+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/tree/acbd96531cda22292a3ceaa67e984955d3965282",
+      "sha256": "c5d103f70fe043d2d41108f77cad43015f4a260e12007e8d688770b694adf764",
+      "bytes": 258882,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-7B-Instruct/revision/acbd96531cda22292a3ceaa67e984955d3965282",
+      "sha256": "bb5319253f1a653b2d300f3cf3c3db0a3d5e2306761e128dd06b37779c7ccacf",
+      "bytes": 7652,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "Qwen/Qwen2.5-7B-Instruct",
+      "modelId": "Qwen/Qwen2.5-7B-Instruct",
+      "author": "Qwen",
+      "sha": "acbd96531cda22292a3ceaa67e984955d3965282",
+      "private": false,
+      "gated": false,
+      "lastModified": "2024-09-19T07:30:10.000Z"
+    },
+    "card_license": "apache-2.0",
+    "card_datasets": null
+  },
+  {
+    "id": "smol",
+    "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/tree/a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "kind": "model checkpoint",
+    "support": "Prospective 20-query and prompt controls",
+    "recorded_revision": "a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "metadata_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B/revision/a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "checked_utc": "2026-10-26T21:21:19.598720+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/tree/a07cc9a04f16550a088caea529712d1d335b0ac1",
+      "sha256": "65b72ca9f448f8c1904b4611addb61acd539851dd885148ac154cae40fbdf85b",
+      "bytes": 227532,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B/revision/a07cc9a04f16550a088caea529712d1d335b0ac1",
+      "sha256": "4c01f59995e35ec9c73c80d7b45767440ff16eb7074dfca49247475e1736f4b5",
+      "bytes": 11026,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "HuggingFaceTB/SmolLM3-3B",
+      "modelId": "HuggingFaceTB/SmolLM3-3B",
+      "author": "HuggingFaceTB",
+      "sha": "a07cc9a04f16550a088caea529712d1d335b0ac1",
+      "private": false,
+      "gated": false,
+      "lastModified": "2025-09-10T12:28:11.000Z"
+    },
+    "card_license": "apache-2.0",
+    "card_datasets": null
+  },
+  {
+    "id": "bge",
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "kind": "model checkpoint",
+    "support": "Matched PRP/prospective controls and candidate diagnostic",
+    "recorded_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "metadata_url": "https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/revision/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "checked_utc": "2026-10-26T21:21:19.701761+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+      "sha256": "dc4f5b896f0f01939eac7a1e65ffa4119176809b24d921a5590143630113af66",
+      "bytes": 189766,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/revision/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+      "sha256": "f6e6967f61ea4afdd6837e15cb125347a0e94b8b81671b2845f3718276cdb828",
+      "bytes": 4598,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "BAAI/bge-reranker-v2-m3",
+      "modelId": "BAAI/bge-reranker-v2-m3",
+      "author": "BAAI",
+      "sha": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+      "private": false,
+      "gated": false,
+      "lastModified": "2024-06-24T14:08:45.000Z"
+    },
+    "card_license": "apache-2.0",
+    "card_datasets": null
+  },
+  {
+    "id": "flan",
+    "url": "https://huggingface.co/google/flan-t5-large/tree/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+    "kind": "model checkpoint",
+    "support": "Adapted PRP-Graph pilot",
+    "recorded_revision": "0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+    "metadata_url": "https://huggingface.co/api/models/google/flan-t5-large/revision/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+    "checked_utc": "2026-10-26T21:21:19.723163+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/google/flan-t5-large/tree/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+      "sha256": "f1fbf46d61f7721313caf644aa203dc17fc7a3903736d9f4dbec116c0739ee33",
+      "bytes": 221661,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/models/google/flan-t5-large/revision/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+      "sha256": "eb4abecf4807b562d01bc10a9414e2e3fc0b2da95cc0069497da15a92098423e",
+      "bytes": 7200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "google/flan-t5-large",
+      "modelId": "google/flan-t5-large",
+      "author": "google",
+      "sha": "0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+      "private": false,
+      "gated": false,
+      "lastModified": "2023-07-17T12:49:05.000Z"
+    },
+    "card_license": "apache-2.0",
+    "card_datasets": [
+      "svakulenk0/qrecc",
+      "taskmaster2",
+      "djaym7/wiki_dialog",
+      "deepmind/code_contests",
+      "lambada",
+      "gsm8k",
+      "aqua_rat",
+      "esnli",
+      "quasc",
+      "qed"
+    ]
+  },
+  {
+    "id": "minilm",
+    "url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+    "kind": "model checkpoint",
+    "support": "Historical score-derived dense source; exact weight revision not recovered",
+    "recorded_revision": null,
+    "metadata_url": "https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2",
+    "checked_utc": "2026-10-26T21:21:19.775616+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+      "sha256": "8d830edb7144ea25db0bf8a79efb3c6dc773043a5091374d0ad4aee45993e365",
+      "bytes": 319909,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2",
+      "sha256": "2e85dd89954dc8755120282c23036b5e43eb2e3c8b071c1f164a96c315dc3067",
+      "bytes": 7059,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": "sentence-transformers/all-MiniLM-L6-v2",
+      "modelId": "sentence-transformers/all-MiniLM-L6-v2",
+      "author": "sentence-transformers",
+      "sha": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "private": false,
+      "gated": false,
+      "lastModified": "2026-06-01T06:29:13.000Z"
+    },
+    "card_license": "apache-2.0",
+    "card_datasets": [
+      "s2orc",
+      "flax-sentence-embeddings/stackexchange_xml",
+      "ms_marco",
+      "gooaq",
+      "yahoo_answers_topics",
+      "code_search_net",
+      "search_qa",
+      "eli5",
+      "snli",
+      "multi_nli",
+      "wikihow",
+      "natural_questions",
+      "trivia_qa",
+      "embedding-data/sentence-compression",
+      "embedding-data/flickr30k-captions",
+      "embedding-data/altlex",
+      "embedding-data/simple-wiki",
+      "embedding-data/QQP",
+      "embedding-data/SPECTER",
+      "embedding-data/PAQ_pairs",
+      "embedding-data/WikiAnswers"
+    ]
+  },
+  {
+    "id": "project",
+    "url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+    "kind": "source code",
+    "support": "Project-maintained construction, repair and analysis; PRIVATE",
+    "recorded_revision": null,
+    "metadata_url": "https://api.github.com/repos/SoroushVahidi/consistency-aware-llm-rankin",
+    "checked_utc": "2026-10-26T21:21:19.792229+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 404,
+      "final_url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+      "sha256": "386f971764bbea9310cdfe4cdd5f2b0437786b8579bcabb6928418a02a4bcae3",
+      "bytes": 266231,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 404,
+      "final_url": "https://api.github.com/repos/SoroushVahidi/consistency-aware-llm-rankin",
+      "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+      "bytes": 118,
+      "content_type": "application/json; charset=utf-8"
+    }
+  },
+  {
+    "id": "prp",
+    "url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "kind": "source code",
+    "support": "Upstream modules used by local runtime adapter; not exact published effectiveness reproduction",
+    "recorded_revision": "968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "metadata_url": "https://api.github.com/repos/Memelank/PRP-Graph",
+    "checked_utc": "2026-10-26T21:21:19.793392+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+      "sha256": "57a2af4cf67b61a2c4ee3e75e974df39d660ba6223d61c541ed64334745183b2",
+      "bytes": 290640,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/Memelank/PRP-Graph",
+      "sha256": "f956ed40dfe58e15d22f44d2acaf477b197ae22dce497987bcb348ffa711bbf1",
+      "bytes": 5265,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 803600573,
+      "private": false,
+      "created_at": "2024-05-21T03:22:34Z",
+      "updated_at": "2026-04-29T17:45:15Z",
+      "pushed_at": "2024-09-09T06:25:44Z",
+      "full_name": "Memelank/PRP-Graph",
+      "html_url": "https://github.com/Memelank/PRP-Graph",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "springrank",
+    "url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "kind": "source code",
+    "support": "Direct original-graph baseline with local component centering/ties",
+    "recorded_revision": "f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "metadata_url": "https://api.github.com/repos/LarremoreLab/SpringRank",
+    "checked_utc": "2026-10-26T21:21:19.824883+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+      "sha256": "4d7858f033f68d5f90591afa6c91c4b13610c8ce2f05984ea7db8312370eb71a",
+      "bytes": 283912,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/LarremoreLab/SpringRank",
+      "sha256": "9310d84ed8a5615b8df9c3aa562e330fcbf372c795662a6bb3a4553e2b6277c0",
+      "bytes": 6482,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 225965002,
+      "private": false,
+      "created_at": "2019-12-04T22:01:16Z",
+      "updated_at": "2026-10-14T15:52:12Z",
+      "pushed_at": "2025-08-20T23:55:51Z",
+      "full_name": "LarremoreLab/SpringRank",
+      "html_url": "https://github.com/LarremoreLab/SpringRank",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "scidocs_original",
+    "url": "https://github.com/allenai/scidocs",
+    "kind": "source code",
+    "support": "SciDocs original benchmark; SPECTER citation",
+    "recorded_revision": null,
+    "metadata_url": "https://api.github.com/repos/allenai/scidocs",
+    "checked_utc": "2026-10-26T21:21:19.925174+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/allenai/scidocs",
+      "sha256": "8fa0ebc75ef62cfba90e69c3d86d23a51ea9d3e8a2db7389d12cb381fdc36dcb",
+      "bytes": 285983,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/allenai/scidocs",
+      "sha256": "e875ca910215e2a1c1233d3631c1d7923e89959716b35c69556c3e9e5da7c1df",
+      "bytes": 6024,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 259742832,
+      "private": false,
+      "created_at": "2020-04-28T20:20:40Z",
+      "updated_at": "2026-10-12T14:18:29Z",
+      "pushed_at": "2022-12-19T23:13:56Z",
+      "full_name": "allenai/scidocs",
+      "html_url": "https://github.com/allenai/scidocs",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "beir_code",
+    "url": "https://github.com/beir-cellar/beir",
+    "kind": "source code",
+    "support": "Conversion/benchmark source attribution; not a historical code pin",
+    "recorded_revision": null,
+    "metadata_url": "https://api.github.com/repos/beir-cellar/beir",
+    "checked_utc": "2026-10-26T21:21:19.932423+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/beir-cellar/beir",
+      "sha256": "d6715366a80d0a4fe41870cdb728389b40957f56bc6287c0622e3079ad09182a",
+      "bytes": 480713,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/beir-cellar/beir",
+      "sha256": "801cf729c67f58c7f57502b75bcce38c9b08f740446be00ca7a2d7e6de8cff57",
+      "bytes": 6538,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 330622921,
+      "private": false,
+      "created_at": "2021-01-18T09:55:54Z",
+      "updated_at": "2026-10-26T08:54:51Z",
+      "pushed_at": "2025-10-16T06:38:03Z",
+      "full_name": "beir-cellar/beir",
+      "html_url": "https://github.com/beir-cellar/beir",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "scip",
+    "url": "https://github.com/scipopt/scip",
+    "kind": "source code",
+    "support": "Canonical exact solver recorded 10.0.2",
+    "recorded_revision": null,
+    "metadata_url": "https://api.github.com/repos/scipopt/scip",
+    "checked_utc": "2026-10-26T21:21:19.964357+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/scipopt/scip",
+      "sha256": "77bde66491ffa54fab870fefe6da77af5a9c8a63fd25daa4163082ca1612dc03",
+      "bytes": 297187,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/scipopt/scip",
+      "sha256": "08c4d7ee9f2943b7e26c77dd3953748a1315aed33c406486364b5b343f208f98",
+      "bytes": 6057,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 342522859,
+      "private": false,
+      "created_at": "2021-02-26T09:16:17Z",
+      "updated_at": "2026-10-25T00:14:24Z",
+      "pushed_at": "2026-10-25T00:14:20Z",
+      "full_name": "scipopt/scip",
+      "html_url": "https://github.com/scipopt/scip",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "pyscipopt",
+    "url": "https://github.com/scipopt/PySCIPOpt",
+    "kind": "source code",
+    "support": "Canonical solver interface recorded 6.2.1",
+    "recorded_revision": null,
+    "metadata_url": "https://api.github.com/repos/scipopt/PySCIPOpt",
+    "checked_utc": "2026-10-26T21:21:19.969482+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://github.com/scipopt/PySCIPOpt",
+      "sha256": "f338048a10baae4343dcd14ba8b2042611b1cdb916a2bcbb401a943928ed1f50",
+      "bytes": 352828,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "metadata": {
+      "http": 200,
+      "final_url": "https://api.github.com/repos/scipopt/PySCIPOpt",
+      "sha256": "b0cf32050cee28cbcf9c80c9934f045b96b5c728027198c626d4821b0b56e051",
+      "bytes": 6304,
+      "content_type": "application/json; charset=utf-8"
+    },
+    "identity": {
+      "id": 59214089,
+      "private": false,
+      "created_at": "2016-05-19T14:29:21Z",
+      "updated_at": "2026-10-25T18:51:48Z",
+      "pushed_at": "2026-10-25T18:51:45Z",
+      "full_name": "scipopt/PySCIPOpt",
+      "html_url": "https://github.com/scipopt/PySCIPOpt",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      }
+    },
+    "card_license": null,
+    "card_datasets": null
+  },
+  {
+    "id": "hotpot",
+    "url": "https://hotpotqa.github.io/",
+    "kind": "original benchmark",
+    "support": "Historical QA-to-retrieval conversion incompletely pinned",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.004557+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://hotpotqa.github.io/",
+      "sha256": "1aa51a46cd7080b941a788c61ae3cebaea8df88cd2f4d22e1d98fff39d0e79c7",
+      "bytes": 144422,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "scip_release",
+    "url": "https://scipopt.org/",
+    "kind": "solver documentation",
+    "support": "SCIP license and citations",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.061640+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://scipopt.org/",
+      "sha256": "b45cb99812b563a17ae8b752f482c8c4a7cca87c083c977c6bf9b8048136107f",
+      "bytes": 126540,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "pyscipopt_docs",
+    "url": "https://pyscipopt.readthedocs.io/",
+    "kind": "interface documentation",
+    "support": "Solver interface citation",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.068007+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://pyscipopt.readthedocs.io/en/latest/",
+      "sha256": "55cf177a37f8845872eccaefcfc9fe4e990d27ee63b896885af496f4f72c4ffe",
+      "bytes": 19613,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "cohere_terms",
+    "url": "https://cohere.com/terms-of-use",
+    "kind": "provider terms",
+    "support": "Historical Cohere comparison/publication applicability remains unresolved",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.161148+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://cohere.com/terms-of-use",
+      "sha256": "232db136101d67e2d376d3fcb74d853e99c0a981023053bc1e2222b8fbe50957",
+      "bytes": 597914,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "cohere_grants",
+    "url": "https://cohere.com/research/grants",
+    "kind": "support program",
+    "support": "Funding attribution; not account-specific permission",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.266800+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://cohere.com/research/grants",
+      "sha256": "83cf619f878f0120b617bf2db19f8268719251452be5cd8c1ab4ab1c53d79b19",
+      "bytes": 535867,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "jdsa_guidelines",
+    "url": "https://link.springer.com/journal/41060/submission-guidelines",
+    "kind": "journal instructions",
+    "support": "Formatting, availability, permissions and review guidance",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.380163+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://link.springer.com/journal/41060/submission-guidelines",
+      "sha256": "735d2b7821259c80050ffced030580a235613e103a4271c4ff60c9ab75be99a2",
+      "bytes": 298192,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "jdsa_route",
+    "url": "https://link.springer.com/journal/41060/how-to-publish-with-us",
+    "kind": "journal instructions",
+    "support": "Subscription route no APC",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.439183+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://link.springer.com/journal/41060/how-to-publish-with-us",
+      "sha256": "696c499778a7556b08557616e89dd1e5425de84e317fe6db819d87981e90c841",
+      "bytes": 187837,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "retrieval_preprint",
+    "url": "https://doi.org/10.21203/rs.3.rs-9335700/v1",
+    "kind": "prior preprint",
+    "support": "Reuse/overlap disclosure",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.534216+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://www.researchsquare.com/article/rs-9335700/v1",
+      "sha256": "01c28e0d072dc4304600a90186b5fc6966903905234844221a9b7de356e3479e",
+      "bytes": 49742,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "published_pipeline",
+    "url": "https://doi.org/10.1007/s11227-026-08852-4",
+    "kind": "published prior work",
+    "support": "Algorithmic lineage; not present novelty",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.546476+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://link.springer.com/article/10.1007/s11227-026-08852-4",
+      "sha256": "0987a51a063fd93f18fa3fb7bd8fd83365ba743718e7992135348540483fff16",
+      "bytes": 375008,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_00",
+    "url": "https://doi.org/10.1007/s10107-010-0419-x",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.573762+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://link.springer.com/article/10.1007/s10107-010-0419-x",
+      "sha256": "dc205f8e3b635eb67668f388495546b4f22a95ca7a1b9ddb3e7dc6ac67a2c66c",
+      "bytes": 312837,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_02",
+    "url": "https://doi.org/10.1016/0020-0190(93)90079-O",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.646360+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/002001909390079O",
+      "sha256": "ce9389ce679fc4d30d0f23ba11858cc6ca216c800ee1f45ada313e39fc16d44e",
+      "bytes": 2675,
+      "content_type": "text/html;charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_03",
+    "url": "https://doi.org/10.1080/07421222.1996.11518099",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.649672+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://www.tandfonline.com/doi/full/10.1080/07421222.1996.11518099",
+      "sha256": "640eba9e6811563906a87a95bf079c8bd79c98190c53642a1a1630503bceaa40",
+      "bytes": 5644,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_04",
+    "url": "https://doi.org/10.1126/sciadv.aar8260",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.652648+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://www.science.org/doi/10.1126/sciadv.aar8260",
+      "sha256": "cbff0ffe7d6963cac1aa196c617e8ff8b918b918337318d09c7202a0fe9e3cbf",
+      "bytes": 5558,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_05",
+    "url": "https://doi.org/10.1145/1411509.1411513",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.659600+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/1411509.1411513",
+      "sha256": "311f8111ae485f433c1116c859369909514d8bed645935c346002c4789e6901f",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_06",
+    "url": "https://doi.org/10.1145/1571941.1572114",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.744140+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/1571941.1572114",
+      "sha256": "a80cda49d339da3258520d94de94f5fb55590f3d3708d8708b96dee11c0a71c3",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_07",
+    "url": "https://doi.org/10.1145/2094072.2094076",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.763677+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/2094072.2094076",
+      "sha256": "c7704624130f9ec211165504c3e1e92ca44cdf989ebe0f5cee0ebdd69a3b510c",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_08",
+    "url": "https://doi.org/10.1145/3184558.3192301",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.829102+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/citation.cfm?doid=3184558.3192301",
+      "sha256": "8de8697bea711ca887da5e6cd2cb8315c07f8ed355939f17ca385b5696d73bb7",
+      "bytes": 5589,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_09",
+    "url": "https://doi.org/10.1145/3331184.3331259",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.836028+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/3331184.3331259",
+      "sha256": "881dd602529d44a8a9777cb6a52a374de50616af2cecc17e27f468826c9fc9db",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_10",
+    "url": "https://doi.org/10.1145/3446429",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.837412+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/3446429",
+      "sha256": "87207c1f0355017e2aab2e2365412a60ac5460e78e93c0301bd1182694cb1aa3",
+      "bytes": 5511,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_11",
+    "url": "https://doi.org/10.1145/3626772.3657813",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.915511+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/3626772.3657813",
+      "sha256": "899972dc30b731b47e6e0f34445360ba165fe97d4f5509c25d1c0278860920b8",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_12",
+    "url": "https://doi.org/10.1145/3696410.3714863",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.924164+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/3696410.3714863",
+      "sha256": "4ff2f2eef44f53e973d2a62b38d82b6d475bc005151c780830c2af6c85986c16",
+      "bytes": 5556,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_13",
+    "url": "https://doi.org/10.1145/371920.372165",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.947018+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/371920.372165",
+      "sha256": "00938f65d9ec3dd17056a5a85a2b61758ba904a6b9e4710cb0aa0c1ce98b90da",
+      "bytes": 5550,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_14",
+    "url": "https://doi.org/10.1145/582415.582418",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.985796+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/582415.582418",
+      "sha256": "3775ad888a76e03ef1cea62685d1dbb4f9a45bcd07e3515c433760fcd334a693",
+      "bytes": 5550,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_15",
+    "url": "https://doi.org/10.1177/2515245918770963",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.988158+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://journals.sagepub.com/doi/10.1177/2515245918770963",
+      "sha256": "9fa843651e051f2ad3d0e9f5108ac1a37eff3c87ffee773a9e5f7e7d3d998d75",
+      "bytes": 5590,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_16",
+    "url": "https://doi.org/10.1214/aos/1079120141",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:20.991701+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://projecteuclid.org/journals/annals-of-statistics/volume-32/issue-1/MM-algorithms-for-generalized-Bradley-Terry-models/10.1214/aos/1079120141.full",
+      "sha256": "dded11bbab4e5f0d711d5d51e3f73b384a24aa60e9a2fa6ebe0b99a46faf583d",
+      "bytes": 1165,
+      "content_type": "text/html"
+    }
+  },
+  {
+    "id": "bib_17",
+    "url": "https://doi.org/10.1287/opre.2016.1534",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.048040+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.2016.1534",
+      "sha256": "27ae82153ecb56eac6d060123af4cc3a530d10948b1faa2e2374d8ba310dba15",
+      "bytes": 5586,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_18",
+    "url": "https://doi.org/10.1287/opre.32.6.1195",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.069721+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 403,
+      "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.32.6.1195",
+      "sha256": "8568daaecd9eb296478230474a71e32a243b87592caf0665e22129b48f1eaae6",
+      "bytes": 5586,
+      "content_type": "text/html; charset=UTF-8"
+    }
+  },
+  {
+    "id": "bib_19",
+    "url": "https://doi.org/10.1609/aaai.v40i26.39343",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.073363+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
+      "sha256": "ef788a9e3dd678433c8bf18f9421aaa04bcb3dec0e3c0b22f8b8c7f8549cc5ba",
+      "bytes": 24953,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_20",
+    "url": "https://doi.org/10.18653/v1/2020.acl-main.207",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.136338+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://aclanthology.org/2020.acl-main.207/",
+      "sha256": "de019482dd2872b53eb6615248b1db60371d09c3096a21f415f6f85ffcd00d93",
+      "bytes": 43705,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_21",
+    "url": "https://doi.org/10.18653/v1/2023.emnlp-main.923",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.138240+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://aclanthology.org/2023.emnlp-main.923/",
+      "sha256": "7dc4081c99fe669c7b361a8d08a550b5b404153c636b1e5f72d4e21f8156983f",
+      "bytes": 45750,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_22",
+    "url": "https://doi.org/10.18653/v1/2024.acl-long.313",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.165932+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://aclanthology.org/2024.acl-long.313/",
+      "sha256": "5ae1f28570e3b9218127d232a6c789b8d7f2c176b6d3079b0793b9c7b2225ba4",
+      "bytes": 42390,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_23",
+    "url": "https://doi.org/10.18653/v1/2024.findings-naacl.97",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.200351+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://aclanthology.org/2024.findings-naacl.97/",
+      "sha256": "cee575e72870c52898f89df31c2c6dc54eeb6bfa84d54e8c7f24aa4bfbb8d8ff",
+      "bytes": 48719,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_24",
+    "url": "https://doi.org/10.18653/v1/D18-1259",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.236362+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://aclanthology.org/D18-1259/",
+      "sha256": "45c58e20f6302c1adec1f86a0a3607385ce3d620a7afa52e06ee04670f05c9d7",
+      "bytes": 44256,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_25",
+    "url": "https://doi.org/10.2307/2334029",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.262766+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://www.jstor.org/stable/2334029?origin=crossref",
+      "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+      "bytes": 3038,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_26",
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.280738+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+      "sha256": "4101d4281ef54bac68657de1a2803d21063fac761f438950bfff2767e33af4e4",
+      "bytes": 254864,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_27",
+    "url": "https://openreview.net/forum?id=VUY0j74Yes",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.317743+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DVUY0j74Yes",
+      "sha256": "340e918948c59429ff7e8363c2b21eecc7b714398e2474879c8123bf96640d88",
+      "bytes": 4787,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_28",
+    "url": "https://openreview.net/forum?id=wCu6T5xFjeJ",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.363456+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DwCu6T5xFjeJ",
+      "sha256": "f37a0535b264548102bcba32e789bd5a593f1df3d03b570fdca2287f82966724",
+      "bytes": 4789,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_29",
+    "url": "https://openreview.net/forum?id=ykuc5q381b",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.384248+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3Dykuc5q381b",
+      "sha256": "54c52da9f84fe35d26ccaf5422a7e0ea3835ca443c4766bf2d089f0b53594383",
+      "bytes": 4787,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_30",
+    "url": "https://proceedings.mlr.press/v267/xu25w.html",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.404247+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://proceedings.mlr.press/v267/xu25w.html",
+      "sha256": "86556e12945e39935e069b4417d1238ad3885f6e17884cc6ad3640078c60639a",
+      "bytes": 16085,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "id": "bib_31",
+    "url": "https://www.jstor.org/stable/4615733",
+    "kind": "cited publication",
+    "support": "Related work or source-method attribution; not experimental input",
+    "recorded_revision": null,
+    "metadata_url": null,
+    "checked_utc": "2026-10-26T21:21:21.461988+00:00",
+    "authentication": "none; no cookies, tokens or netrc",
+    "access": {
+      "http": 200,
+      "final_url": "https://www.jstor.org/stable/4615733",
+      "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+      "bytes": 3038,
+      "content_type": "text/html; charset=utf-8"
+    }
+  }
+]

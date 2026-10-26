@@ -9,3 +9,6 @@ audit/PRIMARY_*
 # Editorial routing and overlap details remain local; repository publication is blocked.
 editorial/
 packages/editorial_private.zip
+
+# Review-only permission; never include in public source packages.
+packages/JDSA_Confidential_Processed_Evidence.zip

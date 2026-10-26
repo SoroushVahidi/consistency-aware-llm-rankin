@@ -1,0 +1,69 @@
+[
+  {
+    "id": "fiqa_original",
+    "url": "https://sites.google.com/view/fiqa/home",
+    "http": 200,
+    "final_url": "https://sites.google.com/view/fiqa/home",
+    "sha256": "b6215a7e1a9542c5301979635e46ed738dd71e773b230c93323fd11f4edb5434"
+  },
+  {
+    "id": "pyscip_contributors",
+    "url": "https://pyscipopt.readthedocs.io/en/latest/contributors.html",
+    "http": 200,
+    "final_url": "https://pyscipopt.readthedocs.io/en/latest/contributors.html",
+    "sha256": "36a2adf99aab54585e53338ccc933cbca906769d81cbab2be27d72d49450bd3e"
+  },
+  {
+    "id": "scip_paper",
+    "url": "https://doi.org/10.1007/s12532-008-0001-1",
+    "http": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s12532-008-0001-1",
+    "sha256": "ac30076dfe31997cb489d03a551f6e85084941f463d2aa734c9871f491602a8a"
+  },
+  {
+    "id": "pyscip_paper",
+    "url": "https://doi.org/10.1007/978-3-319-42432-3_37",
+    "http": 200,
+    "final_url": "https://link.springer.com/chapter/10.1007/978-3-319-42432-3_37",
+    "sha256": "fcf55fc1df54a0774e212fdcc9fbbeae206da5babd1b61d47407108615683bc0"
+  },
+  {
+    "id": "scidocs_license",
+    "url": "https://raw.githubusercontent.com/allenai/scidocs/master/LICENSE",
+    "http": 200,
+    "final_url": "https://raw.githubusercontent.com/allenai/scidocs/master/LICENSE",
+    "sha256": "ee8790799bd0e807be1058ab1db714b61d5908ded4f8ed3c239f9827c52c1076"
+  },
+  {
+    "id": "prp_commit",
+    "url": "https://api.github.com/repos/Memelank/PRP-Graph/commits/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "http": 200,
+    "final_url": "https://api.github.com/repos/Memelank/PRP-Graph/commits/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "sha256": "6062c173930806acef29d7915bf05aa951f7f08d50f25a18de1fdfc061b1d841",
+    "sha": "968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "author": {
+      "name": "Memelank",
+      "date": "2024-09-09T06:25:44Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "date": "2024-09-09T06:25:44Z"
+    }
+  },
+  {
+    "id": "springrank_commit",
+    "url": "https://api.github.com/repos/LarremoreLab/SpringRank/commits/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "http": 200,
+    "final_url": "https://api.github.com/repos/LarremoreLab/SpringRank/commits/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "sha256": "71c3344267fb5b509bc93dca0e351910ff189aebaec3a763d00c45dffbab70d0",
+    "sha": "f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "author": {
+      "name": "Ben Aoki-Sherwood",
+      "date": "2025-08-20T23:55:48Z"
+    },
+    "committer": {
+      "name": "Ben Aoki-Sherwood",
+      "date": "2025-08-20T23:55:48Z"
+    }
+  }
+]

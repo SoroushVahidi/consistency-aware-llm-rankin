@@ -1,0 +1,16 @@
+{
+  "revision": "4d6d9d372c24e541875990923ab5569454b6b44b",
+  "exit": 0,
+  "scope": "Public saved-measurement ledger/schema/means only; no retrieval scoring or corrected35 reproduction",
+  "adjustment": "HF .gitattributes moved outside extraction: transport metadata is not listed in release CHECKSUMS; literal full-Hub checkout fails membership assertion",
+  "result": {
+    "checksummed_files": 20,
+    "comparison_rows": 93504,
+    "configurations": 66,
+    "files": 21,
+    "queries": 342,
+    "records": 93504,
+    "status": "PASS",
+    "summary_rows": 1056
+  }
+}

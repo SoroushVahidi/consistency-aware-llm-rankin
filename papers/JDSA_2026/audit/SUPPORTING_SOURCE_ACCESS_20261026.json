@@ -1,0 +1,122 @@
+[
+  {
+    "id": "springrank_metadata",
+    "url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/setup.cfg",
+    "http": 404,
+    "final_url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/setup.cfg",
+    "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "numpy",
+    "url": "https://numpy.org/doc/stable/",
+    "http": 200,
+    "final_url": "https://numpy.org/doc/stable/",
+    "sha256": "99859c285333b1a2cab55a1f05a2c68828dd9cb473c9c6143e74e92fb0e1e03d",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "torch",
+    "url": "https://pytorch.org/",
+    "http": 200,
+    "final_url": "https://pytorch.org/",
+    "sha256": "c68932cdb7148c61fb8f9e8938e5462c09c0f49249f88d1a780e6b01184ed70a",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "transformers",
+    "url": "https://github.com/huggingface/transformers",
+    "http": 200,
+    "final_url": "https://github.com/huggingface/transformers",
+    "sha256": "69f2eb9d66010a81cba06f4112325a35fc9fde0d90e23c4181ad2528a073f431",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "sentence_transformers",
+    "url": "https://github.com/huggingface/sentence-transformers",
+    "http": 200,
+    "final_url": "https://github.com/huggingface/sentence-transformers",
+    "sha256": "dcfb1bf4b2990898e144a8e8a494c14d9228a4b78637723c3a65b1bd23324af1",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "sklearn",
+    "url": "https://scikit-learn.org/stable/",
+    "http": 200,
+    "final_url": "https://scikit-learn.org/stable/",
+    "sha256": "4eb430980f2575be1c13241bafcf5142247b4a17d1673adb20e10afe9c28fc31",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "networkx",
+    "url": "https://networkx.org/",
+    "http": 200,
+    "final_url": "https://networkx.org/",
+    "sha256": "c131a7abe7ae787036a2d4b1b1bd2ceafa6c72a793629ba4ab5f0ae49b1e7a80",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "scipy",
+    "url": "https://scipy.org/",
+    "http": 200,
+    "final_url": "https://scipy.org/",
+    "sha256": "c5bd50af36212d910a564c01b442f358a7b8924d066c6177ad3b9ea782fa019c",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "rank_bm25",
+    "url": "https://github.com/dorianbrown/rank_bm25",
+    "http": 200,
+    "final_url": "https://github.com/dorianbrown/rank_bm25",
+    "sha256": "b79058e88b61d9b143be0c5b30d7859675305aa2e895a3c4b9c634ffab1f31ad",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "azure_model",
+    "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models",
+    "http": 200,
+    "final_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+    "sha256": "b51203da54bf1f45a6efbf4e2127de28a01f40ea983839d3598c01c4c58d2e99",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "gemini_model",
+    "url": "https://ai.google.dev/gemini-api/docs/models",
+    "http": 200,
+    "final_url": "https://ai.google.dev/gemini-api/docs/models",
+    "sha256": "b27d37bfb70ca88aa7c4236ce2889924a79ed4f25fab54cd176e445ef674a963",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "cohere_model",
+    "url": "https://docs.cohere.com/docs/command-r-plus",
+    "http": 200,
+    "final_url": "https://docs.cohere.com/docs/command-r-plus",
+    "sha256": "9f1f57b038bca2afb63041adfb8ed61a217c3fd768aae1e5ee7d8c26b3311fd3",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "fireworks_model",
+    "url": "https://fireworks.ai/models/fireworks/gpt-oss-120b",
+    "http": 200,
+    "final_url": "https://fireworks.ai/models/fireworks/gpt-oss-120b",
+    "sha256": "87ca658ea454f4f95318358c5ba71a06bc1c1068e04ce6622a8f15ed3f017474",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "open_weight_gpt_oss",
+    "url": "https://huggingface.co/openai/gpt-oss-120b",
+    "http": 200,
+    "final_url": "https://huggingface.co/openai/gpt-oss-120b",
+    "sha256": "27b936709313a39729fb5769b6da0d99619d81cf3a08f4a0d0a1b97b31cb55c1",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  },
+  {
+    "id": "ranking_validator",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/validation/validate_public.py",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/validation/validate_public.py",
+    "sha256": "cc33f4d0d56ce005cd271c23cddab9bf13bca25bbd527ee0b81d529329025e95",
+    "identity_limit": "Current documentation or package, not proof of historical runtime/serving identity"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "main": [
+    "achterberg2009scip",
+    "maher2016pyscipopt"
+  ],
+  "supplement": [
+    "achterberg2009scip",
+    "maher2016pyscipopt"
+  ],
+  "reason": "Canonical solver and Python-interface implementation attribution verified against upstream citation guidance and publisher DOI records"
+}

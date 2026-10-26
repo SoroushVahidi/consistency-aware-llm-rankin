@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-26",
+  "source": "Author personally confirmed all seven statements in the task instructions",
+  "status": "AUTHOR-CONFIRMED",
+  "independently_verified": false,
+  "legally_signed": false,
+  "attestations": [
+    {
+      "id": "authorship",
+      "statement": "Sole author Soroush Vahidi; Department of Computer Science, New Jersey Institute of Technology; active corresponding contact sv96@njit.edu; ORCID 0000-0003-1934-6282",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "support",
+      "statement": "Funding/in-kind computational support and supporting organizations' lack of role as stated in declarations",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "interests",
+      "statement": "No competing interests relevant to the work",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "contributions_ai",
+      "statement": "Scientific contributions and accountability for AI-assisted work",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "ethics",
+      "statement": "Research ethics and applicable consent statements",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "acknowledgments",
+      "statement": "Acknowledgments and applicable personal permissions",
+      "status": "AUTHOR-CONFIRMED"
+    },
+    {
+      "id": "originality_overlap",
+      "statement": "Truthful originality and overlap disclosures, including reused evidence and related work",
+      "status": "AUTHOR-CONFIRMED"
+    }
+  ],
+  "separate_pending": [
+    "final approval of newly rebuilt PDFs",
+    "third-party licenses and provider conditions",
+    "submission-interface declarations and any required signatures"
+  ]
+}

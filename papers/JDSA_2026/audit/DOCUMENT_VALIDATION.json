@@ -179,7 +179,7 @@
       "detail": null
     },
     {
-      "check": "main citation keys unchanged",
+      "check": "main prior citations preserved; only verified additions",
       "pass": true,
       "detail": null
     },
@@ -189,7 +189,7 @@
       "detail": null
     },
     {
-      "check": "supplement citation keys unchanged",
+      "check": "supplement prior citations preserved; only verified additions",
       "pass": true,
       "detail": null
     },
@@ -218,13 +218,13 @@
     {
       "check": "main reference count",
       "pass": true,
-      "detail": 32
+      "detail": 34
     },
     {
       "check": "supplement final log clean",
       "pass": true,
       "detail": {
-        "underfull": 42
+        "underfull": 43
       }
     },
     {
@@ -240,13 +240,13 @@
     {
       "check": "supplement reference count",
       "pass": true,
-      "detail": 8
+      "detail": 10
     },
     {
       "check": "main_anonymous final log clean",
       "pass": true,
       "detail": {
-        "underfull": 125
+        "underfull": 127
       }
     },
     {
@@ -262,13 +262,13 @@
     {
       "check": "main_anonymous reference count",
       "pass": true,
-      "detail": 32
+      "detail": 34
     },
     {
       "check": "supplement_anonymous final log clean",
       "pass": true,
       "detail": {
-        "underfull": 41
+        "underfull": 42
       }
     },
     {
@@ -284,7 +284,7 @@
     {
       "check": "supplement_anonymous reference count",
       "pass": true,
-      "detail": 8
+      "detail": 10
     },
     {
       "check": "main identified PDF author",

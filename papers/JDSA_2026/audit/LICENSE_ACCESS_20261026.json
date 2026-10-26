@@ -1,0 +1,79 @@
+[
+  {
+    "id": "prp_license",
+    "url": "https://raw.githubusercontent.com/Memelank/PRP-Graph/968e45ee8178f5d3ac44a2b8f11f091af69206d7/LICENSE",
+    "http": 200,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "final_url": "https://raw.githubusercontent.com/Memelank/PRP-Graph/968e45ee8178f5d3ac44a2b8f11f091af69206d7/LICENSE"
+  },
+  {
+    "id": "springrank_license",
+    "url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/LICENSE",
+    "http": 200,
+    "sha256": "9900cf62f1fc56a9dac1d65273a569464dca9058089599a8cab67a02bd695097",
+    "final_url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/LICENSE"
+  },
+  {
+    "id": "springrank_setup",
+    "url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/setup.py",
+    "http": 200,
+    "sha256": "8133a3d2ac158d009eb3e4dafe432d05cc76717e1cf69d2635443ff844f77a2f",
+    "final_url": "https://raw.githubusercontent.com/LarremoreLab/SpringRank/f97a489e85e44c553a437e7c6f9e40a800a5ade4/setup.py"
+  },
+  {
+    "id": "scidocs_readme",
+    "url": "https://raw.githubusercontent.com/allenai/scidocs/master/README.md",
+    "http": 200,
+    "sha256": "5d100b736c15c80d6fb6ac8ff8a6ca2bcb06d068d3608c575c97f2a6ebfda35c",
+    "final_url": "https://raw.githubusercontent.com/allenai/scidocs/master/README.md"
+  },
+  {
+    "id": "hotpot_license",
+    "url": "https://raw.githubusercontent.com/hotpotqa/hotpot/master/LICENSE",
+    "http": 404,
+    "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "final_url": "https://raw.githubusercontent.com/hotpotqa/hotpot/master/LICENSE"
+  },
+  {
+    "id": "pyscip_citation",
+    "url": "https://pyscipopt.readthedocs.io/en/latest/citing.html",
+    "http": 404,
+    "sha256": "df8634d9e4c530e70eb2dc4c167f3fb3bb028841a3a2073fe9adb8d117124425",
+    "final_url": "https://pyscipopt.readthedocs.io/en/latest/citing.html"
+  },
+  {
+    "id": "scip_citation",
+    "url": "https://www.scipopt.org/index.php#cite",
+    "http": 200,
+    "sha256": "b45cb99812b563a17ae8b752f482c8c4a7cca87c083c977c6bf9b8048136107f",
+    "final_url": "https://www.scipopt.org/index.php#cite"
+  },
+  {
+    "id": "judgments_citation",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/raw/f9317638ca1cc422661f704168335576d36ca995/CITATION.cff",
+    "http": 200,
+    "sha256": "213906a1584eca3bc5d4c45cbb8b80beb4031eae4e712a204bfae12131840a59",
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/raw/f9317638ca1cc422661f704168335576d36ca995/CITATION.cff"
+  },
+  {
+    "id": "ranking_rights",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/RIGHTS_AND_ATTRIBUTION.md",
+    "http": 200,
+    "sha256": "387b4cde45e340251db1911b46f8bfe34641427460a45be894137eab985e9705",
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/RIGHTS_AND_ATTRIBUTION.md"
+  },
+  {
+    "id": "ranking_reproduce",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/REPRODUCE.md",
+    "http": 200,
+    "sha256": "5d0721fecd5b450310d4dda834db6a65cda8633b7e8aa561a33ca948d9cb6aef",
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/raw/4d6d9d372c24e541875990923ab5569454b6b44b/REPRODUCE.md"
+  },
+  {
+    "id": "judgments_license",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/raw/f9317638ca1cc422661f704168335576d36ca995/LICENSE",
+    "http": 404,
+    "sha256": "f36668ddf22403a332f978057d527cf285b01468bc3431b04094a7bafa6aba59",
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/raw/f9317638ca1cc422661f704168335576d36ca995/LICENSE"
+  }
+]

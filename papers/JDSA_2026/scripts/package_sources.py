@@ -17,8 +17,9 @@ manifest={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
 for f in src.glob('*Fig*.pdf'):manifest[f.name]=hashlib.sha256(f.read_bytes()).hexdigest()
 (root/'audit/PACKAGE_MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
 # This archive remains ignored and local; no other historical files are included.
-with zipfile.ZipFile(dest/'editorial_private.zip','w',zipfile.ZIP_DEFLATED) as z:
- for name in ['cover_letter','overlap_disclosure','title_page']:
-  for suffix in ['.tex','.pdf']:z.write(root/'editorial'/(name+suffix),name+suffix)
- for name in ['authors.tex','sn-jnl.cls']:z.write(src/name,name)
+editorial_files=[root/'editorial'/(name+suffix) for name in ['cover_letter','overlap_disclosure','title_page'] for suffix in ['.tex','.pdf']]
+if all(f.exists() for f in editorial_files):
+ with zipfile.ZipFile(dest/'editorial_private.zip','w',zipfile.ZIP_DEFLATED) as z:
+  for f in editorial_files:z.write(f,f.name)
+  for name in ['authors.tex','sn-jnl.cls']:z.write(src/name,name)
 print('Source package files',len(manifest),'source bytes',(dest/'JDSA_sources.zip').stat().st_size)

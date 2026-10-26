@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "authentication": "none"
+  },
+  {
+    "url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "authentication": "none"
+  },
+  {
+    "url": "https://orcid.org/0000-0003-1934-6282",
+    "http": 200,
+    "final_url": "https://orcid.org/0000-0003-1934-6282",
+    "authentication": "none"
+  }
+]

@@ -1,6 +1,6 @@
 # Repository visibility audit — release held
 
-**Decision: keep PRIVATE.** The visibility change is authorized conditional on safety, but the audit found material explicitly designated confidential in reachable history. No visibility mutation, deletion, purge or history rewrite was performed. Authenticated metadata shows ADMIN permission; this is not an account-permission failure. An unauthenticated GET returns 404.
+**Decision: keep PRIVATE.** See [the prepared remediation plan](PUBLIC_RELEASE_REMEDIATION_PLAN.md) for verified private backup, dependencies, ref migration and required future approvals. The original audit below is historical; its unclassified listwise finding is refined by the new content inspection. The visibility change is authorized conditional on safety, but the audit found material explicitly designated confidential in reachable history. No visibility mutation, deletion, purge or history rewrite was performed. Authenticated metadata shows ADMIN permission; this is not an account-permission failure. An unauthenticated GET returns 404.
 
 Concrete blocker:
 
@@ -23,3 +23,7 @@ Scope and evidence:
 This is a documented **failed release gate**, not an exhaustive clearance certificate. No repository content was exposed for the audit. Full raw inventories/log archives are retained outside Git in the task's private local audit directory; only this redacted finding is versioned.
 
 Safe remediation proposal, requiring a new explicit scope: preserve a private archival mirror; have the author classify and approve any declassification of the exact editorial records, or prepare a reviewed history-filtering plan for every affected branch/tag and GitHub PR/cache reference. Historical content cannot be made safe by deleting HEAD files alone. Review provider responses, third-party source rights, remaining logs/attachments and any non-container package surfaces before final release. Do not execute filtering or force-push without authorization. A separate sanitized public artifact repository could provide reproducibility access while preserving this private history, but would not satisfy restoration of this repository's visibility and has not been created.
+
+## Follow-up content review (26 October 2026)
+
+All 35 historical listwise response_text records are numeric bracketed rankings and separators only; no prose/source passages or full provider envelopes were found. They remain raw-output fields under the artifact policy. Five differ from a simple index-base conversion of the saved parsed indices, so no lossless reconstruction claim is made. The separate editorial-confidentiality blocker remains. A local all-ref bundle and current SNCS tree archive were verified; an off-device copy and destructive scope approval remain pending. No removal, rewrite or visibility change occurred. Exact private evidence and backup receipts are outside Git.
