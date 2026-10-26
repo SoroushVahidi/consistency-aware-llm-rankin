@@ -221,6 +221,25 @@ def test_analysis_interpreter_keeps_virtual_environment_symlink(tmp_path):
     assert absolute_interpreter(virtual_python) != str(virtual_python.resolve())
 
 
+def test_slurm_uses_scheduler_isolation_not_other_mig_processes(monkeypatch):
+    monkeypatch.setenv("SLURM_JOB_ID", "test-only")
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "MIG-test-only")
+
+    def forbidden_global_query(*_args, **_kwargs):
+        pytest.fail("A global GPU process query would include unrelated MIG allocations")
+
+    monkeypatch.setattr(worker.subprocess, "run", forbidden_global_query)
+    assert worker.compute_pids() == set()
+
+
+@pytest.mark.parametrize("visible", ["", "-1", "0,1"])
+def test_slurm_refuses_missing_or_multiple_allocated_gpus(monkeypatch, visible):
+    monkeypatch.setenv("SLURM_JOB_ID", "test-only")
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", visible)
+    with pytest.raises(RuntimeError, match="exactly one allocated"):
+        worker.compute_pids()
+
+
 def test_actual_launcher_keeps_virtual_environment_executable(tmp_path):
     run = tmp_path / "private-run"
     (run / "logs").mkdir(parents=True)

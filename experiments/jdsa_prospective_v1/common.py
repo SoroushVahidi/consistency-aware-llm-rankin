@@ -168,7 +168,7 @@ def source_hashes():
     return {
         p.name: filehash(p)
         for p in sorted(CODE.iterdir())
-        if p.is_file() and p.suffix in {".py", ".md", ".sh"}
+        if p.is_file() and p.suffix in {".py", ".md", ".sh", ".sbatch"}
     }
 
 

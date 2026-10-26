@@ -9,6 +9,7 @@ import importlib.metadata
 import json
 import os
 import random
+import resource
 import shutil
 import signal
 import subprocess
@@ -43,6 +44,13 @@ from .gate import gate_report
 
 
 def compute_pids():
+    if os.environ.get("SLURM_JOB_ID"):
+        # Slurm isolates the allocated MIG instance. A global nvidia-smi process
+        # list includes other legitimate instances and is not a conflict test.
+        visible = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+        if visible.lower() in {"", "-1", "none", "nodevfiles"} or "," in visible:
+            raise RuntimeError("Slurm must expose exactly one allocated CUDA device")
+        return set()
     result = subprocess.run(
         ["nvidia-smi", "--query-compute-apps=pid", "--format=csv,noheader,nounits"],
         text=True,
@@ -201,6 +209,8 @@ class Worker:
         torch.use_deterministic_algorithms(True)
         torch.backends.cudnn.benchmark = False
         torch.backends.cuda.matmul.allow_tf32 = False
+        if torch.cuda.device_count() != 1:
+            raise RuntimeError("Exactly one visible CUDA device is required")
         self.torch = torch
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model_path, local_files_only=True, trust_remote_code=False
@@ -217,6 +227,9 @@ class Worker:
         if next(self.model.parameters()).device.type != "cuda":
             raise RuntimeError("Model was not allocated on CUDA")
         self.runtime = {
+            "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
+            "slurm_cpus_per_task": os.environ.get("SLURM_CPUS_PER_TASK"),
+            "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"),
             "packages": {
                 p: importlib.metadata.version(p)
                 for p in ("torch", "transformers", "accelerate", "numpy", "huggingface-hub")
@@ -226,6 +239,7 @@ class Worker:
             "gpu_total_bytes": torch.cuda.get_device_properties(0).total_memory,
             "gpu_peak_allocated_bytes": torch.cuda.max_memory_allocated(),
             "gpu_peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+            "peak_host_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
             "tokenizer_class": type(self.tokenizer).__name__,
             "chat_template_sha256": digest(self.tokenizer.chat_template),
             "generation_defaults": self.model.generation_config.to_dict(),
