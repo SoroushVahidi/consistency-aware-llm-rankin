@@ -1,0 +1,366 @@
+{
+  "status": "PASS",
+  "passed": 70,
+  "total": 70,
+  "checks": [
+    {
+      "check": "all main table bodies unchanged",
+      "pass": true,
+      "detail": 6
+    },
+    {
+      "check": "unchanged SI table thresholds.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table corrected35.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table candidate.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table extraction.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table construction_domains.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table construction.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table roles.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table springrank.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table external.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table cached_effects.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table corpus_pins.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table model_pins.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table construction_utility.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table canonical_retrieval.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table families.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table endpoint_contracts.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table robustness.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table prompt.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table setup.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table reliability.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table structural_cost.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged SI table construction_algorithm.tex",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged figure Fig2.pdf",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged figure Fig3.pdf",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged figure ESM_Fig1.pdf",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged figure ESM_Fig2.pdf",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged figure ESM_Fig3.pdf",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "complete results sections unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "statistical methods unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "abstract length",
+      "pass": true,
+      "detail": 227
+    },
+    {
+      "check": "keyword count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main iicol",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "obsolete journal removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "no source subfolders",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main citation keys unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main no duplicate source labels",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement citation keys unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement no duplicate source labels",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main final log clean",
+      "pass": true,
+      "detail": {
+        "underfull": 129
+      }
+    },
+    {
+      "check": "main PDF exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main bbl exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main reference count",
+      "pass": true,
+      "detail": 32
+    },
+    {
+      "check": "supplement final log clean",
+      "pass": true,
+      "detail": {
+        "underfull": 42
+      }
+    },
+    {
+      "check": "supplement PDF exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement bbl exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement reference count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "main_anonymous final log clean",
+      "pass": true,
+      "detail": {
+        "underfull": 125
+      }
+    },
+    {
+      "check": "main_anonymous PDF exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous bbl exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous reference count",
+      "pass": true,
+      "detail": 32
+    },
+    {
+      "check": "supplement_anonymous final log clean",
+      "pass": true,
+      "detail": {
+        "underfull": 41
+      }
+    },
+    {
+      "check": "supplement_anonymous PDF exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous bbl exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous reference count",
+      "pass": true,
+      "detail": 8
+    },
+    {
+      "check": "main identified PDF author",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main identified text",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main no unresolved PDF markers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement identified PDF author",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement identified text",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement no unresolved PDF markers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous blank metadata author",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous direct identifiers withheld",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous blank metadata author",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous direct identifiers withheld",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "archive flat",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "archive essential sources",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "archive excludes confidential materials",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "26 DOI identities verified",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "saved scientific invariants",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "scientific_analyses_executed": false
+}

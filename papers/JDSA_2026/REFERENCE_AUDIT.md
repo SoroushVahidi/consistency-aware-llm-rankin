@@ -1,0 +1,22 @@
+# Literature and reference audit
+
+32 main references and eight SI references; no additions solely for count or journal targeting. The unchanged citation-key sets are checked in document validation. All 26 DOI-bearing entries have registration metadata verified through Crossref or DOI content negotiation (`audit/REFERENCE_METADATA.json`). Publisher access challenges are retained in `audit/LINK_CHECKS.json`, not treated as broken DOIs. Metadata verification establishes identity; it is not a claim that every paywalled full text was newly reread.
+
+| Literature-dependent claim | Support / assessment |
+|---|---|
+| Pairwise strength estimation | Bradley–Terry and Hunter MM; Rank Centrality explicitly described as comparison-chain estimation. No claim that deletion weights are calibrated probabilities. |
+| Preference graphs and rank aggregation | Dwork, Ailon and Hodge decomposition cover aggregation, disagreement and cyclic flows; established methods are acknowledged. |
+| MWFAS and exact optimization | Grötschel linear ordering and Baharev exact FAS support the established formulations; Eades distinguishes the implemented cycle-minimum deletion from a different heuristic. No solver novelty is claimed. |
+| Direct graph ranking and fusion | SpringRank primary paper supports weighted quadratic hierarchy; RRF combines ranks. Changing extraction is explicitly separated from deletion's isolated effect. |
+| Retrieval prompting and controls | Original ACL PRP / PRP-Graph, listwise and SIGIR setwise papers support the elicitation distinctions. Adapted PRP-Graph is not called an exact reproduction. Official BGE model card supports raw relevance logits. |
+| Consistency mitigation | Published TMLR LLM-RankFusion, AAAI multi-evaluator acyclic preference and WWW TourRank support narrow method descriptions, not transference of their benefits to fixed-evidence edge deletion. ICML Xu's original paper evaluates model-ranking reliability, explicitly distinguished from document relevance. |
+| Evaluation metric and data quality | Järvelin–Kekäläinen supports graded positional gain; Wang–Strong motivates task-dependent quality. Equal-profile invariance is algebraic, with empirical frequency as the contribution. |
+| Statistical inference | Original Holm, Carterette multiplicity, Urbano IR testing and Lakens equivalence distinguish corrected discoveries, pointwise uncertainty and nonsignificance. Whole-query exchangeability assumptions remain stated. |
+| Reproducible benchmarking | Original SPECTER/SciDocs, FiQA, HotpotQA, BRIGHT and BEIR identify benchmark lineage; model/corpus pins and reuse contracts are in SI. The released derived resources are attributed and linked with coverage restrictions, without claiming independent replication. |
+| Own and related work | Published Supercomputing article is cited as published (publisher confirms September 2026); retrieval Research Square v1 is identified explicitly as a preprint in prose. Pending/preparation MWFAS work is disclosed as unresolved status, never as accepted. SNCS withdrawal remains unconfirmed. |
+
+Non-DOI references: official BGE model card; Holm original journal article/JSTOR stable record; BRIGHT ICLR 2025 original OpenReview paper; BEIR NeurIPS Datasets and Benchmarks 2021 record and author repository; LLM-RankFusion's published TMLR April 2026 primary PDF record; ICML/PMLR Xu metadata and abstract. Current OpenReview challenge pages prevented fresh access to some original PDFs/API records; existing audited metadata and the primary publication records were retained, without invented DOIs or publication status.
+
+Reference adjustments are limited to source URLs, breakable existing model pin, and removal of a spurious issue number for Baharev's article 1.4. Crossref's earliest-online date for Hodge theory is 2010; the volume-127 print citation correctly remains 2011. Registrant records sometimes omit subtitles/article numbering; no false metadata reconciliation or scientific reinterpretation is performed. The Baharev author-institution publication record corroborates volume 26, article 1.4, pp. 1–28. Article numbers for Ailon/Carterette and Supercomputing are retained.
+
+Every existing main/SI citation occurrence is recorded with local context in `audit/CITATION_CLAIMS.json`. No unsupported numerical comparison to another system is introduced. Full original-version overlap review, exhaustive priority assessment and inaccessible full texts remain limits, not certified completion.

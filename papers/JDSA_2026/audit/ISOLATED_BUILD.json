@@ -1,0 +1,23 @@
+{
+  "exit_code": 0,
+  "isolated_directory": "fresh temporary extraction outside the worktree (path omitted for portability)",
+  "scientific_execution": false,
+  "documents": {
+    "main": {
+      "clean_log": true,
+      "same_extracted_text": true
+    },
+    "supplement": {
+      "clean_log": true,
+      "same_extracted_text": true
+    },
+    "main_anonymous": {
+      "clean_log": true,
+      "same_extracted_text": true
+    },
+    "supplement_anonymous": {
+      "clean_log": true,
+      "same_extracted_text": true
+    }
+  }
+}

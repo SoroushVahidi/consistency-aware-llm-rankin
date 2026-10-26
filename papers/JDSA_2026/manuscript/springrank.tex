@@ -1,0 +1,25 @@
+\begin{supplementtable}
+  \caption{Exploratory original-graph SpringRank comparison, primary
+    $\lambda=0$, full-query nDCG@10. U/G/E are unrepaired/greedy/exact
+    Copeland. Positive $\Delta$ favors SpringRank; intervals are pointwise
+    paired query-bootstrap 95\% intervals. Holm covers these eight tests.
+    Selected denotes the 213-query cache. Six-query comparisons with G/E tie on every query; displayed zeros
+    suppress floating-point errors below $10^{-12}$.}
+  \label{tab:springrank}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}L{2.05cm}Yrrr@{}}
+    \toprule
+    Cohort & Control & $\Delta$ & 95\% interval & Holm $p$ \\
+    \midrule
+    Six ($n=6$) & U-Copeland & $+0.001010$ & $[0,0.003030]$ & 1 \\
+     & G-Copeland & $0$ & $[0,0]$ & 1 \\
+     & E-Copeland & $0$ & $[0,0]$ & 1 \\
+     & Bradley--Terry & $+0.001010$ & $[0,0.003030]$ & 1 \\
+    \midrule
+    Selected ($n=213$) & U-Copeland & $+0.003598$ & $[-0.003052,0.011223]$ & 1 \\
+     & G-Copeland & $+0.005175$ & $[-0.000692,0.012694]$ & 1 \\
+     & E-Copeland & $-0.000377$ & $[-0.006577,0.006980]$ & 1 \\
+     & Bradley--Terry & $+0.004546$ & $[-0.000582,0.010750]$ & 1 \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

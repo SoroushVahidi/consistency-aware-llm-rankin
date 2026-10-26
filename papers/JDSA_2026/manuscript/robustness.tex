@@ -1,0 +1,41 @@
+\begin{supplementtable}
+  \caption{Robustness of the canonical no-rejection finding (canonical evidence only).
+    Each row probes a distinct artifact risk; none overturns the
+    Holm-corrected repaired-vs-unrepaired finding. MDE/TOST characterize
+    detectable scale and limited equivalence, not a general proof of
+    zero effect.}
+  \label{tab:robustness}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}L{3.2cm}Y@{}}
+    \toprule
+    Check & Result \\
+    \midrule
+    Baseline fairness & Testing whether the RRF-centered primary candidate
+      pool gives a structural advantage to RRF-family baselines: $0/8$
+      Holm-significant cells (RRF and CombSUM vs.\ the fixed repaired
+      Copeland hybrid, canonical pool, all four datasets). No superiority detected in those contrasts; this is not an interaction
+      test proving the pool policy neutral. \\
+    \addlinespace
+    Power and minimum detectable effect & In the active larger-pool
+      family, median observed absolute mean delta $0.0036$ vs.\ median
+      Holm-adjusted 80\%-power minimum detectable effect $0.0201$
+      (107 finite MDE cells out of 110; undefined values excluded): the
+      reported detectable scale exceeds typical observed effects.
+      MDE is a design-sensitivity calculation, not a confidence bound
+      ruling out effects. \\
+    \addlinespace
+    Narrow equivalence & Two-one-sided-tests equivalence, active larger-pool
+      family: $13/110$ cells reject non-equivalence at a $\pm 0.005$
+      margin, $32/110$ at $\pm 0.010$, after Holm correction. Equivalence
+      is established for a minority of cells, not the majority; the
+      correct reading of the null result is absence of reliable positive
+      evidence, not blanket practical equivalence. \\
+    \addlinespace
+    Larger-pool ($P{>}k$) family & Already reported in
+      Table~\ref{tab:retrieval-holm}: $0/110$ Holm-significant despite a
+      $10.6\%$ mean top-$k$ membership-change rate
+      (reported in the main paper), so membership change
+      alone is not sufficient to produce a corrected retrieval gain. \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

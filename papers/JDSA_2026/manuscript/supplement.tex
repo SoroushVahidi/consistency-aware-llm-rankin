@@ -1,0 +1,317 @@
+\AddToHook{package/hyperref/before}{\RequirePackage{float}}
+\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
+\input{common}
+\usepackage{placeins}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thealgorithm}{S\arabic{algorithm}}
+\hypersetup{pdftitle={Online Resource 1: Preference-Graph Repair and Retrieval Utility}}
+\begin{document}
+\title[Online Resource 1]{Online Resource 1: \maintitle}
+\input{authors}
+\maketitle
+\begin{center}\textit{International Journal of Data Science and Analytics}\end{center}
+This Online Resource provides protocols, comparison families and diagnostics supporting the main paper's opportunity decomposition. The final reviewer ZIP independently reproduces the corrected statistics from processed observations and verifies canonical graph properties. It excludes restricted optional inputs and requires confirmation of the confidential editorial channel; no unrestricted public release of that package is claimed. Identified public resources and the limits of their coverage are listed below.
+
+\subsection*{Reading guide}
+\begingroup\papertable
+\begin{tabularx}{\linewidth}{@{}L{3.0cm}Y@{}}\toprule
+Main question & Location in this Online Resource \\\midrule
+Cohorts and measurement & Section~\ref{sec:si-protocols}: pools, construction, model/corpus identities and prior resource \\
+Repair/extraction controls & Section~\ref{sec:si-methods}: fixed methods, ties and optimum completeness \\
+Endpoints and inference & Section~\ref{sec:si-statistics}: Table~\ref{tab:endpoint-contracts}, family map and corrected Table~\ref{tab:corrected35} \\
+Structural opportunities & Section~\ref{sec:si-structural}: cost, cycles and repeated construction views \\
+Ranking/grade attribution & Section~\ref{sec:si-cached}: selected-cache profiles and descriptive cases \\
+External retrieval controls & Section~\ref{sec:si-controls}: matched rankers and candidate coverage \\
+Instrument validity & Section~\ref{sec:si-validity}: invalidity, abstentions, repeats and unsuccessful prompt development \\
+Evidence reuse/access & Section~\ref{sec:si-related}: lineage, historical limits and bundle inventory \\\bottomrule
+\end{tabularx}\endgroup
+
+\section{Detailed Protocols and Provenance}\label{sec:si-protocols}
+\subsection{Canonical score-derived cohorts}
+The canonical score sources are BM25 lexical retrieval, term frequency--inverse document frequency (TF-IDF) and the all-MiniLM-L6-v2 sentence encoder. Relevance judgments are abbreviated qrels; a directed acyclic graph is abbreviated DAG. The principal endpoint is normalized discounted cumulative gain (nDCG), whose ideal discounted cumulative gain (IDCG) denominator follows the original study contract. BM25 uses $k_1=1.5$, $b=0.75$; TF-IDF uses cosine logarithmic term weighting. Source scores are held fixed and represent a controlled multi-source substrate, not a current retrieval leaderboard. Candidates are the top-$P$ reciprocal rank fusion (RRF) order over the union of native source lists. Canonical cutoff equals pool size; the larger-pool study includes both $P>k$ cells permitting membership changes and $P=k$ reference cells (Table~\ref{tab:setup}).
+\input{setup}
+
+For a query--ranker score vector on available documents $D_{q,s}$, normalization is
+\begin{equation}
+\bar x_{q,s}(d)=\frac{x_{q,s}(d)-\min_{d'\in D_{q,s}}x_{q,s}(d')}
+{\max_{d'\in D_{q,s}}x_{q,s}(d')-\min_{d'\in D_{q,s}}x_{q,s}(d')}.
+\label{eq:si-minmax}
+\end{equation}
+A range below $10^{-12}$ maps to a zero vector; missing scores remain unavailable. Retention matching first records raw-margin per-ranker retained-vote rates and regime edge-count targets. The normalized source thresholds use empirical margin quantiles; a discrete aggregate-threshold search minimizes the absolute retained-edge-count difference, breaking ties toward smaller thresholds. Vote thresholds are per dataset/ranker and shared across regimes; aggregate thresholds are per dataset/regime. This unsupervised calibration uses the same evaluated usable query list, without qrel tuning or a held-out calibration split. Table~\ref{tab:thresholds} and Algorithm~\ref{alg:construction} retain the original contracts.
+\input{thresholds}
+\input{construction_algorithm}
+
+Alternative pool policies use equal per-ranker depth, round-robin interleaving, a single-ranker pool or CombSUM. These are construction sensitivities; baseline comparisons in the canonical pool do not constitute an interaction test proving pool-policy neutrality.
+
+\subsection{Prospective observations and construction rules}
+Twenty queries and BM25 top-12 pools were frozen before relevance evaluation: seven FiQA, seven SciDocs and six BRIGHT biology. Each of 66 unordered pairs per query receives two orientations from each of two pinned models, giving 5,280 first observations. Seven pairs per query are independently repeated in both orientations, adding 560 responses; 40 separate listwise attempts bring the total to 5,880. Repeats estimate reliability and never add primary votes.
+
+Displayed positions are mapped back to document identity before reconciliation. Valid TIE and INSUFFICIENT\_INFORMATION choices are abstentions. Invalid schema, missing fields, unsupported choices/confidence labels and capped incomplete responses are unavailable judgments, never default A votes. The strict primary rule and four exploratory construction rules are:
+\begin{enumerate}
+\item Strict agreement: retain a unit edge only if both orientations are valid, directional and agree on the same document.
+\item AB only: use the first orientation's valid directional winner.
+\item BA only: use the reverse orientation after restoring document identity.
+\item Symmetric, both valid: require both parsed responses, count directional votes as $+1/-1$ and abstentions as zero, and retain a unit edge for a nonzero net winner. Opposed votes cancel; agreement does not double the weight.
+\item Symmetric, available: apply the same sum to available valid responses, permitting one valid directional response when the other is invalid.
+\end{enumerate}
+All variants reuse 40 model/query cells and 20 query identities. Agreement and confidence categories are retention metadata, not calibrated correctness.
+
+\subsection{Dataset, model and software identity}
+Official query/document IDs, text hashes, frozen pool identities and qrel snapshots are retained. New FiQA/SciDocs cohorts use BEIR-hosted snapshots; BRIGHT uses original biology examples, positive IDs and excluded-document rules. Historical HotpotQA remains a retained QA-to-retrieval export with incompletely documented conversion. Tables~\ref{tab:si-corpus} and~\ref{tab:si-models} report exact model/corpus pins. Hosted license tags do not supersede underlying source rights.
+\input{corpus_pins}
+\input{model_pins}
+The recorded PRP-Graph source commit is \texttt{\seqsplit{968e45ee8178f5d3ac44a2b8f11f091af69206d7}}; the SpringRank source commit is \texttt{\seqsplit{f97a489e85e44c553a437e7c6f9e40a800a5ade4}}. The latter has inconsistent license-file/package metadata, so its third-party implementation is not redistributed in the review bundle.
+
+The original prospective runtime records PyTorch 2.13.0+cu130, Transformers 5.16.1 and CUDA 13.0. Pair prompts use query/document truncation of 128/256 tokens, a 48-token output cap, temperature 0.7, top-$p=0.9$ and seed 20261025162122; listwise output cap is 128 and context ceiling 4096. Model-specific chat/reasoning settings are frozen. Historical provider aliases identify observed serving names rather than immutable provider snapshots.
+
+\subsection{Previously released derived judgment resource}
+\begin{supplementtable}
+\caption{Consistency-Aware Judgments v1 configurations. These are record classes, not independent query samples}
+\label{tab:dataset-v1}\papertable
+\begin{tabularx}{\linewidth}{@{}YrY@{}}\toprule
+Configuration & Records & Interpretation\\\midrule
+Pairwise judgments&48,777&Parsed provider/orientation observations\\\addlinespace
+Repeated measurements&7,140&Summaries of repeated observations\\\addlinespace
+Selector training&139&Historical derived feature records\\\addlinespace
+Provider diagnostics&276&Provider/run diagnostic records\\\midrule
+Total&56,332&Four configurations of one resource\\\bottomrule
+\end{tabularx}
+\end{supplementtable}
+Table~\ref{tab:dataset-v1} records the four configurations. Version 1 was publicly released on 13 August 2026. The four existing Parquet files were retrieved at the recorded immutable scientific revision and matched their release hashes and row counts; no observations were generated. Previously prepared anonymous copies removed source-run identifiers and file-level schema metadata while retaining scientific values and counts. Those copies remain archival and are excluded from the final reviewer ZIP. The confidential source mapping preserves the original bytes and transformation record; no new dataset publication is claimed.
+
+The resource includes SciDocs, HotpotQA and BRIGHT and excludes FiQA/Cohere and raw benchmark text. It does not contain the October prospective collection or supply every input used by the paper. Pair, provider, orientation and repeated-measurement fields must remain distinguishable. Some historical confidence/probability fields are absent; they must not be manufactured from winner labels. The exact independent-query sample cannot be inferred from the aggregate release receipt. Its CC BY-SA 4.0 license and original attribution remain in the confidential provenance record; its payload is not bundled or anonymously relicensed.
+
+The separate numerical ranking-pool release contains 93,504 derived method measurements over 66 configurations and 342 query identities, not raw pairwise judgments or a new independent retrieval corpus. Structural MWFAS metric/extension resources belong to related graph-benchmark work and are not new contributions here. Versions and source-parent distinctions remain in the editor's mapping; none is pooled as additional query support.
+
+\section{Repair, Extraction and Optimal-Envelope Details}\label{sec:si-methods}
+\subsection{Repair and extraction instantiations}
+For distinct nodes, binary $b_{uv}$ means $u$ precedes $v$. The established linear-ordering model is
+\begingroup\interdisplaylinepenalty=10000
+\begin{align}
+\min\quad &\sum_{(u,v)\in E}w(u,v)b_{vu},\label{eq:si-mip-objective}\\
+\text{subject to}\quad &b_{uv}+b_{vu}=1\quad (u\ne v),\label{eq:si-antisymmetry}\\
+&b_{ab}+b_{bc}+b_{ca}\le2\quad(a,b,c\text{ distinct}),\label{eq:si-transitivity}\\
+&b_{uv}\in\{0,1\}.\label{eq:si-binary}
+\end{align}\endgroup
+An edge is deleted when its reverse-order variable is one. The formulation is established, not a new minimum-weight feedback arc set (MWFAS) algorithm \cite{groetschel1984cutting,baharev2021exact}. All 1,025 historical reported instances have SCIP proven-optimal status and zero reported gap. The empty BRIGHT/biology:0 \texttt{ms2} graph was historically excluded; empty graphs have trivial repair, not infeasibility. Mean/median/maximum saved solve times are 7.4/0.25/236 ms under a 300-second safety limit. The frozen canonical SCIP objective matches independent brute-force results on 49 saved small cases; these are correctness fixtures, not 49 additional retrieval queries.
+
+The offline replay uses PySCIPOpt 6.2.1/SCIP 10.0.2 and a 60-second exact safety limit. The complete-envelope diagnostic uses 30 seconds per canonical solve and 120 seconds for independent MIP enumeration. These contracts differ from the historical 300-second limit. 
+
+Table~\ref{tab:baselines} records the method roles; Table~\ref{tab:extraction-params} gives the corresponding extraction parameters. Copeland is the fixed primary extractor for the profile attribution because its complete branch permutations are available; this choice does not establish extractor-general attribution. The primary family has graph-free controls and five paired graph rules; the expanded exact-versus-unrepaired family adds PageRank, Rank Centrality, Markov hybrid and Bradley--Terry-style aggregation. Topological and prior-priority topological extraction require a DAG and enter exact-versus-greedy checks rather than an unrepaired cyclic-graph contrast.
+\input{roles}
+\input{extraction}
+For hybrids, the original normalized graph score is combined with the normalized reciprocal-rank-fusion prior:
+\begin{equation}
+h_q(d)=\hat s_q^{\rm prior}(d)+\alpha\hat s_q^{\rm graph}(d),\quad\alpha=0.3.
+\label{eq:si-hybrid}
+\end{equation}
+Graph-free CombSUM sums per-query/source normalized scores; Borda fusion sums rank points based on the query union size, with absent documents contributing zero. RRF sums reciprocal rank contributions, while prior-only uses the fixed upstream fusion score. These are distinct from graph out-degree or edge-weight sums. The prior uses pool-local ranks and reciprocal-rank constant 60; standalone fusion uses each full stored ranking before restricting to the pool. These can differ without a tie. The sensitivity sweep uses 0.1/0.3/0.5/1.0, not test-label selection of a best alpha.
+
+Direct SpringRank minimizes the attributed energy \cite{debacco2018springrank}
+\begin{equation}
+H(s)=\tfrac12\sum_{ij}A_{ij}(s_i-s_j-1)^2+\tfrac\lambda2\sum_i s_i^2.
+\label{eq:si-springrank}
+\end{equation}
+The primary setting is $\lambda=0$; 0.01 and 1 are sensitivities. Each weak component is centered at zero and isolates receive zero. Absolute differences up to $10^{-10}$ form numerical tie groups ordered by document ID. Component offsets are not identified by comparisons. Fractional weights are not independent win counts. Bradley--Terry-style aggregation is the saved finite-iteration implementation, without a likelihood-optimality certificate.
+
+\subsection{Complete optimum sets and utility envelopes}
+For the six primary aggregate graphs, hold candidates, judgments, Copeland and ties fixed. At optimum cost $c_q^\star$, let $\mathcal F_q^\star$ contain every feasible deletion set of that cost. With the same fixed extractor $\mathcal R$ as in the main paper, the conditional utility envelope is
+\begin{equation}
+[U_q^-,U_q^+]=\left[\min_{F\in\mathcal F_q^\star}U_q(\mathcal R(G_q-F)),\,
+\max_{F\in\mathcal F_q^\star}U_q(\mathcal R(G_q-F))\right].
+\label{eq:si-envelope}
+\end{equation}
+This is an envelope over repaired graphs under fixed extraction, not all topological ordering policies for one DAG. Canonical SCIP establishes the optimum; exhaustive enumeration visits all $8!=40,320$ node orders. Duplicate backward-edge deletion sets are collapsed. With positive costs, any optimum $F$ admits a retained-DAG topological order whose backward set $B\subseteq F$ already breaks all cycles; optimality implies $B=F$. With nonnegative costs, additional deleted forward edges can only have zero cost and their subsets must also be enumerated. Primary graphs have no zero-cost arcs. This diagnostic argument does not introduce a new ranking theorem.
+
+An independent deletion model uses binary $d_e$ and positions $p_v\in\{0,\ldots,n-1\}$:
+\begin{equation}
+p_u+1\le p_v+n d_{uv}\quad((u,v)\in E),\qquad\sum_e w_e d_e=c_q^\star.
+\label{eq:si-deletion-mip}
+\end{equation}
+After a solution $D$ is found, it is excluded with the no-good constraint
+\begin{equation}
+\sum_{e\in D}(1-d_e)+\sum_{e\notin D}d_e\ge1.
+\label{eq:si-nogood}
+\end{equation}
+Final infeasibility certifies completeness. All six independent enumerations terminated this way and agree with order enumeration; 33 tiny adversarial fixtures cover unequal/zero costs, isolates and disconnected graphs. A limited enumeration would provide only a lower bound on utility variation. The main paper reports all six utility ranges; the supplied saved tables retain complete query identities and optimal deletion sets. The best utility is an oracle endpoint, not an available qrel-free selector.
+
+\section{Statistical Families and Complete Saved Results}\label{sec:si-statistics}
+\subsection{Metric definitions and normalization contracts}
+For the complete candidate order $\pi_q=(d_1,\ldots,d_{P_q})$, the numerator of nDCG@k sums $(2^{r_q(d_i)}-1)/\log_2(i+1)$ over $i\le\min(k,P_q)$. IDCG sorts the grades in its reference set and sums the first $\min(k,|B_q|)$ ideal positions. Candidate-conditioned IDCG restricts $B_q$ to the candidates; full-query IDCG uses all recorded query qrels. A full-query ideal is not truncated to the candidate count when $P_q<k$. Nonpositive IDCG returns zero. Unjudged candidates have evaluation grade zero; this convention does not establish irrelevance. The canonical qrel helper retains the highest grade for duplicate document IDs.
+
+For $z_{qi}=\mathbf1\{r_q(d_i)>0\}$, $R_q=\sum_i z_{qi}$ and precision $p_q(i)=i^{-1}\sum_{j=1}^i z_{qj}$, the historical endpoints are
+\begin{equation}
+\operatorname{AP}_q=\frac{\sum_{i=1}^{P_q}z_{qi}p_q(i)}{R_q},\qquad
+\operatorname{RR}_q=\frac{1}{\min\{i:z_{qi}=1\}}.
+\label{eq:si-ap-rr}
+\end{equation}
+Both return zero when no candidate is judged positive. The MAP label aggregates this full-candidate AP; its denominator is candidate positives, not all positives in the corpus. MRR aggregates RR over the complete candidate ranking. Single-cell means give each eligible query one value. The corrected pooled family retains regime-row weighting while resampling complete query blocks, as defined in the main paper. Missing/ineligible records are excluded, never scored zero.
+
+Table~\ref{tab:endpoint-contracts} maps the retained contracts. The historical pooled generator passes all query grades, with zero grades added for unjudged candidates, to the full-query nDCG routine at every reported cutoff; its AP/MRR remain candidate-ranking endpoints. These stored results are not renormalized using a later helper implementation.
+\input{endpoint_contracts}
+
+\subsection{Family contracts and the pooled correction}
+Table~\ref{tab:holm-families} preserves the original canonical family boundaries. The eight alternative-pool baseline comparisons use the canonical pool; they are not a pool-policy interaction test. The corrected 35 and separate 399 families compare exact against greedy; the 36/56 families compare exact against unrepaired graphs. Table~\ref{tab:endpoint-contracts} identifies their denominators and cutoffs. The historical family inventories are retained; no public preregistration is asserted. The query-cluster correction protocol was frozen before its reanalysis, rather than before the original data collection.
+\input{families}
+
+For corrected 35, the dataset--query is the sign/bootstrap unit. Repeated regime effects retain their original weighting in the mean. Ordinary endpoints have 1,025 eligible rows on 342 query identities; nDCG@20 has 869 rows on 290 identities. One BRIGHT/\texttt{ms2} graph was historically omitted and original HotpotQA nDCG@20 was ineligible. Missing cells are not scored zero. All 35 effect estimates are unchanged by the correction, within recorded numerical tolerance.
+
+The completed analysis uses 10,000 Monte Carlo whole-query signs, seed 17, add-one two-sided p-values and Holm across 35. The same sign multiplies every regime effect in the query. All 35 use Monte Carlo, including sparse outcomes; they are not exact enumeration. The 10,000-draw, seed 13 bootstrap resamples whole query blocks within each dataset and retains the ratio estimator, with percentile/basic pointwise 95\% intervals. It does not use bias-corrected and accelerated (BCa) intervals for this correction. Query-level label-exchangeability and between-query independence remain assumptions; a weak mean-zero null alone is insufficient. No distribution-free or population-causal guarantee is inferred. Nonsignificance does not establish equivalence or a general absence of repair benefit.
+
+Table~\ref{tab:corrected35} provides all 35 comparisons. Full-precision effects, raw/adjusted p-values, pointwise percentile/basic intervals and Monte Carlo diagnostics are in \nolinkurl{data/corrected35/CORRECTED_INFERENCE.csv} within the local inspection bundle; Table~\ref{tab:corrected35} displays effects and adjusted p-values only.
+\FloatBarrier
+\input{corrected35}
+Every corrected Holm decision is false; minimum raw/adjusted p-values are 0.02429757/0.85041496. For priority-topological nDCG@10, exact-minus-greedy effect is −0.002229579922 over 342 query units, with 30 positive,44 negative and 268 zero query sums. Percentile interval is [−0.004356623955,−0.000334221075] and basic interval [−0.004124938769,−0.000102535889]. The saved raw-p Monte Carlo standard error is approximately 0.00154, so the small change from historical raw inference is not a new scientific finding.
+
+Two pointwise percentile intervals exclude zero, for Copeland and priority-topological nDCG@10, but neither Holm test rejects. Copeland's basic interval includes zero, illustrating interval-method sensitivity. Depending on the endpoint, only 4--99 query sums are nonzero. Sparse outcomes and selected queries limit interpretation even when the roster contains 342 identities. The historical raw 0.026/adjusted 0.906 priority-topological values remain only in labeled historical-comparator columns of the data, not current inferential support.
+
+\subsection{Other families and finite sensitivity}
+The separate 399 per-dataset/regime tests retain zero Holm rejections. Their cached counts/means and one-record-per-query-per-cell structure were checked in the completed correction; their tests were not rerun. Canonical exact-versus-unrepaired 36 and larger-pool 56 retain their original estimands and no-rejection decisions. The original greedy active 20/full 60 and larger-pool 110 results are reproduced as saved tabulations in Table~\ref{tab:retrieval-holm}; fusion macros there are descriptive, not paired superiority tests.
+\input{canonical_retrieval}
+Table~\ref{tab:robustness} summarizes the associated robustness and sensitivity checks.
+\input{robustness}
+
+The 107 finite minimum detectable effect (MDE) cells out of 110 give median absolute mean effect 0.0036 and median corrected 80\%-power minimum detectable effect 0.0201. Minimum detectable effect is a sensitivity calculation, not a confidence bound or practical-importance threshold. The Holm-corrected two one-sided tests (TOST) procedure supports 13/110 cells at $\pm 0.005$ and 32/110 at $\pm 0.010$; these minority cell/margin results do not establish blanket equivalence.
+
+The corrected cached primary family contains five graph conditions times two repairs, on six query clusters. Exact two-sided sign enumeration has minimum p$=2/64=0.03125$, above its first ten-test Holm threshold 0.005. The historical best-of-greedy/exact estimand is qrel-selected and differs from the fixed strict replay. The selected-cache exploratory family retains its saved 502-test inventory, rather than a newly favorable subset. SpringRank has eight retrospective contrasts; PRP-Graph eight acquisition/native controls; strict prospective four; construction sensitivity eight; prompt development two. These are separate analysis roles and multiplicity families, not additional independent replications.
+
+\section{Structural and Ranking Sensitivity}\label{sec:si-structural}
+\subsection{Canonical construction and cost}
+Figures~\ref{fig:si-scale} and~\ref{fig:si-cycles} show source-scale sensitivity and cyclicity. Conditional BM25 edge-weight share is 0.988 raw/0.512 normalized. Normalization changes source influence; it does not establish calibrated correctness. Construction-time mutual dropping and post-hoc reciprocal deletion remain different interventions, with the SciDocs 11.7\% versus 10.8\% residual cyclicity distinction retained.
+\begin{figure}[tp]\centering
+\includegraphics[width=\linewidth]{ESM_Fig1.pdf}
+\caption{Source-scale sensitivity on the fixed canonical cohorts (120 SciDocs, 120 FiQA, 52 HotpotQA and 50 BRIGHT queries). Within each dataset/regime, conditional share is the ratio of summed BM25 weight to summed total source weight over retained directed-edge support with positive BM25 contribution. Gray/blue bars use raw/normalized margins. Panels preserve the original plotted values; 2-vote, 1-vote and 1-vote no mutual denote ms2, ms1 and construction-time mutual dropping}
+\label{fig:si-scale}\end{figure}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{ESM_Fig2.pdf}
+\caption{Cyclic-query percentages under ms1 before and after post-hoc reciprocal-edge deletion (120 SciDocs, 120 FiQA, 52 HotpotQA and 50 BRIGHT queries). This post-hoc diagnostic is distinct from construction-time mutual dropping}
+\label{fig:si-cycles}\end{figure}
+
+Tables~\ref{tab:si-cycles} and~\ref{tab:exact-vs-greedy} retain canonical cycle rates and deletion costs, respectively.
+\begin{supplementtable}\caption{Canonical structural rates. FAS fraction is the mean within-graph ratio of greedy-deleted weight to original total edge weight (zero for zero-weight graphs); displayed zeros may hide small positive values}\label{tab:si-cycles}\papertable
+\begin{tabularx}{\linewidth}{@{}lYrrr@{}}\toprule
+Dataset&Regime&Cyclic\%&Post-mutual\%&FAS fraction\\\midrule
+SciDocs&ms2&0.0&0.0&0.000\\
+&ms1&99.2&10.8&0.074\\
+&ms1\_drop\_mutual&11.7&11.7&0.002\\\addlinespace
+FiQA&ms2&0.0&0.0&0.000\\
+&ms1&98.3&30.8&0.080\\
+&ms1\_drop\_mutual&30.8&30.8&0.004\\\addlinespace
+HotpotQA&ms2&0.0&0.0&0.000\\
+&ms1&63.5&1.9&0.029\\
+&ms1\_drop\_mutual&1.9&1.9&0.000\\\addlinespace
+BRIGHT&ms2&0.0&0.0&0.000\\
+&ms1&92.0&22.0&0.055\\
+&ms1\_drop\_mutual&22.0&22.0&0.003\\\bottomrule
+\end{tabularx}\end{supplementtable}
+\input{structural_cost}
+On the 379 cyclic query--regime records, greedy/exact deletion sets differ in 87.9\%, and 333 have strictly lower exact deletion cost. The average recorded deletion weights are 6.24 greedy/4.60 exact, a 26.3\% mean reduction. These structural comparisons do not identify the sign of retrieval effects.
+
+\subsection{Prospective construction variants}
+All 200 model/query/construction graphs reuse 20 identities. Qwen's two symmetric variants coincide, as do Smol's strict and symmetric-both-valid graphs. Every cyclic graph has saved nonempty deletions and a repaired DAG. Tables~\ref{tab:si-construction} and~\ref{tab:construction-utility} report the full structural and utility matrices; Table~\ref{tab:construction-domains} separates domains. Figure~\ref{fig:si-opportunities} summarizes the repeated opportunity counts. No rule is selected by test relevance.
+\begingroup\renewcommand{\sncstable}{\papertable\renewcommand{\arraystretch}{1.25}}
+\input{construction}
+\input{construction_utility}\endgroup
+\FloatBarrier
+\begingroup\papertable\renewcommand{\arraystretch}{1.25}\input{construction_domains}\endgroup
+\begin{figure}[tp]\centering
+\includegraphics[width=0.88\linewidth]{ESM_Fig3.pdf}
+\caption{Exploratory opportunity counts on the same 20 query identities across all five rules, separately for (a) Qwen2.5-7B-Instruct and (b) SmolLM3-3B. Blue counts cyclic graphs, orange cyclic graphs containing a judged-positive candidate, and green nonzero exact-minus-unrepaired full-query nDCG@10 records. Counts are descriptive repeated views; cyclic-positive eligibility alone does not imply utility improvement}
+\label{fig:si-opportunities}\end{figure}
+Model-averaged AB-only greedy effect is −0.010046, pointwise interval [−0.027757,0], raw p=0.5; AB-only exact is zero. BA-only greedy gives−0.004548, interval [−0.012177,−0.000140], raw p=0.125; BA-only exact gives−0.002172, interval [−0.010946,0.004430], raw p=0.75. Both symmetric constructions have zero observed repair effects. All eight Holm p-values are one. Six of nine nonzero branch records change order within a fixed top-ten set; these records cover six query identities. Smol BA-only exact improves FiQA 3705, harms BRIGHT biology 57 and FiQA 9349 and ties 17 queries. These are conditional outcome descriptions, not a selection rule.
+
+The judged-positive subset contains seven of 20 prospective pools. Conditional strict Qwen/Smol means are 0.362491/0.278386, compared with principal all-query means 0.126872/0.097435. The 13 zero-positive pools remain in principal estimates. Neither conditioning nor treating unjudged documents as evaluation zero restores missing relevant candidates.
+
+\section{Cached LLM Evidence and Relevance Attribution}\label{sec:si-cached}
+\subsection{Primary and selected-cache contracts}
+The corrected primary cache uses six independent queries, three SciDocs/three FiQA, eight candidates and four historical provider identities: Azure GPT-4.1-mini, Cohere command-r-plus-08-2024, Fireworks gpt-oss-120b and Gemini2.5Flash. These serving names are historical aliases. Each provider has 168 unordered query--document pairs with both orientations, giving 1,344 responses. Strict parsing yields 1,334 valid, six invalid and four abstentions. Every individual-provider graph is a DAG; all six aggregate graphs are cyclic.
+
+The earlier cluster analysis used a legacy parser that could default invalid output to A and resolve reversal conflicts toward the first input. It also selected the better whole-graph greedy/exact utility using qrels before averaging 20 conditions per query. Its saved difference +0.00019, cluster interval [−0.00072,0.00140], exact p=0.875 concerns that historical estimand, not the corrected aggregate-only replay. Subtracting it from+0.001010 would not isolate a parsing effect. Both use only six independent queries.
+
+Table~\ref{tab:corrected-llm} retains the primary and selected-cache repair effects.
+\input{cached_effects}
+The selected cache contains 213 disjoint-from-primary identities, with two-provider110 and four-provider103 availability strata. Fixed Copeland exact effects are +0.003164, interval [0.000060,0.007053], raw p=0.09449, and+0.004840, interval [−0.001427,0.014088], raw p=0.25627. Both adjusted p-values equal one in their saved exploratory family. Only 18/213 queries have complete matched source-score maps for graph-free fusion. The 217 score-derived task records on these queries are not genuine-LLM observations.
+
+\subsection{Saved-grade attribution and descriptive cases}
+The attribution selects the already saved strict-agreement, real-LLM, selected-cache aggregate tasks, with Copeland, empty insertion-order seed and one baseline task per dataset/query. It compares none/greedy/exact permutations from 213 checkpoints, preserving the complete 15-document candidate set. The frozen qrel maps define evaluated top-ten grade vectors; missing labels map to evaluation zero. Saved metric differences use the inherited $10^{-12}$ zero tolerance. No discounted gain or nDCG was recomputed for this attribution.
+
+The accompanying 426-row table retains dataset/query/unit/task identities, baseline-source CSV line numbers, checkpoint hashes and descriptive classes. Its two repair records per query are dependent. All 74 positive-pool changed-ranking/zero-nDCG cases per repair have the same evaluated top-ten grade sequence. Greedy/exact zero-positive ranking-change counts are 69/61. All-moved-unjudged indicators are 55/58 among the positive-pool equal-profile cases; positive-document movement occurs in 6/5 and explicitly zero-grade movement in 13/11. The movement indicators are not a new population hypothesis test.
+
+All four symmetric-available cyclic-positive cells are shown in Table~\ref{tab:si-cases}. They contain only three independent query identities. Each has one judged-positive candidate. Every moved document is unjudged and no judged-positive position changes. Exact top-ten membership is unchanged in all four; greedy Qwen/FiQA 7284 changes membership without utility. These are returned-solution cases, not certified complete optimum sets.
+\begin{supplementtable}\caption{Four descriptive cyclic-positive model/query cells on three queries. G/E denote greedy/exact; moved documents are all unjudged}\label{tab:si-cases}\papertable
+\begin{tabularx}{\linewidth}{@{}Yrrl@{}}\toprule
+Model / query&Deleted G/E&Moved G/E&Top10 set G/E\\\midrule
+Qwen / BRIGHT biology 61&2/1&2/4&No/No\\
+Qwen / FiQA 7284&3/1&7/2&Yes/No\\
+Smol / BRIGHT biology 61&5/2&6/4&No/No\\
+Smol / BRIGHT biology 57&1/1&2/3&No/No\\\bottomrule
+\end{tabularx}\end{supplementtable}
+
+Saved structural--utility associations are heterogeneous: exact removed-weight/effect Spearman association is +0.3094 for the Azure selected-cache graphs, but−0.0441/−0.0682 for the two aggregate strata. These are descriptive existing associations without predictive-generalization claims. Removed weight measures intervention magnitude, not necessarily better optimization. Neither a global absence of association nor a causal relationship follows.
+
+\section{External Controls and Candidate Coverage}\label{sec:si-controls}
+\subsection{Matched graph and trained relevance controls}
+The original-graph SpringRank comparison preserves exact candidates, directed weights and full-query qrels, including isolates. The six-query primary mean 0.882760 ties both selected repairs query by query. On 213 selected queries, means are 0.357436 SpringRank,0.353838 unrepaired,0.352261 greedy,0.357813 exact and 0.352890 Bradley--Terry-style aggregation. Exact versus SpringRank has 23 wins,12 losses and 178 ties. All 79 zero-positive pools remain; the 134 positive-containing subset has means 0.568163/0.568763 for SpringRank/exact. These are coverage-conditioned descriptions, not improved candidate recall.
+Table~\ref{tab:springrank} provides all saved matched SpringRank contrasts.
+\input{springrank}
+
+The adapted PRP-Graph pilot uses frozen 20-document pools, pinned FLAN-T5-large and the published implementation's probability-aware comparison/Swiss acquisition and personalized PageRank logic \cite{luo2024prpgraph}. Runtime adapters call unchanged modules directly where the public command-line round handling is unsuitable; no test-qrel interpolation is tuned. Its published TREC-COVID run, original first-stage index and recorded graph are not reproduced. Local changes are documented rather than described as exact reproduction of published effectiveness.
+
+The trained \texttt{BAAI/bge-reranker-v2-m3} cross-encoder follows its official model-card procedure \cite{bge2024modelcard}. It supplies exactly 400 PRP-pool and 240 prospective-pool query--document scores, with 32-bit floating-point (FP32) inference, batch size 8, joint maximum length 512, longest-first/right truncation, raw logits and document-ID ties. These 640 scores are not 640 independent queries. Training and compute differ from the generative models. Table~\ref{tab:external-controls} preserves the full absolute means, including PageRank.
+\input{external}
+On the adapted PRP 20-query cohort, all eight original comparisons against four native Swiss/four random-acquisition controls have Holm p=1. BGE differences and intervals are exploratory pointwise comparisons, not an added confirmatory family. Graph-free canonical macros in Table~\ref{tab:retrieval-holm} similarly provide context rather than paired superiority evidence.
+
+\subsection{Qrels-blind candidate intervention}
+Twenty further queries exclude prior newer-cohort identities and exact query-text duplicates. Both arms are frozen before qrels: BM25 top12, versus BGE top12 selected from the same BM25 top100. Retrieval uses unchanged lowercase-alphanumeric BM25, $k_1=1.5$, $b=0.75$, original IDs, title--newline--body text and deterministic document-ID ties. The oracle orders available candidates by qrel gain with full-query IDCG; it is a label-informed ceiling, not achieved reranker effectiveness.
+Table~\ref{tab:candidate-intervention} separates overall and dataset-specific candidate coverage.
+\input{candidate}
+Coverage rises 6→8/20, difference +0.10 with interval [−0.10,0.30]. Mean candidate recall rises 0.125000→0.183333 and oracle nDCG 0.159189→0.228295, difference +0.069106 with interval [−0.016958,0.164250], four improvements, one harm and 15 ties. SciDocs loses one positive-containing pool. Of 240 candidates per arm,233 BM25/230 BGE are unjudged. BM25 top100 has positive coverage11/20 and oracle 0.318911; that is a diagnostic ceiling, not a third tuned arm. The inspected relevance labels are not an untouched method-selection set.
+
+\section{Measurement Validity and Prompt Development}\label{sec:si-validity}
+\subsection{Prospective reliability and missing controls}
+The original JSON prompt includes an A/high illustrative response. It is a plausible source of positional sensitivity, not an isolated cause established by the collection. Qwen has 2,920 valid pairwise outputs with 1,378 abstentions; Smol has 2,772 valid of 2,920, with 148 invalid, all token-capped. Invalidity and capping overlap rather than add. Initial opposite-winner/abstention and repeat denominators are retained in Table~\ref{tab:reliability-detail}. A repeated positional preference can be stable without being correct.
+\input{reliability}
+Qwen abstentions comprise 1,376 insufficient-information and two ties. Smol invalid pairwise outputs comprise 137 first observations and 11 repeats; initial pairs include 113 single-invalid and 12 double-invalid cases. The 30 invalid listwise outputs terminate normally but are non-JSON, unlike the capped pairwise failures. Missing listwise rankings are never assigned zero utility.
+
+\subsection{Unsuccessful neutral-schema development}
+Thirty deterministic repeated pairs across the same 20 development queries, ten pairs per dataset, yield 240 historical controls and 240 neutral-schema responses from two models, two orientations and two independently executed replicates. Only the A/high example is replaced; other rendered text, model settings, truncation, temperature, top-$p$, output cap and per-observation seeds are matched. Controls are historical, not contemporaneously randomized; numerical/hardware effects are not fully excluded.
+Table~\ref{tab:si-prompt} retains the descriptive prompt-validity counts.
+\input{prompt}
+Qwen abstentions rise 45→80/120. Orientation disagreement falls 36→11/60 while both-abstention rises 11→36 and corroborated directional cases remain 13/60. The primary query-averaged usable-direction difference is zero, interval [−0.1625,0.1750], Holm p=1. Secondary abstention difference is +0.29375, interval [0.19375,0.40000]. Conditional displayed-A change uses 11 defined query cells and is not unconditional debiasing.
+
+Smol neutral outputs contain 117 invalid responses:74 capped and 43 invalid despite normal termination. Of three valid outputs, one abstains. The primary usable-direction difference is −0.0875, interval [−0.2000,0], Holm p=0.5; secondary validity difference is −0.96875, interval [−0.99375,−0.93750]. All neutral orientation/repeat cases involve invalidity, so no repeat-disagreement rate is estimable. Qwen repeat disagreement changes 4→2/60; Smol original is 1/59 and neutral unavailable, not zero. Two surviving neutral Smol directional responses do not validate debiasing.
+
+Primary inference weights 20 query means equally, separately by model, with Holm over two corroboration contrasts. Secondary intervals are pointwise. The frozen code derives endpoint/model seeds from root 20261025; literal-root sensitivity leaves Qwen's primary interval unchanged and changes Smol's lower endpoint to −0.2125. This disclosed seed-prose ambiguity does not replace the frozen implementation result. The unsuccessful variant neither revises primary retrieval inference nor validates a better instrument.
+
+\section{Related-Work and Reuse Detail}\label{sec:si-related}
+The published acyclic-ranking pipeline concerns graph disagreement and ranking recovery; pruning, exact add-back, min-cut exchange and ranking--MWFAS theory remain prior work \cite{vahidi2026acyclicranking}. The present audit estimates deletion effects against external retrieval qrels. Related graph-benchmark work studies graph identity and structural algorithm comparisons; its benchmark resources and numerical outcomes are not presented as new retrieval data. The editor receives an identified related-manuscript/status comparison separately.
+
+PRP-Graph evaluates probability-aware graph reranking \cite{luo2024prpgraph}; direct SpringRank estimates hierarchy on original graphs \cite{debacco2018springrank}. These are different interventions from fixed-extractor edge deletion. Pairwise prompting and listwise prompting have established effectiveness evidence under their own evaluation contracts \cite{qin-etal-2024-large,sun-etal-2023-chatgpt}; the present qualified null does not refute those results. Nor does a graph-internal disagreement optimum imply external nDCG optimality.
+
+The earlier Research Square retrieval preprint, \emph{Consistency-Aware Reranking via Preference Graph Repair: Structural Gains and Conditional Retrieval Effects} (DOI: \href{https://doi.org/10.21203/rs.3.rs-9335700/v1}{10.21203/rs.3.rs-9335700/v1}), shares the four benchmarks, regime names and some stored scores. Construction measurements and some score files are reused; the present paper synthesizes stage-specific opportunity counts and adds selected-cache relevance-profile attribution, with exact-cost, query-clustered and complete-optimum analyses as controls. The available historical record does not permit an independently verified, exhaustive original-version method comparison. Corrected numerical retrieval claims supersede corresponding earlier interpretations, with transparent evidence reuse rather than an independent-replication claim.
+
+Historical selector/headroom work is context rather than a fourth independent test of impossibility. A 419-query mixed-protocol summary over 122,203 dependent rows has preserve/repair/oracle means 0.481487/0.479852/0.483994 and query-level headroom 0.002507824, saved interval [0.002041054,0.003018928]. Benefit/harm/exact-neutral proportions are 28.2/27.2/44.6\%. These meta-averages are not an untouched homogeneous efficacy study. Dependent-row feature p-values do not establish query-level predictability, and the mixed headroom cannot be compared with a canonical MDE as a practical-importance bound. Executed selector failures and mixed-protocol headroom do not establish predictive impossibility; other aggregation/stopping studies address distinct interventions.
+
+\paragraph{Review access and limitations.}
+The final reviewer ZIP (35 files; approximately 2.09\,MiB) provides processed observations, graphs, configurations, saved results and code. Anonymity/offline checks passed. All 35 corrected comparisons independently reproduce at Level~2, confirming 342/290 query populations and zero Holm rejections. Direct checks cover 1,025 graphs (646 acyclic, 379 cyclic) and saved greedy feasibility/cost; other families and exact statuses entail preserved-output checks. Original retrieval scoring, ranking/grade attribution and the six-graph envelope are not fully reconstructed. Their qrels, permutations, responses and complete inputs are excluded. No material rights issue was identified in the included files. Confidential delivery requires editorial-channel confirmation; unrestricted public release is not promised.
+
+
+\subsection{Identified research resources and access limits}
+\ifdefined\AnonymousVersion
+Author-identifying resource addresses are retained in the identified version and separate editorial records. The private project repository is not a public access method.
+\else
+The project repository is \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}; it remains private pending a history and redistribution audit. The source foundation is commit \texttt{\seqsplit{c5cfafab73cff427e91fc1fd94aca7cbbae6d5d1}}, supplemented by the hash-recorded finalized IJIT sources; that commit alone is not the finalized scientific package.
+
+The public derived judgment resource is \url{https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995}. The recorded license is CC BY-SA 4.0; attribution is Soroush Vahidi. Its four record classes and exclusions are described in Section~S1.4. The related public numerical resource is \url{https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results}. Neither resource replaces missing historical permutations or the complete small-instance optimization inputs. Structural resources at \url{https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics} and \url{https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension} belong to related structural research and are not additional retrieval observations here.
+\fi
+
+Authoritative benchmark entry points are \url{https://github.com/allenai/scidocs}, the BEIR FiQA snapshot at \url{https://huggingface.co/datasets/BeIR/fiqa}, \url{https://hotpotqa.github.io/}, and \url{https://huggingface.co/datasets/xlangai/BRIGHT}. Hosted snapshots and license labels do not grant additional rights to underlying source text. The incompletely pinned historical HotpotQA retrieval conversion remains a reproducibility limitation.
+
+External implementations are PRP-Graph at \url{https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7}, SpringRank at \url{https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4}, and the BGE model card at \url{https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e}. Third-party code is obtained from its source; the SpringRank implementation is not redistributed because of the recorded license inconsistency. These addresses identify resources, not a claim of unrestricted end-to-end reconstruction.
+
+\bibliography{references}
+\end{document}

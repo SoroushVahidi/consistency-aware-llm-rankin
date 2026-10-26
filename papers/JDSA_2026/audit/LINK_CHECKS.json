@@ -1,0 +1,327 @@
+[
+  {
+    "url": "https://doi.org/10.1007/s10107-010-0419-x",
+    "status": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s10107-010-0419-x",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.1007/s11227-026-08852-4",
+    "status": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s11227-026-08852-4",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.1016/0020-0190(93)90079-O",
+    "status": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/002001909390079O",
+    "unauthenticated": true,
+    "content_type": "text/html;charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1080/07421222.1996.11518099",
+    "status": 403,
+    "final_url": "https://www.tandfonline.com/doi/full/10.1080/07421222.1996.11518099",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1126/sciadv.aar8260",
+    "status": 403,
+    "final_url": "https://www.science.org/doi/10.1126/sciadv.aar8260",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/1411509.1411513",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/1411509.1411513",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/1571941.1572114",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/1571941.1572114",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/2094072.2094076",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/2094072.2094076",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/3184558.3192301",
+    "status": 403,
+    "final_url": "https://dl.acm.org/citation.cfm?doid=3184558.3192301",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/3331184.3331259",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3331184.3331259",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/3446429",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3446429",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/3626772.3657813",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3626772.3657813",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/3696410.3714863",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3696410.3714863",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/371920.372165",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/371920.372165",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1145/582415.582418",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/582415.582418",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1177/2515245918770963",
+    "status": 403,
+    "final_url": "https://journals.sagepub.com/doi/10.1177/2515245918770963",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1214/aos/1079120141",
+    "status": 200,
+    "final_url": "https://projecteuclid.org/journals/annals-of-statistics/volume-32/issue-1/MM-algorithms-for-generalized-Bradley-Terry-models/10.1214/aos/1079120141.full",
+    "unauthenticated": true,
+    "content_type": "text/html"
+  },
+  {
+    "url": "https://doi.org/10.1287/opre.2016.1534",
+    "status": 403,
+    "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.2016.1534",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1287/opre.32.6.1195",
+    "status": 403,
+    "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.32.6.1195",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=UTF-8"
+  },
+  {
+    "url": "https://doi.org/10.1609/aaai.v40i26.39343",
+    "status": 200,
+    "final_url": "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2020.acl-main.207",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2020.acl-main.207/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2023.emnlp-main.923",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2023.emnlp-main.923/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.acl-long.313",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2024.acl-long.313/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.findings-naacl.97",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2024.findings-naacl.97/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/D18-1259",
+    "status": 200,
+    "final_url": "https://aclanthology.org/D18-1259/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.21203/rs.3.rs-9335700/v1",
+    "status": 200,
+    "final_url": "https://www.researchsquare.com/article/rs-9335700/v1",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://doi.org/10.2307/2334029",
+    "status": 200,
+    "final_url": "https://www.jstor.org/stable/2334029?origin=crossref",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "status": 200,
+    "final_url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "status": 200,
+    "final_url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+    "status": 404,
+    "final_url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://github.com/allenai/scidocs",
+    "status": 200,
+    "final_url": "https://github.com/allenai/scidocs",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://hotpotqa.github.io/",
+    "status": 200,
+    "final_url": "https://hotpotqa.github.io/",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "status": 200,
+    "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "status": 200,
+    "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://openreview.net/forum?id=VUY0j74Yes",
+    "status": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DVUY0j74Yes",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8",
+    "content_access_note": "Browser verification challenge observed for some OpenReview records; HTTP success is not a full-text access certificate."
+  },
+  {
+    "url": "https://openreview.net/forum?id=wCu6T5xFjeJ",
+    "status": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DwCu6T5xFjeJ",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8",
+    "content_access_note": "Browser verification challenge observed for some OpenReview records; HTTP success is not a full-text access certificate."
+  },
+  {
+    "url": "https://openreview.net/forum?id=ykuc5q381b",
+    "status": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3Dykuc5q381b",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8",
+    "content_access_note": "Browser verification challenge observed for some OpenReview records; HTTP success is not a full-text access certificate."
+  },
+  {
+    "url": "https://orcid.org/0000-0003-1934-6282",
+    "status": 200,
+    "final_url": "https://orcid.org/0000-0003-1934-6282",
+    "unauthenticated": true,
+    "content_type": "text/html"
+  },
+  {
+    "url": "https://proceedings.mlr.press/v267/xu25w.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v267/xu25w.html",
+    "unauthenticated": true,
+    "content_type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://www.jstor.org/stable/4615733",
+    "status": 420,
+    "final_url": "https://www.jstor.org/stable/4615733",
+    "unauthenticated": true,
+    "content_type": ""
+  }
+]

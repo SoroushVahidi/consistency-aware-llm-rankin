@@ -1,0 +1,32 @@
+\begin{algorithm}[t]
+\caption{Canonical preference-graph construction for one query}
+\label{alg:construction}
+\begin{algorithmic}[1]
+\Require Query $q$; candidate set $D_q$; base rankers $S=\{\mathrm{BM25},
+  \mathrm{TF\text{-}IDF}, \mathrm{MiniLM}\}$ with scores $x_{q,s}$;
+  construction regime $r \in \{\texttt{ms2}, \texttt{ms1},
+  \texttt{ms1\_drop\_mutual}\}$
+\Ensure Weighted directed preference graph $G_q=(V_q,E_q,w_q)$
+\State $V_q \gets D_q$; initialize an empty weighted edge accumulator
+\For{each ranker $s \in S$}
+  \State Min--max normalize $x_{q,s}$ to $\bar{x}_{q,s}$
+  \For{each unordered candidate pair $\{u,v\} \subseteq D_q$ scored by $s$}
+    \If{$|\bar{x}_{q,s}(u) - \bar{x}_{q,s}(v)|$ is below the vote-margin
+      threshold, or $s$ does not score both $u$ and $v$}
+      \State Abstain on $\{u,v\}$ for ranker $s$
+    \Else
+      \State Accumulate directional support for $u \succ v$ or $v \succ u$
+        (whichever $\bar{x}_{q,s}$ supports), weighted by the normalized
+        margin
+    \EndIf
+  \EndFor
+\EndFor
+\State Apply regime $r$'s support rule and aggregate weight threshold to
+  every accumulated directed pair
+\If{$r = \texttt{ms1\_drop\_mutual}$}
+  \State Remove every unordered pair retained in both directions
+\EndIf
+\State $E_q \gets$ every retained directed pair with positive aggregated weight
+\State \Return $G_q = (V_q, E_q, w_q)$
+\end{algorithmic}
+\end{algorithm}

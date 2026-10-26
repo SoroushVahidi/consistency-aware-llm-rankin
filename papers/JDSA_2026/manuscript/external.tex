@@ -1,0 +1,20 @@
+\begin{supplementtable}
+\caption{Matched full-query nDCG@10. Each column uses $20$ independent queries. U/G/E = unrepaired/greedy/exact Copeland; SR = SpringRank; BT = Bradley--Terry. Shared BM25/BGE values in the prospective columns are one observation per query, not model replications. PRP-native graph methods use its Swiss observations; prospective methods use the strict primary graph, fixed before its repair evaluation.}
+\label{tab:external-controls}
+\sncstable
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}
+\toprule
+Method & PRP pilot & Prospective Qwen & Prospective Smol \\
+\midrule
+BM25 & $0.278865$ & $0.080112$ & $0.080112$ \\
+BGE cross-encoder & $0.354547$ & $0.108610$ & $0.108610$ \\
+Adapted PRP-Graph & $0.270215$ & --- & --- \\
+Unrepaired Copeland & $0.271771$ & $0.126872$ & $0.097435$ \\
+Greedy repair & $0.271771$ & $0.126872$ & $0.097435$ \\
+SCIP exact repair & $0.271526$ & $0.126872$ & $0.097435$ \\
+SpringRank & $0.259999$ & $0.134091$ & $0.085859$ \\
+PageRank & $0.232208$ & $0.126872$ & $0.105153$ \\
+Bradley--Terry & $0.254006$ & $0.134091$ & $0.089653$ \\
+\bottomrule
+\end{tabularx}
+\end{supplementtable}

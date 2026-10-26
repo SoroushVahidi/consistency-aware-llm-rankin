@@ -1,0 +1,15 @@
+\begin{supplementtable}
+\caption{Candidate intervention: frozen BM25 top-$12$ (A) versus BGE-selected top-$12$ from BM25 top-$100$ (B). Coverage counts pools with judged-positive documents; oracle ceilings use the full-query ideal. Both arms were frozen before qrels access.}
+\label{tab:candidate-intervention}
+\sncstable
+\begin{tabularx}{\linewidth}{@{}Yrrrr@{}}
+\toprule
+Dataset ($n$) & Coverage A/B & Positive docs A/B & Oracle A & Oracle B \\
+\midrule
+FiQA ($7$) & $2/4$ & $2/4$ & $0.230450$ & $0.364529$ \\
+SciDocs ($7$) & $4/3$ & $5/5$ & $0.224375$ & $0.200150$ \\
+BRIGHT biology ($6$) & $0/1$ & $0/1$ & $0.000000$ & $0.102191$ \\
+All ($20$) & $6/8$ & $7/10$ & $0.159189$ & $0.228295$ \\
+\bottomrule
+\end{tabularx}
+\end{supplementtable}

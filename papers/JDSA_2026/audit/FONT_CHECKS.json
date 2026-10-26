@@ -1,0 +1,22 @@
+{
+  "ESM_Fig1.pdf": {
+    "fonts": 3,
+    "all_embedded": true
+  },
+  "ESM_Fig3.pdf": {
+    "fonts": 2,
+    "all_embedded": true
+  },
+  "Fig3.pdf": {
+    "fonts": 2,
+    "all_embedded": true
+  },
+  "Fig2.pdf": {
+    "fonts": 3,
+    "all_embedded": true
+  },
+  "ESM_Fig2.pdf": {
+    "fonts": 2,
+    "all_embedded": true
+  }
+}

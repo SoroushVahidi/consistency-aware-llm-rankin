@@ -1,0 +1,21 @@
+\begin{supplementtable}
+  \caption{Exploratory cached-LLM repair effects with fixed Copeland and
+    full-query nDCG@10. Primary: six independent queries; pool variants
+    reuse them. Selected-cache strata: selected, disjoint provider-availability
+    groups. Values are mean repaired-minus-unrepaired differences, not
+    effects of changing pools.}
+  \label{tab:corrected-llm}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}Yrrr@{}}
+    \toprule
+    Population / graph & Queries & Greedy $\Delta$ & SCIP $\Delta$ \\
+    \midrule
+    Primary pool 8, four-provider & 6 & $+0.001010$ & $+0.001010$ \\
+    Complete pool 6, four-provider & 6 & $+0.001732$ & $+0.001732$ \\
+    Sparse pool 8, four-provider & 6 & $-0.003920$ & $-0.004930$ \\
+    Sparse pool 10, four-provider & 6 & $-0.006396$ & $-0.006396$ \\
+    Selected cache, two-provider & 110 & $-0.000950$ & $+0.003164$ \\
+    Selected cache, four-provider & 103 & $-0.002248$ & $+0.004840$ \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

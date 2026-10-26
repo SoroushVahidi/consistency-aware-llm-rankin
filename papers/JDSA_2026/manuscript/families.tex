@@ -1,0 +1,27 @@
+\begin{supplementtable}
+  \caption{Retained Holm families (claim-to-inference map).
+    Primary and robustness families retain separate error scopes; failure to reject does not establish a null or equivalence. Counts match the complete results and sensitivity tabulations below.}
+  \label{tab:holm-families}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lYYY r@{}}
+    \toprule
+    Family & Question & Scope & Methods & Tests \\
+    \midrule
+    Active canonical & Greedy repair gain? & 4$\times$\texttt{ms1}, $P{=}k$ & Prim.\ 5 pairs & 20 \\
+    \addlinespace
+    Full canonical & All regimes? & 4$\times$3 regimes, $P{=}k$ & Prim.\ 5 pairs & 60 \\
+    \addlinespace
+    Active larger-pool & Larger-pool study? & \texttt{ms1}, larger-pool & Prim.\ 5 pairs & 110 \\
+    \addlinespace
+    Exact-repair canonical & Exact vs unrepaired? & 4$\times$\texttt{ms1}, $P{=}k$ & Exp.\ 9 pairs & 36 \\
+    \addlinespace
+    Exact-repair larger-pool & Exact, larger-pool? & larger-pool cells & Exp.\ 9 pairs & 56 \\
+    \addlinespace
+    Exact vs greedy & Exact vs greedy ret.? & query-block pooled / per-cell & Prim.+topo & 35/399 \\
+    \addlinespace
+    Alternative-pool & Baseline contrasts? & canonical pool & vs RRF/CombSUM & 8 \\
+    \addlinespace
+    Equivalence (TOST) & Narrow equivalence? & active larger-pool & Prim.\ pairs & 110 \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

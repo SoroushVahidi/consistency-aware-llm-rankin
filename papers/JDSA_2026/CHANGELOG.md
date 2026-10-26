@@ -1,0 +1,13 @@
+# JDSA conversion change log
+
+Scientific: **no numerical results changed**; no experiments, scoring, statistical tests, solver runs or model judgments executed. Table bodies and five used figure assets are preserved. Six displayed definitions retain their mathematics; two long equations were split across lines. Established evidence restrictions and limitations remain.
+
+Editorial: added a data-science rationale to the abstract, introduction, contributions and evaluation discussion. The contribution remains opportunity decomposition and relevance-profile attribution, supported by corrected inference and exact diagnostics. No new algorithm, universal prediction, general significant gain, equivalence or generalization claim. Abstract changes from 222 to 227 words; six keywords remain.
+
+Formatting: retained the appropriate generic Springer Nature class already used by IJIT, independently replaced its files with the current official December 2024 package, enabled `iicol` for the main manuscript, removed IJIT identity/anonymous author labels from identified deliverables, restored author information and declarations, used wide floats for legibility, breakable links, numbered Springer references, `Fig` asset names, flat source files and `ESM_1.pdf`. SI remains single column, allowed as supplied and needed for wide diagnostics. Anonymous fallback uses a build flag; necessary published self-citations remain.
+
+References: no references added for count or journal targeting. Existing 26 DOIs checked against registrant metadata; six non-DOI resources assessed through primary records. Removed an unsupported issue number from Baharev's volume-26 article (article 1.4 remains in its page identifier); added existing stable source URLs for Holm and BEIR; wrapped the existing BGE revision. Full DOI hyperlinks use the official Springer style. Citation keys and literature claim scope remain unchanged.
+
+Reproducibility: restored identified partial-resource links, pinned upstream implementation/model references, documented public versus private access and reconstruction limits, preserved the exact finalized IJIT snapshot in a separate source commit, recorded saved-invariant checks and source hashes, and created portable build/source archives. Two initially drafted upstream repository addresses failed checks and were corrected to verified Memelank/PRP-Graph and LarremoreLab/SpringRank pins before packaging.
+
+Governance: visibility stays private because earlier reachable records explicitly designate tracked editorial material confidential. No deletion or history rewrite. Exact editor-only disclosures and raw audit inventories stay local outside versioned public-safe deliverables. Existing worktree changes are untouched. No submission is made.

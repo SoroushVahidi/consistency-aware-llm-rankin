@@ -1,0 +1,48 @@
+\begin{supplementtable}
+  \caption{Canonical retrieval evidence under greedy repair.
+    Panel~A: primary Holm-corrected repaired-vs-unrepaired nDCG
+    families (five-pair primary method family, Section~\ref{sec:si-methods}).
+    Panel~B: descriptive dataset-macro mean nDCG across the reported cells
+    for selected anchors (graph-free methods require no repair); these
+    macros are not a paired superiority test between CombSUM and the
+    repaired hybrid. Values are candidate-conditioned nDCG and cannot be
+    compared directly with the full-query LLM means. No cell in Panel~A
+    survives Holm correction.}
+  \label{tab:retrieval-holm}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}Yrrr@{}}
+    \toprule
+    \multicolumn{4}{@{}l}{\textbf{Panel A.} Primary Holm families
+      (paired repaired vs.\ unrepaired)} \\
+    \midrule
+    Comparison family & Cells & Holm-rejected & Smallest Holm-adj.\ $p$ \\
+    \midrule
+    Active canonical (\texttt{ms1}) & 20 & 0/20 & $0.240$ \\
+    \addlinespace
+    Full canonical (all regimes) & 60 & 0/60 & $0.720$ \\
+    \addlinespace
+    Active larger-pool (\texttt{ms1}, reference cells incl.) & 110 & 0/110 & $0.352$ \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{1.15em}
+
+  \begin{tabularx}{\linewidth}{@{}Yr@{}}
+    \toprule
+    \multicolumn{2}{@{}l}{\textbf{Panel B.} Descriptive dataset-macro mean
+      nDCG (not paired confirmatory tests)} \\
+    \midrule
+    Method & Mean nDCG \\
+    \midrule
+    CombSUM (graph-free fusion) & $0.554$ \\
+    \addlinespace
+    Reciprocal rank fusion (graph-free) & $0.546$ \\
+    \addlinespace
+    Copeland hybrid, repaired (\texttt{ms1}) & $0.546$ \\
+    \addlinespace
+    Prior-only (graph-free) & $0.545$ \\
+    \addlinespace
+    Borda fusion (graph-free) & $0.545$ \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

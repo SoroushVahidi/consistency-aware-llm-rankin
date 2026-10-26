@@ -1,0 +1,43 @@
+\begin{supplementtable}
+  \caption{Retention-matched thresholds for the primary protocol
+    (\texttt{primary\_minmax\_retention\_matched}). Vote thresholds are
+    shared across regimes within a dataset; aggregate thresholds and
+    drop-mutual flags are regime-specific. Matching target: raw-margin
+    retained-vote rates (per ranker) and raw retained edge count (per
+    regime). Calibration: unsupervised collection-level protocol thresholds
+    on the same usable queries later evaluated; qrels/nDCG are not used
+    (transductive query list; the main internal-validity discussion).
+    Regime abbreviations: \texttt{ms1},
+    \texttt{ms1dm}=\texttt{ms1\_drop\_mutual}, \texttt{ms2}.}
+  \label{tab:thresholds}
+  \sncstable
+  \begin{tabular}{@{}llrrrccc@{}}
+    \toprule
+    Dataset & Reg. & BM25 & MiniLM & TF-IDF & Agg. & Sup. & Drop \\
+    \midrule
+    SciDocs & \texttt{ms1} & 0.00468 & 0.274 & 0.340 & 0.0108 & 1 & no \\
+    \addlinespace
+    SciDocs & \texttt{ms1dm} & 0.00468 & 0.274 & 0.340 & 0 & 1 & yes \\
+    \addlinespace
+    SciDocs & \texttt{ms2} & 0.00468 & 0.274 & 0.340 & 0 & 2 & no \\
+    \addlinespace
+    FiQA & \texttt{ms1} & 0.00621 & 0.276 & 0.375 & 0.0120 & 1 & no \\
+    \addlinespace
+    FiQA & \texttt{ms1dm} & 0.00621 & 0.276 & 0.375 & 0 & 1 & yes \\
+    \addlinespace
+    FiQA & \texttt{ms2} & 0.00621 & 0.276 & 0.375 & 0 & 2 & no \\
+    \addlinespace
+    HotpotQA & \texttt{ms1} & 0.00317 & 0.272 & 0.228 & 0 & 1 & no \\
+    \addlinespace
+    HotpotQA & \texttt{ms1dm} & 0.00317 & 0.272 & 0.228 & 0.00341 & 1 & yes \\
+    \addlinespace
+    HotpotQA & \texttt{ms2} & 0.00317 & 0.272 & 0.228 & 0.295 & 2 & no \\
+    \addlinespace
+    BRIGHT & \texttt{ms1} & 0.00108 & 0.240 & 0.555 & 0.0114 & 1 & no \\
+    \addlinespace
+    BRIGHT & \texttt{ms1dm} & 0.00108 & 0.240 & 0.555 & 0.0119 & 1 & yes \\
+    \addlinespace
+    BRIGHT & \texttt{ms2} & 0.00108 & 0.240 & 0.555 & 0 & 2 & no \\
+    \bottomrule
+  \end{tabular}
+\end{supplementtable}

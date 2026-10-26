@@ -1,0 +1,15 @@
+\begin{supplementtable}\caption{Graph-construction sensitivity. E = retained edges; C = cyclic graphs; T = cyclic triads; SCC = maximum strongly connected component size; deletion and full-ranking change counts are G/E (greedy/exact). Q/S denote Qwen/Smol. A cyclic triad is a directed three-node cycle; a strongly connected component is a maximal mutually reachable node set. All counts cover twenty queries per row.}\label{tab:si-construction}
+\sncstable
+\begin{tabularx}{\linewidth}{@{}lYrrrrrr@{}}\toprule
+Model & Rule & E & C & T & SCC & Deleted & Rank changes \\\midrule
+Q & Strict & 289 & 0 & 0 & 1 & 0/0 & 0/0 \\
+Q & AB & 728 & 8 & 37 & 9 & 33/16 & 8/8 \\
+Q & BA & 656 & 8 & 46 & 12 & 55/18 & 7/6 \\
+Q & Sym. both & 665 & 5 & 5 & 6 & 8/5 & 4/4 \\
+Q & Sym. avail. & 665 & 5 & 5 & 6 & 8/5 & 4/4 \\
+S & Strict & 144 & 1 & 1 & 3 & 1/1 & 1/1 \\
+S & AB & 1250 & 13 & 108 & 12 & 133/38 & 13/12 \\
+S & BA & 1253 & 12 & 212 & 12 & 82/58 & 11/11 \\
+S & Sym. both & 144 & 1 & 1 & 3 & 1/1 & 1/1 \\
+S & Sym. avail. & 257 & 5 & 11 & 10 & 14/8 & 5/5 \\
+\bottomrule\end{tabularx}\end{supplementtable}

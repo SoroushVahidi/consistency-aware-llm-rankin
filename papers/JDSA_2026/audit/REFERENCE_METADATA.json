@@ -1,0 +1,753 @@
+[
+  {
+    "key": "ailon2008aggregating",
+    "doi": "10.1145/1411509.1411513",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Aggregating inconsistent information"
+    ],
+    "registered_authors": [
+      "Ailon",
+      "Charikar",
+      "Newman"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2008,
+          10
+        ]
+      ]
+    },
+    "venue": "Journal of the ACM",
+    "volume": "55",
+    "issue": "5",
+    "page": "1-27"
+  },
+  {
+    "key": "baharev2021exact",
+    "doi": "10.1145/3446429",
+    "http": 200,
+    "registered_title": [
+      "An Exact Method for the Minimum Feedback Arc Set Problem"
+    ],
+    "registered_authors": [
+      "Baharev",
+      "Schichl",
+      "Neumaier",
+      "Achterberg"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2021,
+          4,
+          23
+        ]
+      ]
+    },
+    "venue": [
+      "ACM Journal of Experimental Algorithmics"
+    ],
+    "volume": "26",
+    "issue": null,
+    "page": "1-28",
+    "url": "https://doi.org/10.1145/3446429"
+  },
+  {
+    "key": "bge2024modelcard",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  },
+  {
+    "key": "bradley1952rank",
+    "doi": "10.2307/2334029",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons"
+    ],
+    "registered_authors": [
+      "Bradley",
+      "Terry"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1952,
+          12
+        ]
+      ]
+    },
+    "venue": "Biometrika",
+    "volume": "39",
+    "issue": "3/4",
+    "page": "324"
+  },
+  {
+    "key": "carterette2012multiple",
+    "doi": "10.1145/2094072.2094076",
+    "http": 200,
+    "registered_title": [
+      "Multiple testing in statistical analysis of systems-based information retrieval experiments"
+    ],
+    "registered_authors": [
+      "Carterette"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2012,
+          2
+        ]
+      ]
+    },
+    "venue": [
+      "ACM Transactions on Information Systems"
+    ],
+    "volume": "30",
+    "issue": "1",
+    "page": "1-34",
+    "url": "https://doi.org/10.1145/2094072.2094076"
+  },
+  {
+    "key": "cohan2020scidocs",
+    "doi": "10.18653/v1/2020.acl-main.207",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "SPECTER: Document-level Representation Learning using Citation-informed Transformers"
+    ],
+    "registered_authors": [
+      "Cohan",
+      "Feldman",
+      "Beltagy",
+      "Downey",
+      "Weld"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    "volume": null,
+    "issue": null,
+    "page": "2270-2282"
+  },
+  {
+    "key": "cormack2009rrf",
+    "doi": "10.1145/1571941.1572114",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Reciprocal rank fusion outperforms condorcet and individual rank learning methods"
+    ],
+    "registered_authors": [
+      "Cormack",
+      "Clarke",
+      "Buettcher"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2009,
+          7,
+          19
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 32nd international ACM SIGIR conference on Research and development in information retrieval",
+    "volume": null,
+    "issue": null,
+    "page": "758-759"
+  },
+  {
+    "key": "debacco2018springrank",
+    "doi": "10.1126/sciadv.aar8260",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "A physical model for efficient ranking in networks"
+    ],
+    "registered_authors": [
+      "De Bacco",
+      "Larremore",
+      "Moore"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018,
+          7,
+          6
+        ]
+      ]
+    },
+    "venue": "Science Advances",
+    "volume": "4",
+    "issue": "7",
+    "page": null
+  },
+  {
+    "key": "dwork2001rank",
+    "doi": "10.1145/371920.372165",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Rank aggregation methods for the Web"
+    ],
+    "registered_authors": [
+      "Dwork",
+      "Kumar",
+      "Naor",
+      "Sivakumar"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2001,
+          4
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 10th international conference on World Wide Web",
+    "volume": null,
+    "issue": null,
+    "page": "613-622"
+  },
+  {
+    "key": "eades1993heuristic",
+    "doi": "10.1016/0020-0190(93)90079-O",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "A fast and effective heuristic for the feedback arc set problem"
+    ],
+    "registered_authors": [
+      "Eades",
+      "Lin",
+      "Smyth"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1993,
+          10
+        ]
+      ]
+    },
+    "venue": "Information Processing Letters",
+    "volume": "47",
+    "issue": "6",
+    "page": "319-323"
+  },
+  {
+    "key": "groetschel1984cutting",
+    "doi": "10.1287/opre.32.6.1195",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "A Cutting Plane Algorithm for the Linear Ordering Problem"
+    ],
+    "registered_authors": [
+      "Gr\u00f6tschel",
+      "J\u00fcnger",
+      "Reinelt"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1984,
+          12
+        ]
+      ]
+    },
+    "venue": "Operations Research",
+    "volume": "32",
+    "issue": "6",
+    "page": "1195-1220"
+  },
+  {
+    "key": "holm1979simple",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  },
+  {
+    "key": "hunter2004mm",
+    "doi": "10.1214/aos/1079120141",
+    "http": 200,
+    "registered_title": [
+      "MM algorithms for generalized Bradley-Terry models"
+    ],
+    "registered_authors": [
+      "Hunter"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2004,
+          2,
+          1
+        ]
+      ]
+    },
+    "venue": [
+      "The Annals of Statistics"
+    ],
+    "volume": "32",
+    "issue": "1",
+    "page": "384-406",
+    "url": "https://doi.org/10.1214/aos/1079120141"
+  },
+  {
+    "key": "jarvelin2002cumulated",
+    "doi": "10.1145/582415.582418",
+    "http": 200,
+    "registered_title": [
+      "Cumulated gain-based evaluation of IR techniques"
+    ],
+    "registered_authors": [
+      "J\u00e4rvelin",
+      "Kek\u00e4l\u00e4inen"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2002,
+          10
+        ]
+      ]
+    },
+    "venue": [
+      "ACM Transactions on Information Systems"
+    ],
+    "volume": "20",
+    "issue": "4",
+    "page": "422-446",
+    "url": "https://doi.org/10.1145/582415.582418"
+  },
+  {
+    "key": "jiang2011hodge",
+    "doi": "10.1007/s10107-010-0419-x",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Statistical ranking and combinatorial Hodge theory"
+    ],
+    "registered_authors": [
+      "Jiang",
+      "Lim",
+      "Yao",
+      "Ye"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2010,
+          11,
+          28
+        ]
+      ]
+    },
+    "venue": "Mathematical Programming",
+    "volume": "127",
+    "issue": "1",
+    "page": "203-244"
+  },
+  {
+    "key": "lakens2018equivalence",
+    "doi": "10.1177/2515245918770963",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Equivalence Testing for Psychological Research: A Tutorial"
+    ],
+    "registered_authors": [
+      "Lakens",
+      "Scheel",
+      "Isager"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018,
+          6
+        ]
+      ]
+    },
+    "venue": "Advances in Methods and Practices in Psychological Science",
+    "volume": "1",
+    "issue": "2",
+    "page": "259-269"
+  },
+  {
+    "key": "luo2024prpgraph",
+    "doi": "10.18653/v1/2024.acl-long.313",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "PRP-Graph: Pairwise Ranking Prompting to LLMs with Graph Aggregation for Effective Text Re-ranking"
+    ],
+    "registered_authors": [
+      "Luo",
+      "Chen",
+      "He",
+      "Sun"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    "volume": null,
+    "issue": null,
+    "page": "5766-5776"
+  },
+  {
+    "key": "maia2018fiqa",
+    "doi": "10.1145/3184558.3192301",
+    "http": 200,
+    "registered_title": [
+      "WWW'18 Open Challenge"
+    ],
+    "registered_authors": [
+      "Maia",
+      "Handschuh",
+      "Freitas",
+      "Davis",
+      "McDermott",
+      "Zarrouk",
+      "Balahur"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "venue": [
+      "Companion of the The Web Conference 2018 on The Web Conference 2018  - WWW '18"
+    ],
+    "volume": null,
+    "issue": null,
+    "page": "1941-1942",
+    "url": "https://doi.org/10.1145/3184558.3192301"
+  },
+  {
+    "key": "negahban2017rankcentrality",
+    "doi": "10.1287/opre.2016.1534",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Rank Centrality: Ranking from Pairwise Comparisons"
+    ],
+    "registered_authors": [
+      "Negahban",
+      "Oh",
+      "Shah"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2017,
+          2
+        ]
+      ]
+    },
+    "venue": "Operations Research",
+    "volume": "65",
+    "issue": "1",
+    "page": "266-287"
+  },
+  {
+    "key": "qin-etal-2024-large",
+    "doi": "10.18653/v1/2024.findings-naacl.97",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Large Language Models are Effective Text Rankers with Pairwise Ranking Prompting"
+    ],
+    "registered_authors": [
+      "Qin",
+      "Jagerman",
+      "Hui",
+      "Zhuang",
+      "Wu",
+      "Yan",
+      "Shen",
+      "Liu",
+      "Liu",
+      "Metzler",
+      "Wang",
+      "Bendersky"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024
+        ]
+      ]
+    },
+    "venue": "Findings of the Association for Computational Linguistics: NAACL 2024",
+    "volume": null,
+    "issue": null,
+    "page": "1504-1518"
+  },
+  {
+    "key": "su2025bright",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  },
+  {
+    "key": "sun-etal-2023-chatgpt",
+    "doi": "10.18653/v1/2023.emnlp-main.923",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agents"
+    ],
+    "registered_authors": [
+      "Sun",
+      "Yan",
+      "Ma",
+      "Wang",
+      "Ren",
+      "Chen",
+      "Yin",
+      "Ren"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    "volume": null,
+    "issue": null,
+    "page": "14918-14937"
+  },
+  {
+    "key": "thakur2021beir",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  },
+  {
+    "key": "urbano2019statistical",
+    "doi": "10.1145/3331184.3331259",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Statistical Significance Testing in Information Retrieval"
+    ],
+    "registered_authors": [
+      "Urbano",
+      "Lima",
+      "Hanjalic"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2019,
+          7,
+          18
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval",
+    "volume": null,
+    "issue": null,
+    "page": "505-514"
+  },
+  {
+    "key": "vahidi2026acyclicranking",
+    "doi": "10.1007/s11227-026-08852-4",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Training-free ranking from pairwise comparisons via acyclic graph construction"
+    ],
+    "registered_authors": [
+      "Vahidi"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2026,
+          9,
+          9
+        ]
+      ]
+    },
+    "venue": "The Journal of Supercomputing",
+    "volume": "82",
+    "issue": "14",
+    "page": null
+  },
+  {
+    "key": "wang1996beyond",
+    "doi": "10.1080/07421222.1996.11518099",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Beyond Accuracy: What Data Quality Means to Data Consumers"
+    ],
+    "registered_authors": [
+      "Wang",
+      "Strong"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          1996,
+          3
+        ]
+      ]
+    },
+    "venue": "Journal of Management Information Systems",
+    "volume": "12",
+    "issue": "4",
+    "page": "5-33"
+  },
+  {
+    "key": "yang2018hotpotqa",
+    "doi": "10.18653/v1/D18-1259",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "HotpotQA: A Dataset for Diverse, Explainable Multi-hop Question Answering"
+    ],
+    "registered_authors": [
+      "Yang",
+      "Qi",
+      "Zhang",
+      "Bengio",
+      "Cohen",
+      "Salakhutdinov",
+      "Manning"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    "volume": null,
+    "issue": null,
+    "page": "2369-2380"
+  },
+  {
+    "key": "zeng2026llmrankfusion",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  },
+  {
+    "key": "hu2026acyclic",
+    "doi": "10.1609/aaai.v40i26.39343",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "Towards Acyclic Preference Evaluation of Language Models via Multiple Evaluators"
+    ],
+    "registered_authors": [
+      "Hu",
+      "Zhang",
+      "Xiong",
+      "Ratner",
+      "Ding",
+      "Krishna"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2026,
+          3,
+          14
+        ]
+      ]
+    },
+    "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+    "volume": "40",
+    "issue": "26",
+    "page": "21903-21911"
+  },
+  {
+    "key": "chen2025tourrank",
+    "doi": "10.1145/3696410.3714863",
+    "http": 200,
+    "registered_title": [
+      "TourRank: Utilizing Large Language Models for Documents Ranking with a Tournament-Inspired Strategy"
+    ],
+    "registered_authors": [
+      "Chen",
+      "Liu",
+      "Zhang",
+      "Sun",
+      "Ma",
+      "Yang",
+      "Shi",
+      "Mao",
+      "Yin"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2025,
+          4,
+          22
+        ]
+      ]
+    },
+    "venue": [
+      "Proceedings of the ACM on Web Conference 2025"
+    ],
+    "volume": null,
+    "issue": null,
+    "page": "1638-1652",
+    "url": "https://doi.org/10.1145/3696410.3714863"
+  },
+  {
+    "key": "zhuang2024setwise",
+    "doi": "10.1145/3626772.3657813",
+    "http": 200,
+    "verification_method": "DOI content negotiation",
+    "registered_title": [
+      "A Setwise Approach for Effective and Highly Efficient Zero-shot Ranking with Large Language Models"
+    ],
+    "registered_authors": [
+      "Zhuang",
+      "Zhuang",
+      "Koopman",
+      "Zuccon"
+    ],
+    "published": {
+      "date-parts": [
+        [
+          2024,
+          7,
+          10
+        ]
+      ]
+    },
+    "venue": "Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+    "volume": null,
+    "issue": null,
+    "page": "38-47"
+  },
+  {
+    "key": "xu2025nontransitivity",
+    "doi": null,
+    "verification": "online primary-source verification required"
+  }
+]

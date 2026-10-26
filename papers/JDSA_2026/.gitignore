@@ -1,0 +1,11 @@
+# Local build intermediates and contact sheets; final PDFs and validation are versioned.
+manuscript/build/
+audit/visual/
+audit/official_*.txt
+audit/SOURCE_*
+audit/ORCID_PUBLIC_RECORD.json
+audit/OPENREVIEW_*
+audit/PRIMARY_*
+# Editorial routing and overlap details remain local; repository publication is blocked.
+editorial/
+packages/editorial_private.zip

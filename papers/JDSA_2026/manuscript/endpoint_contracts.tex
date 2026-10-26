@@ -1,0 +1,12 @@
+\begin{supplementtable}
+\caption{Retained endpoint and normalization contracts. C/F denote candidate-conditioned/full-query IDCG. Query means within a single cell have equal weights; the corrected pooled exact-minus-greedy statistic retains eligible regime-row weights with query-block inference. Family sizes count hypotheses, not samples. Cutoffs and missing eligibility remain as recorded.}
+\label{tab:endpoint-contracts}\papertable
+\begin{tabularx}{\linewidth}{@{}L{3.0cm}L{2.3cm}Y@{}}\toprule
+Comparison / family & Endpoint / ideal & Cutoff and aggregation scope \\\midrule
+Greedy--unrepaired, 20/60 canonical & nDCG / C & $k=P$: 20 except HotpotQA 10; dataset/regime/method cells \\\addlinespace
+Greedy--unrepaired, 110 larger-pool & nDCG / C & Recorded $(P,k)$ in Table~\ref{tab:setup}, including reference $P=k$ cells \\\addlinespace
+Exact--unrepaired, 36/56 & nDCG / C & Canonical/larger-pool cells; nine fixed extraction pairs \\\addlinespace
+Exact--greedy, pooled 35; separate 399 & nDCG / F; MAP, MRR & $k=5,10,20$ when $k\le P$; $P=20$ except HotpotQA 10. AP/RR use full candidate order. Pooled 35: 28 tests on 342 queries, seven nDCG@20 on 290 \\\addlinespace
+Cached/prospective LLM and external controls & nDCG@10 / F & Fixed candidates within each contrast; six/213-query cache and disjoint 20-query cohorts retain separate families \\\addlinespace
+Candidate diagnostic & Oracle nDCG@10 / F & Qrel-ordered candidate ceiling on 20 further queries; not achieved reranking utility \\\bottomrule
+\end{tabularx}\end{supplementtable}

@@ -1,0 +1,27 @@
+\paragraph{Data availability.}
+Public benchmark sources are SciDocs, FiQA, HotpotQA and BRIGHT, with the exact source and conversion limits given in Online Resource~1. The previously released derived judgment and ranking-output resources are linked there with their exclusions. They do not supply all current experimental inputs. The existing confidential reviewer package contains processed paired observations and weighted graphs; prior independent Level~2 validation reproduces all 35 corrected comparisons, including 342/290 query support and zero Holm rejections. Original scoring, ranking/grade attribution and the six-graph optimum envelope are not fully reconstructible from that package. Raw benchmark text, source responses, raw qrels, historical permutations and complete envelope inputs are excluded. Reviewer delivery remains subject to confirmation of a confidential editorial channel.
+\paragraph{Code availability.}
+\ifdefined\AnonymousVersion
+The project repository is private; its identified address is withheld in this fallback.
+\else
+The project code is maintained at \url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}, currently private. Public access is not claimed.
+\fi
+The bounded processed-evidence verification scripts remain in the confidential reviewer package. Installation instructions and source provenance accompany the JDSA preparation package; full reproduction remains limited by the unavailable or restricted inputs above.
+\ifdefined\AnonymousVersion
+\paragraph{Funding.} Identified details are retained on the separate title page.
+\else
+\paragraph{Funding.}
+This work received in-kind computational support through the Cohere Labs Catalyst Grant Program, the Google Cloud Research Credits Program, Microsoft Azure for Students, and Fireworks AI credits provided through the AMD AI Developer Program. These resources supported historical multi-provider model judgments. The score-derived experiments used stored BM25, TF-IDF and MiniLM scores and local open-source SCIP solving. The prospective open-weight study used NJIT Wulver high-performance computing resources. No new model calls or experiments were conducted for this editorial revision. The supporting organizations had no role in study design, analysis, interpretation or manuscript preparation, as declared in the existing scientific record.
+\fi
+\paragraph{Competing interests.}
+The author declares no competing interests relevant to this work. Final author confirmation of these disclosures and the submission-interface entries remains required.
+\ifdefined\AnonymousVersion
+\paragraph{Author contributions.} Identified details are retained on the separate title page.
+\else
+\paragraph{Author contributions.}
+Soroush Vahidi conceived the study, designed and implemented the experimental pipeline, conducted the original experiments, analysed the results and prepared the manuscript and figures. The present revision uses existing evidence. Anthropic Claude and OpenAI ChatGPT/Codex assisted with software development, auditing, figure preparation and drafting/revision, as disclosed in Experimental Design. The author retains responsibility for final content and approval; the automated editorial checks are not represented as independent human verification of every assisted output.
+\fi
+\paragraph{Ethics and consent.}
+No new human participants or human relevance labels were collected. The study uses existing benchmarks and model outputs. Participant consent and consent for publication of individual personal data are not applicable.
+\paragraph{AI-assisted tools.}
+Anthropic Claude and OpenAI ChatGPT/Codex assisted with development, audit utilities, figures and drafting/revision, including this journal conversion, as described in Section~\ref{sec:evidence-access}. The author retains responsibility for verification and final approval. No new model judgments or experiments were generated for this revision.

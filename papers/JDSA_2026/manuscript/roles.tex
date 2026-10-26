@@ -1,0 +1,44 @@
+\begin{supplementtable}
+  \caption{Controlled comparison set for isolating graph construction and
+    repair (not a retrieval leaderboard). Family: primary = greedy
+    repaired-vs-unrepaired; expanded = exact repaired-vs-unrepaired;
+    struct.\ = exact-vs-greedy only. Repair variants: U = unrepaired,
+    G = greedy, E = exact.}
+  \label{tab:baselines}
+  \sncstable\renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\linewidth}{@{}lYccY@{}}
+    \toprule
+    Method & Family & Graph? & Prior? & Repair variants compared \\
+    \midrule
+    Prior-only & primary, expanded & no & yes & n/a (no graph) \\
+    \addlinespace
+    RRF & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
+    CombSUM & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
+    Borda fusion & primary, expanded & no & no & n/a (no graph) \\
+    \addlinespace
+    Copeland & primary & yes & no & U, G, E \\
+    \addlinespace
+    Balance & primary & yes & no & U, G, E \\
+    \addlinespace
+    Markov (damped) & primary & yes & no & U, G, E \\
+    \addlinespace
+    Copeland hybrid & primary & yes & yes ($\alpha{=}0.3$) & U, G, E \\
+    \addlinespace
+    Balance hybrid & primary & yes & yes ($\alpha{=}0.3$) & U, G, E \\
+    \addlinespace
+    PageRank & expanded & yes & no & U, E \\
+    \addlinespace
+    Rank Centrality & expanded & yes & no & U, E \\
+    \addlinespace
+    Markov hybrid & expanded & yes & yes ($\alpha{=}0.3$) & U, E \\
+    \addlinespace
+    Bradley--Terry & expanded & yes & no & U, E \\
+    \addlinespace
+    Topological & struct.\ only & yes & no & G vs.\ E only \\
+    \addlinespace
+    Priority-topological & struct.\ only & yes & yes (tie-break) & G vs.\ E only \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

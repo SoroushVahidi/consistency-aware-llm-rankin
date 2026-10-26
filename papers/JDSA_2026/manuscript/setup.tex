@@ -1,0 +1,24 @@
+\begin{supplementtable}
+  \caption{Datasets and evaluation cells for the offline reranking study.
+    Usable: queries retaining at least one relevant candidate after qrels
+    filtering. Depth: common complete stored score depth across BM25,
+    TF-IDF, and MiniLM. Canonical cells set pool size $P$ equal to metric
+    cutoff $k$; the larger-pool study includes $P>k$ cells permitting top-$k$ membership changes and $P=k$ reference cells.}
+  \label{tab:setup}
+  \sncstable
+  \begin{tabularx}{\linewidth}{@{}lrrY@{}}
+    \toprule
+    Dataset & Usable & Depth & Evaluated $(P,k)$ cells \\
+    \midrule
+    SciDocs & 120 & 50 & canonical $(20,20)$; larger-pool $(20,5)$,
+      $(20,10)$, $(20,20)$, $(50,5)$, $(50,10)$, $(50,20)$ \\
+    \addlinespace
+    FiQA & 120 & 50 & same as SciDocs \\
+    \addlinespace
+    HotpotQA & 52 & 35 & canonical $(10,10)$; larger-pool $(10,5)$,
+      $(35,5)$, $(35,10)$, $(35,20)$ \\
+    \addlinespace
+    BRIGHT & 50 & 50 & same as SciDocs \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

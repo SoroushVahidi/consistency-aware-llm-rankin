@@ -1,0 +1,21 @@
+\begin{supplementtable}
+\caption{Exploratory sensitivity on the same $20$ independent queries per model. Cyc = cyclic graphs; Opp = cyclic graphs with at least one judged-positive candidate; U/G/E = unrepaired/greedy/exact nDCG@10. Qwen's two symmetric variants coincide. No alternative becomes a new primary protocol.}
+\label{tab:construction-utility}
+\sncstable
+\begin{tabularx}{\linewidth}{@{}lYrrrrr@{}}
+\toprule
+Model & Construction & Cyc & Opp & U & G & E \\
+\midrule
+Qwen & Strict & $0$ & $0$ & $0.126872$ & $0.126872$ & $0.126872$ \\
+& AB only & $8$ & $3$ & $0.109908$ & $0.109908$ & $0.109908$ \\
+& BA only & $8$ & $4$ & $0.110179$ & $0.109416$ & $0.110179$ \\
+& Symmetric (both/available) & $5$ & $2$ & $0.121881$ & $0.121881$ & $0.121881$ \\
+\addlinespace
+Smol & Strict & $1$ & $0$ & $0.097435$ & $0.097435$ & $0.097435$ \\
+& AB only & $13$ & $6$ & $0.105196$ & $0.085103$ & $0.105196$ \\
+& BA only & $12$ & $4$ & $0.055740$ & $0.047407$ & $0.051396$ \\
+& Symmetric (both valid) & $1$ & $0$ & $0.097435$ & $0.097435$ & $0.097435$ \\
+& Symmetric (available) & $5$ & $2$ & $0.088779$ & $0.088779$ & $0.088779$ \\
+\bottomrule
+\end{tabularx}
+\end{supplementtable}

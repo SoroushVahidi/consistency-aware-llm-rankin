@@ -1,0 +1,31 @@
+\begin{supplementtable}
+  \caption{Extraction-method implementation parameters matching the
+    canonical pipeline. Direction: edge $u\to v$ means $u$ preferred over
+    $v$. Final ranking sorts by descending score then ascending document id
+    unless noted.}
+  \label{tab:extraction-params}
+  \sncstable\renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\linewidth}{@{}lYY@{}}
+    \toprule
+    Method & Main parameter(s) / ties & Implementation note \\
+    \midrule
+    Copeland & $\deg^+-\deg^-$; id tie-break & Isolates score $0$ \\
+    \addlinespace
+    Balance & weighted out$-$in; id tie-break & Uses edge weights \\
+    \addlinespace
+    Markov (damped) & restart $0.15$; tol $10^{-10}$; $10^{4}$ iter & Loser$\to$winner + uniform restart \\
+    \addlinespace
+    Rank Centrality & self-loops; tol $10^{-8}$; $200$ iter & No teleport; normalize $\pi$ \\
+    \addlinespace
+    PageRank & damping $0.85$; tol $10^{-6}$; $100$ iter & Reversed graph; weighted \\
+    \addlinespace
+    Bradley--Terry-style & MM-style; tol $10^{-6}$; $100$ iter & Uniform init; isolates $0$ \\
+    \addlinespace
+    Topological & NetworkX \texttt{topological\_sort} & DAG-only; construction-order ties \\
+    \addlinespace
+    Priority-topo & RRF prior ($k{=}60$) among sources & Higher prior, then larger id \\
+    \addlinespace
+    Hybrids & $\alpha{=}0.3$; min--max each side & $h=\hat s^{\mathrm{prior}}+\alpha\hat s^{\mathrm{graph}}$; const.\ $\to 0$ \\
+    \bottomrule
+  \end{tabularx}
+\end{supplementtable}

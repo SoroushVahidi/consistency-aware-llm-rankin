@@ -1,0 +1,45 @@
+\begin{longtable}{@{}llrrrrr@{}}
+\caption{Exploratory full-query nDCG@10 by model, construction and dataset. U/G/E/SR = unrepaired/greedy/exact/SpringRank. Opp = cyclic-positive queries. Qwen/Smol identify the models; FiQA/SciD/BR denote FiQA/SciDocs/BRIGHT, with $7/7/6$ queries. All-query variant means are in Table~\ref{tab:construction-utility}.}\label{tab:construction-domains}\\
+\toprule Model & Rule/domain & Opp & U & G & E & SR \\\midrule\endfirsthead
+\caption[]{Domain-specific construction comparisons (continued)}\\
+\toprule Model & Rule/domain & Opp & U & G & E & SR \\\midrule\endhead
+Qwen & Strict/FiQA & 0 & $0.2267$ & $0.2267$ & $0.2267$ & $0.2474$ \\
+Qwen & Strict/SciD & 0 & $0.0242$ & $0.0242$ & $0.0242$ & $0.0242$ \\
+Qwen & Strict/BR & 0 & $0.1301$ & $0.1301$ & $0.1301$ & $0.1301$ \\
+\addlinespace[3pt]
+Qwen & AB/FiQA & 1 & $0.2267$ & $0.2267$ & $0.2267$ & $0.2226$ \\
+Qwen & AB/SciD & 0 & $0.0242$ & $0.0242$ & $0.0242$ & $0.0242$ \\
+Qwen & AB/BR & 2 & $0.0736$ & $0.0736$ & $0.0736$ & $0.0736$ \\
+\addlinespace[3pt]
+Qwen & BA/FiQA & 2 & $0.2051$ & $0.2029$ & $0.2051$ & $0.1706$ \\
+Qwen & BA/SciD & 0 & $0.0187$ & $0.0187$ & $0.0187$ & $0.0173$ \\
+Qwen & BA/BR & 2 & $0.1061$ & $0.1061$ & $0.1061$ & $0.1061$ \\
+\addlinespace[3pt]
+Qwen & Sym. both/FiQA & 1 & $0.2180$ & $0.2180$ & $0.2180$ & $0.2226$ \\
+Qwen & Sym. both/SciD & 0 & $0.0187$ & $0.0187$ & $0.0187$ & $0.0173$ \\
+Qwen & Sym. both/BR & 1 & $0.1301$ & $0.1301$ & $0.1301$ & $0.1301$ \\
+\addlinespace[3pt]
+Qwen & Sym. avail./FiQA & 1 & $0.2180$ & $0.2180$ & $0.2180$ & $0.2226$ \\
+Qwen & Sym. avail./SciD & 0 & $0.0187$ & $0.0187$ & $0.0187$ & $0.0173$ \\
+Qwen & Sym. avail./BR & 1 & $0.1301$ & $0.1301$ & $0.1301$ & $0.1301$ \\
+\midrule
+Smol & Strict/FiQA & 0 & $0.1705$ & $0.1705$ & $0.1705$ & $0.1374$ \\
+Smol & Strict/SciD & 0 & $0.0242$ & $0.0242$ & $0.0242$ & $0.0242$ \\
+Smol & Strict/BR & 0 & $0.0976$ & $0.0976$ & $0.0976$ & $0.0976$ \\
+\addlinespace[3pt]
+Smol & AB/FiQA & 4 & $0.2226$ & $0.1788$ & $0.2226$ & $0.1903$ \\
+Smol & AB/SciD & 0 & $0.0187$ & $0.0187$ & $0.0187$ & $0.0187$ \\
+Smol & AB/BR & 2 & $0.0691$ & $0.0532$ & $0.0691$ & $0.0560$ \\
+\addlinespace[3pt]
+Smol & BA/FiQA & 2 & $0.0530$ & $0.0498$ & $0.0612$ & $0.0530$ \\
+Smol & BA/SciD & 0 & $0.0153$ & $0.0153$ & $0.0153$ & $0.0153$ \\
+Smol & BA/BR & 2 & $0.1061$ & $0.0821$ & $0.0821$ & $0.1061$ \\
+\addlinespace[3pt]
+Smol & Sym. both/FiQA & 0 & $0.1705$ & $0.1705$ & $0.1705$ & $0.1374$ \\
+Smol & Sym. both/SciD & 0 & $0.0242$ & $0.0242$ & $0.0242$ & $0.0242$ \\
+Smol & Sym. both/BR & 0 & $0.0976$ & $0.0976$ & $0.0976$ & $0.0976$ \\
+\addlinespace[3pt]
+Smol & Sym. avail./FiQA & 0 & $0.1491$ & $0.1491$ & $0.1491$ & $0.1229$ \\
+Smol & Sym. avail./SciD & 0 & $0.0209$ & $0.0209$ & $0.0209$ & $0.0209$ \\
+Smol & Sym. avail./BR & 2 & $0.0976$ & $0.0976$ & $0.0976$ & $0.0736$ \\
+\bottomrule\end{longtable}

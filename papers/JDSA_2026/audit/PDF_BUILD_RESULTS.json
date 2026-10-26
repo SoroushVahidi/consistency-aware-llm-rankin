@@ -1,0 +1,34 @@
+{
+  "main": {
+    "pages": 18,
+    "sha256": "8ce4e644881bce4e388674210677b212c146fac5c3405440806c336b34456d6d",
+    "underfull_notices": 129,
+    "overfull": 0,
+    "undefined": 0,
+    "latex_errors": 0
+  },
+  "supplement": {
+    "pages": 32,
+    "sha256": "f9540720acd1b23104f08cf7e769a752d1ed9accbda534bfdff7d2c09c4dcdfe",
+    "underfull_notices": 42,
+    "overfull": 0,
+    "undefined": 0,
+    "latex_errors": 0
+  },
+  "main_anonymous": {
+    "pages": 17,
+    "sha256": "e5eba80d1b9d083d024641f43f6e3e836228948d2f1025ad66fd8ee994c5fb0b",
+    "underfull_notices": 125,
+    "overfull": 0,
+    "undefined": 0,
+    "latex_errors": 0
+  },
+  "supplement_anonymous": {
+    "pages": 31,
+    "sha256": "eb9b869c36c89e947d63bea55a1c2ad96565e5253c2ece095cbce666484e18c0",
+    "underfull_notices": 41,
+    "overfull": 0,
+    "undefined": 0,
+    "latex_errors": 0
+  }
+}

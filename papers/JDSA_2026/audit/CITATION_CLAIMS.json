@@ -1,0 +1,243 @@
+[
+  {
+    "file": "main.tex",
+    "keys": [
+      "bradley1952rank",
+      "hunter2004mm"
+    ],
+    "context": "ution analyses.\n\n\\section{Related Work}\\label{sec:related}\n\\subsection{Preference aggregation and graph repair}\nProbabilistic aggregation and combinatorial repair answer different questions about pairwise evidence. Bradley--Terry models estimate latent strengths from comparisons \\cite{bradley1952rank,hunter2004mm}. Rank Centrality estimates strengths using a comparison Markov chain \\cite{negahban2017rankcentrality}. Combinatorial Hodge theory separates ranking and cyclic components of pairw"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "negahban2017rankcentrality"
+    ],
+    "context": "epair}\nProbabilistic aggregation and combinatorial repair answer different questions about pairwise evidence. Bradley--Terry models estimate latent strengths from comparisons \\cite{bradley1952rank,hunter2004mm}. Rank Centrality estimates strengths using a comparison Markov chain \\cite{negahban2017rankcentrality}. Combinatorial Hodge theory separates ranking and cyclic components of pairwise flow \\cite{jiang2011hodge}. These approaches motivate alternative extraction controls; their assump"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "jiang2011hodge"
+    ],
+    "context": "Terry models estimate latent strengths from comparisons \\cite{bradley1952rank,hunter2004mm}. Rank Centrality estimates strengths using a comparison Markov chain \\cite{negahban2017rankcentrality}. Combinatorial Hodge theory separates ranking and cyclic components of pairwise flow \\cite{jiang2011hodge}. These approaches motivate alternative extraction controls; their assumptions do not make arbitrary edge-deletion costs calibrated correctness probabilities.\n\nRank aggregation and"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "dwork2001rank",
+      "ailon2008aggregating"
+    ],
+    "context": "low \\cite{jiang2011hodge}. These approaches motivate alternative extraction controls; their assumptions do not make arbitrary edge-deletion costs calibrated correctness probabilities.\n\nRank aggregation and minimum-disagreement ordering have a substantial combinatorial literature \\cite{dwork2001rank,ailon2008aggregating}. Feedback arc set optimization removes edges so that the retained directed graph is acyclic; exact methods and linear-ordering formulations are established \\cite{groetschel1984cut"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "groetschel1984cutting",
+      "baharev2021exact"
+    ],
+    "context": "ion and minimum-disagreement ordering have a substantial combinatorial literature \\cite{dwork2001rank,ailon2008aggregating}. Feedback arc set optimization removes edges so that the retained directed graph is acyclic; exact methods and linear-ordering formulations are established \\cite{groetschel1984cutting,baharev2021exact}. We use certified optimization as a diagnostic control on a fixed objective, not as a new formulation or solver.\n\nThe published training-free acyclic-ranking pipeline already deve"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "vahidi2026acyclicranking"
+    ],
+    "context": " We use certified optimization as a diagnostic control on a fixed objective, not as a new formulation or solver.\n\nThe published training-free acyclic-ranking pipeline already develops the ranking--feedback-arc relationship and combines pruning, cycle-safe add-back and refinement \\cite{vahidi2026acyclicranking}. Those components and their ranking-recovery results are prior work. The present comparison instead measures the marginal effect of deletion against external retrieval judgments. "
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "debacco2018springrank"
+    ],
+    "context": "eproducibility; its benchmark and numerical results are not contributed here. Its status and relationship are disclosed confidentially to the editor.\n\nSpringRank infers real-valued hierarchy through a weighted quadratic energy and a linear system, without requiring edge deletion \\cite{debacco2018springrank}. It is a useful direct-aggregation control on the same original graph. Comparing repair plus Copeland with SpringRank changes the extractor, however, and cannot identify the isola"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "cormack2009rrf"
+    ],
+    "context": "e original graph. Comparing repair plus Copeland with SpringRank changes the extractor, however, and cannot identify the isolated effect of repair. That distinction also applies to graph-free fusion: reciprocal rank fusion combines ranks without constructing the preference graph \\cite{cormack2009rrf}.\n\n\\subsection{Retrieval utility and related empirical audits}\nPairwise ranking prompting (PRP) studies language-model comparisons as a document-ranking interface \\cite{qin-etal-20"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "qin-etal-2024-large"
+    ],
+    "context": "ph-free fusion: reciprocal rank fusion combines ranks without constructing the preference graph \\cite{cormack2009rrf}.\n\n\\subsection{Retrieval utility and related empirical audits}\nPairwise ranking prompting (PRP) studies language-model comparisons as a document-ranking interface \\cite{qin-etal-2024-large}. PRP-Graph additionally uses target-label probabilities in graph construction and aggregation \\cite{luo2024prpgraph}. Our adapted author-code comparison supplies a relevant retrie"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "luo2024prpgraph"
+    ],
+    "context": "subsection{Retrieval utility and related empirical audits}\nPairwise ranking prompting (PRP) studies language-model comparisons as a document-ranking interface \\cite{qin-etal-2024-large}. PRP-Graph additionally uses target-label probabilities in graph construction and aggregation \\cite{luo2024prpgraph}. Our adapted author-code comparison supplies a relevant retrieval baseline, while retaining the distinction between its acquisition/aggregation contract and fixed-judgment repair."
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "sun-etal-2023-chatgpt"
+    ],
+    "context": " while retaining the distinction between its acquisition/aggregation contract and fixed-judgment repair. A win-only historical cache cannot recover the label probabilities required by that method. Listwise ranking systems elicit an ordering jointly rather than one pair at a time \\cite{sun-etal-2023-chatgpt}. Setwise prompting selects among several documents and compares pointwise, pairwise and listwise elicitation within a common evaluation framework \\cite{zhuang2024setwise}. Pointwi"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "zhuang2024setwise"
+    ],
+    "context": "uired by that method. Listwise ranking systems elicit an ordering jointly rather than one pair at a time \\cite{sun-etal-2023-chatgpt}. Setwise prompting selects among several documents and compares pointwise, pairwise and listwise elicitation within a common evaluation framework \\cite{zhuang2024setwise}. Pointwise prompts score documents individually; setwise selection and listwise ordering change the elicited evidence and aggregation contract. These distinctions complement our f"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "zeng2026llmrankfusion"
+    ],
+    "context": "gation contract. These distinctions complement our fixed-evidence contrast rather than constitute additional tested baselines.\n\nLLM-RankFusion mitigates presentation-order inconsistency through prompting and calibration, and addresses transitive inconsistency through aggregation \\cite{zeng2026llmrankfusion}. Preference Graph Ensemble and Denoise combines multiple evaluators to construct acyclic judgments for model evaluation, response selection and training-data selection \\cite{hu202"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "hu2026acyclic"
+    ],
+    "context": "mpting and calibration, and addresses transitive inconsistency through aggregation \\cite{zeng2026llmrankfusion}. Preference Graph Ensemble and Denoise combines multiple evaluators to construct acyclic judgments for model evaluation, response selection and training-data selection \\cite{hu2026acyclic}. TourRank uses tournament-style grouping and a points-based ensemble for document ranking \\cite{chen2025tourrank}. These methods demonstrate that consistency mitigation can be use"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "chen2025tourrank"
+    ],
+    "context": ". Preference Graph Ensemble and Denoise combines multiple evaluators to construct acyclic judgments for model evaluation, response selection and training-data selection \\cite{hu2026acyclic}. TourRank uses tournament-style grouping and a points-based ensemble for document ranking \\cite{chen2025tourrank}. These methods demonstrate that consistency mitigation can be useful under their acquisition and aggregation contracts. They do not establish that minimum-weight edge deletion imp"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "xu2025nontransitivity"
+    ],
+    "context": "ot establish that minimum-weight edge deletion improves external relevance when those contracts and the extractor are held fixed.\n\nXu et al. demonstrate nontransitivity-induced sensitivity in model evaluation and investigate tournament acquisition with Bradley--Terry aggregation \\cite{xu2025nontransitivity}. Their endpoint is model-ranking reliability. Here the units are document-retrieval queries, and external relevance judgments evaluate edge deletion with acquisition and extractio"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "wang1996beyond"
+    ],
+    "context": "rieval queries, and external relevance judgments evaluate edge deletion with acquisition and extraction fixed. Neither result transfers automatically to the other task.\n\nThe distinction between intrinsic consistency and task-dependent quality is familiar in data-quality research \\cite{wang1996beyond}. Acyclicity and minimum disagreement describe the preference evidence; normalized discounted cumulative gain evaluates graded relevance at ranking positions \\cite{jarvelin2002cumu"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "jarvelin2002cumulated"
+    ],
+    "context": "nction between intrinsic consistency and task-dependent quality is familiar in data-quality research \\cite{wang1996beyond}. Acyclicity and minimum disagreement describe the preference evidence; normalized discounted cumulative gain evaluates graded relevance at ranking positions \\cite{jarvelin2002cumulated}. The present contribution is not the mathematical possibility of disagreement between these objectives. It is the measured frequency and attribution of inactivity across controlle"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "vahidi2026acyclicranking"
+    ],
+    "context": "is adds quantitative opportunity decomposition and selected-cache ranking/relevance-profile attribution, with corrected query-clustered inference and exact-cost and complete small-instance utility diagnostics. It claims neither the published acyclic-ranking pipeline's algorithms \\cite{vahidi2026acyclicranking} nor related graph-benchmark or structural-optimization manuscripts' methods and numerical results as new contributions. Corrected retrieval interpretations supersede the preprint'"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "urbano2019statistical",
+      "carterette2012multiple",
+      "lakens2018equivalence"
+    ],
+    "context": "ew contributions. Corrected retrieval interpretations supersede the preprint's corresponding claims. Online Resource~1 details reuse and historical comparison limits. Multiplicity-aware paired inference and the distinction between nonsignificance and equivalence remain essential \\cite{urbano2019statistical,carterette2012multiple,lakens2018equivalence}.\n\n\\section{Problem Formulation}\\label{sec:problem}\n\\subsection{Fixed-evidence repair contrast}\nFor query $q$, let $D_q$ be a fixed candidate set and $G_q=(D_q,E_q,w_q)$ its direct"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "cohan2020scidocs",
+      "maia2018fiqa",
+      "yang2018hotpotqa",
+      "su2025bright"
+    ],
+    "context": "mental Design}\\label{sec:design}\n\\subsection{Evidence cohorts and reuse}\nTable~\\ref{tab:cohorts} separates the evidence populations. We use relevance judgments (qrels) as the external evaluation reference. The canonical score-derived study uses SciDocs, FiQA, HotpotQA and BRIGHT \\cite{cohan2020scidocs,maia2018fiqa,yang2018hotpotqa,su2025bright}. These benchmarks provide heterogeneous relevance supervision, including citation- and question-answering-derived labels. They are not uniformly direct human pairwise gold standar"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "thakur2021beir"
+    ],
+    "context": "2018fiqa,yang2018hotpotqa,su2025bright}. These benchmarks provide heterogeneous relevance supervision, including citation- and question-answering-derived labels. They are not uniformly direct human pairwise gold standards. Newer FiQA and SciDocs cohorts use BEIR-hosted snapshots \\cite{thakur2021beir}; the historical HotpotQA retrieval conversion remains incompletely pinned.\n\n\\begin{table*}[t]\n\\caption{Evidence cohorts and comparison contracts. Counts are unique query identitie"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "eades1993heuristic"
+    ],
+    "context": "s. Alternative constructions are exploratory repeated views, not selected replacements for the strict protocol.\n\nGreedy repair repeatedly deletes a minimum-weight edge from a deterministic depth-first-search cycle until acyclic. It is not the Eades--Lin--Smyth ordering heuristic \\cite{eades1993heuristic}. Exact repair uses a linear-ordering mixed-integer program solved by SCIP, requiring proven optimality with zero reported gap. Pool, evidence, extractor, ties and cutoff remain fi"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "bge2024modelcard"
+    ],
+    "context": "\n\\label{fig:pipeline}\n\\end{figure*}\n\nExternal comparisons include original-graph SpringRank, direct Bradley--Terry-style aggregation, graph-free fusion, adapted PRP-Graph and a trained BGE cross-encoder. BGE follows the official raw-relevance-logit procedure on matched documents \\cite{bge2024modelcard}; it is not budget- or training-matched to a generative comparator. The adapted PRP pilot retains the published implementation's Swiss comparisons and personalized PageRank, but ch"
+  },
+  {
+    "file": "main.tex",
+    "keys": [
+      "holm1979simple"
+    ],
+    "context": "ations. The historically omitted empty BRIGHT/\\texttt{ms2} record remains excluded, without zero imputation.\n\nThe completed correction uses 10,000 Monte Carlo whole-query sign assignments, seed 17, add-one two-sided p-values, and Holm correction over the unchanged 35-test family \\cite{holm1979simple}. Bootstrap sensitivity uses 10,000 within-dataset query-cluster draws, seed 13, with percentile and basic 95\\% intervals. This corrected family does not use exact enumeration or b"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "groetschel1984cutting",
+      "baharev2021exact"
+    ],
+    "context": "+b_{ca}\\le2\\quad(a,b,c\\text{ distinct}),\\label{eq:si-transitivity}\\\\\n&b_{uv}\\in\\{0,1\\}.\\label{eq:si-binary}\n\\end{align}\\endgroup\nAn edge is deleted when its reverse-order variable is one. The formulation is established, not a new minimum-weight feedback arc set (MWFAS) algorithm \\cite{groetschel1984cutting,baharev2021exact}. All 1,025 historical reported instances have SCIP proven-optimal status and zero reported gap. The empty BRIGHT/biology:0 \\texttt{ms2} graph was historically excluded; empty grap"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "debacco2018springrank"
+    ],
+    "context": "d reciprocal-rank constant 60; standalone fusion uses each full stored ranking before restricting to the pool. These can differ without a tie. The sensitivity sweep uses 0.1/0.3/0.5/1.0, not test-label selection of a best alpha.\n\nDirect SpringRank minimizes the attributed energy \\cite{debacco2018springrank}\n\\begin{equation}\nH(s)=\\tfrac12\\sum_{ij}A_{ij}(s_i-s_j-1)^2+\\tfrac\\lambda2\\sum_i s_i^2.\n\\label{eq:si-springrank}\n\\end{equation}\nThe primary setting is $\\lambda=0$; 0.01 and 1 are s"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "luo2024prpgraph"
+    ],
+    "context": "{tab:springrank} provides all saved matched SpringRank contrasts.\n\\input{springrank}\n\nThe adapted PRP-Graph pilot uses frozen 20-document pools, pinned FLAN-T5-large and the published implementation's probability-aware comparison/Swiss acquisition and personalized PageRank logic \\cite{luo2024prpgraph}. Runtime adapters call unchanged modules directly where the public command-line round handling is unsuitable; no test-qrel interpolation is tuned. Its published TREC-COVID run, or"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "bge2024modelcard"
+    ],
+    "context": "COVID run, original first-stage index and recorded graph are not reproduced. Local changes are documented rather than described as exact reproduction of published effectiveness.\n\nThe trained \\texttt{BAAI/bge-reranker-v2-m3} cross-encoder follows its official model-card procedure \\cite{bge2024modelcard}. It supplies exactly 400 PRP-pool and 240 prospective-pool query--document scores, with 32-bit floating-point (FP32) inference, batch size 8, joint maximum length 512, longest-fir"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "vahidi2026acyclicranking"
+    ],
+    "context": "erence nor validates a better instrument.\n\n\\section{Related-Work and Reuse Detail}\\label{sec:si-related}\nThe published acyclic-ranking pipeline concerns graph disagreement and ranking recovery; pruning, exact add-back, min-cut exchange and ranking--MWFAS theory remain prior work \\cite{vahidi2026acyclicranking}. The present audit estimates deletion effects against external retrieval qrels. Related graph-benchmark work studies graph identity and structural algorithm comparisons; its bench"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "luo2024prpgraph"
+    ],
+    "context": " graph identity and structural algorithm comparisons; its benchmark resources and numerical outcomes are not presented as new retrieval data. The editor receives an identified related-manuscript/status comparison separately.\n\nPRP-Graph evaluates probability-aware graph reranking \\cite{luo2024prpgraph}; direct SpringRank estimates hierarchy on original graphs \\cite{debacco2018springrank}. These are different interventions from fixed-extractor edge deletion. Pairwise prompting an"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "debacco2018springrank"
+    ],
+    "context": " numerical outcomes are not presented as new retrieval data. The editor receives an identified related-manuscript/status comparison separately.\n\nPRP-Graph evaluates probability-aware graph reranking \\cite{luo2024prpgraph}; direct SpringRank estimates hierarchy on original graphs \\cite{debacco2018springrank}. These are different interventions from fixed-extractor edge deletion. Pairwise prompting and listwise prompting have established effectiveness evidence under their own evaluation"
+  },
+  {
+    "file": "supplement.tex",
+    "keys": [
+      "qin-etal-2024-large",
+      "sun-etal-2023-chatgpt"
+    ],
+    "context": "h}; direct SpringRank estimates hierarchy on original graphs \\cite{debacco2018springrank}. These are different interventions from fixed-extractor edge deletion. Pairwise prompting and listwise prompting have established effectiveness evidence under their own evaluation contracts \\cite{qin-etal-2024-large,sun-etal-2023-chatgpt}; the present qualified null does not refute those results. Nor does a graph-internal disagreement optimum imply external nDCG optimality.\n\nThe earlier Research Square retrieval pr"
+  }
+]

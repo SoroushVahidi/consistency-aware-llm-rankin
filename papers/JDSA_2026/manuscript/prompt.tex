@@ -1,0 +1,12 @@
+\begin{supplementtable}
+\caption{Prompt-validity development: descriptive pooled counts. Original/neutral prompts share exact pair provenance; neither responses nor pairs are independent queries. A/B denote first/second displayed documents and AB/BA their two orientations. A rate conditions on valid directional outputs; the neutral Smol denominator is only two. ``Corroborated'' requires valid AB/BA choices for the same actual document, with all sixty pair/replicate cases in the denominator. Capping and invalidity overlap; abstentions are valid responses, distinct from missing or invalid outputs.}
+\label{tab:si-prompt}
+\sncstable
+\begin{tabularx}{\linewidth}{@{}lYrrrr@{}}\toprule
+Model & Prompt & Valid & Capped & A/directional & Corroborated \\\midrule
+Qwen & Original & $120/120$ & $0$ & $40/75$ & $13/60$ \\
+& Neutral & $120/120$ & $0$ & $16/40$ & $13/60$ \\
+Smol & Original & $119/120$ & $1$ & $114/119$ & $5/60$ \\
+& Neutral & $3/120$ & $74$ & $1/2$ & $0/60$ \\\bottomrule
+\end{tabularx}
+\end{supplementtable}
