@@ -5,15 +5,19 @@ root=Path(__file__).resolve().parents[1]
 src=root/'manuscript';dest=root/'packages';dest.mkdir(exist_ok=True)
 files=[f for f in src.iterdir() if f.is_file() and f.suffix in {'.tex','.cls','.bst','.bib','.sh'}]
 files += [src/'main.pdf',src/'ESM_1.pdf']
+files += [root/'scripts'/n for n in ['verify_relevance_profiles.py','verify_optimum_envelope.py']]
+files += [root/'OFFLINE_VERIFICATION.md']
 for n in ['main.bbl','supplement.bbl']:
  f=src/'build'/n
  if f.exists():files.append(f)
 with zipfile.ZipFile(dest/'JDSA_sources.zip','w',zipfile.ZIP_DEFLATED) as z:
  for f in files:z.write(f,f.name)
+ z.write(root.parents[1]/'LICENSE','LICENSE_VERIFICATION_CODE.txt')
  # Include exactly the five used vector figure assets.
  for f in src.glob('*Fig*.pdf'):
   if f not in files:z.write(f,f.name)
 manifest={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
+manifest['LICENSE_VERIFICATION_CODE.txt']=hashlib.sha256((root.parents[1]/'LICENSE').read_bytes()).hexdigest()
 for f in src.glob('*Fig*.pdf'):manifest[f.name]=hashlib.sha256(f.read_bytes()).hexdigest()
 (root/'audit/PACKAGE_MANIFEST.json').write_text(json.dumps(manifest,indent=2)+'\n')
 # This archive remains ignored and local; no other historical files are included.

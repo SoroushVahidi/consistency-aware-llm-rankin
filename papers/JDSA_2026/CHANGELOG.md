@@ -20,3 +20,15 @@ Governance: visibility stays private because earlier reachable records explicitl
 - Validated the existing public ranking release after excluding Hub transport metadata from its checksum-ledger extraction. Documented partial processed-output coverage and unreconstructible historical inputs without creating another publication.
 - Inspected 35 historical listwise response_text values: numeric indices/separators only, not source prose; five index-base mismatches retained honestly. Verified private all-ref backup restoration and SNCS archive readback; prepared same-repository public-release remediation/ref-migration plan. No live deletion/rewrite/force-push/visibility change.
 - Rebuilt identified 18/33-page and anonymous 18/32-page PDFs, isolated flat-source builds, hyperlink checks and 70 document checks. Source packager tolerates absent ignored editorial artifacts. Journal-specific review model, permissions, final PDF approval, exact submitted-version comparison and confidential delivery remain open.
+
+## Scientific reproducibility recovery follow-up — 26 October 2026
+
+- Recovered and independently reconstructed selected-cache attribution from 219 hash-matched original files: all 426 branch records/6,816 fields match, maximum numeric error 2.22e-16. Added a data-free standard-library verifier and schema documentation.
+- Recovered complete six-graph inputs and independently enumerated 241,920 orders: all eight optimal repairs/rankings and six utility ranges match, maximum error 1.11e-16; no solver/model execution or new certificate claim.
+- Verified all 12 historical score exports and four original canonical qrel files against protocol hashes, without substituting newer snapshots or running scorers. Missing MiniLM deployment/corpus/permutation provenance remains explicit.
+- Corrected availability wording to distinguish local reconstruction from reviewer/public delivery. Kept the original 35-file ZIP unchanged; numeric recovery projections remain private under conditional sharing status. The source ZIP now includes two data-free verifiers, schema guide and original-code MIT notice.
+- Added the official Catalyst FAQ's affirmative publication guidance and separated it from generic benchmarking access/use conditions. Governing accepted award/account terms remain UNKNOWN; precise author-document question prepared, no contact.
+- Updated the confidential overlap assessment to a checksum-verified later prepared version, retaining exact submitted-version uncertainty and explicit shared infrastructure/prior lineage. No confidential active-manuscript details are tracked.
+- Rebuilt main18/SI35 and anonymous18/34 PDFs; 74 document checks, 1,362 unit tests/64 deselected and isolated verification procedures pass. Scientific results, original table/figure content, statistical methods and all 835 protected files remain unchanged.
+
+- Added canonical publisher URLs for existing SPECTER, HotpotQA and PGED references after legacy DOI redirect challenges/connection failure; publisher identities verified and direct-request limits retained. No new reference or changed scientific claim.

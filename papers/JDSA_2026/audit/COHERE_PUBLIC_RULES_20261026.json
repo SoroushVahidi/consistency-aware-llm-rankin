@@ -1,0 +1,32 @@
+[
+  {
+    "key": "grant_faq",
+    "url": "https://cohere.com/research/grants",
+    "http": 200,
+    "final_url": "https://cohere.com/research/grants",
+    "checked_utc": "2026-10-26T21:56:31.845298+00:00",
+    "sha256": "719410eeb1aef9102e0890ef42cdaa35163ab268fca9b5cca9981faab426056b",
+    "last_modified_header": null,
+    "etag": "W/\"786guc563xbhfg\""
+  },
+  {
+    "key": "saas",
+    "url": "https://cohere.com/saas-agreement",
+    "http": 200,
+    "final_url": "https://cohere.com/saas-agreement",
+    "checked_utc": "2026-10-26T21:56:31.995801+00:00",
+    "sha256": "3a56529b4113a6cc80bf0e5521709e0fcadac91adefb7e01781557b5b3a865cf",
+    "last_modified_header": null,
+    "etag": "W/\"12mw8ir3nuje3ei\""
+  },
+  {
+    "key": "terms",
+    "url": "https://cohere.com/terms-of-use",
+    "http": 200,
+    "final_url": "https://cohere.com/terms-of-use",
+    "checked_utc": "2026-10-26T21:56:32.125222+00:00",
+    "sha256": "65b831c6b184c67818d135f2bcca548235a8a928e062e859afd0c30870f5ac86",
+    "last_modified_header": null,
+    "etag": "W/\"6e0xlml5qmct1f\""
+  }
+]

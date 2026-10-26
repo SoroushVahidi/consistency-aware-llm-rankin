@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "passed": 70,
-  "total": 70,
+  "passed": 74,
+  "total": 74,
   "checks": [
     {
       "check": "all main table bodies unchanged",
@@ -202,7 +202,7 @@
       "check": "main final log clean",
       "pass": true,
       "detail": {
-        "underfull": 129
+        "underfull": 136
       }
     },
     {
@@ -224,7 +224,7 @@
       "check": "supplement final log clean",
       "pass": true,
       "detail": {
-        "underfull": 43
+        "underfull": 44
       }
     },
     {
@@ -246,7 +246,7 @@
       "check": "main_anonymous final log clean",
       "pass": true,
       "detail": {
-        "underfull": 127
+        "underfull": 134
       }
     },
     {
@@ -268,7 +268,7 @@
       "check": "supplement_anonymous final log clean",
       "pass": true,
       "detail": {
-        "underfull": 42
+        "underfull": 43
       }
     },
     {
@@ -348,6 +348,26 @@
     },
     {
       "check": "archive excludes confidential materials",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "data-free verifiers and schema guide bundled",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original verifier license notice retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "no recovered numeric payload in source ZIP",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all seven author attestations retained",
       "pass": true,
       "detail": null
     },

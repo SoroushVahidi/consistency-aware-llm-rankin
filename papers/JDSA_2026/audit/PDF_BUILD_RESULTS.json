@@ -1,32 +1,32 @@
 {
   "main": {
     "pages": 18,
-    "sha256": "e1bd60c5532f1f743c3a53f545d162f227598d0a9f7b4ccf8d3ee1bf3e431af0",
-    "underfull_notices": 129,
+    "sha256": "87ceec85e3cf6dbe8e6a4496023033cbcab478e3a078dab997d7a1a1e66506e6",
+    "underfull_notices": 136,
     "overfull": 0,
     "undefined": 0,
     "latex_errors": 0
   },
   "supplement": {
-    "pages": 33,
-    "sha256": "326a1a34358a8004cf49d3392c6d200fa2eaed31dcc8b84281fd6533b3b418c7",
-    "underfull_notices": 43,
+    "pages": 35,
+    "sha256": "c7d0ed68a91b5bf167e55865a2a1989166d389abf6b4b7f070746640aa9c4e0b",
+    "underfull_notices": 44,
     "overfull": 0,
     "undefined": 0,
     "latex_errors": 0
   },
   "main_anonymous": {
     "pages": 18,
-    "sha256": "91b3878ca97729861a8ae4db184a1054310face393ad3535730ef9d864285c00",
-    "underfull_notices": 127,
+    "sha256": "3d4f690089be2b928556770fdc967e64d61dd66b9f6601da7c5c3f89a2d38bbc",
+    "underfull_notices": 134,
     "overfull": 0,
     "undefined": 0,
     "latex_errors": 0
   },
   "supplement_anonymous": {
-    "pages": 32,
-    "sha256": "814ed6c6d58cedf1ffa06733d5a99c8b09da06e39eb7af0a6d401951df3ea0a4",
-    "underfull_notices": 42,
+    "pages": 34,
+    "sha256": "cf7dda0447180fd2e3d8d055b38089798c2bec4e485bc92163c95b22db7aff80",
+    "underfull_notices": 43,
     "overfull": 0,
     "undefined": 0,
     "latex_errors": 0

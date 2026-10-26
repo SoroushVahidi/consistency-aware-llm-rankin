@@ -1,0 +1,16 @@
+{
+  "attribution": {
+    "exit": 0,
+    "network_connect_calls": 0,
+    "research_workspace_reads": 0,
+    "stdlib_only": true,
+    "altered_reference_rejected": true
+  },
+  "envelope": {
+    "exit": 0,
+    "network_connect_calls": 0,
+    "research_workspace_reads": 0,
+    "stdlib_only": true,
+    "altered_reference_rejected": true
+  }
+}

@@ -59,6 +59,12 @@ with zipfile.ZipFile(root/'packages/JDSA_sources.zip') as z:
  check('archive flat',all('/' not in n for n in z.namelist()))
  check('archive essential sources',all(x in z.namelist() for x in ['main.tex','supplement.tex','common.tex','authors.tex','declarations.tex','references.bib','sn-jnl.cls','sn-basic.bst','main.pdf','ESM_1.pdf','Fig1.tex','Fig2.pdf','Fig3.pdf','build.sh']))
  check('archive excludes confidential materials',not any('editorial' in n or 'response' in n or 'judgment' in n for n in z.namelist()))
+with zipfile.ZipFile(root/'packages/JDSA_sources.zip') as z:
+ check('data-free verifiers and schema guide bundled',all(n in z.namelist() for n in ['verify_relevance_profiles.py','verify_optimum_envelope.py','OFFLINE_VERIFICATION.md']) and all(z.read(n)==(root/'scripts'/n).read_bytes() for n in ['verify_relevance_profiles.py','verify_optimum_envelope.py']))
+ check('original verifier license notice retained',z.read('LICENSE_VERIFICATION_CODE.txt')==(root.parents[1]/'LICENSE').read_bytes())
+ check('no recovered numeric payload in source ZIP',not any(n.endswith(('.json','.jsonl','.parquet','.csv')) for n in z.namelist()))
+att=json.loads((audit/'AUTHOR_CONFIRMATIONS_20261026.json').read_text())
+check('all seven author attestations retained',len(att['attestations'])==7 and all(x['status']=='AUTHOR-CONFIRMED' for x in att['attestations']) and not att['independently_verified'] and not att['legally_signed'])
 metadata=json.loads((audit/'REFERENCE_METADATA.json').read_text());check('26 DOI identities verified',sum(x.get('http')==200 for x in metadata)==26)
 inv=json.loads((audit/'SAVED_INVARIANTS.json').read_text());check('saved scientific invariants',inv['structural_records']==1025 and inv['acyclic']==646 and inv['cyclic']==379 and inv['corrected_comparisons']==35 and inv['corrected_holm_rejections']==0 and inv['independent_query_support_counts']=={'342':28,'290':7} and inv['envelope_graphs']==6)
 result={'status':'PASS' if all(c['pass'] for c in checks) else 'FAIL','passed':sum(c['pass'] for c in checks),'total':len(checks),'checks':checks,'scientific_analyses_executed':False}

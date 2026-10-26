@@ -2,5 +2,6 @@
   "without_ignored_editorial_files_exit": 0,
   "source_zip_created": true,
   "editorial_zip_created": false,
-  "scientific_execution": false
+  "scientific_execution": false,
+  "verifiers_and_license_copied": true
 }

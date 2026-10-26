@@ -1,0 +1,25 @@
+[
+  {
+    "key": "cohan2020scidocs",
+    "url": "https://aclanthology.org/2020.acl-main.207/",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "http": 200,
+    "sha256": "de019482dd2872b53eb6615248b1db60371d09c3096a21f415f6f85ffcd00d93"
+  },
+  {
+    "key": "yang2018hotpotqa",
+    "url": "https://aclanthology.org/D18-1259/",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "http": 200,
+    "sha256": "45c58e20f6302c1adec1f86a0a3607385ce3d620a7afa52e06ee04670f05c9d7"
+  },
+  {
+    "key": "hu2026acyclic",
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "direct_request_error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+  }
+]

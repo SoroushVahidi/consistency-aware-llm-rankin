@@ -15,6 +15,10 @@ Completed / evidence-confirmed:
 - [x] Public ranking-output validator checks 93,504 stored measurements, 342 query identities, 66 configurations and 1,056 summary rows. Hub transport metadata must be excluded from the verification extraction; see availability guide.
 - [x] Private Git bundle verified by bare restoration and fsck; current SNCS archive matches all 103 tracked files. No live deletion, shared-ref rewrite or visibility change.
 
+- [x] Complete frozen selected-cache attribution and six-graph inputs recovered and independently verified. All 426 branch records/6,816 fields and six finite envelopes match; no scientific results changed. Sharing remains distinct from reconstruction.
+- [x] Twelve canonical score exports and all four original canonical qrel files match historical protocol hashes. Missing original model/conversion/permutation provenance remains disclosed.
+- [x] Confidential overlap comparison updated to a checksum-verified later prepared candidate; exact portal-upload binding remains unverified and is not inferred from preparation status.
+
 Seven AUTHOR-CONFIRMED attestations (26 October 2026):
 
 1. Sole authorship, active contact, affiliation and ORCID.
@@ -29,7 +33,7 @@ The machine-readable record is `audit/AUTHOR_CONFIRMATIONS_20261026.json`. These
 
 Applicable requirements still unresolved:
 
-- [ ] Resolve applicable historical Cohere account/grant terms for comparative publication; record a permission, contractual exception or documented applicability determination. Current public conditions and their limits are in `PERMISSIONS_AND_RESOURCE_RIGHTS.md`. No contact is made in this task.
+- [ ] Establish the accepted historical Catalyst grant/account agreement and approved scope. The official program generally requires no publication approval outside its safety exception, so a new consent requirement is not assumed. Governing applicability and new input sharing remain unresolved; see `COHERE_PERMISSION_ASSESSMENT.md` and its exact author-document question.
 - [ ] Finish content-specific third-party rights checks for the final article and any proposed shared material. No blanket clearance of raw corpora, qrels, provider outputs, previously published figures or implementation payloads is inferred.
 - [ ] Confirm JDSA's journal-specific anonymity model and a genuinely non-public reviewer attachment category; retain both identified and anonymous artifacts until then.
 - [ ] Deliver the checksum-identified processed-evidence archive through that approved confidential category when submission is separately authorized. Delivery is PENDING; a local ZIP is not reviewer access. See `REVIEWER_ACCESS.md`.
@@ -43,6 +47,6 @@ Public-release requirements, separate from journal submission:
 
 Out-of-scope pre-existing gate: formal SNCS withdrawal confirmation was neither investigated nor changed in this task. It remains a separate concurrent-consideration condition before a future submission; it is not grounds to label this readiness work failed.
 
-Optional improvements: a durable versioned public code release after cleanup, recovery/clearance of missing historical inputs, and broader independent reconstruction of attribution/envelope findings. No new experiments are required or authorized to manufacture missing historical provenance.
+Optional improvements: a durable versioned public code release after cleanup, an authorized reviewer extension using the now-verified attribution/envelope projections, and recovery of still-missing original scorer/permutation provenance. No new experiments are required or authorized to manufacture missing historical provenance.
 
 Not performed: journal submission/contact, public upload, new experiments, model/solver calls, merge, force-push, history filtering or visibility change.

@@ -1,0 +1,118 @@
+{
+  "attribution": {
+    "status": "COMPLETED_SUCCESS",
+    "query_units": 213,
+    "branch_records": 426,
+    "reference_field_checks": 6816,
+    "max_reference_absolute_error": 2.220446049250313e-16,
+    "summary": {
+      "greedy": {
+        "query_units": 213,
+        "classes": {
+          "positive_pool_identical_top10_grade_sequence": 74,
+          "zero_positive_pool": 69,
+          "saved_metric_changed": 37,
+          "ranking_unchanged": 33
+        },
+        "equal_profile_all_moved_unjudged": 55,
+        "equal_profile_any_moved_positive": 6,
+        "equal_profile_membership_changes": 24
+      },
+      "scip_exact": {
+        "query_units": 213,
+        "classes": {
+          "ranking_unchanged": 53,
+          "zero_positive_pool": 61,
+          "positive_pool_identical_top10_grade_sequence": 74,
+          "saved_metric_changed": 25
+        },
+        "equal_profile_all_moved_unjudged": 58,
+        "equal_profile_any_moved_positive": 5,
+        "equal_profile_membership_changes": 16
+      }
+    },
+    "scope": "Saved permutation/grade reconstruction and nDCG arithmetic; no original graph construction, model judgments or repair generation",
+    "isolation": {
+      "exit": 0,
+      "network_connect_calls": 0,
+      "research_workspace_reads": 0,
+      "standard_library_only": true,
+      "fresh_extraction": true,
+      "python": "Python 3.12.3"
+    },
+    "source_receipt": {
+      "original_source_manifest_sha256": "a37cd59cdce755d24c5ec3aa36288ad6c15eb44a079cea577aa5df0d715e6d16",
+      "sources_matched": 219,
+      "query_units": 213,
+      "branch_records": 426,
+      "original_attribution_csv_sha256": "b34a38ca0f5d6650c634737abfba68e98ecb7daaff34866f6db0b5a65f5c3b77",
+      "projection_sha256": "e2f2f409c0efb0eb36558bbb31d1b8f91c9ae619dd9bee1db1064c174cedaac2",
+      "transformation": "Bijective per-query baseline-order document relabeling, grade/explicit-judged masks, full-query top10 ideal grades; numerical observations retained; no text or raw responses",
+      "redistribution": "CONDITIONAL; not added to any reviewerZIP or Git"
+    }
+  },
+  "six_graph_envelope": {
+    "state": "COMPLETED_SUCCESS",
+    "graphs": 6,
+    "total_orders_visited": 241920,
+    "unique_optimum_graphs": 4,
+    "distinct_repairs": 8,
+    "graphs_with_utility_variation": 1,
+    "maximum_query_width": 0.0060602693906083305,
+    "mean_minimum": 0.8817498644543745,
+    "mean_maximum": 0.8827599093528092,
+    "baseline": 0.8817498644543745,
+    "mean_delta_minimum": 0.0,
+    "mean_delta_maximum": 0.0010100448984347032,
+    "historical_selections_utility_best": true,
+    "any_negative_query_effect": false,
+    "max_reference_absolute_error": 1.1102230246251565e-16,
+    "scope": "Independent complete finite reconstruction from preserved processed graphs and metric-sufficient gains; provider judgments and original corpus acquisition are not reconstructed",
+    "runtime_seconds": 0.41546108946204185,
+    "isolated_command_exit": 0,
+    "network_connect_calls": 0,
+    "research_workspace_openat": false,
+    "sharing_status": "PRIVATE_HOLD; no permission determination",
+    "source_verification": {
+      "source_graphs_sha256": "6714a107b6d80967264981d39b7778d27045871aac6a09433a78380d74f2a5a3",
+      "frozen_manifest_sha256": "09ef717e34ae127653ef93d959ab454485a4d9067e039f50554701463e643881",
+      "frozen_files_verified": 42,
+      "input_manifest_records_verified": 22
+    }
+  },
+  "historical_scoring": {
+    "status": "COMPLETED_SUCCESS",
+    "score_files": 12,
+    "protocol_manifests": 12,
+    "score_hash_matches": 36,
+    "qrel_hash_matches": 12,
+    "graph_records": 1026,
+    "original_score_generator": "scripts/generate_score_file.py",
+    "original_score_generator_sha256": "a7d726b4320ecda418a260c6b46a5640a1a5fc8b754f88459e4925380e13a0b3",
+    "score_generation_repeated": false,
+    "model_inference": false,
+    "unresolved": [
+      "Exact historical corpus-export/conversion digest for raw score generation",
+      "MiniLM exact model/tokenizer weight revision used for historical scores",
+      "Full exact/greedy historical per-method ranking permutations were not serialized by exact-study generator; canonical query_records retains graph edges and scalar metrics",
+      "Historical hardware/library/runtime tree completeness for original score generation"
+    ],
+    "excluded_proxy": "outputs/real_full/PROVENANCE.md explicitly labels those older outputs synthetic proxy; not used as a reconstruction input",
+    "canonical_protocol_records": 1026,
+    "exact_eligible_records": 1025,
+    "historically_omitted_empty_records": 1,
+    "omission_verified_empty": true,
+    "historical_code_comparison": [
+      {
+        "canonical_manifest_head": "c8f6f41e656ecc552736f3f6154cf1c34a416043",
+        "source_object_available": true,
+        "code_sha256": "a7d726b4320ecda418a260c6b46a5640a1a5fc8b754f88459e4925380e13a0b3",
+        "matches_current_code": true
+      }
+    ],
+    "code_identity_limit": "Canonical manifest commit identifies a historical repository version; exact scorer execution tree/weight revision not independently established by that later manifest"
+  },
+  "input_sharing_status": "CONDITIONAL; numerical projections not distributed",
+  "original_reviewer_zip_sha256": "c31fff08567d3fc0504e0a303a2328067175b8820541746588c30cfee484f7b3",
+  "scientific_results_changed": false
+}

@@ -1,5 +1,7 @@
 {
   "main": [
+    "https://aclanthology.org/2020.acl-main.207/",
+    "https://aclanthology.org/D18-1259/",
     "https://doi.org/10.1007/978-3-319-42432-3_37",
     "https://doi.org/10.1007/s10107-010-0419-x",
     "https://doi.org/10.1007/s11227-026-08852-4",
@@ -31,6 +33,7 @@
     "https://doi.org/10.2307/2334029",
     "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
     "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
     "https://openreview.net/forum?id=VUY0j74Yes",
     "https://openreview.net/forum?id=wCu6T5xFjeJ",
     "https://openreview.net/forum?id=ykuc5q381b",
@@ -74,6 +77,8 @@
     "https://sites.google.com/view/fiqa/home"
   ],
   "main_anonymous": [
+    "https://aclanthology.org/2020.acl-main.207/",
+    "https://aclanthology.org/D18-1259/",
     "https://doi.org/10.1007/978-3-319-42432-3_37",
     "https://doi.org/10.1007/s10107-010-0419-x",
     "https://doi.org/10.1007/s11227-026-08852-4",
@@ -104,6 +109,7 @@
     "https://doi.org/10.21203/rs.3.rs-9335700/v1",
     "https://doi.org/10.2307/2334029",
     "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
     "https://openreview.net/forum?id=VUY0j74Yes",
     "https://openreview.net/forum?id=wCu6T5xFjeJ",
     "https://openreview.net/forum?id=ykuc5q381b",

@@ -24,3 +24,9 @@ Superseded moving-head addresses, now version-pinned:
 - https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results
 
 The project GitHub URL, judgment scientific revision, BGE, PRP-Graph, SpringRank, source-dataset papers and two prior-work DOIs were already present. They were reverified; the project remains private, and its availability wording is corrected without claiming a public checkout. All added/pinned links return unauthenticated HTTP 200 in the current access ledgers. No new dataset was published.
+
+Recovery follow-up adds canonical publisher access URLs to three existing references, preserving their DOI fields and citation identities:
+
+- [https://aclanthology.org/2020.acl-main.207/](https://aclanthology.org/2020.acl-main.207/)
+- [https://aclanthology.org/D18-1259/](https://aclanthology.org/D18-1259/)
+- [https://ojs.aaai.org/index.php/AAAI/article/view/39343](https://ojs.aaai.org/index.php/AAAI/article/view/39343)

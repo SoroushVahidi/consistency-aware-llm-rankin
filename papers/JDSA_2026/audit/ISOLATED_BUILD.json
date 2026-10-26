@@ -1,23 +1,23 @@
 {
   "exit_code": 0,
-  "isolated_directory": "Fresh extraction outside research worktree; exact local path withheld for portability",
+  "isolated_directory": "Fresh final flat source extraction outside research worktree; private path withheld",
   "scientific_execution": false,
   "documents": {
     "main": {
-      "clean_log": true,
-      "same_extracted_text": true
+      "same_extracted_text": true,
+      "clean_log": true
     },
     "supplement": {
-      "clean_log": true,
-      "same_extracted_text": true
+      "same_extracted_text": true,
+      "clean_log": true
     },
     "main_anonymous": {
-      "clean_log": true,
-      "same_extracted_text": true
+      "same_extracted_text": true,
+      "clean_log": true
     },
     "supplement_anonymous": {
-      "clean_log": true,
-      "same_extracted_text": true
+      "same_extracted_text": true,
+      "clean_log": true
     }
   }
 }

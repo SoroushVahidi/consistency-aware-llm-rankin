@@ -1,0 +1,366 @@
+[
+  {
+    "url": "https://doi.org/10.1007/978-3-319-42432-3_37",
+    "http": 200,
+    "final_url": "https://link.springer.com/chapter/10.1007/978-3-319-42432-3_37",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1007/s10107-010-0419-x",
+    "http": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s10107-010-0419-x",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1007/s11227-026-08852-4",
+    "http": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s11227-026-08852-4",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1007/s12532-008-0001-1",
+    "http": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s12532-008-0001-1",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1016/0020-0190(93)90079-O",
+    "http": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/002001909390079O",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1080/07421222.1996.11518099",
+    "http": 403,
+    "final_url": "https://www.tandfonline.com/doi/full/10.1080/07421222.1996.11518099",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1126/sciadv.aar8260",
+    "http": 403,
+    "final_url": "https://www.science.org/doi/10.1126/sciadv.aar8260",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/1411509.1411513",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/1411509.1411513",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/1571941.1572114",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/1571941.1572114",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/2094072.2094076",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/2094072.2094076",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/3184558.3192301",
+    "http": 403,
+    "final_url": "https://dl.acm.org/citation.cfm?doid=3184558.3192301",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/3331184.3331259",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3331184.3331259",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/3446429",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3446429",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/3626772.3657813",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3626772.3657813",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/3696410.3714863",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3696410.3714863",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/371920.372165",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/371920.372165",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1145/582415.582418",
+    "http": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/582415.582418",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1177/2515245918770963",
+    "http": 403,
+    "final_url": "https://journals.sagepub.com/doi/10.1177/2515245918770963",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1214/aos/1079120141",
+    "http": 200,
+    "final_url": "https://projecteuclid.org/journals/annals-of-statistics/volume-32/issue-1/MM-algorithms-for-generalized-Bradley-Terry-models/10.1214/aos/1079120141.full",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1287/opre.2016.1534",
+    "http": 403,
+    "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.2016.1534",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1287/opre.32.6.1195",
+    "http": 403,
+    "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.32.6.1195",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.1609/aaai.v40i26.39343",
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2020.acl-main.207",
+    "http": 418,
+    "final_url": "https://www.aclweb.org/anthology/2020.acl-main.207",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2023.emnlp-main.923",
+    "http": 200,
+    "final_url": "https://aclanthology.org/2023.emnlp-main.923/",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.acl-long.313",
+    "http": 200,
+    "final_url": "https://aclanthology.org/2024.acl-long.313/",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.findings-naacl.97",
+    "http": 200,
+    "final_url": "https://aclanthology.org/2024.findings-naacl.97/",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/D18-1259",
+    "http": 406,
+    "final_url": "http://aclweb.org/anthology/D18-1259",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.21203/rs.3.rs-9335700/v1",
+    "http": 200,
+    "final_url": "https://www.researchsquare.com/article/rs-9335700/v1",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://doi.org/10.2307/2334029",
+    "http": 420,
+    "final_url": "https://www.jstor.org/stable/2334029?origin=crossref",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "http": 200,
+    "final_url": "https://github.com/LarremoreLab/SpringRank/tree/f97a489e85e44c553a437e7c6f9e40a800a5ade4",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "http": 200,
+    "final_url": "https://github.com/Memelank/PRP-Graph/tree/968e45ee8178f5d3ac44a2b8f11f091af69206d7",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+    "http": 404,
+    "final_url": "https://github.com/SoroushVahidi/consistency-aware-llm-rankin",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/allenai/scidocs",
+    "http": 200,
+    "final_url": "https://github.com/allenai/scidocs",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/scipopt/PySCIPOpt",
+    "http": 200,
+    "final_url": "https://github.com/scipopt/PySCIPOpt",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://github.com/scipopt/scip",
+    "http": 200,
+    "final_url": "https://github.com/scipopt/scip",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://hotpotqa.github.io/",
+    "http": 200,
+    "final_url": "https://hotpotqa.github.io/",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "http": 200,
+    "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "http": 200,
+    "final_url": "https://huggingface.co/BAAI/bge-reranker-v2-m3/tree/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/tree/a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "http": 200,
+    "final_url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/tree/a07cc9a04f16550a088caea529712d1d335b0ac1",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/tree/acbd96531cda22292a3ceaa67e984955d3965282",
+    "http": 200,
+    "final_url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/tree/acbd96531cda22292a3ceaa67e984955d3965282",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/BeIR/fiqa",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/BeIR/fiqa-qrels",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/BeIR/fiqa-qrels",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/BeIR/scidocs-qrels",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/BeIR/scidocs-qrels",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments/tree/f9317638ca1cc422661f704168335576d36ca995",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension/tree/117cd82e5b863238377c5effe7430ce771062cf4",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-benchmark-extension/tree/117cd82e5b863238377c5effe7430ce771062cf4",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics/tree/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/mwfas-heuristic-metrics/tree/5b6cd5620ca0a1c9b3be5e8d996bf8e3c467e79f",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/tree/4d6d9d372c24e541875990923ab5569454b6b44b",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results/tree/4d6d9d372c24e541875990923ab5569454b6b44b",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "http": 200,
+    "final_url": "https://huggingface.co/datasets/xlangai/BRIGHT",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/google/flan-t5-large/tree/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+    "http": 200,
+    "final_url": "https://huggingface.co/google/flan-t5-large/tree/0613663d0d48ea86ba8cb3d7a44f0f65dc596a2a",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+    "http": 200,
+    "final_url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://openreview.net/forum?id=VUY0j74Yes",
+    "http": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DVUY0j74Yes",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://openreview.net/forum?id=wCu6T5xFjeJ",
+    "http": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3DwCu6T5xFjeJ",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://openreview.net/forum?id=ykuc5q381b",
+    "http": 200,
+    "final_url": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3Dykuc5q381b",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://orcid.org/0000-0003-1934-6282",
+    "http": 200,
+    "final_url": "https://orcid.org/0000-0003-1934-6282",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://proceedings.mlr.press/v267/xu25w.html",
+    "http": 200,
+    "final_url": "https://proceedings.mlr.press/v267/xu25w.html",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://sites.google.com/view/fiqa/home",
+    "http": 200,
+    "final_url": "https://sites.google.com/view/fiqa/home",
+    "unauthenticated": true
+  },
+  {
+    "url": "https://www.jstor.org/stable/4615733",
+    "http": 420,
+    "final_url": "https://www.jstor.org/stable/4615733",
+    "unauthenticated": true
+  },
+  {
+    "key": "cohan2020scidocs",
+    "url": "https://aclanthology.org/2020.acl-main.207/",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "http": 200,
+    "sha256": "de019482dd2872b53eb6615248b1db60371d09c3096a21f415f6f85ffcd00d93"
+  },
+  {
+    "key": "yang2018hotpotqa",
+    "url": "https://aclanthology.org/D18-1259/",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "http": 200,
+    "sha256": "45c58e20f6302c1adec1f86a0a3607385ce3d620a7afa52e06ee04670f05c9d7"
+  },
+  {
+    "key": "hu2026acyclic",
+    "url": "https://ojs.aaai.org/index.php/AAAI/article/view/39343",
+    "web_tool_access": "Public publisher page retrieved; title/authors/DOI checked",
+    "identity": "Existing bibliography identity retained",
+    "direct_request_error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+  }
+]

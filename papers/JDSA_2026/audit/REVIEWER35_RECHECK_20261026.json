@@ -1,0 +1,38 @@
+{
+  "archive_sha256": "c31fff08567d3fc0504e0a303a2328067175b8820541746588c30cfee484f7b3",
+  "files": 35,
+  "commands": [
+    {
+      "command": "python3 reproduction/quick_verify.py",
+      "exit": 0
+    },
+    {
+      "command": "python3 reproduction/verify_available_offline.py --output ../offline",
+      "exit": 0
+    },
+    {
+      "command": "python3 reproduction/independent_statistics.py --package . --output ../independent",
+      "exit": 0
+    }
+  ],
+  "statistics": {
+    "state": "COMPLETED_SUCCESS",
+    "input_rows": 34783,
+    "tests": 35,
+    "level_1": 0,
+    "level_2": 35,
+    "level_3_only": 0,
+    "populations": {
+      "all": 342,
+      "nDCG20": 290
+    },
+    "holm_rejections": 0,
+    "min_raw_p": 0.024297570242975703,
+    "min_adjusted_p": 0.8504149585041496,
+    "max_reference_absolute_error": 0.0,
+    "numpy": "2.3.5",
+    "inference": "10000 whole-query sign patterns PCG64(17); 10000 within-dataset query-block bootstrap PCG64(13); unchanged eligible-row-weighted statistic; Holm 35",
+    "dependency_assumptions": "independent recorded dataset/query units; whole query vector exchangeability/sign symmetry; fixed benchmark mix; these are assumptions, not independently proven",
+    "scope": "Processed-observation statistical reproduction; original ranking/qrel scoring not reconstructed"
+  }
+}
