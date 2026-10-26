@@ -1,0 +1,12 @@
+{
+  "foundation_commit": "c5cfafab73cff427e91fc1fd94aca7cbbae6d5d1",
+  "latest_origin_main": "8f9b3c4",
+  "authoritative_state": "Final targeted IJIT correction 2026-10-26, originally untracked on manuscript/oct25-evidence-revision",
+  "source_main_sha256": "9cb699a23d0881e0f931de00d9f5938b2de2b87619529d3a2e9dff39c85699e1",
+  "source_main_pdf_sha256": "702d39ea517307638515124a7f8c21c85f2d1fe0fe54d15aa81937091b1cfaa4",
+  "source_supplement_sha256": "767e8e59b6ddf021ac4969f089a3809067b08044a582a5d317d6e59ef3d09d04",
+  "source_supplement_pdf_sha256": "c7c4b2a6f4c03af890aea6ac7f378222a8313f1ef9bbb0a56d1a5b9a3dbe005f",
+  "frozen_archive_sha256": "1590f8bd8c135f2e1e7bbd823e34fa0a03b6b6a2be57bb8ef8dafecb0cd95564",
+  "files": 41,
+  "basis": "TARGETED_FINAL_CORRECTION_VALIDATION_20261026.md identifies these exact 22/30-page hashes as latest corrected deliverables; origin/main is an earlier PDF-only archival update, not the current corrected sources."
+}
