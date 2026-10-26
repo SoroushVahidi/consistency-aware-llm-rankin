@@ -72,6 +72,11 @@ def filehash(path):
     return h.hexdigest()
 
 
+def absolute_interpreter(path):
+    """Preserve a venv's executable symlink: resolving it loses pyvenv.cfg."""
+    return str(Path(path).expanduser().absolute())
+
+
 def atomic(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)

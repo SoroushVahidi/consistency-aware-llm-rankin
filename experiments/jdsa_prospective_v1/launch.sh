@@ -7,7 +7,8 @@ if [[ $# -lt 2 ]]; then
   exit 64
 fi
 run_dir=$(realpath "$1")
-inference_python=$(realpath "$2")
+# Keep the venv symlink path: resolving it would execute system Python.
+inference_python=$(realpath --no-symlinks "$2")
 shift 2
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 worktree_dir=$(cd -- "$script_dir/../.." && pwd)

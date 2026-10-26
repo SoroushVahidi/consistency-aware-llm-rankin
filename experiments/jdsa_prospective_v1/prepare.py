@@ -25,6 +25,7 @@ from .common import (
     MODEL_REVISION,
     SEED,
     WORKTREE,
+    absolute_interpreter,
     atomic,
     canonical,
     digest,
@@ -405,7 +406,7 @@ def main():
         "analysis_reserve_s": 3600,
         "max_new_disk_bytes": 30 * 1024**3,
         "model_path": str(model_path),
-        "analysis_python": str(args.analysis_python.resolve()),
+        "analysis_python": absolute_interpreter(args.analysis_python),
         "prepare_packages": {
             p: importlib.metadata.version(p) for p in ["pyarrow", "numpy", "networkx"]
         },

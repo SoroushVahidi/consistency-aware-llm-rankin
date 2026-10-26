@@ -3,6 +3,8 @@
 import itertools
 import json
 import sqlite3
+import subprocess
+from pathlib import Path
 
 import networkx as nx
 import pytest
@@ -11,6 +13,7 @@ from . import worker
 from .analyze import classify, decomposition, evaluate_pool, make_graph, summarize
 from .common import (
     EVALUATION_COUNTS,
+    absolute_interpreter,
     atomic,
     database,
     paired_disposition,
@@ -206,6 +209,31 @@ def test_sqlite_completed_records_cannot_be_replaced(tmp_path):
     with pytest.raises(sqlite3.IntegrityError):
         connection.execute("INSERT INTO responses VALUES('same','evaluation','q','{}')")
     connection.close()
+
+
+def test_analysis_interpreter_keeps_virtual_environment_symlink(tmp_path):
+    binary = tmp_path / "python-real"
+    binary.touch()
+    virtual_python = tmp_path / "venv" / "bin" / "python"
+    virtual_python.parent.mkdir(parents=True)
+    virtual_python.symlink_to(binary)
+    assert absolute_interpreter(virtual_python) == str(virtual_python)
+    assert absolute_interpreter(virtual_python) != str(virtual_python.resolve())
+
+
+def test_actual_launcher_keeps_virtual_environment_executable(tmp_path):
+    run = tmp_path / "private-run"
+    (run / "logs").mkdir(parents=True)
+    marker = tmp_path / "invoked-interpreter"
+    target = tmp_path / "underlying-interpreter"
+    target.write_text('#!/bin/sh\nprintf "%s\\n" "$0" > "' + str(marker) + '"\n')
+    target.chmod(0o700)
+    virtual_python = tmp_path / "venv" / "bin" / "python"
+    virtual_python.parent.mkdir(parents=True)
+    virtual_python.symlink_to(target)
+    script = Path(__file__).parent / "launch.sh"
+    subprocess.run(["bash", str(script), str(run), str(virtual_python)], check=True)
+    assert marker.read_text().strip() == str(virtual_python)
 
 
 def test_failed_gate_does_not_launch_main(monkeypatch, tmp_path):
