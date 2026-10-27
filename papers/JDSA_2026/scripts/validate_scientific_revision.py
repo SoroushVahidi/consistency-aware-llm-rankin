@@ -44,6 +44,10 @@ def citations(text):
 
 
 def main():
+    if (AUDIT / "SCIENTIFIC_WRITING_MANIFEST.json").exists():
+        from validate_scientific_writing import main as validate_writing
+
+        return validate_writing()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--protected-root", type=Path)
     args = parser.parse_args()

@@ -2,12 +2,14 @@
 
 [Download the latest JDSA manuscript](LATEST_MANUSCRIPT.pdf)
 
-This is the authoritative, up-to-date identified manuscript (20 pages), from
+This branch contains a **scientific-writing draft for independent review (19 pages)**.
+The PDF on main remains unchanged until a separately reviewed merge.
+The identified manuscript derives from
 scientific revision `af03da5900e61a3683de352172c96b96dd8a1d66`, with subsequent
 presentation/access clarifications documented in the [final readiness audit](papers/JDSA_2026/FINAL_SUBMISSION_READINESS_AUDIT.md).
 Earlier compiled versions are superseded. Supporting figure PDFs, publisher
 manuals and historical research materials are not alternate manuscript versions.
-The JDSA draft is not represented as submitted or submission-ready.
+The JDSA draft is not represented as submitted, author-approved or submission-ready.
 The [current readiness-resolution record](papers/JDSA_2026/READINESS_RESOLUTION.md)
 separates verified corrections and private evidence preparation from outstanding
 rights, reviewer-access, related-version and withdrawal requirements.

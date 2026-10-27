@@ -1,0 +1,31 @@
+{
+  "schema": "jdsa-scientific-writing-v1",
+  "base_main_sha": "a9bfe54e48e600153c8d19dff91b5d1e8076ed13",
+  "changed_source_files": [
+    "main.tex",
+    "supplement.tex",
+    "declarations.tex",
+    "common.tex",
+    "selected_worked_example.tex",
+    "informative_support.tex",
+    "preprint_delta.tex"
+  ],
+  "canonical_sha256": "5d06f20fffb32cf536ab3c3a11c44148ad541771dedfbb573bf922320da8a462",
+  "numerical_results_changed": false,
+  "statistical_methods_changed": false,
+  "new_experiments": false,
+  "new_tests_or_families": false,
+  "rights_classifications_changed": false,
+  "author_approval_claimed": false,
+  "private_extension_distribution_status": "NOT CLEARED FOR DISTRIBUTION",
+  "branch_only_draft": true,
+  "source_sha256": {
+    "main.tex": "9047f7c7f434b7104b02ef96cf2440cb1eba4131c4e2ba925a71e78cebf3ddb8",
+    "supplement.tex": "27f6d87cee8693c0d4b9f26d9627c9af712ea60845bebad30beb62127cfc19c8",
+    "declarations.tex": "6a4e28d40190c3f5d29b9092302a5abd8cd86a6740e96b97ef3c62326dc9b174",
+    "common.tex": "4304a8d91c08eabdf28efa36c6674adeca9eeb9994be10dae335cfcfb90e9515",
+    "selected_worked_example.tex": "ccba9bf0dab0767894a6c4ea1eb595cd68af31943e3d4df37664df1def06e22b",
+    "informative_support.tex": "c8c5cdd3add700136a7459f056508c1d41ba7ac23867e04d4a84bf77068929f2",
+    "preprint_delta.tex": "08e6a2b62a9c304578945360a2233b2f4776eeb37c48880a1413f3a4afd2b4de"
+  }
+}

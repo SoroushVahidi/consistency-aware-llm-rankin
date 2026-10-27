@@ -1,5 +1,7 @@
 # JDSA preparation package — 26 October 2026
 
+> **Scientific-writing draft:** this branch revises the article around the structural/ranking/relevance decomposition, with a 19-page identified main and 37-page supplement. Scientific results and methods are unchanged. `audit/SCIENTIFIC_WRITING_MANIFEST.json` and `audit/SCIENTIFIC_WRITING_VALIDATION.json` describe this version; earlier audit receipts retain their historical scope. The draft awaits independent review and does not replace main's canonical PDF until a separately reviewed merge.
+
 The manuscript is prepared for **Regular Paper**, subscription route (no APC), but **submission readiness is not confirmed**. Do not submit, contact the journal or make the repository public on the basis of this package.
 
 - [Latest authoritative manuscript](../../LATEST_MANUSCRIPT.pdf), [supplement source](manuscript/supplement.tex), and [editable main source](manuscript/main.tex).

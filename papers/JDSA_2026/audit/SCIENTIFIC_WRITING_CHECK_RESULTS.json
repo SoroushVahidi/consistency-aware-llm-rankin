@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "base_main_sha": "a9bfe54e48e600153c8d19dff91b5d1e8076ed13",
+  "pytest": {
+    "passed": 1362,
+    "deselected": 64,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 37.75
+  },
+  "composition_unit_tests": {
+    "passed": 7
+  },
+  "document_checks": {
+    "passed": 88,
+    "total": 88
+  },
+  "source_archive_files": 52,
+  "isolated_all_four_builds_match_text": true,
+  "visual_review": {
+    "all_main_pages": 19,
+    "all_supplement_pages": 37,
+    "dense_pages_enlarged": {
+      "main": [
+        9,
+        11,
+        12
+      ],
+      "supplement": [
+        23,
+        27
+      ]
+    },
+    "blocking_layout_defects_identified": false
+  },
+  "fonts": {
+    "main": {
+      "fonts": 28,
+      "all_embedded": true
+    },
+    "supplement": {
+      "fonts": 36,
+      "all_embedded": true
+    },
+    "main_anonymous": {
+      "fonts": 28,
+      "all_embedded": true
+    },
+    "supplement_anonymous": {
+      "fonts": 36,
+      "all_embedded": true
+    }
+  },
+  "figure_fonts": {
+    "Fig2.pdf": {
+      "fonts": 3,
+      "all_embedded": true
+    },
+    "Fig3.pdf": {
+      "fonts": 2,
+      "all_embedded": true
+    },
+    "ESM_Fig1.pdf": {
+      "fonts": 3,
+      "all_embedded": true
+    },
+    "ESM_Fig2.pdf": {
+      "fonts": 2,
+      "all_embedded": true
+    },
+    "ESM_Fig3.pdf": {
+      "fonts": 2,
+      "all_embedded": true
+    }
+  },
+  "main_external_link_targets_unchanged": true,
+  "main_external_target_count": 41,
+  "historical_protected_files": 835,
+  "supporting_pdfs_unchanged": 99,
+  "rights_classifications_changed": false,
+  "new_experiments": false,
+  "private_reviewer_inputs_added": false,
+  "main_branch_pdf_modified": false,
+  "cloud_tiers": "Not run: draft is not being merged and no experimental smoke campaign is authorized."
+}
