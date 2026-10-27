@@ -1,8 +1,8 @@
 {
   "status": "PASS",
   "base_main_sha": "a9bfe54e48e600153c8d19dff91b5d1e8076ed13",
-  "passed": 88,
-  "total": 88,
+  "passed": 87,
+  "total": 87,
   "checks": [
     {
       "check": "fixed scientific-writing baseline",
@@ -25,27 +25,7 @@
       "detail": null
     },
     {
-      "check": "declared revised source identity: declarations.tex",
-      "passed": true,
-      "detail": null
-    },
-    {
-      "check": "declared revised source identity: preprint_delta.tex",
-      "passed": true,
-      "detail": null
-    },
-    {
-      "check": "declared revised source identity: common.tex",
-      "passed": true,
-      "detail": null
-    },
-    {
-      "check": "declared revised source identity: main.tex",
-      "passed": true,
-      "detail": null
-    },
-    {
-      "check": "declared revised source identity: informative_support.tex",
+      "check": "declared revised source identity: supplement.tex",
       "passed": true,
       "detail": null
     },
@@ -55,7 +35,27 @@
       "detail": null
     },
     {
-      "check": "declared revised source identity: supplement.tex",
+      "check": "declared revised source identity: common.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: informative_support.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: preprint_delta.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: declarations.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: main.tex",
       "passed": true,
       "detail": null
     },
@@ -363,14 +363,6 @@
       "detail": null
     },
     {
-      "check": "historical protected files unchanged",
-      "passed": true,
-      "detail": {
-        "matched": 835,
-        "total": 835
-      }
-    },
-    {
       "check": "main references and layout compile cleanly",
       "passed": true,
       "detail": null
@@ -454,22 +446,22 @@
   "pdfs": {
     "main": {
       "pages": 19,
-      "sha256": "5d06f20fffb32cf536ab3c3a11c44148ad541771dedfbb573bf922320da8a462",
+      "sha256": "459417fc4909f769c38085a90ddbf4b8b5dad49291e9fd6a568861dc824d9d21",
       "references": 36
     },
     "supplement": {
       "pages": 37,
-      "sha256": "a2fd71d0427abe01ce0059d66fae1f3149e9a4ed803935e89aa08c2c994c97b1",
+      "sha256": "a41c01562ce14216a8fec1bd88f4cfcfe1fa60f60137a4d56ce5d9defa5a643b",
       "references": 12
     },
     "main_anonymous": {
       "pages": 18,
-      "sha256": "adce300d485887b59258b220cbcc602cacd2e7c2df908669395721a3ac280e8a",
+      "sha256": "cdb562bca4bbeb77f279f3a7e8387b0c0487697977678cfef73c847eb97494e0",
       "references": 36
     },
     "supplement_anonymous": {
       "pages": 36,
-      "sha256": "1eba93bdf9acc57f5b465fc35fea1ccd807e76a456a73c2e1bce978467043232",
+      "sha256": "1bf521291e38f03e23f3d9cc91455a78bb8bbb9ad2d582f65258a2566c708c1f",
       "references": 12
     }
   },

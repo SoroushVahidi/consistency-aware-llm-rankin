@@ -6,14 +6,15 @@
     "deselected": 64,
     "failed": 0,
     "skipped": 0,
-    "seconds": 37.75
+    "seconds": 37.85
   },
   "composition_unit_tests": {
     "passed": 7
   },
   "document_checks": {
-    "passed": 88,
-    "total": 88
+    "passed": 87,
+    "total": 87,
+    "optional_private_historical_root_check": "Not repeated; original 835-file check is retained in the prior commit receipt. All tracked historical files remain unchanged."
   },
   "source_archive_files": 52,
   "isolated_all_four_builds_match_text": true,
@@ -22,13 +23,18 @@
     "all_supplement_pages": 37,
     "dense_pages_enlarged": {
       "main": [
+        1,
         9,
         11,
-        12
+        12,
+        14,
+        15,
+        17
       ],
       "supplement": [
         23,
-        27
+        27,
+        33
       ]
     },
     "blocking_layout_defects_identified": false
@@ -75,11 +81,66 @@
   },
   "main_external_link_targets_unchanged": true,
   "main_external_target_count": 41,
-  "historical_protected_files": 835,
   "supporting_pdfs_unchanged": 99,
   "rights_classifications_changed": false,
   "new_experiments": false,
   "private_reviewer_inputs_added": false,
-  "main_branch_pdf_modified": false,
-  "cloud_tiers": "Not run: draft is not being merged and no experimental smoke campaign is authorized."
+  "cloud_tiers": "Not run under the task prohibition on new experimental campaigns; all nonexperimental repository validators, maintained lint, offline pytest and manuscript checks pass.",
+  "historical_files_unchanged": true,
+  "canonical_pdf_rebuilt_for_main_integration": true,
+  "main_all_page_pixels_identical_to_original_pr": true,
+  "supplement_text_change": "Requested Table S26 caption only; line wrapping changes, no pagination change.",
+  "nonexperimental_repository_validators": [
+    {
+      "command": "python -m unittest discover -s papers/JDSA_2026/scripts -p test_selected_composition.py -v",
+      "passed": true
+    },
+    {
+      "command": "python scripts/check_repo_ready.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/check_architecture_boundaries.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/check_active_portability.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/validate_canonical_evidence_manifest.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/validate_claim_evidence_registry.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/validate_repo_clarity.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/validate_report_links.py",
+      "passed": true
+    },
+    {
+      "command": "python scripts/run_secret_scan.py",
+      "passed": true
+    }
+  ],
+  "caption_corrected": true,
+  "readme_files_updated": [
+    "README.md",
+    "papers/JDSA_2026/README.md",
+    "papers/JDSA_2026/manuscript/README.md"
+  ],
+  "all_four_build_page_counts": {
+    "main": 19,
+    "supplement": 37,
+    "main_anonymous": 18,
+    "supplement_anonymous": 36
+  },
+  "third_party_rights_classifications_changed": false,
+  "submission_readiness": "NOT_READY",
+  "author_approval_claimed": false
 }
