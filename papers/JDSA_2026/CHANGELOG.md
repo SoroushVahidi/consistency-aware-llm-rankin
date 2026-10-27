@@ -32,3 +32,7 @@ Governance: visibility stays private because earlier reachable records explicitl
 - Rebuilt main18/SI35 and anonymous18/34 PDFs; 74 document checks, 1,362 unit tests/64 deselected and isolated verification procedures pass. Scientific results, original table/figure content, statistical methods and all 835 protected files remain unchanged.
 
 - Added canonical publisher URLs for existing SPECTER, HotpotQA and PGED references after legacy DOI redirect challenges/connection failure; publisher identities verified and direct-request limits retained. No new reference or changed scientific claim.
+
+## Scientific revision of authoritative JDSA baseline
+
+See [SCIENTIFIC_REVISION_CHANGELOG.md](SCIENTIFIC_REVISION_CHANGELOG.md) for the issue-by-issue before/after map, new authentic descriptive composition, preserved numerical results and unresolved submission gates. Earlier entries describe the previous preparation state. The scientific revision uses its own baseline-aware validator and does not claim that newly reorganized prose is identical to the earlier conversion.

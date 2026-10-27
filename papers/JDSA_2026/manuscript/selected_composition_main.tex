@@ -1,0 +1,16 @@
+\begin{table*}[t]
+\caption{Composition of the 213 selected queries. $P+$ counts pools with a judged-positive candidate. Paired entries are greedy/exact (G/E) counts on the same queries. Same/changed refer to full rankings; Eq.$+$ counts changed-ranking, positive-pool cases with the same evaluated top-ten grade profile and zero metric change. $\Delta U$ counts measured utility changes. Dataset and availability panels are overlapping descriptions, not independent samples.}
+\label{tab:selected-composition}\papertable
+\begin{tabularx}{\linewidth}{@{}Yrrrrrrrr@{}}\toprule
+Group & $N$ & $P+$ & Same G/E & Changed G/E & Eq.$+$ G/E & $\Delta U$ G/E & Gains G/E & Harms G/E\\\midrule
+SciDocs & 77 & 41 & 10/15 & 67/62 & 16/23 & 19/9 & 7/7 & 12/2\\
+FiQA & 76 & 38 & 6/18 & 70/58 & 27/22 & 8/7 & 5/4 & 3/3\\
+BRIGHT & 42 & 38 & 14/16 & 28/26 & 18/18 & 8/6 & 2/3 & 6/3\\
+HotpotQA & 18 & 17 & 3/4 & 15/14 & 13/11 & 2/3 & 1/2 & 1/1\\
+\midrule
+Two-provider & 110 & 71 & 30/49 & 80/61 & 31/26 & 19/12 & 8/7 & 11/5\\
+Four-provider & 103 & 63 & 3/4 & 100/99 & 43/48 & 18/13 & 7/9 & 11/4\\
+\midrule
+All queries & 213 & 134 & 33/53 & 180/160 & 74/74 & 37/25 & 15/16 & 22/9\\
+\bottomrule\end{tabularx}
+\end{table*}

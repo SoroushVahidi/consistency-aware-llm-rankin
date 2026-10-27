@@ -33,3 +33,7 @@ python papers/JDSA_2026/scripts/validate_package.py
 ```
 
 The source archive's `build.sh` produces equivalent identified and anonymous PDFs after extraction. Packaging editorial artifacts requires the separately prepared ignored `editorial/` files; ordinary manuscript builds and validation do not require experiment inputs. Full code installation (`pip install -e '.[exact]'`) is unnecessary for document or reviewer checks. Historical `docs/REPRODUCTION_CANONICAL.md` describes a narrower score-derived program and does not override the corrected estimand or current input-access limits.
+
+## Scientific-revision additions
+
+The editable source ZIP additionally contains `stratify_selected_cache.py`, its explicitly synthetic unit tests and STRATIFIED_ATTRIBUTION.md. They define the fixed descriptive analysis of the existing selected cache. Private enriched inputs and original query linkage are excluded; no extra public or confidential sharing clearance is inferred. The aggregate TeX tables and minimal derived worked case are manuscript content, not a raw input release. See the scientific-revision validation report for current PDF/source checks; earlier validation counts describe the prior preparation state. The separate prospective replication remains outside this manuscript revision.

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "original_jdsa_files_matched": 100,
+  "original_jdsa_files_total": 100,
+  "baseline_commit": "2c69f331fa4add10ce577c17516afb997b630dfe",
+  "private_editorial_files_not_copied": true,
+  "experiment_accessed": false
+}

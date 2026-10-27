@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "archive_sha256": "076a01103bb9f0932fab9ea0464e5f1682b2ee3da015e1189dcc5a162945fed3",
+  "all_four_documents": {
+    "main": {
+      "text_identical": true,
+      "clean_log": true
+    },
+    "supplement": {
+      "text_identical": true,
+      "clean_log": true
+    },
+    "main_anonymous": {
+      "text_identical": true,
+      "clean_log": true
+    },
+    "supplement_anonymous": {
+      "text_identical": true,
+      "clean_log": true
+    }
+  },
+  "data_free_unit_tests": 7,
+  "private_payloads_included": false,
+  "external_input_dependencies": "Attribution/envelope input projections remain private; only source builds and synthetic tests run from ZIP alone"
+}

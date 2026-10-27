@@ -50,3 +50,18 @@ Out-of-scope pre-existing gate: formal SNCS withdrawal confirmation was neither 
 Optional improvements: a durable versioned public code release after cleanup, an authorized reviewer extension using the now-verified attribution/envelope projections, and recovery of still-missing original scorer/permutation provenance. No new experiments are required or authorized to manufacture missing historical provenance.
 
 Not performed: journal submission/contact, public upload, new experiments, model/solver calls, merge, force-push, history filtering or visibility change.
+
+## Separate scientific-revision draft
+
+- [x] M01: explicit incremental contribution boundaries and evidence-linked claims.
+- [x] M02: fixed selected-cache composition, original query identity retained privately; exact aggregate reconciliation.
+- [x] M03: informative support, saved pointwise uncertainty and old instrument limitations foregrounded.
+- [x] W01, P01, L01, V01: wording, organization, incomplete-judgment reference and presentation revised.
+- [x] Requested advisor acknowledgment included in identified main; anonymous fallback suppresses it.
+- [x] Public-preprint version map and legacy cyclicity reconstruction limit disclosed (M05).
+- [ ] Exact uploaded related-submission version obtained and compared with final revised manuscript (remaining M05).
+- [ ] Recovered central inputs cleared and delivered through a confirmed confidential reviewer channel (M04/M06).
+- [ ] Author-specific Cohere historical terms and other applicable sharing permissions resolved (M06).
+- [ ] Journal review model/confidential attachment handling confirmed; final author PDF/disclosure approval (H01).
+
+These entries do not authorize submission, public release or a claim of readiness. The separately scheduled experiment is excluded and must undergo its own later review. No preliminary result was used.

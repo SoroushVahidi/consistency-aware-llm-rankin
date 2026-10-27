@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "scope": "Only revision-changed/new paths; no broad repository scan",
+  "paths_checked": 40,
+  "secret_pattern_findings": 0,
+  "no_changes_outside_jdsa": true
+}

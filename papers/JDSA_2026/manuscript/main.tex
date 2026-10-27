@@ -6,7 +6,7 @@
 \begin{document}
 \title[Preference-Graph Repair and Retrieval Utility]{\maintitle}
 \input{authors}
-\abstract{Deleting cycles can improve the internal consistency of a preference graph without improving the relevance of its extracted ranking. We audit graph-based ranking interventions by quantifying structural, ranking and measured-relevance opportunities in existing retrieval experiments, stored rankings and relevance judgments. Matched comparisons hold candidate documents, preference evidence and ranking extraction fixed while varying unrepaired, greedy-repaired and exact minimum-weight feedback arc set branches. The principal endpoint is normalized discounted cumulative gain. Across four score-derived benchmarks, 1,025 graph records represent 342 query identities; 646 records are acyclic. In a selected cache of 213 queries, 191 aggregate graphs are cyclic, but exact and greedy repair leave 31 and 11 extracted rankings unchanged, respectively. Among changed rankings in positive-containing pools, 74 zero-effect cases per branch preserve the evaluated top-ten relevance-grade sequence; the branches share queries. A prospective strict construction yields only one cyclic graph among 40 two-model graphs on 20 queries, without a judged-positive candidate in that case. Query-clustered exact-versus-greedy inference gives zero Holm-adjusted rejections in 35 comparisons: 28 use 342 query units and seven use 290. A certified six-query diagnostic shows that equal-cost optimal repairs can have different retrieval utility. The contribution is the conditional distribution and attribution of observed opportunity losses, not a new repair algorithm. Selected cohorts, incomplete judgments and limited informative opportunities prevent general causal conclusions. Nonsignificance does not establish equivalence or show that repair cannot help.}
+\abstract{Preference-graph repair optimizes structural consistency, while retrieval evaluation measures relevance at ranking positions. We investigate where these responses separate in preserved retrieval evidence, holding candidates, comparisons, extraction and evaluation fixed across unrepaired, greedy and exact deletion branches. The empirical contribution is a decomposition of observed intervention, ranking and measured-relevance responses, with their dataset and provider-availability composition. In a selected cache of 213 queries, greedy and exact repair change 180 and 160 rankings, respectively, but change measured utility in only 37 and 25 cases. Among changed rankings in positive-containing pools, 74 cases per branch preserve the evaluated top-ten grade sequence; the branches share queries. Such cases occur in all four datasets and both availability strata, whereas zero-positive pools are concentrated in two datasets. The distinction separates missing judged opportunity from active ranking changes that the metric cannot distinguish. Corrected query-block inference retains zero Holm rejections in 35 exact-versus-greedy comparisons, but only 4--99 query sums per endpoint are nonzero. The completed compact-model cohort has no strict cyclic-positive case and substantial instrument limitations. A complete six-graph diagnostic additionally finds utility variation among equal-cost repairs in one graph. These conditional distributions and finite diagnostics extend earlier construction-dependent findings without introducing a new repair algorithm. Selection, incomplete judgments and inferential assumptions limit generalization; nonsignificance does not establish equivalence.}
 \keywords{preference graphs, feedback arc set, graph repair, rank aggregation, information retrieval, retrieval evaluation}
 \maketitle
 
@@ -20,16 +20,20 @@ We ask: at which stages do structural changes fail to affect measured retrieval 
 
 The evidence combines four score-derived benchmarks, selected cached multi-provider judgments, an independent compact-model collection and completed external controls. Repeated construction regimes and model observations do not increase the independent query sample. The larger selected cache provides informative cyclic graphs, while the prospective strict construction has almost no cyclic graph containing a judged-positive candidate. Neither can substitute for the other's sampling and measurement contract.
 
-Exact optimization controls deletion cost; a complete small-instance diagnostic tests utility ambiguity among equal-cost repairs. Both controls support a conditional empirical decomposition, not a general causal theory of repair failure.
+The missing empirical knowledge is how frequently the intervention stops at each stage, and whether superficially similar zeros have the same composition. A cyclic graph with an unchanged extracted order, a changed order with no judged-positive candidate, and a changed positive-pool order with fixed evaluated gain positions answer different evaluation questions. An average effect or a count of nonsignificant tests cannot distinguish them. We use complete saved permutations and relevance maps to make those distinctions observable, then examine their composition rather than presenting a metric identity as a discovery.
+
+Exact optimization controls deletion cost; a complete small-instance diagnostic tests utility ambiguity among equal-cost repairs. Both support the conditional audit. All prospective results in this article refer to the already completed 20-query collection; this revision collects no new judgments and uses no outcomes from a separate replication.
 
 \subsection{Contributions}
-The principal contribution is a quantitative decomposition of structural, ranking and measured-relevance opportunities in preference-graph repair. It has two linked analyses:
+The contribution is additional empirical knowledge about the transmission of an intervention to an evaluated outcome:
 \begin{enumerate}
-\item Cohort-specific counts distinguish deletion activity, changes in the complete extracted order and changes in evaluated relevance positions, separating graph records from query identities.
-\item Relevance-profile attribution explains the selected cache's changed-ranking zero effects under fixed judgments, while retaining helpful and harmful cases. The empirical frequencies are new analysis of existing evidence; the algebra of metric invariance is established.
+\item \textbf{Locate the inactive stage.} Cohort-specific structural and ranking counts distinguish construction inactivity from an extractor's unchanged response (Table~\ref{tab:opportunities}). The canonical and selected-cache populations support different decompositions and are not interchangeable.
+\item \textbf{Explain and disaggregate measured zeros.} Saved-ranking attribution separates zero-positive pools from fixed positive-pool grade profiles, while retaining gains and harms (Table~\ref{tab:grades}). Dataset and availability-stratum counts show where each mechanism occurs and expose small or empty cells (Table~\ref{tab:selected-composition}; Online Resource~1). This composition, rather than the invariance identity alone, is the central extension of earlier evidence.
+\item \textbf{Bound what structural exactness identifies.} All-optimum utility ranges for six authentic graphs show that one returned structural optimum need not determine utility, while establishing neither prevalence nor a deployable selector (Table~\ref{tab:envelope}).
 \end{enumerate}
-For graph analytics and reproducible empirical evaluation, this decomposition identifies which observable stages can transmit a structural intervention to a task metric. Supporting matched unrepaired, greedy and exact controls test whether cheaper structural repair changes measured utility. Corrected query-clustered inference and exact-cost and complete small-instance utility diagnostics delimit those comparisons.
-These distinctions matter because an inactive intervention and an active intervention with no measured gain support different interpretations of a retrieval null. They provide evaluation checks, not a validated rule for predicting repair benefit. The ranking and feedback-arc methods are established, including the published graph-ranking pipeline discussed below. Previously released resources, reused benchmark measurements and the evidence/code package are not new contributions or independent samples; the contribution lies in the opportunity decomposition and attribution analyses.
+The evaluation consequence is to report the opportunity denominator alongside an effect: a null from an inactive or unreliable instrument cannot establish efficacy among informative cyclic-positive cases, and an unchanged measured grade profile cannot establish semantic irrelevance. The reporting prescription is not a validated predictor of benefit.
+
+Graph-repair algorithms and ranking--MWFAS theory are established prior work. The broad construction-dependent retrieval message is already in the public preprint \cite{vahidi2026retrievalpreprint}; benchmark measurements and previously released resources are reused. Corrected inference repairs the independent-unit analysis (Section~\ref{sec:statistics}), and reconstruction verifies the processed evidence (Section~\ref{sec:evidence-access}); neither alone is a novelty claim. The new attribution and composition are analyses of preserved observations, not new independent datasets or experiments.
 
 \section{Related Work}\label{sec:related}
 \subsection{Preference aggregation and graph repair}
@@ -50,7 +54,9 @@ Xu et al. demonstrate nontransitivity-induced sensitivity in model evaluation an
 
 The distinction between intrinsic consistency and task-dependent quality is familiar in data-quality research \cite{wang1996beyond}. Acyclicity and minimum disagreement describe the preference evidence; normalized discounted cumulative gain evaluates graded relevance at ranking positions \cite{jarvelin2002cumulated}. The present contribution is not the mathematical possibility of disagreement between these objectives. It is the measured frequency and attribution of inactivity across controlled retrieval pipelines, together with exact-cost and optimum-choice diagnostics.
 
-An earlier public retrieval preprint, \emph{Consistency-Aware Reranking via Preference Graph Repair: Structural Gains and Conditional Retrieval Effects} (Research Square; DOI: \href{https://doi.org/10.21203/rs.3.rs-9335700/v1}{10.21203/rs.3.rs-9335700/v1}), shares the four benchmarks, regime names and partially overlapping stored scores. The four-benchmark construction and retrieval evidence is reused rather than independently replicated. The present analysis adds quantitative opportunity decomposition and selected-cache ranking/relevance-profile attribution, with corrected query-clustered inference and exact-cost and complete small-instance utility diagnostics. It claims neither the published acyclic-ranking pipeline's algorithms \cite{vahidi2026acyclicranking} nor related graph-benchmark or structural-optimization manuscripts' methods and numerical results as new contributions. Corrected retrieval interpretations supersede the preprint's corresponding claims. Online Resource~1 details reuse and historical comparison limits. Multiplicity-aware paired inference and the distinction between nonsignificance and equivalence remain essential \cite{urbano2019statistical,carterette2012multiple,lakens2018equivalence}.
+Incomplete assessments are a separate established measurement limitation. Buckley and Voorhees study retrieval evaluation when relevance information is incomplete \cite{buckley2004incomplete}. That work grounds our distinction between an evaluation zero and semantic irrelevance; it does not validate these selected cohorts or imply that another metric would recover their unobserved relevance. We retain the original nDCG contracts rather than introducing a post-hoc metric replacement.
+
+The public retrieval preprint \cite{vahidi2026retrievalpreprint} already separates construction, repair and extraction and reports conditional retrieval effects. We do not claim that broad message anew. The present increment is the quantified location and composition of opportunity losses, complete selected-cache relevance-profile attribution and the finite all-optimum diagnostic, supported by corrected query-block inference. Online Resource~1 maps the preprint's sections/tables to reused evidence, changed construction/normalization, added analyses and superseded interpretations. Its legacy cyclicity summaries and the current retention-matched protocol are different pipeline versions; an execution-level bridge for every old row is not established. Reused evidence is not independent replication. Neither published algorithms \cite{vahidi2026acyclicranking} nor related structural benchmarks' methods/results are new contributions here. Multiplicity-aware paired inference and the distinction between nonsignificance and equivalence remain essential \cite{urbano2019statistical,carterette2012multiple,lakens2018equivalence}.
 
 \section{Problem Formulation}\label{sec:problem}
 \subsection{Fixed-evidence repair contrast}
@@ -152,11 +158,9 @@ Sign-flip inference assumes independent query units and exchangeability of the e
 \subsection{Evidence access and AI assistance}\label{sec:evidence-access}
 The supporting \emph{Consistency-Aware Judgments v1} resource was publicly released before this revision. Its 56,332 records comprise 48,777 pairwise judgments, 7,140 repeated-measurement summaries, 139 selector-training records and 276 provider diagnostics. These are four configurations of one heterogeneous resource, not four independent datasets or 56,332 independent queries. The release excludes FiQA, Cohere and raw benchmark text; it is not the complete source of all cached or prospective results reported here. October prospective responses are not part of that release.
 
-The resource preserves provider, orientation, parsing and repetition information needed to interpret derived evidence. Selector-training fields are historical features, not evidence of a validated selector. Other hosted numerical ranking outcomes and structural benchmark resources are attributed reused outputs; neither third-party benchmark content nor related manuscripts' datasets are presented as new contributions. Version identities, schemas and source/output checksums support evidence inspection, with historical reconstruction limits stated below.
+The unchanged confidential reviewer ZIP (35 files) independently reproduces all 35 corrected comparisons from processed paired observations (Level~2), including 342/290 query populations and zero Holm-adjusted rejections. Direct checks of 1,025 weighted graphs confirm 646 acyclic and 379 cyclic inputs and saved greedy deletion feasibility/cost. Other families retain saved-p-value checks; saved exact statuses are not new optimality proofs. A separate recovery audit locates the complete frozen selected-cache permutations and relevance maps and independently reconstructs all 426 branch attributions on 213 queries, including nDCG arithmetic. Complete frozen processed inputs also permit an independent, solver-free exhaustive reconstruction of the six-graph optimum envelope. These checks confirm existing results, not new observations or regenerated provider judgments. Historical score files and canonical qrels match recorded hashes, but the exact original MiniLM weight revision and historical exact-ranking permutations remain incompletely preserved. Online Resource~1 distinguishes these verification levels.
 
-The unchanged confidential reviewer ZIP (35 files, approximately 2.09\,MiB) independently reproduces all 35 corrected comparisons from processed paired observations (Level~2), including 342/290 query populations and zero Holm-adjusted rejections. Direct checks of 1,025 weighted graphs confirm 646 acyclic and 379 cyclic inputs and saved greedy deletion feasibility/cost. Other families retain saved-p-value checks; saved exact statuses are not new optimality proofs. A separate recovery audit locates the complete frozen selected-cache permutations and relevance maps and independently reconstructs all 426 branch attributions on 213 queries, including nDCG arithmetic. Complete frozen processed inputs also permit an independent, solver-free exhaustive reconstruction of the six-graph optimum envelope. These checks confirm existing results, not new observations or regenerated provider judgments. Historical score files and canonical qrels match recorded hashes, but the exact original MiniLM weight revision and historical exact-ranking permutations remain incompletely preserved. Online Resource~1 distinguishes these verification levels.
-
-The recovered provider-linked graphs, permutations and relevance projections remain outside the 35-file reviewer ZIP pending applicable sharing clearance. Data-free offline verification procedures accompany the JDSA preparation sources; their input projections are not public artifacts. No raw provider transcripts, benchmark text, qrels or complete envelope inputs are added to that ZIP. Its content-specific audit covers proposed confidential review use, not full repository history or excluded material. Confidential delivery remains pending confirmation of a non-public editorial channel. The project repository is private; its address is \ifdefined\AnonymousVersion withheld in this fallback\else\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}\fi. Public access is not claimed. Previously released resources and their coverage limits are identified in Online Resource~1.
+The recovered provider-linked graphs, permutations and relevance projections required to verify the central attribution and envelope analyses remain outside the 35-file reviewer ZIP pending applicable sharing clearance. Data-free offline verification procedures accompany the JDSA preparation sources; their input projections are not public artifacts. No raw provider transcripts, benchmark text, qrels or complete envelope inputs are added to that ZIP. Its content-specific audit covers proposed confidential review use, not full repository history or excluded material. Confidential delivery remains pending confirmation of a non-public editorial channel. The project repository is private; its address is \ifdefined\AnonymousVersion withheld in this fallback\else\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}\fi. Public access is not claimed. Previously released resources and their coverage limits are identified in Online Resource~1.
 
 \paragraph{Generative-AI assistance.}
 Anthropic Claude and OpenAI ChatGPT/Codex were used for software-development assistance, analysis and audit utilities, figure preparation, and drafting and revising portions of the manuscript. Scientific responsibility for the final text, code, analyses, figures and citations includes human verification against source materials and underlying evidence. No generative-AI tool is credited as an author.
@@ -198,56 +202,8 @@ Graph activity does not imply a full-ranking response. Among the 191 cyclic sele
 
 The prospective construction workload contains 400 greedy/exact branch records across 200 model/query/construction graphs. Existing diagnostics identify 116 graph changes, 106 ranking changes and nine nonzero utility records, covering six query identities. These workload counts are descriptive repeated measurements of 20 queries. Complete historical permutations are unavailable for the 1,025 historical exact canonical scalar records, so a corresponding full canonical rank-response decomposition is not reconstructed. The selected-cache and prospective decompositions are therefore reported with their own explicit support rather than extrapolated to all canonical graphs.
 
-\section{Retrieval Outcomes and Measured Explanations}\label{sec:retrieval}
-\subsection{Retrieval effects under matched repair}
-Table~\ref{tab:families} summarizes the principal matched families. The canonical active and full greedy families have zero Holm rejections, as does the 110-cell larger-pool family. Figure~\ref{fig:forest} retains the corresponding active-regime point estimates and pointwise uncertainty. Exact-versus-unrepaired families likewise retain zero rejections. These are no-demonstrated-benefit findings under the stated protocols and sensitivity, not evidence that all true effects vanish.
-
-\begin{table*}[t]
-\caption{Principal matched result families. Test counts are hypotheses, not query counts. Separate rows do not define a combined family-wise guarantee}
-\label{tab:families}\papertable
-\begin{tabularx}{\linewidth}{@{}YL{2.3cm}rr@{}}\toprule
-Contrast / scope & Query support & Tests & Holm rejections \\\midrule
-Greedy--unrepaired, active canonical &50--120 per dataset&20&0\\\addlinespace
-Greedy--unrepaired, full canonical &342 roster, repeated cells&60&0\\\addlinespace
-Greedy--unrepaired, larger pools &342 roster, repeated cells&110&0\\\addlinespace
-Exact--unrepaired, canonical &342 roster&36&0\\\addlinespace
-Exact--unrepaired, larger pools &342 roster&56&0\\\addlinespace
-Exact--greedy, corrected pooled &342; 290 at nDCG@20&35&0\\\bottomrule
-\end{tabularx}
-\end{table*}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\linewidth,trim=0 0 225 0,clip]{Fig3.pdf}\\[6pt]
-\hfill\includegraphics[width=0.789\linewidth,trim=285 0 0 0,clip]{Fig3.pdf}
-\caption{Greedy-minus-unrepaired nDCG effects and pointwise 95\% bootstrap intervals under ms1 and candidate-conditioned IDCG: nDCG@20 for SciDocs/FiQA/BRIGHT (120/120/50 queries), nDCG@10 for HotpotQA (52). Purple/orange marks positive/negative point estimates, not significance; the vertical line is zero. Upper panels: SciDocs and FiQA; lower panels: HotpotQA and BRIGHT, with the same method-row order. None of the active family's 20 comparisons survives Holm correction; interval positions are not corrected discovery decisions}
-\label{fig:forest}
-\end{figure*}
-
-The corrected six-query primary aggregate has mean nDCG 0.881750 unrepaired and 0.882760 after either selected repair, a difference of +0.001010 with saved interval [0,0.003030]. One query improves and five tie; raw and adjusted p-values equal one. This ten-test family cannot attain its first Holm threshold with only six queries even if every query changes. In the selected cache, exact means improve by +0.003164 and +0.004840 in the 110/103 strata, each with Holm p=1 in the existing exploratory family. Greedy differences are −0.000950 and −0.002248. Positive selected point estimates do not establish a general benefit.
-
-Complementary external controls help assess whether the repaired pipeline earns its complexity. On 213 selected queries, SpringRank, unrepaired Copeland, greedy Copeland and exact Copeland means are 0.357436, 0.353838, 0.352261 and 0.357813; exact exceeds SpringRank by 0.000377. None of the eight matched SpringRank contrasts survives Holm correction. Table~\ref{tab:baselines} adds the trained BGE and adapted PRP-Graph controls. Training, model family, acquisition and compute differ; the table is matched-document effectiveness context, not an isolated deletion test or a confirmatory ranking of model families.
-
-\begin{table*}[t]
-\caption{Completed external controls: full-query nDCG@10 on two disjoint 20-query pools. Shared BM25/BGE prospective values are not replicated observations. U/G/E denote unrepaired/greedy/exact Copeland}
-\label{tab:baselines}\papertable
-\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
-Method & PRP pool & Prospective Qwen & Prospective Smol\\\midrule
-BM25&0.278865&0.080112&0.080112\\
-BGE cross-encoder&0.354547&0.108610&0.108610\\
-Adapted PRP-Graph&0.270215&---&---\\
-U-Copeland&0.271771&0.126872&0.097435\\
-G-Copeland&0.271771&0.126872&0.097435\\
-E-Copeland&0.271526&0.126872&0.097435\\
-SpringRank&0.259999&0.134091&0.085859\\
-Bradley--Terry-style&0.254006&0.134091&0.089653\\\bottomrule
-\end{tabularx}
-\end{table*}
-
-BGE's exploratory paired differences on the PRP pool are +0.075682 versus BM25, interval [−0.004973,0.158395], and +0.084332 versus adapted PRP-Graph, interval [0.008773,0.180777]. These pointwise, unregistered comparisons are not confirmatory superiority tests. The adapted PRP comparison's eight primary native/random-acquisition contrasts all have Holm p=1. The strict prospective repair effects are zero for every query; the inactive opportunity documented above limits that null's interpretation. Invalid direct-listwise outputs, zero valid Qwen and ten valid Smol rankings among 20 attempts each, cannot serve as complete baselines or be scored zero.
-
-\subsection{Relevance profiles and top-k activity}
-Table~\ref{tab:grades} attributes the selected cache's ranking-change zeros using stored Copeland permutations and the frozen relevance map, without rerunning extraction or scoring. All 213 identities enter both repair branches. For exact repair, 160 rankings change: 135 retain recorded nDCG, comprising 61 zero-positive pools and 74 positive-containing pools with identical evaluated grade sequences. Greedy changes 180 rankings; its 143 zero-effect cases split into 69 and 74. No positive-pool changed-ranking zero remains with a different top-ten grade sequence in this selected cohort.
+\section{Relevance-Profile Attribution and Its Composition}\label{sec:profiles}
+Table~\ref{tab:grades} attributes the selected cache's ranking-change zeros using stored Copeland permutations and the frozen relevance map. No new historical model/provider generation or ranking acquisition is performed; discounted-gain and nDCG arithmetic are independently recomputed from the preserved records. All 213 identities enter both repair branches. For exact repair, 160 rankings change: 135 retain recorded nDCG, comprising 61 zero-positive pools and 74 positive-containing pools with identical evaluated grade sequences. Greedy changes 180 rankings; its 143 zero-effect cases split into 69 and 74. No positive-pool changed-ranking zero remains with a different top-ten grade sequence in this selected cohort.
 
 \begin{table*}[t]
 \caption{Saved relevance-profile attribution on 213 selected query identities. Mutually exclusive rows sum to 213 in each branch. The two columns share queries; the 74-case subsets are not 148 independent observations}
@@ -269,10 +225,72 @@ Top-ten membership changes in 56 greedy and 38 exact cases, yet 45 and 32 still 
 
 The four symmetric-available cyclic-positive prospective cells illustrate the same measured explanation on only three query identities. Both repairs change full rankings, but every moved document is unjudged and the top-ten grade sequence remains fixed. These selected solutions are descriptive cases, not evidence that all equally optimal repairs or all reliable comparison settings are utility-inert. Directional constructions provide contrary cases: nine nonzero records include harms and one exact improvement, six within an unchanged top-ten set. All eight model-averaged exploratory construction contrasts retain Holm p=1.
 
-\subsection{Exact-cost and optimum-choice diagnostics}
+
+\subsection{Composition of observed opportunity losses}
+\input{selected_composition_main}
+Table~\ref{tab:selected-composition} keeps the distinct-query denominator visible and separates dataset from provider-availability descriptions. Of the 79 zero-positive pools, 36 are SciDocs and 38 FiQA: these two datasets contribute 74/79, compared with four BRIGHT and one HotpotQA pool. Absence of judged positives is therefore composition-dependent. By contrast, positive-pool fixed-profile zeros occur in all four datasets and both availability strata. They cannot be attributed entirely to a single dataset or to missing positives. These are observed evaluation mechanisms, not explanations of semantic relevance or preference correctness.
+
+Of 134 positive-containing pools, 120 are cyclic. Greedy changes 111 positive-pool rankings, with 37 measured changes; exact changes 99, with 25 measured changes. The remaining 74 per branch retain the evaluated profile. Among 79 zero-positive pools, greedy/exact change 69/61 rankings without changing measured utility; 10/18 rankings remain unchanged. Thus the all-query and changed-ranking denominators answer different questions. The corresponding all-query counts, including unfavorable cases, remain the principal description; conditioning does not create new evidence of efficacy.
+
+The two-provider stratum has 57 cyclic-positive queries among 110, versus 63 among 103 in the four-provider stratum. Dataset, available providers and retained evidence vary together; these strata are not randomized treatments or isolated provider interventions. The complete dataset $\times$ availability $\times$ positive-availability table in Online Resource~1 includes an empty HotpotQA/two-provider/zero-positive cell and zero-positive cells of size one or two. These cells support counts only, without stable subgroup-effect claims. No stratum was selected for significance and no testing family is added.
+
+\input{selected_worked_example}
+
+\section{Retrieval Effects and Uncertainty}\label{sec:retrieval}
+\subsection{Retrieval effects under matched repair}
+Table~\ref{tab:families} summarizes the principal matched families. The canonical active and full greedy families have zero Holm rejections, as does the 110-cell larger-pool family. Online Resource~1 retains the original active-regime forest display with pointwise uncertainty; Table~\ref{tab:informative-support} brings saved effect estimates and informative query counts into the main text. Exact-versus-unrepaired families likewise retain zero rejections. These are no-demonstrated-benefit findings under the stated protocols and sensitivity, not evidence that all true effects vanish.
+
+\begin{table*}[t]
+\caption{Principal matched result families. Test counts are hypotheses, not query counts. Separate rows do not define a combined family-wise guarantee}
+\label{tab:families}\papertable
+\begin{tabularx}{\linewidth}{@{}YL{2.3cm}rr@{}}\toprule
+Contrast / scope & Query support & Tests & Holm rejections \\\midrule
+Greedy--unrepaired, active canonical &50--120 per dataset&20&0\\\addlinespace
+Greedy--unrepaired, full canonical &342 roster, repeated cells&60&0\\\addlinespace
+Greedy--unrepaired, larger pools &342 roster, repeated cells&110&0\\\addlinespace
+Exact--unrepaired, canonical &342 roster&36&0\\\addlinespace
+Exact--unrepaired, larger pools &342 roster&56&0\\\addlinespace
+Exact--greedy, corrected pooled &342; 290 at nDCG@20&35&0\\\bottomrule
+\end{tabularx}
+\end{table*}
+
+
+
+\subsection{Informative support and pointwise uncertainty}
+The 35 corrected exact-versus-greedy comparisons contain 28 endpoints with 342 independent query units and seven with 290; only 4--99 query sums per endpoint are nonzero. Table~\ref{tab:informative-support} shows saved examples alongside both selected-cache strata and the six-query primary diagnostic. Its intervals are pointwise sensitivity summaries under their original family-specific procedures, not simultaneous confidence intervals. No pooled inferential family or altered weighting is introduced. Copeland's percentile interval excludes zero while its basic interval includes zero; the respective Holm decision remains no rejection.
+\input{informative_support}
 Improving deletion cost does not demonstrate a retrieval advantage in the corrected 35-test diagnostic. It has zero Holm rejections; the minimum adjusted p is 0.85041496. Priority-topological nDCG@10 has mean exact-minus-greedy effect −0.002229580 across 342 query units, raw p=0.02429757 and Holm p=0.85041496. Its query sums are positive/negative/zero for 30/44/268 identities. A pointwise percentile interval [−0.004356624,−0.000334221] does not establish a family-corrected discovery. The separate saved 399-cell per-dataset/regime family also reports zero rejections and was not rerun in the correction.
 
-The six-query complete envelope supplies a different diagnostic: structural cost does not identify external utility even among optimal deletion sets. Table~\ref{tab:envelope} retains all six instances. Four have a unique optimum. FiQA/2377 has two optimal repairs exchanging grade-one documents at ranks two and three, with unchanged utility. One SciDocs graph has two cost-0.75 repairs that place a grade-one document at rank seven or eight relative to a grade-zero document, yielding 0.950531008 or 0.956591277.
+
+The corrected six-query primary aggregate has mean nDCG 0.881750 unrepaired and 0.882760 after either selected repair, a difference of +0.001010 with saved interval [0,0.003030]. One query improves and five tie; raw and adjusted p-values equal one. This ten-test family cannot attain its first Holm threshold with only six queries even if every query changes: the smallest attainable two-sided exact sign-flip p-value is $2/2^6=0.03125$, exceeding $0.05/10=0.005$. In the selected cache, exact means improve by +0.003164 and +0.004840 in the 110/103 strata, each with Holm p=1 in the existing exploratory family. Greedy differences are −0.000950 and −0.002248. Positive selected point estimates do not establish a general benefit.
+
+Complementary external controls help assess whether the repaired pipeline earns its complexity. On 213 selected queries, SpringRank, unrepaired Copeland, greedy Copeland and exact Copeland means are 0.357436, 0.353838, 0.352261 and 0.357813; exact exceeds SpringRank by 0.000377. None of the eight matched SpringRank contrasts survives Holm correction. Table~\ref{tab:baselines} adds the trained BGE and adapted PRP-Graph controls. Training, model family, acquisition and compute differ; the table is matched-document effectiveness context, not an isolated deletion test or a confirmatory ranking of model families.
+
+\begin{table*}[t]
+\caption{Completed external controls: full-query nDCG@10 on two disjoint 20-query pools. Shared BM25/BGE prospective values are not replicated observations. U/G/E denote unrepaired/greedy/exact Copeland}
+\label{tab:baselines}\papertable
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
+Method & PRP pool & Prospective Qwen & Prospective Smol\\\midrule
+BM25&0.278865&0.080112&0.080112\\
+BGE cross-encoder&0.354547&0.108610&0.108610\\
+Adapted PRP-Graph&0.270215&---&---\\
+U-Copeland&0.271771&0.126872&0.097435\\
+G-Copeland&0.271771&0.126872&0.097435\\
+E-Copeland&0.271526&0.126872&0.097435\\
+SpringRank&0.259999&0.134091&0.085859\\
+Bradley--Terry-style&0.254006&0.134091&0.089653\\\bottomrule
+\end{tabularx}
+\end{table*}
+
+BGE's exploratory paired differences on the PRP pool are +0.075682 versus BM25, interval [−0.004973,0.158395], and +0.084332 versus adapted PRP-Graph, interval [0.008773,0.180777]. These pointwise, unregistered comparisons are not confirmatory superiority tests. The adapted PRP comparison's eight primary native/random-acquisition contrasts all have Holm p=1. The strict prospective repair effects are zero for every query; the inactive opportunity documented above limits that null's interpretation. Invalid direct-listwise outputs, zero valid Qwen and ten valid Smol rankings among 20 attempts each, cannot serve as complete baselines or be scored zero.
+
+\subsection{Limits of the completed prospective instrument}
+The strict prospective null must be read with the instrument's observed dispositions. Qwen abstains on 1,378 of 2,920 valid pairwise outputs. Smol selects displayed A on 2,591 of 2,772 directional responses, despite reversed presentation. There are 148 capped invalid outputs; these belong to invalid-response accounting, not an additional independent sample. Abstentions, invalids and reversal conflicts do not become directional votes. Repeated observations assess reliability without adding primary votes or query units. Parsing success alone therefore does not establish an informative instrument.
+
+Strict construction produces no cyclic-positive graph: its sole cyclic model/query graph has no judged-positive candidate, and all 14 positive-containing model/query graphs are acyclic. The resulting zero repair effects test an almost inactive intervention under a compromised instrument, not equivalence in reliable cyclic-positive evidence. Invalid listwise attempts remain missing controls (20/20 Qwen and 10/20 Smol), without zero imputation. Full dispositions, model-specific repeats and the unsuccessful neutral-schema development are retained in Online Resource~1. No results from the separately scheduled replication enter this article.
+
+\section{Finite Optimal-Repair Diagnostic}\label{sec:optimum-choice}
+The six-query complete envelope supplies a different diagnostic: structural cost does not identify external utility even among optimal deletion sets. Table~\ref{tab:envelope} retains all six instances. Four have a unique optimum. FiQA/2377 has two optimal repairs exchanging grade-one documents at ranks two and three, with unchanged utility. One SciDocs graph has two cost-0.75 repairs that exchange a grade-one and a grade-zero document: placing the positive at rank seven gives 0.956591277, while rank eight gives 0.950531008.
 
 \begin{table*}[t]
 \caption{Certified utility ranges over all optimal repairs of six primary graphs. SciDocs identifiers are shortened; complete identities, certificates and full-precision utilities remain in the study archives, outside the reviewer ZIP. The reported selected SCIP repairs attain the maxima; utilities are rounded to six decimals here}
@@ -288,7 +306,7 @@ SciDocs /970093\ldots&0.75&2&0.950531&0.956591\\\bottomrule
 \end{tabularx}
 \end{table*}
 
-The certified mean utility range is [0.881749864,0.882759909], corresponding to improvement [0,+0.001010045] over unrepaired Copeland. The selected SCIP optimum is already utility-best on the affected query. An equally optimal choice removes the pilot's sole improvement and leaves six ties; no certified choice produces a negative effect or strict sign reversal. The 0.006060269 per-query width demonstrates conditional non-identification, not a population effect, new algorithm or deployable relevance-aware selector.
+This finite range over a complete optimum set is not a confidence interval. The certified mean utility range is [0.881749864,0.882759909], corresponding to improvement [0,+0.001010045] over unrepaired Copeland. The selected SCIP optimum is already utility-best on the affected query. An equally optimal choice removes the pilot's sole improvement and leaves six ties; no certified choice produces a negative effect or strict sign reversal. The 0.006060269 per-query width demonstrates conditional non-identification, not a population effect, new algorithm or deployable relevance-aware selector.
 
 \section{Discussion and Limitations}\label{sec:discussion}
 \subsection{What the audit establishes}
@@ -311,11 +329,16 @@ Inferential conclusions remain assumption-dependent and limited by sparse change
 Finally, complete historical exact ranking permutations are unavailable for the canonical scalar records, and the full optimum envelope covers only six eight-node graphs. Local reconstruction of attribution from saved permutations and of this finite envelope strengthens verification within those cohorts; it does not reproduce historical model serving, recover missing permutations or broaden the sampling scope. Existing external baselines differ in model training, truncation and compute; they are contextual controls, not a comprehensive ranking of modern retrieval systems. Historical provider aliases and some dataset conversions are incompletely pinned; restrictions limit excluded historical inputs. The final reviewer ZIP supports independent processed-observation statistics and graph checks, with historical reconstruction limits and editorial-channel confirmation still required.
 
 \section{Conclusion}\label{sec:conclusion}
-Preference-graph repair can succeed structurally while failing to change an extracted order or its evaluated relevance-grade positions. The observed opportunity losses differ across protocols: many canonical graphs and almost all strict prospective graphs are acyclic, whereas the selected cache contains substantial structural and ranking activity with frequent measured utility inactivity. Relevance-profile attribution explains its changed-ranking zeros under the frozen relevance contract. Exact-cost controls retain no corrected general retrieval advantage, and a complete small-instance envelope shows residual utility ambiguity among equal-cost optima. These findings justify separate reporting of structural, ranking and retrieval outcomes. Selected cohorts, incomplete judgments, limited informative opportunities and inferential assumptions prevent a universal negative conclusion, statistical equivalence or a validated repair-selection rule.
+Preference-graph repair can succeed structurally while failing to change an extracted order or its evaluated relevance-grade positions. The observed opportunity losses differ across protocols: many canonical graphs and almost all strict prospective graphs are acyclic, whereas the selected cache contains substantial structural and ranking activity with frequent measured utility inactivity. Relevance-profile attribution explains its changed-ranking zeros under the frozen relevance contract. None of the evaluated 35 exact-versus-greedy comparisons rejects after its specified Holm correction, and a complete small-instance envelope shows residual utility ambiguity among equal-cost optima. These findings justify separate reporting of structural, ranking and retrieval outcomes. Selected cohorts, incomplete judgments, limited informative opportunities and inferential assumptions prevent a universal negative conclusion, statistical equivalence or a validated repair-selection rule.
 
 \backmatter
 \section*{Supplementary information}
 Online Resource~1 (ESM\_1.pdf): protocols, query populations, complete saved comparison families, structural and retrieval diagnostics, source identities, reuse and reproducibility limits.
+
+\ifdefined\AnonymousVersion\else
+\section*{Acknowledgments}
+The author gratefully acknowledges Professor Ioannis Koutis for his academic guidance and support.
+\fi
 
 \section*{Statements and Declarations}
 \input{declarations}

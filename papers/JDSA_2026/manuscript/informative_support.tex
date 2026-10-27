@@ -1,0 +1,15 @@
+\begin{table*}[t]
+\caption{Saved nDCG@10 effects and pointwise 95\% intervals. $N$ is distinct queries; $n_{\ne0}$ counts nonzero query sums for the pooled corrected family and nonzero query differences otherwise. The pooled exact-minus-greedy estimand retains regime-row weighting. Other rows use their original query means. Intervals are percentile except where basic is explicitly shown; Explor. denotes the saved exploratory family; each Holm decision belongs only to the stated original family. These are selected informative displays, not a new testing family.}
+\label{tab:informative-support}\papertable
+\begin{tabularx}{\linewidth}{@{}YL{1.55cm}rrrL{3.4cm}r@{}}\toprule
+Comparison & Family & $N$ & $n_{\ne0}$ & Mean $\Delta$ & Pointwise interval & Holm $p$\\\midrule
+Copeland E--G & Corrected 35 &342&63&$-0.001785$&$[-0.003584,-0.000112]$&1\\
+\quad basic sensitivity & same endpoint &342&63&same&$[-0.003459,0.000013]$&1\\
+Priority-topological E--G & Corrected 35 &342&74&$-0.002230$&$[-0.004357,-0.000334]$&0.850415\\\addlinespace
+G--U, two-provider & Explor. 502 &110&19&$-0.000950$&$[-0.007574,0.005823]$&1\\
+E--U, two-provider & Explor. 502 &110&12&$0.003164$&$[0.000060,0.007053]$&1\\
+G--U, four-provider & Explor. 502 &103&18&$-0.002248$&$[-0.014272,0.009574]$&1\\
+E--U, four-provider & Explor. 502 &103&13&$0.004840$&$[-0.001427,0.014088]$&1\\\addlinespace
+G/E--U, primary aggregate & Primary 10 &6&1&$0.001010$&$[0,0.003030]$&1\\\bottomrule
+\end{tabularx}
+\end{table*}

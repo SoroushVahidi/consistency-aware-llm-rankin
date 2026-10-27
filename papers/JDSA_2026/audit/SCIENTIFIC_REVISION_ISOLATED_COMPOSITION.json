@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "standard_library_only": true,
+  "input_sha256": "ae3829877988c5f0ed2ef34b4b41b18987b2936cb8d7c1197e082f8764893df0",
+  "query_units": 213,
+  "branch_records": 426,
+  "reference_fields": 6816,
+  "maximum_error": 2.220446049250313e-16,
+  "synthetic_tests": 7,
+  "private_outputs_excluded": true,
+  "script_sha256": "8c6d2d6f3e2e76a3f82da9306cedb53220eda8ca9caa8ed3ca5bcba3109cb541"
+}

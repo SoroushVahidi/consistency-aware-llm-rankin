@@ -1,0 +1,438 @@
+{
+  "status": "PASS",
+  "passed": 79,
+  "total": 79,
+  "checks": [
+    {
+      "check": "fixed baseline commit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig1.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: cached_effects.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: candidate.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: canonical_retrieval.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: common.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_algorithm.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_domains.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_utility.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: corpus_pins.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: corrected35.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: endpoint_contracts.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: external.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: extraction.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: families.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: model_pins.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: prompt.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: reliability.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: robustness.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: roles.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: setup.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: sn-basic.bst",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: sn-jnl.cls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: springrank.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: structural_cost.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: thresholds.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all six original main table bodies preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original statistical estimands and methods preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "abstract 150 to 250 words",
+      "passed": true,
+      "detail": 213
+    },
+    {
+      "check": "six keywords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Springer two-column main format retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "three wording corrections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unique bibliography keys",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main source references resolved",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "main unique labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main citation metadata present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main prior citations retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 137
+      }
+    },
+    {
+      "check": "main bibliography matches cited keys",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main identified author details",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "requested advisor acknowledgment",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 132
+      }
+    },
+    {
+      "check": "main_anonymous bibliography matches cited keys",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main_anonymous no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous direct identifiers and acknowledgment withheld",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement source references resolved",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "supplement unique labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement citation metadata present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement prior citations retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 52
+      }
+    },
+    {
+      "check": "supplement bibliography matches cited keys",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement identified author details",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 51
+      }
+    },
+    {
+      "check": "supplement_anonymous bibliography matches cited keys",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement_anonymous no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous direct identifiers and acknowledgment withheld",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "213-query 426-branch reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original 219 source hashes verified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "6816 attribution fields reproduce",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no added inferential family",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "generated tables and observed case match validated receipt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new main uncertainty display matches saved endpoint values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "35 comparisons, 342/290 supports, zero Holm rejections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "4--99 nonzero support range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "1025 graph records and six diagnostics retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive is flat and complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive hashes match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no private payload or editorial documents in archive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "every source input and data-free procedure packaged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all protected historical files unchanged",
+      "passed": true,
+      "detail": {
+        "matched": 835,
+        "total": 835
+      }
+    },
+    {
+      "check": "changes confined to JDSA preparation package",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "baseline_commit": "2c69f331fa4add10ce577c17516afb997b630dfe",
+  "pdfs": {
+    "main": {
+      "pages": 20,
+      "sha256": "d709713feb231ed241de50e45b22ba7c772efa4020acb374487a877e95990abf",
+      "references": 36
+    },
+    "main_anonymous": {
+      "pages": 19,
+      "sha256": "dcfc9a550cfd940658bef57e690331f216ebd4533591451bc595ff33e5a4fa36",
+      "references": 36
+    },
+    "supplement": {
+      "pages": 38,
+      "sha256": "a0d1b93c7e0d9aee7e4e3ee943af6abc72fe6809532bbac9dd42f9b7b54631a2",
+      "references": 12
+    },
+    "supplement_anonymous": {
+      "pages": 38,
+      "sha256": "207e0d0881b37036fb31efcbbe0148b440db8d02a730f240ad21d8e3f3cd5332",
+      "references": 12
+    }
+  },
+  "new_experiments_performed": false,
+  "scientific_scope": "Existing-record descriptive arithmetic; original measurements preserved"
+}
