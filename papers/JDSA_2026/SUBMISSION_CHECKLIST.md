@@ -65,3 +65,17 @@ Not performed: journal submission/contact, public upload, new experiments, model
 - [ ] Journal review model/confidential attachment handling confirmed; final author PDF/disclosure approval (H01).
 
 These entries do not authorize submission, public release or a claim of readiness. The separately scheduled experiment is excluded and must undergo its own later review. No preliminary result was used.
+
+## Final readiness audit — 27 October 2026
+
+Current verdict: **NOT_READY**; see [final evidence-grounded audit](FINAL_SUBMISSION_READINESS_AUDIT.md). This supersedes readiness inference from technical integration checks, not the original measurements.
+
+- [ ] Obtain documentary closure/withdrawal acknowledgment for the overlapping SNCS retrieval submission. The available private preparation note records a request as unconfirmed; neither Git cleanup nor that request proves closure.
+- [ ] Bind the actual uploaded related MWFAS version and update the confidential comparison/disclosure for the final JDSA version.
+- [ ] Establish applicable terms and a lawful sharing basis for the minimum cache/envelope projections before adding any inputs to a reviewer copy.
+- [ ] Confirm genuinely non-public reviewer delivery and correct main/SI file handling; select identified/anonymous files according to verified journal workflow.
+- [ ] Obtain author approval of final PDFs and accurate exclusivity/rights/overlap/declaration statements.
+- [x] Preserve original numerical results, family scope, query units, mathematical expressions and scientific tables; use no new experiments or responses.
+- [x] Correct citation order, forest-figure citation, disclosure tense, directional parsing wording and explicit access limitation.
+
+The current public Catalyst guidance does not establish a blanket new publication-consent requirement. Public release is not required; confidential, lawful reviewer access would address the central-access gate. Novelty sufficiency, supplement length, missing historical scorer pins and prospective replication are separate scientific limitations/editorial considerations, not newly invented compliance requirements.

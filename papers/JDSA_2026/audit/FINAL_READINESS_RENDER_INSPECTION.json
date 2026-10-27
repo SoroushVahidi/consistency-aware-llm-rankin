@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "identified_main_pages_inspected": 20,
+  "identified_supplement_pages_inspected": 38,
+  "contact_sheet_scope": "All 58 pages",
+  "detailed_views": [
+    "main composition",
+    "main pointwise uncertainty",
+    "supplement construction table S17",
+    "supplement composition table S19"
+  ],
+  "blocking_visual_defect_found": false,
+  "external_main_pdf_links_preserved": 41,
+  "font_check": {
+    "Fig2.pdf": {
+      "font_count": 3,
+      "all_embedded": true
+    },
+    "Fig3.pdf": {
+      "font_count": 2,
+      "all_embedded": true
+    },
+    "ESM_Fig1.pdf": {
+      "font_count": 3,
+      "all_embedded": true
+    },
+    "ESM_Fig2.pdf": {
+      "font_count": 2,
+      "all_embedded": true
+    },
+    "ESM_Fig3.pdf": {
+      "font_count": 2,
+      "all_embedded": true
+    }
+  },
+  "private_submission_staging_created": true,
+  "reviewer_inputs_in_staging": false,
+  "author_final_approval": false
+}

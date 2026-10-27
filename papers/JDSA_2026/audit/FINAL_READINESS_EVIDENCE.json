@@ -1,0 +1,35 @@
+{
+  "checked_date_utc": "2026-10-27",
+  "sources": [
+    {
+      "source": "journal_guidelines",
+      "url": "https://link.springer.com/journal/41060/submission-guidelines",
+      "http": 200,
+      "sha256": "75589284fc8dd7c2eda83c0c7d7b9e1ec4341c55c33b37bacc8b38174155d7a5"
+    },
+    {
+      "source": "publishing_options",
+      "url": "https://link.springer.com/journal/41060/how-to-publish-with-us",
+      "http": 200,
+      "sha256": "b875fc206735c1c8d8dca87d615ea26b26bf052bfd6091f47c848f3650e335b1"
+    },
+    {
+      "source": "catalyst_faq",
+      "url": "https://cohere.com/research/grants",
+      "http": 200,
+      "sha256": "83cf619f878f0120b617bf2db19f8268719251452be5cd8c1ab4ab1c53d79b19"
+    }
+  ],
+  "sncs_source_sha256": "68bc54c9b7fd8d8962549f2e2e236e7dfdf8c10ea48ac9e63ce4dc141de7d78f",
+  "public_preprint_pdf_sha256": "46ad5bc012c350331ef16a7fbe9e8d55b492130d443bf1b4c04c4751862c0d22",
+  "reviewer_zip_sha256": "c31fff08567d3fc0504e0a303a2328067175b8820541746588c30cfee484f7b3",
+  "reviewer_zip_files": 35,
+  "fresh_quick_verify_exit": 0,
+  "central_inputs_present_in_zip": false,
+  "confidential_input_addition_cleared": false,
+  "sncs_withdrawal_confirmed": false,
+  "exact_uploaded_related_version_verified": false,
+  "private_records_published": false,
+  "new_experiments": false,
+  "new_statistical_inference": false
+}

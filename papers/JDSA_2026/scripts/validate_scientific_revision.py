@@ -322,10 +322,16 @@ def main():
             {"matched": matches, "total": len(ledger)},
         )
     integration = json.loads((AUDIT / "MAIN_INTEGRATION_MANIFEST.json").read_text())
+    readiness_path = AUDIT / "FINAL_READINESS_MANIFEST.json"
+    readiness = json.loads(readiness_path.read_text()) if readiness_path.exists() else None
+    expected_canonical = (
+        readiness["canonical_sha256"] if readiness else integration["canonical_sha256"]
+    )
+
     canonical = repo / "LATEST_MANUSCRIPT.pdf"
     check(
-        "canonical PDF is the exact approved revision artifact",
-        digest(canonical.read_bytes()) == integration["canonical_sha256"],
+        "canonical PDF matches current version manifest",
+        digest(canonical.read_bytes()) == expected_canonical,
     )
     check("identified main rebuild has 20 pages", pdf_summary["main"]["pages"] == 20)
     check("identified supplement rebuild has 38 pages", pdf_summary["supplement"]["pages"] == 38)
@@ -377,15 +383,76 @@ def main():
             )
         )
     ]
+    prose = readiness["prose_file_sha256"] if readiness else {}
     check(
-        "all revision scientific sources and evidence byte-identical",
+        "all scientific sources match baseline or declared prose revision",
         all(
-            (repo / p).read_bytes()
+            digest((repo / p).read_bytes()) == prose[p]
+            if p in prose
+            else (repo / p).read_bytes()
             == subprocess.check_output(["git", "show", f"{source}:{p}"], cwd=repo)
             for p in scientific
         ),
         len(scientific),
     )
+    if readiness:
+        check(
+            "only three declared prose files",
+            set(prose)
+            == {
+                "papers/JDSA_2026/manuscript/main.tex",
+                "papers/JDSA_2026/manuscript/supplement.tex",
+                "papers/JDSA_2026/manuscript/declarations.tex",
+            },
+        )
+        for name in ("main", "supplement"):
+            old = subprocess.check_output(
+                ["git", "show", f"{source}:papers/JDSA_2026/manuscript/{name}.tex"],
+                cwd=repo,
+                text=True,
+            )
+            current = (SRC / f"{name}.tex").read_text()
+            if name == "main":
+                beginning = r"\section{Problem Formulation}"
+                ending = r"\backmatter"
+                check(
+                    "main methods/results/discussion/conclusion text unchanged",
+                    current[current.index(beginning) : current.index(ending)]
+                    == old[old.index(beginning) : old.index(ending)],
+                )
+
+            def math(t):
+                return re.findall(r"\\begin\{(equation|align)\}(.*?)\\end\{\1\}", t, re.S)
+
+            check(name + " displayed mathematics unchanged", math(old) == math(current))
+
+            def numbers(t):
+                return collections.Counter(
+                    re.findall(
+                        r"(?<![A-Za-z])[0-9]+(?:[.,][0-9]+)*",
+                        re.sub(r"\\(?:ref|label)\{[^}]+\}", "", t),
+                    )
+                )
+
+            expected_numbers = numbers(old)
+            if name == "main":
+                expected_numbers.update({"213": 1})
+            check(
+                name + " numerical text unchanged except explicit cohort reminder",
+                numbers(current) == expected_numbers,
+            )
+            full = expanded(name + ".tex")
+            for prefix in ("tab:", "fig:"):
+                labels = [
+                    k for k in re.findall(r"\\label\{([^}]+)\}", full) if k.startswith(prefix)
+                ]
+                refs = list(
+                    dict.fromkeys(
+                        k for k in re.findall(r"\\ref\{([^}]+)\}", full) if k.startswith(prefix)
+                    )
+                )
+                check(name + " consecutive first citations: " + prefix, refs == labels)
+        check("no additional data/response/optimizer generation", not readiness["new_experiments"])
     result = dict(
         status="PASS" if all(c["passed"] for c in checks) else "FAIL",
         passed=sum(c["passed"] for c in checks),
@@ -396,9 +463,14 @@ def main():
         new_experiments_performed=False,
         scientific_scope="Existing-record descriptive arithmetic; original measurements preserved",
     )
-    (AUDIT / "MAIN_INTEGRATION_DOCUMENT_VALIDATION.json").write_text(
-        json.dumps(result, indent=2) + "\n"
-    )
+    (
+        AUDIT
+        / (
+            "FINAL_READINESS_VALIDATION.json"
+            if readiness
+            else "MAIN_INTEGRATION_DOCUMENT_VALIDATION.json"
+        )
+    ).write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k not in ("checks", "pdfs")}, indent=2))
     for c in checks:
         if not c["passed"]:

@@ -18,3 +18,5 @@ Scientific recovery follow-up: [gap-resolution report](REPRODUCIBILITY_GAP_RESOL
 Scientific revision: [issue-by-issue change log](SCIENTIFIC_REVISION_CHANGELOG.md), [composition procedure/schema](STRATIFIED_ATTRIBUTION.md), [preprint/provenance map](PREPRINT_DELTA_AND_PROVENANCE.md), and current [validation report](VALIDATION_REPORT.md). Existing measurements and protected historical files are preserved; new descriptive strata do not constitute new experiments or resolve access/permissions gates.
 
 Current integration and PDF-retention policy: [MAIN_INTEGRATION.md](MAIN_INTEGRATION.md). Earlier build/validation receipts are dated historical records. The full scientific revision is preserved; only output locations, packaging and discoverability change.
+
+Final readiness verdict: **NOT_READY**. See [FINAL_SUBMISSION_READINESS_AUDIT.md](FINAL_SUBMISSION_READINESS_AUDIT.md) for documentary exclusivity, related-version, central-access and rights gates, distinguished from optional improvements. The root PDF reflects only supported prose/presentation corrections; no results change.

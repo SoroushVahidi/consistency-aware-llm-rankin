@@ -1,0 +1,1088 @@
+{
+  "status": "PASS",
+  "passed": 209,
+  "total": 209,
+  "checks": [
+    {
+      "check": "fixed baseline commit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: ESM_Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig1.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: cached_effects.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: candidate.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: canonical_retrieval.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: common.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_algorithm.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_domains.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: construction_utility.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: corpus_pins.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: corrected35.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: endpoint_contracts.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: external.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: extraction.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: families.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: model_pins.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: prompt.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: reliability.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: robustness.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: roles.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: setup.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: sn-basic.bst",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: sn-jnl.cls",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: springrank.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: structural_cost.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged baseline asset: thresholds.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all six original main table bodies preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original statistical estimands and methods preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "abstract 150 to 250 words",
+      "passed": true,
+      "detail": 213
+    },
+    {
+      "check": "six keywords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Springer two-column main format retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "three wording corrections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unique bibliography keys",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main source references resolved",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "main unique labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main citation metadata present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main prior citations retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 134
+      }
+    },
+    {
+      "check": "main bibliography matches cited keys",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main identified author details",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "requested advisor acknowledgment",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 129
+      }
+    },
+    {
+      "check": "main_anonymous bibliography matches cited keys",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main_anonymous no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous direct identifiers and acknowledgment withheld",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement source references resolved",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "supplement unique labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement citation metadata present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement prior citations retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 52
+      }
+    },
+    {
+      "check": "supplement bibliography matches cited keys",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement identified author details",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous clean final LaTeX log",
+      "passed": true,
+      "detail": {
+        "underfull_notices": 51
+      }
+    },
+    {
+      "check": "supplement_anonymous bibliography matches cited keys",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement_anonymous no unresolved PDF markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous direct identifiers and acknowledgment withheld",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "213-query 426-branch reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original 219 source hashes verified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "6816 attribution fields reproduce",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no added inferential family",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "generated tables and observed case match validated receipt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new main uncertainty display matches saved endpoint values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "35 comparisons, 342/290 supports, zero Holm rejections",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "4--99 nonzero support range",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "1025 graph records and six diagnostics retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive is flat and complete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive hashes match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no private payload or editorial documents in archive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "every source input and data-free procedure packaged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all protected historical files unchanged",
+      "passed": true,
+      "detail": {
+        "matched": 835,
+        "total": 835
+      }
+    },
+    {
+      "check": "canonical PDF matches current version manifest",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "identified main rebuild has 20 pages",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "identified supplement rebuild has 38 pages",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "canonical and rebuilt manuscript text match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "README begins with canonical download link",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/failure_taxonomy_distribution_uniform.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/fig_mean_ndcg_hybrids_clean.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure1_preference_graph_pipeline.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure2_graph_inconsistency_by_regime.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure3_structural_quality_improvement_ms1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure4_repair_effect_forest_final.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure5_dataset_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/legacy/figure6_failure_taxonomy.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/manuscript/fig_failure_classes.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/manuscript/fig_graph_qrels_bew_pre_post.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/manuscript/fig_mean_ndcg_hybrids.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: figures/manuscript/fig_pipeline.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/figures/figure_1_pipeline_diagram.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/figures/figure_2_cyclicity_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/figures/figure_3_repair_effect_ndcg.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/figures/figure_4_structural_retrieval_tradeoff.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/figures/figure_5_llm_paradigm_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: outputs/manuscript_artifacts/graphical_abstract/graphical_abstract.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/Consistency_Aware_Ranking_Repair_Opportunity_Analysis_2026.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig1_pipeline.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig7_bootstrap_forest_full15.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig8_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDIQ_2026/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDIQ_2026/manuscript/supplement.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig8_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDIQ_2026/submission/final_anonymous/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_submission_materials/cover_letter.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_submission_materials/highlights.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDIQ_2026/submission/final_submission_materials/title_page.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDSA_2026/manuscript/ESM_1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDSA_2026/manuscript/ESM_Fig1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDSA_2026/manuscript/ESM_Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDSA_2026/manuscript/ESM_Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDSA_2026/manuscript/Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/JDSA_2026/manuscript/Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDSA_2026/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDSA_2026/manuscript/main_anonymous.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDSA_2026/manuscript/supplement.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/JDSA_2026/manuscript/supplement_anonymous.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/COVER_LETTER.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/HIGHLIGHTS.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/SNCS_2026/Structural_Consistency_Is_Not_Retrieval_Utility.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/figures/f2_bm25_share.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/figures/f3_cycle_decomposition.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/figures/f4_bootstrap_forest.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/figures/f5_exact_vs_greedy_gap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: papers/SNCS_2026/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/template/sn-article-sample.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: papers/SNCS_2026/template/sn-user-manual.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "superseded output absent: reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/alpha_sensitivity.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/bm25_weight_share_raw_vs_calibrated.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/cyclicity_before_after_mutual_deletion.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/cyclicity_primary_by_dataset_regime.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/helped_harmed_unchanged_counts.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/hotpotqa_query_level_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/normalized_fas_weight_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/per_dataset_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/raw_vs_calibrated_retrieval_deltas.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/raw_vs_calibrated_structural_results.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/repair_deltas_primary_with_intervals.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/figures/scidocs_query_level_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/alpha_sensitivity.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/bm25_weight_share_raw_vs_calibrated.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_before_after_mutual_deletion.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_primary_by_dataset_regime.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/helped_harmed_unchanged_counts.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/hotpotqa_query_level_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/normalized_fas_weight_removed.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/per_dataset_baseline_comparison.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_retrieval_deltas.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_structural_results.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/repair_deltas_primary_with_intervals.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "retained supporting PDF: reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/scidocs_query_level_influence.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one canonical manuscript and expected supporting PDFs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all scientific sources match baseline or declared prose revision",
+      "passed": true,
+      "detail": 41
+    },
+    {
+      "check": "only three declared prose files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main methods/results/discussion/conclusion text unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main displayed mathematics unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main numerical text unchanged except explicit cohort reminder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main consecutive first citations: tab:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main consecutive first citations: fig:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement displayed mathematics unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement numerical text unchanged except explicit cohort reminder",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement consecutive first citations: tab:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement consecutive first citations: fig:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no additional data/response/optimizer generation",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "baseline_commit": "2c69f331fa4add10ce577c17516afb997b630dfe",
+  "pdfs": {
+    "main": {
+      "pages": 20,
+      "sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+      "references": 36
+    },
+    "main_anonymous": {
+      "pages": 19,
+      "sha256": "bb7af269a51d1f7ee6fcb25a226651d03dfeecbded7b634620698156bb1bd1ed",
+      "references": 36
+    },
+    "supplement": {
+      "pages": 38,
+      "sha256": "43c4f4765ee38f5bc479c9cbfe09ed072e164d795bfeafd0be78b8ccbbc2bebe",
+      "references": 12
+    },
+    "supplement_anonymous": {
+      "pages": 38,
+      "sha256": "f16b4e7b9a89c2e9da8c965154a905e9f94e230c1ccd56da8e55ae6ba9163725",
+      "references": 12
+    }
+  },
+  "new_experiments_performed": false,
+  "scientific_scope": "Existing-record descriptive arithmetic; original measurements preserved"
+}

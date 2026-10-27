@@ -1,0 +1,23 @@
+{
+  "schema": "jdsa-final-readiness-prose-v1",
+  "baseline_main_commit": "efef450a349770a79cfb21fe956890d7e8a66bc2",
+  "scientific_revision_commit": "af03da5900e61a3683de352172c96b96dd8a1d66",
+  "canonical_sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+  "prose_file_sha256": {
+    "papers/JDSA_2026/manuscript/main.tex": "5b4e4e30c0ad46d59fa4373bafb565390d346a9abdf81d462b4d35d2068b6a2e",
+    "papers/JDSA_2026/manuscript/supplement.tex": "f55cd5bff3903b93437bdac724fbbc21b9fab7ad0bcfcb7f34a557c49af0f80f",
+    "papers/JDSA_2026/manuscript/declarations.tex": "6ec7f0f785685032dde4296a78aa16c0fc44755d4223d8801863127e144c4e02"
+  },
+  "allowed_changes": [
+    "Explicit existing 213-query cohort in contribution statement",
+    "Consecutive table/figure citations",
+    "Prepared-versus-delivered editorial disclosure distinction",
+    "Explicit lack of central reviewer-input access",
+    "Directional parsing terminology; counts unchanged"
+  ],
+  "new_experiments": false,
+  "new_model_responses": false,
+  "scientific_measurements_changed": false,
+  "reviewer_inputs_distributed": false,
+  "sncs_withdrawal_confirmed": false
+}

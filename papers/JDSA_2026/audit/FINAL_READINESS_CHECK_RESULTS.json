@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "document_checks": {
+    "passed": 209,
+    "total": 209
+  },
+  "existing_pytest": {
+    "passed": 1362,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 64,
+    "seconds": 39.04
+  },
+  "existing_composition_unit_tests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "maintained_make_checks": {
+    "exit": 0,
+    "targets": [
+      "check",
+      "check-portability",
+      "lint",
+      "validate-evidence",
+      "validate-claims",
+      "validate-clarity",
+      "doc-links",
+      "secret-scan"
+    ],
+    "source_path": "PYTHONPATH=src",
+    "initial_environment_only_failure": "First make invocation omitted PYTHONPATH in the uninstalled worktree; corrected documented invocation passed without changing project code",
+    "nonblocking_warnings": "Historical optional documentation and optional ir-datasets notices"
+  },
+  "source_main_commit_unchanged": true,
+  "scientific_result_sections_byte_identical": true,
+  "numerical_results_changed": false,
+  "new_experiments": false,
+  "new_model_responses": false,
+  "reviewer_inputs_added": false,
+  "new_statistical_inference": false,
+  "note": "Existing automated tests use software fixtures; their outputs are not manuscript evidence. Full fresh cloud tiers are a future merge check, not claimed run for this non-merged audit draft."
+}
