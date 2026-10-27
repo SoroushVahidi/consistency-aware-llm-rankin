@@ -20,3 +20,5 @@ Scientific revision: [issue-by-issue change log](SCIENTIFIC_REVISION_CHANGELOG.m
 Current integration and PDF-retention policy: [MAIN_INTEGRATION.md](MAIN_INTEGRATION.md). Earlier build/validation receipts are dated historical records. The full scientific revision is preserved; only output locations, packaging and discoverability change.
 
 Final readiness verdict: **NOT_READY**. See [FINAL_SUBMISSION_READINESS_AUDIT.md](FINAL_SUBMISSION_READINESS_AUDIT.md) for documentary exclusivity, related-version, central-access and rights gates, distinguished from optional improvements. The root PDF reflects only supported prose/presentation corrections; no results change.
+
+Current bounded follow-up: [READINESS_RESOLUTION.md](READINESS_RESOLUTION.md). Existing publisher/grant correspondence now strengthens submission/award provenance, without binding the uploaded MWFAS bytes or clearing historical terms. A minimal reviewer-extension candidate and cover/declaration drafts are prepared and verified privately, not delivered or cleared for distribution. The exact audited canonical PDF and all scientific values remain unchanged by this status update.

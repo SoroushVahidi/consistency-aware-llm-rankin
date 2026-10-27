@@ -1,6 +1,6 @@
 # Canonical manuscript and supporting PDF policy
 
-> This is the historical main-integration record and its original PDF identity. A later [readiness audit](FINAL_SUBMISSION_READINESS_AUDIT.md) makes narrowly documented prose/presentation corrections in its own draft branch; `audit/FINAL_READINESS_MANIFEST.json` pins that branch's current PDF without changing scientific results.
+> This is the historical main-integration record and its original PDF identity. The later audited revision `494439340df22fb818e0b6b1eb7b2fed3f1b007b` supersedes the original PDF below; `audit/FINAL_READINESS_MANIFEST.json` pins its current PDF without changing scientific results. The [current resolution record](READINESS_RESOLUTION.md) documents integration and remaining external gates. Historical receipts below retain their original scope and identities.
 
 The authoritative compiled document is [LATEST_MANUSCRIPT.pdf](../../LATEST_MANUSCRIPT.pdf) at repository root. It is the exact 20-page identified main PDF from scientific revision `af03da5900e61a3683de352172c96b96dd8a1d66`, SHA-256 `d709713feb231ed241de50e45b22ba7c772efa4020acb374487a877e95990abf`. It includes the 213-query stratified attribution, corrected statistical interpretation, current citations and Professor Ioannis Koutis acknowledgment. No scientific source, result or relevance record changes in this integration.
 

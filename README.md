@@ -8,6 +8,9 @@ presentation/access clarifications documented in the [final readiness audit](pap
 Earlier compiled versions are superseded. Supporting figure PDFs, publisher
 manuals and historical research materials are not alternate manuscript versions.
 The JDSA draft is not represented as submitted or submission-ready.
+The [current readiness-resolution record](papers/JDSA_2026/READINESS_RESOLUTION.md)
+separates verified corrections and private evidence preparation from outstanding
+rights, reviewer-access, related-version and withdrawal requirements.
 
 [Editable manuscript and supplement sources](papers/JDSA_2026/manuscript/README.md)
 · [Integration and PDF-retention record](papers/JDSA_2026/MAIN_INTEGRATION.md)

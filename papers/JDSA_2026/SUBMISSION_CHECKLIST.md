@@ -45,9 +45,9 @@ Public-release requirements, separate from journal submission:
 - [ ] Approve exact destructive scope and backup for the same-repository remediation in `PUBLIC_RELEASE_REMEDIATION_PLAN.md`; complete an off-device private backup and post-change validation. Current visibility is PRIVATE. A public project-code claim is not made.
 - [ ] Resolve SpringRank's MIT-file/GPL-metadata conflict only if its implementation is proposed for redistribution. No SpringRank/PRP/model implementation or weights are included in the source or final reviewer ZIP; this is not an included-code blocker today.
 
-Out-of-scope pre-existing gate: formal SNCS withdrawal confirmation was neither investigated nor changed in this task. It remains a separate concurrent-consideration condition before a future submission; it is not grounds to label this readiness work failed.
+Historical preparation boundary: SNCS withdrawal was not investigated in that earlier checklist. The follow-up below independently verifies a request, but still finds no definitive closure. Concurrent consideration remains a condition before a future submission.
 
-Optional improvements: a durable versioned public code release after cleanup, an authorized reviewer extension using the now-verified attribution/envelope projections, and recovery of still-missing original scorer/permutation provenance. No new experiments are required or authorized to manufacture missing historical provenance.
+Optional improvements: a durable versioned public code release after cleanup and recovery of still-missing original scorer/permutation provenance. The central reviewer extension is now prepared locally, but sharing clearance and actual access remain unresolved gates. No new experiments are required or authorized to manufacture missing historical provenance.
 
 Not performed: journal submission/contact, public upload, new experiments, model/solver calls, merge, force-push, history filtering or visibility change.
 
@@ -70,7 +70,7 @@ These entries do not authorize submission, public release or a claim of readines
 
 Current verdict: **NOT_READY**; see [final evidence-grounded audit](FINAL_SUBMISSION_READINESS_AUDIT.md). This supersedes readiness inference from technical integration checks, not the original measurements.
 
-- [ ] Obtain documentary closure/withdrawal acknowledgment for the overlapping SNCS retrieval submission. The available private preparation note records a request as unconfirmed; neither Git cleanup nor that request proves closure.
+- [ ] Obtain documentary closure/withdrawal acknowledgment for the overlapping SNCS retrieval submission. A follow-up independently inspected the sent request and automated receipt; neither confirms closure.
 - [ ] Bind the actual uploaded related MWFAS version and update the confidential comparison/disclosure for the final JDSA version.
 - [ ] Establish applicable terms and a lawful sharing basis for the minimum cache/envelope projections before adding any inputs to a reviewer copy.
 - [ ] Confirm genuinely non-public reviewer delivery and correct main/SI file handling; select identified/anonymous files according to verified journal workflow.
@@ -79,3 +79,16 @@ Current verdict: **NOT_READY**; see [final evidence-grounded audit](FINAL_SUBMIS
 - [x] Correct citation order, forest-figure citation, disclosure tense, directional parsing wording and explicit access limitation.
 
 The current public Catalyst guidance does not establish a blanket new publication-consent requirement. Public release is not required; confidential, lawful reviewer access would address the central-access gate. Novelty sufficiency, supplement length, missing historical scorer pins and prospective replication are separate scientific limitations/editorial considerations, not newly invented compliance requirements.
+
+## Bounded resolution follow-up — 27 October 2026 UTC
+
+This section supersedes earlier evidence-search status where indicated; readiness remains **NOT_READY**. See [READINESS_RESOLUTION.md](READINESS_RESOLUTION.md).
+
+- [x] Independently retrieved existing MWFAS submission receipts; prepared 25-page candidate hashes and current-version comparison verified. No uploaded-byte binding found; exact submitted PDF still unverified.
+- [x] Recovered an author-specific Catalyst award and its direct official-FAQ link. Full historical terms/scope and July-call linkage remain unverified; no blanket new-publication-consent requirement inferred.
+- [x] Prepared a separate private reviewer-extension candidate with authentic, anonymized numeric inputs, schemas, manifest, checksums and scripts; isolated attribution/composition/envelope checks pass. **NOT CLEARED FOR DISTRIBUTION; NOT DELIVERED.** Original statistical ZIP unchanged.
+- [x] Prepared private item-level rights matrix, exact-version/overlap disclosure and unsent cover/declaration drafts; no correspondence or restricted payload added to Git.
+- [x] Independently verified the SNCS withdrawal request and automated acknowledgment. Status: **WITHDRAWAL_REQUESTED_UNCONFIRMED**.
+- [ ] Supply definitive SNCS closure; exact submitted MWFAS version; applicable historical grant/account/scope evidence; payload-specific sharing basis; confirmed non-public route; final author PDF/declaration approval. These remain separate gates.
+
+No additional scientific rewrite or experiment is justified by this follow-up. The canonical PDF remains the exact 20-page audited revision; supplement sources retain the 38-page identified build. Technical integration into main does not signify submission readiness, exclusivity, permission or approval.

@@ -1,0 +1,135 @@
+{
+  "schema": "jdsa-readiness-resolution-v1",
+  "state": "COMPLETED_SUCCESS",
+  "readiness": "NOT_READY",
+  "original_main_sha": "efef450a349770a79cfb21fe956890d7e8a66bc2",
+  "audited_manuscript_commit": "494439340df22fb818e0b6b1eb7b2fed3f1b007b",
+  "scientific_revision_commit": "af03da5900e61a3683de352172c96b96dd8a1d66",
+  "canonical_pdf_sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+  "canonical_pdf_pages": 20,
+  "supplement_pages": 38,
+  "designated_compiled_manuscript_count": 1,
+  "all_tracked_pdf_count": 100,
+  "other_pdf_hashes_unchanged": 99,
+  "document_checks": {
+    "passed": 209,
+    "total": 209
+  },
+  "existing_pytest": {
+    "passed": 1362,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 64,
+    "seconds": 37.26
+  },
+  "existing_composition_software_tests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "maintained_checks": {
+    "exit_code": 0,
+    "command": "PYTHONPATH=src make repo-ready validate-claims validate-clarity check-portability",
+    "warnings": "Historical optional documentation/IR dependency notices"
+  },
+  "builds": {
+    "main": {
+      "pages": 20,
+      "sha256": "104644a15a97921594a920565570eea475a66f33761e9368297e86cb860cdbbe",
+      "references": 36
+    },
+    "main_anonymous": {
+      "pages": 19,
+      "sha256": "678cf47b992bef7ced719b1a565226f23276e2d2e22af4853c1cd806bb520706",
+      "references": 36
+    },
+    "supplement": {
+      "pages": 38,
+      "sha256": "758de5b899e2f546cd1df3d4bb8cfa0b542d23a8ea2d84dd9b31c2cfecdb2c71",
+      "references": 12
+    },
+    "supplement_anonymous": {
+      "pages": 38,
+      "sha256": "d80e72f28030e0240dd9ecc383b68e2fe12a6ed02b2257fd20d598db41f862fa",
+      "references": 12
+    }
+  },
+  "pixel_checks": {
+    "main": {
+      "pages": 20,
+      "pixel_identical_pages": 20,
+      "all_pixel_identical": true
+    },
+    "supplement": {
+      "pages": 38,
+      "pixel_identical_pages": 38,
+      "all_pixel_identical": true
+    }
+  },
+  "source_archive": {
+    "files": 52,
+    "flat": true,
+    "all_hashes_match": true,
+    "all_four_isolated_build_texts_match": true,
+    "compiled_documents_or_private_inputs_in_archive": false
+  },
+  "historical_protected_files": {
+    "matched": 835,
+    "total": 835
+  },
+  "statistical_reproduction": {
+    "paired_rows": 34783,
+    "tests": 35,
+    "independent_queries": {
+      "all": 342,
+      "nDCG20": 290
+    },
+    "holm_rejections": 0,
+    "max_reference_error": 0.0,
+    "numpy_version_this_recheck": "2.5.1",
+    "historical_estimand_preserved": true,
+    "original_zip_unchanged": true
+  },
+  "central_extension": {
+    "prepared": true,
+    "validated_in_isolation": true,
+    "query_units": 213,
+    "dependent_branch_records": 426,
+    "reference_fields": 6816,
+    "composition_tables_byte_identical": true,
+    "graphs": 6,
+    "orders_enumerated": 241920,
+    "optimal_repairs": 8,
+    "attribution_max_error": 2.220446049250313e-16,
+    "envelope_max_error": 1.1102230246251565e-16,
+    "anonymous_identifiers_only": true,
+    "status": "NOT CLEARED FOR DISTRIBUTION",
+    "delivered": false,
+    "included_in_git": false
+  },
+  "rights": {
+    "author_specific_award_recovered": true,
+    "historical_full_terms_and_scope": "UNKNOWN",
+    "conclusions_and_aggregates": "CONDITIONAL",
+    "new_numeric_confidential_sharing": "UNKNOWN",
+    "new_numeric_public_redistribution": "UNKNOWN"
+  },
+  "mwfas": {
+    "submission_receipts_independently_read": true,
+    "prepared_candidate_pages": 25,
+    "exact_uploaded_pdf_identity_verified": false,
+    "current_main_shared12word_windows": 0,
+    "current_supplement_shared12word_windows": 0,
+    "identical_whole_tables_or_pdf_artwork": false,
+    "limits": "Prepared candidate only; not a paraphrase or exhaustive graph-instance clearance"
+  },
+  "sncs_withdrawal_status": "WITHDRAWAL_REQUESTED_UNCONFIRMED",
+  "jdsa_confidential_route_confirmed": false,
+  "numerical_results_changed": false,
+  "new_experiments": false,
+  "new_model_responses": false,
+  "prospective_experiment_touched": false,
+  "experimental_pr_excluded": 53,
+  "experimental_head_observed": "adc0ffcb05c178b8384c8ad335ea2b4edf81630e",
+  "cloud_tiers": "Not rerun: unchanged executable code, current user prohibits new experiments; core includes synthetic quick-start. Historical clean core/solver PASS retained, not claimed as fresh runs.",
+  "private_details": "Correspondence, rights matrix, version report, source linkage, numerical candidate and unsent drafts remain outside Git."
+}
