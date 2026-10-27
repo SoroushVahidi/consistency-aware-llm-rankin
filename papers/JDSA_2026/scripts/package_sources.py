@@ -14,7 +14,6 @@ files = [
     for f in source.iterdir()
     if f.is_file() and f.suffix in {".tex", ".cls", ".bst", ".bib", ".sh"}
 ]
-files += [source / "main.pdf", source / "ESM_1.pdf"]
 files += [
     source / n for n in ("Fig2.pdf", "Fig3.pdf", "ESM_Fig1.pdf", "ESM_Fig2.pdf", "ESM_Fig3.pdf")
 ]

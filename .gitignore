@@ -456,3 +456,20 @@ reports/reviewer_concerns_program_20260729T035320Z/smoke_branch_b/cache/
 
 papers/SNCS_2026/figures/_layout_review/
 papers/SNCS_2026/SUBMISSION_CHECKLIST.pdf
+
+# One canonical compiled manuscript: /LATEST_MANUSCRIPT.pdf.
+# Rebuilds and superseded outputs remain local; retain all figure inputs.
+/papers/Consistency_Aware_Ranking_Repair_Opportunity_Analysis_2026.pdf
+/papers/JDIQ_2026/manuscript/main.pdf
+/papers/JDIQ_2026/manuscript/supplement.pdf
+/papers/JDIQ_2026/submission/final_anonymous/manuscript/main.pdf
+/papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.pdf
+/papers/JDSA_2026/manuscript/ESM_1.pdf
+/papers/JDSA_2026/manuscript/main.pdf
+/papers/JDSA_2026/manuscript/main_anonymous.pdf
+/papers/JDSA_2026/manuscript/supplement.pdf
+/papers/JDSA_2026/manuscript/supplement_anonymous.pdf
+/papers/SNCS_2026/Structural_Consistency_Is_Not_Retrieval_Utility.pdf
+/papers/SNCS_2026/manuscript/main.pdf
+/reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/main.pdf
+/reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf

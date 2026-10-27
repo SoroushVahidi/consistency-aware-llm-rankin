@@ -1,5 +1,7 @@
 # Scientific-revision validation and remaining gates
 
+> Historical validation of revision `af03da5900e61a3683de352172c96b96dd8a1d66` and its former output layout. The current sole manuscript is [LATEST_MANUSCRIPT.pdf](../../LATEST_MANUSCRIPT.pdf); see [main integration validation and build policy](MAIN_INTEGRATION.md) for current paths and source-only packaging. The numerical evidence below remains preserved.
+
 Base: `2c69f331fa4add10ce577c17516afb997b630dfe`. Current preparation branch: `papers/jdsa-scientific-revision-20261026`. This draft is for author review; **submission readiness is not confirmed**. The separate prospective replication was not accessed or modified. No new data acquisition, model generation, optimizer campaign, significance test or change to original measurements occurred.
 
 ## Current deliverables

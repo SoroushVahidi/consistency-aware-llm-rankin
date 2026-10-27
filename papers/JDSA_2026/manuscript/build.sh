@@ -12,9 +12,7 @@ for document_name in main supplement; do
   for build_pass in 2 3 4; do
     pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build "$document_name.tex" >>"build/$document_name.console.log" 2>&1
   done
-  cp "build/$document_name.pdf" "$document_name.pdf"
 done
-cp supplement.pdf ESM_1.pdf
 # Retained fallback: same scientific body, identity-bearing declarations/links suppressed.
 for document_name in main supplement; do
   job_name="${document_name}_anonymous"
@@ -24,5 +22,7 @@ for document_name in main supplement; do
       (cd build && bibtex "$job_name") >>"build/$job_name.console.log" 2>&1
     fi
   done
-  cp "build/$job_name.pdf" "$job_name.pdf"
 done
+
+# All generated PDFs remain in ignored build/. The root canonical PDF is
+# an explicitly approved artifact; this verification build never replaces it.

@@ -1,0 +1,826 @@
+{
+  "original_main_sha": "8f9b3c4db0ed00afed6942a8deccc98cde562378",
+  "source_revision_sha": "af03da5900e61a3683de352172c96b96dd8a1d66",
+  "canonical_path": "LATEST_MANUSCRIPT.pdf",
+  "canonical_sha256": "d709713feb231ed241de50e45b22ba7c772efa4020acb374487a877e95990abf",
+  "canonical_pages": 20,
+  "original_main_pdf_count": 103,
+  "source_pdf_count": 113,
+  "removed_pdf_paths": [
+    "papers/Consistency_Aware_Ranking_Repair_Opportunity_Analysis_2026.pdf",
+    "papers/JDIQ_2026/manuscript/main.pdf",
+    "papers/JDIQ_2026/manuscript/supplement.pdf",
+    "papers/JDIQ_2026/submission/final_anonymous/manuscript/main.pdf",
+    "papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.pdf",
+    "papers/JDSA_2026/manuscript/ESM_1.pdf",
+    "papers/JDSA_2026/manuscript/main.pdf",
+    "papers/JDSA_2026/manuscript/main_anonymous.pdf",
+    "papers/JDSA_2026/manuscript/supplement.pdf",
+    "papers/JDSA_2026/manuscript/supplement_anonymous.pdf",
+    "papers/SNCS_2026/Structural_Consistency_Is_Not_Retrieval_Utility.pdf",
+    "papers/SNCS_2026/manuscript/main.pdf",
+    "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/main.pdf",
+    "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf"
+  ],
+  "source_pdf_inventory": [
+    {
+      "path": "figures/legacy/failure_taxonomy_distribution_uniform.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4b98797ba1129418a413236ef8ada14a7dea14263c5c6361b32165d6ca01b011"
+    },
+    {
+      "path": "figures/legacy/fig_mean_ndcg_hybrids_clean.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "df68b2bc148bfa87c574d9b48b6543cab1bf81cf5ef24c945fb778dc66f637b3"
+    },
+    {
+      "path": "figures/legacy/figure1_preference_graph_pipeline.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "f27008796c914b04e0b242256a245e03f358e7f0bd06d4d995740d6d753aa81c"
+    },
+    {
+      "path": "figures/legacy/figure2_graph_inconsistency_by_regime.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "783fd46dc8c129fa69424589c21fc47177b57e87f553adbacc57a1978ce65294"
+    },
+    {
+      "path": "figures/legacy/figure3_structural_quality_improvement_ms1.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "67ad97152bb156713b945cc10e4cd5869dc7dd55d6e0d1f8ad1f2908faa7811e"
+    },
+    {
+      "path": "figures/legacy/figure4_repair_effect_forest_final.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "8081371985dafb9cf513f923ec0b94ce65beab925f89ec040f9d9052bb3486d0"
+    },
+    {
+      "path": "figures/legacy/figure5_dataset_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "454cbc82b0ffdb446904350434290c761fce1241d52bbfae00780777d29cfe05"
+    },
+    {
+      "path": "figures/legacy/figure6_failure_taxonomy.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "6d3ef32c258293012a56eb352d9f5c720e8cd920f09b5808c59cd8e332ccb62c"
+    },
+    {
+      "path": "figures/manuscript/fig_failure_classes.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "e586f8b8c65060f27c91ccbe1599389aabf158bf2e8e0edb0100f18c6687af44"
+    },
+    {
+      "path": "figures/manuscript/fig_graph_qrels_bew_pre_post.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "cbc38e02b6f788a777672773a6b9d124158188a724a077ac4a900ddea8b8c7d1"
+    },
+    {
+      "path": "figures/manuscript/fig_mean_ndcg_hybrids.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4e66db2a6fc685ca92222169811f9c06a0a5bca416d04985867fb4b906d172af"
+    },
+    {
+      "path": "figures/manuscript/fig_pipeline.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "a9126e575534ee842c3abd739207fc981a225c7f47a6c08ff972c09da8742ec4"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/figures/figure_1_pipeline_diagram.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "31b5dc5754ffb35c93bf71a289ae0ec4bf8626c934992bbb3dcfdb6864111e5b"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/figures/figure_2_cyclicity_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4d41af957a6b4749360b66f2b7f77002084bf198613780ed922cadaf7fce89c2"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/figures/figure_3_repair_effect_ndcg.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "37e95bb85e87e7fffb70be8481185d8e716f265a97be2de0c12c1288b3452536"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/figures/figure_4_structural_retrieval_tradeoff.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "b533d52822efefad52174499c834c8d95797260658746c6dc8691bfd9374918a"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/figures/figure_5_llm_paradigm_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "44c0bdab12b514833b29c8db8c356031bdd990b7e0fbd0c602800ef3892b7e62"
+    },
+    {
+      "path": "outputs/manuscript_artifacts/graphical_abstract/graphical_abstract.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "423239857a74ec05a69ca94d6135503eee1725f2698837cec5e6b6c71e29aa3b"
+    },
+    {
+      "path": "papers/Consistency_Aware_Ranking_Repair_Opportunity_Analysis_2026.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "06629a54e6a75797b7c1e293140b7bda7d0a56813694ce2ab95710192d311ff2"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "375818db34003b9d9834ff23ce380161e1a6b6ae5486c6499774eac690ccee47"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "30b419e67f8c513e8dc01429376305adbea7fe2509a1069805e953dc8985f463"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig1_pipeline.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "8e9418512438615168c76730bd6c00c6cb836a22eac686f0f8e1604cb4026a35"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "df52cbf1c222284e60c7b0f65df9dd58212724d24c0dbb4b28643bb640fbfec2"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "d3e531c96a52402d87282f175dbb87d55dcdc68f6352e5f5539d169e33ce0dbd"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "ef47480a85153f68a2a4cddf9006a9370833619b436ffeef0a2191509ac4fc9c"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "69dbfb6f871d64b2f27efc4dce9c315dff11795d76bc4f41ea35c3c7faaf9caf"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4b650c142680bef836ac66610664ad89e0e7fc6bd7b9b5dd2009647148fda374"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "2779dfcbdc8feb85b7fe0ff352ac18fe84ce336ceb06572567b757dcc0d94548"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig7_bootstrap_forest_full15.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "ad13887435b56e7e13970af16471137b653c6caa5f098770741bdf7d9dcbf093"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig8_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "21a16dbb56363aa8fc6fcb447bc546e54f65d4307af7ea72b2ae2215f868429a"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "24f0bc2941dcdc3639cd85910ae94e99660d09da635d74164eedfbdbbf066a17"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/main.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "93265e1ab13571101d4ef260b3afb61c6089a03e257e7c9e49fd79c2640f3840"
+    },
+    {
+      "path": "papers/JDIQ_2026/manuscript/supplement.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Generated supplement/fallback; preserved sources rebuild it",
+      "sha256": "31c5f4a5006af24ba12adeb14f3a861e8159250a07779fed86be100d2ac6c4b3"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "375818db34003b9d9834ff23ce380161e1a6b6ae5486c6499774eac690ccee47"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "df52cbf1c222284e60c7b0f65df9dd58212724d24c0dbb4b28643bb640fbfec2"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "ef47480a85153f68a2a4cddf9006a9370833619b436ffeef0a2191509ac4fc9c"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4b650c142680bef836ac66610664ad89e0e7fc6bd7b9b5dd2009647148fda374"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "2779dfcbdc8feb85b7fe0ff352ac18fe84ce336ceb06572567b757dcc0d94548"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig8_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "21a16dbb56363aa8fc6fcb447bc546e54f65d4307af7ea72b2ae2215f868429a"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "24f0bc2941dcdc3639cd85910ae94e99660d09da635d74164eedfbdbbf066a17"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/main.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "93265e1ab13571101d4ef260b3afb61c6089a03e257e7c9e49fd79c2640f3840"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_anonymous/manuscript/supplement.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Generated supplement/fallback; preserved sources rebuild it",
+      "sha256": "31c5f4a5006af24ba12adeb14f3a861e8159250a07779fed86be100d2ac6c4b3"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_submission_materials/cover_letter.pdf",
+      "classification": "historical_supporting_material",
+      "action": "retain",
+      "reason": "Existing supporting submission material; retained without republication or status inference",
+      "sha256": "f0a73eca53a9d3a914ca4b1db7533ff6eb6ca0d6ee3fff5d78a0eaf3f62b9e26"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_submission_materials/highlights.pdf",
+      "classification": "historical_supporting_material",
+      "action": "retain",
+      "reason": "Existing supporting submission material; retained without republication or status inference",
+      "sha256": "241a72bb27dc8fedf1ba5f7afb3484265a2bdc2d182a45d3788a4ea868bfb28c"
+    },
+    {
+      "path": "papers/JDIQ_2026/submission/final_submission_materials/title_page.pdf",
+      "classification": "historical_supporting_material",
+      "action": "retain",
+      "reason": "Existing supporting submission material; retained without republication or status inference",
+      "sha256": "0b9211af8efbdddbceaaa0bd62696fbb728cd49a00725da167ad8347ee941356"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/ESM_1.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Generated supplement/fallback; preserved sources rebuild it",
+      "sha256": "a0d1b93c7e0d9aee7e4e3ee943af6abc72fe6809532bbac9dd42f9b7b54631a2"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/ESM_Fig1.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "8ffc3b5ff92395c14b6c6cb9b0771f9d9e6ebae6b876381b93343034a684e384"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/ESM_Fig2.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "66b545f0bc58e1351574c7dfc8f524fcef8e1d9030944ab9006a8a0357308f74"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/ESM_Fig3.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "e0b192270bdb421cba4334e6e947f17abbd4dfce3042b8b359ca3aac53ca1c54"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/Fig2.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "8aaacc9bb1401d74643c03f1a7e9e11dd7560100b9c23df453aabef00910f458"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/Fig3.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "2779dfcbdc8feb85b7fe0ff352ac18fe84ce336ceb06572567b757dcc0d94548"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/main.pdf",
+      "classification": "canonical_relocated",
+      "action": "remove_tracked_output",
+      "reason": "Exact authoritative identified manuscript relocated to LATEST_MANUSCRIPT.pdf",
+      "sha256": "d709713feb231ed241de50e45b22ba7c772efa4020acb374487a877e95990abf"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/main_anonymous.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "dcfc9a550cfd940658bef57e690331f216ebd4533591451bc595ff33e5a4fa36"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/supplement.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Generated supplement/fallback; preserved sources rebuild it",
+      "sha256": "a0d1b93c7e0d9aee7e4e3ee943af6abc72fe6809532bbac9dd42f9b7b54631a2"
+    },
+    {
+      "path": "papers/JDSA_2026/manuscript/supplement_anonymous.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Generated supplement/fallback; preserved sources rebuild it",
+      "sha256": "207e0d0881b37036fb31efcbbe0148b440db8d02a730f240ad21d8e3f3cd5332"
+    },
+    {
+      "path": "papers/SNCS_2026/COVER_LETTER.pdf",
+      "classification": "historical_supporting_material",
+      "action": "retain",
+      "reason": "Existing supporting submission material; retained without republication or status inference",
+      "sha256": "e445a9c5a877aad3e30802f1ae3d0c9b24748668e66d94276788cd8fd84fe695"
+    },
+    {
+      "path": "papers/SNCS_2026/HIGHLIGHTS.pdf",
+      "classification": "historical_supporting_material",
+      "action": "retain",
+      "reason": "Existing supporting submission material; retained without republication or status inference",
+      "sha256": "9f2a18f3aa334a2f77a8e73163d3257ac5fe94b5fd4307b7f1f2c879eb3f5141"
+    },
+    {
+      "path": "papers/SNCS_2026/Structural_Consistency_Is_Not_Retrieval_Utility.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "8b73d4094a971aca868c3ebb42ce7211c22bdb14033cb4876f7bd5b18f31c382"
+    },
+    {
+      "path": "papers/SNCS_2026/figures/f2_bm25_share.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "df52cbf1c222284e60c7b0f65df9dd58212724d24c0dbb4b28643bb640fbfec2"
+    },
+    {
+      "path": "papers/SNCS_2026/figures/f3_cycle_decomposition.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "9594ebeb2ab9d6d0748421d88c35a57af3ff316199b1674b370d229fa552632d"
+    },
+    {
+      "path": "papers/SNCS_2026/figures/f4_bootstrap_forest.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "2779dfcbdc8feb85b7fe0ff352ac18fe84ce336ceb06572567b757dcc0d94548"
+    },
+    {
+      "path": "papers/SNCS_2026/figures/f5_exact_vs_greedy_gap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "79e5a08a3f30ce0f766acf034c91f8e8160ad75721943ecc842c2280f3b61ebe"
+    },
+    {
+      "path": "papers/SNCS_2026/manuscript/main.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "e693c2966442708a0d7afb8d5cf337466d06893547f549528389d1ca685256d3"
+    },
+    {
+      "path": "papers/SNCS_2026/template/sn-article-sample.pdf",
+      "classification": "publisher_documentation",
+      "action": "retain",
+      "reason": "Unrelated publisher sample/manual; retained",
+      "sha256": "98f733c4946df6612fa8071dc864e3a43aa8be6dd7a4aacd1598cb6025216ac1"
+    },
+    {
+      "path": "papers/SNCS_2026/template/sn-user-manual.pdf",
+      "classification": "publisher_documentation",
+      "action": "retain",
+      "reason": "Unrelated publisher sample/manual; retained",
+      "sha256": "4bb5d025c3ec64825cb3f4e1590d7ecc73b51c3c7c53e06711f59d2e840ed9e9"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "33799fee2d97f9845be573e15596776ab4be71e2c3da1bb4a587d338f1afabdd"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "33217ce082f76f5fd1b96fa82a51ff3b66861538f87682e6198d37aa370bf063"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "d2f788ce5900a1f7369c7c1b2f55f55236ea2e05ae663d32a54c6685adfe6773"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "772af22e4fc7b5741724c4eb4eb3d79404294c5dc1d4441a8ea19b7d3c2449cd"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7da5beed40f1a363a6bf94a14cc5acb3b6525beacf651183ecdadc13d687d8f5"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "1a78da42d9d17209015ea0efda1401ce2fe7f90d34232e80cd11017a96b3deb5"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "476ee0c69aca208002cef756e583f4230713280efff278a816d38b631ea60205"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "165dd64c98d1c2d9eb9db9e58cd674087643789dd6288b810cde52702588538a"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7380cd45fcdf5bec080db5cd92cc07557a3c4a80e2e4ced9a5e4fc6f61360730"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "a75743a3c7de1fde0345c444bde265a82adff6c4cd9518749e764e3753b99922"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "119f3f98190b546a75501e703e3c3d7e88405ca4e1772dae82fcf7096cd75451"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-20260713-225928/artifact_prep/stage/manuscript/main.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "d583f48de1fdc3a2334be9cd7de963a4c24e88299dbb11ce34fbaaa8737f286f"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig10_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "33799fee2d97f9845be573e15596776ab4be71e2c3da1bb4a587d338f1afabdd"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig11_alpha_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "33217ce082f76f5fd1b96fa82a51ff3b66861538f87682e6198d37aa370bf063"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig1_pipeline.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "d2f788ce5900a1f7369c7c1b2f55f55236ea2e05ae663d32a54c6685adfe6773"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig2_bm25_share.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "772af22e4fc7b5741724c4eb4eb3d79404294c5dc1d4441a8ea19b7d3c2449cd"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig3_cyclicity_primary.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7da5beed40f1a363a6bf94a14cc5acb3b6525beacf651183ecdadc13d687d8f5"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig4_raw_vs_calibrated_structure.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "1a78da42d9d17209015ea0efda1401ce2fe7f90d34232e80cd11017a96b3deb5"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig5_cycle_decomposition.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "476ee0c69aca208002cef756e583f4230713280efff278a816d38b631ea60205"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig6_normalized_fas_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "165dd64c98d1c2d9eb9db9e58cd674087643789dd6288b810cde52702588538a"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig7_bootstrap_forest.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7380cd45fcdf5bec080db5cd92cc07557a3c4a80e2e4ced9a5e4fc6f61360730"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig8_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "a75743a3c7de1fde0345c444bde265a82adff6c4cd9518749e764e3753b99922"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/figures_v2/fig9_sign_change_heatmap.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "119f3f98190b546a75501e703e3c3d7e88405ca4e1772dae82fcf7096cd75451"
+    },
+    {
+      "path": "reports/_archive/jdiq-overnight-cont-20260713-230229/artifact_prep/stage/manuscript/main.pdf",
+      "classification": "superseded_compiled_output",
+      "action": "remove_tracked_output",
+      "reason": "Superseded compiled manuscript; preserved source and Git history remain",
+      "sha256": "ac68819505ac6487fe295533f56ca83044c8eaa115d73e39be94473ee44a0a17"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/alpha_sensitivity.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7ccbfc6e44c23894fef9d9975ff1cbfa7dd033809836b00a7fb630c42e46fb96"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/bm25_weight_share_raw_vs_calibrated.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "79db4cbc4af9f31cf4c1d04e3001b89b175e00273b9c12648a334e81d2c870c8"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/cyclicity_before_after_mutual_deletion.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4b563edd56f957daf3e396ee0c58a24a96fc709465c2e763ef717359edb4b839"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/cyclicity_primary_by_dataset_regime.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "f97bf85c34894b4254cb400546fc73a8ae4e09e9206979cdd96da1fe22e7a303"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/helped_harmed_unchanged_counts.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "a759e015f1db20976b96eee01a75b2c70d6838077b48c6ba95452e9860fbf0b6"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/hotpotqa_query_level_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "515434c33a4786adbd643e534265d573786864e3d6510e4c030452deddee3309"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/normalized_fas_weight_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "470c83677d70520f134a6fd94914e8160465682a7b29860d984e78e10f02664b"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/per_dataset_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "b2a80744dcc497f0a76d42972207957121fc7a1382560b7e46cd632e6169ab4b"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/raw_vs_calibrated_retrieval_deltas.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "795a510533958f835e09f709d3ec3f3dc95e22e22c917ee6414d0917869d7f3c"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/raw_vs_calibrated_structural_results.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "db3725029c4b5dc803200f7793c68fbb2a5344ca2c55083addfe44a2e4210652"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/repair_deltas_primary_with_intervals.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "1646384e178f6320431cd86a711da5d3d716335122684ddf45d202e5ff0a1364"
+    },
+    {
+      "path": "reports/full_calibrated_core/figures/scidocs_query_level_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7a31c74617bc77a79c97f83533b8b3a6f8fa9f74354c1b942a864804adc293a2"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/alpha_sensitivity.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7ccbfc6e44c23894fef9d9975ff1cbfa7dd033809836b00a7fb630c42e46fb96"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/bm25_weight_share_raw_vs_calibrated.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "79db4cbc4af9f31cf4c1d04e3001b89b175e00273b9c12648a334e81d2c870c8"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_before_after_mutual_deletion.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "4b563edd56f957daf3e396ee0c58a24a96fc709465c2e763ef717359edb4b839"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/cyclicity_primary_by_dataset_regime.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "f97bf85c34894b4254cb400546fc73a8ae4e09e9206979cdd96da1fe22e7a303"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/helped_harmed_unchanged_counts.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "a759e015f1db20976b96eee01a75b2c70d6838077b48c6ba95452e9860fbf0b6"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/hotpotqa_query_level_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "515434c33a4786adbd643e534265d573786864e3d6510e4c030452deddee3309"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/normalized_fas_weight_removed.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "470c83677d70520f134a6fd94914e8160465682a7b29860d984e78e10f02664b"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/per_dataset_baseline_comparison.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "b2a80744dcc497f0a76d42972207957121fc7a1382560b7e46cd632e6169ab4b"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_retrieval_deltas.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "795a510533958f835e09f709d3ec3f3dc95e22e22c917ee6414d0917869d7f3c"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/raw_vs_calibrated_structural_results.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "db3725029c4b5dc803200f7793c68fbb2a5344ca2c55083addfe44a2e4210652"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/repair_deltas_primary_with_intervals.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "1646384e178f6320431cd86a711da5d3d716335122684ddf45d202e5ff0a1364"
+    },
+    {
+      "path": "reports/full_calibrated_core/outputs/calibrated_all4/paper_package/plots/scidocs_query_level_influence.pdf",
+      "classification": "supporting_figure",
+      "action": "retain",
+      "reason": "Figure or graphical-abstract asset; retained byte-for-byte",
+      "sha256": "7a31c74617bc77a79c97f83533b8b3a6f8fa9f74354c1b942a864804adc293a2"
+    }
+  ],
+  "expected_final_pdf_count": 100,
+  "compiled_authoritative_manuscript_count": 1,
+  "all_sources_and_research_records_preserved": true,
+  "experiment_integrated": false,
+  "markdown_links_updated": [
+    "papers/JDSA_2026/README.md",
+    "papers/SNCS_2026/README.md"
+  ]
+}

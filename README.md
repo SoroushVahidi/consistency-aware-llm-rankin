@@ -1,3 +1,16 @@
+# Latest Manuscript
+
+[Download the latest JDSA manuscript](LATEST_MANUSCRIPT.pdf)
+
+This is the authoritative, up-to-date identified manuscript (20 pages), from
+scientific revision `af03da5900e61a3683de352172c96b96dd8a1d66`.
+Earlier compiled versions are superseded. Supporting figure PDFs, publisher
+manuals and historical research materials are not alternate manuscript versions.
+The JDSA draft is not represented as submitted or submission-ready.
+
+[Editable manuscript and supplement sources](papers/JDSA_2026/manuscript/README.md)
+· [Integration and PDF-retention record](papers/JDSA_2026/MAIN_INTEGRATION.md)
+
 # consistency-aware-llm-rankin
 
 > **Research Repository** — Consistency-Aware Retrieval Ranking via Graph Repair
@@ -65,22 +78,18 @@ not assumed from a filename. Summary:
 
 ## Current Manuscript
 
-**Active submission:** *Structural Consistency Does Not Reliably Predict
-Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair
-for Multi-Ranker Retrieval* — submitted to **SN Computer Science**
-(Springer Nature) on 2026-08-02; with the editor for evaluation as of
-2026-08-27. Manuscript source: [`papers/SNCS_2026/manuscript/main.tex`](papers/SNCS_2026/manuscript/main.tex).
+The current manuscript is *Preference-Graph Repair and Retrieval Utility:
+An Empirical Opportunity Audit*, prepared for the International Journal of
+Data Science and Analytics (Regular Paper, intended subscription route).
+The sole authoritative compiled manuscript is [LATEST_MANUSCRIPT.pdf](LATEST_MANUSCRIPT.pdf).
+[Its sources](papers/JDSA_2026/manuscript/main.tex) and
+[the supplement source](papers/JDSA_2026/manuscript/supplement.tex) retain the
+complete scientific revision. Reviewer access, permissions, overlap-version
+verification and final author approval remain open; integration is not submission.
 
-**Earlier submission (declined):** an earlier data-quality framing of a
-subset of this evidence base — *Data Quality for Derived Preference
-Graphs: Construction Sensitivity and Repair Outcomes in Multi-Ranker
-Retrieval* — was submitted to the ACM Journal of Data and Information
-Quality (JDIQ) and declined as outside the journal's scope. It is not
-under review anywhere. The `papers/JDIQ_2026/` package is retained
-because parts of its evidence base and reproduction path are still
-load-bearing for the current manuscript (see "Where to look" below) —
-it is historical submission material, not a second active
-submission.
+The SNCS and JDIQ directories retain earlier sources, evidence and supporting
+materials. They are historical workspaces, not alternate current PDFs. Their
+previous status statements are historical and are not reverified here.
 
 ## Repository status
 
@@ -136,7 +145,7 @@ every command above.
 | A specific claim's evidence/status/manuscript-applicability (machine-readable) | [`docs/claim_evidence_registry.yaml`](docs/claim_evidence_registry.yaml) |
 | What belongs in Git vs. local/external archive | [`docs/EXPERIMENT_ARTIFACT_POLICY.md`](docs/EXPERIMENT_ARTIFACT_POLICY.md) (timestamped-experiment specifics) and [`docs/ARTIFACT_POLICY.md`](docs/ARTIFACT_POLICY.md) (broader policy + dated decision log) |
 | Exact reproduction commands for the classical evidence tables | [`docs/REPRODUCTION_CANONICAL.md`](docs/REPRODUCTION_CANONICAL.md) |
-| **Current** manuscript (SN Computer Science, with editor) + reviewer quickstart | [`papers/SNCS_2026/`](papers/SNCS_2026/), [`papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md`](papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md) |
+| Historical SN Computer Science source + reviewer quickstart | [`papers/SNCS_2026/`](papers/SNCS_2026/), [`papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md`](papers/SNCS_2026/REPRODUCIBILITY_QUICKSTART.md) |
 | Earlier ACM JDIQ manuscript (declined, not under review; shares the classical evidence backbone) | [`papers/JDIQ_2026/manuscript/main.tex`](papers/JDIQ_2026/manuscript/main.tex) |
 | Production-facing policy logic (guarded, never learned-routing by default) | `src/consistency_ranker/policy_selection/production_config.py` — see `docs/CONTRIBUTIONS.md` §1.7 |
 | The internal-only Gurobi validation studies (never manuscript evidence) | [`reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/`](reports/gurobi_vs_scip_solver_cross_validation_20260731T162314Z/), [`reports/exact_solver_scaling_study_20260731T162314Z/`](reports/exact_solver_scaling_study_20260731T162314Z/) |
@@ -161,7 +170,8 @@ every command above.
 - **The `real_data` test tier requires prepared datasets** (network, ~3GB);
   it is cleanly separated from the default suite, not silently skipped.
 - **No `docs/*.md` file overrides a manuscript `.tex` on an actual number** —
-  for the current, active SN Computer Science submission trust
+  for the current JDSA draft trust
+  `papers/JDSA_2026/manuscript/main.tex`; for the historical SNCS version use
   `papers/SNCS_2026/manuscript/main.tex`; for the earlier, declined JDIQ
   submission (not under review; retained for shared-evidence provenance)
   trust `papers/JDIQ_2026/manuscript/main.tex`. Use `docs/CONTRIBUTIONS.md`
@@ -906,18 +916,16 @@ earlier, historical evidence package and are kept for provenance only.
 
 ## Citation
 
-If you use this code in your research, please cite the manuscript
-currently under evaluation:
+For the latest draft, cite the identified manuscript linked above. Its current
+status is a JDSA preparation draft, not a confirmed journal submission:
 
 ```bibtex
-@unpublished{vahidi2026structural,
+@unpublished{vahidi2026opportunityaudit,
   author = {Soroush Vahidi},
-  title  = {Structural Consistency Does Not Reliably Predict Retrieval
-            Utility: An Exact-and-Heuristic Audit of Preference-Graph
-            Repair for Multi-Ranker Retrieval},
-  note   = {Manuscript submitted to SN Computer Science},
-  year   = {2026},
-  url    = {https://github.com/SoroushVahidi/consistency-aware-llm-rankin}
+  title = {Preference-Graph Repair and Retrieval Utility: An Empirical Opportunity Audit},
+  year = {2026},
+  note = {JDSA preparation draft; scientific revision af03da5900e61a3683de352172c96b96dd8a1d66},
+  url = {https://github.com/SoroushVahidi/consistency-aware-llm-rankin/blob/main/LATEST_MANUSCRIPT.pdf}
 }
 ```
 

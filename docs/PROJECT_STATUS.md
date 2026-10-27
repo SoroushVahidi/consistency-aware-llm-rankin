@@ -1,5 +1,7 @@
 # Project Status (current `main`)
 
+> **JDSA manuscript integration update (26 October 2026):** the current identified draft is [LATEST_MANUSCRIPT.pdf](../LATEST_MANUSCRIPT.pdf), with [current scientific sources](../papers/JDSA_2026/manuscript/main.tex) and [integration scope](../papers/JDSA_2026/MAIN_INTEGRATION.md). The older JDIQ/SNCS statements below describe historical versions and their evidence classifications. No prospective replication result or submission-readiness clearance is inferred from integration.
+
 **Authoritative for:** current state of `main` -- what is complete, active,
 canonical, exploratory, superseded, historical, or internal-only, and what to
 work on next.

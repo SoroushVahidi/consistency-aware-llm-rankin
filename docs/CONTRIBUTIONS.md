@@ -1,5 +1,7 @@
 # Contributions
 
+> **JDSA manuscript integration update (26 October 2026):** the current identified draft is [LATEST_MANUSCRIPT.pdf](../LATEST_MANUSCRIPT.pdf), with [current scientific sources](../papers/JDSA_2026/manuscript/main.tex) and [integration scope](../papers/JDSA_2026/MAIN_INTEGRATION.md). The older JDIQ/SNCS statements below describe historical versions and their evidence classifications. No prospective replication result or submission-readiness clearance is inferred from integration.
+
 **Purpose:** an authoritative map of what this repository actually
 contributes -- scientific and engineering -- so a future coding or research
 agent does not have to re-derive it from 30+ overlapping `docs/*.md` files or

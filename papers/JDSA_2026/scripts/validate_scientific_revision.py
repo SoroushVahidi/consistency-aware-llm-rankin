@@ -145,7 +145,7 @@ def main():
             bbl = (SRC / "build" / (doc + ".bbl")).read_text()
             found = set(re.findall(r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}", bbl))
             check(doc + " bibliography matches cited keys", found == keys, len(found))
-            pdf = SRC / (doc + ".pdf")
+            pdf = SRC / "build" / (doc + ".pdf")
             info = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
             body = subprocess.check_output(["pdftotext", str(pdf), "-"], text=True)
             check(doc + " no unresolved PDF markers", "??" not in body)
@@ -290,8 +290,6 @@ def main():
             p.name for p in SRC.iterdir() if p.suffix in {".tex", ".cls", ".bst", ".bib", ".sh"}
         }
         required |= {
-            "main.pdf",
-            "ESM_1.pdf",
             "Fig2.pdf",
             "Fig3.pdf",
             "ESM_Fig1.pdf",
@@ -323,15 +321,70 @@ def main():
             matches == len(ledger),
             {"matched": matches, "total": len(ledger)},
         )
-    changed = subprocess.check_output(
-        ["git", "diff", "--name-only", BASE], cwd=repo, text=True
-    ).splitlines()
-    untracked = subprocess.check_output(
-        ["git", "ls-files", "--others", "--exclude-standard"], cwd=repo, text=True
-    ).splitlines()
+    integration = json.loads((AUDIT / "MAIN_INTEGRATION_MANIFEST.json").read_text())
+    canonical = repo / "LATEST_MANUSCRIPT.pdf"
     check(
-        "changes confined to JDSA preparation package",
-        all(p.startswith("papers/JDSA_2026/") for p in changed + untracked),
+        "canonical PDF is the exact approved revision artifact",
+        digest(canonical.read_bytes()) == integration["canonical_sha256"],
+    )
+    check("identified main rebuild has 20 pages", pdf_summary["main"]["pages"] == 20)
+    check("identified supplement rebuild has 38 pages", pdf_summary["supplement"]["pages"] == 38)
+    canonical_text = subprocess.check_output(["pdftotext", str(canonical), "-"], text=True)
+    rebuilt_text = subprocess.check_output(
+        ["pdftotext", str(SRC / "build/main.pdf"), "-"], text=True
+    )
+    check("canonical and rebuilt manuscript text match", canonical_text == rebuilt_text)
+    check(
+        "README begins with canonical download link",
+        (repo / "README.md")
+        .read_text()
+        .startswith(
+            "# Latest Manuscript\n\n[Download the latest JDSA manuscript](LATEST_MANUSCRIPT.pdf)"
+        ),
+    )
+    for item in integration["source_pdf_inventory"]:
+        path = repo / item["path"]
+        if item["action"] == "retain":
+            check(
+                "retained supporting PDF: " + item["path"],
+                path.is_file() and digest(path.read_bytes()) == item["sha256"],
+            )
+        else:
+            check("superseded output absent: " + item["path"], not path.exists())
+    tracked = subprocess.check_output(["git", "ls-files"], cwd=repo, text=True).splitlines()
+    pdf_paths = [p for p in tracked if p.lower().endswith(".pdf")]
+    check(
+        "one canonical manuscript and expected supporting PDFs",
+        len(pdf_paths) == integration["expected_final_pdf_count"]
+        and "LATEST_MANUSCRIPT.pdf" in pdf_paths
+        and not set(pdf_paths).intersection(integration["removed_pdf_paths"]),
+    )
+    # All scientific TeX, bibliography, numeric evidence and analysis stay at af03da5.
+    source = integration["source_revision_sha"]
+    source_paths = subprocess.check_output(
+        ["git", "ls-tree", "-r", "--name-only", source, "papers/JDSA_2026"], cwd=repo, text=True
+    ).splitlines()
+    scientific = [
+        p
+        for p in source_paths
+        if Path(p).suffix in (".tex", ".bib", ".cls", ".bst")
+        or p.endswith(
+            (
+                "stratify_selected_cache.py",
+                "verify_relevance_profiles.py",
+                "verify_optimum_envelope.py",
+                "SCIENTIFIC_REVISION_EVIDENCE.json",
+            )
+        )
+    ]
+    check(
+        "all revision scientific sources and evidence byte-identical",
+        all(
+            (repo / p).read_bytes()
+            == subprocess.check_output(["git", "show", f"{source}:{p}"], cwd=repo)
+            for p in scientific
+        ),
+        len(scientific),
     )
     result = dict(
         status="PASS" if all(c["passed"] for c in checks) else "FAIL",
@@ -343,7 +396,9 @@ def main():
         new_experiments_performed=False,
         scientific_scope="Existing-record descriptive arithmetic; original measurements preserved",
     )
-    (AUDIT / "SCIENTIFIC_REVISION_VALIDATION.json").write_text(json.dumps(result, indent=2) + "\n")
+    (AUDIT / "MAIN_INTEGRATION_DOCUMENT_VALIDATION.json").write_text(
+        json.dumps(result, indent=2) + "\n"
+    )
     print(json.dumps({k: v for k, v in result.items() if k not in ("checks", "pdfs")}, indent=2))
     for c in checks:
         if not c["passed"]:

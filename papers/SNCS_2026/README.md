@@ -4,7 +4,7 @@ This directory contains the SN Computer Science submission package for:
 
 **Structural Consistency Does Not Reliably Predict Retrieval Utility: An Exact-and-Heuristic Audit of Preference-Graph Repair for Multi-Ranker Retrieval**
 
-- **Manuscript PDF:** [`manuscript/main.pdf`](manuscript/main.pdf)
+- **Manuscript PDF:** [Latest authoritative manuscript](../../LATEST_MANUSCRIPT.pdf)
 - **LaTeX source:** [`manuscript/main.tex`](manuscript/main.tex)
 - **Cover letter PDF:** [`COVER_LETTER.pdf`](COVER_LETTER.pdf)
 - **Highlights PDF (optional):** [`HIGHLIGHTS.pdf`](HIGHLIGHTS.pdf)
