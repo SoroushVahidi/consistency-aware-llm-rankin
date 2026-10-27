@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "validated_candidate_sha": "764884e0c330fefa57ea5bd4abd97005c7540d92",
+  "tiers": {
+    "core": {
+      "status": "PASS",
+      "candidate_commit": "764884e0c330fefa57ea5bd4abd97005c7540d92",
+      "clean_worktree": true,
+      "steps_passed": 18,
+      "pytest_counts": {
+        "passed": 1337,
+        "skipped": 25,
+        "deselected": 64
+      },
+      "run_id": "20261027T015145Z",
+      "summary_sha256": "395d9dc970e8aafd4b82c61f70902bb3217584cecdfe770a178d8986abb2334d"
+    },
+    "solver": {
+      "status": "PASS",
+      "candidate_commit": "764884e0c330fefa57ea5bd4abd97005c7540d92",
+      "clean_worktree": true,
+      "steps_passed": 15,
+      "pytest_counts": {
+        "passed": 1362,
+        "deselected": 64
+      },
+      "run_id": "20261027T015146Z",
+      "summary_sha256": "6073ad0f888f0447a6e4246fdc73e327e7e537ab6513d72066f84103385ab4fc"
+    }
+  },
+  "isolated_source_build": {
+    "status": "PASS",
+    "source_archive_files": 52,
+    "compiled_documents_in_archive": 0,
+    "rebuilt_identical_document_text": {
+      "main": true,
+      "supplement": true,
+      "main_anonymous": true,
+      "supplement_anonymous": true
+    },
+    "canonical_sha256": "d709713feb231ed241de50e45b22ba7c772efa4020acb374487a877e95990abf",
+    "canonical_untouched": true
+  },
+  "new_experiment_results_used": false,
+  "raw_logs_committed": false,
+  "real_data_tests": "Not run; dataset loaders and candidate-pool code unchanged; default deselection retained"
+}

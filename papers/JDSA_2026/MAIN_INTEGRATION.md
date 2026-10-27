@@ -30,3 +30,9 @@ A private copy of the 38-page supplement and both anonymous fallbacks was preser
 ## Validation boundary
 
 `audit/MAIN_INTEGRATION_DOCUMENT_VALIDATION.json` checks canonical identity, all four builds, references/citations, original numerical invariants, 99 retained PDF hashes, deleted output paths, unchanged scientific sources and source-only archive completeness. The integration follows the repository's ordinary core/solver validation policy; exact run state is recorded in the handoff rather than assumed from old receipts. No new LLM calls, data collection or optimizer research campaign is performed.
+
+## Completed pre-push validation
+
+Validated candidate: `764884e0c330fefa57ea5bd4abd97005c7540d92`, with clean worktrees and no dirty-tree override. Core: **1337 passed, 25 expected solver-related skips, 64 deselected**, all 18 steps PASS. Solver: **1362 passed, zero skipped, 64 deselected**, all 15 steps PASS. Both canonical cloud-validation receipts independently pass `--verify-run`. The final follow-up adds this validation record only, with no code or PDF changes.
+
+All **198** document/source/preservation checks and **7** selected-composition software tests pass. The 52-file source-only ZIP independently rebuilds all four PDFs with identical extracted text; it contains no compiled manuscript documents. All **835** protected historical files retain their recorded hashes. The README download link resolves to the exact source-revision blob. Real-data tests are deselected because no dataset loaders or candidate-pool code changes; no new data acquisition is required. Full raw test logs remain local and are not committed; sanitized totals and receipt hashes are in `audit/MAIN_INTEGRATION_TESTS.json`.
