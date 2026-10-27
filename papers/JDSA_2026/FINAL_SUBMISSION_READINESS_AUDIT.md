@@ -1,5 +1,7 @@
 # Final evidence-grounded JDSA submission-readiness audit
 
+> Follow-up: [READINESS_RESOLUTION.md](READINESS_RESOLUTION.md) records recovered correspondence, private candidate preparation and a final availability-only correction after live GitHub metadata reports PUBLIC. This audit's original validation/render receipts retain their dated scope; the current manifest and `audit/READINESS_RESOLUTION_VALIDATION.json` pin the follow-up PDF and checks. Readiness remains NOT_READY.
+
 **Verdict: NOT_READY.** The scientific and technical audit can be completed without new experiments, but the available evidence does not close the exclusivity, central-reviewer-access and version-specific disclosure gates. Technical validation is not author approval or journal clearance.
 
 Baseline: `efef450a349770a79cfb21fe956890d7e8a66bc2`; scientific revision: `af03da5900e61a3683de352172c96b96dd8a1d66`. Work is isolated; main, historical scientific inputs and the separate prospective experiment are unchanged. This audit performs no acquisition, model generation, new inferential family, optimizer campaign or scientific reanalysis. Numerical checks inspect preserved results; the reviewer quick check performs existing graph/saved-output verification only.

@@ -42,7 +42,7 @@ Applicable requirements still unresolved:
 
 Public-release requirements, separate from journal submission:
 
-- [ ] Approve exact destructive scope and backup for the same-repository remediation in `PUBLIC_RELEASE_REMEDIATION_PLAN.md`; complete an off-device private backup and post-change validation. Current visibility is PRIVATE. A public project-code claim is not made.
+- [ ] Approve exact destructive scope and backup for the same-repository remediation in `PUBLIC_RELEASE_REMEDIATION_PLAN.md`; complete an off-device private backup and post-change validation. Follow-up live GitHub metadata reports PUBLIC, contrary to earlier private-state records; this task did not change visibility or certify remediation. Author must resolve visibility intent. Public visibility is not a sharing-rights clearance.
 - [ ] Resolve SpringRank's MIT-file/GPL-metadata conflict only if its implementation is proposed for redistribution. No SpringRank/PRP/model implementation or weights are included in the source or final reviewer ZIP; this is not an included-code blocker today.
 
 Historical preparation boundary: SNCS withdrawal was not investigated in that earlier checklist. The follow-up below independently verifies a request, but still finds no definitive closure. Concurrent consideration remains a condition before a future submission.
@@ -91,4 +91,4 @@ This section supersedes earlier evidence-search status where indicated; readines
 - [x] Independently verified the SNCS withdrawal request and automated acknowledgment. Status: **WITHDRAWAL_REQUESTED_UNCONFIRMED**.
 - [ ] Supply definitive SNCS closure; exact submitted MWFAS version; applicable historical grant/account/scope evidence; payload-specific sharing basis; confirmed non-public route; final author PDF/declaration approval. These remain separate gates.
 
-No additional scientific rewrite or experiment is justified by this follow-up. The canonical PDF remains the exact 20-page audited revision; supplement sources retain the 38-page identified build. Technical integration into main does not signify submission readiness, exclusivity, permission or approval.
+No additional scientific rewrite or experiment is justified by this follow-up. A final availability-only correction removes stale assertions of private repository visibility; no results change. Technical integration into main does not signify submission readiness, exclusivity, permission or approval. Repository visibility itself is left unchanged pending the author's decision.

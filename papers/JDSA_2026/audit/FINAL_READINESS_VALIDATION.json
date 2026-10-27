@@ -1,7 +1,7 @@
 {
   "status": "PASS",
-  "passed": 209,
-  "total": 209,
+  "passed": 210,
+  "total": 210,
   "checks": [
     {
       "check": "fixed baseline commit",
@@ -1010,7 +1010,12 @@
       "detail": null
     },
     {
-      "check": "main methods/results/discussion/conclusion text unchanged",
+      "check": "single explicit repository-access wording correction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main scientific text unchanged apart from declared access sentence",
       "passed": true,
       "detail": null
     },
@@ -1064,22 +1069,22 @@
   "pdfs": {
     "main": {
       "pages": 20,
-      "sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+      "sha256": "e35c9415905d16a83a95cb9cb372d25f9f008710f2ed3e5d6d19e071b26f5515",
       "references": 36
     },
     "main_anonymous": {
       "pages": 19,
-      "sha256": "bb7af269a51d1f7ee6fcb25a226651d03dfeecbded7b634620698156bb1bd1ed",
+      "sha256": "b2ac62364e576068826fffb7458234f960afc19d1e632f3c0c8ce2f97f0a3ec0",
       "references": 36
     },
     "supplement": {
       "pages": 38,
-      "sha256": "43c4f4765ee38f5bc479c9cbfe09ed072e164d795bfeafd0be78b8ccbbc2bebe",
+      "sha256": "9eff7819bce6c3330221549b326999e2147e639a766507d4acbcd6044e1f9c7c",
       "references": 12
     },
     "supplement_anonymous": {
       "pages": 38,
-      "sha256": "f16b4e7b9a89c2e9da8c965154a905e9f94e230c1ccd56da8e55ae6ba9163725",
+      "sha256": "6e11f24f194bc13ad0c7f35bbc389734495b8d5dd8fa103f681d003eef70311e",
       "references": 12
     }
   },

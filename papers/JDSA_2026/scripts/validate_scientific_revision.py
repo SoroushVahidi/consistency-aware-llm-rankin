@@ -415,10 +415,34 @@ def main():
             if name == "main":
                 beginning = r"\section{Problem Formulation}"
                 ending = r"\backmatter"
+                # A visibility-only access sentence may change without changing
+                # methods, results or interpretations. Certify that exact edit,
+                # rather than exempting the whole evidence-access subsection.
+                access_before = (
+                    r"The project repository is private; its address is "
+                    r"\ifdefined\AnonymousVersion withheld in this fallback\else"
+                    r"\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}"
+                    r"\fi. Public access is not claimed."
+                )
+                access_after = (
+                    r"The project-repository address is "
+                    r"\ifdefined\AnonymousVersion withheld in this fallback\else"
+                    r"\url{https://github.com/SoroushVahidi/consistency-aware-llm-rankin}"
+                    r"\fi. Repository access does not supply the excluded inputs "
+                    r"or establish their sharing clearance."
+                )
+                expected_body = old[old.index(beginning) : old.index(ending)]
+                if readiness.get("repository_visibility_wording_corrected"):
+                    check(
+                        "single explicit repository-access wording correction",
+                        expected_body.count(access_before) == 1
+                        and current.count(access_after) == 1,
+                    )
+                    expected_body = expected_body.replace(access_before, access_after)
                 check(
-                    "main methods/results/discussion/conclusion text unchanged",
+                    "main scientific text unchanged apart from declared access sentence",
                     current[current.index(beginning) : current.index(ending)]
-                    == old[old.index(beginning) : old.index(ending)],
+                    == expected_body,
                 )
 
             def math(t):

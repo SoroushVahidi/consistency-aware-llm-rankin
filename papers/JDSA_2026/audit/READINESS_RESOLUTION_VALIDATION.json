@@ -5,15 +5,15 @@
   "original_main_sha": "efef450a349770a79cfb21fe956890d7e8a66bc2",
   "audited_manuscript_commit": "494439340df22fb818e0b6b1eb7b2fed3f1b007b",
   "scientific_revision_commit": "af03da5900e61a3683de352172c96b96dd8a1d66",
-  "canonical_pdf_sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+  "canonical_pdf_sha256": "e35c9415905d16a83a95cb9cb372d25f9f008710f2ed3e5d6d19e071b26f5515",
   "canonical_pdf_pages": 20,
   "supplement_pages": 38,
   "designated_compiled_manuscript_count": 1,
   "all_tracked_pdf_count": 100,
   "other_pdf_hashes_unchanged": 99,
   "document_checks": {
-    "passed": 209,
-    "total": 209
+    "passed": 210,
+    "total": 210
   },
   "existing_pytest": {
     "passed": 1362,
@@ -34,35 +34,23 @@
   "builds": {
     "main": {
       "pages": 20,
-      "sha256": "104644a15a97921594a920565570eea475a66f33761e9368297e86cb860cdbbe",
+      "sha256": "e35c9415905d16a83a95cb9cb372d25f9f008710f2ed3e5d6d19e071b26f5515",
       "references": 36
     },
     "main_anonymous": {
       "pages": 19,
-      "sha256": "678cf47b992bef7ced719b1a565226f23276e2d2e22af4853c1cd806bb520706",
+      "sha256": "b2ac62364e576068826fffb7458234f960afc19d1e632f3c0c8ce2f97f0a3ec0",
       "references": 36
     },
     "supplement": {
       "pages": 38,
-      "sha256": "758de5b899e2f546cd1df3d4bb8cfa0b542d23a8ea2d84dd9b31c2cfecdb2c71",
+      "sha256": "9eff7819bce6c3330221549b326999e2147e639a766507d4acbcd6044e1f9c7c",
       "references": 12
     },
     "supplement_anonymous": {
       "pages": 38,
-      "sha256": "d80e72f28030e0240dd9ecc383b68e2fe12a6ed02b2257fd20d598db41f862fa",
+      "sha256": "6e11f24f194bc13ad0c7f35bbc389734495b8d5dd8fa103f681d003eef70311e",
       "references": 12
-    }
-  },
-  "pixel_checks": {
-    "main": {
-      "pages": 20,
-      "pixel_identical_pages": 20,
-      "all_pixel_identical": true
-    },
-    "supplement": {
-      "pages": 38,
-      "pixel_identical_pages": 38,
-      "all_pixel_identical": true
     }
   },
   "source_archive": {
@@ -130,6 +118,32 @@
   "prospective_experiment_touched": false,
   "experimental_pr_excluded": 53,
   "experimental_head_observed": "adc0ffcb05c178b8384c8ad335ea2b4edf81630e",
-  "cloud_tiers": "Not rerun: unchanged executable code, current user prohibits new experiments; core includes synthetic quick-start. Historical clean core/solver PASS retained, not claimed as fresh runs.",
-  "private_details": "Correspondence, rights matrix, version report, source linkage, numerical candidate and unsent drafts remain outside Git."
+  "cloud_tiers": "Not rerun: user prohibits new experiments; core includes synthetic quick-start. Historical clean core/solver PASS retained, not claimed as fresh runs. Research implementations unchanged; document validator certifies one exact access-sentence edit.",
+  "private_details": "Correspondence, rights matrix, version report, source linkage, numerical candidate and unsent drafts remain outside Git.",
+  "prior_audited_build_pixel_checks": {
+    "main": {
+      "pages": 20,
+      "pixel_identical_pages": 20,
+      "all_pixel_identical": true
+    },
+    "supplement": {
+      "pages": 38,
+      "pixel_identical_pages": 38,
+      "all_pixel_identical": true
+    }
+  },
+  "final_canonical_equals_rebuild_pixels": true,
+  "final_availability_wording_pages_inspected": {
+    "main": [
+      8,
+      17
+    ],
+    "supplement": [
+      36
+    ]
+  },
+  "repository_visibility_observed": "PUBLIC",
+  "repository_visibility_changed_by_task": false,
+  "visibility_intent_confirmed": false,
+  "manuscript_changes": "Only declared availability/access sentences after audited revision; stale private-repository assertions removed. Scientific methods/results preserved by exact access-sentence substitution check."
 }

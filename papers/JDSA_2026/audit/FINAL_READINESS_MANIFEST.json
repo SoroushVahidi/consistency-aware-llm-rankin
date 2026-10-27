@@ -2,22 +2,27 @@
   "schema": "jdsa-final-readiness-prose-v1",
   "baseline_main_commit": "efef450a349770a79cfb21fe956890d7e8a66bc2",
   "scientific_revision_commit": "af03da5900e61a3683de352172c96b96dd8a1d66",
-  "canonical_sha256": "baef3494c3cb6c29965f4f3981c2371c2df984d95c840b160ad3c472dd4a1c56",
+  "canonical_sha256": "e35c9415905d16a83a95cb9cb372d25f9f008710f2ed3e5d6d19e071b26f5515",
   "prose_file_sha256": {
-    "papers/JDSA_2026/manuscript/main.tex": "5b4e4e30c0ad46d59fa4373bafb565390d346a9abdf81d462b4d35d2068b6a2e",
-    "papers/JDSA_2026/manuscript/supplement.tex": "f55cd5bff3903b93437bdac724fbbc21b9fab7ad0bcfcb7f34a557c49af0f80f",
-    "papers/JDSA_2026/manuscript/declarations.tex": "6ec7f0f785685032dde4296a78aa16c0fc44755d4223d8801863127e144c4e02"
+    "papers/JDSA_2026/manuscript/main.tex": "36ff1be31c3a4930e076bd85589af18da8bdaf9f836dd7127dc1eae587f45878",
+    "papers/JDSA_2026/manuscript/supplement.tex": "07d0ee8cca3c99e0bd7332e05b8e39a92d1a59e43388d0a8f5f70885aac93f31",
+    "papers/JDSA_2026/manuscript/declarations.tex": "93380a96837adaec65fa66694434b46710ae121a2f07e9b3b74f02878de3e268"
   },
   "allowed_changes": [
     "Explicit existing 213-query cohort in contribution statement",
     "Consecutive table/figure citations",
     "Prepared-versus-delivered editorial disclosure distinction",
     "Explicit lack of central reviewer-input access",
-    "Directional parsing terminology; counts unchanged"
+    "Directional parsing terminology; counts unchanged",
+    "Remove stale private-repository assertions; distinguish repository access from excluded-input availability and sharing clearance; no scientific result change"
   ],
   "new_experiments": false,
   "new_model_responses": false,
   "scientific_measurements_changed": false,
   "reviewer_inputs_distributed": false,
-  "sncs_withdrawal_confirmed": false
+  "sncs_withdrawal_confirmed": false,
+  "audited_parent_commit": "494439340df22fb818e0b6b1eb7b2fed3f1b007b",
+  "repository_visibility_wording_corrected": true,
+  "live_repository_visibility_observed": "PUBLIC",
+  "repository_visibility_changed_by_task": false
 }
