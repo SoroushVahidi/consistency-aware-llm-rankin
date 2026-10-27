@@ -1,0 +1,472 @@
+{
+  "status": "PASS",
+  "base_main_sha": "a9bfe54e48e600153c8d19dff91b5d1e8076ed13",
+  "passed": 87,
+  "total": 87,
+  "checks": [
+    {
+      "check": "fixed scientific-writing baseline",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "explicit source-edit scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all other scientific inputs, bibliography and figures unchanged",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "rights classifications and unresolved submission gates unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: supplement.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: selected_worked_example.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: common.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: informative_support.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: preprint_delta.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: declarations.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "declared revised source identity: main.tex",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main.tex displayed mathematics unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main.tex complete citation set retained",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main.tex no duplicate labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main.tex all cross-references defined",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "main.tex consecutive first citations tab:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main.tex consecutive first citations fig:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main.tex all numerical table bodies retained",
+      "passed": true,
+      "detail": 8
+    },
+    {
+      "check": "supplement.tex displayed mathematics unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement.tex complete citation set retained",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement.tex no duplicate labels",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement.tex all cross-references defined",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "supplement.tex consecutive first citations tab:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement.tex consecutive first citations fig:",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement.tex all numerical table bodies retained",
+      "passed": true,
+      "detail": 26
+    },
+    {
+      "check": "every scientific numerical value retained across main and SI",
+      "passed": true,
+      "detail": [
+        "2.09",
+        "219"
+      ]
+    },
+    {
+      "check": "new narrative frequencies are rounded from original counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 143/180",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 135/160",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 79.4\\%",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 84.4\\%",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: descriptive frequencies",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: not estimates of population",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 74",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "central descriptive framing: 213",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete definitions and metric contracts unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "statistical procedures and estimands unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one main section: Introduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one main section: Related Work",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one main section: Problem Formulation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one main section: Experimental Design",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one main section: Conclusion",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no operational narrative in main scientific body",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: nonrandom selection",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: incomplete judgments",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: no equivalence claim",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: sign symmetry",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: deterministic interventions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: sparse support",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: unjudged does not imply irrelevant",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: model abstentions",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: position preference",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: invalidity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: no cyclic-positive strict case",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: shallow pools",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: six-graph generalizability",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: historical reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: external access incomplete",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: sharing not cleared",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "limitation retained: pointwise intervals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "abstract 150\u2013250 words",
+      "passed": true,
+      "detail": 225
+    },
+    {
+      "check": "six keywords",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Springer two-column main retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact requested acknowledgment retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all cited references have bibliography records",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all 35 statistical table rows unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original figure bytes: Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original figure bytes: Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original figure bytes: ESM_Fig1.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original figure bytes: ESM_Fig2.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original figure bytes: ESM_Fig3.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main references and layout compile cleanly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main reference count",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "supplement references and layout compile cleanly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement reference count",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "main_anonymous references and layout compile cleanly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "main_anonymous reference count",
+      "passed": true,
+      "detail": 36
+    },
+    {
+      "check": "main_anonymous advisor and identity suppressed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous references and layout compile cleanly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplement_anonymous reference count",
+      "passed": true,
+      "detail": 12
+    },
+    {
+      "check": "supplement_anonymous advisor and identity suppressed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root canonical matches identified build",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "canonical manifest identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive complete and flat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive hashes match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source archive excludes compiled documents and restricted inputs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "99 supporting PDFs unchanged",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "pdfs": {
+    "main": {
+      "pages": 19,
+      "sha256": "459417fc4909f769c38085a90ddbf4b8b5dad49291e9fd6a568861dc824d9d21",
+      "references": 36
+    },
+    "supplement": {
+      "pages": 37,
+      "sha256": "a41c01562ce14216a8fec1bd88f4cfcfe1fa60f60137a4d56ce5d9defa5a643b",
+      "references": 12
+    },
+    "main_anonymous": {
+      "pages": 18,
+      "sha256": "cdb562bca4bbeb77f279f3a7e8387b0c0487697977678cfef73c847eb97494e0",
+      "references": 36
+    },
+    "supplement_anonymous": {
+      "pages": 36,
+      "sha256": "1bf521291e38f03e23f3d9cc91455a78bb8bbb9ad2d582f65258a2566c708c1f",
+      "references": 12
+    }
+  },
+  "numerical_results_changed": false,
+  "statistical_methods_changed": false,
+  "new_experiments": false,
+  "new_statistical_tests": false
+}

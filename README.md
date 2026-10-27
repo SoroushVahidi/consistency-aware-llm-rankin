@@ -2,15 +2,16 @@
 
 [Download the latest JDSA manuscript](LATEST_MANUSCRIPT.pdf)
 
-This is the authoritative, up-to-date identified manuscript (20 pages), from
-scientific revision `af03da5900e61a3683de352172c96b96dd8a1d66`, with subsequent
-presentation/access clarifications documented in the [final readiness audit](papers/JDSA_2026/FINAL_SUBMISSION_READINESS_AUDIT.md).
-Earlier compiled versions are superseded. Supporting figure PDFs, publisher
-manuals and historical research materials are not alternate manuscript versions.
-The JDSA draft is not represented as submitted or submission-ready.
-The [current readiness-resolution record](papers/JDSA_2026/READINESS_RESOLUTION.md)
-separates verified corrections and private evidence preparation from outstanding
-rights, reviewer-access, related-version and withdrawal requirements.
+The canonical PDF is the latest research version of
+*Preference-Graph Repair and Retrieval Effectiveness: An Empirical Decomposition*
+(19-page identified manuscript); the 37-page supplement is reproducible from
+[source](papers/JDSA_2026/manuscript/supplement.tex).
+Earlier compiled versions are superseded; supporting PDFs remain research inputs.
+This manuscript is not submitted to or accepted by JDSA, and final author
+approval is not claimed. Submission readiness remains **NOT_READY**: rights,
+reviewer access, related-version verification and withdrawal requirements remain
+open in the [readiness record](papers/JDSA_2026/READINESS_RESOLUTION.md).
+The private reviewer extension is not cleared for distribution.
 
 [Editable manuscript and supplement sources](papers/JDSA_2026/manuscript/README.md)
 · [Integration and PDF-retention record](papers/JDSA_2026/MAIN_INTEGRATION.md)
@@ -82,8 +83,8 @@ not assumed from a filename. Summary:
 
 ## Current Manuscript
 
-The current manuscript is *Preference-Graph Repair and Retrieval Utility:
-An Empirical Opportunity Audit*, prepared for the International Journal of
+The current manuscript is *Preference-Graph Repair and Retrieval Effectiveness:
+An Empirical Decomposition*, prepared for the International Journal of
 Data Science and Analytics (Regular Paper, intended subscription route).
 The sole authoritative compiled manuscript is [LATEST_MANUSCRIPT.pdf](LATEST_MANUSCRIPT.pdf).
 [Its sources](papers/JDSA_2026/manuscript/main.tex) and
@@ -174,7 +175,7 @@ every command above.
 - **The `real_data` test tier requires prepared datasets** (network, ~3GB);
   it is cleanly separated from the default suite, not silently skipped.
 - **No `docs/*.md` file overrides a manuscript `.tex` on an actual number** —
-  for the current JDSA draft trust
+  for the current JDSA manuscript trust
   `papers/JDSA_2026/manuscript/main.tex`; for the historical SNCS version use
   `papers/SNCS_2026/manuscript/main.tex`; for the earlier, declined JDIQ
   submission (not under review; retained for shared-evidence provenance)
@@ -920,15 +921,15 @@ earlier, historical evidence package and are kept for provenance only.
 
 ## Citation
 
-For the latest draft, cite the identified manuscript linked above. Its current
-status is a JDSA preparation draft, not a confirmed journal submission:
+For the latest research version, cite the identified manuscript linked above.
+It has not been submitted to or accepted by JDSA:
 
 ```bibtex
 @unpublished{vahidi2026opportunityaudit,
   author = {Soroush Vahidi},
-  title = {Preference-Graph Repair and Retrieval Utility: An Empirical Opportunity Audit},
+  title = {Preference-Graph Repair and Retrieval Effectiveness: An Empirical Decomposition},
   year = {2026},
-  note = {JDSA preparation draft; scientific revision af03da5900e61a3683de352172c96b96dd8a1d66},
+  note = {Latest research version; prepared for JDSA, not submitted or accepted},
   url = {https://github.com/SoroushVahidi/consistency-aware-llm-rankin/blob/main/LATEST_MANUSCRIPT.pdf}
 }
 ```

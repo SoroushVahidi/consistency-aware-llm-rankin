@@ -1,8 +1,8 @@
 # JDSA editable manuscript sources
 
-The sole authoritative compiled manuscript is [LATEST_MANUSCRIPT.pdf](../../../LATEST_MANUSCRIPT.pdf) at the repository root. It is the exact approved 20-page identified PDF from scientific revision `af03da5900e61a3683de352172c96b96dd8a1d66`. Build verification never replaces it automatically.
+[LATEST_MANUSCRIPT.pdf](../../../LATEST_MANUSCRIPT.pdf) is the canonical 19-page identified manuscript, *Preference-Graph Repair and Retrieval Effectiveness: An Empirical Decomposition*, and the latest research version. The 37-page identified supplement is reproducible from source. The manuscript is not submitted to or accepted by JDSA, and final author approval is not claimed. Build verification does not replace the root PDF automatically.
 
-`main.tex` uses the official Springer Nature class with `iicol`; `supplement.tex` produces the 38-page Online Resource 1. All editable dependencies, bibliography, native figure source and five build-critical PDF figure assets remain here. The publisher class and bibliography style are unmodified.
+`main.tex` uses the official Springer Nature class with `iicol`; `supplement.tex` produces the 37-page Online Resource 1. All editable dependencies, bibliography, native figure source and five build-critical PDF figure assets remain here. The publisher class and bibliography style are unmodified.
 
 From repository root:
 
@@ -17,4 +17,4 @@ All four generated documents stay in ignored `build/`: `main.pdf`, `supplement.p
 
 The source-only `packages/JDSA_sources.zip` contains editable dependencies, compiled BBLs, data-free verifiers and their schema/test documentation. It excludes compiled main/supplement PDFs and all private experimental/editorial inputs. The five figure PDFs are supporting inputs, not manuscript versions. A frozen earlier scientific-source ZIP under `audit/` remains a historical preservation artifact, not a current download.
 
-No new experiment or prospective replication result is incorporated. Reviewer access, rights, version-specific overlap and final author approval remain open as documented in the submission checklist.
+No new experiment or prospective replication result is incorporated. The private reviewer extension is not cleared for distribution. Reviewer access, rights, version-specific overlap, withdrawal confirmation and final author approval remain open as documented in the submission checklist. `audit/SCIENTIFIC_WRITING_MANIFEST.json` identifies this editorial version; the validation command dispatches to the writing-specific preservation checks. Earlier validation receipts remain historical. The complete passage classification, relocation inventory and change report are retained privately outside Git.
