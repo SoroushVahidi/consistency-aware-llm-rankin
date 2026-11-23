@@ -1,4 +1,31 @@
-# Latest Manuscript
+# Consistency-Aware Ranking via Preference-Graph Repair
+
+**In plain words.** To rerank search results, you can ask several judges (classical retrieval scorers, or LLMs comparing two documents at a time) which document is better. Their pairwise votes form a directed graph that often has cycles (A > B, B > C, C > A). This project repairs those cycles with a *minimum weighted feedback arc set* (MWFAS) step, turning the votes into a consistent ranking. It then measures carefully how much of the gain is structural (fewer contradictions) and how much actually improves retrieval quality (nDCG) on BEIR-style benchmarks, with statistical-inference checks. The repository has the code, experiment outputs, and manuscript sources.
+
+## Paper
+
+- **Preprint (latest):** S. Vahidi. *Preference-Graph Repair and Retrieval Effectiveness: An Empirical Decomposition.* Research Square, 2026. [doi:10.21203/rs.3.rs-11518675/v1](https://doi.org/10.21203/rs.3.rs-11518675/v1). PDF in this repo: [`LATEST_MANUSCRIPT.pdf`](LATEST_MANUSCRIPT.pdf).
+- **Preprint (earlier version):** S. Vahidi. *Consistency-Aware Reranking via Preference Graph Repair: Structural Gains and Conditional Retrieval Effects.* Research Square, 2026. [doi:10.21203/rs.3.rs-9335700/v1](https://doi.org/10.21203/rs.3.rs-9335700/v1).
+
+Both are preprints, not yet peer-reviewed.
+
+```bibtex
+@misc{vahidi2026preferencegraph,
+  author = {Vahidi, Soroush},
+  title  = {Preference-Graph Repair and Retrieval Effectiveness: An Empirical Decomposition},
+  year   = {2026},
+  note   = {Research Square preprint},
+  doi    = {10.21203/rs.3.rs-11518675/v1}
+}
+```
+
+Data: [consistency-aware-judgments](https://huggingface.co/datasets/SoroushVahidi/consistency-aware-judgments), [ranking-pool-ndcg-results](https://huggingface.co/datasets/SoroushVahidi/ranking-pool-ndcg-results).
+
+Builds on: S. Vahidi, *Training-free ranking from pairwise comparisons via acyclic graph construction*, The Journal of Supercomputing 2026, [doi:10.1007/s11227-026-08852-4](https://doi.org/10.1007/s11227-026-08852-4).
+
+---
+
+> The detailed documentation below is kept from the previous README, with only small factual updates.
 
 [Download the latest JDSA manuscript](LATEST_MANUSCRIPT.pdf)
 
